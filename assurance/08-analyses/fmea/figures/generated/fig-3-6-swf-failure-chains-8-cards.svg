@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1411" viewBox="0 0 1280 1411" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 8 of 14 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 8 of 14 (SWF rev 1.15): failure modes SWF-042 to SWF-052 (6 failure modes, 10 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 8 of 14 (SWF rev 1.16): failure modes SWF-042 to SWF-052 (6 failure modes, 10 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="1411" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 8 of 14</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.15 · BL-007 · draft · SWF-042 … SWF-052 · 10 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.16 · BL-007 · draft · SWF-042 … SWF-052 · 10 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
@@ -179,7 +179,7 @@
   <text x="886" y="745.8" font-size="10.5" fill="#0B0B0B">Defect in the opendbc cap of the final ACCEL_CMD during stock</text>
   <text x="886" y="759.9" font-size="10.5" fill="#0B0B0B">AEB (opendbc f4e6166, BL-007): the PID and pitch terms added</text>
   <text x="886" y="773.9" font-size="10.5" fill="#0B0B0B">after the host request lift the command above 0, or the cap waits…</text>
-  <text x="886" y="787.1" font-size="9.8" fill="#52514E" font-weight="600">O5 · D8 · in SWF-SE-045</text>
+  <text x="886" y="787.1" font-size="9.8" fill="#52514E" font-weight="600">O5 · D4 · in SWF-SE-045</text>
   <rect x="886" y="793.1" width="140" height="15" rx="7.5" fill="#FFF5DC"/><text x="956" y="804" font-size="9.5" font-weight="700" fill="#7A5600" text-anchor="middle" letter-spacing=".02em">SWF-ACT-081 in progress</text>
   <rect x="40" y="1044.5" width="180" height="68.5" fill="#000000" rx="12" opacity=".05"/>
   <rect x="40" y="1041.5" width="180" height="68.5" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
@@ -286,11 +286,11 @@
   <circle cx="892.5" cy="1214.6" r="5.5" fill="#6250D6"/>
   <text x="904" y="1218.6" font-size="11.5" font-weight="700" fill="#0B0B0B" font-family="'JetBrains Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace">SWF-052.C1</text>
   <rect x="1182.5" y="1207.6" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="1192" cy="1215.1" r="4.3" fill="#9E2424"/><rect x="1189.4" y="1214.3" width="5.2" height="1.6" fill="#FBE9E9"/><text x="1199.5" y="1218.5" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>
-  <text x="886" y="1233.1" font-size="10.5" fill="#0B0B0B">The Toyota CarController takes pcm_accel_cmd from</text>
-  <text x="886" y="1247.2" font-size="10.5" fill="#0B0B0B">actuators.accel with no longActive gate (carcontroller.py:197-250);</text>
-  <text x="886" y="1261.3" font-size="10.5" fill="#0B0B0B">the inactive value relies on LongControl returning 0 in its off state…</text>
-  <text x="886" y="1274.4" font-size="9.8" fill="#52514E" font-weight="600">O6 · D9 · in SWF-SE-045</text>
-  <rect x="886" y="1280.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="1291.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SWF-ACT-052 open</text>
+  <text x="886" y="1233.1" font-size="10.5" fill="#0B0B0B">Defect in the inactive-value gate of the Toyota CarController (after</text>
+  <text x="886" y="1247.2" font-size="10.5" fill="#0B0B0B">BL-007, opendbc f23b4fa,</text>
+  <text x="886" y="1261.3" font-size="10.5" fill="#0B0B0B">change-2026-10-29-toyota-inactive-accel): while CC.longActive is…</text>
+  <text x="886" y="1274.4" font-size="9.8" fill="#52514E" font-weight="600">O5 · D4 · in SWF-SE-045</text>
+  <rect x="886" y="1280.4" width="135.3" height="15" rx="7.5" fill="#E6F5E6"/><text x="953.7" y="1291.3" font-size="9.5" font-weight="700" fill="#0A6A0A" text-anchor="middle" letter-spacing=".02em">SWF-ACT-052 completed</text>
   <line x1="40" y1="1331.4" x2="1240" y2="1331.4" stroke="#E1E0D9" stroke-width="1"/>
   <text x="40" y="1353.4" font-size="10.5" fill="#0B0B0B" font-weight="700">Legend</text>
   <rect x="96" y="1342.4" width="48.5" height="15" rx="7.5" fill="#FBE9E9"/><circle cx="105.5" cy="1349.9" r="4.3" fill="#9E2424"/><rect x="102.9" y="1349.1" width="5.2" height="1.6" fill="#FBE9E9"/><text x="113" y="1353.3" font-size="9.5" font-weight="700" fill="#9E2424">AP H</text>

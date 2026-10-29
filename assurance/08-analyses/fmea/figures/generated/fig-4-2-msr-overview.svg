@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="831" viewBox="0 0 1280 831" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 4-2. FMEA-MSR overview of the System FMEA and DFMEA</title>
-  <desc id="d">FMEA-MSR overview: System FMEA SFM rev 0.39 at BL-007: 75 causes rated, 14 exempt, MSR AP H 73, M 2, L 0, monitoring M 1-4 0, M 5-6 18, M 7-8 20, M 9-10 37; DFMEA DFM rev 0.13 at BL-007: 25 causes rated, 0 exempt, MSR AP H 21, M 4, L 0, monitoring M 1-4 0, M 5-6 1, M 7-8 5, M 9-10 19. For each FMEA a frequency by monitoring grid over the S 10 handbook MSR AP table, the count per monitoring band, the timing basis, how many responses lower the severity, and the actions the MSR rows name.</desc>
+  <desc id="d">FMEA-MSR overview: System FMEA SFM rev 0.40 at BL-007: 75 causes rated, 14 exempt, MSR AP H 73, M 2, L 0, monitoring M 1-4 0, M 5-6 18, M 7-8 20, M 9-10 37; DFMEA DFM rev 0.13 at BL-007: 25 causes rated, 0 exempt, MSR AP H 21, M 4, L 0, monitoring M 1-4 0, M 5-6 1, M 7-8 5, M 9-10 19. For each FMEA a frequency by monitoring grid over the S 10 handbook MSR AP table, the count per monitoring band, the timing basis, how many responses lower the severity, and the actions the MSR rows name.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -14,7 +14,7 @@
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml, dfmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="114" font-size="15" fill="#0F172A" font-weight="700">System FMEA</text>
-  <text x="40" y="131" font-size="10.5" fill="#475569">SFM rev 0.39 · BL-007 · draft · msr: complete</text>
+  <text x="40" y="131" font-size="10.5" fill="#475569">SFM rev 0.40 · BL-007 · draft · msr: complete</text>
   <text x="40" y="146" font-size="10.5" fill="#475569">75 causes rated for monitoring and system response · 14 rated in another FMEA</text>
   <rect x="40" y="158" width="564.5" height="22" fill="#D2553F"/>
   <text x="322.3" y="173" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">MSR AP H 73</text>

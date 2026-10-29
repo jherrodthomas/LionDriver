@@ -516,3 +516,30 @@ replace = "    if (planner_fcw or model_fcw) and not self.CP.notCar:"
 tests = ["openpilot/selfdrive/selfdrived/tests/test_fcw_freshness.py"]
 fmea = ["SWF-051.C1"]
 why = "selfdrived does not use the freshness gate"
+
+[[mutants]]
+id = "IA-1"
+file = "opendbc_repo/opendbc/car/toyota/carcontroller.py"
+find = "          pcm_accel_cmd = INACTIVE_ACCEL"
+replace = "          pcm_accel_cmd = pcm_accel_cmd"
+tests = ["opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py"]
+fmea = ["SWF-052.C1"]
+why = "while longitudinal control is not active, actuators.accel reaches ACCEL_CMD"
+
+[[mutants]]
+id = "AE-5"
+file = "opendbc_repo/opendbc/car/toyota/carcontroller.py"
+find = "          if CS.out.stockAeb:\n            pcm_accel_cmd = min(pcm_accel_cmd, 0.0)"
+replace = "          if False:\n            pcm_accel_cmd = min(pcm_accel_cmd, 0.0)"
+tests = ["opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py"]
+fmea = ["SWF-093.C2"]
+why = "the opendbc cap is not applied during a stock AEB event, so the PID and pitch terms can lift the command above 0"
+
+[[mutants]]
+id = "AE-6"
+file = "opendbc_repo/opendbc/car/toyota/carcontroller.py"
+find = "            pcm_accel_cmd = min(pcm_accel_cmd, 0.0)"
+replace = "            pcm_accel_cmd = min(pcm_accel_cmd, 0.5)"
+tests = ["opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py"]
+fmea = ["SWF-093.C2"]
+why = "the cap allows a positive request"
