@@ -907,6 +907,8 @@ def render_all(m: sysml_lite.Model) -> dict[str, str]:
       out.update(result)
     else:
       out[spec["file"]] = result
+    if "phone" in spec:  # the same view laid out again at phone width
+      out[spec["phone"]["file"]] = render_arch.render_interconnection_phone(m, vid, spec, digest)
   import render_se
   out.update(render_se.extra_outputs(m))
   missing = sorted(set(m.views) - set(layout["views"]))

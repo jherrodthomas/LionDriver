@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-03 · Technical safety architecture</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">LD-SDA in its vehicle context · QM partition and ASIL C safety envelope · interfaces IF-01 to IF-10 · SM from WP-S-03 §6</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::systemInterconnection</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model a064c51b9f0b</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model 50203476e1d6</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <g data-el="context.ldsda.deviceHardware">
 <rect x="250" y="104" width="990" height="668" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>

@@ -277,6 +277,40 @@ columns = [
   { el = "E-05", width = 196, title = "Harness" },
 ]
 
+[views.V-03.phone]
+file = "fig-sysml-v03-system-interconnection-phone.svg"
+width = 640
+subtitle = "The same architecture stacked for a phone: from the road and the driver, through the QM partition and the ASIL C envelope of the comma device, to the harness and the car"
+sequence = ["row:roadEnvironment driver", "IF-05 IF-06", "band:qm", "E-04b", "E-01", "E-02", "IF-04 IF-04b",
+            "band:env", "E-03a", "E-03b", "E-04a", "IF-10", "E-05", "IF-01 IF-02 IF-03",
+            "row:EXT-EPS EXT-PCM", "row:absVsc EXT-CLU", "row:forwardCamera forwardRadar",
+            "IF-07 IF-08 IF-09", "row:backEnd vehicleSupply", "row:E-06"]
+no_parts = ["E-02", "E-04a"]  # their subtitle already names the parts
+desc = """V-03 laid out at phone width, generated from the same SysML v2 model and the same element texts. Top to \
+bottom: the road environment and the driver; the cameras (IF-05, IF-06); the QM partition of the comma device with \
+the device hardware E-04b, the SoC processes of E-01 and the ML models E-02; the SPI link and boot lines to the MCU \
+(IF-04, IF-04b); the ASIL C envelope with the safety layer E-03a and the platform firmware E-03b and their software \
+units, and the STM32H7 E-04a; the relay (IF-10) and the harness E-05; the car side (IF-01 to IF-03) with the EPS, \
+ECM/PCM, ABS/VSC, cluster, forward camera and radar; then the alerts to the driver (IF-07), the supply (IF-08) and \
+the untrusted back end (IF-09). Each block lists the safety mechanisms it performs."""
+
+[views.V-03.phone.bands]
+qm = ["QM PARTITION · E-04b, E-01, E-02", "slate"]
+env = ["SAFETY ENVELOPE · ASIL C · E-03a, E-03b, E-04a", "envelope"]
+
+[views.V-03.phone.interfaces]
+"IF-05" = "Road cameras: images of the road"
+"IF-06" = "Driver camera: images of the driver"
+"IF-04" = "SPI link, SoC ↔ safety MCU (FFI claim)"
+"IF-04b" = "MCU boot and reset lines (SoC control)"
+"IF-10" = "Intercept relay and harness sense"
+"IF-01" = "Commands to the car: bus 0 to EPS, PCM"
+"IF-02" = "Car CAN in (bus 0) and radar CAN (bus 1)"
+"IF-03" = "Toyota camera CAN (bus 2), forwarded"
+"IF-07" = "Display, speaker and siren to the driver"
+"IF-08" = "12 V supply and ignition"
+"IF-09" = "Network to the comma.ai back end (untrusted)"
+
 # ======================================================================= V-04
 
 [views.V-04]

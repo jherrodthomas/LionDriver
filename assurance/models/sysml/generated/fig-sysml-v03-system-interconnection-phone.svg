@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="2388" viewBox="0 0 640 2388" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-03. Technical safety architecture, phone layout (SysML v2 view systemInterconnection)</title>
+<desc id="d">V-03 laid out at phone width, generated from the same SysML v2 model and the same element texts. Top to bottom: the road environment and the driver; the cameras (IF-05, IF-06); the QM partition of the comma device with the device hardware E-04b, the SoC processes of E-01 and the ML models E-02; the SPI link and boot lines to the MCU (IF-04, IF-04b); the ASIL C envelope with the safety layer E-03a and the platform firmware E-03b and their software units, and the STM32H7 E-04a; the relay (IF-10) and the harness E-05; the car side (IF-01 to IF-03) with the EPS, ECM/PCM, ABS/VSC, cluster, forward camera and radar; then the alerts to the driver (IF-07), the supply (IF-08) and the untrusted back end (IF-09). Each block lists the safety mechanisms it performs.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="640" height="2388" fill="#FFFFFF"/>
+<text x="24" y="38" font-size="19" fill="#0F172A" font-weight="700">V-03 · Technical safety architecture</text>
+<text x="24" y="60" font-size="12.5" fill="#64748B">The same architecture stacked for a phone: from the road and the driver, through the QM partition</text>
+<text x="24" y="77" font-size="12.5" fill="#64748B">and the ASIL C envelope of the comma device, to the harness and the car</text>
+<text x="24" y="96" font-size="10.5" fill="#94A3B8">SysML v2 view LionDriverViews::systemInterconnection · phone layout · model 50203476e1d6</text>
+<line x1="24" y1="110" x2="616" y2="110" stroke="#E2E8F0"/>
+<rect x="24" y="126" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="147" font-size="12" fill="#0F172A" font-weight="700">Road environment</text>
+<text x="34" y="163" font-size="10.5" fill="#64748B">ODD of WP-C-02</text>
+<rect x="324" y="126" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="334" y="147" font-size="12" fill="#0F172A" font-weight="700">Driver</text>
+<text x="334" y="163" font-size="10.5" fill="#64748B">supervises, overrides, responds to warnings ·</text>
+<text x="334" y="176" font-size="10.5" fill="#64748B">AOU-06, AOU-07</text>
+<line x1="40" y1="192" x2="40" y2="256" stroke="#0F766E" stroke-width="2.4"/>
+<rect x="58" y="202" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="214.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-05</text>
+<text x="111.5" y="215" font-size="11.5" fill="#334155" font-weight="600">Road cameras: images of the road</text>
+<rect x="58" y="226" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="238.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-06</text>
+<text x="111.5" y="239" font-size="11.5" fill="#334155" font-weight="600">Driver camera: images of the driver</text>
+<rect x="24" y="260" width="592" height="22" rx="4" fill="#475569"/>
+<text x="320" y="275" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" letter-spacing="0.6">QM PARTITION · E-04b, E-01, E-02</text>
+<rect x="24" y="290" width="592" height="294" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<rect x="36" y="302" width="46.1" height="18" rx="9" fill="#475569"/><text x="59.1" y="314.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04b</text>
+<text x="90.1" y="316" font-size="14" fill="#0F172A" font-weight="700">Device</text>
+<rect x="572.9" y="302" width="31.1" height="18" rx="9" fill="#475569"/><text x="588.4" y="314.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
+<rect x="36" y="336" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="353" font-size="12" fill="#0F172A" font-weight="600">Qualcomm SoC</text>
+<text x="44" y="369" font-size="10.5" fill="#64748B">runs E-01 and E-02</text>
+<rect x="324" y="336" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="353" font-size="12" fill="#0F172A" font-weight="600">Road cameras</text>
+<text x="332" y="369" font-size="10.5" fill="#64748B">wide + narrow</text>
+<rect x="36" y="384" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="401" font-size="12" fill="#0F172A" font-weight="600">Driver camera</text>
+<text x="44" y="417" font-size="10.5" fill="#64748B">IR, driver-facing</text>
+<rect x="324" y="384" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="401" font-size="12" fill="#0F172A" font-weight="600">IMU · GNSS</text>
+<text x="332" y="417" font-size="10.5" fill="#64748B">sensor messages</text>
+<rect x="36" y="432" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="449" font-size="12" fill="#0F172A" font-weight="600">Display</text>
+<text x="44" y="465" font-size="10.5" fill="#64748B">UI, alerts</text>
+<rect x="324" y="432" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="449" font-size="12" fill="#0F172A" font-weight="600">Speaker</text>
+<text x="332" y="465" font-size="10.5" fill="#64748B">alert sounds</text>
+<rect x="36" y="480" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="497" font-size="12" fill="#0F172A" font-weight="600">CAN transceivers</text>
+<text x="44" y="513" font-size="10.5" fill="#64748B"></text>
+<rect x="324" y="480" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="497" font-size="12" fill="#0F172A" font-weight="600">Power supply</text>
+<text x="332" y="513" font-size="10.5" fill="#64748B">12 V in</text>
+<rect x="36" y="528" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="545" font-size="12" fill="#0F172A" font-weight="600">Enclosure</text>
+<text x="44" y="561" font-size="10.5" fill="#64748B"></text>
+<rect x="24" y="596" width="592" height="420" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.4"/>
+<rect x="36" y="608" width="36.9" height="18" rx="9" fill="#475569"/><text x="54.4" y="620.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-01</text>
+<text x="80.9" y="622" font-size="14" fill="#0F172A" font-weight="700">SoC software</text>
+<rect x="572.9" y="608" width="31.1" height="18" rx="9" fill="#475569"/><text x="588.4" y="620.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
+<text x="36" y="646" font-size="11" fill="#64748B">openpilot · WP-S-03 §8</text>
+<rect x="36" y="657" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="674" font-size="12" fill="#0F172A" font-weight="600">pandad</text>
+<text x="308" y="674" font-size="9" fill="#334155" font-weight="700" text-anchor="end">QM · B-sup</text>
+<text x="44" y="690" font-size="10.5" fill="#64748B">SPI · heartbeat · mode</text>
+<rect x="324" y="657" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="674" font-size="12" fill="#0F172A" font-weight="600">card</text>
+<text x="596" y="674" font-size="9" fill="#334155" font-weight="700" text-anchor="end">QM · B-sup</text>
+<text x="332" y="690" font-size="10.5" fill="#64748B">carState · sendcan</text>
+<rect x="36" y="705" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="722" font-size="12" fill="#0F172A" font-weight="600">controlsd</text>
+<text x="308" y="722" font-size="9" fill="#334155" font-weight="700" text-anchor="end">QM · B-sup</text>
+<text x="44" y="738" font-size="10.5" fill="#64748B">control law</text>
+<rect x="324" y="705" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="722" font-size="12" fill="#0F172A" font-weight="600">selfdrived</text>
+<text x="596" y="722" font-size="9" fill="#334155" font-weight="700" text-anchor="end">QM · B-sup</text>
+<text x="332" y="738" font-size="10.5" fill="#64748B">engagement state</text>
+<rect x="36" y="753" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="770" font-size="12" fill="#0F172A" font-weight="600">plannerd</text>
+<text x="44" y="786" font-size="10.5" fill="#64748B">longitudinal plan</text>
+<rect x="324" y="753" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="770" font-size="12" fill="#0F172A" font-weight="600">radard</text>
+<text x="332" y="786" font-size="10.5" fill="#64748B">lead fusion</text>
+<rect x="36" y="801" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="818" font-size="12" fill="#0F172A" font-weight="600">modeld</text>
+<text x="44" y="834" font-size="10.5" fill="#64748B">driving model</text>
+<rect x="324" y="801" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="818" font-size="12" fill="#0F172A" font-weight="600">dm</text>
+<text x="332" y="834" font-size="10.5" fill="#64748B">driver monitoring</text>
+<rect x="36" y="849" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="866" font-size="12" fill="#0F172A" font-weight="600">hmi</text>
+<text x="308" y="866" font-size="9" fill="#334155" font-weight="700" text-anchor="end">QM · B-sup</text>
+<text x="44" y="882" font-size="10.5" fill="#64748B">ui · soundd</text>
+<rect x="324" y="849" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="866" font-size="12" fill="#0F172A" font-weight="600">manager</text>
+<text x="332" y="882" font-size="10.5" fill="#64748B">process control</text>
+<rect x="36" y="897" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="914" font-size="12" fill="#0F172A" font-weight="600">cereal</text>
+<text x="44" y="930" font-size="10.5" fill="#64748B">pub/sub, alive checks</text>
+<rect x="324" y="897" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="914" font-size="12" fill="#0F172A" font-weight="600">estimators</text>
+<text x="332" y="930" font-size="10.5" fill="#64748B">locationd, calibrationd, paramsd, torqued</text>
+<rect x="36" y="945" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="44" y="962" font-size="12" fill="#0F172A" font-weight="600">hardwared</text>
+<text x="44" y="978" font-size="10.5" fill="#64748B">thermal, onroad gating</text>
+<rect x="324" y="945" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+<text x="332" y="962" font-size="12" fill="#0F172A" font-weight="600">athena · loggerd</text>
+<text x="332" y="978" font-size="10.5" fill="#64748B">updated, uploader · F-09</text>
+<text x="36" y="1005" font-size="10.5" fill="#C2410C" font-weight="700">SM-25 · 26 · 27 · 28 · 30 · 31 · 32 · 33 · 34 · 37 · 43</text>
+<rect x="24" y="1028" width="592" height="78" rx="10" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.4"/>
+<rect x="36" y="1040" width="39" height="18" rx="9" fill="#4F46E5"/><text x="55.5" y="1052.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-02</text>
+<text x="83" y="1054" font-size="14" fill="#0F172A" font-weight="700">ML models</text>
+<rect x="572.9" y="1040" width="31.1" height="18" rx="9" fill="#475569"/><text x="588.4" y="1052.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
+<text x="36" y="1078" font-size="11" fill="#64748B">driving model → host.modeld · DM model → host.dm · SOTIF, ISO/PAS 8800</text>
+<text x="36" y="1095" font-size="10.5" fill="#C2410C" font-weight="700">SM-26</text>
+<line x1="40" y1="1114" x2="40" y2="1178" stroke="#7C3AED" stroke-width="2.4"/>
+<rect x="58" y="1124" width="45.5" height="18" rx="9" fill="#7C3AED"/><text x="80.8" y="1136.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-04</text>
+<text x="111.5" y="1137" font-size="11.5" fill="#334155" font-weight="600">SPI link, SoC ↔ safety MCU (FFI claim)</text>
+<rect x="58" y="1148" width="51.8" height="18" rx="9" fill="#7C3AED"/><text x="83.9" y="1160.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-04b</text>
+<text x="117.8" y="1161" font-size="11.5" fill="#334155" font-weight="600">MCU boot and reset lines (SoC control)</text>
+<rect x="24" y="1182" width="592" height="22" rx="4" fill="#C2410C"/>
+<text x="320" y="1197" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" letter-spacing="0.6">SAFETY ENVELOPE · ASIL C · E-03a, E-03b, E-04a</text>
+<rect x="24" y="1212" width="592" height="108" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="1224" width="45.3" height="18" rx="9" fill="#C2410C"/><text x="58.6" y="1236.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03a</text>
+<text x="89.3" y="1238" font-size="14" fill="#0F172A" font-weight="700">Safety layer</text>
+<rect x="582.6" y="1224" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1236.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="36" y="1262" font-size="11" fill="#64748B">opendbc safety core and Toyota mode: TX limits and gating, RX checks, authority</text>
+<rect x="36" y="1273" width="71" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="71.5" y="1285.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-CORE</text>
+<rect x="112" y="1273" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="144.7" y="1285.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-LAT</text>
+<rect x="182.3" y="1273" width="71" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="217.8" y="1285.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-LONG</text>
+<rect x="258.3" y="1273" width="71" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="293.8" y="1285.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-HELP</text>
+<rect x="334.3" y="1273" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="366.9" y="1285.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-TOY</text>
+<rect x="404.6" y="1273" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="437.2" y="1285.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-DEF</text>
+<rect x="474.9" y="1273" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="507.6" y="1285.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-IGN</text>
+<text x="36" y="1309" font-size="10.5" fill="#C2410C" font-weight="700">SM-01 · 02 · 03 · 04 · 05 · 06 · 07 · 08 · 09 · 10 · 11 · 13 · 24 · 29 · 35 · 36 · 39</text>
+<rect x="24" y="1332" width="592" height="130" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="1344" width="45.8" height="18" rx="9" fill="#C2410C"/><text x="58.9" y="1356.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03b</text>
+<text x="89.8" y="1358" font-size="14" fill="#0F172A" font-weight="700">Platform firmware</text>
+<rect x="582.6" y="1344" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1356.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="36" y="1382" font-size="11" fill="#64748B">main loop and safety task, comms and reference lock, SPI and FDCAN drivers, faults, bootstub</text>
+<rect x="36" y="1393" width="71" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="71.5" y="1405.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-MAIN</text>
+<rect x="112" y="1393" width="59.6" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="141.8" y="1405.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-HK</text>
+<rect x="176.6" y="1393" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="209.2" y="1405.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-FLT</text>
+<rect x="246.9" y="1393" width="71" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="282.4" y="1405.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-PLAT</text>
+<rect x="322.9" y="1393" width="76.7" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="361.2" y="1405.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-COMMS</text>
+<rect x="404.6" y="1393" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="437.2" y="1405.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-SPI</text>
+<rect x="474.9" y="1393" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="507.5" y="1405.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-USB</text>
+<rect x="36" y="1415" width="76.7" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="74.3" y="1427.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-FDCAN</text>
+<rect x="117.7" y="1415" width="71" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="153.2" y="1427.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-HARN</text>
+<rect x="193.7" y="1415" width="65.3" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="226.3" y="1427.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-PWR</text>
+<rect x="264" y="1415" width="71" height="18" rx="9" fill="#FFEDD5" stroke="#FDBA74" stroke-width="1"/><text x="299.5" y="1427.4" font-size="9.5" fill="#9A3412" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-BOOT</text>
+<text x="36" y="1451" font-size="10.5" fill="#C2410C" font-weight="700">SM-12 · 13 · 14 · 15 · 16 · 17 · 22 · 23 · 29 · 35 · 38 · 40 · 41</text>
+<rect x="24" y="1474" width="592" height="78" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="1486" width="45.6" height="18" rx="9" fill="#C2410C"/><text x="58.8" y="1498.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04a</text>
+<text x="89.6" y="1500" font-size="14" fill="#0F172A" font-weight="700">STM32H7 safety MCU</text>
+<rect x="582.6" y="1486" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1498.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="36" y="1524" font-size="11" fill="#64748B">clock, supply, ECC memories, SPI4, FDCAN1–3, ADC, GPIO, DAC siren path, IWDG1</text>
+<text x="36" y="1541" font-size="10.5" fill="#C2410C" font-weight="700">SM-15 · 17 · 18 · 19 · 20 · 21 · 23 · 38 · 40 · 41 · 42</text>
+<line x1="40" y1="1560" x2="40" y2="1600" stroke="#C2410C" stroke-width="2.4"/>
+<rect x="58" y="1570" width="45.5" height="18" rx="9" fill="#C2410C"/><text x="80.8" y="1582.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-10</text>
+<text x="111.5" y="1583" font-size="11.5" fill="#334155" font-weight="600">Intercept relay and harness sense</text>
+<rect x="24" y="1604" width="592" height="132" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="36" y="1616" width="39.1" height="18" rx="9" fill="#C2410C"/><text x="55.5" y="1628.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-05</text>
+<text x="83.1" y="1630" font-size="14" fill="#0F172A" font-weight="700">Harness</text>
+<rect x="582.6" y="1616" width="21.4" height="18" rx="9" fill="#C2410C"/><text x="593.3" y="1628.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<text x="36" y="1654" font-size="11" fill="#64748B">Toyota TSS2 with intercept relay; released, camera and car CAN link directly (AOU-13)</text>
+<rect x="36" y="1665" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/>
+<text x="44" y="1682" font-size="12" fill="#0F172A" font-weight="600">Wiring</text>
+<text x="44" y="1698" font-size="10.5" fill="#64748B"></text>
+<rect x="324" y="1665" width="280" height="42" rx="6" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/>
+<text x="332" y="1682" font-size="12" fill="#0F172A" font-weight="600">Intercept relay</text>
+<text x="332" y="1698" font-size="10.5" fill="#64748B"></text>
+<text x="36" y="1725" font-size="10.5" fill="#C2410C" font-weight="700">SM-20 · 42</text>
+<line x1="40" y1="1744" x2="40" y2="1832" stroke="#C2410C" stroke-width="2.4"/>
+<rect x="58" y="1754" width="45.5" height="18" rx="9" fill="#C2410C"/><text x="80.8" y="1766.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-01</text>
+<text x="111.5" y="1767" font-size="11.5" fill="#334155" font-weight="600">Commands to the car: bus 0 to EPS, PCM</text>
+<rect x="58" y="1778" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="1790.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-02</text>
+<text x="111.5" y="1791" font-size="11.5" fill="#334155" font-weight="600">Car CAN in (bus 0) and radar CAN (bus 1)</text>
+<rect x="58" y="1802" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="1814.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-03</text>
+<text x="111.5" y="1815" font-size="11.5" fill="#334155" font-weight="600">Toyota camera CAN (bus 2), forwarded</text>
+<rect x="24" y="1836" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="34" y="1844" width="53.6" height="16" rx="8" fill="#64748B"/><text x="60.8" y="1855.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">EXT-EPS</text>
+<text x="93.6" y="1857" font-size="12" fill="#0F172A" font-weight="700">EPS</text>
+<text x="34" y="1873" font-size="10.5" fill="#64748B">AOU-01, AOU-02</text>
+<rect x="324" y="1836" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="334" y="1844" width="57.3" height="16" rx="8" fill="#64748B"/><text x="362.6" y="1855.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">EXT-PCM</text>
+<text x="397.3" y="1857" font-size="12" fill="#0F172A" font-weight="700">ECM / PCM</text>
+<text x="334" y="1873" font-size="10.5" fill="#64748B">ACC envelope · AOU-05</text>
+<rect x="24" y="1906" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="1927" font-size="12" fill="#0F172A" font-weight="700">ABS / VSC</text>
+<text x="34" y="1943" font-size="10.5" fill="#64748B">AOU-03, AOU-10</text>
+<rect x="324" y="1906" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="334" y="1914" width="54.8" height="16" rx="8" fill="#64748B"/><text x="361.4" y="1925.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">EXT-CLU</text>
+<text x="394.8" y="1927" font-size="12" fill="#0F172A" font-weight="700">Cluster, stalk</text>
+<text x="334" y="1943" font-size="10.5" fill="#64748B">cruise, HUD · AOU-12</text>
+<rect x="24" y="1976" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="1997" font-size="12" fill="#0F172A" font-weight="700">Toyota forward camera</text>
+<text x="34" y="2013" font-size="10.5" fill="#64748B">LKA, ACC intercepted · PCS forwarded</text>
+<rect x="324" y="1976" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="334" y="1997" font-size="12" fill="#0F172A" font-weight="700">Forward radar</text>
+<text x="334" y="2013" font-size="10.5" fill="#64748B">lead tracks, stock PCS</text>
+<line x1="40" y1="2042" x2="40" y2="2130" stroke="#0F766E" stroke-width="2.4"/>
+<rect x="58" y="2052" width="45.5" height="18" rx="9" fill="#0F766E"/><text x="80.8" y="2064.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-07</text>
+<text x="111.5" y="2065" font-size="11.5" fill="#334155" font-weight="600">Display, speaker and siren to the driver</text>
+<rect x="58" y="2076" width="45.5" height="18" rx="9" fill="#B45309"/><text x="80.8" y="2088.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-08</text>
+<text x="111.5" y="2089" font-size="11.5" fill="#334155" font-weight="600">12 V supply and ignition</text>
+<rect x="58" y="2100" width="45.5" height="18" rx="9" fill="#9333EA"/><text x="80.8" y="2112.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">IF-09</text>
+<text x="111.5" y="2113" font-size="11.5" fill="#334155" font-weight="600">Network to the comma.ai back end (untrusted)</text>
+<rect x="24" y="2134" width="292" height="58" rx="8" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
+<text x="34" y="2155" font-size="12" fill="#0F172A" font-weight="700">comma.ai back end</text>
+<text x="34" y="2171" font-size="10.5" fill="#64748B">athena, connect, updates</text>
+<rect x="324" y="2134" width="292" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="334" y="2155" font-size="12" fill="#0F172A" font-weight="700">Vehicle supply</text>
+<text x="334" y="2171" font-size="10.5" fill="#64748B">12 V and ignition</text>
+<rect x="24" y="2204" width="592" height="58" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<rect x="34" y="2212" width="35.6" height="16" rx="8" fill="#64748B"/><text x="51.8" y="2223.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-06</text>
+<text x="75.6" y="2225" font-size="12" fill="#0F172A" font-weight="700">External compute</text>
+<text x="34" y="2241" font-size="10.5" fill="#64748B">excluded pending WP-C-01 OI-4</text>
+<line x1="24" y1="2278" x2="616" y2="2278" stroke="#E2E8F0"/>
+<line x1="24" y1="2303" x2="44" y2="2303" stroke="#C2410C" stroke-width="2.4"/>
+<text x="50" y="2307" font-size="11" fill="#334155">actuation</text>
+<line x1="114.07" y1="2303" x2="134.07" y2="2303" stroke="#7C3AED" stroke-width="2.4"/>
+<text x="140.1" y="2307" font-size="11" fill="#334155">SoC ↔ MCU</text>
+<line x1="224.70999999999998" y1="2303" x2="244.70999999999998" y2="2303" stroke="#0F766E" stroke-width="2.4"/>
+<text x="250.7" y="2307" font-size="11" fill="#334155">sensing, HMI</text>
+<line x1="334.36" y1="2303" x2="354.36" y2="2303" stroke="#B45309" stroke-width="2.4" stroke-dasharray="5 4"/>
+<text x="360.4" y="2307" font-size="11" fill="#334155">power</text>
+<line x1="409.25" y1="2303" x2="429.25" y2="2303" stroke="#9333EA" stroke-width="2.4" stroke-dasharray="4 4"/>
+<text x="435.2" y="2307" font-size="11" fill="#334155">untrusted</text>
+<text x="24" y="2330" font-size="11" fill="#334155">SM-nn: the safety mechanisms each element performs (WP-S-03 §6). The full-width V-03 shows where each</text>
+<text x="24" y="2346" font-size="11" fill="#334155">interface attaches; this layout lists them between the blocks they join.</text>
+<text x="24" y="2370" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>
