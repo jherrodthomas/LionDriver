@@ -37,4 +37,4 @@ Before the change the new tests fail to import (`demo_active` does not exist). T
 |---|---|---|
 | OI-1 | Device check: open the view parked, start the car, confirm "Close Driver Camera View" and that monitoring follows the driver (WP-S-09) | G3 |
 | OI-2 | Fault-injection scenario VS-FI-23 (params tampering) with this parameter (WP-V-05) | G3 |
-| OI-3 | WP-A-04 MCS-08.4 and BE-8.06 text to cite the interlock (FTA document owner) | FTA owner |
+| OI-3 | WP-A-04 MCS-08.4 and BE-8.06 text to cite the interlock (FTA document owner) | **Done:** WP-A-04 v1.21 |

@@ -123,15 +123,15 @@
 <circle cx="1249" cy="354.0" r="5.5" fill="#1baf7a"/>
 <text x="1262" y="358.0" class="id">BE-8.06</text>
 <text x="1438" y="358.0" class="kind">BASIC EVENT</text>
-<text x="1242" y="377.0" class="d">DM demo mode</text>
-<text x="1242" y="392.0" class="d">(IsDriverViewEnabled) active</text>
-<text x="1242" y="407.0" class="d">while the item can engage: the</text>
-<text x="1242" y="422.0" class="d">policy runs on a synthetic</text>
-<text x="1242" y="437.0" class="d">vehicle state (zero calibration,</text>
-<text x="1242" y="452.0" class="d">fixed speed) and may switch the</text>
-<text x="1242" y="467.0" class="d">monitored seat while engaged, so</text>
-<text x="1242" y="482.0" class="d">a distracted driver can be</text>
-<text x="1242" y="497.0" class="d">judged against the wrong pose…</text>
+<text x="1242" y="377.0" class="d">DM demo mode active while</text>
+<text x="1242" y="392.0" class="d">engaged: defect in the TSR-610</text>
+<text x="1242" y="407.0" class="d">interlock, so a distracted</text>
+<text x="1242" y="422.0" class="d">driver is judged on a synthetic</text>
+<text x="1242" y="437.0" class="d">vehicle state, against the wrong</text>
+<text x="1242" y="452.0" class="d">pose reference or seat</text>
+<text x="1242" y="467.0" class="d">(dmonitoringd.py:8-32,</text>
+<text x="1242" y="482.0" class="d">selfdrived.py:514,</text>
+<text x="1242" y="497.0" class="d">policy.py:286-291; GAP-20)</text>
 <rect x="1242.0" y="505.0" width="51.2" height="17" rx="4" fill="none" stroke="#e1e0d9"/>
 <text x="1267.6" y="517.0" class="chip" fill="#52514e">SWF-085</text>
 <text x="40" y="1015.0" class="lh">Symbols · IEC 61025</text>

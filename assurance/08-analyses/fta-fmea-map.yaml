@@ -746,7 +746,9 @@ events:
       SWF-085.C1 (cabin camera dialog open across the onroad transition), SWF-085.C2 (no engagement interlock; GAP-20,
       TSR-610). SW FMEA rev 1.1 closes this part of F-37. By code reading demo mode does not switch the alerts off: it
       decouples the policy from the real vehicle state and removes the lock on the monitored seat (SWF-085 notes), as
-      MCS-08.4 states since WP-A-04 v1.5 (F-39)
+      MCS-08.4 states since WP-A-04 v1.5 (F-39). Since SW FMEA rev 1.14 and WP-A-04 v1.21 the TSR-610 interlock is
+      implemented (demo mode only while card is not running; selfdrived driverViewActive NO_ENTRY and SOFT_DISABLE):
+      BE-8.06 is a defect in that interlock, SWF-085.C1/C2 claim D 4, and it stays a single point of the tree
   - id: BE-8.07
     class: systematic_sw
     fmea: [SFM-023, SWF-061]
