@@ -90,10 +90,10 @@ svg { --bg:#fcfcfb; --card:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --mute:#89878
 <line x1="170" y1="650.0" x2="624" y2="650.0" class="rule"/>
 <circle cx="46.0" cy="666.0" r="9.5" fill="var(--basic)" stroke="var(--hot)" stroke-width="2.4"/>
 <text x="64" y="671.0" class="pidhot">BE-8.06</text>
-<text x="134" y="671.0" class="t">DM demo mode (IsDriverViewEnabled) active while the item can engage:</text>
-<text x="134" y="689.0" class="t">the policy runs on a synthetic vehicle state (zero calibration, fixed</text>
-<text x="134" y="707.0" class="t">speed) and may switch the monitored seat while engaged, so a</text>
-<text x="134" y="725.0" class="t">distracted driver can be judged against the wrong pose reference or…</text>
+<text x="134" y="671.0" class="t">DM demo mode active while engaged: defect in the TSR-610 interlock,</text>
+<text x="134" y="689.0" class="t">so a distracted driver is judged on a synthetic vehicle state,</text>
+<text x="134" y="707.0" class="t">against the wrong pose reference or seat (dmonitoringd.py:8-32,</text>
+<text x="134" y="725.0" class="t">selfdrived.py:514, policy.py:286-291; GAP-20)</text>
 <rect x="134.0" y="735.0" width="57.4" height="18" rx="4" fill="none" stroke="var(--grid)"/><text x="141.0" y="748.0" class="pc" fill="var(--ink2)">SWF-085</text>
 <line x1="134" y1="763.0" x2="624" y2="763.0" class="rule"/>
 </svg>

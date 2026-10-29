@@ -120,15 +120,15 @@
 <path d="M1259,307.5 H1461 A9,9 0 0 1 1470,316.5 V312.5 H1250 V316.5 A9,9 0 0 1 1259,307.5 Z" fill="#64748b"/>
 <text x="1264" y="332.5" class="id">BE-8.06</text>
 <text x="1456" y="332.5" class="kind">BASIC</text>
-<text x="1264" y="347.0" class="d">DM demo mode</text>
-<text x="1264" y="361.5" class="d">(IsDriverViewEnabled) active</text>
-<text x="1264" y="376.0" class="d">while the item can engage: the</text>
-<text x="1264" y="390.5" class="d">policy runs on a synthetic</text>
-<text x="1264" y="405.0" class="d">vehicle state (zero calibration,</text>
-<text x="1264" y="419.5" class="d">fixed speed) and may switch the</text>
-<text x="1264" y="434.0" class="d">monitored seat while engaged, so</text>
-<text x="1264" y="448.5" class="d">a distracted driver can be</text>
-<text x="1264" y="463.0" class="d">judged against the wrong pose…</text>
+<text x="1264" y="347.0" class="d">DM demo mode active while</text>
+<text x="1264" y="361.5" class="d">engaged: defect in the TSR-610</text>
+<text x="1264" y="376.0" class="d">interlock, so a distracted</text>
+<text x="1264" y="390.5" class="d">driver is judged on a synthetic</text>
+<text x="1264" y="405.0" class="d">vehicle state, against the wrong</text>
+<text x="1264" y="419.5" class="d">pose reference or seat</text>
+<text x="1264" y="434.0" class="d">(dmonitoringd.py:8-32,</text>
+<text x="1264" y="448.5" class="d">selfdrived.py:514,</text>
+<text x="1264" y="463.0" class="d">policy.py:286-291; GAP-20)</text>
 <rect x="1264.0" y="471.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="1291.0" y="482.5" class="chip" fill="#fff">SWF-085</text>
 <circle cx="1360.0" cy="519.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
