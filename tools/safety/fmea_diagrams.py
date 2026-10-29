@@ -2879,8 +2879,11 @@ def render_dfa(doc: dict, fig: str) -> str:
     p, w = pill(660, my - 11, mid, fill, fg, stroke, dashed=dashed)
     body.append(p)
     alloc = ", ".join(m.get("allocated_to", []))
-    body.append(txt(660 + 52, my, fit(f"{m['description']}", 400, 10), 10, INK))
     body.append(txt(1240, my, fit(alloc, 110, 9.5), 9.5, MUTED, 600, anchor="end"))
+    # the whole description, wrapped: a cut-off measure reads as a different measure
+    for k, ln in enumerate(wrap(m["description"], 410, 10)):
+      body.append(txt(660 + 52, my + 13 * k, ln, 10, INK))
+    my += 13 * k + 3
   y = max(ky, my) + 26
 
   # open items
