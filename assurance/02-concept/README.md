@@ -8,7 +8,7 @@ Standard clauses: 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800.
 
 ## The concept phase at a glance
 
-![The concept phase, top to bottom: the item and its boundary with its models, the ODD, the driver and misuse analysis, then four lanes in parallel: functional safety (HARA with 39 hazardous events and 8 safety goals, then the FSC with 58 requirements), SOTIF (12 hazards, 23 insufficiencies and 35 triggering conditions, 11 functional modifications), cybersecurity (14 threat scenarios, 8 cybersecurity goals) and AI (30 AI safety requirements). All four feed the hazard log and argument structure, then gate G1, then system design. Dashed lines join the 8 places where one lane depends on another](figures/fig-c00-1-concept-flow.svg)
+![The concept phase, top to bottom: the item and its boundary with its models, the ODD, the driver and misuse analysis, then four lanes in parallel: functional safety (HARA with 39 hazardous events and 8 safety goals, then the FSC with 58 requirements), SOTIF (13 hazards, 24 insufficiencies and 36 triggering conditions, 11 functional modifications), cybersecurity (14 threat scenarios, 8 cybersecurity goals) and AI (30 AI safety requirements). All four feed the hazard log and argument structure, then gate G1, then system design. Dashed lines join the 8 places where one lane depends on another](figures/fig-c00-1-concept-flow.svg)
 
 *Figure C-0-1. One box per work product, in the order of the activities CON-01 to CON-15 of [`concept.yaml`](../process/model/concept.yaml); the dashed links are its G1 rows of [`interfaces.yaml`](../process/model/interfaces.yaml). Counts are the defined rows of each document's table and the chips the WP-M-00 §3 status, both read at build time by [`fig_c00_overview.py`](figures/fig_c00_overview.py) (CI fails if stale).*
 
@@ -18,7 +18,7 @@ Each box, and where it is:
 - ODD and intended functionality: [WP-C-02](WP-C-02-odd-and-intended-functionality.md)
 - Driver, HMI and misuse analysis: [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md)
 - Functional safety: HARA (39 hazardous events → 8 safety goals, [WP-C-03](WP-C-03-hara.md)) → Functional safety concept (58 functional safety requirements, [WP-C-04](WP-C-04-functional-safety-concept.md))
-- SOTIF: SOTIF hazards and acceptance criteria (12 SOTIF hazards, [WP-C-05](WP-C-05-sotif-hazard-identification.md)) → Insufficiencies and triggering conditions (23 insufficiencies · 35 triggering conditions, [WP-C-06](WP-C-06-sotif-insufficiencies-triggering-conditions.md)) → Functional modifications (11 functional modifications, [WP-C-07](WP-C-07-sotif-functional-modifications.md))
+- SOTIF: SOTIF hazards and acceptance criteria (13 SOTIF hazards, [WP-C-05](WP-C-05-sotif-hazard-identification.md)) → Insufficiencies and triggering conditions (24 insufficiencies · 36 triggering conditions, [WP-C-06](WP-C-06-sotif-insufficiencies-triggering-conditions.md)) → Functional modifications (11 functional modifications, [WP-C-07](WP-C-07-sotif-functional-modifications.md))
 - Cybersecurity: TARA (14 threat scenarios, [WP-C-09](WP-C-09-tara.md)) → Cybersecurity goals and concept (8 cybersecurity goals, [WP-C-10](WP-C-10-cybersecurity-goals-and-concept.md))
 - AI: AI system and AI safety requirements (30 AI safety requirements, [WP-C-11](WP-C-11-ai-system-definition-and-safety-requirements.md))
 - Hazard log and argument structure: [WP-T-01](../trace/README.md), [WP-K-01](../10-safety-case/WP-K-01-safety-case.md); then gate G1 ([WP-M-00 §2](../01-management/WP-M-00-work-product-register.md)) and [system design](../03-system/README.md) (G2)
