@@ -45,7 +45,7 @@
 <text x="2076.5" y="453" class="cid" fill="#2f557f">C4</text>
 <text x="2076.5" y="467" class="cs">Hazard log: H-01…H-09;</text>
 <text x="2076.5" y="481" class="cs">HE-01.1…HE-09.2; SG-01…SG-08</text>
-<text x="2076.5" y="495" class="cs">[WP-C-03]; SH-01…SH-13</text>
+<text x="2076.5" y="495" class="cs">[WP-C-03]; SH-01…SH-14</text>
 <text x="2076.5" y="509" class="cs">[WP-C-05]; TARA damage</text>
 <text x="2076.5" y="523" class="cs">scenarios [WP-C-09]</text>
 <rect x="1978.5" y="552" width="196" height="96" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
@@ -144,7 +144,7 @@
 <text x="562.6" y="1244.5" class="chip" fill="#334155">→ sheet 4</text>
 <rect x="772.0" y="1130" width="196" height="82" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
 <text x="870.0" y="1151" class="cid" fill="#2f557f">C8</text>
-<text x="870.0" y="1165" class="cs">SOTIF hazards SH-01…SH-13,</text>
+<text x="870.0" y="1165" class="cs">SOTIF hazards SH-01…SH-14,</text>
 <text x="870.0" y="1179" class="cs">acceptance criteria</text>
 <text x="870.0" y="1193" class="cs">AC-01…AC-06 [WP-C-05]</text>
 <rect x="772.0" y="1222" width="196" height="54" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>

@@ -22,7 +22,7 @@ Specification on the left, verification on the right. Each verification process 
 ```mermaid
 block-beta
   columns 13
-  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 18 · H 9 · HE 39<br/>SG 8 · SH 13 · TS 14"]
+  SYS1["<b>SYS.1</b><br/>Requirements elicitation<br/>AOU 18 · H 9 · HE 39<br/>SG 8 · SH 14 · TS 14"]
   space
   space
   space
@@ -36,7 +36,7 @@ block-beta
   space
   VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 31 cases"]
   space
-  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39 · FSR 58 · TSR 128<br/>TC 35 · FI 23 · FM 11<br/>CSG 8<br/><i>from SG: 8/8</i>"]
+  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39 · FSR 58 · TSR 128<br/>TC 36 · FI 24 · FM 11<br/>CSG 8<br/><i>from SG: 8/8</i>"]
   space
   space
   space
@@ -123,7 +123,7 @@ block-beta
   SYS3 --> L3
   L3 --> L4
   L4 --> SWE3
-  VAL1 -. "SG 7/8 · SH 1/13" .-> SYS1
+  VAL1 -. "SG 7/8 · SH 1/14" .-> SYS1
   SYS5 -. "SYS 25/39 · FSR 57/58 · TSR 62/110" .-> SYS2
   SYS4 -. "TSR 79/110" .-> SYS3
   SWE6 -. "SWSR 84/144" .-> SWE1
@@ -156,14 +156,14 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 733 traced items carry status `verified`. [`links/verification.yaml`](../links/verification.yaml) links 103 existing tests to 36 requirements (WP-W-06 §4.1, §4.9) and records no result; the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 736 traced items carry status `verified`. [`links/verification.yaml`](../links/verification.yaml) links 103 existing tests to 36 requirements (WP-W-06 §4.1, §4.9) and records no result; the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K7–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
-| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (18, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (13, trace data), TS (14, trace data) |
-| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, trace data), FSR (58, trace data), TSR (128, trace data), TC (35, trace data), FI (23, trace data), FM (11, trace data), CSG (8, trace data) |
+| **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (18, trace data), H (9, trace data), HE (39, trace data), SG (8, trace data), SH (14, trace data), TS (14, trace data) |
+| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, trace data), FSR (58, trace data), TSR (128, trace data), TC (36, trace data), FI (24, trace data), FM (11, trace data), CSG (8, trace data) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, trace data) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (144, trace data) |
 | **HWE.1** | HW requirements analysis | WP-H-01 | HWSR (46, trace data) |
@@ -201,9 +201,9 @@ flowchart LR
   style ISO26262 fill:#FFFFFF,stroke:#CBD5E1
   subgraph ISO21448["ISO 21448"]
     direction LR
-    kSH["<b>SH</b> 13<br/>SOTIF hazards"]:::traced
-    kTC["<b>TC</b> 35<br/>triggering conditions"]:::traced
-    kFI["<b>FI</b> 23<br/>functional insufficiencies"]:::traced
+    kSH["<b>SH</b> 14<br/>SOTIF hazards"]:::traced
+    kTC["<b>TC</b> 36<br/>triggering conditions"]:::traced
+    kFI["<b>FI</b> 24<br/>functional insufficiencies"]:::traced
     kFM["<b>FM</b> 11<br/>functional modifications"]:::traced
   end
   style ISO21448 fill:#FFFFFF,stroke:#CBD5E1
@@ -232,8 +232,8 @@ flowchart LR
   kTSR -->|"98/104"| kSWSR
   kTSR -->|"19/19"| kHWSR
   kAOU --> kSG
-  kSH -->|"12/12"| kTC
-  kSH -->|"12/12"| kFI
+  kSH -->|"13/13"| kTC
+  kSH -->|"13/13"| kFI
   kTC --> kFM
   kFI --> kFM
   kSH --> kH
@@ -250,7 +250,7 @@ flowchart LR
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
 | ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 39, SG 8, AOU 18, FSR 58, TSR 128, SWSR 144, HWSR 46 | — |
-| ISO 21448 | SH, TC, FI, FM | SH 13, TC 35, FI 23, FM 11 | — |
+| ISO 21448 | SH, TC, FI, FM | SH 14, TC 36, FI 24, FM 11 | — |
 | ISO/PAS 8800 | AIR, DSR | AIR 30, DSR 13 | — |
 | ISO/SAE 21434 | TS, CSG, CSR | TS 14, CSG 8, CSR 64 | — |
 | ASPICE | SYS | SYS 39 | — |
@@ -267,8 +267,8 @@ Parents with at least one child in the trace data (WP-T-01 checks K4, K12).
 | FSR -> TSR | 58/58 | complete | — |
 | TSR -> SWSR (SW-allocated TSRs) | 98/104 | partial | TSR-628, TSR-630, TSR-631, TSR-632, TSR-633, TSR-712 |
 | TSR -> HWSR (HW-allocated TSRs) | 19/19 | complete | — |
-| SOTIF hazard -> functional insufficiency | 12/12 | complete | — |
-| SOTIF hazard -> triggering condition | 12/12 | complete | — |
+| SOTIF hazard -> functional insufficiency | 13/13 | complete | — |
+| SOTIF hazard -> triggering condition | 13/13 | complete | — |
 | threat scenario -> cybersecurity goal | 14/14 | complete | — |
 | cybersecurity goal -> cybersecurity requirement | 8/8 | complete | — |
 
@@ -281,7 +281,7 @@ Items named by at least one case of the paired test specification. A case names 
 | Pair | Test specification | Kind | Named | Status | Not named |
 |---|---|---|---|---|---|
 | SYS.1 ↔ VAL.1 | VS-VAL | SG | 7/8 | partial | SG-08 |
-| SYS.1 ↔ VAL.1 | VS-VAL | SH | 1/13 | partial | SH-01, SH-02, SH-03, SH-04, SH-05, SH-06, SH-07, SH-08, SH-09, SH-10, SH-11, SH-13 |
+| SYS.1 ↔ VAL.1 | VS-VAL | SH | 1/14 | partial | SH-01, SH-02, SH-03, SH-04, SH-05, SH-06, SH-07, SH-08, SH-09, SH-10, SH-11, SH-13, SH-14 |
 | SYS.2 ↔ SYS.5 | VS-SQ | SYS | 25/39 | partial | SYS-005, SYS-006, SYS-027, SYS-043, SYS-061, SYS-083, SYS-100, SYS-101, SYS-102, SYS-121, SYS-142, SYS-143, SYS-144, SYS-145 |
 | SYS.2 ↔ SYS.5 | VS-SQ | FSR | 57/58 | partial | FSR-08.01 |
 | SYS.2 ↔ SYS.5 | VS-SQ | TSR | 62/110 | partial | TSR-409, TSR-410, TSR-411, TSR-412, TSR-413, TSR-501, TSR-502, TSR-503, TSR-504, TSR-505, TSR-506, TSR-507, TSR-508, TSR-509, TSR-511, TSR-512, TSR-513, TSR-514, TSR-515, TSR-517, TSR-518, TSR-519, TSR-619, TSR-620, TSR-621, TSR-622, TSR-623, TSR-624, TSR-625, TSR-626, TSR-627, TSR-628, TSR-630, TSR-631, TSR-632, TSR-633, TSR-634, TSR-635, TSR-701, TSR-702 … (+8) |

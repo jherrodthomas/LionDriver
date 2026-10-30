@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-03 Evaluation of known hazardous scenarios (specification and results) |
 | Standard reference | ISO 21448:2022 §10 (verification of the SOTIF, known hazardous scenarios); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 SYS.5, VAL.1 |
-| Version | 0.10 (§2 B2 row: paired closed-course runs against stock TSS2, DQ-138 A; KS-01, KS-03, KS-08, KS-09, KS-11 and KS-27 now marked B2 beside KS-05, KS-07 and KS-20, with the metric compared per scenario and why the others get no pair; §4 B2 row; OI-3 names the queued site question DQ-041; 2026-10-25). 0.9 (KS-27: the reveal gap depends on the radius, 40–80 m at 250–400 m with a barrier at or just outside the lane edge, about 95 m at 600 m; 2026-10-19). 0.8 (KS-27: lead detected late in a curve while accelerating to the set speed, TC-35, from RR-2026-011 F-6; 2026-10-19). 0.7 (KS-20 names TC-34 and FI-23, the stock PCS interaction added to WP-C-06; 2026-10-18). 0.6 (simulation credit rule decided by the lead, DQ-139: §2 and §5.4; 2026-10-16). 0.5 (KS-25 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.4 (§5.4: first simulation result recorded as synthetic data with no credit, SIM-2026-001 from the layer-1 plant model; OI-7; 2026-10-16). 0.3 (simulation rule: synthetic-data labelling and scenario families per WP-V-02 §5.3; 2026-10-16). 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
+| Version | 0.11 (KS-28: emergency vehicle closing from behind, and stopped on the shoulder with a responder at the lane edge, for SH-14 and TC-36 of WP-C-05 v0.11 and WP-C-06 v0.7; pass criteria and trial count open, OI-8; 2026-10-30). 0.10 (§2 B2 row: paired closed-course runs against stock TSS2, DQ-138 A; KS-01, KS-03, KS-08, KS-09, KS-11 and KS-27 now marked B2 beside KS-05, KS-07 and KS-20, with the metric compared per scenario and why the others get no pair; §4 B2 row; OI-3 names the queued site question DQ-041; 2026-10-25). 0.9 (KS-27: the reveal gap depends on the radius, 40–80 m at 250–400 m with a barrier at or just outside the lane edge, about 95 m at 600 m; 2026-10-19). 0.8 (KS-27: lead detected late in a curve while accelerating to the set speed, TC-35, from RR-2026-011 F-6; 2026-10-19). 0.7 (KS-20 names TC-34 and FI-23, the stock PCS interaction added to WP-C-06; 2026-10-18). 0.6 (simulation credit rule decided by the lead, DQ-139: §2 and §5.4; 2026-10-16). 0.5 (KS-25 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.4 (§5.4: first simulation result recorded as synthetic data with no credit, SIM-2026-001 from the layer-1 plant model; OI-7; 2026-10-16). 0.3 (simulation rule: synthetic-data labelling and scenario families per WP-V-02 §5.3; 2026-10-16). 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
 | Status | Draft (specification). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -87,6 +87,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | KS-17 | DM under night, glare, sunglasses, glasses | SH-12 | TC-24 | Day/night; IR-opaque and IR-transparent sunglasses; low sun on face | WP-W-10 VS-ML-06 (M3), M8 parked + CC | Scripted look-away detected per AIR-07 timing; if the model is uncertain, the wheel-touch fallback activates (`policy.py:82-83`); no stratum where distraction is missed **and** no fallback is active | VT-08 |
 | KS-18 | Distraction behaviours and face out of view | SH-12 | TC-24, TC-25 | Phone in lap / at ear, looking at passenger, eyes closed, leaning out of camera view | VS-ML-06, M8 | Alerts follow 5/8/13 s vision timers (`policy.py:34-36`); no-response → forced deceleration (`policy.py`, `noResponseForceDecel`); lockout counts as specified | VT-08 |
 | KS-19 | Driver override interactions | SH-05 | TC-29 | Steering override in a curve; gas override while following; brake tap; cancel button; at 30/60/90 km/h | M8 (≥ 299 trials per input type for VT-05, accumulated over campaigns) | Release within the SG-05 budget (≤ 0.2 s preliminary) for brake and cancel; steering override possible with ≤ AOU-02 force; no residual torque after disengagement | VT-05 |
+| KS-28 | Emergency vehicle: (a) closing from behind in the ego's lane with beacons and siren; (b) stopped on the shoulder with beacons, a responder dummy at the lane edge, the next lane free (move-over) | SH-14 | TC-36 (FI-24) | Ego engaged at closed-course speeds (§2, up to 90 km/h); (a) closing speed 20–40 km/h; (b) dummy 0.5 m and 1.0 m beyond the edge line | M8 with test subjects, M4 (no credit) | The item is expected to do nothing (FI-24): its behaviour is recorded, not judged. The criterion is the driver's: gives way or moves over or slows down in time. Threshold and number of subjects TBC (OI-8) | — |
 
 ### 3.5 Vehicle-integration and system scenarios
 
@@ -117,6 +118,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | FM-04, SH-05 | KS-19, KS-26 |
 | SH-10, VT-13 | KS-14 |
 | SH-11 | KS-22, KS-23 |
+| SH-14 | KS-28 (no VT yet, WP-V-02 OI-9) |
 
 ## 5. Results
 
@@ -168,6 +170,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | KS-25 | | | | | | | | | Not yet executed | |
 | KS-26 | | | | | | | | | Not yet executed | |
 | KS-27 | | | | | | | | | Not yet executed | |
+| KS-28 | | | | | | | | | Not yet executed | |
 
 Verdict values: Pass / Fail / Insufficient trials / Not yet executed. A Fail opens a problem report ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)) and a WP-C-06 update; the decision (functional modification, ODD restriction, or accepted with rationale) is recorded here and in [WP-K-02](../10-safety-case/WP-K-02-sotif-release-argument.md).
 
@@ -198,3 +201,4 @@ What the run cannot show:
 | OI-5 | Port the relevant `longitudinal_maneuvers` cases into LionDriver CI with traceability to KS-05, KS-07, KS-08, KS-23 |
 | OI-6 | Confirm the (TBC) thresholds with WP-V-02 OI-3 before the first campaign |
 | OI-7 | Check SIM-2026-001 (§5.4) on the vehicle: measure the lateral acceleration at full envelope torque (WP-V-01 lateral step tests), and run KS-01 at 2.0 and 2.5 m/s² on the closed course. If the authority is below 2.5 m/s², R_ODD changes (WP-C-02 OI-2), and KS-01's pass criterion at that point becomes the take-over alert |
+| OI-8 | KS-28 (SH-14): set the pass criterion for the driver's response (time to give way or move over, minimum lateral clearance or speed when passing the shoulder), the number of subjects, and how a responder dummy and beacons are staged safely on the closed course. Not analysed yet; follows the lead's answer on the SH-14 ratings (DQ-429) |
