@@ -112,7 +112,7 @@ shown. It shows links, not progress. Gaps to note:
 - **SH-09** (traffic-control non-compliance) leaves scope with Experimental Mode locked off (FM-01). KS-24 verifies
   the lock.
 - **SH-14** (no response to emergency vehicles) has no modification and no validation target yet. Its S3 and C2
-  are proposed, waiting for the lead (DQ-429); KS-28 is specified, but the driver's response is not analysed yet.
+  were accepted by the lead (DQ-429 A); KS-28 is specified, but the driver's response is not analysed yet.
 
 ## 4. Triggering conditions → insufficiencies → hazards
 

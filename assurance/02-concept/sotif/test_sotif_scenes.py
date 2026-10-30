@@ -43,7 +43,7 @@ class TestSotifScenes(unittest.TestCase):
     self.assertEqual(by["SH-02"]["row"]["out"], "mod")
     self.assertEqual(by["SH-04"]["hchip"], "SH-04 · H-04 · S2 C2")
     self.assertEqual(by["SH-12"]["hchip"], "SH-12 · enabling")
-    self.assertEqual(by["SH-14"]["hchip"], "SH-14 · new · S3 C2 proposed")   # until the lead accepts (DQ-429)
+    self.assertEqual(by["SH-14"]["hchip"], "SH-14 · new · S3 C2")   # accepted by the lead (DQ-429 A)
     self.assertEqual((by["SH-08"]["tc"], by["SH-08"]["fi"], by["SH-08"]["cls"]), ("TC-34", "FI-23", "S"))
 
   def test_missing_model_rejected(self):

@@ -6331,8 +6331,9 @@
       title: "Leave it out; SH-06 and user information cover it"
       detail: "No new work. Cost: the give-way and move-over cases stay unanalysed while PE26007 is open."
   sources: ["NHTSA PE26007 (2026-09-29)", "assurance/sim/blender/scenes.yaml sh-new-ambulance-behind, sh-new-move-over (PR #442)", "assurance/02-concept/WP-C-05-sotif-hazard-identification.md SH-06"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-30, note: "The lead decided: add the emergency vehicle hazard to WP-C-05. Applied as SH-14 in WP-C-05 v0.11."}
+  applied: {ref: "jherrodthomas/LionDriver#541", record: "WP-C-05 v0.11 §3 (SH-14 and the note after the table)", at: 2026-10-30}
 
 - id: DQ-429
   question: "Do you accept the proposed ratings for the new emergency-vehicle hazard (SH-14): severity S3, controllability C2?"
@@ -6362,4 +6363,6 @@
       title: "Re-rate it with Claude"
       detail: "A closer look at exposure and the driver's response first. Cost: SH-14 stays proposed and its test criteria wait."
   sources: ["assurance/02-concept/WP-C-05-sotif-hazard-identification.md SH-14, OI-6", "assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md FI-24, TC-36", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md KS-28", "DQ-032", "DQ-428", "NHTSA PE26007"]
-  status: open
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-30, note: "Accept S3 and C2."}
+  applied: {ref: "jherrodthomas/LionDriver#541", record: "WP-C-05 v0.11 §3 (SH-14 rationale and the note after the table)", at: 2026-10-30}

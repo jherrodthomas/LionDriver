@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-02 SOTIF achievement evaluation and release recommendation |
 | Standard reference | ISO 21448:2022 §12 (evaluation of the achievement of the SOTIF, release); inputs from §6–§11, §13 |
-| Version | 0.3.1 (context and residual-risk template name SOTIF hazards SH-01…SH-14: SH-14 added in WP-C-05 v0.11, ratings proposed, DQ-429; no argument changed; 2026-10-30). 0.3 (R-08 confidence level decided: one-sided 95 % with the WP-V-02 §3 bounds per scenario class, DQ-057 A; OI-2 closed; 2026-10-19). 0.2 (signatory for the SOTIF recommendation decided: the project lead signs after an external SOTIF review, DQ-025; 2026-10-17). 0.1 |
+| Version | 0.3.1 (context and residual-risk template name SOTIF hazards SH-01…SH-14: SH-14 added in WP-C-05 v0.11, S3 C2 accepted, DQ-429 A; no argument changed; 2026-10-30). 0.3 (R-08 confidence level decided: one-sided 95 % with the WP-V-02 §3 bounds per scenario class, DQ-057 A; OI-2 closed; 2026-10-19). 0.2 (signatory for the SOTIF recommendation decided: the project lead signs after an external SOTIF review, DQ-025; 2026-10-17). 0.1 |
 | Status | Skeleton — structure, criteria and evidence checklist only. **The evaluation has not been performed.** Results sections are templates marked "Not yet executed" |
 | ASIL / scope | SOTIF (G2 of [WP-K-01](WP-K-01-safety-case.md)); AI contribution (G3) |
 | Author | Assurance team (initial draft) |

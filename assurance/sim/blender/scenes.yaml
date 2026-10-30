@@ -1003,7 +1003,7 @@ scenes:
       cones close its lane; the driver steers into the open lane after the reaction time.
 
   - id: sh-14-ambulance-behind
-    sotif: {id: SH-14, title: "No response to emergency vehicles", situation: "OS-01 highway: an ambulance with beacons and siren closes from behind in the ego's lane (TC-36)", effect: "The ambulance is held up behind the ego and brakes hard; the item has no siren or beacon detection and holds its lane and speed", s: 3, c: 2, proposed: DQ-429}
+    sotif: {id: SH-14, title: "No response to emergency vehicles", situation: "OS-01 highway: an ambulance with beacons and siren closes from behind in the ego's lane (TC-36)", effect: "The ambulance is held up behind the ego and brakes hard; the item has no siren or beacon detection and holds its lane and speed", s: 3, c: 2}
     tc: [TC-36]
     ks: [KS-28]
     motion: kinematic
@@ -1023,10 +1023,10 @@ scenes:
       An ambulance with its beacons on closes from behind in the ego's lane at 140 km/h. The item has no siren or
       beacon detection: it holds its lane and 105 km/h, and the driver, relying on it, does not move over to let the
       ambulance pass. The ambulance has to brake hard behind the ego. SH-14 of WP-C-05 (TC-36, KS-28); its S3 and C2
-      are proposed until the project lead accepts them (DQ-429).
+      were accepted by the project lead (DQ-429).
 
   - id: sh-14-move-over
-    sotif: {id: SH-14, title: "No response to emergency vehicles", situation: "OS-07 highway at night: a patrol car stopped on the shoulder, an officer at its door; the left lane is free (TC-36)", effect: "The ego passes the officer at full speed in the next lane (no move-over); the item has no beacon detection", s: 3, c: 2, proposed: DQ-429}
+    sotif: {id: SH-14, title: "No response to emergency vehicles", situation: "OS-07 highway at night: a patrol car stopped on the shoulder, an officer at its door; the left lane is free (TC-36)", effect: "The ego passes the officer at full speed in the next lane (no move-over); the item has no beacon detection", s: 3, c: 2}
     tc: [TC-36]
     ks: [KS-28]
     motion: kinematic
@@ -1049,7 +1049,7 @@ scenes:
       A patrol car has stopped a car on the shoulder; the officer stands at the driver's door, just outside the lane
       line. Move-over laws ask the ego to change to the free left lane or slow down. The item has no beacon detection
       and keeps the right lane at 105 km/h; the driver does not intervene, and the ego passes the officer 1.2 m away.
-      SH-14 of WP-C-05 (TC-36, KS-28); its S3 and C2 are proposed until the project lead accepts them (DQ-429).
+      SH-14 of WP-C-05 (TC-36, KS-28); its S3 and C2 were accepted by the project lead (DQ-429).
 
   # ---------------------------------------------------------------------------------------------- edge cases (search)
   # Worst cases of the failure search (search/families.yaml, results/edge-cases.md), each reproducing its catalogue
