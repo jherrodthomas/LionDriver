@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="2067" viewBox="0 0 500 2067" role="img" aria-labelledby="t d">
 <title id="t">Figure C-0-1. The concept phase on one page</title>
-<desc id="d">The concept phase, top to bottom: WP-C-01 Item and its boundary; WP-C-12 Item and environment models; WP-C-02 ODD and intended functionality; WP-C-08 Driver, HMI and misuse analysis. Four lanes in parallel: Functional safety: WP-C-03 HARA (39 hazardous events → 8 safety goals), then WP-C-04 Functional safety concept (58 functional safety requirements); SOTIF: WP-C-05 SOTIF hazards and acceptance criteria (12 SOTIF hazards), then WP-C-06 Insufficiencies and triggering conditions (23 insufficiencies · 35 triggering conditions), then WP-C-07 Functional modifications (11 functional modifications); Cybersecurity: WP-C-09 TARA (14 threat scenarios), then WP-C-10 Cybersecurity goals and concept (8 cybersecurity goals); AI: WP-C-11 AI system and AI safety requirements (30 AI safety requirements). All lanes feed the hazard log and argument structure (WP-T-01, WP-K-01), then gate G1, then system design (G2). Every work product is draft. Dashed connectors: HARA and TARA: cyber effects rated on the HARA hazards; FSC and cyber goals: cybersecurity goals protect the safety goals; HARA and SOTIF hazards: one hazard log for HARA and SOTIF hazards; FSC and driver analysis: driver monitoring: a misuse measure, no ASIL; driver analysis and AI requirements: driver-monitoring targets are AI requirements; ODD and AI requirements: ODD claimed only where evaluation data covers it; AI requirements and TARA: model files load without a signature; FSC and modifications: FSC transition rule implemented by FM-03.</desc>
+<desc id="d">The concept phase, top to bottom: WP-C-01 Item and its boundary; WP-C-12 Item and environment models; WP-C-02 ODD and intended functionality; WP-C-08 Driver, HMI and misuse analysis. Four lanes in parallel: Functional safety: WP-C-03 HARA (39 hazardous events → 8 safety goals), then WP-C-04 Functional safety concept (58 functional safety requirements); SOTIF: WP-C-05 SOTIF hazards and acceptance criteria (13 SOTIF hazards), then WP-C-06 Insufficiencies and triggering conditions (24 insufficiencies · 36 triggering conditions), then WP-C-07 Functional modifications (11 functional modifications); Cybersecurity: WP-C-09 TARA (14 threat scenarios), then WP-C-10 Cybersecurity goals and concept (8 cybersecurity goals); AI: WP-C-11 AI system and AI safety requirements (30 AI safety requirements). All lanes feed the hazard log and argument structure (WP-T-01, WP-K-01), then gate G1, then system design (G2). Every work product is draft. Dashed connectors: HARA and TARA: cyber effects rated on the HARA hazards; FSC and cyber goals: cybersecurity goals protect the safety goals; HARA and SOTIF hazards: one hazard log for HARA and SOTIF hazards; FSC and driver analysis: driver monitoring: a misuse measure, no ASIL; driver analysis and AI requirements: driver-monitoring targets are AI requirements; ODD and AI requirements: ODD claimed only where evaluation data covers it; AI requirements and TARA: model files load without a signature; FSC and modifications: FSC transition rule implemented by FM-03.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --amb:#c98500; --amb-bg:#fdf4dc; --ok:#2e9e6a; --ok2:#166534;
@@ -111,7 +111,7 @@ text { font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
 <text x="40" y="683" class="t3">WP-C-05</text>
 <rect x="103.3" y="673" width="22" height="12" rx="6" class="s-draft"/>
 <text x="130.3" y="683" class="t3">Draft</text>
-<text x="40" y="699" class="tb">12 SOTIF hazards</text>
+<text x="40" y="699" class="tb">13 SOTIF hazards</text>
 <text x="40" y="715" class="ti">after: HARA</text>
 <path d="M56,727 L56,743" class="arr" marker-end="url(#a)"/>
 <rect x="26" y="744" width="360" height="68" rx="7" class="box"/>
@@ -120,7 +120,7 @@ text { font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
 <text x="40" y="785" class="t3">WP-C-06</text>
 <rect x="103.3" y="775" width="22" height="12" rx="6" class="s-draft"/>
 <text x="130.3" y="785" class="t3">Draft</text>
-<text x="40" y="801" class="tb">23 insufficiencies · 35 triggering conditions</text>
+<text x="40" y="801" class="tb">24 insufficiencies · 36 triggering conditions</text>
 <path d="M56,813 L56,829" class="arr" marker-end="url(#a)"/>
 <rect x="26" y="830" width="360" height="84" rx="7" class="box"/>
 <rect x="26" y="830" width="4" height="84" rx="2" class="so"/>

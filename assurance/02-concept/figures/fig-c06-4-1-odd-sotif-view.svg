@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1178.0" viewBox="0 0 1280 1178.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1212.0" viewBox="0 0 1280 1212.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 4-1. The ODD in the SOTIF view (WP-C-06 §4, §5; WP-C-02 §3.1)</title>
-<desc id="d">The WP-C-02 ODD categories with the WP-C-06 triggering conditions in each. Road type: TC-13 (Needs modification), TC-31 (Needs validation). Geometry: TC-14 (Needs modification), TC-15 (Needs validation), TC-16 (Needs validation), TC-17 (Needs validation), TC-32 (Needs validation). Lane markings: TC-05 (Needs validation). Speed: TC-20 (Needs modification). Weather: TC-03 (Needs validation), TC-04 (Needs modification), TC-21 (Acceptable, with a stated condition). Lighting: TC-01 (Needs validation), TC-02 (Needs validation), TC-18 (Needs validation). Road surface: none. Traffic: TC-07 (Needs validation), TC-08 (Needs validation), TC-09 (Needs validation), TC-11 (Needs validation), TC-28 (Acceptable, with a stated condition), TC-33 (Needs validation), TC-34 (Needs validation), TC-35 (Needs validation). VRUs: TC-12 (Needs modification), TC-27 (Needs modification). Geography: none. Infrastructure: TC-06 (Needs modification), TC-10 (Needs validation). Connectivity: none. Vehicle state: TC-19 (Acceptable, with a stated condition). Driver state: TC-24 (Needs validation), TC-25 (Needs modification). Not an ODD attribute: TC-22 (Needs modification), TC-23 (Needs modification), TC-26 (Needs modification), TC-29 (Needs validation), TC-30 (Needs modification).</desc>
+<desc id="d">The WP-C-02 ODD categories with the WP-C-06 triggering conditions in each. Road type: TC-13 (Needs modification), TC-31 (Needs validation). Geometry: TC-14 (Needs modification), TC-15 (Needs validation), TC-16 (Needs validation), TC-17 (Needs validation), TC-32 (Needs validation). Lane markings: TC-05 (Needs validation). Speed: TC-20 (Needs modification). Weather: TC-03 (Needs validation), TC-04 (Needs modification), TC-21 (Acceptable, with a stated condition). Lighting: TC-01 (Needs validation), TC-02 (Needs validation), TC-18 (Needs validation). Road surface: none. Traffic: TC-07 (Needs validation), TC-08 (Needs validation), TC-09 (Needs validation), TC-11 (Needs validation), TC-28 (Acceptable, with a stated condition), TC-33 (Needs validation), TC-34 (Needs validation), TC-35 (Needs validation), TC-36 (Needs validation). VRUs: TC-12 (Needs modification), TC-27 (Needs modification). Geography: none. Infrastructure: TC-06 (Needs modification), TC-10 (Needs validation). Connectivity: none. Vehicle state: TC-19 (Acceptable, with a stated condition). Driver state: TC-24 (Needs validation), TC-25 (Needs modification). Not an ODD attribute: TC-22 (Needs modification), TC-23 (Needs modification), TC-26 (Needs modification), TC-29 (Needs validation), TC-30 (Needs modification).</desc>
 <defs></defs>
-<rect width="1280" height="1178.0" fill="#FFFFFF"/>
+<rect width="1280" height="1212.0" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · The ODD in the SOTIF view</text>
 <text x="40" y="66" font-size="12.5" fill="#475569">The categories of the WP-C-02 ODD taxonomy, each with the triggering conditions of §4 that sit in it, coloured by their §5 evaluation</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-06 §4, §5</text>
@@ -51,7 +51,7 @@
 <rect x="961" y="159" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="980.501" y="170.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-20</text>
 <text x="1006" y="170.5" font-size="10" fill="#0F172A">Speed above the ODD bound (&gt; 110 km/h</text>
 <text x="1006" y="183.5" font-size="10" fill="#0F172A">since DQ-260) and above training distribut …</text>
-<rect x="40" y="347" width="291" height="307" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="40" y="347" width="291" height="341" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="52" y="368" font-size="12.5" fill="#0F172A" font-weight="700">Weather</text>
 <text x="319" y="368" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">3 TC</text>
 <text x="52" y="383" font-size="10" fill="#475569">Precipitation, Visibility, Wind, Ambient temperature</text>
@@ -62,7 +62,7 @@
 <rect x="52" y="444" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="71.5008" y="455.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-21</text>
 <text x="97.0016" y="455.5" font-size="10" fill="#0F172A">Extreme ambient temperature (device</text>
 <text x="97.0016" y="468.5" font-size="10" fill="#0F172A">throttling, sensor effects)</text>
-<rect x="343" y="347" width="291" height="307" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="343" y="347" width="291" height="341" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="355" y="368" font-size="12.5" fill="#0F172A" font-weight="700">Lighting</text>
 <text x="622" y="368" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">3 TC</text>
 <text x="355" y="383" font-size="10" fill="#475569">Illumination</text>
@@ -75,14 +75,14 @@
 <rect x="355" y="470" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="374.501" y="481.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-18</text>
 <text x="400.002" y="481.5" font-size="10" fill="#475569" font-style="italic">Tunnel entry/exit (lighting change; GNSS</text>
 <text x="400.002" y="494.5" font-size="10" fill="#475569" font-style="italic">loss)</text>
-<rect x="646" y="347" width="291" height="307" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="646" y="347" width="291" height="341" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="658" y="368" font-size="12.5" fill="#0F172A" font-weight="700">Road surface</text>
 <text x="925" y="368" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">no TC</text>
 <text x="658" y="383" font-size="10" fill="#475569">Type and condition</text>
 <text x="658" y="412" font-size="10" fill="#94A3B8" font-style="italic">No triggering condition in §4</text>
-<rect x="949" y="347" width="291" height="307" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<rect x="949" y="347" width="291" height="341" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
 <text x="961" y="368" font-size="12.5" fill="#0F172A" font-weight="700">Traffic</text>
-<text x="1228" y="368" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">8 TC</text>
+<text x="1228" y="368" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">9 TC</text>
 <text x="961" y="383" font-size="10" fill="#475569">Motor vehicles, Stationary objects in lane</text>
 <rect x="961" y="402" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="980.501" y="413.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-07</text>
 <text x="1006" y="413.5" font-size="10" fill="#0F172A">Close cut-in from an adjacent lane</text>
@@ -106,88 +106,91 @@
 <rect x="961" y="614" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="980.501" y="625.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-35</text>
 <text x="1006" y="625.5" font-size="10" fill="#0F172A">Lead hidden or not acquired in a curve while</text>
 <text x="1006" y="638.5" font-size="10" fill="#0F172A">the item accelerates toward the set speed …</text>
-<rect x="40" y="666" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="52" y="687" font-size="12.5" fill="#0F172A" font-weight="700">VRUs</text>
-<text x="319" y="687" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">2 TC</text>
-<text x="52" y="702" font-size="10" fill="#475569">Pedestrians, cyclists</text>
-<rect x="52" y="721" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="71.5008" y="732.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-12</text>
-<text x="97.0016" y="732.5" font-size="10" fill="#0F172A">Pedestrian or cyclist at the road edge or</text>
-<text x="97.0016" y="745.5" font-size="10" fill="#0F172A">crossing</text>
-<rect x="52" y="755" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="71.5008" y="766.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-27</text>
-<text x="97.0016" y="766.5" font-size="10" fill="#0F172A">Lead moves off from standstill while a</text>
-<text x="97.0016" y="779.5" font-size="10" fill="#0F172A">pedestrian crosses between ego and lead</text>
-<rect x="343" y="666" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="355" y="687" font-size="12.5" fill="#0F172A" font-weight="700">Geography</text>
-<text x="622" y="687" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">no TC</text>
-<text x="355" y="702" font-size="10" fill="#475569">Region</text>
-<text x="355" y="731" font-size="10" fill="#94A3B8" font-style="italic">No triggering condition in §4</text>
-<rect x="646" y="666" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="658" y="687" font-size="12.5" fill="#0F172A" font-weight="700">Infrastructure</text>
-<text x="925" y="687" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">2 TC</text>
-<text x="658" y="702" font-size="10" fill="#475569">Special zones</text>
-<rect x="658" y="721" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="732.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-06</text>
-<text x="703.002" y="732.5" font-size="10" fill="#475569" font-style="italic">Construction / work zone: lane shifts,</text>
-<text x="703.002" y="745.5" font-size="10" fill="#475569" font-style="italic">cones, temporary markings, barriers close …</text>
-<rect x="658" y="755" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="677.501" y="766.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-10</text>
-<text x="703.002" y="766.5" font-size="10" fill="#0F172A">Overhead structures, bridges, metal plates,</text>
-<text x="703.002" y="779.5" font-size="10" fill="#0F172A">toll booths</text>
-<rect x="949" y="666" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="961" y="687" font-size="12.5" fill="#0F172A" font-weight="700">Connectivity</text>
-<text x="1228" y="687" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">no TC</text>
-<text x="961" y="702" font-size="10" fill="#475569">Network</text>
-<text x="961" y="731" font-size="10" fill="#94A3B8" font-style="italic">No triggering condition in §4</text>
-<rect x="40" y="807" width="291" height="231" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="52" y="828" font-size="12.5" fill="#0F172A" font-weight="700">Vehicle state</text>
-<text x="319" y="828" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">1 TC</text>
-<text x="52" y="843" font-size="10" fill="#475569">Reference vehicle</text>
-<rect x="52" y="862" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="71.5008" y="873.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-19</text>
-<text x="97.0016" y="873.5" font-size="10" fill="#0F172A">Device mount disturbed, windscreen dirty,</text>
-<text x="97.0016" y="886.5" font-size="10" fill="#0F172A">sticker or wrap over camera area</text>
-<rect x="343" y="807" width="291" height="231" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
-<text x="355" y="828" font-size="12.5" fill="#0F172A" font-weight="700">Driver state</text>
-<text x="622" y="828" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">2 TC</text>
-<text x="355" y="843" font-size="10" fill="#475569">Driver</text>
-<rect x="355" y="862" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="374.501" y="873.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-24</text>
-<text x="400.002" y="873.5" font-size="10" fill="#0F172A">Driver wears sunglasses, low cabin light,</text>
-<text x="400.002" y="886.5" font-size="10" fill="#0F172A">face partly out of view, camera covered</text>
-<rect x="355" y="896" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="374.501" y="907.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-25</text>
-<text x="400.002" y="907.5" font-size="10" fill="#0F172A">Driver makes small periodic steering or gas</text>
-<text x="400.002" y="920.5" font-size="10" fill="#0F172A">inputs while not watching the road (incl. d …</text>
-<rect x="646" y="807" width="291" height="231" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 4"/>
-<text x="658" y="828" font-size="12.5" fill="#0F172A" font-weight="700">Not an ODD attribute</text>
-<text x="925" y="828" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">5 TC</text>
-<text x="658" y="843" font-size="10" fill="#475569">Inside the system, its configuration or its HMI</text>
-<rect x="658" y="862" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="873.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-22</text>
-<text x="703.002" y="873.5" font-size="10" fill="#0F172A">Big model load/fail event (eGPU</text>
-<text x="703.002" y="886.5" font-size="10" fill="#0F172A">disconnected, timeout)</text>
-<rect x="658" y="896" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="907.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-23</text>
-<text x="703.002" y="907.5" font-size="10" fill="#0F172A">Inter-process message delays or drops</text>
-<text x="703.002" y="920.5" font-size="10" fill="#0F172A">within the 10× "alive" window; process re …</text>
-<rect x="658" y="930" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="941.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-26</text>
-<text x="703.002" y="941.5" font-size="10" fill="#0F172A">Debug parameter set: IsDriverViewEnabled,</text>
-<text x="703.002" y="954.5" font-size="10" fill="#0F172A">maneuver or joystick modes</text>
-<rect x="658" y="964" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="677.501" y="975.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-29</text>
-<text x="703.002" y="975.5" font-size="10" fill="#0F172A">Driver presses gas to override and believes</text>
-<text x="703.002" y="988.5" font-size="10" fill="#0F172A">the system disengaged</text>
-<rect x="658" y="998" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="1009.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-30</text>
-<text x="703.002" y="1009.5" font-size="10" fill="#0F172A">PCM cruise remains active after an item</text>
-<text x="703.002" y="1022.5" font-size="10" fill="#0F172A">disengagement (cancel not effective)</text>
-<rect x="40" y="1049" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#D2553F"/>
-<text x="59" y="1060" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC</text>
-<text x="86" y="1060" font-size="11" fill="#0F172A">Needs modification (12)</text>
-<rect x="231.22000000000003" y="1049" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#D97706"/>
-<text x="250.22" y="1060" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC</text>
-<text x="277.22" y="1060" font-size="11" fill="#0F172A">Needs validation (20)</text>
-<rect x="410.78000000000003" y="1049" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#64748B"/>
-<text x="429.78" y="1060" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC</text>
-<text x="456.78" y="1060" font-size="11" fill="#0F172A">Acceptable, with a stated condition (3)</text>
-<text x="680.21" y="1060" font-size="11" fill="#475569" font-style="italic">Italic: §4 marks the condition outside the ODD or not validated</text>
-<text x="40" y="1080" font-size="11" fill="#475569">The category of each condition is an analyst input (TC_ODD in sotif_views.py); §4's own category column is coarser. A category with no condition is not shown to be free of them.</text>
+<rect x="961" y="648" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="980.501" y="659.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-36</text>
+<text x="1006" y="659.5" font-size="10" fill="#0F172A">Emergency vehicle with beacons or siren:</text>
+<text x="1006" y="672.5" font-size="10" fill="#0F172A">closing from behind in the ego's lane, or s …</text>
+<rect x="40" y="700" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="52" y="721" font-size="12.5" fill="#0F172A" font-weight="700">VRUs</text>
+<text x="319" y="721" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">2 TC</text>
+<text x="52" y="736" font-size="10" fill="#475569">Pedestrians, cyclists</text>
+<rect x="52" y="755" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="71.5008" y="766.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-12</text>
+<text x="97.0016" y="766.5" font-size="10" fill="#0F172A">Pedestrian or cyclist at the road edge or</text>
+<text x="97.0016" y="779.5" font-size="10" fill="#0F172A">crossing</text>
+<rect x="52" y="789" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="71.5008" y="800.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-27</text>
+<text x="97.0016" y="800.5" font-size="10" fill="#0F172A">Lead moves off from standstill while a</text>
+<text x="97.0016" y="813.5" font-size="10" fill="#0F172A">pedestrian crosses between ego and lead</text>
+<rect x="343" y="700" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="355" y="721" font-size="12.5" fill="#0F172A" font-weight="700">Geography</text>
+<text x="622" y="721" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">no TC</text>
+<text x="355" y="736" font-size="10" fill="#475569">Region</text>
+<text x="355" y="765" font-size="10" fill="#94A3B8" font-style="italic">No triggering condition in §4</text>
+<rect x="646" y="700" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="658" y="721" font-size="12.5" fill="#0F172A" font-weight="700">Infrastructure</text>
+<text x="925" y="721" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">2 TC</text>
+<text x="658" y="736" font-size="10" fill="#475569">Special zones</text>
+<rect x="658" y="755" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="766.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-06</text>
+<text x="703.002" y="766.5" font-size="10" fill="#475569" font-style="italic">Construction / work zone: lane shifts,</text>
+<text x="703.002" y="779.5" font-size="10" fill="#475569" font-style="italic">cones, temporary markings, barriers close …</text>
+<rect x="658" y="789" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="677.501" y="800.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-10</text>
+<text x="703.002" y="800.5" font-size="10" fill="#0F172A">Overhead structures, bridges, metal plates,</text>
+<text x="703.002" y="813.5" font-size="10" fill="#0F172A">toll booths</text>
+<rect x="949" y="700" width="291" height="129" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="961" y="721" font-size="12.5" fill="#0F172A" font-weight="700">Connectivity</text>
+<text x="1228" y="721" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">no TC</text>
+<text x="961" y="736" font-size="10" fill="#475569">Network</text>
+<text x="961" y="765" font-size="10" fill="#94A3B8" font-style="italic">No triggering condition in §4</text>
+<rect x="40" y="841" width="291" height="231" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="52" y="862" font-size="12.5" fill="#0F172A" font-weight="700">Vehicle state</text>
+<text x="319" y="862" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">1 TC</text>
+<text x="52" y="877" font-size="10" fill="#475569">Reference vehicle</text>
+<rect x="52" y="896" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="71.5008" y="907.5" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC-19</text>
+<text x="97.0016" y="907.5" font-size="10" fill="#0F172A">Device mount disturbed, windscreen dirty,</text>
+<text x="97.0016" y="920.5" font-size="10" fill="#0F172A">sticker or wrap over camera area</text>
+<rect x="343" y="841" width="291" height="231" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="355" y="862" font-size="12.5" fill="#0F172A" font-weight="700">Driver state</text>
+<text x="622" y="862" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">2 TC</text>
+<text x="355" y="877" font-size="10" fill="#475569">Driver</text>
+<rect x="355" y="896" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="374.501" y="907.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-24</text>
+<text x="400.002" y="907.5" font-size="10" fill="#0F172A">Driver wears sunglasses, low cabin light,</text>
+<text x="400.002" y="920.5" font-size="10" fill="#0F172A">face partly out of view, camera covered</text>
+<rect x="355" y="930" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="374.501" y="941.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-25</text>
+<text x="400.002" y="941.5" font-size="10" fill="#0F172A">Driver makes small periodic steering or gas</text>
+<text x="400.002" y="954.5" font-size="10" fill="#0F172A">inputs while not watching the road (incl. d …</text>
+<rect x="646" y="841" width="291" height="231" rx="9" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 4"/>
+<text x="658" y="862" font-size="12.5" fill="#0F172A" font-weight="700">Not an ODD attribute</text>
+<text x="925" y="862" font-size="10.5" fill="#475569" font-weight="700" text-anchor="end">5 TC</text>
+<text x="658" y="877" font-size="10" fill="#475569">Inside the system, its configuration or its HMI</text>
+<rect x="658" y="896" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="907.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-22</text>
+<text x="703.002" y="907.5" font-size="10" fill="#0F172A">Big model load/fail event (eGPU</text>
+<text x="703.002" y="920.5" font-size="10" fill="#0F172A">disconnected, timeout)</text>
+<rect x="658" y="930" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="941.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-23</text>
+<text x="703.002" y="941.5" font-size="10" fill="#0F172A">Inter-process message delays or drops</text>
+<text x="703.002" y="954.5" font-size="10" fill="#0F172A">within the 10× "alive" window; process re …</text>
+<rect x="658" y="964" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="975.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-26</text>
+<text x="703.002" y="975.5" font-size="10" fill="#0F172A">Debug parameter set: IsDriverViewEnabled,</text>
+<text x="703.002" y="988.5" font-size="10" fill="#0F172A">maneuver or joystick modes</text>
+<rect x="658" y="998" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D97706"/><text x="677.501" y="1009.5" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC-29</text>
+<text x="703.002" y="1009.5" font-size="10" fill="#0F172A">Driver presses gas to override and believes</text>
+<text x="703.002" y="1022.5" font-size="10" fill="#0F172A">the system disengaged</text>
+<rect x="658" y="1032" width="39.0" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F"/><text x="677.501" y="1043.5" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC-30</text>
+<text x="703.002" y="1043.5" font-size="10" fill="#0F172A">PCM cruise remains active after an item</text>
+<text x="703.002" y="1056.5" font-size="10" fill="#0F172A">disengagement (cancel not effective)</text>
+<rect x="40" y="1083" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#D2553F"/>
+<text x="59" y="1094" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">TC</text>
+<text x="86" y="1094" font-size="11" fill="#0F172A">Needs modification (12)</text>
+<rect x="231.22000000000003" y="1083" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#D97706"/>
+<text x="250.22" y="1094" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">TC</text>
+<text x="277.22" y="1094" font-size="11" fill="#0F172A">Needs validation (21)</text>
+<rect x="410.78000000000003" y="1083" width="38" height="15" rx="4" fill="#FFFFFF" stroke="#64748B"/>
+<text x="429.78" y="1094" font-size="9.5" fill="#64748B" font-weight="700" text-anchor="middle">TC</text>
+<text x="456.78" y="1094" font-size="11" fill="#0F172A">Acceptable, with a stated condition (3)</text>
+<text x="680.21" y="1094" font-size="11" fill="#475569" font-style="italic">Italic: §4 marks the condition outside the ODD or not validated</text>
+<text x="40" y="1114" font-size="11" fill="#475569">The category of each condition is an analyst input (TC_ODD in sotif_views.py); §4's own category column is coarser. A category with no condition is not shown to be free of them.</text>
 <g class="terms">
-<text x="40" y="1100" font-size="10.5" fill="#475569">Terms: DQ-nn decision of the project lead (decision register) · eGPU external graphics processor (the optional big-model hardware) · GNSS global navigation satellite system (GPS) · HMI human-machine interface:</text>
-<text x="40" y="1114.5" font-size="10.5" fill="#475569">display, sounds, cluster · LD-SDA LionDriver Supervised Driving Assistance, the item · ODD operational design domain: where the system is meant to work · PCM powertrain control module (engine and drive) · PCS</text>
-<text x="40" y="1129" font-size="10.5" fill="#475569">pre-collision system: Toyota's stock collision warning and braking · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · TC-nn triggering condition (WP-C-06) · VRU vulnerable road</text>
-<text x="40" y="1143.5" font-size="10.5" fill="#475569">user: pedestrian or cyclist · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="40" y="1134" font-size="10.5" fill="#475569">Terms: DQ-nn decision of the project lead (decision register) · eGPU external graphics processor (the optional big-model hardware) · GNSS global navigation satellite system (GPS) · HMI human-machine interface:</text>
+<text x="40" y="1148.5" font-size="10.5" fill="#475569">display, sounds, cluster · LD-SDA LionDriver Supervised Driving Assistance, the item · ODD operational design domain: where the system is meant to work · PCM powertrain control module (engine and drive) · PCS</text>
+<text x="40" y="1163" font-size="10.5" fill="#475569">pre-collision system: Toyota's stock collision warning and braking · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · TC-nn triggering condition (WP-C-06) · VRU vulnerable road</text>
+<text x="40" y="1177.5" font-size="10.5" fill="#475569">user: pedestrian or cyclist · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
-<text x="1240" y="1164" font-size="10" fill="#475569" text-anchor="end">Generated by sotif_views.py</text>
+<text x="1240" y="1198" font-size="10" fill="#475569" text-anchor="end">Generated by sotif_views.py</text>
 </svg>

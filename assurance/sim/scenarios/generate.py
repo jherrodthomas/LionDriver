@@ -309,6 +309,7 @@ NOT_REPRESENTED = {
   "KS-22": "pedestrians and cyclists at the lane edge are outside the highway-only ODD (DQ-023 answered B)",
   "KS-24": "inspection",
   "KS-26": "PCM cruise after disengagement: HIL and closed course (M1, M8)",
+  "KS-28": "emergency vehicles: beacons and sirens are perception conditions and the driver's response is a closed-course trial (M8); the Blender scenes sh-14-* picture the motion",
 }
 
 

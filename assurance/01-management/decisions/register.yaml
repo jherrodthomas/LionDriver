@@ -6308,3 +6308,61 @@
       detail: "The view closes by itself. Cost: changes in both UIs (comma 3X and comma four) with UI tests; not needed for safety once monitoring ignores it."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-085", "assurance/07-supporting/impact/change-2026-10-29-driver-view-interlock.md", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-610"]
   status: open
+- id: DQ-428
+  question: "Should the SOTIF analysis add a hazard for not giving way to emergency vehicles, and not moving over or slowing down for one stopped on the shoulder?"
+  context: >-
+    NHTSA's preliminary evaluation PE26007 (opened 2026-09-29) covers crashes of comma devices running openpilot into
+    stopped or slow vehicles in the travel lane, one of them a first responder's vehicle. The stopped emergency vehicle in
+    the lane is already SH-06. Two scenes added in PR #442 show what was missing: an ambulance closing from behind has to
+    brake hard because the item holds its lane and speed, and the item passes an officer at a stopped car 1.2 m away
+    instead of moving over. **Adding the hazard brings it into the triggering-condition analysis, the validation plan
+    and the user information.**
+  reversibility: easy
+  blocks: "WP-C-05 SH-14 and its wiring through WP-C-06, WP-C-07, WP-V-02, WP-V-03; scenes sh-14-ambulance-behind, sh-14-move-over"
+  gate: G1
+  decider: lead
+  asked: 2026-10-30
+  options:
+    - key: A
+      recommended: true
+      title: "Add it to WP-C-05 as a new hazard (SH-14)"
+      detail: "Rated, analysed and validated like the other hazards. Cost: a new insufficiency and triggering condition, a known scenario, user information, and a ratings question for you."
+    - key: B
+      title: "Leave it out; SH-06 and user information cover it"
+      detail: "No new work. Cost: the give-way and move-over cases stay unanalysed while PE26007 is open."
+  sources: ["NHTSA PE26007 (2026-09-29)", "assurance/sim/blender/scenes.yaml sh-new-ambulance-behind, sh-new-move-over (PR #442)", "assurance/02-concept/WP-C-05-sotif-hazard-identification.md SH-06"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-30, note: "The lead decided: add the emergency vehicle hazard to WP-C-05. Applied as SH-14 in WP-C-05 v0.11."}
+  applied: {ref: "jherrodthomas/LionDriver#541", record: "WP-C-05 v0.11 §3 (SH-14 and the note after the table)", at: 2026-10-30}
+
+- id: DQ-429
+  question: "Do you accept the proposed ratings for the new emergency-vehicle hazard (SH-14): severity S3, controllability C2?"
+  context: >-
+    You added the hazard (DQ-428): LionDriver does not detect beacons or sirens, so it neither gives way to an ambulance
+    closing from behind nor moves over or slows for a patrol car stopped on the shoulder with an officer beside it. The
+    proposed **S3** rates the worst direct harm, an officer struck at highway speed. The delayed emergency response is
+    named but not rated. The proposed **C2** credits a supervising driver who sees the beacons, hears the siren and can
+    change lane or slow down. The item gives no cue, though, and reliance on it delays the response. The stock car leaves
+    all of this to the driver too. **These ratings decide whether SH-14 gets a validation target and how strict its test
+    is.** Same kind of question as DQ-032 for SH-09 to SH-11.
+  reversibility: easy
+  blocks: "SH-14 ratings in WP-C-05 §3 (OI-6); whether SH-14 gets a validation target (WP-V-02 OI-9); the KS-28 pass criterion (WP-V-03 OI-8); the 'proposed' label on the SH-14 scene cards"
+  gate: G1
+  decider: lead
+  asked: 2026-10-30
+  batch: 19
+  options:
+    - key: A
+      recommended: true
+      title: "Accept S3 and C2"
+      detail: "SH-14 is rated like SH-09 to SH-11 and the 'proposed' label comes off. Cost: none now; revisited if the KS-28 driver trials contradict C2."
+    - key: B
+      title: "Rate controllability C3 (the item gives no cue at all)"
+      detail: "Stricter: SH-14 then needs a validation target and makes the detection study (WP-C-07 OI-6) a priority. Cost: more test and design work before G1."
+    - key: C
+      title: "Re-rate it with Claude"
+      detail: "A closer look at exposure and the driver's response first. Cost: SH-14 stays proposed and its test criteria wait."
+  sources: ["assurance/02-concept/WP-C-05-sotif-hazard-identification.md SH-14, OI-6", "assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md FI-24, TC-36", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md KS-28", "DQ-032", "DQ-428", "NHTSA PE26007"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-30, note: "Accept S3 and C2."}
+  applied: {ref: "jherrodthomas/LionDriver#541", record: "WP-C-05 v0.11 §3 (SH-14 rationale and the note after the table)", at: 2026-10-30}

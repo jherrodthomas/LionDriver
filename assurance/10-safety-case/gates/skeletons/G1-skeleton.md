@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-02, CR-03@G1, CR-04, FSA-I1, SR-01, CS-I1 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 84 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 90 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -32,11 +32,11 @@
 | [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 7 | |
 | [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 7 | |
 | [WP-C-08](../../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) Driver interaction, HMI and reasonably foreseeable misuse analysis | CON-03 | Draft | 5 | |
-| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 9 | |
+| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 10 | |
 | [WP-C-04](../../../02-concept/WP-C-04-functional-safety-concept.md) Functional safety concept (FSRs, allocation, AoUs) | CON-05 | Draft | 8 | |
-| [WP-C-05](../../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | CON-06 | Draft | 3 | |
-| [WP-C-06](../../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) Functional insufficiencies and triggering conditions analysis | CON-07 | Draft | 4 | |
-| [WP-C-07](../../../02-concept/WP-C-07-sotif-functional-modifications.md) Functional modifications addressing SOTIF risk | CON-08 | Draft | 5 | |
+| [WP-C-05](../../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | CON-06 | Draft | 5 | |
+| [WP-C-06](../../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) Functional insufficiencies and triggering conditions analysis | CON-07 | Draft | 5 | |
+| [WP-C-07](../../../02-concept/WP-C-07-sotif-functional-modifications.md) Functional modifications addressing SOTIF risk | CON-08 | Draft | 7 | |
 | [WP-C-11](../../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) AI system definition and AI safety requirements | CON-09 | Draft | 6 | |
 | [WP-C-09](../../../02-concept/WP-C-09-tara.md) Threat analysis and risk assessment (TARA) | CON-10 | Draft | 6 | |
 | [WP-C-10](../../../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) Cybersecurity goals, claims and concept | CON-11 | Draft | 6 | |

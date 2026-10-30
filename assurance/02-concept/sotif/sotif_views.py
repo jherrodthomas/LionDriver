@@ -50,7 +50,7 @@ TC_ODD = {
   "TC-16": "Geometry", "TC-17": "Geometry", "TC-18": "Lighting", "TC-19": "Vehicle state", "TC-20": "Speed",
   "TC-21": "Weather", "TC-22": NOT_ODD, "TC-23": NOT_ODD, "TC-24": "Driver state", "TC-25": "Driver state",
   "TC-26": NOT_ODD, "TC-27": "VRUs", "TC-28": "Traffic", "TC-29": NOT_ODD, "TC-30": NOT_ODD, "TC-31": "Road type",
-  "TC-32": "Geometry", "TC-33": "Traffic", "TC-34": "Traffic", "TC-35": "Traffic",
+  "TC-32": "Geometry", "TC-33": "Traffic", "TC-34": "Traffic", "TC-35": "Traffic", "TC-36": "Traffic",
 }
 PRIO_COL = {"P1": ("#991B1B", "#FEE2E2"), "P2": ("#B45309", "#FFFBEB"), "P3": ("#475569", "#F1F5F9")}
 
