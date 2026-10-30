@@ -1,0 +1,281 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="2067" viewBox="0 0 500 2067" role="img" aria-labelledby="t d">
+<title id="t">Figure C-0-1. The concept phase on one page</title>
+<desc id="d">The concept phase, top to bottom: WP-C-01 Item and its boundary; WP-C-12 Item and environment models; WP-C-02 ODD and intended functionality; WP-C-08 Driver, HMI and misuse analysis. Four lanes in parallel: Functional safety: WP-C-03 HARA (39 hazardous events → 8 safety goals), then WP-C-04 Functional safety concept (58 functional safety requirements); SOTIF: WP-C-05 SOTIF hazards and acceptance criteria (12 SOTIF hazards), then WP-C-06 Insufficiencies and triggering conditions (23 insufficiencies · 35 triggering conditions), then WP-C-07 Functional modifications (11 functional modifications); Cybersecurity: WP-C-09 TARA (14 threat scenarios), then WP-C-10 Cybersecurity goals and concept (8 cybersecurity goals); AI: WP-C-11 AI system and AI safety requirements (30 AI safety requirements). All lanes feed the hazard log and argument structure (WP-T-01, WP-K-01), then gate G1, then system design (G2). Every work product is draft. Dashed connectors: HARA and TARA: cyber effects rated on the HARA hazards; FSC and cyber goals: cybersecurity goals protect the safety goals; HARA and SOTIF hazards: one hazard log for HARA and SOTIF hazards; FSC and driver analysis: driver monitoring: a misuse measure, no ASIL; driver analysis and AI requirements: driver-monitoring targets are AI requirements; ODD and AI requirements: ODD claimed only where evaluation data covers it; AI requirements and TARA: model files load without a signature; FSC and modifications: FSC transition rule implemented by FM-03.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
+      --amb:#c98500; --amb-bg:#fdf4dc; --ok:#2e9e6a; --ok2:#166534;
+      --fs:#c2410c; --fs-bg:#fff4ec; --so:#0f766e; --so-bg:#eaf6f3; --cy:#7c3aed; --cy-bg:#f3effd;
+      --ai:#2563eb; --ai-bg:#edf3fe; --gate:#0b0b0b; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#3a3936; --card:#232321;
+        --amb:#eda100; --amb-bg:#3a2f12; --ok:#3fb97d; --ok2:#2f9e5f;
+        --fs:#f2885a; --fs-bg:#2c1c13; --so:#3cc4ae; --so-bg:#112826; --cy:#ab8df6; --cy-bg:#221a35;
+        --ai:#71a3f6; --ai-bg:#132238; --gate:#f0efec; }
+}
+.bg { fill:var(--bg); }
+text { font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; }
+.h { font-weight:600; font-size:20px; fill:var(--ink); }
+.tb { font-weight:600; font-size:14px; fill:var(--ink); }
+.t2 { font-size:13px; fill:var(--ink2); }
+.t3 { font-size:12px; fill:var(--ink3); }
+.ti { font-size:12px; font-style:italic; fill:var(--ink2); }
+.nb { font-weight:700; font-size:10.5px; fill:var(--bg); }
+.gt { font-weight:700; font-size:14px; fill:var(--bg); }
+.terms text { font-size:11px; fill:var(--ink2); }
+.box { fill:var(--bg); stroke:var(--grid); stroke-width:1.2; }
+.card { fill:var(--card); stroke:var(--grid); stroke-width:1.2; }
+.hair { stroke:var(--grid); stroke-width:1; }
+.arr { stroke:var(--ink2); stroke-width:1.5; fill:none; }
+.ix { stroke:var(--ink2); stroke-width:1.3; fill:none; stroke-dasharray:4 3; }
+.dot { fill:var(--ink2); } .badge { fill:var(--ink); }
+.gate { fill:var(--gate); }
+.s-skel { fill:var(--bg); stroke:var(--ink3); stroke-width:1.4; stroke-dasharray:4 3; }
+.s-draft { fill:var(--amb); } .s-rev { fill:var(--amb-bg); stroke:var(--amb); stroke-width:1.6; }
+.s-appr { fill:var(--ok); } .s-base { fill:var(--ok2); }
+.s-na { fill:var(--bg); stroke:var(--grid); stroke-width:1.2; stroke-dasharray:2 2; }
+.fs { fill:var(--fs); } .so { fill:var(--so); } .cy { fill:var(--cy); } .ai { fill:var(--ai); }
+.fs-band { fill:var(--fs-bg); stroke:var(--fs); stroke-width:1.2; }
+.so-band { fill:var(--so-bg); stroke:var(--so); stroke-width:1.2; }
+.cy-band { fill:var(--cy-bg); stroke:var(--cy); stroke-width:1.2; }
+.ai-band { fill:var(--ai-bg); stroke:var(--ai); stroke-width:1.2; }
+.fs-l { stroke:var(--fs); } .so-l { stroke:var(--so); } .cy-l { stroke:var(--cy); } .ai-l { stroke:var(--ai); }
+.fs-t { font-weight:700; font-size:13px; fill:var(--fs); } .so-t { font-weight:700; font-size:13px; fill:var(--so); }
+.cy-t { font-weight:700; font-size:13px; fill:var(--cy); } .ai-t { font-weight:700; font-size:13px; fill:var(--ai); }
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dot"/></marker></defs>
+<rect class="bg" width="500" height="2067"/>
+<text x="16" y="32" class="h">The concept phase on one page</text>
+<text x="16" y="54" class="t2">One box per work product, in the order of the concept activities; the number</text>
+<text x="16" y="71" class="t2">in a box is the count of its document's table rows.</text>
+<rect x="16" y="102" width="190.3" height="52" rx="7" class="box"/>
+<text x="26" y="126" class="tb">Item and its boundary</text>
+<text x="26" y="143" class="t3">WP-C-01</text>
+<rect x="89.3" y="133" width="22" height="12" rx="6" class="s-draft"/>
+<text x="116.3" y="143" class="t3">Draft</text>
+<rect x="220.3" y="102" width="175.7" height="70" rx="7" class="box"/>
+<text x="230.3" y="126" class="tb">Item and environment</text>
+<text x="230.3" y="144" class="tb">models</text>
+<text x="230.3" y="161" class="t3">WP-C-12</text>
+<rect x="293.6" y="151" width="22" height="12" rx="6" class="s-draft"/>
+<text x="320.6" y="161" class="t3">Draft</text>
+<path d="M207.3,124 L219.3,124" class="arr" marker-end="url(#a)"/>
+<path d="M111.2,173 L111.2,193" class="arr" marker-end="url(#a)"/>
+<rect x="16" y="194" width="380" height="52" rx="7" class="box"/>
+<text x="26" y="218" class="tb">ODD and intended functionality</text>
+<text x="26" y="235" class="t3">WP-C-02</text>
+<rect x="89.3" y="225" width="22" height="12" rx="6" class="s-draft"/>
+<text x="116.3" y="235" class="t3">Draft</text>
+<path d="M111.2,247 L111.2,267" class="arr" marker-end="url(#a)"/>
+<rect x="16" y="268" width="380" height="52" rx="7" class="box"/>
+<text x="26" y="292" class="tb">Driver, HMI and misuse analysis</text>
+<text x="26" y="309" class="t3">WP-C-08</text>
+<rect x="89.3" y="299" width="22" height="12" rx="6" class="s-draft"/>
+<text x="116.3" y="309" class="t3">Draft</text>
+<path d="M170,321 L60.5,349" class="arr" marker-end="url(#a)"/>
+<rect x="16" y="350" width="89" height="26" rx="13" class="fs-band"/>
+<text x="60.5" y="367.5" class="fs-t" text-anchor="middle">Func. safety</text>
+<path d="M194,321 L157.5,349" class="arr" marker-end="url(#a)"/>
+<rect x="113" y="350" width="89" height="26" rx="13" class="so-band"/>
+<text x="157.5" y="367.5" class="so-t" text-anchor="middle">SOTIF</text>
+<path d="M218,321 L254.5,349" class="arr" marker-end="url(#a)"/>
+<rect x="210" y="350" width="89" height="26" rx="13" class="cy-band"/>
+<text x="254.5" y="367.5" class="cy-t" text-anchor="middle">Cyber</text>
+<path d="M242,321 L351.5,349" class="arr" marker-end="url(#a)"/>
+<rect x="307" y="350" width="89" height="26" rx="13" class="ai-band"/>
+<text x="351.5" y="367.5" class="ai-t" text-anchor="middle">AI</text>
+<text x="206" y="394" class="ti" text-anchor="middle">the four lanes, worked in parallel</text>
+<rect x="16" y="406" width="380" height="194" rx="10" class="fs-band"/>
+<text x="26" y="426" class="fs-t">Functional safety</text>
+<text x="386" y="426" class="t3" text-anchor="end">ISO 26262-3</text>
+<rect x="26" y="436" width="360" height="68" rx="7" class="box"/>
+<rect x="26" y="436" width="4" height="68" rx="2" class="fs"/>
+<text x="40" y="460" class="tb">HARA</text>
+<text x="40" y="477" class="t3">WP-C-03</text>
+<rect x="103.3" y="467" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="477" class="t3">Draft</text>
+<text x="40" y="493" class="tb">39 hazardous events → 8 safety goals</text>
+<path d="M56,505 L56,521" class="arr" marker-end="url(#a)"/>
+<rect x="26" y="522" width="360" height="68" rx="7" class="box"/>
+<rect x="26" y="522" width="4" height="68" rx="2" class="fs"/>
+<text x="40" y="546" class="tb">Functional safety concept</text>
+<text x="40" y="563" class="t3">WP-C-04</text>
+<rect x="103.3" y="553" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="563" class="t3">Draft</text>
+<text x="40" y="579" class="tb">58 functional safety requirements</text>
+<rect x="16" y="612" width="380" height="312" rx="10" class="so-band"/>
+<text x="26" y="632" class="so-t">SOTIF</text>
+<text x="386" y="632" class="t3" text-anchor="end">ISO 21448</text>
+<rect x="26" y="642" width="360" height="84" rx="7" class="box"/>
+<rect x="26" y="642" width="4" height="84" rx="2" class="so"/>
+<text x="40" y="666" class="tb">SOTIF hazards and acceptance criteria</text>
+<text x="40" y="683" class="t3">WP-C-05</text>
+<rect x="103.3" y="673" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="683" class="t3">Draft</text>
+<text x="40" y="699" class="tb">12 SOTIF hazards</text>
+<text x="40" y="715" class="ti">after: HARA</text>
+<path d="M56,727 L56,743" class="arr" marker-end="url(#a)"/>
+<rect x="26" y="744" width="360" height="68" rx="7" class="box"/>
+<rect x="26" y="744" width="4" height="68" rx="2" class="so"/>
+<text x="40" y="768" class="tb">Insufficiencies and triggering conditions</text>
+<text x="40" y="785" class="t3">WP-C-06</text>
+<rect x="103.3" y="775" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="785" class="t3">Draft</text>
+<text x="40" y="801" class="tb">23 insufficiencies · 35 triggering conditions</text>
+<path d="M56,813 L56,829" class="arr" marker-end="url(#a)"/>
+<rect x="26" y="830" width="360" height="84" rx="7" class="box"/>
+<rect x="26" y="830" width="4" height="84" rx="2" class="so"/>
+<text x="40" y="854" class="tb">Functional modifications</text>
+<text x="40" y="871" class="t3">WP-C-07</text>
+<rect x="103.3" y="861" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="871" class="t3">Draft</text>
+<text x="40" y="887" class="tb">11 functional modifications</text>
+<text x="40" y="903" class="ti">after: FSC</text>
+<rect x="16" y="936" width="380" height="226" rx="10" class="cy-band"/>
+<text x="26" y="956" class="cy-t">Cybersecurity</text>
+<text x="386" y="956" class="t3" text-anchor="end">ISO/SAE 21434</text>
+<rect x="26" y="966" width="360" height="84" rx="7" class="box"/>
+<rect x="26" y="966" width="4" height="84" rx="2" class="cy"/>
+<text x="40" y="990" class="tb">TARA</text>
+<text x="40" y="1007" class="t3">WP-C-09</text>
+<rect x="103.3" y="997" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="1007" class="t3">Draft</text>
+<text x="40" y="1023" class="tb">14 threat scenarios</text>
+<text x="40" y="1039" class="ti">after: HARA</text>
+<path d="M56,1051 L56,1067" class="arr" marker-end="url(#a)"/>
+<rect x="26" y="1068" width="360" height="84" rx="7" class="box"/>
+<rect x="26" y="1068" width="4" height="84" rx="2" class="cy"/>
+<text x="40" y="1092" class="tb">Cybersecurity goals and concept</text>
+<text x="40" y="1109" class="t3">WP-C-10</text>
+<rect x="103.3" y="1099" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="1109" class="t3">Draft</text>
+<text x="40" y="1125" class="tb">8 cybersecurity goals</text>
+<text x="40" y="1141" class="ti">after: FSC</text>
+<rect x="16" y="1174" width="380" height="124" rx="10" class="ai-band"/>
+<text x="26" y="1194" class="ai-t">AI</text>
+<text x="386" y="1194" class="t3" text-anchor="end">ISO/PAS 8800</text>
+<rect x="26" y="1204" width="360" height="84" rx="7" class="box"/>
+<rect x="26" y="1204" width="4" height="84" rx="2" class="ai"/>
+<text x="40" y="1228" class="tb">AI system and AI safety requirements</text>
+<text x="40" y="1245" class="t3">WP-C-11</text>
+<rect x="103.3" y="1235" width="22" height="12" rx="6" class="s-draft"/>
+<text x="130.3" y="1245" class="t3">Draft</text>
+<text x="40" y="1261" class="tb">30 AI safety requirements</text>
+<text x="40" y="1277" class="ti">after: FSC, insufficiencies, modifications</text>
+<text x="16" y="1320" class="ti">Each lane feeds the hazard log:</text>
+<rect x="16" y="1328" width="89" height="25" rx="8" class="fs-band"/>
+<text x="60.5" y="1344" class="t3" text-anchor="middle">HARA, FSC</text>
+<path d="M60.5,1354 L161,1376" class="arr" marker-end="url(#a)"/>
+<rect x="113" y="1328" width="89" height="40" rx="8" class="so-band"/>
+<text x="157.5" y="1344" class="t3" text-anchor="middle">SOTIF</text>
+<text x="157.5" y="1359" class="t3" text-anchor="middle">hazards</text>
+<path d="M157.5,1369 L191,1376" class="arr" marker-end="url(#a)"/>
+<rect x="210" y="1328" width="89" height="25" rx="8" class="cy-band"/>
+<text x="254.5" y="1344" class="t3" text-anchor="middle">cyber goals</text>
+<path d="M254.5,1354 L221,1376" class="arr" marker-end="url(#a)"/>
+<rect x="307" y="1328" width="89" height="40" rx="8" class="ai-band"/>
+<text x="351.5" y="1344" class="t3" text-anchor="middle">AI</text>
+<text x="351.5" y="1359" class="t3" text-anchor="middle">requirements</text>
+<path d="M351.5,1369 L251,1376" class="arr" marker-end="url(#a)"/>
+<rect x="16" y="1378" width="380" height="70" rx="7" class="card"/>
+<text x="26" y="1402" class="tb">Hazard log and argument structure</text>
+<text x="26" y="1422" class="t3">WP-T-01</text>
+<rect x="89.3" y="1412" width="22" height="12" rx="6" class="s-draft"/>
+<text x="116.3" y="1422" class="t3">Draft</text>
+<text x="162.2" y="1422" class="t3">WP-K-01</text>
+<rect x="225.5" y="1412" width="22" height="12" rx="6" class="s-draft"/>
+<text x="252.5" y="1422" class="t3">Draft</text>
+<text x="26" y="1439" class="t3">One log for the HARA, SOTIF, TARA and AI hazards</text>
+<path d="M206,1449 L206,1469" class="arr" marker-end="url(#a)"/>
+<rect x="16" y="1470" width="380" height="50" rx="25" class="gate"/>
+<text x="206" y="1491" class="gt" text-anchor="middle">Gate G1 · Concept</text>
+<text x="206" y="1509" class="t3" text-anchor="middle" style="fill:var(--bg)">needs these 12 work products; now 12 draft</text>
+<path d="M206,1521 L206,1541" class="arr" marker-end="url(#a)"/>
+<rect x="16" y="1542" width="380" height="46" rx="7" class="box"/>
+<text x="26" y="1563" class="tb">System design (G2) · 03-system</text>
+<text x="26" y="1580" class="t3">technical safety concept, system requirements, architecture</text>
+<path d="M396,481.3 H436 V994 H396" class="ix"/>
+<path d="M396,573 H445 V1110 H396" class="ix"/>
+<path d="M396,458.7 H418 V684 H396" class="ix"/>
+<path d="M396,539 H427 V285.3 H396" class="ix"/>
+<path d="M396,302.7 H454 V1246 H396" class="ix"/>
+<path d="M396,220 H463 V1225 H396" class="ix"/>
+<path d="M396,1267 H418 V1022 H396" class="ix"/>
+<path d="M396,556 H427 V872 H396" class="ix"/>
+<circle cx="406" cy="481.3" r="7" class="badge"/>
+<text x="406" y="485" class="nb" text-anchor="middle">1</text>
+<circle cx="406" cy="994" r="7" class="badge"/>
+<text x="406" y="997.7" class="nb" text-anchor="middle">1</text>
+<circle cx="406" cy="573" r="7" class="badge"/>
+<text x="406" y="576.7" class="nb" text-anchor="middle">2</text>
+<circle cx="406" cy="1110" r="7" class="badge"/>
+<text x="406" y="1113.7" class="nb" text-anchor="middle">2</text>
+<circle cx="406" cy="458.7" r="7" class="badge"/>
+<text x="406" y="462.4" class="nb" text-anchor="middle">3</text>
+<circle cx="406" cy="684" r="7" class="badge"/>
+<text x="406" y="687.7" class="nb" text-anchor="middle">3</text>
+<circle cx="406" cy="539" r="7" class="badge"/>
+<text x="406" y="542.7" class="nb" text-anchor="middle">4</text>
+<circle cx="406" cy="285.3" r="7" class="badge"/>
+<text x="406" y="289" class="nb" text-anchor="middle">4</text>
+<circle cx="406" cy="302.7" r="7" class="badge"/>
+<text x="406" y="306.4" class="nb" text-anchor="middle">5</text>
+<circle cx="406" cy="1246" r="7" class="badge"/>
+<text x="406" y="1249.7" class="nb" text-anchor="middle">5</text>
+<circle cx="406" cy="220" r="7" class="badge"/>
+<text x="406" y="223.7" class="nb" text-anchor="middle">6</text>
+<circle cx="406" cy="1225" r="7" class="badge"/>
+<text x="406" y="1228.7" class="nb" text-anchor="middle">6</text>
+<circle cx="406" cy="1267" r="7" class="badge"/>
+<text x="406" y="1270.7" class="nb" text-anchor="middle">7</text>
+<circle cx="406" cy="1022" r="7" class="badge"/>
+<text x="406" y="1025.7" class="nb" text-anchor="middle">7</text>
+<circle cx="406" cy="556" r="7" class="badge"/>
+<text x="406" y="559.7" class="nb" text-anchor="middle">8</text>
+<circle cx="406" cy="872" r="7" class="badge"/>
+<text x="406" y="875.7" class="nb" text-anchor="middle">8</text>
+<line x1="16" y1="1598" x2="484" y2="1598" class="hair"/>
+<text x="16" y="1616" class="tb">Dashed: where one lane's analysis depends on another's</text>
+<text x="16" y="1633" class="t3">(the G1 interfaces of the process model)</text>
+<circle cx="24" cy="1646" r="7" class="badge"/>
+<text x="24" y="1649.7" class="nb" text-anchor="middle">1</text>
+<text x="38" y="1650" class="t2">HARA ↔ TARA: cyber effects rated on the HARA hazards</text>
+<circle cx="24" cy="1666" r="7" class="badge"/>
+<text x="24" y="1669.7" class="nb" text-anchor="middle">2</text>
+<text x="38" y="1670" class="t2">FSC ↔ cyber goals: cybersecurity goals protect the safety goals</text>
+<circle cx="24" cy="1686" r="7" class="badge"/>
+<text x="24" y="1689.7" class="nb" text-anchor="middle">3</text>
+<text x="38" y="1690" class="t2">HARA ↔ SOTIF hazards: one hazard log for HARA and SOTIF hazards</text>
+<circle cx="24" cy="1706" r="7" class="badge"/>
+<text x="24" y="1709.7" class="nb" text-anchor="middle">4</text>
+<text x="38" y="1710" class="t2">FSC ↔ driver analysis: driver monitoring: a misuse measure, no ASIL</text>
+<circle cx="24" cy="1726" r="7" class="badge"/>
+<text x="24" y="1729.7" class="nb" text-anchor="middle">5</text>
+<text x="38" y="1730" class="t2">driver analysis ↔ AI requirements: driver-monitoring targets are AI</text>
+<text x="38" y="1747" class="t2">requirements</text>
+<circle cx="24" cy="1763" r="7" class="badge"/>
+<text x="24" y="1766.7" class="nb" text-anchor="middle">6</text>
+<text x="38" y="1767" class="t2">ODD ↔ AI requirements: ODD claimed only where evaluation data covers</text>
+<text x="38" y="1784" class="t2">it</text>
+<circle cx="24" cy="1800" r="7" class="badge"/>
+<text x="24" y="1803.7" class="nb" text-anchor="middle">7</text>
+<text x="38" y="1804" class="t2">AI requirements ↔ TARA: model files load without a signature</text>
+<circle cx="24" cy="1820" r="7" class="badge"/>
+<text x="24" y="1823.7" class="nb" text-anchor="middle">8</text>
+<text x="38" y="1824" class="t2">FSC ↔ modifications: FSC transition rule implemented by FM-03</text>
+<g class="terms">
+<text x="16" y="1850" font-size="11" fill="#475569">Terms: AI artificial intelligence · ASIL Automotive Safety Integrity Level, A</text>
+<text x="16" y="1865" font-size="11" fill="#475569">(lowest) to D (highest), from ISO 26262 · FM-nn functional modification</text>
+<text x="16" y="1880" font-size="11" fill="#475569">(WP-C-07) · FSC functional safety concept · G0–G6 gate G0…G6 of the project</text>
+<text x="16" y="1895" font-size="11" fill="#475569">lifecycle · HARA hazard analysis and risk assessment (ISO 26262-3) · HMI</text>
+<text x="16" y="1910" font-size="11" fill="#475569">human-machine interface: display, sounds, cluster · ISO International</text>
+<text x="16" y="1925" font-size="11" fill="#475569">Organization for Standardization · ODD operational design domain: where the</text>
+<text x="16" y="1940" font-size="11" fill="#475569">system is meant to work · PAS publicly available specification (ISO/PAS 8800 is</text>
+<text x="16" y="1955" font-size="11" fill="#475569">the AI safety one) · SAE SAE International (formerly the Society of Automotive</text>
+<text x="16" y="1970" font-size="11" fill="#475569">Engineers) · SOTIF safety of the intended functionality (ISO 21448): hazards</text>
+<text x="16" y="1985" font-size="11" fill="#475569">with nothing failing · TARA threat analysis and risk assessment (ISO/SAE 21434)</text>
+<text x="16" y="2000" font-size="11" fill="#475569">· WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
+<text x="16" y="2015" font-size="11" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A</text>
+<text x="16" y="2030" font-size="11" fill="#475569">analyses, O operation, K safety case)</text>
+</g>
+<text x="484" y="2053" class="t3" text-anchor="end">Generated by fig_c00_overview.py</text>
+</svg>

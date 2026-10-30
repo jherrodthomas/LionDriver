@@ -10,6 +10,9 @@ exist, so it never needs editing by hand:
 - the folder's own section, if it has one: `figures/index-section.md`, written by that folder's figure script (for
   03-system, fig_s00_se.py: the systems-engineering alignment). Its links are relative to figures/, where it lives,
   and are rewritten to work from the README;
+- the folder's own opening, if it has one: `figures/index-top.md`, placed right under the folder's description and
+  above the status figure (for 02-concept, fig_c00_overview.py: the concept phase on one page and one hazard followed
+  through the documents). Its links are rewritten the same way;
 - its subfolders, with the title of their own README. Files are not listed (GitHub shows them above the page), so
   adding a file to a folder never makes a page stale.
 
@@ -209,6 +212,9 @@ def page(folder: str, lay: dict, regs: dict, reg) -> tuple[str, str | None]:
   title, items = regs.get(folder, ("", []))
   names = dict(reg.statuses)
   out = [GENERATED, "", f"# {folder}", "", rebase(content, folder) + ".", "", f"Standard clauses: {clauses}." if clauses else "", ""]
+  top = d / "figures" / "index-top.md"
+  if top.exists():
+    out += [rebase_from(top.read_text(encoding="utf-8").rstrip(), top.parent, d), ""]
   svg = None
   if items:
     svg = figure(folder, title, items, reg)
