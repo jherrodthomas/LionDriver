@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1018" viewBox="0 0 640 1018" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1162" viewBox="0 0 640 1162" role="img" aria-labelledby="t d">
 <title id="t">Modelling plan: tools, what they model, and what the output may be used for</title>
-<desc id="d">Tool map of the modelling plan. Python → SM-SELFDRIVED record (Exists) → TL-28 TCL2: Envelope design description | Python → Back-to-back test (Exists) → TL-29 TCL1: Envelope verification (no credit) | Python, OpenModelica → HIL plant model (In progress) → TL-30 TCL1 / TCL2: Envelope verification on the bench | Octave → Envelope calculations and plots (Exists) → TL-25 TCL1: None (design support) | SysML v2, Python → Architecture model (Draft) → TL-26 TCL1: None (design description); TL-27 TCL1: None (consistency support and figures) | Python → Fault-propagation model of the SG-02 tree (In progress) → TL-49 TCL1: Analysis support for WP-A-04; no item element | Python → Panda TSRs restated as structured requirements with a temporal meaning; checked against WP-S-02 and the code (In progress) → TL-51 TCL1: Analysis support for WP-S-02; no item element. Rule: No model output is verification evidence until the tool that produced it is classified at the confidence level the evidence needs (WP-P-07 §5) and the result has been reviewed.</desc>
+<desc id="d">Tool map of the modelling plan. Python → SM-SELFDRIVED record (Exists) → TL-28 TCL2: Envelope design description | Python → Back-to-back test (Exists) → TL-29 TCL1: Envelope verification (no credit) | Python, OpenModelica → HIL plant model (In progress) → TL-30 TCL1 / TCL2: Envelope verification on the bench | Octave → Envelope calculations and plots (Exists) → TL-25 TCL1: None (design support) | SysML v2, Python → Architecture model (Draft) → TL-26 TCL1: None (design description); TL-27 TCL1: None (consistency support and figures) | Python → Fault-propagation model of the SG-02 tree (In progress) → TL-49 TCL1: Analysis support for WP-A-04; no item element | Python → Panda TSRs restated as structured requirements with a temporal meaning; checked against WP-S-02 and the code (In progress) → TL-51 TCL1: Analysis support for WP-S-02; no item element | Python → AUTOSAR description of the existing architecture for OEM/Tier-1 integration (Draft) → TL-61 TCL1: None: a description for OEM/Tier-1 integration; no item element, no evidence. Rule: No model output is verification evidence until the tool that produced it is classified at the confidence level the evidence needs (WP-P-07 §5) and the result has been reviewed.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --py:#2a78d6; --py-bg:#e9f1fb; --om:#6250d6; --om-bg:#efedfb; --oc:#0f8a6e; --oc-bg:#e3f5ef;
@@ -32,7 +32,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 .arr { stroke:var(--ink2); stroke-width:1.6; fill:none; }
 </style>
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="f-ink2"/></marker></defs>
-<rect class="bg" width="640" height="1018"/>
+<rect class="bg" width="640" height="1162"/>
 <text x="24" y="34" class="h">Modelling: tool → what it models → use</text>
 <text x="24" y="56" class="t2">From §2 of this page and the WP-P-07 §3 tool inventory</text>
 <line x1="24" y1="70" x2="616" y2="70" class="hair"/>
@@ -40,7 +40,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <text x="160" y="96" class="t2b">Models (§2 item)</text>
 <text x="410" y="96" class="ta" text-anchor="middle">WP-P-07</text>
 <text x="462" y="96" class="t2b">Output may be used for</text>
-<rect x="372" y="106" width="76" height="802" rx="6" class="gate"/>
+<rect x="372" y="106" width="76" height="946" rx="6" class="gate"/>
 <rect x="160" y="110" width="196" height="74" rx="8" class="card"/>
 <rect x="462" y="110" width="154" height="74" rx="8" class="card"/>
 <rect x="24" y="120" width="57.8" height="20" rx="10" class="f-py"/>
@@ -157,8 +157,28 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <path d="M138 751 H158" class="arr" marker-end="url(#a)"/>
 <path d="M358 751 H370" class="arr" marker-end="url(#a)"/>
 <path d="M450 751 H460" class="arr" marker-end="url(#a)"/>
-<rect x="24" y="920" width="592" height="86" rx="8" class="gate"/>
-<text x="40" y="942" class="t">No model output is verification evidence until the tool that produced</text>
-<text x="40" y="962" class="t">it is classified at the confidence level the evidence needs (WP-P-07</text>
-<text x="40" y="982" class="t">§5) and the result has been reviewed.</text>
+<rect x="160" y="914" width="196" height="134" rx="8" class="card"/>
+<rect x="462" y="914" width="154" height="134" rx="8" class="card"/>
+<rect x="24" y="924" width="57.8" height="20" rx="10" class="f-py"/>
+<text x="52.9" y="938" class="chip" text-anchor="middle">Python</text>
+<text x="170" y="936" class="tb">AUTOSAR description</text>
+<text x="170" y="956" class="tb">of the existing</text>
+<text x="170" y="976" class="tb">architecture for</text>
+<text x="170" y="996" class="tb">OEM/Tier-1</text>
+<text x="170" y="1016" class="tb">integration</text>
+<text x="170" y="1036" class="t2">#8 · Draft</text>
+<text x="472" y="934" class="t2">None: a description</text>
+<text x="472" y="952" class="t2">for OEM/Tier-1</text>
+<text x="472" y="970" class="t2">integration; no</text>
+<text x="472" y="988" class="t2">item element, no</text>
+<text x="472" y="1006" class="t2">evidence</text>
+<text x="410" y="936" class="t2b" text-anchor="middle">TL-61</text>
+<text x="410" y="952" class="t2" text-anchor="middle">TCL1</text>
+<path d="M138 935 H158" class="arr" marker-end="url(#a)"/>
+<path d="M358 935 H370" class="arr" marker-end="url(#a)"/>
+<path d="M450 935 H460" class="arr" marker-end="url(#a)"/>
+<rect x="24" y="1064" width="592" height="86" rx="8" class="gate"/>
+<text x="40" y="1086" class="t">No model output is verification evidence until the tool that produced</text>
+<text x="40" y="1106" class="t">it is classified at the confidence level the evidence needs (WP-P-07</text>
+<text x="40" y="1126" class="t">§5) and the result has been reviewed.</text>
 </svg>

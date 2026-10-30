@@ -57,8 +57,8 @@ class TestModelsFigures(unittest.TestCase):
     # a changed state word, a new tool row without a gate, and a lost rule sentence each fail
     md = self.md.replace("| Exists: [`octave/`]", "| Planned: [`octave/`]")
     self.assertTrue(any("state" in p for p in fm.problems(md)))
-    md = self.md.replace("| 5 | Architecture model", "| 8 | Something new | Python | Draft |\n| 5 | Architecture model")
-    self.assertTrue(any("item 8 names a tool" in p for p in fm.problems(md)))
+    md = self.md.replace("| 5 | Architecture model", "| 9 | Something new | Python | Draft |\n| 5 | Architecture model")
+    self.assertTrue(any("item 9 names a tool" in p for p in fm.problems(md)))
     md = self.md.replace(fm.EVIDENCE_RULE, "Model output is evidence")
     self.assertTrue(any("sentence" in p for p in fm.problems(md)))
 

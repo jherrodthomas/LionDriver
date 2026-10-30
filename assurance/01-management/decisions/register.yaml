@@ -6366,3 +6366,28 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-30, note: "Accept S3 and C2."}
   applied: {ref: "jherrodthomas/LionDriver#541", record: "WP-C-05 v0.11 §3 (SH-14 rationale and the note after the table)", at: 2026-10-30}
+- id: DQ-430
+  question: "May CI download AUTOSAR's XML schema and validate the AUTOSAR description of LionDriver against it on every change?"
+  context: >-
+    The new AUTOSAR description (assurance/models/autosar) is checked in CI by a structural check written for the
+    project; it was validated once by hand against AUTOSAR's own schema (R22-11) and passed. AUTOSAR publishes that
+    schema for "informational purposes only" and needs written permission for any other use; redistribution is
+    restricted, so it is not committed. **Validating on every change catches what the in-house check cannot (element
+    order, value patterns), but whether that use counts as informational is a licence reading for you.** The file
+    itself carries no evidence credit.
+  reversibility: easy
+  blocks: "assurance/models/autosar README OI-1; schema check in the 'autosar description' CI job"
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Yes: CI downloads the schema from autosar.org at run time, pinned by SHA-256, never stored in the repository"
+      detail: "Full schema check on every change; one step in the CI job. Cost: relies on reading CI validation of a no-credit description as informational use; a download from autosar.org in each run."
+    - key: B
+      title: "No: keep the structural check in CI and validate against the schema by hand at each baseline"
+      detail: "No licence question. Cost: an element-order or value-pattern error is found only at the next baseline."
+    - key: C
+      title: "Ask AUTOSAR for written permission (or use an integration partner's licensed tool) first"
+      detail: "Removes the doubt. Cost: time and an external request; B applies meanwhile."
+  sources: ["assurance/models/autosar/README.md §4", "AUTOSAR_MMOD_XMLSchema R22-11 _disclaimer.txt"]
+  status: queued

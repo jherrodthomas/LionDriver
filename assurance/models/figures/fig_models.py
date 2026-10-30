@@ -39,7 +39,8 @@ TOOLS = [("Python", "py"), ("OpenModelica", "om"), ("Octave", "oc"), ("SysML v2"
 # Which WP-P-07 row classifies which §2 work item ("#" cell). The keyword must appear in both rows.
 GATES = [("2", "TL-28", "state machine"), ("3", "TL-29", "back to back"), ("4", "TL-30", "plant"),
          ("—", "TL-25", "octave"), ("5", "TL-26", "sysml"), ("5", "TL-27", "sysml"),
-         ("6", "TL-49", "fault propagation"), ("7", "TL-51", "structured requirements")]
+         ("6", "TL-49", "fault propagation"), ("7", "TL-51", "structured requirements"),
+         ("8", "TL-61", "autosar")]
 
 STATES = {"Done": "s-done", "Exists": "s-exists", "In progress": "s-prog", "Draft": "s-draft"}
 
