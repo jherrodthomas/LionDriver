@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-07 Functional modifications addressing SOTIF risk |
 | Standard reference | ISO 21448:2022 §8 (functional modifications addressing SOTIF-related risks); ASPICE 4.0 SYS.2 |
-| Version | 0.5 (FM-06 status: debug, maneuver and joystick modes left out of the reference build, DQ-131 A; DM demo mode still open; 2026-10-25). 0.4 (§2: Figures 3-1 and 3-2, one scene card per modification, today against the same scene with it, drawn by `sotif/fm_scenes.py`; no modification, priority or requirement changed; 2026-10-19). 0.3.1 (FM-01 status: part (a), the Chill default, is in the code since 2026-10-14, while the toggle stays and a stored "1" is honoured (DQ-001 A); OI-1 narrowed; 2026-10-19). 0.3 (FM-07 bound 110 km/h, decision register DQ-260; 2026-10-16). 0.2 (FM-07 and FM-08 follow the highway-only ODD, decision register DQ-023, and the 110 km/h controllability test, DQ-091; 2026-10-16). 0.1 |
+| Version | 0.6 (§4: SH-14, no response to emergency vehicles (TC-36, FI-24), gets no modification now: user information / ODD; OI-6, the feasibility of beacon or siren detection, and OI-7, the user warning, are open; 2026-10-30). 0.5 (FM-06 status: debug, maneuver and joystick modes left out of the reference build, DQ-131 A; DM demo mode still open; 2026-10-25). 0.4 (§2: Figures 3-1 and 3-2, one scene card per modification, today against the same scene with it, drawn by `sotif/fm_scenes.py`; no modification, priority or requirement changed; 2026-10-19). 0.3.1 (FM-01 status: part (a), the Chill default, is in the code since 2026-10-14, while the toggle stays and a stored "1" is honoured (DQ-001 A); OI-1 narrowed; 2026-10-19). 0.3 (FM-07 bound 110 km/h, decision register DQ-260; 2026-10-16). 0.2 (FM-07 and FM-08 follow the highway-only ODD, decision register DQ-023, and the 110 km/h controllability test, DQ-091; 2026-10-16). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF (some modifications also support FSRs in WP-C-04) |
 | Author | Assurance team (initial draft) |
@@ -183,6 +183,7 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 |---|---|
 | SH-06 stationary vehicles (TC-08), SH-11 VRUs (TC-12), SH-10 lane change (TC-28) | Driver responsibility, user information ([WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md)), DM, ODD restriction. Residual risk evaluated in WP-V-03/WP-V-04 |
 | Weather and lighting (TC-01…TC-04) | ODD restriction plus FM-09; validation |
+| SH-14 emergency vehicles: giving way and moving over (TC-36, FI-24) | User information / ODD: the driver yields, moves over or slows down ([WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md); the warning is not written yet, OI-7); DM. No modification yet: whether beacons or sirens can be detected with the item's camera and microphone is not analysed (OI-6). Residual risk evaluated in WP-V-03 (KS-28) |
 
 ## 5. Open items
 
@@ -193,3 +194,5 @@ Sheets: [P1](#modification-scenes-p1) · **P2 and P3**
 | OI-3 | Derive TSR-6xx requirements for FM-03, FM-04, FM-05, FM-06, FM-09 in WP-S-02 | Safety engineer | G2 |
 | OI-4 | Feasibility study for FM-08 | SW lead | G2 |
 | OI-5 | Re-run WP-C-06 evaluation after FMs are implemented | SOTIF lead | G4 |
+| OI-6 | SH-14: study whether emergency vehicles can be detected (beacons in the road camera, sirens in the device microphone) well enough to warn the driver or support a move-over, and propose an FM if so | SW lead | G2 |
+| OI-7 | SH-14: add to [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md) that the item does not respond to emergency vehicles, and that the driver must give way, move over or slow down as the law requires | SOTIF lead | G1 |

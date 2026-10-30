@@ -21,7 +21,8 @@ class TestFourAreas(unittest.TestCase):
     t6 = fa.C06.read_text(encoding="utf-8")
     self.assertEqual(self.c["fi"], len(set(re.findall(r"^\| (FI-\d+) \| [PS] \|", t6, re.M))))
     self.assertEqual(self.c["mod"] + self.c["val"] + self.c["acc"], self.c["rows"])
-    self.assertEqual(self.c["sh"], 12)  # SH-01…SH-13 without the placeholder SH-07
+    self.assertEqual(self.c["sh"], 13)  # SH-01…SH-14 without the placeholder SH-07
+    self.assertEqual(self.c["sh_last"], "SH-14")
 
   def test_the_chart_shows_the_counts(self):
     self.assertIn(f"{self.c['fi']} functional insufficiencies FI-01…{self.c['fi_last']}", self.svg)

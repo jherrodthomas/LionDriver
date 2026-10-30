@@ -168,6 +168,19 @@
   status: proposed
   source: WP-C-05
 
+- id: SH-14
+  kind: sotif-hazard
+  text: "No response to emergency vehicles: the intended function does not detect emergency vehicles, their beacons or their sirens. So it does not give way to one approaching (it holds its lane and set speed while an ambulance closes from behind), and it does not move over or slow down for one stopped on the shoulder with responders beside it, as move-over laws require"
+  functions: [F-01, F-02]
+  function_text: "F-01, F-02"
+  s: 3
+  c: 2
+  situations: "OS-01 multi-lane highway (an emergency vehicle closing from behind; the free lane to move over into), OS-07 (an emergency vehicle stopped on the shoulder or in the lane ahead; the one in the lane is SH-06)"
+  shares_event: []
+  linked_text: "new (effect like H-06)"
+  status: proposed
+  source: WP-C-05
+
 - id: FI-01
   kind: functional-insufficiency
   text: "Lane/path estimate wrong or unstable when markings are faded, missing, doubled (old and new), or when tar seams/shadows look like lines"
@@ -372,6 +385,15 @@
   fi_type: "S"
   component: "Interface to the stock PCS"
   parents: [SH-08]
+  status: proposed
+  source: WP-C-06
+
+- id: FI-24
+  kind: functional-insufficiency
+  text: "No emergency-vehicle detection: the item has no input for beacons or sirens and no behaviour for them. It does not give way to an emergency vehicle closing from behind and does not move over or slow down for one stopped on the shoulder; both are left to the driver"
+  fi_type: "S"
+  component: "Perception scope / planner"
+  parents: [SH-14]
   status: proposed
   source: WP-C-06
 
@@ -722,6 +744,16 @@
   parents: [SH-03, SH-06]
   insufficiencies: [FI-04, FI-06, FI-07]
   evaluation: "Needs validation"
+  status: proposed
+  source: WP-C-06
+
+- id: TC-36
+  kind: triggering-condition
+  text: "Emergency vehicle with beacons or siren: closing from behind in the ego's lane, or stopped on the shoulder with an officer or responder near the lane edge while the next lane is free"
+  category: "Traffic"
+  parents: [SH-14]
+  insufficiencies: [FI-24]
+  evaluation: "Needs validation (driver responsibility; user info)"
   status: proposed
   source: WP-C-06
 

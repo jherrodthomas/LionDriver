@@ -77,7 +77,7 @@ evidence credit.
 | Status | Draft, AI-assisted (Claude), I0, not reviewed. Version 0.1.0 (the file's `SYSTEM-VERSION`) |
 | Generated from | The [SysML model](../sysml/README.md), [WP-S-05](../../03-system/WP-S-05-hsi-specification.md) §4.2, §5 and §11 (through the model's `Signals.sysml`), the [trace data](../../trace/README.md), the [vehicle register](../../../docs/liondriver/vehicles/README.md) and, in opendbc at the pinned commit, the platform's DBC and the Toyota safety mode (`opendbc/safety/modes/toyota.h`, built as the reference build) |
 | Tool classification | [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-61, TCL1, no credit |
-| Open question | Whether CI may validate against the AUTOSAR schema: [decision register](../../01-management/decisions/register.yaml) DQ-428 (§4) |
+| Open question | Whether CI may validate against the AUTOSAR schema: [decision register](../../01-management/decisions/register.yaml) DQ-430 (§4) |
 
 ## 1. Where each element comes from
 
@@ -164,13 +164,13 @@ element of the type it names, ports typed by interfaces, connectors joining matc
 one ECU, one sender per frame, and the statement of what the file is. It does not check element order or the
 schema's value patterns. The file was validated once against `AUTOSAR_00051.xsd` (R22-11, downloaded from
 autosar.org on 2026-10-30, used for information only): **valid**, A0 passes. Whether CI may download the schema and
-validate every change is the lead's question DQ-428.
+validate every change is the lead's question DQ-430.
 
 ## 5. Open items
 
 | ID | Item |
 |---|---|
-| OI-1 | DQ-428: schema validation in CI (licence) |
+| OI-1 | DQ-430: schema validation in CI (licence) |
 | OI-2 | Import the file into an AUTOSAR authoring tool of an integration partner and record what it reports beyond the schema (semantic constraints, the non-standard E2E category) |
 | OI-3 | Value tables, and the frames on bus 1, if an integrator needs them |
 | OI-4 | The frame peers (`PEERS`) rest on the SysML descriptions of the vehicle ECUs, not on an OEM network description; confirm them when one is available |

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-02 SOTIF achievement evaluation and release recommendation |
 | Standard reference | ISO 21448:2022 §12 (evaluation of the achievement of the SOTIF, release); inputs from §6–§11, §13 |
-| Version | 0.3 (R-08 confidence level decided: one-sided 95 % with the WP-V-02 §3 bounds per scenario class, DQ-057 A; OI-2 closed; 2026-10-19). 0.2 (signatory for the SOTIF recommendation decided: the project lead signs after an external SOTIF review, DQ-025; 2026-10-17). 0.1 |
+| Version | 0.3.1 (context and residual-risk template name SOTIF hazards SH-01…SH-14: SH-14 added in WP-C-05 v0.11, S3 C2 accepted, DQ-429 A; no argument changed; 2026-10-30). 0.3 (R-08 confidence level decided: one-sided 95 % with the WP-V-02 §3 bounds per scenario class, DQ-057 A; OI-2 closed; 2026-10-19). 0.2 (signatory for the SOTIF recommendation decided: the project lead signs after an external SOTIF review, DQ-025; 2026-10-17). 0.1 |
 | Status | Skeleton — structure, criteria and evidence checklist only. **The evaluation has not been performed.** Results sections are templates marked "Not yet executed" |
 | ASIL / scope | SOTIF (G2 of [WP-K-01](WP-K-01-safety-case.md)); AI contribution (G3) |
 | Author | Assurance team (initial draft) |
@@ -29,7 +29,7 @@ It is the detailed form of claim G2 (and the SOTIF-relevant part of G3) in the [
 ```text
 G2   Hazards from functional insufficiencies and reasonably foreseeable misuse are
      acceptably low for the reference configuration in its ODD.
- ⊙ C  ODD [WP-C-02]; SOTIF hazards SH-01…SH-13 and acceptance criteria AC-01…AC-06
+ ⊙ C  ODD [WP-C-02]; SOTIF hazards SH-01…SH-14 and acceptance criteria AC-01…AC-06
       [WP-C-05]; validation targets [WP-V-02]; release baseline [WP-K-06]
  → S-K2  Argue over the specification, the known area, the unknown area, misuse, AI
          components and operation (21448 §12 evaluation aspects)
@@ -94,7 +94,7 @@ G2   Hazards from functional insufficiencies and reasonably foreseeable misuse a
 
 ### 5.1 Residual risk statement — Not yet executed
 
-Template: "At baseline `<tag>`, the residual risk from SOTIF hazards SH-01…SH-13 in the ODD of WP-C-02 is estimated as `<value / qualitative statement>` against the validation targets `<VT-nn>` with `<confidence>`. Known limitations communicated to users: `<list>`."
+Template: "At baseline `<tag>`, the residual risk from SOTIF hazards SH-01…SH-14 in the ODD of WP-C-02 is estimated as `<value / qualitative statement>` against the validation targets `<VT-nn>` with `<confidence>`. Known limitations communicated to users: `<list>`."
 
 The statement also gives, for SH-11, the P(severity class) of an older struck person beside the average: the elderly ranges of WP-V-02 §3.5 (0.72–0.80 in OS-04 and 0.10–0.21 in OS-06, against the averages of 0.38 and 0.05), from the Tefft age shift and the Ashton and Mackay age ratio.
 

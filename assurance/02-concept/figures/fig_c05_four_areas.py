@@ -72,7 +72,7 @@ def sotif_counts(c05: Path = C05, c06: Path = C06) -> dict:
       raise ParseError(f"WP-C-06 §5: evaluation not recognised: {outcome[:40]!r}")
   if not (sh and fi and tc and rows):
     raise ParseError("a SOTIF table is empty or its heading moved")
-  return {"sh": len(sh), "fi": len(fi), "fi_last": fi[-1], "tc": len(tc), "tc_last": tc[-1], "rows": len(rows),
+  return {"sh": len(sh), "sh_last": sorted(sh)[-1][0], "fi": len(fi), "fi_last": fi[-1], "tc": len(tc), "tc_last": tc[-1], "rows": len(rows),
           **ev, "acc_tcs": acc_tcs}
 
 
@@ -111,7 +111,7 @@ def main(argv: list[str]) -> int:
 
 TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="830" viewBox="0 0 1280 830" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 2-1. ISO 21448 scenario areas as covered by WP-C-05 and WP-C-06</title>
-  <desc id="d">Two-by-two chart of known and unknown scenarios against hazardous and not hazardous behaviour. Area 2, known hazardous: the $sh_word SOTIF hazards SH-01 to SH-06 and SH-08 to SH-13, all needing further treatment, with $fi functional insufficiencies and $tc triggering conditions in WP-C-06, whose $rows evaluation rows are $mod needs modification, $val needs validation and $acc acceptable with a condition. Area 1, known not hazardous: hazards rated S0 or C0 need no treatment, but none qualifies; $acc_word triggering-condition rows are acceptable only with a condition; acceptance criteria AC-01 to AC-06 are not yet met. Area 3, unknown hazardous: the driving model is a black box with unknown training data, with no out-of-distribution supervision; addressed by unknown-scenario exploration in WP-V-04 and acceptance criterion AC-07. Area 4, unknown not hazardous, is not addressed. Arrows show Area 3 to Area 2 by exploration and Area 2 to Area 1 by functional modification, ODD restriction, user information and validation.</desc>
+  <desc id="d">Two-by-two chart of known and unknown scenarios against hazardous and not hazardous behaviour. Area 2, known hazardous: the $sh_word SOTIF hazards SH-01 to SH-06 and SH-08 to $sh_last, all needing further treatment, with $fi functional insufficiencies and $tc triggering conditions in WP-C-06, whose $rows evaluation rows are $mod needs modification, $val needs validation and $acc acceptable with a condition. Area 1, known not hazardous: hazards rated S0 or C0 need no treatment, but none qualifies; $acc_word triggering-condition rows are acceptable only with a condition; acceptance criteria AC-01 to AC-06 are not yet met. Area 3, unknown hazardous: the driving model is a black box with unknown training data, with no out-of-distribution supervision; addressed by unknown-scenario exploration in WP-V-04 and acceptance criterion AC-07. Area 4, unknown not hazardous, is not addressed. Arrows show Area 3 to Area 2 by exploration and Area 2 to Area 1 by functional modification, ODD restriction, user information and validation.</desc>
   <defs>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
@@ -147,7 +147,7 @@ TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="830" 
   <text x="208" y="157" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">Area 2</text>
   <text x="252" y="158" class="t b" font-size="14">Known, hazardous</text>
   <text x="178" y="192" class="t sb" font-size="12">$sh SOTIF hazards (WP-C-05 §3)</text>
-  <text x="178" y="209" class="m" font-size="11">SH-01…SH-06, SH-08…SH-13 · SH-07 not used</text>
+  <text x="178" y="209" class="m" font-size="11">SH-01…SH-06, SH-08…$sh_last · SH-07 not used</text>
   <text x="178" y="224" class="m" font-size="11">All $sh need further SOTIF treatment (§6; SH-09 only if</text>
   <text x="178" y="239" class="m" font-size="11">Experimental Mode is kept) · misuse raises C (§4, WP-C-08)</text>
   <text x="178" y="268" class="t sb" font-size="12">Causes analysed in WP-C-06</text>
@@ -185,7 +185,7 @@ TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="830" 
   <text x="208" y="537" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">Area 1</text>
   <text x="252" y="538" class="t b" font-size="14">Known, not hazardous</text>
   <text x="178" y="571" class="m" font-size="11">Hazards rated S0 or C0 need no further treatment (WP-C-05 §2</text>
-  <text x="178" y="586" class="m" font-size="11">step 5) · none of SH-01…SH-13 is rated so (§6)</text>
+  <text x="178" y="586" class="m" font-size="11">step 5) · none of SH-01…$sh_last is rated so (§6)</text>
   <text x="178" y="610" class="m" font-size="11">Acceptable only with a condition (WP-C-06 §5): TC-19 large</text>
   <text x="178" y="625" class="m" font-size="11">calibration errors · TC-21 after FM-03 · TC-28 with user</text>
   <text x="178" y="640" class="m" font-size="11">information, abort controllability still to be validated</text>

@@ -59,6 +59,7 @@ CLASS_CHIP = {"P": ("#DBEAFE", "#1E3A8A", "P · it sees it wrong"), "S": ("#EDE9
 class Docs:
   data: sf.Data
   h: dict[str, str]                       # SH -> linked-H column (WP-C-05 §3)
+  proposed: set[str]                      # SHs whose S and C still wait for the lead's acceptance (WP-C-05 §3 rationale)
   rows: list[dict]                        # WP-C-06 §5 rows with response and action
   measures: dict[str, str]                # SH -> WP-C-05 §6 proposed modifications
 
@@ -66,11 +67,13 @@ class Docs:
 def load() -> Docs:
   md5, md6 = sf.C05.read_text(encoding="utf-8"), sf.C06.read_text(encoding="utf-8")
   data = sf.parse(md5, md6)
-  h = {}
+  h, proposed = {}, set()
   for ln in sf._section(md5, 3, "WP-C-05").splitlines():
     if re.match(r"^\| SH-\d\d \|", ln):
       c = sf._cells(ln)
       h[c[0]] = c[3]
+      if "pending the lead's acceptance" in c[7]:
+        proposed.add(c[0])
   measures = {}
   for ln in sf._section(md5, 6, "WP-C-05").splitlines():
     if re.match(r"^\| SH-\d\d \|", ln):
@@ -82,7 +85,7 @@ def load() -> Docs:
       c = sf._cells(ln)
       rows.append(dict(tc=sf._ids(c[0], "TC"), fi=sf._ids(c[1], "FI"), sh=sf._ids(c[2], "SH"),
                        resp=c[3].replace("`", ""), ev=c[4], out=sf.outcome(c[4]), act=c[5].replace("`", "")))
-  return Docs(data, h, rows, measures)
+  return Docs(data, h, proposed, rows, measures)
 
 
 # ---------------------------------------------------------------- scene helpers over the scene kit (time-based; f in [0, 1] of the drive)
@@ -485,6 +488,27 @@ def sh13():
   return ch, sc
 
 
+def sh14():
+  """TC-36 / FI-24: a patrol car stopped on the shoulder, its officer at the lane edge; the item does not move over."""
+  lane = lambda f: 84 - 30 * (0 if f < .25 else min(1, (f - .25) / .3)) ** 1.2
+  ego = sample(lambda f: (30 + 230 * f, 84))
+  over = sample(lambda f: (30 + 230 * f, lane(f)))
+  officer = sample(lambda f: (172, 103), 10)
+  beacon = '<circle cx="158" cy="110" r="2.2" fill="#EF4444"/><circle cx="164" cy="110" r="2.2" fill="#3B82F6"/>'
+  i_pass = min(range(len(ego)), key=lambda i: abs(ego[i][1] - 172))
+  sc = straight() + [car(160, 116, 0, GREY, GREY_S), beacon, label(150, 128, "patrol car on the shoulder", anchor="end"),
+                     drive(over, ghost()), walker(officer),
+                     f'<g opacity="0">{window(.2, .6)}<rect x="146" y="102" width="30" height="22" rx="3" fill="none" stroke="{BLUE}" stroke-width="1.4" stroke-dasharray="3 2"/>' +
+                     label(178, 56, "model: no beacon output", BLUE, 7, "middle", True) + "</g>",
+                     trail(ego), drive(ego, _car_body(EGO, EGO_S)), marker(118, 98, .25),
+                     ring(ego[i_pass][1], 84, "passes the officer at 105 km/h", ego[i_pass][0])]
+  mv = [(f, 94 - 64 * (0 if f < .25 else min(1, (f - .25) / .3))) for f in [i / 20 for i in range(21)]]
+  ch = frame("move over", [(94, "0"), (30, "lane")]) + [
+    gap(mv, [(f, 94) for f, _ in mv]), needed([(f, y) for f, y in mv]), line([(0, 94), (1, 94)], CR),
+    note(.25, 22, "beacons ahead: no move-over"), cursor()]
+  return ch, sc
+
+
 # hazard: (short title, primary TC, primary FI, draw)
 MODELS = {
   "SH-01": ("Leaves the lane on a false line", "TC-05", "FI-01", sh01),
@@ -499,6 +523,7 @@ MODELS = {
   "SH-11": ("No reaction to a pedestrian", "TC-12", "FI-04", sh11),
   "SH-12": ("Inattention reset by small inputs", "TC-25", "FI-19", sh12),
   "SH-13": ("Stays engaged above the ODD speed", "TC-20", "FI-16", sh13),
+  "SH-14": ("Does not move over for a stopped patrol car", "TC-36", "FI-24", sh14),
 }
 
 
@@ -508,6 +533,7 @@ def h_chip(sh, docs):
   head = hid[0] if h.startswith("H-") else ("new" if h.startswith("new") else "enabling")
   s, c = docs.data.sh[sh][1], docs.data.sh[sh][2]
   sc = f" · {s} {c}" if re.fullmatch(r"S\d", s) and re.fullmatch(r"C\d", c) else ""
+  sc += " proposed" if sc and sh in docs.proposed else ""
   return f"{sh} · {head}{sc}"
 
 

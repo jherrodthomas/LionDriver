@@ -55,6 +55,8 @@ PAGES = [
   A / "models/autosar/README.md",
 ]
 FIGURES = [
+  A / "02-concept/figures/fig-c00-1-concept-flow.svg",
+  A / "02-concept/figures/fig-c00-2-one-hazard.svg",
   A / "02-concept/figures/fig-c01-3-4-function-allocation.svg",
   A / "02-concept/figures/fig-c11-6-1-air-map.svg",
   A / "03-system/figures/fig-s03-3-3-functional-flow.svg",

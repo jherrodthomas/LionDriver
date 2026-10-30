@@ -106,6 +106,8 @@ jobs:
         python3 assurance/01-management/figures/scenekit.py --check
         python3 assurance/01-management/figures/fig_scenekit.py --check
         python3 assurance/01-management/figures/test_scenekit.py
+        python3 assurance/02-concept/figures/fig_c00_overview.py --check
+        python3 assurance/02-concept/figures/test_fig_c00_overview.py
         python3 assurance/02-concept/figures/fig_c02_odd.py --check
         python3 assurance/02-concept/figures/test_fig_c02_odd.py
         python3 assurance/02-concept/figures/fig_c02_exits.py --check
@@ -331,7 +333,7 @@ jobs:
     name: autosar description
     # The ARXML description of the reference configuration (assurance/models/autosar, WP-P-07 TL-61) is generated
     # from the SysML model, WP-S-05, the trace data, the vehicle register and the pinned opendbc. A description, not an
-    # AUTOSAR implementation; no evidence credit. Schema validation is not run here (licence, decision DQ-428).
+    # AUTOSAR implementation; no evidence credit. Schema validation is not run here (licence, decision DQ-430).
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

@@ -385,14 +385,16 @@ def card(scene: dict, hes: dict) -> dict:
             "tc": scene.get("tc", []), "ks": scene.get("ks", [])}
   sh = scene["sotif"]
   rated = "s" in sh and "c" in sh               # a proposed hazard, not yet in WP-C-05, is not rated
+  pending = sh.get("proposed")                   # rated in WP-C-05, but the lead has not accepted the ratings yet (a DQ id)
   sev, ctl = (f"S{sh['s']}", f"C{sh['c']}") if rated else ("not rated", "not rated")
   return {"kind": "SOTIF", "id": sh["id"],
-          "badge": f"{sh['id']}  SOTIF  {sev} {ctl}" if rated else f"{sh['id']}  SOTIF  proposed",
+          "badge": (f"{sh['id']}  SOTIF  {sev} {ctl}" + ("  proposed" if pending else "")) if rated else f"{sh['id']}  SOTIF  proposed",
           "title": sh["title"], "situation": sh["situation"], "effect": sh["effect"],
           "rows": [["Severity", sev], ["Controllability", ctl],
                    ["Triggering condition", ", ".join(scene.get("tc", [])) or "—"],
                    ["Known scenario", ", ".join(scene.get("ks", [])) or "—"], ["Condition", condition_text(scene)]],
-          "note": "WP-C-05 rates S and C only; triggering conditions WP-C-06, scenarios WP-V-03",
+          "note": "WP-C-05 rates S and C only; triggering conditions WP-C-06, scenarios WP-V-03" + (
+              f"; S and C proposed, pending the lead's acceptance ({pending})" if rated and pending else ""),
           "tc": scene.get("tc", []), "ks": scene.get("ks", [])}
 
 
