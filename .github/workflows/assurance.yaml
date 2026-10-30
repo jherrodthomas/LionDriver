@@ -327,6 +327,26 @@ jobs:
         python3 -m pip install --quiet --user --break-system-packages zstandard
         assurance/models/sysml/tools/pilot/validate.sh "$RUNNER_TEMP/sysml-pilot"
 
+  autosar:
+    name: autosar description
+    # The ARXML description of the reference configuration (assurance/models/autosar, WP-P-07 TL-61) is generated
+    # from the SysML model, WP-S-05, the trace data, the vehicle register and the pinned opendbc. A description, not an
+    # AUTOSAR implementation; no evidence credit. Schema validation is not run here (licence, decision DQ-428).
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout the opendbc submodule (DBC and Toyota safety mode)
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: ARXML current with its sources, structural check A1-A8, tests
+      working-directory: assurance/models/autosar
+      run: |
+        python3 tools/gen_arxml.py --check
+        python3 tools/check_arxml.py
+        python3 tools/test_arxml.py
+
   safety-case:
     name: living safety case
     runs-on: ubuntu-24.04

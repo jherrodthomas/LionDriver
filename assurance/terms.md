@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [technical-safety-requirements](03-system/technical-safety-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [technical-safety-requirements](03-system/technical-safety-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md), [autosar](models/autosar/README.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -26,15 +26,19 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | AI | artificial intelligence |
 | ALLOWED | the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 |
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
+| ARXML | AUTOSAR XML: the file format AUTOSAR tools exchange |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
+| AUTOSAR | AUTomotive Open System ARchitecture: the automotive software standard; Classic Platform for ECUs |
 | BOR | brown-out reset (MCU supply monitor) |
 | CAL | cybersecurity assurance level, 1 to 4 (ISO/SAE 21434) |
 | CAN | controller area network: the vehicle's data bus |
 | CI | continuous integration: the checks that run on every pull request |
 | CLU | instrument cluster |
 | CRC | cyclic redundancy check |
+| CSAR | configuration, software and architecture repository: the project lead's Tier-1 toolchain term, not an AUTOSAR one |
 | CSS | clock security system (MCU clock monitor) |
 | CSV | comma-separated values file |
+| DBC | CAN database file: the frames, signals, scaling and bit layout of a car's CAN messages (opendbc) |
 | DC | diagnostic coverage: the share of faults a safety mechanism detects |
 | DFA | dependent failure analysis |
 | DM | driver monitoring |
@@ -107,6 +111,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | MDN | mixture density network (how the model reports a spread of possible values) |
 | ML | machine learning |
 | MPU | memory protection unit |
+| MQB | Volkswagen's transverse modular platform (Modularer Querbaukasten) |
 | NA | not applicable |
 | NACK | not acknowledge |
 | NaN | not a number: an invalid floating-point value |
@@ -118,6 +123,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | OBD-II | on-board diagnostics port |
 | ODD | operational design domain: where the system is meant to work |
 | ODD-H | the claimed ODD: limited-access highways |
+| OEM | original equipment manufacturer: the carmaker |
 | ONNX | Open Neural Network Exchange, the model file format |
 | OOD | out of distribution: unlike the data the model learned from |
 | OPS | allocation to a production or operation process (WP-S-02 §2.2) |
@@ -130,6 +136,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | PCB | printed circuit board |
 | PCM | powertrain control module (engine and drive) |
 | PCS | pre-collision system: Toyota's stock collision warning and braking |
+| PDU | protocol data unit: the payload of a frame (AUTOSAR I-PDU) |
 | PR | pull request |
 | PVD | programmable voltage detector (MCU supply monitor) |
 | QM | quality managed: no ASIL; ordinary quality processes suffice |
@@ -147,11 +154,13 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | RPC | remote procedure call |
 | RSA-1024 | RSA signature with a 1024-bit key, too short today |
 | RT | real time |
+| RTE | AUTOSAR runtime environment: the layer that connects software components to each other and to basic software |
 | RTK | real-time kinematic GPS, accurate to centimetres |
 | RX | receive |
 | SAE | SAE International (formerly the Society of Automotive Engineers) |
 | SBOM | software bill of materials: the list of every component and version |
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
+| SecOC | secure onboard communication: AUTOSAR's message authentication for in-vehicle buses |
 | SHA-1 | secure hash algorithm 1, an outdated hash |
 | SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |
@@ -189,6 +198,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | VSC | vehicle stability control (Toyota's stability system) |
 | WCET | worst-case execution time |
 | WRP | write protection of the MCU's flash (option bytes) |
+| XML | extensible markup language |
 | XOR | exclusive or: a simple checksum that misses many multi-bit errors |
 
 ## Record codes
@@ -249,6 +259,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | R-nn | shared resource in the DFA map (08-analyses/dfa/shared-resources.yaml): something two elements both depend on |
 | RM-nn | runtime monitor of the AI safety plan (WP-M-10) |
 | RR-nn | review record |
+| S-nn | safety-relevant signal across the hardware-software interface or the item boundary (WP-S-05 §11), S-01…S-29 |
 | SG-nn | safety goal (HARA §6) |
 | SH-nn | SOTIF hazard (WP-C-05) |
 | SM-nn | safety mechanism (TSC §6) |
