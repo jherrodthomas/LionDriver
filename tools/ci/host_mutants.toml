@@ -543,3 +543,39 @@ replace = "            pcm_accel_cmd = min(pcm_accel_cmd, 0.5)"
 tests = ["opendbc_repo/opendbc/car/toyota/tests/test_carcontroller.py"]
 fmea = ["SWF-093.C2"]
 why = "the cap allows a positive request"
+
+[[mutants]]
+id = "TX-1"
+file = "panda/board/can_comms.h"
+find = "      (void)memcpy((uint8_t*)&to_push, can_write_buffer.data, can_write_buffer.ptr);\n      can_send(&to_push, to_push.bus, false);"
+replace = "      (void)memcpy((uint8_t*)&to_push, can_write_buffer.data, can_write_buffer.ptr);\n      can_send(&to_push, to_push.bus, true);"
+tests = ["tools/ci/test_check_panda_tx_paths.py"]
+fmea = ["SWF-016.C1"]
+why = "a host frame split across two bulk transfers skips the safety TX hook"
+
+[[mutants]]
+id = "TX-2"
+file = "panda/board/can_comms.h"
+find = "      (void)memcpy((uint8_t*)&to_push, &data[pos], pckt_len);\n      can_send(&to_push, to_push.bus, false);"
+replace = "      (void)memcpy((uint8_t*)&to_push, &data[pos], pckt_len);\n      can_send(&to_push, to_push.bus, true);"
+tests = ["tools/ci/test_check_panda_tx_paths.py"]
+fmea = ["SWF-016.C1"]
+why = "a whole host frame skips the safety TX hook"
+
+[[mutants]]
+id = "TX-3"
+file = "panda/board/drivers/can_common.h"
+find = "  if (skip_tx_hook || safety_tx_hook(to_push) != 0) {"
+replace = "  if (skip_tx_hook || (safety_tx_hook(to_push) != 0) || true) {"
+tests = ["tools/ci/test_check_panda_tx_paths.py"]
+fmea = ["SWF-016.C1"]
+why = "can_send queues every frame whatever the safety hook returns"
+
+[[mutants]]
+id = "TX-4"
+file = "panda/board/can_comms.h"
+find = "      (void)memcpy((uint8_t*)&to_push, &data[pos], pckt_len);\n      can_send(&to_push, to_push.bus, false);"
+replace = "      (void)memcpy((uint8_t*)&to_push, &data[pos], pckt_len);\n      (void)can_push(can_queues[to_push.bus], &to_push);"
+tests = ["tools/ci/test_check_panda_tx_paths.py"]
+fmea = ["SWF-016.C1"]
+why = "a host frame goes straight into the TX queue, past can_send"
