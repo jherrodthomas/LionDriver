@@ -5165,8 +5165,9 @@
       title: "Leave §6 as it is for now"
       detail: "No work now. Cost: WP-S-03 OI-1 stays open, and the targets of the software mechanisms remain unconfirmable at G3."
   sources: ["assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §6, OI-1", "assurance/05-software/WP-W-04-software-safety-analysis.md §2", "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §4, §6.3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-11-01}
+  applied: {ref: "jherrodthomas/LionDriver#557, jherrodthomas/LionDriver#558", record: "WP-S-03 v0.25 §6: DC targets for hardware mechanisms only; the 13 software-only checks (SM-01..08, 13, 22, 29, 36, 39) carry no DC percentage (Mechanisms.sysml dcTarget follows). WP-W-04 v1.7 §3.8: coverage class per mechanism, 0 covered, 8 partly, 5 not covered (SM-01, 04, 05, 07, 08)", at: 2026-11-01}
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
