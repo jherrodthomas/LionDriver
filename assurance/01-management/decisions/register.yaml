@@ -5145,6 +5145,27 @@
   answer: {choice: A, via: inbox, at: 2026-10-18, by: u_DgEswP8TFzpISXlzh3BD1g}
   applied: {ref: "#292", record: "change-2026-10-19-stock-aeb-stand-down (merged with the lead's explicit OK; new tests ran locally only, the scons CI jobs were down on the LFS 404)", at: 2026-10-19}
 
+- id: DQ-343
+  question: "Software-only safety mechanisms have no diagnostic-coverage percentage. Should the safety concept rate them by a coverage class instead, keeping percentages for hardware mechanisms only?"
+  context: "WP-S-03 §6 gives every safety mechanism a diagnostic-coverage (DC) target of low/medium/high, the ISO 26262-5 hardware metric. About half of them are envelope software checks against wrong commands from the QM SoC (torque limits, freshness, the configuration lock) rather than against random hardware faults. The software safety analysis (WP-W-04) rates each failure mode only as covered, partly or not covered, so **no document can confirm those DC targets**, and WP-S-03 OI-1 cannot close. Only 1 of 45 mechanisms has a credited value matching its target today. This changes what the safety case claims for the software mechanisms, so it is yours."
+  reversibility: easy
+  blocks: "WP-S-03 OI-1 (G3); WP-S-03 §6 DC column; WP-W-04 coverage method"
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Percentages for hardware mechanisms only; software mechanisms get a coverage class plus verification"
+      detail: "§6 keeps low/medium/high DC targets for mechanisms that act on random hardware faults (watchdog, RAM/flash checks, relay readback, CAN CRC). Software-only checks are confirmed by their WP-W-04 rating (covered/partly/not) and their tests. This matches how ISO 26262-5 (hardware metrics) and -6 (software analysis) split the work. Cost: §6 gets a second column; a few software mechanisms now read 'partly' where they read 'high'."
+    - key: B
+      title: "Keep percentages for every mechanism; WP-W-04 estimates one per software check"
+      detail: "One scale for all. Cost: a coverage percentage for software has no method in the standard, so each number needs its own argument and an assessor is likely to question it."
+    - key: C
+      title: "Leave §6 as it is for now"
+      detail: "No work now. Cost: WP-S-03 OI-1 stays open, and the targets of the software mechanisms remain unconfirmable at G3."
+  sources: ["assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §6, OI-1", "assurance/05-software/WP-W-04-software-safety-analysis.md §2", "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §4, §6.3"]
+  status: queued
+
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
   context: "The fault trees for loss of steering (SG-02) and loss of braking (SG-06) assume the EPS and PCM report when they stop acting on our requests. If either just ignores them without a fault code, **neither the main computer nor the safety chip notices**, and only the driver can catch it. No assumption of use states that the car always reports this."
