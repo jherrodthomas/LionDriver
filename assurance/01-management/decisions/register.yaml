@@ -6215,7 +6215,9 @@
       title: "Also edit the historical records"
       detail: "Option B plus the gap assessment, the audit and old decisions. Cost: rewrites records that should stay as they were; the git history keeps them anyway."
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4 items 5–8", "DQ-421", "LionDriver-security (private): gaps/INVENTORY.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-01, note: "go with A on DQ-423"}
+  applied: {ref: "jherrodthomas/LionDriver#551", record: "WP-O-05 v0.5 §4.4 item 7", at: 2026-11-01}
 
 
 - id: DQ-424
