@@ -91,7 +91,7 @@ Residual error target and CRC selection (DQ-143 A, analysis 2026-11-01, OI-2):
 | 8-bit XOR today | 2 / 2 | 7 × 10⁻⁵ … 2 × 10⁻³ /h | 0.7 … 16 /h | no |
 | CRC-8 (0x1D or 0x2F) | 2 / 2 | about 10⁻⁶ /h | about 10⁻² /h | no |
 | CRC-16/CCITT (0x1021) | 4 / 4 | ≤ 2.3 × 10⁻¹⁵ /h | ≤ 2.3 × 10⁻⁷ /h | only while p ≤ 2.5 × 10⁻⁶, which needs a bit-error-rate monitor and a measurement |
-| **CRC-32C (0x1EDC6F41)** | ≥ 6 / ≥ 5 | < 10⁻²⁴ /h | < 10⁻¹⁴ /h | **yes, at either bit error rate** |
+| **CRC-32C (0x1EDC6F41)** | ≥ 6 / ≥ 6 (exhaustive search) | < 10⁻²⁴ /h | < 10⁻¹⁴ /h | **yes, at either bit error rate** |
 
 - **Selected: CRC-32C** (poly 0x1EDC6F41, init 0xFFFFFFFF, reflected, final XOR 0xFFFFFFFF; the STM32H7 CRC unit computes it). CRC-16 is shorter but meets the target only under a bit-error-rate bound that nothing enforces today; CRC-32C meets it unconditionally for two more bytes per transfer (about 0.3 µs at 50 MHz), so it is the shortest check that meets the target without a new monitor (decided 2026-11-01, technical choice within DQ-143 A).
 - **Coverage:** the header (sync, endpoint, MOSI and MISO lengths, a 1-byte sequence counter and a 1-byte control-frame index) has its own CRC so the length is trusted before the data DMA starts; the data CRC is computed over the header fields followed by the payload, which binds endpoint, length and counter to the data. Control requests (endpoint 0) carry the same CRC. The data phase stays ≤ 2047 bytes and the MCU enforces it (TSR-412).
