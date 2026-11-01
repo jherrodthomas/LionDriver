@@ -84,8 +84,9 @@
 <rect x="1209.2" y="382" width="22.8" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
 <text x="1220.6" y="394" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">FW</text>
 <text x="957.5" y="412" font-size="9.5" fill="#0F172A">Softloader entry (0xd1 param 1) shall be accepted only while</text>
-<text x="957.5" y="424" font-size="9.5" fill="#0F172A">the panda is in a non-actuating mode and the vehicle ignition</text>
-<text x="957.5" y="436" font-size="9.5" fill="#0F172A">is off.</text>
+<text x="957.5" y="424" font-size="9.5" fill="#0F172A">the panda is in a non-actuating mode and no car mode has</text>
+<text x="957.5" y="436" font-size="9.5" fill="#0F172A">been active in the current ignition cycle (refused after a</text>
+<text x="957.5" y="448" font-size="9.5" fill="#0F172A">drive this ignition cycle).</text>
 <rect x="30" y="486" width="1220" height="132" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
 <text x="46" y="510" font-size="13" fill="#0F172A" font-weight="700">CSR-C-03 Authenticated firmware boot</text>
 <text x="331.6" y="510" font-size="11" fill="#475569">CSG-02 · CAL 3</text>
