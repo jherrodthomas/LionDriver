@@ -2090,7 +2090,7 @@ package LionDriverRequirements {
         :>> verifMethod = "BA, R, FZ";
     }
     requirement <'CSR-024'> csr_024 : CybersecurityRequirement {
-        doc /* Softloader entry (0xd1 param 1) shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off. */
+        doc /* Softloader entry (0xd1 param 1) shall be accepted only while the panda is in a non-actuating mode and no car mode has been active in the current ignition cycle (refused after a drive this ignition cycle). */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-02";
