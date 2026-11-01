@@ -124,6 +124,37 @@ class TestHarness(OpenpilotTestCase):
     self.assertTrue(CC.longActive and CC.latActive)
 
 
+class TestFreshnessGateCallSite(OpenpilotTestCase):
+  # SWF-040.C1, SWF-043.C1 (TSR-602): controlsd drops lateral or longitudinal control when one of its inputs is stale.
+  # The gate logic is tested in test_input_freshness.py; this checks the inputs controlsd passes and what it gates
+  NS = 1e9
+
+  def gated(self, stale=None, alive_sd=True):
+    t = controls()
+    for s in t.sm.logMonoTime:
+      t.sm.logMonoTime[s] = int(10 * self.NS)
+    if stale:
+      t.sm.logMonoTime[stale] = int(9 * self.NS)  # 1 s old: past the bound for every input
+    t.sm.alive['selfdriveState'] = alive_sd
+    CC, _ = t.c.state_control()
+    return CC.latActive, CC.longActive
+
+  def test_all_fresh(self):
+    self.assertEqual(self.gated(), (True, True))
+
+  def test_stale_model_ends_lateral_only(self):
+    self.assertEqual(self.gated('modelV2'), (False, True))
+
+  def test_stale_plan_ends_longitudinal_only(self):
+    self.assertEqual(self.gated('longitudinalPlan'), (True, False))
+
+  def test_stale_car_state_ends_both(self):
+    self.assertEqual(self.gated('carState'), (False, False))
+
+  def test_selfdrive_state_not_alive_ends_both(self):
+    self.assertEqual(self.gated(alive_sd=False), (False, False))
+
+
 class TestLateralResetCallSite(OpenpilotTestCase):
   # SWF-042.C1: when lateral control ends, controlsd resets the reference car's torque controller, integrator included
   def test_integrator_cleared_when_lateral_control_ends(self):

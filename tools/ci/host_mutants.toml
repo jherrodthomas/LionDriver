@@ -579,3 +579,168 @@ replace = "      (void)memcpy((uint8_t*)&to_push, &data[pos], pckt_len);\n      
 tests = ["tools/ci/test_check_panda_tx_paths.py"]
 fmea = ["SWF-016.C1"]
 why = "a host frame goes straight into the TX queue, past can_send"
+
+# panda status supervision in selfdrived (TSR-621 controlsMismatch, TSR-615 panda flags; supervision.py, selfdrived.py;
+# SWF-ACT-055)
+[[mutants]]
+id = "CM-1"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    return self.count >= self.samples or frame - self.start_frame >= self.max_frames"
+replace = "    return frame - self.start_frame >= self.max_frames"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision.py"]
+fmea = ["SWF-034.C1"]
+why = "two consecutive mismatched samples no longer disengage; only the 0.5 s timer does"
+
+[[mutants]]
+id = "CM-2"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    return self.count >= self.samples or frame - self.start_frame >= self.max_frames"
+replace = "    return self.count >= self.samples"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision.py"]
+fmea = ["SWF-034.C1"]
+why = "no time bound: a mismatch with stale pandaStates is never reported"
+
+[[mutants]]
+id = "CM-3"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    in_grace = self.enabled_frame is not None and frame - self.enabled_frame < self.grace_frames"
+replace = "    in_grace = self.enabled_frame is not None"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision.py"]
+fmea = ["SWF-034.C1"]
+why = "the engagement grace never ends, so samples never count after engaging"
+
+[[mutants]]
+id = "CM-4"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    self.grace_frames = round(engage_grace / dt)"
+replace = "    self.grace_frames = round(engage_grace / dt) * 2"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision.py"]
+fmea = ["SWF-034.C1"]
+why = "the grace is 0.6 s, longer than the 0.5 s bound it must sit inside"
+
+[[mutants]]
+id = "CM-5"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "    self.controls_mismatch.update(mismatch, self.sm.updated['pandaStates'], self.sm.frame, self.enabled)"
+replace = "    self.controls_mismatch.update(False, self.sm.updated['pandaStates'], self.sm.frame, self.enabled)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision_call_sites.py"]
+fmea = ["SWF-034.C1"]
+why = "selfdrived does not feed the panda's controlsAllowed to the check"
+
+[[mutants]]
+id = "CM-6"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "         self.controls_mismatch.triggered(self.sm.frame):"
+replace = "         False:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision_call_sites.py"]
+fmea = ["SWF-034.C1"]
+why = "the check triggers but no controlsMismatch event is raised"
+
+[[mutants]]
+id = "TB-1"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    self.last[index] = count"
+replace = "    self.last[index] = max(count, previous or 0)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision.py"]
+fmea = ["SWF-032.C3"]
+why = "the safetyTxBlocked baseline is not moved down after a panda reset, so later rises are missed"
+
+[[mutants]]
+id = "TB-2"
+file = "openpilot/selfdrive/selfdrived/supervision.py"
+find = "    return engaged and previous is not None and count > previous"
+replace = "    return engaged and previous is not None and count > previous + 1"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision.py"]
+fmea = ["SWF-032.C3"]
+why = "a single blocked frame between two samples gives no disable"
+
+[[mutants]]
+id = "TB-3"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "self.tx_blocked.update(i, pandaState.safetyTxBlocked, self.enabled):"
+replace = "self.tx_blocked.update(i, pandaState.safetyTxBlocked, False):"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision_call_sites.py"]
+fmea = ["SWF-032.C3"]
+why = "selfdrived passes the wrong engagement state, so a rise while engaged gives no event"
+
+[[mutants]]
+id = "TB-4"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "      if pandaState.txRateExceeded:"
+replace = "      if False:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision_call_sites.py"]
+fmea = ["SWF-032.C3"]
+why = "the panda's TX rate revocation gives no event"
+
+[[mutants]]
+id = "TB-5"
+file = "openpilot/selfdrive/selfdrived/selfdrived.py"
+find = "      if pandaState.heartbeatLost:"
+replace = "      if False:"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_supervision_call_sites.py"]
+fmea = ["SWF-032.C3"]
+why = "the panda's heartbeat-loss revocation gives no event"
+
+# controlsd input freshness gate (TSR-602; input_freshness.py, controlsd.py; SWF-ACT-055)
+[[mutants]]
+id = "IF-1"
+file = "openpilot/selfdrive/controls/lib/input_freshness.py"
+find = "STALE_PERIODS = 10."
+replace = "STALE_PERIODS = 20."
+tests = ["openpilot/selfdrive/controls/tests/test_input_freshness.py"]
+fmea = ["SWF-040.C1", "SWF-043.C1"]
+why = "inputs up to 20 periods old pass the gate"
+
+[[mutants]]
+id = "IF-2"
+file = "openpilot/selfdrive/controls/lib/input_freshness.py"
+find = "      if not alive[s]:\n        return False"
+replace = "      if False:\n        return False"
+tests = ["openpilot/selfdrive/controls/tests/test_input_freshness.py"]
+fmea = ["SWF-040.C1"]
+why = "selfdriveState is not judged on the wall clock, so control continues after selfdrived stops"
+
+[[mutants]]
+id = "IF-3"
+file = "openpilot/selfdrive/controls/lib/input_freshness.py"
+find = "    elif ref_time - log_mono_time[s] > STALE_PERIODS * 1e9 / frequency[s]:"
+replace = "    elif log_mono_time[s] - ref_time > STALE_PERIODS * 1e9 / frequency[s]:"
+tests = ["openpilot/selfdrive/controls/tests/test_input_freshness.py"]
+fmea = ["SWF-043.C1"]
+why = "the age is taken with the wrong sign, so an old input is never stale"
+
+[[mutants]]
+id = "FG-1"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    CC.latActive = CC.latActive and self.inputs_fresh(LAT_INPUTS)"
+replace = "    CC.latActive = CC.latActive"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-040.C1", "SWF-043.C1"]
+why = "lateral control is not gated on fresh inputs"
+
+[[mutants]]
+id = "FG-2"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    CC.longActive = CC.longActive and self.inputs_fresh(LONG_INPUTS)"
+replace = "    CC.longActive = CC.longActive"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-040.C1", "SWF-043.C1"]
+why = "longitudinal control is not gated on fresh inputs"
+
+[[mutants]]
+id = "FG-3"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "LAT_INPUTS = ('selfdriveState', 'carState', 'modelV2')"
+replace = "LAT_INPUTS = ('selfdriveState', 'carState')"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-043.C1"]
+why = "a stale modelV2 does not end lateral control"
+
+[[mutants]]
+id = "FG-4"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "LONG_INPUTS = ('selfdriveState', 'carState', 'longitudinalPlan')"
+replace = "LONG_INPUTS = ('selfdriveState', 'carState')"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-043.C1"]
+why = "a stale longitudinalPlan does not end longitudinal control"

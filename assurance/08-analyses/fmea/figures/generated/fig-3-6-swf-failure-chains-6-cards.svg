@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1562" viewBox="0 0 1280 1562" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 6 of 14 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 6 of 14 (SWF rev 1.17): failure modes SWF-034 to SWF-037 (6 failure modes, 11 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 6 of 14 (SWF rev 1.18): failure modes SWF-034 to SWF-037 (6 failure modes, 11 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -10,7 +10,7 @@
   </defs>
   <rect width="1280" height="1562" fill="#FCFCFB"/>
   <text x="40" y="44" font-size="20" fill="#0B0B0B" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 6 of 14</text>
-  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.17 · BL-007 · draft · SWF-034 … SWF-037 · 11 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#52514E">SWF rev 1.18 · BL-007 · draft · SWF-034 … SWF-037 · 11 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#52514E" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#52514E" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E1E0D9" stroke-width="1"/>
@@ -89,10 +89,10 @@
   <text x="886" y="156.1" font-size="10.5" fill="#0B0B0B">Defect in the BL-005 controlsMismatch supervision (supervision.py</text>
   <text x="886" y="170.1" font-size="10.5" fill="#0B0B0B">ControlsMismatch: 2 consecutive pandaStates samples, at most 0.5</text>
   <text x="886" y="184.2" font-size="10.5" fill="#0B0B0B">s from the first mismatched frame, samples in the first 0.3 s after…</text>
-  <text x="886" y="197.3" font-size="9.8" fill="#52514E" font-weight="600">O5 · D8 · in SWF-SE-032</text>
+  <text x="886" y="197.3" font-size="9.8" fill="#52514E" font-weight="600">O5 · D4 · in SWF-SE-032</text>
   <rect x="886" y="203.3" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="214.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SWF-ACT-030 open</text>
   <rect x="998.9" y="203.3" width="140" height="15" rx="7.5" fill="#FFF5DC"/><text x="1068.9" y="214.3" font-size="9.5" font-weight="700" fill="#7A5600" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 in progress</text>
-  <rect x="886" y="221.3" width="140" height="15" rx="7.5" fill="#FFF5DC"/><text x="956" y="232.3" font-size="9.5" font-weight="700" fill="#7A5600" text-anchor="middle" letter-spacing=".02em">SWF-ACT-055 in progress</text>
+  <rect x="886" y="221.3" width="135.3" height="15" rx="7.5" fill="#E6F5E6"/><text x="953.7" y="232.3" font-size="9.5" font-weight="700" fill="#0A6A0A" text-anchor="middle" letter-spacing=".02em">SWF-ACT-055 completed</text>
   <rect x="876" y="255.3" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
   <rect x="876" y="252.3" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
   <circle cx="892.5" cy="267.8" r="5.5" fill="#6250D6"/>
@@ -229,7 +229,7 @@
   <text x="886" y="890.1" font-size="10.5" fill="#0B0B0B">Defect in the BL-005 flag reactions: a wrong field, a missed panda</text>
   <text x="886" y="904.2" font-size="10.5" fill="#0B0B0B">index, or the safetyTxBlocked baseline not moved after a panda</text>
   <text x="886" y="918.3" font-size="10.5" fill="#0B0B0B">reset, so a flag the panda raises gives no disable…</text>
-  <text x="886" y="931.4" font-size="9.8" fill="#52514E" font-weight="600">O5 · D8 · in SWF-SE-032</text>
+  <text x="886" y="931.4" font-size="9.8" fill="#52514E" font-weight="600">O5 · D4 · in SWF-SE-032</text>
   <rect x="886" y="937.4" width="108.9" height="15" rx="7.5" fill="#FBE9E9"/><text x="940.4" y="948.3" font-size="9.5" font-weight="700" fill="#9E2424" text-anchor="middle" letter-spacing=".02em">SWF-ACT-030 open</text>
   <rect x="876" y="971.4" width="364" height="106.3" fill="#000000" rx="12" opacity=".05"/>
   <rect x="876" y="968.4" width="364" height="106.3" fill="#FFFFFF" stroke="#E1E0D9" stroke-width="1" rx="12"/>
