@@ -256,7 +256,7 @@ package LionDriverTiming {
         :>> mechanism = "RX timeout";
         :>> code = "opendbc_repo/opendbc/safety/safety.h:321-344; called at 1 Hz from panda/board/main.c:241-242";
         :>> derivation = "threshold max(10 × period, 1 s); for the Corolla messages 10 × period is 120 ms (0xAA 83 Hz), 200 ms (0x260 50 Hz), 303 ms (0x1D2 33 Hz), 250 ms (0x226 40 Hz), so 1 s applies; evaluated once per second";
-        :>> worstCase = "1–2 s (at 8b8c6ae). *Status 2026-10-12:* 5 nominal periods (rx_timeout_periods, opendbc de80b63), evaluated by the 100 Hz safety task (panda 171fcdf): ≤ 0.162 s for 0x1D2 (5 × 30.3 ms + one 10 ms task period, 161.5 ms; §3.10); the reference build adds 0x262 (25 Hz, ≈ 0.21 s, slightly above TSR-401's 0.2 s if the real rate is 25 Hz) and 0x1D3 (33 Hz, ≈ 0.162 s) (opendbc 21d8dd8). Not verified on hardware";
+        :>> worstCase = "1–2 s (at 8b8c6ae). *Status 2026-10-12:* 5 nominal periods (rx_timeout_periods, opendbc de80b63), evaluated by the 100 Hz safety task (panda 171fcdf): ≤ 0.162 s for 0x1D2 (5 × 30.3 ms + one 10 ms task period, 161.5 ms; §3.10); the reference build adds 0x262 (25 Hz, ≈ 0.21 s, slightly above TSR-401's 0.2 s if the real rate is 25 Hz; decided: measure the rate first, WP-S-05 OI-7, DQ-431 A) and 0x1D3 (33 Hz, ≈ 0.162 s) (opendbc 21d8dd8). Not verified on hardware";
     }
     item <'T-02'> t_02 : CodeDerivedTime {
         doc /* RX checksum / quality */

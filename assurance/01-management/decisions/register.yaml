@@ -6451,7 +6451,9 @@
     yours.**
   reversibility: easy
   blocks: "TSR-401 'met by design' for 0x262 (WP-S-04 T-01, §5 RX loss row); a green virtual HIL run of test_12 [EPS_STATUS]; M-04 on the real bench"
+  gate: G2
   decider: lead
+  asked: 2026-11-01
   options:
     - key: A
       recommended: true
@@ -6464,4 +6466,6 @@
       title: "Accept 0.21 s for 0x262 and record the 10 ms overrun against the FTTI margin"
       detail: "No firmware change. Cost: TSR-401 gets a stated exception, which needs a justification that the 10 ms fits inside the FTTI for the steering hazards."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md T-01, §5 RX loss row", "assurance/03-system/WP-S-05-hsi-specification.md §5 0x262 row, OI-7", "opendbc_repo/opendbc/safety/modes/toyota.h (0x262 RX check, 25U)", "panda/tests/hitl/test_12_rx_timeout.py test_timeout_per_message", "assurance/sim/vhil"]
-  status: queued
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-01, note: "go with A on DQ-431, measure the rate first"}
+  applied: {ref: "jherrodthomas/LionDriver#550", record: "WP-S-04 v0.29 T-01 and §5 RX loss row; WP-S-05 v0.22 OI-7; assurance/sim/vhil README §3 and run_vhil.py KNOWN_OPEN", at: 2026-11-01}
