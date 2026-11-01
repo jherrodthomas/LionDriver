@@ -1,3 +1,5 @@
+from unittest import mock
+
 from opendbc.car.structs import car
 from opendbc.car.toyota.values import CAR as TOYOTA
 from openpilot.cereal import log
@@ -24,7 +26,9 @@ class TestPandaSupervisionCallSites(OpenpilotTestCase):
     self.sd.initialized = True
     self.sd.CS_prev = car.CarState.new_message()
     sm = self.sd.sm
-    sm.update = lambda timeout=0: None  # the test sets the received data
+    patcher = mock.patch.object(sm, 'update')  # the test sets the received data
+    patcher.start()
+    self.addCleanup(patcher.stop)
     sm.frame = 100  # under 10 s: the safety-mode check of the same event is not armed yet
     sm.data['pandaStates'] = [log.PandaState.new_message()]
     self.ps.safetyModel = car.CarParams.SafetyModel.toyota
