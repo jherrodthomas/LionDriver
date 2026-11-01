@@ -5152,6 +5152,7 @@
   blocks: "WP-S-03 OI-1 (G3); WP-S-03 §6 DC column; WP-W-04 coverage method"
   gate: G3
   decider: lead
+  asked: 2026-11-01
   options:
     - key: A
       recommended: true
@@ -5164,7 +5165,8 @@
       title: "Leave §6 as it is for now"
       detail: "No work now. Cost: WP-S-03 OI-1 stays open, and the targets of the software mechanisms remain unconfirmable at G3."
   sources: ["assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §6, OI-1", "assurance/05-software/WP-W-04-software-safety-analysis.md §2", "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §4, §6.3"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-11-01}
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"

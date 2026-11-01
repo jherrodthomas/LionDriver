@@ -19,7 +19,7 @@
 <text x="294.7" y="168" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
 <text x="54" y="188" font-size="11.5" fill="#0F172A" font-weight="600">Torque magnitude limit (speed-dependent)</text>
 <text x="54" y="203" font-size="10" fill="#475569">Covers: excessive torque command from SoC</text>
-<text x="54" y="242" font-size="9.5" fill="#475569">TSR 101, 102 · DC high (for SoC command faults)</text>
+<text x="54" y="242" font-size="9.5" fill="#475569">TSR 101, 102 · DC — (software): WP-W-04 coverage class…</text>
 <rect x="343" y="148" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="343" y="148" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
 <text x="357" y="168" font-size="12" fill="#0F172A" font-weight="700">SM-02</text>
@@ -27,7 +27,7 @@
 <text x="582.5" y="168" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
 <text x="357" y="188" font-size="11.5" fill="#0F172A" font-weight="600">Torque rate and RT-window limit</text>
 <text x="357" y="203" font-size="10" fill="#475569">Covers: high-rate torque command</text>
-<text x="357" y="242" font-size="9.5" fill="#475569">TSR 103 · DC high</text>
+<text x="357" y="242" font-size="9.5" fill="#475569">TSR 103 · DC — (software): WP-W-04 coverage class and…</text>
 <rect x="646" y="148" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="646" y="148" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
 <text x="660" y="168" font-size="12" fill="#0F172A" font-weight="700">SM-03</text>
@@ -35,7 +35,7 @@
 <text x="885.5" y="168" font-size="9.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">implemented</text>
 <text x="660" y="188" font-size="11.5" fill="#0F172A" font-weight="600">Measured-torque tracking</text>
 <text x="660" y="203" font-size="10" fill="#475569">Covers: command diverging from EPS output</text>
-<text x="660" y="242" font-size="9.5" fill="#475569">TSR 104 · DC medium (depends on 0x260 integrity)</text>
+<text x="660" y="242" font-size="9.5" fill="#475569">TSR 104 · DC — (software): WP-W-04 coverage class and…</text>
 <rect x="949" y="148" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="949" y="148" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="963" y="168" font-size="12" fill="#0F172A" font-weight="700">SM-04</text>
@@ -45,7 +45,7 @@
 <text x="963" y="203" font-size="11.5" fill="#0F172A" font-weight="600">request)</text>
 <text x="963" y="218" font-size="10" fill="#475569">Covers: actuation when not engaged; no release on</text>
 <text x="963" y="231" font-size="10" fill="#475569">driver action</text>
-<text x="963" y="242" font-size="9.5" fill="#475569">TSR 105–107, 203, 301–306 · DC high</text>
+<text x="963" y="242" font-size="9.5" fill="#475569">TSR 105–107, 203, 301–306 · DC — (software): WP-W-04…</text>
 <rect x="40" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="40" y="264" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="54" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-05</text>
@@ -53,7 +53,7 @@
 <text x="267.2" y="284" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">not implemented</text>
 <text x="54" y="304" font-size="11.5" fill="#0F172A" font-weight="600">Driver-torque override monitor</text>
 <text x="54" y="319" font-size="10" fill="#475569">Covers: actuation opposing driver</text>
-<text x="54" y="358" font-size="9.5" fill="#475569">TSR 304, 628 · DC medium</text>
+<text x="54" y="358" font-size="9.5" fill="#475569">TSR 304, 628 · DC — (software): WP-W-04 coverage class…</text>
 <rect x="343" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="343" y="264" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="357" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-06</text>
@@ -61,7 +61,7 @@
 <text x="597.7" y="284" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
 <text x="357" y="304" font-size="11.5" fill="#0F172A" font-weight="600">EPS status monitor</text>
 <text x="357" y="319" font-size="10" fill="#475569">Covers: EPS LKA fault while engaged</text>
-<text x="357" y="358" font-size="9.5" fill="#475569">TSR 110, 607 · DC medium</text>
+<text x="357" y="358" font-size="9.5" fill="#475569">TSR 110, 607 · DC — (software): WP-W-04 coverage class…</text>
 <rect x="646" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="646" y="264" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="660" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-07</text>
@@ -69,7 +69,7 @@
 <text x="900.7" y="284" font-size="9.5" fill="#92400E" font-weight="700" text-anchor="middle">partly</text>
 <text x="660" y="304" font-size="11.5" fill="#0F172A" font-weight="600">Longitudinal bounds and jerk limits</text>
 <text x="660" y="319" font-size="10" fill="#475569">Covers: excessive accel/decel or onset</text>
-<text x="660" y="358" font-size="9.5" fill="#475569">TSR 201–207 · DC high</text>
+<text x="660" y="358" font-size="9.5" fill="#475569">TSR 201–207 · DC — (software): WP-W-04 coverage class…</text>
 <rect x="949" y="264" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="949" y="264" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="963" y="284" font-size="12" fill="#0F172A" font-weight="700">SM-08</text>
@@ -77,7 +77,7 @@
 <text x="1176.2" y="284" font-size="9.5" fill="#991B1B" font-weight="700" text-anchor="middle">not implemented</text>
 <text x="963" y="304" font-size="11.5" fill="#0F172A" font-weight="600">Active safe-state frame</text>
 <text x="963" y="319" font-size="10" fill="#475569">Covers: torque persisting after rejection</text>
-<text x="963" y="358" font-size="9.5" fill="#475569">TSR 108, 109 · DC high</text>
+<text x="963" y="358" font-size="9.5" fill="#475569">TSR 108, 109 · DC — (software): WP-W-04 coverage class…</text>
 <rect x="40" y="380" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="40" y="380" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
 <text x="54" y="400" font-size="12" fill="#0F172A" font-weight="700">SM-09</text>
@@ -111,7 +111,7 @@
 <text x="1034" y="400" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-03b</text>
 <text x="963" y="420" font-size="11.5" fill="#0F172A" font-weight="600">Command-frame freshness</text>
 <text x="963" y="435" font-size="10" fill="#475569">Covers: SoC stops sending commands</text>
-<text x="963" y="474" font-size="9.5" fill="#475569">TSR 408, 614 · DC high</text>
+<text x="963" y="474" font-size="9.5" fill="#475569">TSR 408, 614 · DC — (software): WP-W-04 coverage class…</text>
 <rect x="40" y="496" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="40" y="496" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
 <text x="54" y="516" font-size="12" fill="#0F172A" font-weight="700">SM-24</text>
@@ -131,7 +131,7 @@
 <text x="357" y="551" font-size="11.5" fill="#0F172A" font-weight="600">SoC "not engaged"</text>
 <text x="357" y="566" font-size="10" fill="#475569">Covers: engagement state of the envelope differs from</text>
 <text x="357" y="579" font-size="10" fill="#475569">the PCM or from the SoC</text>
-<text x="357" y="590" font-size="9.5" fill="#475569">TSR 307(a), 309 · DC high</text>
+<text x="357" y="590" font-size="9.5" fill="#475569">TSR 307(a), 309 · DC — (software): WP-W-04 coverage…</text>
 <rect x="646" y="496" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="646" y="496" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="660" y="516" font-size="12" fill="#0F172A" font-weight="700">SM-35</text>
@@ -152,7 +152,7 @@
 <text x="963" y="536" font-size="11.5" fill="#0F172A" font-weight="600">PCS and DSU message TX gate</text>
 <text x="963" y="551" font-size="10" fill="#475569">Covers: item originates or alters frames used by the</text>
 <text x="963" y="564" font-size="10" fill="#475569">stock PCS</text>
-<text x="963" y="590" font-size="9.5" fill="#475569">TSR 705 · DC high (when implemented)</text>
+<text x="963" y="590" font-size="9.5" fill="#475569">TSR 705 · DC — (software): WP-W-04 coverage class and…</text>
 <rect x="40" y="612" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="40" y="612" width="5" height="104" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
 <text x="54" y="632" font-size="12" fill="#0F172A" font-weight="700">SM-39</text>
@@ -161,7 +161,7 @@
 <text x="54" y="652" font-size="11.5" fill="#0F172A" font-weight="600">Per-ID TX rate supervision</text>
 <text x="54" y="667" font-size="10" fill="#475569">Covers: actuation frames sent faster than nominal</text>
 <text x="54" y="680" font-size="10" fill="#475569">(burst, duplicated frames)</text>
-<text x="54" y="706" font-size="9.5" fill="#475569">TSR 518 · DC medium</text>
+<text x="54" y="706" font-size="9.5" fill="#475569">TSR 518 · DC — (software): WP-W-04 coverage class and…</text>
 <rect x="30" y="746" width="1220" height="276" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
 <text x="46" y="772" font-size="14" fill="#0F172A" font-weight="700">E-03b · Panda platform firmware</text>
 <text x="317.3" y="772" font-size="11" fill="#475569">main loop, drivers, comms handlers, fault handling</text>
@@ -183,7 +183,7 @@
 <text x="357" y="826" font-size="11.5" fill="#0F172A" font-weight="600">SPI CRC + sequence counter + bounds</text>
 <text x="357" y="841" font-size="11.5" fill="#0F172A" font-weight="600">checks</text>
 <text x="357" y="856" font-size="10" fill="#475569">Covers: corrupted/stale/oversized SoC transfers</text>
-<text x="357" y="880" font-size="9.5" fill="#475569">TSR 410–413 · DC high (with CRC-16/32)</text>
+<text x="357" y="880" font-size="9.5" fill="#475569">TSR 410–413 · DC high (with CRC-32C)</text>
 <rect x="646" y="786" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="646" y="786" width="5" height="104" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
 <text x="660" y="806" font-size="12" fill="#0F172A" font-weight="700">SM-16</text>
@@ -200,7 +200,7 @@
 <text x="963" y="826" font-size="11.5" fill="#0F172A" font-weight="600">Configuration lock and command gating</text>
 <text x="963" y="841" font-size="10" fill="#475569">Covers: SoC selects wrong mode/param; debug</text>
 <text x="963" y="854" font-size="10" fill="#475569">commands</text>
-<text x="963" y="880" font-size="9.5" fill="#475569">TSR 511–514, 619, 620 · DC high</text>
+<text x="963" y="880" font-size="9.5" fill="#475569">TSR 511–514, 619, 620 · DC — (software): WP-W-04…</text>
 <rect x="40" y="902" width="291" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
 <rect x="40" y="902" width="5" height="104" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="54" y="922" font-size="12" fill="#0F172A" font-weight="700">SM-23</text>
@@ -448,17 +448,17 @@
 <text x="662.1" y="1972" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">+E-0x</text>
 <text x="693.1" y="1972" font-size="11" fill="#0F172A">also carried by that element</text>
 <text x="40" y="1994" font-size="11" fill="#475569">Status is the latest in §6 (the reference build where it is given). Nothing is verified: implemented means the code does it, drawn blue, not green. Mixed statuses (Impl / Partial) count as partly.</text>
-<text x="40" y="2010" font-size="11" fill="#475569">DC targets are targets for the FMEDA (WP-H-03) and software safety analysis (WP-W-04), not demonstrated. Generated by fig_s03_mechanisms.py from WP-S-03 §3.1 and §6.</text>
+<text x="40" y="2010" font-size="11" fill="#475569">DC targets are FMEDA targets for hardware mechanisms; software-only checks use a WP-W-04 class (DQ-343 A). Not demonstrated. Generated by fig_s03_mechanisms.py from WP-S-03 §3.1 and §6.</text>
 <g class="terms">
 <text x="40" y="2032" font-size="10.5" fill="#475569">Terms: ABS anti-lock braking system; on the Toyota, the ABS/VSC ECU that also runs stability control · ACC adaptive cruise control · AEB automatic emergency braking · AOU-nn assumption of use (WP-C-01 §7); an R</text>
 <text x="40" y="2046.5" font-size="10.5" fill="#475569">suffix marks the FSC's refined version · ASIL Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · BOR brown-out reset (MCU supply monitor) · CAN controller area network: the vehicle's data</text>
-<text x="40" y="2061" font-size="10.5" fill="#475569">bus · CRC cyclic redundancy check · CSS clock security system (MCU clock monitor) · DC diagnostic coverage: the share of faults a safety mechanism detects · DM driver monitoring · DSU driving support unit (Toyota's</text>
-<text x="40" y="2075.5" font-size="10.5" fill="#475569">radar cruise module) · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · ECC error-correcting code (memory) · EPS electric power steering · FCW forward collision warning · FDCAN CAN with flexible data rate (the</text>
-<text x="40" y="2090" font-size="10.5" fill="#475569">MCU's CAN controller) · FMEDA failure modes, effects and diagnostic analysis (hardware metrics) · HMI human-machine interface: display, sounds, cluster · LKA lane keeping assist · MCU microcontroller: the panda</text>
-<text x="40" y="2104.5" font-size="10.5" fill="#475569">safety processor (STM32H7) · ML machine learning · MPU memory protection unit · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · PVD</text>
-<text x="40" y="2119" font-size="10.5" fill="#475569">programmable voltage detector (MCU supply monitor) · QM quality managed: no ASIL; ordinary quality processes suffice · RAM random-access memory · RT real time · RX receive · SM-nn safety mechanism (TSC §6) · SoC</text>
-<text x="40" y="2133.5" font-size="10.5" fill="#475569">system on chip: the comma device's main processor, running openpilot (QM) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SPI serial peripheral interface (the link between</text>
-<text x="40" y="2148" font-size="10.5" fill="#475569">SoC and MCU) · TSR-nn technical safety requirement (WP-S-02) · TX transmit · VSC vehicle stability control (Toyota's stability system) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
-<text x="40" y="2162.5" font-size="10.5" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="40" y="2061" font-size="10.5" fill="#475569">bus · CRC cyclic redundancy check · CSS clock security system (MCU clock monitor) · DC diagnostic coverage: the share of faults a safety mechanism detects · DM driver monitoring · DQ-nn decision of the project lead</text>
+<text x="40" y="2075.5" font-size="10.5" fill="#475569">(decision register) · DSU driving support unit (Toyota's radar cruise module) · E-nn element of the item (WP-C-01 §3.1), E-01…E-06 · ECC error-correcting code (memory) · EPS electric power steering · FCW forward</text>
+<text x="40" y="2090" font-size="10.5" fill="#475569">collision warning · FDCAN CAN with flexible data rate (the MCU's CAN controller) · FMEDA failure modes, effects and diagnostic analysis (hardware metrics) · HMI human-machine interface: display, sounds, cluster ·</text>
+<text x="40" y="2104.5" font-size="10.5" fill="#475569">LKA lane keeping assist · MCU microcontroller: the panda safety processor (STM32H7) · ML machine learning · MPU memory protection unit · PCM powertrain control module (engine and drive) · PCS pre-collision system:</text>
+<text x="40" y="2119" font-size="10.5" fill="#475569">Toyota's stock collision warning and braking · PVD programmable voltage detector (MCU supply monitor) · QM quality managed: no ASIL; ordinary quality processes suffice · RAM random-access memory · RT real time · RX</text>
+<text x="40" y="2133.5" font-size="10.5" fill="#475569">receive · SM-nn safety mechanism (TSC §6) · SoC system on chip: the comma device's main processor, running openpilot (QM) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SPI</text>
+<text x="40" y="2148" font-size="10.5" fill="#475569">serial peripheral interface (the link between SoC and MCU) · TSR-nn technical safety requirement (WP-S-02) · TX transmit · VSC vehicle stability control (Toyota's stability system) · WP-nn work product, e.g.</text>
+<text x="40" y="2162.5" font-size="10.5" fill="#475569">WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
 </svg>
