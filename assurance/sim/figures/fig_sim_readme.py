@@ -619,19 +619,19 @@ OPEN = [
   ("Needs another work product", "card", [
     ("SIM-OI-2", "Driver values from WP-C-08 §8; the SoC take-over alert with layer 3")]),
   ("Simulation-track work", "card", [
-    ("SIM-OI-3", "LSI tolerance and the other hang types (VS-FI-17)"),
     ("SIM-OI-4", "Layer 3 end to end; the search over MetaDrive"),
     ("SIM-OI-5", "KS-04 lane split and merge")]),
   ("Outside the project", "plan", [
     ("SIM-OI-6", "Scenic and VerifAI, if rv-ltl gets a licence")]),
-  ("Closed", "plan", [("SIM-OI-9", "Reachability pilot done; bound kept in numpy")]),
+  ("Closed", "plan", [("SIM-OI-3", "LSI tolerance and the other hang types (VS-FI-17) modelled"),
+                      ("SIM-OI-9", "Reachability pilot done; bound kept in numpy")]),
 ]
 SRC["fig-sim-r7-open.svg"] = [
   "The EPS reaction to lost STEERING_LKA frames decides most layer-1 results", "Replace both cases with M-02",
   "L2 column parameters (§3.5) are assumed", "replace them with M-02 measurements",
   "on the reference Corolla (now in WP-S-04 M-08); they decide whether the host's `MAX_USER_TORQUE` rule meets SG-05",
   "Replace the driver assumptions with WP-C-08 §8 values; add the SoC take-over alert",
-  "Model the LSI tolerance and the other hang types of WP-V-05 VS-FI-17", "Layer 3 end to end",
+  "**Closed 2026-11-01:** the LSI tolerance and the other hang types of WP-V-05 VS-FI-17", "Layer 3 end to end",
   "the search over MetaDrive", "KS-04 (lane split and merge)", "Scenic and VerifAI if rv-ltl is published with a licence",
   "**Closed 2026-10-17:** reachability pilot (§3.6) done",
 ]
@@ -660,8 +660,8 @@ def fig_open() -> str:
     y += 18
   return svg(int(y), "Simulation track open items grouped by what closes them",
              "Three open items need measurements on the reference Corolla: SIM-OI-1 EPS reaction to lost frames (M-02), "
-             "SIM-OI-7 column parameters (M-02), SIM-OI-8 torque scales (M-08). SIM-OI-2 needs WP-C-08. SIM-OI-3, 4 and "
-             "5 are simulation-track work. SIM-OI-6 waits on an outside licence. SIM-OI-9 is closed.", b)
+             "SIM-OI-7 column parameters (M-02), SIM-OI-8 torque scales (M-08). SIM-OI-2 needs WP-C-08. SIM-OI-4 and 5 "
+             "are simulation-track work. SIM-OI-6 waits on an outside licence. SIM-OI-3 and 9 are closed.", b)
 
 
 FIGURES = {
