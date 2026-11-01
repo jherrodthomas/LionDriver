@@ -39,12 +39,12 @@ and the 1 Hz siren countdown (T-07).
 ## 3. Known open items
 
 `run_vhil.py` keeps a list, `KNOWN_OPEN`, of failures that show an open design question. Each names its register entry.
-They still run and are reported as `FAIL (open)`; they do not fail the job, because the test cannot pass until the
-lead has decided. Any other failure fails the job. Remove the entry when the decision is applied.
+They still run and are reported as `FAIL (open)`; they do not fail the job, because the test cannot pass until its open
+item is settled. Any other failure fails the job. Remove the entry when it is.
 
 | Test | Why it fails | Entry |
 |---|---|---|
-| `test_12` `test_timeout_per_message [EPS_STATUS]` | `0x262` at 25 Hz is detected within 5 periods plus one task period, 0.21 s; TSR-401 asks < 0.2 s (WP-S-04 T-01). Measured 0.202–0.204 s in most runs | DQ-431 |
+| `test_12` `test_timeout_per_message [EPS_STATUS]` | `0x262` at 25 Hz is detected within 5 periods plus one task period, 0.21 s; TSR-401 asks < 0.2 s (WP-S-04 T-01). Measured 0.202–0.204 s in most runs. Decided: measure the real rate first (WP-S-05 OI-7) | DQ-431 A |
 
 ## 4. What the first runs found
 

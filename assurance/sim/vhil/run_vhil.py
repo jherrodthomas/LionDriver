@@ -28,11 +28,11 @@ ROOT = HERE.parents[2]
 MODULES = ["test_12_rx_timeout", "test_13_eps_fault", "test_14_tx_rate", "test_15_heartbeat_siren",
            "test_16_engaged_mismatch_siren"]
 # Failures that show an open item of the firmware design, each with its register entry. They still run and are
-# reported as FAIL; they do not fail the run, because the test cannot pass until the lead has decided. Remove the
-# entry when the decision is applied. Any other failure fails the run.
+# reported as FAIL; they do not fail the run, because the test cannot pass until its open item is settled. Remove the
+# entry when it is. Any other failure fails the run.
 KNOWN_OPEN = {
   "test_12_rx_timeout.TestToyotaRxTimeout.test_timeout_per_message [EPS_STATUS]":
-    "DQ-431: 0x262 at 25 Hz is detected within 0.21 s, TSR-401 asks 0.2 s (WP-S-04 T-01); fails in most runs (phase of the last frame)",
+    "DQ-431 A: 0x262 at 25 Hz is detected within 0.21 s against TSR-401's 0.2 s; open until its rate is measured",
 }
 
 
