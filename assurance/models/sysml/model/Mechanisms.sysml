@@ -12,7 +12,7 @@ package LionDriverMechanisms {
     action <'SM-01'> torqueMagnitudeLimit : SafetyMechanism {
         doc /* Torque magnitude limit (speed-dependent) */
         :>> covers = "excessive torque command from SoC";
-        :>> dcTarget = "high (for SoC command faults)";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high (for SoC command faults))";
         :>> tsr = ("TSR-101", "TSR-102");
         :>> element = "E-03a";
         :>> status = "Partial";
@@ -21,7 +21,7 @@ package LionDriverMechanisms {
     action <'SM-02'> torqueRateLimit : SafetyMechanism {
         doc /* Torque rate and RT-window limit */
         :>> covers = "high-rate torque command";
-        :>> dcTarget = "high";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high)";
         :>> tsr = "TSR-103";
         :>> element = "E-03a";
         :>> status = "Impl";
@@ -30,7 +30,7 @@ package LionDriverMechanisms {
     action <'SM-03'> measuredTorqueTracking : SafetyMechanism {
         doc /* Measured-torque tracking */
         :>> covers = "command diverging from EPS output";
-        :>> dcTarget = "medium (depends on `0x260` integrity)";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was medium (depends on `0x260` integrity))";
         :>> tsr = "TSR-104";
         :>> element = "E-03a";
         :>> status = "Impl";
@@ -39,7 +39,7 @@ package LionDriverMechanisms {
     action <'SM-04'> authorityGating : SafetyMechanism {
         doc /* Authority gating (PCM edge, brake, gas, steer request) */
         :>> covers = "actuation when not engaged; no release on driver action";
-        :>> dcTarget = "high";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high)";
         :>> tsr = ("TSR-105", "TSR-106", "TSR-107", "TSR-203", "TSR-301", "TSR-302", "TSR-303", "TSR-304", "TSR-305", "TSR-306");
         :>> element = "E-03a";
         :>> status = "Impl/Partial";
@@ -48,7 +48,7 @@ package LionDriverMechanisms {
     action <'SM-05'> driverTorqueOverride : SafetyMechanism {
         doc /* Driver-torque override monitor */
         :>> covers = "actuation opposing driver";
-        :>> dcTarget = "medium";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was medium)";
         :>> tsr = ("TSR-304", "TSR-628");
         :>> element = "E-03a";
         :>> status = "New";
@@ -57,7 +57,7 @@ package LionDriverMechanisms {
     action <'SM-06'> epsStatusMonitor : SafetyMechanism {
         doc /* EPS status monitor */
         :>> covers = "EPS LKA fault while engaged";
-        :>> dcTarget = "medium";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was medium)";
         :>> tsr = ("TSR-110", "TSR-607");
         :>> element = "E-03a";
         :>> status = "New at baseline; **Partial** 2026-10-12 (reference build: LKA refused on LKA_STATE fault codes, `epsFault` reported; code set unconfirmed; not verified)";
@@ -66,7 +66,7 @@ package LionDriverMechanisms {
     action <'SM-07'> longitudinalBounds : SafetyMechanism {
         doc /* Longitudinal bounds and jerk limits */
         :>> covers = "excessive accel/decel or onset";
-        :>> dcTarget = "high";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high)";
         :>> tsr = ("TSR-201", "TSR-202", "TSR-203", "TSR-204", "TSR-205", "TSR-206", "TSR-207");
         :>> element = "E-03a";
         :>> status = "Partial";
@@ -75,7 +75,7 @@ package LionDriverMechanisms {
     action <'SM-08'> activeSafeStateFrame : SafetyMechanism {
         doc /* Active safe-state frame */
         :>> covers = "torque persisting after rejection";
-        :>> dcTarget = "high";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high)";
         :>> tsr = ("TSR-108", "TSR-109");
         :>> element = "E-03a";
         :>> status = "New";
@@ -120,7 +120,7 @@ package LionDriverMechanisms {
     action <'SM-13'> commandFreshness : SafetyMechanism {
         doc /* Command-frame freshness */
         :>> covers = "SoC stops sending commands";
-        :>> dcTarget = "high";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high)";
         :>> tsr = ("TSR-408", "TSR-614");
         :>> element = "E-03a/b";
         :>> status = "New at baseline; **Partial** 2026-10-16 (TSR-408 in the reference build, opendbc `273f44e`, not verified on hardware; TSR-614 not met)";
@@ -129,7 +129,7 @@ package LionDriverMechanisms {
     action <'SM-14'> spiIntegrity : SafetyMechanism {
         doc /* SPI CRC + sequence counter + bounds checks */
         :>> covers = "corrupted/stale/oversized SoC transfers";
-        :>> dcTarget = "high (with CRC-16/32)";
+        :>> dcTarget = "high (with CRC-32C)";
         :>> tsr = ("TSR-410", "TSR-411", "TSR-412", "TSR-413");
         :>> element = "E-03b";
         :>> status = "Partial";
@@ -201,7 +201,7 @@ package LionDriverMechanisms {
     action <'SM-22'> configurationLock : SafetyMechanism {
         doc /* Configuration lock and command gating */
         :>> covers = "SoC selects wrong mode/param; debug commands";
-        :>> dcTarget = "high";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high)";
         :>> tsr = ("TSR-511", "TSR-512", "TSR-513", "TSR-514", "TSR-619", "TSR-620");
         :>> element = "E-03b";
         :>> status = "New at baseline; **Partial** 2026-10-12 (TSR-512/513 in the reference build; 511, 514, 619, 620 open)";
@@ -264,7 +264,7 @@ package LionDriverMechanisms {
     action <'SM-29'> engagementFollowsCruise : SafetyMechanism {
         doc /* Engagement follows PCM cruise; revoke on SoC "not engaged" */
         :>> covers = "engagement state of the envelope differs from the PCM or from the SoC";
-        :>> dcTarget = "high";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high)";
         :>> tsr = ("TSR-307(a)", "TSR-309");
         :>> element = "E-03a/E-03b";
         :>> status = "Impl (309) / Partial (307(a): 2–3 s)";
@@ -327,7 +327,7 @@ package LionDriverMechanisms {
     action <'SM-36'> pcsTxGate : SafetyMechanism {
         doc /* PCS and DSU message TX gate */
         :>> covers = "item originates or alters frames used by the stock PCS";
-        :>> dcTarget = "high (when implemented)";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was high (when implemented))";
         :>> tsr = "TSR-705";
         :>> element = "E-03a";
         :>> status = "**Not met** (GAP-42) at baseline; **Met (reference build)** 2026-10-12 (other builds keep `0x411`; not verified on hardware)";
@@ -354,7 +354,7 @@ package LionDriverMechanisms {
     action <'SM-39'> txRateSupervision : SafetyMechanism {
         doc /* Per-ID TX rate supervision */
         :>> covers = "actuation frames sent faster than nominal (burst, duplicated frames)";
-        :>> dcTarget = "medium";
+        :>> dcTarget = "— (software): WP-W-04 coverage class and verification, DQ-343 A (was medium)";
         :>> tsr = "TSR-518";
         :>> element = "E-03a";
         :>> status = "New at baseline; **Impl (reference build)** 2026-10-12 (budgets to be confirmed on logs; not verified)";
