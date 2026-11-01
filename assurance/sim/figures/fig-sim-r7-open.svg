@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="762" viewBox="0 0 640 762" role="img" aria-labelledby="t d">
 <title id="t">Simulation track open items grouped by what closes them</title>
-<desc id="d">Three open items need measurements on the reference Corolla: SIM-OI-1 EPS reaction to lost frames (M-02), SIM-OI-7 column parameters (M-02), SIM-OI-8 torque scales (M-08). SIM-OI-2 needs WP-C-08. SIM-OI-4 and 5 are simulation-track work. SIM-OI-6 waits on an outside licence. SIM-OI-3 and 9 are closed.</desc>
+<desc id="d">Three open items need measurements on the reference Corolla: SIM-OI-1 EPS reaction to lost frames (M-02), SIM-OI-7 column parameters (M-02), SIM-OI-8 torque scales (M-08). SIM-OI-2 needs WP-C-08. SIM-OI-4 is simulation-track work. SIM-OI-6 waits on an outside licence. SIM-OI-3, 5 and 9 are closed.</desc>
 <style>
 svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --card:#f7f7f5;
       --real:#2a78d6; --real-bg:#e9f1fb; --amb:#c98500; --amb-bg:#fdf4dc; --bad:#e34948; --bad-bg:#fdecec;
@@ -64,19 +64,20 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <rect x="24" y="430" width="592" height="38" rx="8" class="card"/>
 <text x="38" y="454" class="tb">SIM-OI-4</text>
 <text x="142" y="454" class="t">Layer 3 end to end; the search over MetaDrive</text>
-<rect x="24" y="476" width="592" height="38" rx="8" class="card"/>
-<text x="38" y="500" class="tb">SIM-OI-5</text>
-<text x="142" y="500" class="t">KS-04 lane split and merge</text>
-<text x="24" y="544" class="t2b">OUTSIDE THE PROJECT</text>
-<rect x="24" y="554" width="592" height="38" rx="8" class="plan"/>
-<text x="38" y="578" class="tb">SIM-OI-6</text>
-<text x="142" y="578" class="t">Scenic and VerifAI, if rv-ltl gets a licence</text>
-<text x="24" y="622" class="t2b">CLOSED</text>
-<rect x="24" y="632" width="592" height="58" rx="8" class="plan"/>
-<text x="38" y="656" class="tb">SIM-OI-3</text>
-<text x="142" y="656" class="t">LSI tolerance and the other hang types (VS-FI-17)</text>
-<text x="142" y="676" class="t">modelled</text>
-<line x1="38" y1="651" x2="110" y2="651" class="strike"/>
+<text x="24" y="498" class="t2b">OUTSIDE THE PROJECT</text>
+<rect x="24" y="508" width="592" height="38" rx="8" class="plan"/>
+<text x="38" y="532" class="tb">SIM-OI-6</text>
+<text x="142" y="532" class="t">Scenic and VerifAI, if rv-ltl gets a licence</text>
+<text x="24" y="576" class="t2b">CLOSED</text>
+<rect x="24" y="586" width="592" height="58" rx="8" class="plan"/>
+<text x="38" y="610" class="tb">SIM-OI-3</text>
+<text x="142" y="610" class="t">LSI tolerance and the other hang types (VS-FI-17)</text>
+<text x="142" y="630" class="t">modelled</text>
+<line x1="38" y1="605" x2="110" y2="605" class="strike"/>
+<rect x="24" y="652" width="592" height="38" rx="8" class="plan"/>
+<text x="38" y="676" class="tb">SIM-OI-5</text>
+<text x="142" y="676" class="t">KS-04 lane split and merge written</text>
+<line x1="38" y1="671" x2="110" y2="671" class="strike"/>
 <rect x="24" y="698" width="592" height="38" rx="8" class="plan"/>
 <text x="38" y="722" class="tb">SIM-OI-9</text>
 <text x="142" y="722" class="t">Reachability pilot done; bound kept in numpy</text>

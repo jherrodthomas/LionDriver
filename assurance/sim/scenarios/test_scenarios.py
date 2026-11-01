@@ -48,6 +48,38 @@ class TestScenarios(unittest.TestCase):
     self.assertLess(p["StartSpeed"], generate.ODD_SPEED)
     self.assertGreater(p["EndSpeed"], generate.ODD_SPEED)
 
+  def test_ks04_lanes_open_and_end(self):
+    """The exit lane grows from 0 to a full lane over the taper; lane -3 of the merge shrinks from a full lane to 0."""
+    import xml.etree.ElementTree as ET
+
+    def width_at(path, road, lane, s):
+      rd = next(r for r in ET.parse(path).getroot().iter("road") if r.get("id") == road)
+      secs = [ls for ls in rd.iter("laneSection") if float(ls.get("s")) <= s]
+      ls = secs[-1]
+      ln = next((x for x in ls.iter("lane") if int(x.get("id")) == lane), None)
+      if ln is None:
+        return 0.0
+      w = ln.find("width")
+      ds = s - float(ls.get("s"))
+      return sum(float(w.get(k)) * ds ** n for n, k in enumerate("abcd"))
+    sc = generate.SCENARIOS_BY_ID["KS-04"]
+    for fid, road in generate.files_of(sc):
+      path = HERE / "xodr" / f"{fid}.xodr"
+      t0, t1 = road["taper_start"], road["taper_start"] + road["taper"]
+      if road["kind"] == "exit":
+        self.assertAlmostEqual(width_at(path, "0", -4, t0), 0.0)
+        self.assertAlmostEqual(width_at(path, "0", -4, t1 - 1e-9), generate.LANE_W, places=6)
+        self.assertAlmostEqual(width_at(path, "0", -4, road["nose"] - 1), generate.LANE_W)
+        mark = "broken" if road["marked"] else "none"
+        rd0 = next(r for r in ET.parse(path).getroot().iter("road") if r.get("id") == "0")
+        for ls in list(rd0.iter("laneSection"))[1:]:
+          ln = next(x for x in ls.iter("lane") if x.get("id") == "-3")
+          self.assertEqual(ln.find("roadMark").get("type"), mark, fid)
+      else:
+        self.assertAlmostEqual(width_at(path, "0", -3, t0), generate.LANE_W)
+        self.assertAlmostEqual(width_at(path, "0", -3, t1 - 1e-9), 0.0, places=6)
+        self.assertEqual(width_at(path, "0", -3, t1 + 1), 0.0)
+
   def test_plant_reads_ks01_lane_centre(self):
     road = from_xodr(HERE / "xodr" / "KS-01.xodr")
     self.assertAlmostEqual(road.lane_width, 3.7)

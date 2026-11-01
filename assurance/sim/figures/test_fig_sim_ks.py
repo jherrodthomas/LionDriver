@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for fig_sim_ks.py: one animated top view per scenario file, current, small, synthetic, looping (or a still), no script,
+"""Tests for fig_sim_ks.py: one animated top view per scenario file and the KS-04 plan view, current, small, synthetic, looping (or a still), no script,
 every listed event seen in the replay, no loop past an overlap, and each embedded in the scenarios README."""
 
 import sys
@@ -20,7 +20,7 @@ class TestKsFigures(unittest.TestCase):
 
   def test_one_figure_per_scenario_file(self):
     import generate
-    self.assertEqual(sorted(self.out), sorted(f"fig-sim-{fk.slug(sc.id)}-anim.svg" for sc in generate.SCENARIOS))
+    self.assertEqual(sorted(self.out), sorted([f"fig-sim-{fk.slug(sc.id)}-anim.svg" for sc in generate.SCENARIOS] + [fk.PLAN]))
 
   def test_every_event_happens_in_the_replay(self):
     self.assertEqual(self.errs, [])
@@ -42,7 +42,9 @@ class TestKsFigures(unittest.TestCase):
       self.assertTrue(root.find(f"{NS}desc").text.startswith("Synthetic (DSR-12)"), name)
       self.assertLess(len(content.encode()), 30_000, name)
       self.assertNotIn("<script", content, name)
-      if " Looping top view " in root.find(f"{NS}desc").text:
+      if name == fk.PLAN:
+        self.assertNotIn("<animate", content, name)
+      elif " Looping top view " in root.find(f"{NS}desc").text:
         self.assertIn('repeatCount="indefinite"', content, name)
       else:
         self.assertNotIn("<animate", content, name)

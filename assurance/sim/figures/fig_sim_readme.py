@@ -177,7 +177,7 @@ SRC["fig-sim-r1-overview.svg"] = [
   "fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4)",
   "Fault catalog: each fault with its FMEA causes, TSRs",
   "What the **real panda safety code** of the reference build does with each injected fault",
-  "Built for 10 of the 27 WP-V-03 scenarios",
+  "Built for 11 of the 27 WP-V-03 scenarios",
   "replays headless",
   "esmini plays the scenario with its own simple controllers",
   "Planned (backlog item 3)",
@@ -217,7 +217,7 @@ def fig_overview() -> str:
   # layer 1 and 2
   b += layer(L, 190, 140, "real", "LAYER 1", "Plant model", "Built", "f-real",
              ["real panda safety code", "+ Corolla single-track plant", "EPS, PCM, driver: assumed"])
-  b += layer(Rx, 190, 140, "card", "LAYER 2", "Known scenarios", "Built · 10 of 27", "f-model",
+  b += layer(Rx, 190, 140, "card", "LAYER 2", "Known scenarios", "Built · 11 of 27", "f-model",
              ["OpenSCENARIO + OpenDRIVE", "replayed headless in esmini", "(its own simple drivers)"])
   # layer 4 and 3
   b += [P(f"M{L + cw / 2},330 V370"), P(f"M{Rx + cw / 2},330 V370", "arrd")]
@@ -254,7 +254,7 @@ def fig_overview() -> str:
   h = oy + 116 + 24
   return svg(h, "Simulation track at a glance: four layers and the Blender scenes",
              "Synthetic (DSR-12), no evidence credit. Inputs faults.yaml and WP-V-03 feed layer 1 (plant model with the "
-             "real panda safety code, built) and layer 2 (known scenarios as OpenSCENARIO, 10 of 27 built). Layer 1 feeds "
+             "real panda safety code, built) and layer 2 (known scenarios as OpenSCENARIO, 11 of 27 built). Layer 1 feeds "
              "layer 4 (failure search and reachability bound, prototype); layer 2 and the panda code feed layer 3 "
              "(MetaDrive closed loop, planned). Plant runs or kinematic motions become scene.json, are rendered in "
              "Blender and composed into review dashboards and clips. Results rank risks and guide tests; no evidence "
@@ -271,7 +271,7 @@ LAYERS = [
    ["The real EPS, PCM and driver: they are assumptions",
     "openpilot itself: no SoC alerts, model or planner faults",
     "MCU latency, bus load, tyre limits"]),
-  ("LAYER 2", "Known scenarios as data", "Built · 10 of 27", "f-model", "card",
+  ("LAYER 2", "Known scenarios as data", "Built · 11 of 27", "f-model", "card",
    ["Each representable WP-V-03 scenario, written down unambiguously",
     "It parses and replays headless; same road and traffic as layers 1 and 3"],
    ["Any behaviour of the item: esmini drives with its own simple controllers"]),
@@ -292,7 +292,7 @@ SRC["fig-sim-r2-layers.svg"] = [
   "Anything the assumptions decide: the EPS reaction to lost frames, the torque-to-lateral-acceleration gain, the driver",
   "no SoC alert, no model or planner fault",
   "Interrupt latency and bus load on the real MCU. Tyre limits",
-  "Built for 10 of the 27 WP-V-03 scenarios",
+  "Built for 11 of the 27 WP-V-03 scenarios",
   "is written down unambiguously, parses and replays headless; the same road and traffic used by layers 1 and 3",
   "Any behaviour of the item: esmini plays the scenario with its own simple controllers",
   "Planned (backlog item 3)",
@@ -332,7 +332,7 @@ def fig_layers() -> str:
   b += legend(y + 16, [("real", "built, real code in it"), ("card", "built"), ("plan", "planned")])[0]
   return svg(int(y + 40), "What each simulation layer can and cannot show",
              "Synthetic (DSR-12), no evidence credit. Four cards, one per layer, with its status and what it can and "
-             "cannot show: layer 1 plant model (built), layer 2 known scenarios (built for 10 of 27), layer 3 MetaDrive "
+             "cannot show: layer 1 plant model (built), layer 2 known scenarios (built for 11 of 27), layer 3 MetaDrive "
              "closed loop (planned), layer 4 unknown-scenario search (prototype).", b)
 
 
@@ -619,11 +619,11 @@ OPEN = [
   ("Needs another work product", "card", [
     ("SIM-OI-2", "Driver values from WP-C-08 §8; the SoC take-over alert with layer 3")]),
   ("Simulation-track work", "card", [
-    ("SIM-OI-4", "Layer 3 end to end; the search over MetaDrive"),
-    ("SIM-OI-5", "KS-04 lane split and merge")]),
+    ("SIM-OI-4", "Layer 3 end to end; the search over MetaDrive")]),
   ("Outside the project", "plan", [
     ("SIM-OI-6", "Scenic and VerifAI, if rv-ltl gets a licence")]),
   ("Closed", "plan", [("SIM-OI-3", "LSI tolerance and the other hang types (VS-FI-17) modelled"),
+                      ("SIM-OI-5", "KS-04 lane split and merge written"),
                       ("SIM-OI-9", "Reachability pilot done; bound kept in numpy")]),
 ]
 SRC["fig-sim-r7-open.svg"] = [
@@ -632,7 +632,7 @@ SRC["fig-sim-r7-open.svg"] = [
   "on the reference Corolla (now in WP-S-04 M-08); they decide whether the host's `MAX_USER_TORQUE` rule meets SG-05",
   "Replace the driver assumptions with WP-C-08 §8 values; add the SoC take-over alert",
   "**Closed 2026-11-01:** the LSI tolerance and the other hang types of WP-V-05 VS-FI-17", "Layer 3 end to end",
-  "the search over MetaDrive", "KS-04 (lane split and merge)", "Scenic and VerifAI if rv-ltl is published with a licence",
+  "the search over MetaDrive", "**Closed 2026-11-01:** KS-04 (lane split and merge) written", "Scenic and VerifAI if rv-ltl is published with a licence",
   "**Closed 2026-10-17:** reachability pilot (§3.6) done",
 ]
 
@@ -660,8 +660,8 @@ def fig_open() -> str:
     y += 18
   return svg(int(y), "Simulation track open items grouped by what closes them",
              "Three open items need measurements on the reference Corolla: SIM-OI-1 EPS reaction to lost frames (M-02), "
-             "SIM-OI-7 column parameters (M-02), SIM-OI-8 torque scales (M-08). SIM-OI-2 needs WP-C-08. SIM-OI-4 and 5 "
-             "are simulation-track work. SIM-OI-6 waits on an outside licence. SIM-OI-3 and 9 are closed.", b)
+             "SIM-OI-7 column parameters (M-02), SIM-OI-8 torque scales (M-08). SIM-OI-2 needs WP-C-08. SIM-OI-4 is "
+             "simulation-track work. SIM-OI-6 waits on an outside licence. SIM-OI-3, 5 and 9 are closed.", b)
 
 
 FIGURES = {

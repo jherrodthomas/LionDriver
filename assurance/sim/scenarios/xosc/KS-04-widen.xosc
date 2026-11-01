@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<OpenSCENARIO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="OpenScenario.xsd">
+    <FileHeader description="KS-04 Lane split, exit gore, lane merge, widening lane, no line along the exit lane (widening lane)" author="LionDriver simulation track (synthetic scenario, DSR-12)" revMajor="1" revMinor="3" date="2026-10-16T00:00:00"/>
+    <ParameterDeclarations>
+        <ParameterDeclaration name="EgoSpeed" parameterType="double" value="27.778"/>
+        <ParameterDeclaration name="ExitDesire" parameterType="double" value="0.0"/>
+        <ParameterDeclaration name="MergeGap" parameterType="double" value="0.0"/>
+    </ParameterDeclarations>
+    <CatalogLocations/>
+    <RoadNetwork>
+        <LogicFile filepath="../xodr/KS-04-widen.xodr"/>
+    </RoadNetwork>
+    <Entities>
+        <ScenarioObject name="ego">
+            <Vehicle name="corolla_e210" vehicleCategory="car">
+                <BoundingBox>
+                    <Center x="1.3" y="0.0" z="0.72"/>
+                    <Dimensions width="1.781" length="4.63" height="1.43"/>
+                </BoundingBox>
+                <Performance maxSpeed="69.0" maxDeceleration="9.0" maxAcceleration="4.0"/>
+                <Axles>
+                    <FrontAxle maxSteering="0.5" wheelDiameter="0.65" trackWidth="1.53" positionX="2.67" positionZ="0.3"/>
+                    <RearAxle maxSteering="0.0" wheelDiameter="0.65" trackWidth="1.53" positionX="0.0" positionZ="0.3"/>
+                </Axles>
+            </Vehicle>
+        </ScenarioObject>
+    </Entities>
+    <Storyboard>
+        <Init>
+            <Actions>
+                <Private entityRef="ego">
+                    <PrivateAction>
+                        <TeleportAction>
+                            <Position>
+                                <LanePosition roadId="0" laneId="-3" s="300.0" offset="0.0"/>
+                            </Position>
+                        </TeleportAction>
+                    </PrivateAction>
+                    <PrivateAction>
+                        <LongitudinalAction>
+                            <SpeedAction>
+                                <SpeedActionDynamics dynamicsShape="step" value="0.0" dynamicsDimension="time"/>
+                                <SpeedActionTarget>
+                                    <AbsoluteTargetSpeed value="$EgoSpeed"/>
+                                </SpeedActionTarget>
+                            </SpeedAction>
+                        </LongitudinalAction>
+                    </PrivateAction>
+                </Private>
+            </Actions>
+        </Init>
+        <Story name="take_the_exit">
+            <Act name="take_the_exit">
+                <ManeuverGroup name="take_the_exit" maximumExecutionCount="1">
+                    <Actors selectTriggeringEntities="false">
+                        <EntityRef entityRef="ego"/>
+                    </Actors>
+                    <Maneuver name="take_the_exit">
+                        <Event name="take_the_exit" priority="override" maximumExecutionCount="1">
+                            <Action name="take_the_exit">
+                                <PrivateAction>
+                                    <LateralAction>
+                                        <LaneChangeAction>
+                                            <LaneChangeActionDynamics dynamicsShape="sinusoidal" value="3.0" dynamicsDimension="time"/>
+                                            <LaneChangeTarget>
+                                                <AbsoluteTargetLane value="-4"/>
+                                            </LaneChangeTarget>
+                                        </LaneChangeAction>
+                                    </LateralAction>
+                                </PrivateAction>
+                            </Action>
+                            <StartTrigger>
+                                <ConditionGroup>
+                                    <Condition name="exit_desire" delay="0.0" conditionEdge="none">
+                                        <ByValueCondition>
+                                            <ParameterCondition parameterRef="ExitDesire" value="1" rule="equalTo"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                    <Condition name="at_exit_lane_full_width" delay="0.0" conditionEdge="none">
+                                        <ByValueCondition>
+                                            <SimulationTimeCondition value="${(620 - 300) / $EgoSpeed}" rule="greaterThan"/>
+                                        </ByValueCondition>
+                                    </Condition>
+                                </ConditionGroup>
+                            </StartTrigger>
+                        </Event>
+                    </Maneuver>
+                </ManeuverGroup>
+                <StartTrigger>
+                    <ConditionGroup>
+                        <Condition name="at_0s" delay="0.0" conditionEdge="none">
+                            <ByValueCondition>
+                                <SimulationTimeCondition value="0.0" rule="greaterThan"/>
+                            </ByValueCondition>
+                        </Condition>
+                    </ConditionGroup>
+                </StartTrigger>
+                <StopTrigger/>
+            </Act>
+        </Story>
+        <StopTrigger>
+            <ConditionGroup>
+                <Condition name="end" delay="0.0" conditionEdge="none">
+                    <ByValueCondition>
+                        <SimulationTimeCondition value="30.0" rule="greaterThan"/>
+                    </ByValueCondition>
+                </Condition>
+            </ConditionGroup>
+        </StopTrigger>
+    </Storyboard>
+</OpenSCENARIO>

@@ -28,7 +28,7 @@ def esmini_bin() -> Path:
   root = cache_dir()
   bin_dir = root / "esmini" / "bin"
   if (bin_dir / "esmini").exists():
-    return bin_dir
+    return executable(bin_dir)
   root.mkdir(parents=True, exist_ok=True)
   archive = root / "esmini-bin_Linux.zip"
   if not archive.exists():
@@ -39,7 +39,12 @@ def esmini_bin() -> Path:
     raise RuntimeError(f"esmini archive SHA-256 {digest} does not match the pinned {SHA256}")
   with zipfile.ZipFile(archive) as z:
     z.extractall(root)
-  for name in ("esmini", "dat2csv"):
+  return executable(bin_dir)
+
+
+def executable(bin_dir: Path) -> Path:
+  """The tools this track runs, executable also in a directory extracted before odrplot was used (a CI cache)."""
+  for name in ("esmini", "dat2csv", "odrplot"):
     (bin_dir / name).chmod(0o755)
   return bin_dir
 
