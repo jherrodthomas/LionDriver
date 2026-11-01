@@ -640,6 +640,11 @@ class TestFmeda(LintFixture):
     doc["components"][0]["failure_modes"][1]["per_goal"] = [{"goal": "SG-05", "violates_sg_directly": True, "reason": "t"}]
     self.assertError(self.lint(fmd=doc), "per_goal SG-05 is not in analysis.targets")
 
+  def test_catalogue_ref_must_exist_in_wp_s_03(self):
+    doc = copy.deepcopy(FMEDA)
+    doc["safety_mechanisms"][0]["catalogue_ref"] = "SM-99"
+    self.assertError(self.lint(fmd=doc), "catalogue_ref SM-99 not found")
+
 
 class TestHaraExport(unittest.TestCase):
   def test_export_matches_yaml(self):

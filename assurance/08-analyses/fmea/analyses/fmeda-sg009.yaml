@@ -20,7 +20,7 @@ analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.10'
+  revision: '0.11'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -45,7 +45,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-27'
+  updated: '2026-11-01'
   history:
   - revision: '0.1'
     date: '2026-10-10'
@@ -77,32 +77,45 @@ analysis:
   - revision: '0.10'
     date: '2026-10-27'
     change: 'FMD-035 and FMD-036 linked to DFMEA DFM-022 and DFM-023 (DFMEA rev 0.13); no rate, classification or metric change'
+  - revision: '0.11'
+    date: '2026-11-01'
+    change: 'Mechanisms linked to the WP-S-03 §6 catalogue (catalogue_ref); SM-42 listed as not credited, with the reason; no rate, classification or metric change'
 safety_mechanisms:
 - id: FMD-SM-001
+  catalogue_ref: SM-17
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
   dc_basis: 'ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults'
   implementation: STM32H7 flash ECC (RM0468); always on
 - id: FMD-SM-002
+  catalogue_ref: SM-17
   description: SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002
   dc_basis: 'ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited'
   implementation: STM32H7 RAM ECC (RM0468); RAMECC monitors not configured
   requirement: TSR-503
 - id: FMD-SM-003
+  catalogue_ref: SM-17
   description: Bootstub signature check of the application image at every power-up
   dc_basis: 'Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle)'
   implementation: panda/board/bootstub.c
 - id: FMD-SM-005
+  catalogue_ref: SM-18
   description: 'Clock security system on HSE loss: NMI and reset'
   dc_basis: 'Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift'
   implementation: panda/board/stm32h7/clock.h
   requirement: TSR-504
 - id: FMD-SM-007
+  catalogue_ref: SM-15
   description: Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the relay
   dc_basis: 'Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run. Credit
     provisional: the lead accepts it in place of the interim residuals once an independent reviewer checks it and the LSI tolerance
     (DQ-114); HIL fault injection deferred with the bench (DQ-049)'
   implementation: panda/board/drivers/hw_watchdog.h
   requirement: TSR-501
+- id: FMD-SM-009
+  catalogue_ref: SM-42
+  description: 'Harness orientation and connection detection before the relay is first driven (WP-S-03 SM-42)'
+  dc_basis: 'Not credited: it checks orientation and connection at start-up (TSR-515), not the stock-path faults of FMD-C-008 while driving, and it is partly implemented. It does not cover FMD-023 (open in the stock camera path) or FMD-024. A DC claim needs the analysis of SBU1/SBU2 sensing (RR-2026-010 HB-07)'
+  requirement: TSR-701
 components:
 - id: FMD-C-001
   rate_kind: generic

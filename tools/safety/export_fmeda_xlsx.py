@@ -147,12 +147,13 @@ def build(doc: dict, source: str) -> Workbook:
         if fm.get(key):
           dc_max[fm[key]] = max(dc_max.get(fm[key], 0.0), fm[dck])
   ws = wb.create_sheet("05_Safety_Mechanisms_From_TSC")
-  header_row(ws, 1, ["Mechanism ID", "Name", "Description", "DC % (highest claimed)", "DC basis", "Requirement", "Implementation"])
+  header_row(ws, 1, ["Mechanism ID", "Name", "Description", "DC % (highest claimed)", "DC basis", "Requirement", "Implementation",
+                    "WP-S-03 §6 mechanism"])
   for i, m in enumerate(doc["safety_mechanisms"], start=2):
     for j, v in enumerate([m["id"], m["description"].split(":")[0][:60], m["description"], round(100 * dc_max.get(m["id"], 0.0), 1),
-                           m["dc_basis"], m.get("requirement", ""), m.get("implementation", "")], start=1):
+                           m["dc_basis"], m.get("requirement", ""), m.get("implementation", ""), m.get("catalogue_ref", "")], start=1):
       ws.cell(row=i, column=j, value=v).alignment = WRAP
-  for k, w in zip("ABCDEFG", (14, 40, 70, 12, 70, 12, 40), strict=True):
+  for k, w in zip("ABCDEFGH", (14, 40, 70, 12, 70, 12, 40, 12), strict=True):
     ws.column_dimensions[k].width = w
 
   def split(r, d, m, dc, sr, lam):

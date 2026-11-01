@@ -485,8 +485,17 @@ def fmeda_metrics(doc, goal=None):
           "spfm": spfm, "lfm": lfm, "pmhf_spf_rf_fit": spf + rf}
 
 
+SM_CATALOGUE = "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md"
+SM_ROW_RE = re.compile(r"^\| (SM-[0-9]{2,}) \|", re.M)
+
+
 def check_fmeda(name, doc, ctx, res: Result):
   mechanisms = {m["id"] for m in doc["safety_mechanisms"]}
+  catalogue_path = ctx.root / SM_CATALOGUE
+  catalogue = set(SM_ROW_RE.findall(catalogue_path.read_text(encoding="utf-8"))) if catalogue_path.is_file() else set()
+  for m in doc["safety_mechanisms"]:
+    if m.get("catalogue_ref") and m["catalogue_ref"] not in catalogue:
+      res.error(f"{name} {m['id']}", f"catalogue_ref {m['catalogue_ref']} not found in {SM_CATALOGUE} §6")
   for comp in doc["components"]:
     where = f"{name} {comp['id']}"
     if comp.get("dfmea_element") and comp["dfmea_element"] not in ctx.elements:

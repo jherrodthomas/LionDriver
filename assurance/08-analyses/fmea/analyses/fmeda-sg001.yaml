@@ -25,7 +25,7 @@ analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-001 lateral (panda safety path), generic failure rates
-  revision: '0.7'
+  revision: '0.8'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -67,7 +67,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-20'
+  updated: '2026-11-01'
   history:
   - revision: '0.1'
     date: '2026-10-10'
@@ -90,40 +90,63 @@ analysis:
   - revision: '0.7'
     date: '2026-10-20'
     change: 'Format review: targets per goal (C with B alongside for SG-01), SG-05 classification of FMD-001 and FMD-009, rate kind and wire ends as fields; SG-01 metrics unchanged'
+  - revision: '0.8'
+    date: '2026-11-01'
+    change: 'Mechanisms linked to the WP-S-03 §6 catalogue (catalogue_ref); FMD-SM-004 (TX XOR) no longer tagged TSR-517, which is the post-load read-back SM-38; SM-14, SM-23 and SM-41 listed as not credited, with the reason; no rate, classification or metric change'
 safety_mechanisms:
 - id: FMD-SM-001
+  catalogue_ref: SM-17
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
   dc_basis: 'ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults'
   implementation: STM32H7 flash ECC (RM0468); always on
 - id: FMD-SM-002
+  catalogue_ref: SM-17
   description: SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002
   dc_basis: 'ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited'
   implementation: STM32H7 RAM ECC (RM0468); RAMECC monitors not configured
   requirement: TSR-503
 - id: FMD-SM-003
+  catalogue_ref: SM-17
   description: Bootstub signature check of the application image at every power-up
   dc_basis: 'Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle)'
   implementation: panda/board/bootstub.c
 - id: FMD-SM-004
-  description: 8-bit XOR over the TX packet checked before loading into the FDCAN FIFO
-  dc_basis: 'Annex D, Table D.7 (communication): checksum, low; covers the software TX queue only'
+  description: 8-bit XOR over the TX packet checked before loading into the FDCAN FIFO (existing panda check; not the TSR-517 post-load read-back, WP-S-03 SM-38, which is not implemented)
+  dc_basis: 'Annex D, Table D.7 (communication): checksum, low; covers the software TX queue only. It has no row in the WP-S-03 §6 catalogue and traces to no TSR'
   implementation: panda/board/drivers/fdcan.h:100
-  requirement: TSR-517
 - id: FMD-SM-005
+  catalogue_ref: SM-18
   description: 'Clock security system on HSE loss: NMI and reset'
   dc_basis: 'Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift'
   implementation: panda/board/stm32h7/clock.h
   requirement: TSR-504
 - id: FMD-SM-006
+  catalogue_ref: SM-24
   description: 'Relay malfunction detection: a stock camera control message seen on the car side blocks all TX (1 s grace after a mode change)'
   dc_basis: 'Analysis: detects relay-not-intercepting before or within about 1-2 s of engagement; medium'
   implementation: opendbc_repo/opendbc/safety/safety.h
   requirement: TSR-710
 - id: FMD-SM-008
+  catalogue_ref: SM-09
   description: CAN protocol CRC and per-message RX timeout (5 periods) on vehicle messages
   dc_basis: 'Annex D, Table D.7: CRC, high for transmission errors; RX timeout for loss'
   implementation: opendbc_repo/opendbc/safety/safety.h
   requirement: TSR-401
+- id: FMD-SM-009
+  catalogue_ref: SM-14
+  description: 'SPI CRC, sequence counter and bounds checks on SoC transfers (WP-S-03 SM-14)'
+  dc_basis: 'Not credited: the SoC-MCU SPI link has no row in this FMEDA (it is analysed qualitatively in WP-H-03 §4.8, FM-SPI-01…03), and the link today carries an 8-bit XOR only (GAP-10). A row and a DC claim follow when the CRC and counter are implemented'
+  requirement: TSR-410
+- id: FMD-SM-010
+  catalogue_ref: SM-23
+  description: 'SoC-independent siren on loss of the SoC, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect (WP-S-03 SM-23)'
+  dc_basis: 'Not credited: the siren is a warning to the driver, not a detection of a hardware fault, so it gives no diagnostic coverage in the ISO 26262-5 sense. It is the warning path the SG-02/SG-06 rows rely on (DQ-362) and is argued in the FTA (WP-A-04)'
+  requirement: TSR-516
+- id: FMD-SM-011
+  catalogue_ref: SM-41
+  description: 'MCU die-temperature monitor (WP-S-03 SM-41)'
+  dc_basis: 'Not credited: today the temperature is reported only, with no reaction (WP-H-03 FM-TMP-01, HWSR-509), so it detects nothing in the sense of Annex D. The sensor has no row; it gets one with the MCU internal FMEDA (WP-H-03 §2, item 5)'
+  requirement: TSR-509
 components:
 - id: FMD-C-001
   part: STM32H725 CPU core, bus matrix, interrupt controller and peripherals (digital logic, permanent and transient)

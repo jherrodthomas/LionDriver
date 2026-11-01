@@ -70,6 +70,7 @@
           "description": {"type": "string", "minLength": 1},
           "dc_basis": {"type": "string", "description": "ISO 26262-5 Annex D table/row, or analysis/test evidence."},
           "requirement": {"type": "string", "pattern": "^(TSR|HSR|SSR)-[0-9]{3,}$"},
+          "catalogue_ref": {"type": "string", "pattern": "^SM-[0-9]{2,}$", "description": "Mechanism in the WP-S-03 §6 safety mechanism catalogue."},
           "implementation": {"type": "string", "description": "Code path or HW reference."}
         }
       }
