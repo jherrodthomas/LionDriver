@@ -24,7 +24,19 @@ from opendbc.can import CANPacker  # noqa: E402
 HERE = Path(__file__).resolve().parent
 SAFETY_TOYOTA = 2            # opendbc CarParams.SafetyModel.toyota
 REFERENCE_PARAM = 73         # panda/board/reference_lock.h LIONDRIVER_REFERENCE_TOYOTA_PARAM (EPS factor 73, no flags)
-LSI_HZ = 32000.0             # nominal LSI frequency of the STM32H7 (hw_watchdog.h comment); tolerance not modelled
+LSI_HZ = 32000.0             # nominal LSI frequency of the STM32H7 (hw_watchdog.h comment); Panda.lsi_hz sweeps it
+# The hangs of the firmware's fault-injection build (panda/board/drivers/fault_injection.h, requested over 0xa9), as
+# WP-V-05 VS-FI-17 and HIL test_10_hw_watchdog.py inject them. Every interrupt has the same NVIC priority
+# (drivers/irq_priorities.h), so none pre-empts another: a hang inside one interrupt stops all the others and the main
+# loop. A main-loop hang stops only the main loop: its flag for the IWDG feed (hw_watchdog_main_loop_alive) is no
+# longer set, while the safety task, CAN, the host link and the tick run on.
+HANGS = {
+  "main_loop": "FAULT_INJECTION_HANG_MAIN_LOOP",      # main loop spins; interrupts run
+  "tick": "FAULT_INJECTION_HANG_TICK",                # the next 8 Hz tick spins; everything stops
+  "irq_off": "FAULT_INJECTION_HANG_IRQ_DISABLED",     # main loop disables interrupts and spins; everything stops
+  "safety_task": "FAULT_INJECTION_HANG_SAFETY_TASK",  # the next safety task spins after its feed; everything stops
+  "early_feed": "FAULT_INJECTION_EARLY_FEED",         # the next safety task feeds twice; the second is early
+}
 DBC = "toyota_nodsu_pt_generated"
 
 ffi = libsafety_py.ffi
@@ -78,6 +90,12 @@ class Panda:
     self.resets = 0
     self.iwdg_counter = None   # None: not started
     self._iwdg_frac = 0.0
+    self.lsi_hz = LSI_HZ
+    self.t_us = 0
+    self.hang = None             # requested fault-injection mode (HANGS), until the reset clears it
+    self.main_loop_hung = False
+    self.hang_t = None           # s, when the requested hang starts
+    self.reset_t = None          # s, when the IWDG counter reached zero (or the early feed came), within the period
     self.boot()
 
   # ------------------------------------------------------------------ firmware life cycle
@@ -99,9 +117,35 @@ class Panda:
     self.relay_driven = False
     self.iwdg_counter = None
     self.hung = False
+    self.hang = None             # fault_injection_mode is static: a reset clears it
+    self.main_loop_hung = False
+
+  def request_hang(self, mode: str):
+    """Fault injection request (0xa9): the hang starts where fault_injection.h puts it."""
+    if mode not in HANGS:
+      raise ValueError(mode)
+    self.hang = mode
+    if mode in ("main_loop", "irq_off"):   # the main loop runs within microseconds and hangs in it
+      self._start_hang(mode == "irq_off")
+
+  def _start_hang(self, everything: bool):
+    self.hang_t = self.t_us / 1e6
+    if self.hang in ("main_loop", "irq_off"):
+      # main.c main_loop_progress(): hw_watchdog_main_loop_alive() runs just before fault_injection_main_loop()
+      self.lib.sim_main_loop_alive()
+    if everything:
+      self.hung = True
+    else:
+      self.main_loop_hung = True
+
+  def tick_8hz(self):
+    """The 8 Hz tick handler: a requested tick hang starts in it (fault_injection_tick)."""
+    if self.hang == "tick" and not self.hung:
+      self._start_hang(True)
 
   # ------------------------------------------------------------------ hooks (each is the real firmware code)
   def set_time(self, t_us: int):
+    self.t_us = t_us
     self.lib.set_timer(t_us & 0xFFFFFFFF)
 
   def rx(self, name: str, values: dict, bus: int = 0) -> bool:
@@ -136,7 +180,7 @@ class Panda:
       self.lib.sim_tick_1hz()
 
   def main_loop(self):
-    if not self.hung:
+    if not self.hung and not self.main_loop_hung:
       self.lib.sim_main_loop_alive()
 
   def safety_task(self):
@@ -153,22 +197,31 @@ class Panda:
         if self.iwdg_counter is not None and self.iwdg_counter > self.lib.sim_iwdg_winr():
           return self._fire()                # window mode: a feed before the window opens resets
         self.iwdg_counter = float(self.lib.sim_iwdg_rlr())
+      # fault_injection_safety_task(), after the feed
+      if self.hang == "safety_task":
+        self._start_hang(True)
+      elif self.hang == "early_feed" and self.iwdg_counter is not None:
+        self.hang_t = self.t_us / 1e6
+        if self.iwdg_counter > self.lib.sim_iwdg_winr():   # the feed just reloaded it: the window is closed
+          return self._fire()
     return None
 
   def iwdg_step(self, dt: float):
     if self.iwdg_counter is None:
       return None
     div = 4 * 2 ** self.lib.sim_iwdg_pr()
-    self.iwdg_counter -= dt * LSI_HZ / div
+    self.iwdg_counter -= dt * self.lsi_hz / div
     if self.iwdg_counter <= 0:
-      return self._fire()
+      return self._fire(-self.iwdg_counter * div / self.lsi_hz)
     return None
 
   def iwdg_timeout(self) -> float:
     """Nominal timeout (s) from the values the firmware writes: 4 * 2^PR * (RLR + 1) / f_LSI."""
-    return 4 * 2 ** self.lib.sim_iwdg_pr() * (self.lib.sim_iwdg_rlr() + 1) / LSI_HZ
+    return 4 * 2 ** self.lib.sim_iwdg_pr() * (self.lib.sim_iwdg_rlr() + 1) / self.lsi_hz
 
-  def _fire(self):
+  def _fire(self, overshoot: float = 0.0):
+    """Reset now; the counter reached zero `overshoot` s before this call (the plant acts on it at this call)."""
+    self.reset_t = self.t_us / 1e6 - overshoot
     self.reset_to_silent()
     return "reset"
 

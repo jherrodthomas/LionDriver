@@ -138,6 +138,9 @@ class Case:
   follow_gap_s: float = 1.0          # s, time gap of the following vehicle (WP-S-04 §3.4)
   alert_lead_s: float = 0.0          # soft_disable, dm_stop: the slow-down starts this long after the alert
   soft_disable_s: float = SOFT_DISABLE_TIME  # soft_disable: the SoC disengages this long after the alert
+  # hang-type study (hang_types.py) only; no catalog case sets them
+  stuck_intercept: bool = False      # hang_* kinds: the switch stays in intercept after the IWDG reset
+  lsi_hz: float | None = None        # the IWDG's LSI clock (None: the nominal 32 kHz of hw_watchdog.h)
 
 
 @dataclass
@@ -279,6 +282,8 @@ def _simulate(case: Case) -> Result:
   v0 = case.speed_kph / 3.6
   road = make_road(case.road, v0, case.lane_width)
   panda = Panda(reference=True)
+  if case.lsi_hz is not None:
+    panda.lsi_hz = case.lsi_hz
   soc = SoC(d, panda.packer)
   plant = CorollaPlant(v0, A("eps_hold_s") if case.eps == "hold" else A("eps_release_s"), A("pcm_timeout_s"), d, p)
   eps = plant.eps
@@ -374,6 +379,9 @@ def _simulate(case: Case) -> Result:
     elif f in ("mcu_hang", "mcu_hang_stuck_intercept", "pcs_mcu_hang", "pcs_stuck_intercept"):
       panda.hung = True
       stuck_intercept = f in ("mcu_hang_stuck_intercept", "pcs_stuck_intercept")
+    elif f.startswith("hang_"):           # a fault-injection hang of VS-FI-17 (panda_loop.HANGS)
+      panda.request_hang(f[len("hang_"):])
+      stuck_intercept = case.stuck_intercept
     elif f == "pcs_stock":
       pass
     elif f == "switch_pass":
@@ -543,8 +551,14 @@ def _simulate(case: Case) -> Result:
     if k % 10 == 3:
       if panda.safety_task() == "reset":
         res.event("IWDG reset" + (", switch stays in intercept" if stuck_intercept else ", switch to pass-through"), t)
+        if case.fault.startswith("hang_"):   # the counter reached zero within the task period: the exact time
+          res.event("IWDG counter at zero", panda.reset_t)
     elif panda.hung:
       panda.iwdg_step(0.0)
+    if k % 125 == 3:
+      panda.tick_8hz()
+    if panda.hang_t is not None and fault_on:
+      res.event("hang starts", panda.hang_t)
     if k % 125 == 3:
       loop_counter = (loop_counter + 1) % 8
       if loop_counter == 0:
