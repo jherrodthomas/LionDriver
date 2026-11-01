@@ -149,11 +149,13 @@ def page(name: str, doc: dict) -> str:
       L.append(f"| {pg['goal']} | {fm['id']} | {classify(fm)} | {classify(fmea_lint.fmeda_mode(fm, pg['goal']))} | {one(pg['reason'])} |")
   else:
     L.append("None: every row classifies the same for every target goal.")
-  L += ["", "## 5. Safety mechanisms", "", "| ID | Mechanism | DC basis | Requirement | Credited on |", "|---|---|---|---|---|"]
+  L += ["", "## 5. Safety mechanisms", "", "WP-S-03 is the [safety mechanism catalogue](../../../../03-system/WP-S-03-technical-safety-concept-architecture.md#6-safety-mechanism-catalogue).", "",
+        "| ID | WP-S-03 §6 | Mechanism | DC basis | Requirement | Credited on |", "|---|---|---|---|---|---|"]
   for sid, s in sms.items():
     on = [f"{fm['id']} ({(fm.get('dc_spf') if fm.get('safety_mechanism_spf') == sid else fm.get('dc_lf')) * 100:g} %)"
           for c in comps for fm in c["failure_modes"] if sid in (fm.get("safety_mechanism_spf"), fm.get("safety_mechanism_lf"))]
-    L.append(f"| {sid} | {one(s['description'])} | {one(s['dc_basis'])} | {s.get('requirement', '—')} | {', '.join(on) or '—'} |")
+    L.append(f"| {sid} | {s.get('catalogue_ref', '—')} | {one(s['description'])} | {one(s['dc_basis'])} | {s.get('requirement', '—')} | "
+             f"{', '.join(on) or 'none (not credited)'} |")
   wb = export_fmeda_xlsx.build(doc, f"assurance/08-analyses/fmea/analyses/{name}.yaml")
   L += ["", "## 6. Open items", "", "From the workbook's `11_Open_Items` tab.", ""]
   for r in wb["11_Open_Items"].iter_rows(min_row=2, values_only=True):
