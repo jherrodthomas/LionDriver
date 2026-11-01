@@ -866,7 +866,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-HIL, FI";
     }
     requirement <'TSR-410'> tsr_410 : TechnicalSafetyRequirement {
-        doc /* Every SPI transfer (header and data) shall be protected by a CRC whose residual error probability over the maximum transfer length meets the target set in WP-S-05 §4 (assurance/03-system/WP-S-05-hsi-specification.md), and every CAN-TX transfer shall carry a sequence counter; the envelope shall discard transfers with a failed CRC or a repeated or out-of-order counter. The per-packet XOR may remain as an additional check. Before sending 0x2E4 or 0x343, the envelope shall also verify the frame's Toyota checksum and refuse the frame if it fails (WP-S-05 §12.7 P-3). */
+        doc /* Every SPI transfer (header and data) shall be protected by a CRC whose residual error probability over the maximum transfer length meets the target set in WP-S-05 §4 (assurance/03-system/WP-S-05-hsi-specification.md) (CRC-32C over the header, with endpoint, lengths, sequence counter and control-frame index, and the data; selected 2026-11-01), and every CAN-TX transfer shall carry a sequence counter; the envelope shall discard transfers with a failed CRC or a repeated or out-of-order counter. The per-packet XOR may remain as an additional check. Before sending 0x2E4 or 0x343, the envelope shall also verify the frame's Toyota checksum and refuse the frame if it fails (WP-S-05 §12.7 P-3). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, SoC";
         :>> asil = "C";

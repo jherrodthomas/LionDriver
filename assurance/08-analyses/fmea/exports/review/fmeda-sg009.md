@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.10 | draft | BL-002 | RT-1 | 2026-10-27 |
+| 0.11 | draft | BL-002 | RT-1 | 2026-11-01 |
 
 **Scope.** Random hardware faults of the panda section and harness that can keep the stock camera's PCS messages from reaching the car (LD-HARA-001 SG-009, ASIL B; assurance WP-C-03 SG-07, ASIL B). Reference device at BL-002
 
@@ -163,13 +163,16 @@ None: every row classifies the same for every target goal.
 
 ## 5. Safety mechanisms
 
-| ID | Mechanism | DC basis | Requirement | Credited on |
-|---|---|---|---|---|
-| FMD-SM-001 | Flash ECC (single-error correction in silicon; corrected reads are transparent) | ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults | — | FMD-004 (99 %) |
-| FMD-SM-002 | SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002 | ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited | TSR-503 | FMD-007 (99 %) |
-| FMD-SM-003 | Bootstub signature check of the application image at every power-up | Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle) | — | FMD-006 (90 %) |
-| FMD-SM-005 | Clock security system on HSE loss: NMI and reset | Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift | TSR-504 | FMD-010 (99 %) |
-| FMD-SM-007 | Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the relay | Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run. Credit provisional: the lead accepts it in place of the interim residuals once an independent reviewer checks it and the LSI tolerance (DQ-114); HIL fault injection deferred with the bench (DQ-049) | TSR-501 | FMD-001 (90 %), FMD-005 (90 %), FMD-008 (90 %), FMD-014 (60 %) |
+WP-S-03 is the [safety mechanism catalogue](../../../../03-system/WP-S-03-technical-safety-concept-architecture.md#6-safety-mechanism-catalogue).
+
+| ID | WP-S-03 §6 | Mechanism | DC basis | Requirement | Credited on |
+|---|---|---|---|---|---|
+| FMD-SM-001 | SM-17 | Flash ECC (single-error correction in silicon; corrected reads are transparent) | ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults | — | FMD-004 (99 %) |
+| FMD-SM-002 | SM-17 | SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002 | ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited | TSR-503 | FMD-007 (99 %) |
+| FMD-SM-003 | SM-17 | Bootstub signature check of the application image at every power-up | Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle) | — | FMD-006 (90 %) |
+| FMD-SM-005 | SM-18 | Clock security system on HSE loss: NMI and reset | Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift | TSR-504 | FMD-010 (99 %) |
+| FMD-SM-007 | SM-15 | Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the relay | Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run. Credit provisional: the lead accepts it in place of the interim residuals once an independent reviewer checks it and the LSI tolerance (DQ-114); HIL fault injection deferred with the bench (DQ-049) | TSR-501 | FMD-001 (90 %), FMD-005 (90 %), FMD-008 (90 %), FMD-014 (60 %) |
+| FMD-SM-009 | SM-42 | Harness orientation and connection detection before the relay is first driven (WP-S-03 SM-42) | Not credited: it checks orientation and connection at start-up (TSR-515), not the stock-path faults of FMD-C-008 while driving, and it is partly implemented. It does not cover FMD-023 (open in the stock camera path) or FMD-024. A DC claim needs the analysis of SBU1/SBU2 sensing (RR-2026-010 HB-07) | TSR-701 | none (not credited) |
 
 ## 6. Open items
 
@@ -210,3 +213,4 @@ From the workbook's `11_Open_Items` tab.
 | 0.8 | 2026-10-27 | FMD-033 note: harness box SPICE pilot predictions per short path (PR #510); whole mode stays single-point; no rate, classification or metric change |
 | 0.9 | 2026-10-27 | Camera-side termination R7/R8 added (FMD-C-014): one open latent, short single-point; total and SPF rates change |
 | 0.10 | 2026-10-27 | FMD-035 and FMD-036 linked to DFMEA DFM-022 and DFM-023 (DFMEA rev 0.13); no rate, classification or metric change |
+| 0.11 | 2026-11-01 | Mechanisms linked to the WP-S-03 §6 catalogue (catalogue_ref); SM-42 listed as not credited, with the reason; no rate, classification or metric change |

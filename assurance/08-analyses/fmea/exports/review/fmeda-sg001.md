@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.7 | draft | BL-002 | RT-1 | 2026-10-20 |
+| 0.8 | draft | BL-002 | RT-1 | 2026-11-01 |
 
 **Scope.** Random hardware faults of the panda section that can let an out-of-envelope or unauthorised steering request reach the EPS (LD-HARA-001 SG-001, ASIL D; assurance WP-C-03 SG-01, ASIL C pending OI-1). Reference device at BL-002. By decision DQ-362 (2026-10-18) the rows also stand for assurance SG-02, SG-03, SG-06 (ASIL C) and SG-05 (ASIL B), classified for SG-001; per-goal notes in WP-H-03 §6.4
 
@@ -141,15 +141,20 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 
 ## 5. Safety mechanisms
 
-| ID | Mechanism | DC basis | Requirement | Credited on |
-|---|---|---|---|---|
-| FMD-SM-001 | Flash ECC (single-error correction in silicon; corrected reads are transparent) | ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults | — | FMD-005 (99 %) |
-| FMD-SM-002 | SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002 | ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited | TSR-503 | FMD-008 (99 %) |
-| FMD-SM-003 | Bootstub signature check of the application image at every power-up | Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle) | — | FMD-006 (90 %) |
-| FMD-SM-004 | 8-bit XOR over the TX packet checked before loading into the FDCAN FIFO | Annex D, Table D.7 (communication): checksum, low; covers the software TX queue only | TSR-517 | FMD-002 (60 %), FMD-010 (60 %) |
-| FMD-SM-005 | Clock security system on HSE loss: NMI and reset | Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift | TSR-504 | FMD-012 (99 %) |
-| FMD-SM-006 | Relay malfunction detection: a stock camera control message seen on the car side blocks all TX (1 s grace after a mode change) | Analysis: detects relay-not-intercepting before or within about 1-2 s of engagement; medium | TSR-710 | FMD-020 (90 %), FMD-023 (90 %) |
-| FMD-SM-008 | CAN protocol CRC and per-message RX timeout (5 periods) on vehicle messages | Annex D, Table D.7: CRC, high for transmission errors; RX timeout for loss | TSR-401 | FMD-019 (99 %), FMD-022 (90 %) |
+WP-S-03 is the [safety mechanism catalogue](../../../../03-system/WP-S-03-technical-safety-concept-architecture.md#6-safety-mechanism-catalogue).
+
+| ID | WP-S-03 §6 | Mechanism | DC basis | Requirement | Credited on |
+|---|---|---|---|---|---|
+| FMD-SM-001 | SM-17 | Flash ECC (single-error correction in silicon; corrected reads are transparent) | ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults | — | FMD-005 (99 %) |
+| FMD-SM-002 | SM-17 | SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002 | ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited | TSR-503 | FMD-008 (99 %) |
+| FMD-SM-003 | SM-17 | Bootstub signature check of the application image at every power-up | Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle) | — | FMD-006 (90 %) |
+| FMD-SM-004 | — | 8-bit XOR over the TX packet checked before loading into the FDCAN FIFO (existing panda check; not the TSR-517 post-load read-back, WP-S-03 SM-38, which is not implemented) | Annex D, Table D.7 (communication): checksum, low; covers the software TX queue only. It has no row in the WP-S-03 §6 catalogue and traces to no TSR | — | FMD-002 (60 %), FMD-010 (60 %) |
+| FMD-SM-005 | SM-18 | Clock security system on HSE loss: NMI and reset | Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift | TSR-504 | FMD-012 (99 %) |
+| FMD-SM-006 | SM-24 | Relay malfunction detection: a stock camera control message seen on the car side blocks all TX (1 s grace after a mode change) | Analysis: detects relay-not-intercepting before or within about 1-2 s of engagement; medium | TSR-710 | FMD-020 (90 %), FMD-023 (90 %) |
+| FMD-SM-008 | SM-09 | CAN protocol CRC and per-message RX timeout (5 periods) on vehicle messages | Annex D, Table D.7: CRC, high for transmission errors; RX timeout for loss | TSR-401 | FMD-019 (99 %), FMD-022 (90 %) |
+| FMD-SM-009 | SM-14 | SPI CRC, sequence counter and bounds checks on SoC transfers (WP-S-03 SM-14) | Not credited: the SoC-MCU SPI link has no row in this FMEDA (it is analysed qualitatively in WP-H-03 §4.8, FM-SPI-01…03), and the link today carries an 8-bit XOR only (GAP-10). A row and a DC claim follow when the CRC and counter are implemented | TSR-410 | none (not credited) |
+| FMD-SM-010 | SM-23 | SoC-independent siren on loss of the SoC, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect (WP-S-03 SM-23) | Not credited: the siren is a warning to the driver, not a detection of a hardware fault, so it gives no diagnostic coverage in the ISO 26262-5 sense. It is the warning path the SG-02/SG-06 rows rely on (DQ-362) and is argued in the FTA (WP-A-04) | TSR-516 | none (not credited) |
+| FMD-SM-011 | SM-41 | MCU die-temperature monitor (WP-S-03 SM-41) | Not credited: today the temperature is reported only, with no reaction (WP-H-03 FM-TMP-01, HWSR-509), so it detects nothing in the sense of Annex D. The sensor has no row; it gets one with the MCU internal FMEDA (WP-H-03 §2, item 5) | TSR-509 | none (not credited) |
 
 ## 6. Open items
 
@@ -177,3 +182,4 @@ From the workbook's `11_Open_Items` tab.
 | 0.5 | 2026-10-18 | Rows reused for SG-02, SG-03, SG-05 and SG-06 (DQ-362 A), a note per goal; no rate, classification or metric change |
 | 0.6 | 2026-10-20 | Wire-end IDs of the WireViz drawings added; no rate, classification or metric change |
 | 0.7 | 2026-10-20 | Format review: targets per goal (C with B alongside for SG-01), SG-05 classification of FMD-001 and FMD-009, rate kind and wire ends as fields; SG-01 metrics unchanged |
+| 0.8 | 2026-11-01 | Mechanisms linked to the WP-S-03 §6 catalogue (catalogue_ref); FMD-SM-004 (TX XOR) no longer tagged TSR-517, which is the post-load read-back SM-38; SM-14, SM-23 and SM-41 listed as not credited, with the reason; no rate, classification or metric change |
