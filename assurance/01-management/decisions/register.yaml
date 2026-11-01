@@ -6196,7 +6196,7 @@
   sources: ["assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md §4.4 items 5–8", "DQ-421", "LionDriver-security (private): gaps/INVENTORY.md"]
   status: applied
   answer: {choice: A, via: chat, at: 2026-11-01, note: "go with A on DQ-423"}
-  applied: {ref: "jherrodthomas/LionDriver#PR", record: "WP-O-05 v0.5 §4.4 item 7", at: 2026-11-01}
+  applied: {ref: "jherrodthomas/LionDriver#551", record: "WP-O-05 v0.5 §4.4 item 7", at: 2026-11-01}
 
 
 - id: DQ-424
