@@ -412,7 +412,7 @@
 
 - id: CSR-024
   kind: cybersecurity-requirement
-  text: "Softloader entry (`0xd1` param 1) shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off."
+  text: "Softloader entry (`0xd1` param 1) shall be accepted only while the panda is in a non-actuating mode and no car mode has been active in the current ignition cycle (refused after a drive this ignition cycle)."
   parents: [CSG-01, CSG-02]
   concept_requirement: "CSR-C-02"
   cal: "CAL 3"
