@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-06@G3, CR-07, CR-08, CR-09, CR-10, SR-04@G3 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 135 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 136 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
