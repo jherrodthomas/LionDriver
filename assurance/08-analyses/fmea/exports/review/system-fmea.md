@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.40 | draft | BL-007 | RT-3 | 2026-10-25 |
+| 0.41 | draft | BL-007 | RT-3 | 2026-10-25 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005; re-checked at BL-006 and BL-007), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -454,7 +454,7 @@ Effects:
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
 | `SFM-016.C1` Reaction type for an event under-classified (soft instead of immediate) | • Reaction types chosen upstream; FSC WD-01 notes the 3 s must be justified per event (not done) <sub>openpilot/selfdrive/selfdrived/events.py</sub> | • test_soft_disable_timer checks that the timer is 3 s; it is not designed to show that 3 s is within the FTTI <sub>openpilot/selfdrive/selfdrived/tests/test_state_machine.py</sub> | 8 | 9 | 🔴 **H** | SFM-ACT-010 |
-| `SFM-016.C2` Debounce or counters too long (e.g. excessive actuation 0.25 s); at BL-005 a defect in the controlsMismatch supervision (2 consecutive samples, at most 0.5 s, TSR-621), which replaced the upstream 200-frame counter | • New LionDriver supervision code (#51, TSR-621); rated in the SW FMEA <sub>openpilot/selfdrive/selfdrived/supervision.py</sub> | • test_supervision.py targets the cause (consecutive samples, 0.5 s bound, engagement grace); not run in CI at BL-005 and not proven by mutation (SWF-ACT-055) <sub>openpilot/selfdrive/selfdrived/tests/test_supervision.py</sub> | 5 | 8 | 🔴 **H** | SFM-ACT-010 |
+| `SFM-016.C2` Debounce or counters too long (e.g. excessive actuation 0.25 s); at BL-005 a defect in the controlsMismatch supervision (2 consecutive samples, at most 0.5 s, TSR-621), which replaced the upstream 200-frame counter | • New LionDriver supervision code (#51, TSR-621); rated in the SW FMEA <sub>openpilot/selfdrive/selfdrived/supervision.py</sub> | • test_supervision.py targets the cause (consecutive samples, 0.5 s bound, engagement grace); not run in CI at BL-005. In CI since #179, and proven by mutation since SW FMEA rev 1.18 (System FMEA rev 0.41): the logic and its selfdrived call sites (test_supervision_call_sites.py, mutants CM-1..CM-6, SWF-ACT-055 completed), so D 4, from D 8 <sub>openpilot/selfdrive/selfdrived/tests/test_supervision.py</sub> | 5 | 4 | 🔴 **H** | SFM-ACT-010 |
 
 <sub>Note: Needs FTTI from the HARA/FSC to judge. Each SOFT_DISABLE event should be justified against FTTI.</sub>
 
@@ -994,7 +994,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-015.C3` | Abrupt disengagement without alert | 10/5/10 | SFM-ACT-003 |
 | `SFM-015.C4` | Abrupt disengagement without alert | 10/4/10 | SFM-ACT-003 |
 | `SFM-016.C1` | Disengagement later than required by the fault | 10/8/9 | SFM-ACT-010 |
-| `SFM-016.C2` | Disengagement later than required by the fault | 10/5/8 | SFM-ACT-010 |
+| `SFM-016.C2` | Disengagement later than required by the fault | 10/5/4 | SFM-ACT-010 |
 | `SFM-017.C1` | Brake press does not disengage | 10/6/9 | SFM-ACT-003 |
 | `SFM-017.C2` | Brake press does not disengage | 10/7/8 | **none** |
 | `SFM-017.C3` | Brake press does not disengage | 10/8/10 | **none** |

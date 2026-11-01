@@ -157,6 +157,8 @@
 #   (TSR-610, DQ-427, SW FMEA rev 1.14) was implemented and mutated; its MSR row F 8 M 10 -> F 5 M 7 (timing not measured). AP stays H.
 # Rev 0.40 (after BL-007, ratings within BL-007): SFM-036.C1 D 8 -> 4: with the opendbc cap mutated too (AE-5, AE-6, SW FMEA rev 1.16), every
 #   part of the stand-down is proven by mutation in CI. AP stays H (S 10, O 5).
+# Rev 0.41 (after BL-007, ratings within BL-007): SFM-016.C2 D 8 -> 4, re-inherited from SWF-034.C1 once the controlsMismatch supervision and its
+#   selfdrived call sites were proven by mutation (CM-1..CM-6, SW FMEA rev 1.18, SWF-ACT-055). AP stays H (S 10, O 5).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -165,7 +167,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.40"
+  revision: "0.41"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -2445,15 +2447,16 @@ failure_modes:
         - description: New LionDriver supervision code (#51, TSR-621); rated in the SW FMEA
           ref: openpilot/selfdrive/selfdrived/supervision.py
         detection_controls:
-        - description: 'test_supervision.py targets the cause (consecutive samples, 0.5 s bound, engagement grace); not run in CI at BL-005
-            and not proven by mutation (SWF-ACT-055)'
+        - description: 'test_supervision.py targets the cause (consecutive samples, 0.5 s bound, engagement grace); not run in CI at BL-005.
+            In CI since #179, and proven by mutation since SW FMEA rev 1.18 (System FMEA rev 0.41): the logic and its selfdrived call sites
+            (test_supervision_call_sites.py, mutants CM-1..CM-6, SWF-ACT-055 completed), so D 4, from D 8'
           test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
         occurrence: 5
-        detection: 8
+        detection: 4
         ap: H
         actions:
         - SFM-ACT-010
-        rationale: Rated, and actioned, in the SW FMEA (SWF-034.C1 O5 D8 at BL-005, SWF-ACT-033, SWF-ACT-055); this row inherits that rating
+        rationale: Rated, and actioned, in the SW FMEA (SWF-034.C1 O5 D8 at BL-005, O5 D4 since rev 1.18; SWF-ACT-033, SWF-ACT-055); this row inherits that rating
     notes: "Needs FTTI from the HARA/FSC to judge. Each SOFT_DISABLE event should be justified against FTTI."
 
   # ----- F4 Driver override -----

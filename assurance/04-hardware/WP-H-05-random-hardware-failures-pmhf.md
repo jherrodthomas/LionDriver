@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF) |
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
-| Version | 0.7 (OI-3: external measures for effects only, PMHF with and without them, an internal method choice until an assessor confirms it (DQ-071 A); 2026-10-22). 0.6 (method approved by the lead: PMHF plus a per-cause check of the biggest contributors, DQ-066 option A, 2026-10-19; OI-1 closed; §4 ASILs follow WP-C-03 v0.4; §6 and Figure 6-1 updated). 0.5 (§3 mission-profile working values approved by the lead 2026-10-18 (DQ-067, A); OI-2 closed, OI-6 for logged operating hours; 2026-10-19). 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
+| Version | 0.8 (§4: 1 FIT of each 100 FIT target reserved for an undetected corrupted actuation transfer on the SoC–MCU SPI link, as WP-S-05 §4.1 asks (DQ-143 A); 99 FIT left for the FMEDA terms; OI-7; 2026-11-01). 0.7 (OI-3: external measures for effects only, PMHF with and without them, an internal method choice until an assessor confirms it (DQ-071 A); 2026-10-22). 0.6 (method approved by the lead: PMHF plus a per-cause check of the biggest contributors, DQ-066 option A, 2026-10-19; OI-1 closed; §4 ASILs follow WP-C-03 v0.4; §6 and Figure 6-1 updated). 0.5 (§3 mission-profile working values approved by the lead 2026-10-18 (DQ-067, A); OI-2 closed, OI-6 for logged operating hours; 2026-10-19). 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
 | Status | Draft (method and plan; no value computed) |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -82,6 +82,19 @@ claimed), so the reference values apply.
 The target is a budget for the whole item's hardware contribution to the SG. LionDriver allocates
 **the full budget to E-04 + E-05**, because no other hardware element of the item exists (vehicle
 ECUs are outside the item, T-02).
+
+**Reserve for the SoC–MCU link (IF-04).** Of each 100 FIT target, **1 FIT (10⁻⁹ /h, 1 %)** is reserved
+for an undetected corrupted actuation transfer on the SPI link between the SoC and the MCU. Bit errors
+on the link come from random hardware faults and disturbances, so they belong to this budget; the
+share follows the IEC 61784-3 convention for a safety communication layer, which
+[WP-S-05](../03-system/WP-S-05-hsi-specification.md) §4.1 uses to select the link check (DQ-143 A). That
+leaves **99 FIT** for the FMEDA terms (λ_SPF + λ_RF + the dual-point term) of each SG.
+
+- **Meets the reserve:** CRC-32C over header and payload with a sequence counter (WP-S-05 §4.1, TSR-410,
+  TSR-411): below 10⁻¹⁴ /h even at a bit error rate of 10⁻⁵, at 100 actuation transfers/s. No credit is
+  taken for the envelope limits, the packet XOR or the EPS's own checks.
+- **As built:** the link still uses 8-bit XOR checksums (WP-S-05 §4.1, SW FMEA SWF-ACT-027), which does
+  not meet the reserve. Until the CRC is in the firmware, the reserve is a requirement, not a result (OI-7).
 
 ## 5. Argument structure and the vehicle-side external measures
 
@@ -173,3 +186,4 @@ reported as "met" or "not met" until computed.
 | OI-4 | Verify target values and PMHF approximations against licensed ISO 26262-5 and -10 | G2 |
 | OI-5 | Obtain data (plan steps 2 and 8) | G2/G3 |
 | OI-6 | Replace the operating-hours working value (500 h/year) with logged driving data once there is some (DQ-067, A); re-check the latent-fault exposure time and PMHF with it | G3 |
+| OI-7 | The 1 FIT link reserve of §4: met only once CRC-32C and the sequence counter are implemented and verified on the link (TSR-410, TSR-411, SWF-ACT-027). The FMEDA targets per SG are to show the 99 FIT left after the reserve (FMEDA owner) | G2 |
