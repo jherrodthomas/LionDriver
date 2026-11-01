@@ -142,6 +142,8 @@
 # rev 1.16 (after BL-007, ratings within BL-007): opendbc f23b4fa (opendbc#22): the Toyota CarController sends the inactive acceleration whenever
 #   longitudinal control is not active (change-2026-10-29-toyota-inactive-accel). SWF-052.C1 O 6 D 9 -> O 5 D 4 (mutant IA-1); SWF-093.C2 D 8 -> 4, the
 #   opendbc stock-AEB cap now mutated (AE-5, AE-6; 59 host mutants). AP stays H (S 10). SWF-ACT-052 completed; SWF-ACT-081 keeps the AOU-04R vehicle test.
+# rev 1.17 (after BL-007, ratings within BL-007): SWF-016.C1 D 8 -> 4, AP H -> L (S 10 O 3): a static check of the pinned panda sources in CI
+#   (tools/ci/check_panda_tx_paths.py) that every host TX path runs the safety TX hook, proven by mutants TX-1..TX-4 (63 in all). SWF-ACT-008 completed.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -191,7 +193,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.16"
+  revision: "1.17"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -1862,11 +1864,17 @@ failure_modes:
       ref: panda/tests/misra
     - description: Upstream code review; no coverage gate on panda board code
     detection_controls:
+    - description: 'Static check in CI (rev 1.17): tools/ci/check_panda_tx_paths.py reads the pinned panda sources and fails when a can_send call in the host
+        TX entry (can_comms.h) does not pass skip_tx_hook=false, a call skips the hook outside the reviewed forwarding and body paths, the set of call
+        sites changes, anything else pushes into a CAN TX queue, or can_send stops testing the hook. Run by the trace job (unittest discover of
+        tools/ci) and proven by mutants TX-1..TX-4 (host_mutation.py, unit_tests job); so D 4 (RT-2), from D 8'
+      ref: tools/ci/check_panda_tx_paths.py
+      test: tools/ci/test_check_panda_tx_paths.py
     - description: Panda HITL safety tests (hardware needed; not run here)
       test: panda/tests/hitl/test_6_safety.py
     occurrence: 3
-    detection: 8
-    ap: H
+    detection: 4
+    ap: L
     actions:
     - SWF-ACT-008
   safety_mechanisms:
@@ -6015,7 +6023,14 @@ actions:
   kind: detection
   description: Add a unit or static check that every host TX path calls can_send with skip_tx_hook=false
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: 'tools/ci/check_panda_tx_paths.py and its 9 tests (the pinned tree, and each bypass on a copy), run in the trace job; mutants TX-1..TX-4
+    killed (rev 1.17). A new can_send call site fails CI until it is reviewed and added to the check'
+  revised:
+    severity: 10
+    occurrence: 3
+    detection: 4
+    ap: L
 - id: SWF-ACT-009
   kind: design_change
   description: 'Make LIONDRIVER_REFERENCE=1 (with RELEASE=1) the only firmware build used for the reference configuration: set it in openpilot''s panda build and

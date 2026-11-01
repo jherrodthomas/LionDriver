@@ -6276,7 +6276,16 @@
       title: "Leave them; rely on no shell access"
       detail: "No change. Cost: SWF-028.C2 and SWF-030.C2 stay AP H with nothing that detects them."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-028, SWF-030, SWF-058, SWF-082", "assurance/07-supporting/impact/change-2026-10-27-reference-test-switches.md", "DQ-131"]
-  status: open
+  status: applied
+  answer:
+    choice: A
+    via: assumed
+    at: 2026-11-01
+    note: No answer or objection by proceed_after; Claude went ahead with the recommended option, as the entry said. The lead can still change it
+  applied:
+    ref: jherrodthomas/LionDriver#505
+    record: "openpilot system/manager/reference_env.py and manager.py: test-only switches removed on the device in the reference build, test_reference_env.py, mutants RE-1..RE-4; change-2026-10-27-reference-test-switches; SW FMEA rev 1.11 SWF-028.C2, SWF-030.C2"
+    at: 2026-10-27
 - id: DQ-426
   question: "Should the steering controller forget its built-up correction each time steering assist ends?"
   context: >-
@@ -6300,7 +6309,16 @@
       title: "Keep upstream behaviour and record why"
       detail: "No fork difference. Cost: an old correction is applied at engagement; SWF-042.C1 stays AP H with no test."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-042", "assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md"]
-  status: open
+  status: applied
+  answer:
+    choice: A
+    via: assumed
+    at: 2026-11-01
+    note: No answer or objection by proceed_after; Claude went ahead with the recommended option, as the entry said. The lead can still change it
+  applied:
+    ref: jherrodthomas/LionDriver#530
+    record: "openpilot latcontrol_torque.py and latcontrol_pid.py reset their PID in reset(), tests and mutants LR-1..LR-3; change-2026-10-29-lateral-integrator-reset; SW FMEA rev 1.13 SWF-042.C1"
+    at: 2026-10-29
 - id: DQ-427
   question: "With the driver-camera view open, should the car refuse to engage, and disengage if the view turns on while engaged?"
   context: >-
@@ -6328,7 +6346,16 @@
       title: "Also have the UI clear the parameter when the car turns on"
       detail: "The view closes by itself. Cost: changes in both UIs (comma 3X and comma four) with UI tests; not needed for safety once monitoring ignores it."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-085", "assurance/07-supporting/impact/change-2026-10-29-driver-view-interlock.md", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-610"]
-  status: open
+  status: applied
+  answer:
+    choice: A
+    via: assumed
+    at: 2026-11-01
+    note: No answer or objection by proceed_after; Claude went ahead with the recommended option, as the entry said. The lead can still change it
+  applied:
+    ref: jherrodthomas/LionDriver#532
+    record: "openpilot selfdrived driverViewActive (NO_ENTRY, SOFT_DISABLE) and dmonitoringd demo mode only offroad, test_driver_view.py, mutants DV-1..DV-6; change-2026-10-29-driver-view-interlock; TSR-610, SWSR-610, CSR-072; SW FMEA rev 1.14 SWF-085"
+    at: 2026-10-29
 - id: DQ-428
   question: "Should the SOTIF analysis add a hazard for not giving way to emergency vehicles, and not moving over or slowing down for one stopped on the shoulder?"
   context: >-
@@ -6411,4 +6438,30 @@
       title: "Ask AUTOSAR for written permission (or use an integration partner's licensed tool) first"
       detail: "Removes the doubt. Cost: time and an external request; B applies meanwhile."
   sources: ["assurance/models/autosar/README.md §4", "AUTOSAR_MMOD_XMLSchema R22-11 _disclaimer.txt"]
+  status: queued
+- id: DQ-431
+  question: "The firmware can take up to 0.21 s to notice that the EPS status message (0x262) has stopped, against a 0.2 s requirement. What do we do?"
+  context: >-
+    The reference build revokes authority once a supervised CAN message misses 5 periods. For EPS_STATUS at its
+    assumed 25 Hz that is 0.20 s, plus up to one 10 ms safety-task run: **0.21 s worst case, above TSR-401's 0.2 s**.
+    WP-S-04 T-01 already flags it as marginal, and the Octave timing model expects exactly this overrun. The new virtual
+    HIL bench now shows it too: the panda HIL test for TSR-401 fails on 0x262 in most runs (0.202–0.204 s),
+    depending on where the last frame falls. The 25 Hz rate is a parser minimum, not a measurement (WP-S-05 OI-7); a real
+    rate of 30 Hz or more would close the gap on its own. **This is a detection-time budget against the FTTI, so it is
+    yours.**
+  reversibility: easy
+  blocks: "TSR-401 'met by design' for 0x262 (WP-S-04 T-01, §5 RX loss row); a green virtual HIL run of test_12 [EPS_STATUS]; M-04 on the real bench"
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Measure the real 0x262 rate on the car first (WP-S-05 OI-7), then decide"
+      detail: "No change to firmware or requirement now; the test keeps failing and the gap stays recorded as open. Cost: one CAN log of the Corolla; decision waits on it."
+    - key: B
+      title: "Shorten the 0x262 timeout to 4 periods (0.17 s worst case at 25 Hz)"
+      detail: "Meets 0.2 s now with margin. Cost: a firmware change in the reference build, and more spurious revocations if the EPS ever drops one frame more than usual."
+    - key: C
+      title: "Accept 0.21 s for 0x262 and record the 10 ms overrun against the FTTI margin"
+      detail: "No firmware change. Cost: TSR-401 gets a stated exception, which needs a justification that the 10 ms fits inside the FTTI for the steering hazards."
+  sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md T-01, §5 RX loss row", "assurance/03-system/WP-S-05-hsi-specification.md §5 0x262 row, OI-7", "opendbc_repo/opendbc/safety/modes/toyota.h (0x262 RX check, 25U)", "panda/tests/hitl/test_12_rx_timeout.py test_timeout_per_message", "assurance/sim/vhil"]
   status: queued
