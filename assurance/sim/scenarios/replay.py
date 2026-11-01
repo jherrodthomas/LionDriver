@@ -92,6 +92,27 @@ def check(sc_id: str, p: dict, R: dict[str, list[dict]], road: dict | None = Non
     want = v * v / generate.R01
     return [("ego stays in lane -2", lane_always(ego, -2), ""),
             ("a_y = v²/R within 5 %", abs(ay - want) <= 0.05 * want, f"{ay:.2f} m/s² for {want:.2f}")]
+  if sc_id == "KS-04":
+    r = road or generate.SCENARIOS_BY_ID["KS-04"].road
+    end = r["taper_start"] + r["taper"]
+    if r["kind"] == "merge":
+      m = R["merging"]
+      done = next((x for x in m if x["laneId"] == -2 and abs(x["offset"]) < 0.05), None)
+      gap = None if done is None else done["s"] - at(ego, done["time"])["s"]
+      return [("merging car in lane -2 before lane -3 ends", done is not None and done["s"] <= end,
+               "never" if done is None else f"at s = {done['s']:.0f} m"),
+              ("merging car MergeGap ahead of the ego within 0.5 m", gap is not None and abs(gap - p["MergeGap"]) <= 0.5,
+               "—" if gap is None else f"{gap:+.2f} m"),
+              ("ego keeps lane -2", lane_always(ego, -2), "")]
+    approach = [x for x in ego if x["roadId"] == "0"]
+    if p["ExitDesire"] == 0:
+      return [("ego keeps lane -3 and goes on to the mainline (road 1)",
+               lane_always(approach, -3) and ego[-1]["roadId"] == "1" and ego[-1]["laneId"] == -3,
+               f"ends on road {ego[-1]['roadId']}, lane {ego[-1]['laneId']}")]
+    into = next((x for x in approach if x["laneId"] == -4), None)
+    return [("ego enters the exit lane after it reaches full width", into is not None and into["s"] >= end,
+             "never" if into is None else f"at s = {into['s']:.0f} m"),
+            ("ego ends on the exit ramp (road 2)", ego[-1]["roadId"] == "2", f"road {ego[-1]['roadId']}")]
   if sc_id == "KS-05":
     st = R["stopped"]
     off = st[-1]["offset"]
@@ -159,10 +180,14 @@ def check(sc_id: str, p: dict, R: dict[str, list[dict]], road: dict | None = Non
   raise ValueError(sc_id)
 
 
-def points(sc) -> list[dict]:
+def points(sc, road: dict | None = None) -> list[dict]:
+  """The defaults, then each sweep value of one parameter at a time; a road that names its parameters ("params")
+  sweeps only those."""
   defaults = {k: v[0] for k, v in sc.params.items()}
   out = [defaults]
   for k, (default, sweep, *_r) in sc.params.items():
+    if road and "params" in road and k not in road["params"]:
+      continue
     for val in sweep:
       if val != default:
         out.append({**defaults, k: val})
@@ -174,7 +199,7 @@ def replay(bin_dir: Path) -> tuple[str, int]:
   failures = 0
   for sc in generate.SCENARIOS:
     for fid, road in generate.files_of(sc):
-      for p in points(sc):
+      for p in points(sc, road):
         R = run(bin_dir, fid, p)
         changed = ", ".join(f"{k} = {v:g}" for k, v in p.items() if v != sc.params[k][0]) or "defaults"
         for name, ok, measured in check(sc.id, p, R, road):

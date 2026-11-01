@@ -24,6 +24,31 @@ Each scenario runs at its defaults and at each sweep value of one parameter at a
 | KS-01 | SF-1 | EgoSpeed = 30 | a_y = v²/R within 5 % | pass | 2.95 m/s² for 3.00 |
 | KS-01 | SF-1 | EgoSpeed = 32.404 | ego stays in lane -2 | pass | — |
 | KS-01 | SF-1 | EgoSpeed = 32.404 | a_y = v²/R within 5 % | pass | 3.44 m/s² for 3.50 |
+| KS-04 | not assigned in WP-V-02 §5.3.2 | defaults | ego keeps lane -3 and goes on to the mainline (road 1) | pass | ends on road 1, lane -3 |
+| KS-04 | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 22.222 | ego keeps lane -3 and goes on to the mainline (road 1) | pass | ends on road 1, lane -3 |
+| KS-04 | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 30.556 | ego keeps lane -3 and goes on to the mainline (road 1) | pass | ends on road 1, lane -3 |
+| KS-04 | not assigned in WP-V-02 §5.3.2 | ExitDesire = 1 | ego enters the exit lane after it reaches full width | pass | at s = 662 m |
+| KS-04 | not assigned in WP-V-02 §5.3.2 | ExitDesire = 1 | ego ends on the exit ramp (road 2) | pass | road 2 |
+| KS-04-widen | not assigned in WP-V-02 §5.3.2 | defaults | ego keeps lane -3 and goes on to the mainline (road 1) | pass | ends on road 1, lane -3 |
+| KS-04-widen | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 22.222 | ego keeps lane -3 and goes on to the mainline (road 1) | pass | ends on road 1, lane -3 |
+| KS-04-widen | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 30.556 | ego keeps lane -3 and goes on to the mainline (road 1) | pass | ends on road 1, lane -3 |
+| KS-04-widen | not assigned in WP-V-02 §5.3.2 | ExitDesire = 1 | ego enters the exit lane after it reaches full width | pass | at s = 662 m |
+| KS-04-widen | not assigned in WP-V-02 §5.3.2 | ExitDesire = 1 | ego ends on the exit ramp (road 2) | pass | road 2 |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | defaults | merging car in lane -2 before lane -3 ends | pass | at s = 704 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | defaults | merging car MergeGap ahead of the ego within 0.5 m | pass | -0.08 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | defaults | ego keeps lane -2 | pass | — |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 22.222 | merging car in lane -2 before lane -3 ends | pass | at s = 684 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 22.222 | merging car MergeGap ahead of the ego within 0.5 m | pass | -0.10 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 22.222 | ego keeps lane -2 | pass | — |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 30.556 | merging car in lane -2 before lane -3 ends | pass | at s = 715 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 30.556 | merging car MergeGap ahead of the ego within 0.5 m | pass | -0.07 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | EgoSpeed = 30.556 | ego keeps lane -2 | pass | — |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | MergeGap = -10 | merging car in lane -2 before lane -3 ends | pass | at s = 705 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | MergeGap = -10 | merging car MergeGap ahead of the ego within 0.5 m | pass | -10.08 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | MergeGap = -10 | ego keeps lane -2 | pass | — |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | MergeGap = 10 | merging car in lane -2 before lane -3 ends | pass | at s = 704 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | MergeGap = 10 | merging car MergeGap ahead of the ego within 0.5 m | pass | +9.92 m |
+| KS-04-merge | not assigned in WP-V-02 §5.3.2 | MergeGap = 10 | ego keeps lane -2 | pass | — |
 | KS-05 | SF-3 | defaults | stationary vehicle at speed 0 in lane -2 | pass | — |
 | KS-05 | SF-3 | defaults | offset as set | pass | +0.00 m |
 | KS-05 | SF-3 | EgoSpeed = 11.111 | stationary vehicle at speed 0 in lane -2 | pass | — |

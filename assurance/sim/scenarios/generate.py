@@ -36,7 +36,9 @@ class Scenario:
   id: str
   title: str
   road: dict                      # {"length": m} or {"straight": m, "clothoid": m, "radius": m, "arc": m}; "lane_width",
-                                  # "lanes" (default 3), "wall": {"t": m, "height": m} along the curve
+                                  # "lanes" (default 3), "wall": {"t": m, "height": m} along the curve; or
+                                  # {"kind": "exit" | "merge", ...} for KS-04 (exit_road, merge_road); "label": the
+                                  # variant's title suffix; "params": the parameters its replay sweeps (default all)
   params: dict                    # name -> (default, sweep values, unit, meaning)
   build: callable = None
   checks: list = field(default_factory=list)   # descriptions; replay.py implements them
@@ -78,8 +80,8 @@ def place(init: xosc.Init, name: str, s, lane: int, speed, offset=0.0):
   init.add_init_action(name, xosc.AbsoluteSpeedAction(speed, step(0)))
 
 
-def at_time(t: float):
-  label = t.strip("$") if isinstance(t, str) else f"{t:g}s"
+def at_time(t: float, label: str | None = None):
+  label = label or (t.strip("$") if isinstance(t, str) else f"{t:g}s")
   return xosc.ValueTrigger(f"at_{label}", 0, xosc.ConditionEdge.none, xosc.SimulationTimeCondition(t, xosc.Rule.greaterThan))
 
 
@@ -101,6 +103,10 @@ def story(name: str, actor: str, action, trigger) -> xosc.Story:
 
 # ------------------------------------------------------------------------------------------------ roads
 def road_xodr(fid: str, r: dict) -> xodr.OpenDrive:
+  if r.get("kind") == "exit":
+    return exit_road(fid, r)
+  if r.get("kind") == "merge":
+    return merge_road(fid, r)
   w = r.get("lane_width", LANE_W)
   if "radius" in r:
     k = 1.0 / r["radius"]
@@ -124,14 +130,100 @@ def road_xodr(fid: str, r: dict) -> xodr.OpenDrive:
   return odr
 
 
+def taper_width(length: float, w0: float, w1: float) -> dict:
+  """Lane width from w0 to w1 over length, as an OpenDRIVE cubic with zero slope at both ends."""
+  dw = w1 - w0
+  return {"a": w0, "b": 0.0, "c": 3 * dw / length ** 2, "d": -2 * dw / length ** 3}
+
+
+def lane_section(s0: float, widths: dict, marks: dict, links: dict) -> xodr.LaneSection:
+  """A section of right lanes: widths {id: width dict}, marks {id: RoadMarkType} of each lane's outer edge, links
+  {id: (predecessor id or None, successor id or None)} within the road."""
+  centre = xodr.Lane(a=0)
+  centre.add_roadmark(xodr.RoadMark(xodr.RoadMarkType.solid))
+  ls = xodr.LaneSection(s0, centre)
+  for lid in sorted(widths, reverse=True):
+    ln = xodr.Lane(**widths[lid])
+    ln.add_roadmark(xodr.RoadMark(marks[lid]))
+    pre, suc = links.get(lid, (None, None))
+    if pre is not None:
+      ln.add_link("predecessor", pre)
+    if suc is not None:
+      ln.add_link("successor", suc)
+    ls.add_right_lane(ln)
+  return ls
+
+
+def exit_road(fid: str, r: dict) -> xodr.OpenDrive:
+  """KS-04 exit: road 0 is three lanes; lane -4 opens over the taper and runs at full width to the gore nose. A
+  junction joins lanes -1…-3 to the mainline (road 1) and lane -4 to the exit ramp (road 2), which leaves to the right
+  through a clothoid into an arc. The outer edge of lane -3 along the exit lane is broken (r["marked"]) or has no line
+  (the widening lane)."""
+  t0, t1, nose = r["taper_start"], r["taper_start"] + r["taper"], r["nose"]
+  solid, broken = xodr.RoadMarkType.solid, xodr.RoadMarkType.broken
+  edge3 = broken if r["marked"] else xodr.RoadMarkType.none
+  full = {"a": LANE_W}
+  lanes = xodr.Lanes()
+  lanes.add_lanesection(lane_section(0.0, {-1: full, -2: full, -3: full}, {-1: broken, -2: broken, -3: solid},
+                                     {i: (None, i) for i in (-1, -2, -3)}))
+  lanes.add_lanesection(lane_section(t0, {-1: full, -2: full, -3: full, -4: taper_width(r["taper"], 0.0, LANE_W)},
+                                     {-1: broken, -2: broken, -3: edge3, -4: solid},
+                                     {**{i: (i, i) for i in (-1, -2, -3)}, -4: (None, -4)}))
+  lanes.add_lanesection(lane_section(t1, {-1: full, -2: full, -3: full, -4: full},
+                                     {-1: broken, -2: broken, -3: edge3, -4: solid},
+                                     {i: (i, None) for i in (-1, -2, -3, -4)}))
+  pv = xodr.PlanView()
+  pv.add_geometry(xodr.Line(nose))
+  approach = xodr.Road(0, pv, lanes)
+  mainline = xodr.create_road(xodr.Line(r["mainline"]), 1, left_lanes=0, right_lanes=3, lane_width=LANE_W)
+  k = -1.0 / r["ramp_radius"]
+  ramp = xodr.create_road([xodr.Spiral(-1e-9, k, r["ramp_clothoid"]), xodr.Arc(k, r["ramp_arc"])], 2, left_lanes=0,
+                          right_lanes=1, lane_width=LANE_W)
+  jl = r["junction"]
+  jc = xodr.CommonJunctionCreator(100, "exit")
+  jc.add_incoming_road_cartesian_geometry(approach, 0, 0, 0, "successor")
+  jc.add_incoming_road_cartesian_geometry(mainline, jl, 0, math.pi, "predecessor")
+  # the ramp's reference line (its left edge) starts r["gore_end"] right of the mainline's edge, turned away from it
+  jc.add_incoming_road_cartesian_geometry(ramp, jl, -3 * LANE_W - r["gore_end"], math.pi - r["ramp_angle"],
+                                          "predecessor")
+  jc.add_connection(0, 1, [-1, -2, -3], [-1, -2, -3])
+  jc.add_connection(0, 2, -4, -1)
+  odr = xodr.OpenDrive(fid)
+  for rd in (approach, mainline, ramp):
+    odr.add_road(rd)
+  odr.add_junction_creator(jc)
+  odr.adjust_roads_and_lanes()
+  return odr
+
+
+def merge_road(fid: str, r: dict) -> xodr.OpenDrive:
+  """KS-04 merge: one road; lane -3 narrows to nothing over the taper, then lanes -1 and -2 run on."""
+  m0, m1 = r["taper_start"], r["taper_start"] + r["taper"]
+  solid, broken = xodr.RoadMarkType.solid, xodr.RoadMarkType.broken
+  full = {"a": LANE_W}
+  lanes = xodr.Lanes()
+  lanes.add_lanesection(lane_section(0.0, {-1: full, -2: full, -3: full}, {-1: broken, -2: broken, -3: solid},
+                                     {i: (None, i) for i in (-1, -2, -3)}))
+  lanes.add_lanesection(lane_section(m0, {-1: full, -2: full, -3: taper_width(r["taper"], LANE_W, 0.0)},
+                                     {-1: broken, -2: broken, -3: solid}, {-1: (-1, -1), -2: (-2, -2), -3: (-3, None)}))
+  lanes.add_lanesection(lane_section(m1, {-1: full, -2: full}, {-1: broken, -2: solid},
+                                     {-1: (-1, None), -2: (-2, None)}))
+  pv = xodr.PlanView()
+  pv.add_geometry(xodr.Line(r["length"]))
+  odr = xodr.OpenDrive(fid)
+  odr.add_road(xodr.Road(0, pv, lanes))
+  odr.adjust_roads_and_lanes()
+  return odr
+
+
 # ------------------------------------------------------------------------------------------------ scenarios
-def ks01(sb_init, ent):
+def ks01(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   place(sb_init, "ego", EGO_S, -2, "$EgoSpeed")
   return []
 
 
-def ks05(sb_init, ent):
+def ks05(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("stopped", car("stopped_car"))
   place(sb_init, "ego", EGO_S, -2, "$EgoSpeed")
@@ -139,7 +231,7 @@ def ks05(sb_init, ent):
   return []
 
 
-def ks06(sb_init, ent):
+def ks06(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("truck", truck())
   place(sb_init, "ego", EGO_S, -2, "$EgoSpeed")
@@ -147,7 +239,7 @@ def ks06(sb_init, ent):
   return []
 
 
-def ks07(sb_init, ent):
+def ks07(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("cutin", car("cut_in_car"))
   place(sb_init, "ego", EGO_S, -2, "$EgoSpeed")
@@ -158,7 +250,7 @@ def ks07(sb_init, ent):
   return [story("cut_in", "cutin", lc, at_time(2.0))]
 
 
-def ks08(sb_init, ent):
+def ks08(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("lead", car("lead_car"))
   place(sb_init, "ego", EGO_S, -2, "$EgoSpeed")
@@ -168,7 +260,7 @@ def ks08(sb_init, ent):
   return [story("lead_brakes", "lead", brake, at_time(3.0))]
 
 
-def ks09(sb_init, ent):
+def ks09(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("lead", car("lead_car"))
   ent.add_scenario_object("stopped", car("stopped_car"))
@@ -183,7 +275,7 @@ def ks09(sb_init, ent):
   return [story("cut_out", "lead", lc, trig)]
 
 
-def ks14(sb_init, ent):
+def ks14(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("target", car("adjacent_car"))
   place(sb_init, "ego", 600.0, -2, "$EgoSpeed")
@@ -193,7 +285,7 @@ def ks14(sb_init, ent):
   return [story("driver_lane_change", "ego", lc, at_time(3.0))]
 
 
-def ks23(sb_init, ent):
+def ks23(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("lead", car("lead_car"))
   place(sb_init, "ego", EGO_S, -2, 0)
@@ -202,7 +294,7 @@ def ks23(sb_init, ent):
   return [story("lead_leaves", "lead", go, at_time("$StandTime"))]
 
 
-def ks25(sb_init, ent):
+def ks25(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   place(sb_init, "ego", EGO_S, -2, "$StartSpeed")
   acc = xosc.AbsoluteSpeedAction("$EndSpeed", xosc.TransitionDynamics(xosc.DynamicsShapes.linear,
@@ -210,7 +302,7 @@ def ks25(sb_init, ent):
   return [story("speed_up", "ego", acc, at_time(1.0))]
 
 
-def ks27(sb_init, ent):
+def ks27(sb_init, ent, road):
   ent.add_scenario_object("ego", corolla())
   ent.add_scenario_object("lead", car("lead_car"))
   place(sb_init, "ego", EGO_S, -1, "$EgoSpeed")
@@ -219,6 +311,31 @@ def ks27(sb_init, ent):
   acc = xosc.AbsoluteSpeedAction("${$EgoSpeed + $SetSpeedDelta}", xosc.TransitionDynamics(
     xosc.DynamicsShapes.linear, xosc.DynamicsDimension.rate, 1.5))
   return [story("accelerate_to_set_speed", "ego", acc, at_time(0.5))]
+
+
+def ks04(sb_init, ent, road):
+  ent.add_scenario_object("ego", corolla())
+  if road["kind"] == "merge":
+    # the merging car keeps the ego's speed MergeGap ahead (centre to centre) and changes into lane -2 from the start
+    # of the taper, done before lane -3 ends
+    ent.add_scenario_object("merging", car("merging_car"))
+    place(sb_init, "ego", KS04_START, -2, "$EgoSpeed")
+    place(sb_init, "merging", f"${{{KS04_START:g} + $MergeGap}}", -3, "$EgoSpeed")
+    lc = xosc.AbsoluteLaneChangeAction(-2, xosc.TransitionDynamics(xosc.DynamicsShapes.sinusoidal,
+                                                                   xosc.DynamicsDimension.time, KS04_MERGE_TIME))
+    t = f"${{({road['taper_start']:g} - {KS04_START:g} - $MergeGap) / $EgoSpeed}}"
+    return [story("merge", "merging", lc, at_time(t, "taper_start"))]
+  place(sb_init, "ego", KS04_START, -3, "$EgoSpeed")
+  # ExitDesire 1: the driver steers into the exit lane once it has full width (scripted; in a closed loop the driver
+  # overrides the item); 0: the ego keeps lane -3 and goes on to the mainline
+  t = f"${{({road['taper_start'] + road['taper'] + 20.0:g} - {KS04_START:g}) / $EgoSpeed}}"
+  go = xosc.ConditionGroup()
+  go.add_condition(xosc.ValueTrigger("exit_desire", 0, xosc.ConditionEdge.none,
+                                     xosc.ParameterCondition("ExitDesire", 1, xosc.Rule.equalTo)))
+  go.add_condition(at_time(t, "exit_lane_full_width"))
+  lc = xosc.AbsoluteLaneChangeAction(-4, xosc.TransitionDynamics(xosc.DynamicsShapes.sinusoidal,
+                                                                 xosc.DynamicsDimension.time, 3.0))
+  return [story("take_the_exit", "ego", lc, go)]
 
 
 def kmh(v):
@@ -232,6 +349,14 @@ R01 = 300.0
 # The sight line from the lane centre clears the wall up to a gap of 2·sqrt(2·Rp·m) along the lane, Rp = R + w/2 and
 # m = w/2 + t the clearance: about 66 m at R = 250 m, inside the 40–80 m of WP-V-03.
 R27, WALL27_T = 250.0, 0.3
+# KS-04: lengths are assumptions (no design source read; README §1): the exit lane opens over a 100 m taper and runs
+# 200 m at full width to the gore nose; a 30 m junction, the ramp leaves at 3° and curves away at R 250 m. The merge
+# drops lane -3 over 200 m. The ego starts 200 m before the taper.
+KS04_START = 300.0
+KS04_MERGE_TIME = 4.0
+KS04_EXIT = {"kind": "exit", "marked": True, "taper_start": 500.0, "taper": 100.0, "nose": 800.0, "junction": 30.0,
+             "gore_end": 1.5, "ramp_angle": math.radians(3.0), "ramp_radius": 250.0, "ramp_clothoid": 120.0,
+             "ramp_arc": 300.0, "mainline": 700.0, "params": ["EgoSpeed", "ExitDesire"]}
 # 400 m and 600 m (WP-V-03 v0.9): the barrier's centreline on the lane edge, m = 1.85 m: about 77 m and 94 m.
 # "reveal" is the band of the reveal gap along the lane that WP-V-03 asks for at that radius.
 SCENARIOS = [
@@ -240,6 +365,16 @@ SCENARIOS = [
            {"EgoSpeed": (round(math.sqrt(2.5 * R01), 3), [round(math.sqrt(a * R01), 3) for a in (2.0, 2.5, 3.0, 3.5)], "m/s",
                          f"speed for a required lateral acceleration of 2.0, 2.5, 3.0, 3.5 m/s² at R = {R01:g} m")},
            ks01, ["ego stays in lane -2", "steady-state lateral acceleration v²/R equals the parameter's within 5 %"], 25.0),
+  Scenario("KS-04", "Lane split, exit gore, lane merge, widening lane", KS04_EXIT,
+           {"EgoSpeed": (kmh(100), [kmh(80), kmh(100), kmh(110)], "m/s", "ego speed (and the merging car's), up to the ODD-H bound"),
+            "ExitDesire": (0.0, [0.0, 1.0], "-", "exit files: 1 = the driver steers into the exit lane once it has full width"),
+            "MergeGap": (0.0, [-10.0, 0.0, 10.0], "m", "merge file: the merging car ahead of the ego (centre to centre) when its lane change starts")},
+           ks04, ["ExitDesire 0: ego keeps lane -3 and goes on to the mainline (road 1); 1: it ends on the exit ramp (road 2)",
+                  "merge: the merging car is in lane -2 before lane -3 ends, MergeGap ahead of the ego within 0.5 m; ego keeps lane -2"],
+           30.0,
+           variants={"widen": {"marked": False, "label": "no line along the exit lane (widening lane)"},
+                     "merge": {"kind": "merge", "taper_start": 600.0, "taper": 200.0, "length": 1500.0,
+                               "label": "lane -3 ends (3 to 2 lanes)", "params": ["EgoSpeed", "MergeGap"]}}),
   Scenario("KS-05", "Stationary vehicle in lane at highway approach", {"length": 1500.0},
            {"EgoSpeed": (kmh(80), [kmh(40), kmh(60), kmh(80), kmh(120)], "m/s", "approach speed (CC 40/60/80 km/h; 120 km/h by simulation only)"),
             "TargetS": (500.0, [500.0], "m", "position of the stationary vehicle"),
@@ -284,8 +419,8 @@ SCENARIOS = [
            ks27, ["the inside wall hides the lead until the gap along the lane is 40–80 m",
                   "ego accelerates to EgoSpeed + SetSpeedDelta (scripted here: in a closed loop the item does it)",
                   "lead keeps LeadSpeed in lane -1"], 20.0,
-           variants={"R400": {"radius": 400.0, "wall": {"t": 0.0, "height": 2.0}, "reveal": (40.0, 80.0)},
-                     "R600": {"radius": 600.0, "wall": {"t": 0.0, "height": 2.0}, "reveal": (80.0, 100.0)}}),
+           variants={"R400": {"radius": 400.0, "wall": {"t": 0.0, "height": 2.0}, "reveal": (40.0, 80.0), "label": "R = 400 m"},
+                     "R600": {"radius": 600.0, "wall": {"t": 0.0, "height": 2.0}, "reveal": (80.0, 100.0), "label": "R = 600 m"}}),
 ]
 
 SCENARIOS_BY_ID = {sc.id: sc for sc in SCENARIOS}
@@ -294,7 +429,6 @@ SCENARIOS_BY_ID = {sc.id: sc for sc in SCENARIOS}
 NOT_REPRESENTED = {
   "KS-02": "bank and crosswind: OpenSCENARIO 1.x has no wind, and esmini does not use superelevation; plant model (layer 1) later",
   "KS-03": "lane-marking visibility is a perception condition: recorded data and the closed course (M3, M8)",
-  "KS-04": "lane split and merge: representable with a junction or a lane-width polynomial; deferred (SIM-OI-5)",
   "KS-10": "overpass and shadow false braking is a perception condition (M3, M9)",
   "KS-11": "radar clutter and metal plates are perception conditions (M3, M8, M9)",
   "KS-12": "sun, headlights, tunnels are perception conditions (M3, M9)",
@@ -323,12 +457,12 @@ def scenario_files(sc: Scenario, fid: str, road: dict) -> dict[str, str]:
       pd.add_parameter(xosc.Parameter(name, xosc.ParameterType.double, str(default)))
     init = xosc.Init()
     ent = xosc.Entities()
-    stories = sc.build(init, ent)
+    stories = sc.build(init, ent, road)
     stop = xosc.ValueTrigger("end", 0, xosc.ConditionEdge.none, xosc.SimulationTimeCondition(sc.duration, xosc.Rule.greaterThan), "stop")
     sb = xosc.StoryBoard(init, stop)
     for st in stories:
       sb.add_story(st)
-    title = sc.title if fid == sc.id else f"{sc.title}, R = {road['radius']:g} m"
+    title = sc.title if fid == sc.id else f"{sc.title}, {road['label']}"
     scen = xosc.Scenario(f"{sc.id} {title}", AUTHOR, pd, ent, sb, xosc.RoadNetwork(f"../xodr/{fid}.xodr"),
                          xosc.Catalog(), creation_date=FIXED_DATE)
     xosc_path = Path(tmp) / f"{fid}.xosc"
