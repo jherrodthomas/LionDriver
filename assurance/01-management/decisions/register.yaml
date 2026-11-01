@@ -6255,7 +6255,16 @@
       title: "Leave them; rely on no shell access"
       detail: "No change. Cost: SWF-028.C2 and SWF-030.C2 stay AP H with nothing that detects them."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-028, SWF-030, SWF-058, SWF-082", "assurance/07-supporting/impact/change-2026-10-27-reference-test-switches.md", "DQ-131"]
-  status: open
+  status: applied
+  answer:
+    choice: A
+    via: assumed
+    at: 2026-11-01
+    note: No answer or objection by proceed_after; Claude went ahead with the recommended option, as the entry said. The lead can still change it
+  applied:
+    ref: jherrodthomas/LionDriver#505
+    record: "openpilot system/manager/reference_env.py and manager.py: test-only switches removed on the device in the reference build, test_reference_env.py, mutants RE-1..RE-4; change-2026-10-27-reference-test-switches; SW FMEA rev 1.11 SWF-028.C2, SWF-030.C2"
+    at: 2026-10-27
 - id: DQ-426
   question: "Should the steering controller forget its built-up correction each time steering assist ends?"
   context: >-
@@ -6279,7 +6288,16 @@
       title: "Keep upstream behaviour and record why"
       detail: "No fork difference. Cost: an old correction is applied at engagement; SWF-042.C1 stays AP H with no test."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-042", "assurance/07-supporting/impact/change-2026-10-29-lateral-integrator-reset.md"]
-  status: open
+  status: applied
+  answer:
+    choice: A
+    via: assumed
+    at: 2026-11-01
+    note: No answer or objection by proceed_after; Claude went ahead with the recommended option, as the entry said. The lead can still change it
+  applied:
+    ref: jherrodthomas/LionDriver#530
+    record: "openpilot latcontrol_torque.py and latcontrol_pid.py reset their PID in reset(), tests and mutants LR-1..LR-3; change-2026-10-29-lateral-integrator-reset; SW FMEA rev 1.13 SWF-042.C1"
+    at: 2026-10-29
 - id: DQ-427
   question: "With the driver-camera view open, should the car refuse to engage, and disengage if the view turns on while engaged?"
   context: >-
@@ -6307,7 +6325,16 @@
       title: "Also have the UI clear the parameter when the car turns on"
       detail: "The view closes by itself. Cost: changes in both UIs (comma 3X and comma four) with UI tests; not needed for safety once monitoring ignores it."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-085", "assurance/07-supporting/impact/change-2026-10-29-driver-view-interlock.md", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-610"]
-  status: open
+  status: applied
+  answer:
+    choice: A
+    via: assumed
+    at: 2026-11-01
+    note: No answer or objection by proceed_after; Claude went ahead with the recommended option, as the entry said. The lead can still change it
+  applied:
+    ref: jherrodthomas/LionDriver#532
+    record: "openpilot selfdrived driverViewActive (NO_ENTRY, SOFT_DISABLE) and dmonitoringd demo mode only offroad, test_driver_view.py, mutants DV-1..DV-6; change-2026-10-29-driver-view-interlock; TSR-610, SWSR-610, CSR-072; SW FMEA rev 1.14 SWF-085"
+    at: 2026-10-29
 - id: DQ-428
   question: "Should the SOTIF analysis add a hazard for not giving way to emergency vehicles, and not moving over or slowing down for one stopped on the shoulder?"
   context: >-
