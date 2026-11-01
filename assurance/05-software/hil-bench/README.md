@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Hardware-in-the-loop bench plan (decision D-04 of [WP-M-01](../../01-management/WP-M-01-assurance-strategy.md); test environment of [WP-W-08](../WP-W-08-embedded-software-testing.md) §3) |
 | Standard reference | ISO 26262-6:2018 §11.4.2 (test environments); ISO 26262-8:2018 §9.4.3 (verification environment); ASPICE 4.0 SWE.6 |
-| Version | 0.9 (§5.5: the virtual HIL bench runs `test_12`…`test_16` in CI before the bench, no credit; test fixes in panda `cb3670d`; AI-drafted; 2026-11-01). 0.8 (A-1 and Status: the bench is deferred by the lead, D-04, DQ-049 B; 2026-10-23). 0.7 (`test_16` in the pin since `3a8b7c2` (#405); AI-drafted; 2026-10-21). 0.6 (`test_16_engaged_mismatch_siren.py`, panda PR #22, mapped to VS-FI-10 (b); AI-drafted; 2026-10-21). 0.5 (merge of PR #47 software alignment with the base; §7 mapping rows of `test_12`…`test_14` merged into the base's rows; 2026-10-13). It carries PR #47's draft, numbered 0.2 there: alignment pass: baseline and pins consistent; mapping for `test_12`…`test_14`. History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
+| Version | 0.9 (§5.5: the virtual HIL bench runs `test_12`…`test_16` in CI before the bench, no credit; test fixes in panda `131320c`; AI-drafted; 2026-11-01). 0.8 (A-1 and Status: the bench is deferred by the lead, D-04, DQ-049 B; 2026-10-23). 0.7 (`test_16` in the pin since `3a8b7c2` (#405); AI-drafted; 2026-10-21). 0.6 (`test_16_engaged_mismatch_siren.py`, panda PR #22, mapped to VS-FI-10 (b); AI-drafted; 2026-10-21). 0.5 (merge of PR #47 software alignment with the base; §7 mapping rows of `test_12`…`test_14` merged into the base's rows; 2026-10-13). It carries PR #47's draft, numbered 0.2 there: alignment pass: baseline and pins consistent; mapping for `test_12`…`test_14`. History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware. The bench is deferred by the lead (D-04, decision register DQ-049, B, 2026-10-14) |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
@@ -147,7 +147,7 @@ Record each skipped test as **Not run**, never as Pass. Record the build type (d
 
 Before the bench, `test_12`…`test_16` run on the [virtual HIL bench](../../sim/vhil/README.md) in CI (TL-62, no
 credit): the firmware's safety code on the host, with its clocks locked to the wall clock. Its first runs found three
-test bugs, fixed in panda `cb3670d` (panda#23, [change record](../../07-supporting/impact/change-2026-11-01-pin-cb3670d.md)),
+test bugs, fixed in panda `131320c` (panda#23, [change record](../../07-supporting/impact/change-2026-11-01-pin-131320c.md)),
 and reproduced the open `0x262` timing gap (WP-S-04 T-01, DQ-431). A virtual pass is not a bench result: record the
 bench run as above.
 
