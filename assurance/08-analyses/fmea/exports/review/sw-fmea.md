@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 1.16 | draft | BL-007 | RT-2 | 2026-10-17 |
+| 1.17 | draft | BL-007 | RT-2 | 2026-10-17 |
 
 **Scope.** P1 elements for AC-001 at BL-007 (frozen; liondriver-dev 9fe3eb2, panda 3a8b7c2, opendbc 4d1a056; the LIONDRIVER_REFERENCE build is the default; rows of code unchanged since an earlier baseline keep that rating): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28. Rev 1.9: start-up fault-code read (SWF-091), panda siren (SWF-092), stock-AEB stand-down (SWF-093).
 
@@ -595,7 +595,7 @@ Safety mechanisms: (1) None for frame content. The reference lock blocks ELM327 
 
 #### SWF-016 · Host transmission bypasses the safety check
 
-🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-012` Route every host transmission through the safety check
+🟢 L · **S 10** · guideword *omission* · function `SWF-FN-012` Route every host transmission through the safety check
 
 Effects:
 
@@ -606,7 +606,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-016.C1` A host TX path calls can_send with skip_tx_hook=true | • Both host TX entries pass skip_tx_hook=false (can_comms.h:97,118); only forwarding and the body use skip=true <sub>panda/board/can_comms.h</sub><br>• MISRA C checks on panda firmware <sub>panda/tests/misra</sub><br>• Upstream code review; no coverage gate on panda board code | • Panda HITL safety tests (hardware needed; not run here) <sub>panda/tests/hitl/test_6_safety.py</sub> | 3 | 8 | 🔴 **H** | SWF-ACT-008 |
+| `SWF-016.C1` A host TX path calls can_send with skip_tx_hook=true | • Both host TX entries pass skip_tx_hook=false (can_comms.h:97,118); only forwarding and the body use skip=true <sub>panda/board/can_comms.h</sub><br>• MISRA C checks on panda firmware <sub>panda/tests/misra</sub><br>• Upstream code review; no coverage gate on panda board code | • Static check in CI (rev 1.17): tools/ci/check_panda_tx_paths.py reads the pinned panda sources and fails when a can_send call in the host TX entry (can_comms.h) does not pass skip_tx_hook=false, a call skips the hook outside the reviewed forwarding and body paths, the set of call sites changes, anything else pushes into a CAN TX queue, or can_send stops testing the hook. Run by the trace job (unittest discover of tools/ci) and proven by mutants TX-1..TX-4 (host_mutation.py, unit_tests job); so D 4 (RT-2), from D 8 <sub>tools/ci/test_check_panda_tx_paths.py</sub><br>• Panda HITL safety tests (hardware needed; not run here) <sub>panda/tests/hitl/test_6_safety.py</sub> | 3 | 4 | 🟢 L | SWF-ACT-008 |
 
 Safety mechanisms: (1) None at run time; correctness of the two host TX entries by inspection
 
@@ -2010,7 +2010,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-005 | design_change | Add an acceleration-rate (jerk) check to the panda longitudinal checks, or justify the absence with characterized powertrain rate limits (OI-002) | Jherrod Thomas | open | SWF-004.C1 | — |
 | SWF-ACT-006 | detection | Verify on the vehicle that the PCM cancels cruise on brake (FSC FOI-006) so PCM_CRUISE can be credited as the diverse brake path; add a safety test for brake-without-cruise-cancel | Jherrod Thomas | open | SWF-005.C1 | — |
 | SWF-ACT-007 | design_change | Derive RX-lag and heartbeat timeouts from the FTTI and check them at 8 Hz or faster while controls are allowed (LD-DES-001 DR-20) | Jherrod Thomas | in_progress | SWF-006.C1, SWF-014.C1, SWF-014.C2, SWF-014.C3, SWF-092.C1, SWF-092.C2 | — |
-| SWF-ACT-008 | detection | Add a unit or static check that every host TX path calls can_send with skip_tx_hook=false | Jherrod Thomas | open | SWF-016.C1 | — |
+| SWF-ACT-008 | detection | Add a unit or static check that every host TX path calls can_send with skip_tx_hook=false | Jherrod Thomas | completed | SWF-016.C1 | 10/3/4 → 🟢 L |
 | SWF-ACT-009 | design_change | Make LIONDRIVER_REFERENCE=1 (with RELEASE=1) the only firmware build used for the reference configuration: set it in openpilot's panda build and the release procedure, and have the host check it (e.g. a version or health flag) before engaging | Jherrod Thomas | completed | SWF-001.C3, SWF-008.C1, SWF-013.C2 | 10/3/4 → 🟢 L |
 | SWF-ACT-010 | design_change | Restrict ELM327 TX to the UDS services fingerprinting and radar disable need, and refuse it above standstill (WP-W-04 OI-6) | Jherrod Thomas | in_progress | SWF-015.C1 | — |
 | SWF-ACT-011 | detection | Confirm the LSI range from the STM32H725 datasheet and run the watchdog HIL test (test_10_hw_watchdog) on the bench, including a long soak for spurious resets (D-04) | Jherrod Thomas | open | SWF-018.C1, SWF-019.C1 | — |
@@ -2097,7 +2097,6 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-011.C1` | Stock pre-collision (AEB) messages blocked | 10/5/3 | SWF-ACT-002 |
 | `SWF-012.C1` | Relay malfunction not detected | 10/5/3 | SWF-ACT-002 |
 | `SWF-015.C1` | Diagnostic (ELM327) mode accepted while driving | 10/4/8 | SWF-ACT-010 |
-| `SWF-016.C1` | Host transmission bypasses the safety check | 10/3/8 | SWF-ACT-008 |
 | `SWF-017.C1` | Item deceleration passed while the driver presses the accelerator | 10/5/3 | SWF-ACT-002 |
 | `SWF-018.C1` | Safety checks stop running while the relay is driven | 10/4/7 | SWF-ACT-011 |
 | `SWF-019.C1` | Spurious MCU reset while engaged | 10/5/8 | SWF-ACT-011 |
