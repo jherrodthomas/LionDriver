@@ -627,6 +627,36 @@ jobs:
         python3 assurance/sim/blender/test_scenes.py
         python3 assurance/sim/blender/test_fetch_assets.py
 
+  virtual-hil:
+    name: virtual HIL
+    # Virtual HIL bench (assurance/sim/vhil, tool TL-62): the panda HIL tests test_12 ... test_16 against the pinned
+    # firmware safety code compiled for the host, its clocks locked to the wall clock. A model of the bench, no
+    # evidence credit (WP-S-04 §6, DQ-206 A). Fails on any failure that is not a known open item (run_vhil.py
+    # KNOWN_OPEN, each tied to a decision-register entry); the report goes to the job summary and an artifact.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Install the pinned packages of the simulation track
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/requirements.txt
+    - name: The bench's own tests (fake clock)
+      run: python3 assurance/sim/vhil/test_vhil.py
+    - name: Panda HIL tests on the virtual bench (reference build)
+      run: python3 assurance/sim/vhil/run_vhil.py --report virtual-hil-report.md
+    - name: Report to the job summary
+      if: always()
+      run: '[ -f virtual-hil-report.md ] && cat virtual-hil-report.md >> "$GITHUB_STEP_SUMMARY" || true'
+    - uses: actions/upload-artifact@v7
+      if: always()
+      with:
+        name: virtual-hil-report
+        path: virtual-hil-report.md
+        if-no-files-found: ignore
+
   sim-column:
     name: simulation L2 column
     # L2 steering column (assurance/sim README §3.5): OpenModelica 1.27.1 (tool TL-44) exports the column as an FMU;
