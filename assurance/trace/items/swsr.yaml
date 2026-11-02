@@ -197,7 +197,7 @@
 
 - id: SWSR-108a
   kind: swsr
-  text: "The envelope shall record the cause of every authority revocation as a reason code (at least: TX violation, RX checksum, RX timeout, RX plausibility, brake, cruise off, heartbeat, command stall, platform fault) and report the latest code and a per-cause counter in the health packet, in the one layout of WP-S-05 §4.2 (assurance/03-system/WP-S-05-hsi-specification.md) that the firmware, the host and the logs share; the host logs them in a new `pandaStates` field (DQ-152 A)."
+  text: "The envelope shall record the cause of every authority revocation as a reason code (at least: TX violation, RX checksum, RX timeout, RX plausibility, brake, cruise off, heartbeat, command stall, platform fault) and report the latest code and a per-cause counter in the health packet."
   asil: "B‡"
   parents: [TSR-108, TSR-406]
   parent_text: "TSR-108, TSR-406"
@@ -207,7 +207,7 @@
   acceptance: "Each cause produces its distinct code in `0xd2` health within one health period"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: no general reason code or per-cause counter yet; the layout is decided (DQ-152 A), not implemented (OI-8). Reported today: `safety_tx_blocked` count and the RX-invalid flag (`main_comms.h`); in addition since 2026-10-12 the health flags EPS fault (bit 10, `pandaState.epsFault`), TX rate exceeded (bit 11, `pandaState.txRateExceeded`) and watchdog reset (bit 9, `pandaState.watchdogReset`), and the refused-request counter `requests_rejected_pkt` (panda `8aa8671`, `board/health.h`); interface change in WP-S-05 §4.2 (assurance/03-system/WP-S-05-hsi-specification.md)"
+  baseline_impl: "Partial: no general reason code yet (OI-8). Reported today: `safety_tx_blocked` count and the RX-invalid flag (`main_comms.h`); in addition since 2026-10-12 the health flags EPS fault (bit 10, `pandaState.epsFault`), TX rate exceeded (bit 11, `pandaState.txRateExceeded`) and watchdog reset (bit 9, `pandaState.watchdogReset`), and the refused-request counter `requests_rejected_pkt` (panda `8aa8671`, `board/health.h`); interface change in WP-S-05 §4.2 (assurance/03-system/WP-S-05-hsi-specification.md)"
   status: proposed
   source: WP-W-02
 
@@ -403,22 +403,6 @@
   status: proposed
   source: WP-W-02
 
-- id: SWSR-301h
-  kind: swsr
-  text: "In `preEnabled`, `selfdrived` shall go to `enabled` only in a 100 Hz cycle in which no PRE_ENABLE event and no disable event (IMMEDIATE_DISABLE, USER_DISABLE, SOFT_DISABLE) is present. A SOFT_DISABLE event present in `preEnabled` shall end the engagement attempt: `selfdrived` goes to `disabled` with the SOFT_DISABLE alert instead of ignoring it (transition P1, WP-W-05 (assurance/05-software/WP-W-05-software-unit-design.md) §5.3; DQ-151 A)."
-  asil: "QM (C-sup: SWSR-301)"
-  parents: [TSR-301]
-  parent_text: "TSR-301"
-  other_parents: false
-  allocated_to: "`host.selfdrived`"
-  verification: "UT"
-  acceptance: "P1 taken only with no PRE_ENABLE and no disable event; SOFT_DISABLE in `preEnabled` → `disabled` in the same cycle"
-  applies_to: "CFG-001"
-  proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: a SOFT_DISABLE event is not acted on in `preEnabled` (`selfdrive/selfdrived/state.py:60-64`, WP-W-05 §5.3 P1). Draft (DQ-151 A, OI-12), not implemented, no test"
-  status: proposed
-  source: WP-W-02
-
 - id: SWSR-302
   kind: swsr
   text: "The envelope shall clear authority when BRAKE_PRESSED (`0x226` bit 37) rises, or is set while any wheel speed is non-zero."
@@ -431,23 +415,7 @@
   acceptance: "Clear in the same RX call"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:350-357`; `modes/toyota.h:148-150, 157-168`. `0x226` without checksum (GAP-01) → SWSR-405. B2B-02 (B2B-TOY-AUTH-2026-10-13 (assurance/05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md)): the code decides standstill on the sum of the four wheel speeds, which differs from \"any wheel\" only for signed speeds that sum to zero. Method decided 2026-11-02 (DQ-164 A): a CAN log of the reference car that includes reversing comes first; if `0xAA` carries signed wheel speeds, the code changes to check each wheel. The requirement is unchanged; the log and any code change are open"
-  status: proposed
-  source: WP-W-02
-
-- id: SWSR-302h
-  kind: swsr
-  text: "`selfdrived` shall go from `preEnabled`, `enabled`, `softDisabling` or `overriding` to `disabled`, with the USER_DISABLE alert, in the 100 Hz cycle in which a USER_DISABLE event (a driver disengagement: cruise off, brake, cancel button) is present and no IMMEDIATE_DISABLE event; an IMMEDIATE_DISABLE event in the same cycle takes priority (transition X2, WP-W-05 §5.3; DQ-151 A)."
-  asil: "QM (C-sup: SWSR-301, SWSR-307)"
-  parents: [TSR-301, TSR-302]
-  parent_text: "TSR-301, TSR-302"
-  other_parents: false
-  allocated_to: "`host.selfdrived`"
-  verification: "UT"
-  acceptance: "Each USER_DISABLE source → `disabled` in the same cycle from each of the four states; IMMEDIATE_DISABLE wins when both are present"
-  applies_to: "CFG-001"
-  proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not assessed: draft (DQ-151 A, OI-12); the transition is coded (`selfdrive/selfdrived/state.py:31-33`, WP-W-05 §5.3 X2) but not checked or tested against this requirement"
+  baseline_impl: "Impl: `safety.h:350-357`; `modes/toyota.h:148-150, 157-168`. `0x226` without checksum (GAP-01) → SWSR-405"
   status: proposed
   source: WP-W-02
 
@@ -499,22 +467,6 @@
   status: proposed
   source: WP-W-02
 
-- id: SWSR-304h
-  kind: swsr
-  text: "`selfdrived` shall go from `enabled` to `overriding`, with the override alerts, in the 100 Hz cycle in which an OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL event is present and no disable event; in `overriding` the disable events shall act as in `enabled` (transitions X1, X2, O1) (transition E2, WP-W-05 §5.3; DQ-151 A)."
-  asil: "QM (C-sup: SWSR-304, SWSR-304a)"
-  parents: [TSR-304, TSR-305]
-  parent_text: "TSR-304, TSR-305"
-  other_parents: false
-  allocated_to: "`host.selfdrived`"
-  verification: "UT"
-  acceptance: "Each override event → `overriding` in the same cycle; a disable event present in the same cycle takes priority"
-  applies_to: "CFG-001"
-  proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not assessed: draft (DQ-151 A, OI-12); the transition is coded (`selfdrive/selfdrived/state.py:43-45`, WP-W-05 §5.3 E2) but not checked or tested against this requirement"
-  status: proposed
-  source: WP-W-02
-
 - id: SWSR-305
   kind: swsr
   text: "While GAS_RELEASED (`0x1D2` bit 4) = 0 the envelope shall treat longitudinal authority as not granted and shall not clear lateral authority."
@@ -528,22 +480,6 @@
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:146`; `longitudinal.h:3-5`"
-  status: proposed
-  source: WP-W-02
-
-- id: SWSR-305h
-  kind: swsr
-  text: "`selfdrived` shall return from `overriding` to `enabled` only in a 100 Hz cycle in which no override event, no SOFT_DISABLE event and no other disable event is present (transition O2, WP-W-05 §5.3; DQ-151 A)."
-  asil: "QM (C-sup: SWSR-304, SWSR-304a)"
-  parents: [TSR-304, TSR-305]
-  parent_text: "TSR-304, TSR-305"
-  other_parents: false
-  allocated_to: "`host.selfdrived`"
-  verification: "UT"
-  acceptance: "`overriding` kept while any override event is present; → `enabled` in the first cycle without override or disable event"
-  applies_to: "CFG-001"
-  proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not assessed: draft (DQ-151 A, OI-12); the transition is coded (`selfdrive/selfdrived/state.py:72-73`, WP-W-05 §5.3 O2) but not checked or tested against this requirement"
   status: proposed
   source: WP-W-02
 
@@ -741,17 +677,17 @@
 
 - id: SWSR-406
   kind: swsr
-  text: "On any RX fault the envelope shall clear all authority in the same call, report the reason (SWSR-108a), and not set authority again until all RX checks pass and a new PCM rising edge occurs. A frame that the TX hook accepted while authority was granted shall not be loaded into the CAN controller's TX buffer if authority has been cleared since: the TX path re-checks authority with interrupts masked just before the load (WP-W-03 (assurance/05-software/WP-W-03-software-architecture.md) §5.4 R-5, ATC-18; DQ-154 A)."
+  text: "On any RX fault the envelope shall clear all authority in the same call, report the reason (SWSR-108a), and not set authority again until all RX checks pass and a new PCM rising edge occurs."
   asil: "B‡"
   parents: [TSR-406]
   parent_text: "TSR-406"
   other_parents: false
   allocated_to: "U-SAF-CORE"
   verification: "UT, FI, IT"
-  acceptance: "Reaction in same call; re-engage only after edge; no frame accepted under authority is loaded after a revocation that preempts the TX path (R-5 interleaving injected)"
+  acceptance: "Reaction in same call; re-engage only after edge"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: `safety.h:112-121, 337-340`; single flag `main_comms.h:23`. The masked re-check before the TX load is not implemented (ATC-18)"
+  baseline_impl: "Partial: `safety.h:112-121, 337-340`; single flag `main_comms.h:23`"
   status: proposed
   source: WP-W-02
 
@@ -1317,7 +1253,7 @@
 
 - id: SWSR-515
   kind: swsr
-  text: "Before first driving the relay after power-up, the firmware shall run start-up tests (image CRC, RAM test of safety data regions, ECC test, watchdog test reset at the defined interval, relay drive/readback by a controlled toggle, siren self-test) and stay in SS-S on failure. Which of these run at every start and block a drive is fixed only after the false-block rate of the full set (drives refused on a false failure) has been measured on the bench (DQ-165 A; WP-H-04 OI-4)."
+  text: "Before first driving the relay after power-up, the firmware shall run start-up tests (image CRC, RAM test of safety data regions, watchdog reset path at the defined interval, relay drive/readback, siren path) and stay in SS-S on failure."
   asil: "B‡"
   parents: [TSR-515]
   parent_text: "TSR-515"
@@ -1327,7 +1263,7 @@
   acceptance: "Each injected start-up failure → no relay drive"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl (none in `main.c`, WP-W-03 ATC-03). Approach decided 2026-11-02 (DQ-165 A): define the full set, measure its false-block rate on the bench, then choose. Test definitions, bench campaign and choice open"
+  baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
 
@@ -2197,7 +2133,7 @@
 
 - id: SWSR-501b
   kind: swsr
-  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) A start in the bootstub is not a target (v0.50, DQ-149 A, assumed): until the relay is first driven the car runs on its stock path, so a hang before then leaves the stock car (WP-W-03 §6.2)."
+  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) The bootstub start target is dropped (DQ-149 A, 2026-11-02): before the relay is first driven the car runs on its stock path, so a hang there leaves the stock car."
   asil: "C"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"
