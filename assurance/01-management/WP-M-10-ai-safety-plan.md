@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-10 AI safety management plan |
 | Standard reference | ISO/PAS 8800:2024 (AI safety management, AI safety lifecycle, data, V&V, operation phase, assurance argument); ISO 21448:2022 §7, §10, §13 (interface); ASPICE 4.0 MLE.1–MLE.4, SUP.11 |
-| Version | 0.2 (status update: OI-7 closed 2026-10-12 recorded; §6.1 status of the work products that now exist as Draft; §3 and OI-2 AI-2 exclusion decided; owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2, OI-3 and OI-5; 2026-10-14). 0.1 |
+| Version | 0.3 (OI-6 decided: verified-hash precondition, DQ-162 A; 2026-11-02). 0.2 (status update: OI-7 closed 2026-10-12 recorded; §6.1 status of the work products that now exist as Draft; §3 and OI-2 AI-2 exclusion decided; owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2, OI-3 and OI-5; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for driving models; safety-relevant for controllability (DM model, QM allocation proposed in WP-C-04 §7) |
 | Author | Assurance team (initial draft) |
@@ -149,5 +149,5 @@ The AI argument is the G3 branch of the [safety case (WP-K-01)](../10-safety-cas
 | OI-3 | Confirm at G1 the QM allocation of the DM function chain (AI-3) proposed in WP-C-04 §7. The lead answered on 2026-10-14 (decision register DQ-205) that the unresponsive driver becomes its own hazard (H-09) with an ASIL A goal; the DM allocation must be re-checked against it once WP-C-03 and WP-C-04 are updated | SM | G1 |
 | OI-4 | Obtain LFS objects for the pinned models and record their hashes and sizes in the release manifest (this checkout holds pointers only) | ML | G3 |
 | OI-5 | Define the LionDriver evaluation dataset specification and storage, including the policy on uploading to comma servers (§6.3). Upload policy answered by the lead 2026-10-14 (decision register DQ-084): no uploads, LionDriver keeps its own logs. Open: dataset specification and storage | ML | G3 |
-| OI-6 | Decide a replacement for `pickle`-based model loading, or a verified-hash precondition (RM-1). Queued for the lead (decision register DQ-170) | ML | G3 |
+| OI-6 | Decided 2026-11-02 (DQ-162 A, which merged DQ-170): a verified-hash precondition against the signed release manifest (AIR-19, AIR-20); `pickle` stays behind it. Left: the manifest (RM-1) and the check (WP-W-10 OI-5) | ML | G3 |
 | OI-7 | Closed (2026-10-12): no request was sent. By decision of the maintainer the question is answered from comma.ai's public statements, recorded in [WP-M-11 §3.5](WP-M-11-upstream-and-supplier-management.md#35-public-information-on-the-ml-models-wp-m-10-oi-7). Training-data source is known in kind (uploaded user drives); no model card, dataset description or evaluation report is published | ML | G1 |

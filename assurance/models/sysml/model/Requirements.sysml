@@ -1361,7 +1361,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-HIL";
     }
     requirement <'TSR-633'> tsr_633 : TechnicalSafetyRequirement {
-        doc /* When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall keep the lane and decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then keep the vehicle stopped and held, and lock out re-engagement and resumption until the driver responds, so that the item cannot drive off again (register DQ-365, A, decided 2026-10-16). It shall not leave lateral and longitudinal control active at the set speed. */
+        doc /* When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall keep the lane and decelerate in lane to a standstill at 2 m/s², ramped in within j_down (TSR-202, TSR-205), about 15 s and 230 m from 110 km/h (register DQ-424, A, decided 2026-10-30), with the terminal alert sounding, then keep the vehicle stopped and held, and lock out re-engagement and resumption until the driver responds, so that the item cannot drive off again (register DQ-365, A, decided 2026-10-16). It shall not leave lateral and longitudinal control active at the set speed. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";

@@ -2133,7 +2133,7 @@
 
 - id: SWSR-501b
   kind: swsr
-  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) Start in the bootstub before the application runs remains a target (OI-10)."
+  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) The bootstub start target is dropped (DQ-149 A, 2026-11-02): before the relay is first driven the car runs on its stock path, so a hang there leaves the stock car."
   asil: "C"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"

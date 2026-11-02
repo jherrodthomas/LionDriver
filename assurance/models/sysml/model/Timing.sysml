@@ -233,7 +233,7 @@ package LionDriverTiming {
     }
     constraint <'SG-08 no-response reaction (§3.8.4; DQ-365 A)'> budget_17 : TimingBudget {
         doc /* SG-08 no-response reaction (§3.8.4; DQ-365 A) */
-        :>> ftti = "preliminary: reaction starts ≤ 18 s (vision) / ≤ 30 s (wheel-touch) from loss of attention; standstill about 10 s later from 110 km/h at 3 m/s² (OI-11)";
+        :>> ftti = "preliminary: reaction starts ≤ 18 s (vision) / ≤ 30 s (wheel-touch) from loss of attention; standstill about 15 s and 230 m later from 110 km/h at 2 m/s², ramped in (TSR-633, DQ-424 A; OI-11)";
         :>> fdti = "terminal alert at 13 s vision / 25 s wheel-touch (T-24); DM invalid → take-over request ≤ 2 s (TSR-609)";
         :>> frti = "reaction ≤ 5 s after the terminal alert (TSR-633, T-33)";
         :>> margin = "TBD";
