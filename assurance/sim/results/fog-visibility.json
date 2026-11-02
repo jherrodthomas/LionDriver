@@ -1,0 +1,125 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. Koschmieder's law; assumed camera threshold.",
+ "rows": [
+  {
+   "visibility_m": 50,
+   "car_m": [
+    41.5,
+    65.3
+   ],
+   "line_m": [
+    10.9,
+    32.0
+   ],
+   "line_nominal_m": 14.4
+  },
+  {
+   "visibility_m": 100,
+   "car_m": [
+    82.9,
+    130.6
+   ],
+   "line_m": [
+    21.7,
+    64.0
+   ],
+   "line_nominal_m": 28.9
+  },
+  {
+   "visibility_m": 150,
+   "car_m": [
+    124.4,
+    195.9
+   ],
+   "line_m": [
+    32.6,
+    96.0
+   ],
+   "line_nominal_m": 43.3
+  },
+  {
+   "visibility_m": 200,
+   "car_m": [
+    165.9,
+    261.2
+   ],
+   "line_m": [
+    43.4,
+    128.0
+   ],
+   "line_nominal_m": 57.7
+  },
+  {
+   "visibility_m": 300,
+   "car_m": [
+    248.8,
+    391.8
+   ],
+   "line_m": [
+    65.2,
+    192.0
+   ],
+   "line_nominal_m": 86.6
+  },
+  {
+   "visibility_m": 400,
+   "car_m": [
+    331.8,
+    522.3
+   ],
+   "line_m": [
+    86.9,
+    256.0
+   ],
+   "line_nominal_m": 115.5
+  },
+  {
+   "visibility_m": 600,
+   "car_m": [
+    497.7,
+    783.5
+   ],
+   "line_m": [
+    130.3,
+    383.9
+   ],
+   "line_nominal_m": 173.2
+  },
+  {
+   "visibility_m": 1000,
+   "car_m": [
+    829.5,
+    1305.9
+   ],
+   "line_m": [
+    217.2,
+    639.9
+   ],
+   "line_nominal_m": 288.7
+  }
+ ],
+ "stop_m": {
+  "item": 148.7,
+  "driver_attentive_dry": 107.2,
+  "driver_unwarned_dry": 137.8,
+  "driver_unwarned_wet": 188.1
+ },
+ "preview_m": 61.1,
+ "visibility_needed_m": {
+  "car_item": [
+   113.9,
+   179.3
+  ],
+  "car_driver_wet": [
+   144.0,
+   226.8
+  ],
+  "lines_preview": [
+   95.5,
+   281.4
+  ],
+  "lines_preview_nominal": 211.7
+ },
+ "dense_fog_m": 400.0,
+ "odd_visibility_m": 200.0
+}

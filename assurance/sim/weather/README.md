@@ -1,4 +1,4 @@
-# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests and a stopped car
+# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests, a stopped car, lane markings and fog
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01), oncoming headlights (TC-02), rain (TC-03), crown and wind (TC-15),
@@ -528,7 +528,72 @@ Results: [`results/stopped-car.md`](../results/stopped-car.md).
 
 *Figure 23. A stopped car ahead in the model's input.*
 
-## 15. Checks
+## 15. Lane markings at night in rain (TC-05, TC-03, KS-03, KS-15)
+
+**Question.** Under the car's own low beams, wet or dry and with oncoming glare, how much line-to-road contrast does
+the camera get?
+
+**Method.** [`markings.py`](markings.py):
+- **Contrast:** under the car's own lights, the line and the road stand in the ratio of their retroreflectivities (RL).
+  Oncoming headlights add the headlight study's veil to both. On a wet road, which returns about 7 times less light,
+  the same veil weighs 7 times more.
+- **Thresholds:** NCHRP Project 20-102(06) found that a machine-vision camera (Mobileye, on a closed course) detected
+  every marking at these contrast ratios:
+  - 2.5 at night, dry;
+  - 3.0 with oncoming glare;
+  - 2.1 wet.
+- **Inputs:** pavement RL 13.6 dry and 2 wet. Lines at the US minimum of 50 (MUTCD), and the better values the
+  report cites.
+
+**Result.**
+- **Dry, no glare:** a line at the US minimum gives a ratio of 3.7, enough.
+  Low beams across a median barely move it.
+- **Dry, undipped high beam across an 8 m median:** the ratio falls to 2.2 (3 % scatter) and
+  1.5 (10 %). The line then needs 73–149
+  mcd/m²/lx.
+- **Wet:** without glare a line needs only 4. With that high beam it needs
+  22–64. The MUTCD sets no wet level, so a road can meet the US
+  minimum and still lose its lines to the camera in rain with oncoming high beams.
+- **For KS-03 and KS-15:** test worn lines at night in rain, with an undipped high beam across the median.
+
+**Limits.** The thresholds are a Mobileye camera's, not openpilot's model. RL is measured at 30 m geometry.
+
+Results: [`results/markings.md`](../results/markings.md).
+
+![The contrast ratio of a dry line at the US minimum and of a wet good marking, without glare, with oncoming low beams and with undipped high beams across an 8 m median and on an undivided road, against the NCHRP thresholds of 3.0 and 2.1](figures/fig-wx-24-markings.webp)
+
+*Figure 24. Lane lines at night: the contrast the camera gets.*
+
+## 16. Fog (TC-04)
+
+**Question.** How far does the road camera see a stopped car and the lane lines in fog? Is the ODD's 200 m visibility
+bound (WP-C-02) enough?
+
+**Method.** [`fog_visibility.py`](fog_visibility.py):
+- **The law:** Koschmieder's. Visibility is the WMO's meteorological optical range, where contrast falls to 5 %.
+- **A car** is seen against the fog-lit horizon.
+- **The lines** are seen against the road. The fog's airlight there is 5–12 times the road's own luminance, so they
+  fade much sooner.
+- **The camera** sees an object while its contrast stays above 2–5 %. This band is assumed; openpilot's own figure is
+  not known.
+
+**Result.**
+- **The item's stop** (149 m) needs a visibility of 114–179 m. That is inside the
+  ODD's 200 m bound.
+- **The lines fade first.** Two seconds of them (61 m) need 212 m nominally, and up to
+  281 m at the cautious end. The 200 m bound is about right nominally and short at the cautious
+  end.
+- The camera's real contrast threshold, from local logs in fog, decides whether the bound moves. Until then this is a
+  margin to watch.
+- **Truck spray** (the plan's other half) is not built: no quantitative source was found.
+
+Results: [`results/fog-visibility.md`](../results/fog-visibility.md).
+
+![The distance at which the camera sees a stopped car and the lane lines against the fog's visibility, with the item's 149 m stop, a 2 s preview of the lines and the ODD's 200 m bound](figures/fig-wx-25-fog-visibility.webp)
+
+*Figure 25. Fog: how far the road camera sees.*
+
+## 17. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -585,6 +650,10 @@ Results: [`results/stopped-car.md`](../results/stopped-car.md).
 | K3 The design eye sees the design object at the design distance | a wrong formula |
 | P1 Model focal lengths and radard's lead rules read from openpilot; width = f·W/d | a code change or pixel error |
 | P2 Stopping distances as the wet-braking study's | a mismatch between studies |
+| N1 The contrast ratio is the RL ratio without a veil, tends to 1 under a strong one; the RL needed inverts it | a wrong glare algebra |
+| N2 NCHRP 20-102(06)'s own pairs come back (34 on its dry pavement is 2.5) | a wrong pavement value |
+| V1 Koschmieder: a black object at the visibility keeps 5 %; at 2 % it is seen ln 50 / ln 20 farther | a wrong extinction |
+| V2 A line against a road as bright as the horizon fades by Koschmieder itself; brighter airlight, sooner | a wrong airlight term |
 
 Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
 study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
@@ -607,4 +676,6 @@ python3 assurance/sim/assets/tools/device_shading.py       # only where the lice
 python3 assurance/sim/weather/wet_curves.py --figures      # reads the wet-braking table
 python3 assurance/sim/weather/crest.py --figures
 python3 assurance/sim/weather/stopped_car.py --figures     # reads model.py and radard.py
+python3 assurance/sim/weather/markings.py --figures        # reads results/headlights.json
+python3 assurance/sim/weather/fog_visibility.py --figures  # reads results/stopped-car.json
 ```

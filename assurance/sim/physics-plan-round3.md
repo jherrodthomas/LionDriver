@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the fourteen already built ([weather README](weather/README.md), [thermal README](thermal/README.md), [supply README](supply/README.md), [round 2](physics-plan.md)): what each answers, how, with which inputs, checks and picture, and in what order. They cover triggering conditions (TCs) the first two rounds left out: what the sensors can see, the vehicle at its limits, the driver camera and the device |
-| Status | Phase A built 2026-10-25 (studies 11, 12, 14, 15; §2); study 13 stopped for want of a source; phases B and C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-10-25 (studies 11, 12, 14, 15; §2); phase B built 2026-11-02 (studies 16 and 17's fog half; §3). Stopped for want of a source: 13, 17's truck spray, 18, 19. Phase C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit goes to the lead as a register question; the study itself does not move it |
 | Lead decisions needed | **None to start.** No new tool: every study runs in an existing environment. Inputs that have no public source yet (the radar's beam, the driver camera's light) are tasks, and the study that needs them waits in phase B |
 
@@ -120,6 +120,20 @@ Changes from the plan below:
 - **Feeds.** HWSR-509a (how much a partly clogged fan costs before it stalls); a maintenance note for WP-O-03.
 
 ## 3. Phase B: published optical and radio data
+
+**Built 2026-11-02**, in part. Results, synthetic:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 16 | Lane markings at night | On NCHRP 20-102(06)'s machine-vision thresholds (2.5 dry, 3.0 with glare, 2.1 wet) and the headlight study's veil: a dry line at the US minimum (50 mcd/m²/lx) is enough without glare. An undipped high beam across an 8 m median needs 73–149 dry and 22–64 wet; the MUTCD sets no wet level | [`markings.md`](results/markings.md), [weather §15](weather/README.md#15-lane-markings-at-night-in-rain-tc-05-tc-03-ks-03-ks-15) |
+| 17 | Fog | Koschmieder's law: the item's 149 m stop needs a visibility of 114–179 m, inside the ODD's 200 m. The lines fade first: 2 s of them need 212 m nominally, up to 281 m at the cautious end. A margin to watch until local logs in fog give the camera's real contrast threshold. **Truck spray not built**: the spray measurements found (TRID, SWOV, SAE 856097) give no extinction a model can use | [`fog-visibility.md`](results/fog-visibility.md), [weather §16](weather/README.md#16-fog-tc-04) |
+| 18 | Radar under bridges | **Not built.** The radar's beam width has no public source: the FCC filing for its ID (HYQDNMWR009) could not be read from the public mirrors. A measurement, a teardown or the FCC exhibits would unblock it | — |
+| 19 | Driver camera through sunglasses | **Not built.** openpilot's code does not name the driver camera's infrared wavelength, and no measured sunglass transmission at 850 or 940 nm was found (vendor claims only). The illuminator's part (T1) and a lens measurement would unblock it | — |
+
+Changes from the plan below:
+- **Study 16** takes its thresholds from a measured machine-vision test, not a contrast computed through the
+  exposure loop. Its veil is the headlight study's.
+- **Study 17** covers fog only. Its contrast threshold (2–5 %) is assumed.
 
 ### 16. Lane markings at night in rain (TC-05, TC-03, KS-03, KS-15)
 
