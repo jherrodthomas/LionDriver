@@ -962,6 +962,7 @@
       title: "NCAT at Auburn, as a research partner"
       detail: "Not a rental; could bring an independent reviewer and test subjects. Cost: a slower, partnership-style arrangement two hours from Atlanta."
   sources: ["assurance/06-validation/test-sites/README.md §2, §3, §4", "assurance/06-validation/WP-V-01-safety-validation.md OI-1", "assurance/06-validation/WP-V-07-vehicle-test-operations.md §4, §8.1, §12"]
+  explanation: {text: "You don't need to commit to a site to answer this: the question is only which one to phone first, and you can call a second one later. ITIC (Greenville) and Michelin Laurens are the only two candidates that look able to host both the low-speed tests and the 90 km/h ones; the others cover low speed only, or are a research partnership (NCAT). What decides it is not the track but three yeses on the first call: will they let an aftermarket driver-assistance device and its test firmware run, will they accept your insurance for a borrowed or rented car, and what does a half day cost. Picking A means Claude drafts that call sheet (test-sites §5) for ITIC; nothing is booked or paid. If you would rather wait until a car and insurance are in place (DQ-039, DQ-045), leave it open; it blocks every closed-course test.", at: 2026-11-02}
   status: open
 
 - id: DQ-042
@@ -3360,7 +3361,8 @@
       title: "Real-time kernel (PREEMPT_RT) or a dedicated real-time target from the start"
       detail: "Tight timing without measuring first. Cost: a kernel build or extra hardware, and keeping it working."
   sources: ["assurance/models/README.md item 4", "assurance/03-system/WP-S-08-system-integration-test.md I-3", "assurance/05-software/hil-bench/README.md §2 (B3)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-142
   question: "Until the panda tests its intercept switch at every start, how often should the hardware metrics assume a hidden fault in it is found?"
@@ -3386,7 +3388,8 @@
       title: "Assume a shorter interval now"
       detail: "A better number. Cost: it needs a check the driver or a technician really performs that often, which no procedure has yet."
   sources: ["assurance/03-system/WP-S-06-requirements-production-operation.md OI-2", "assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md PM-03", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-143
   question: "How should the CRC that protects commands from the main computer to the panda be chosen?"
@@ -3462,7 +3465,8 @@
       title: "Align the sizes"
       detail: "One size on both ends. Cost: a change to pandad or the firmware, carried at every sync."
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §3 (SPI buffer size), OI-5", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-07"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-146
   question: "For closed-loop integration tests, what should play the car around a real panda: the existing Corolla plant model, or openpilot's driving simulator adapted to Toyota?"
@@ -3491,7 +3495,8 @@
       title: "No closed loop; replay recorded traffic only"
       detail: "Least effort. Cost: no test of how the system behaves when the car responds to its commands."
   sources: ["assurance/03-system/WP-S-08-system-integration-test.md I-3, OI-5", "assurance/sim/README.md (layers 1 and 3)", "assurance/05-software/hil-bench/README.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-147
   question: "While the car is under control, should the panda refuse every command the main computer does not need, instead of only the ones known to be dangerous?"
@@ -3570,7 +3575,8 @@
       title: "Keep the target and raise a change request"
       detail: "Covers the time before the relay is driven too. Cost: the bootloader and flasher paths are reworked and retested."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-501b, OI-10", "assurance/05-software/WP-W-03-software-architecture.md ATC-02", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-501"]
-  status: open
+  status: assumed
+  answer: {choice: A, via: assumed, at: 2026-11-02, note: "The lead answered 'not sure' on the inbox (2026-10-30). A reversible technical choice (decider: claude), so Claude went ahead with the recommendation at proceed_after; the lead can change it"}
 
 - id: DQ-150
   question: "How should SWSR-408 be worded: when does command-arrival supervision start, and does a frame refused for its content count as 'accepted'?"
@@ -3617,7 +3623,8 @@
       title: "Record why none is needed"
       detail: "Less work. Cost: a written argument that the envelope requirements alone suffice, which the pre-enable case makes harder."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-152
   question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
@@ -3643,7 +3650,8 @@
       title: "Pack the cause into spare bits of the existing health flags"
       detail: "No schema change. Cost: few bits, no counters, and the meaning hidden in bit positions."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-108a, OI-8", "assurance/03-system/WP-S-05-hsi-specification.md §4.2", "openpilot/cereal/log.capnp (PandaState)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-153
   question: "Should the panda's safety checks get a higher interrupt priority than its communication, or stay at the same level?"
@@ -3693,7 +3701,8 @@
       title: "Rely on the race analysis"
       detail: "No code change. Cost: the one-frame residual stays and has to be argued in the safety case."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, ATC-18", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-406"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-155
   question: "Should the reference firmware leave out the safety code for car brands other than Toyota?"
@@ -3770,7 +3779,8 @@
       title: "Add a reserved forwarding queue now"
       detail: "Removes the dependency on host behaviour. Cost: a change in the CAN driver of the safety MCU, with its own analysis and tests."
   sources: ["assurance/05-software/WP-W-04-software-safety-analysis.md SDF-05, OI-2", "assurance/05-software/design-notes/DN-01-tx-rate-supervision.md §7", "DQ-134"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-158
   question: "How should the size and complexity limit for the panda's big functions be checked: with a measuring tool, or by review?"
@@ -3795,7 +3805,8 @@
       title: "Judge it in review"
       detail: "No tool. Cost: weaker evidence and no automatic check."
   sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2", "assurance/05-software/WP-W-01-software-development-environment-guidelines.md ENV-R-07"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-159
   question: "Which MC/DC coverage measurement approach should the envelope tests use, plus a branch-coverage gate?"
@@ -3841,7 +3852,8 @@
       title: "A commercial abstract-interpretation analyser"
       detail: "Whole-program results with vendor support. Cost: licence fees, and results others cannot rerun."
   sources: ["assurance/05-software/WP-W-06-software-unit-verification.md OI-2, VS-UV-S3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-161
   question: "Should the min, max, clamp and abs macros in the safety code be replaced with typed inline functions, removing four standing MISRA deviations?"
@@ -3865,7 +3877,8 @@
       title: "Keep them with approved deviations"
       detail: "No code churn. Cost: four deviation records with rationale, and the two mandatory-rule entries argued as tool false positives."
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-9, DEV-09, DEV-10, DEV-12, DEV-13", "opendbc_repo/opendbc/safety/helpers.h", "panda/board/utils.h"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-162
   question: "How should the driving and monitoring models be loaded safely: check their hash first and keep today's format, or move to a format that cannot run code?"
@@ -3892,6 +3905,7 @@
       title: "Both: the hash check now, the new format later"
       detail: "Meets the requirements now and removes the risk later. Cost: the two changes in sequence."
   sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-5", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md AIR-19, AIR-20, OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-6", "assurance/00-assessment/gap-assessment.md GAP-22", "DQ-170 (merged here)", "DQ-188 (merged here)"]
+  explanation: {text: "Today the driving and monitoring models are loaded with a Python format (pickle) that can run code hidden in the file, and nothing checks the file first. The recommendation is the smallest fix that meets both AI requirements: before loading, compare each model file's fingerprint (its hash) with the one listed in the signed release, and refuse to engage if they differ. That is option A; option C adds a safer file format later on top. This is a reversible technical choice marked for Claude to decide: if you have no preference, answer A (or C if you want the format change planned now) and Claude carries it out. Nothing here changes how the car drives.", at: 2026-11-02}
   status: open
 
 - id: DQ-163
@@ -3917,7 +3931,8 @@
       title: "Test only on the reference device"
       detail: "One set of evidence. Cost: waits for the B4 bench and the reference device."
   sources: ["assurance/05-software/hil-bench/README.md R-2, §2 (B1, B4)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-164
   question: "When the panda decides whether the car is moving, should it add up the four wheel speeds (as coded) or check that any wheel is turning (as SWSR-302 says)?"
@@ -3941,7 +3956,8 @@
       title: "Change SWSR-302 to the sum now"
       detail: "Closes the finding at once. Cost: wrong if signed speeds do occur."
   sources: ["assurance/05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md B2B-02", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-165
   question: "Which self-tests should the panda run at every start (watchdog reset, memory ECC, relay toggle with readback, siren), knowing each can block a drive if it fails?"
@@ -3965,7 +3981,8 @@
       title: "A minimal set: watchdog reset and ECC test"
       detail: "Little effect on start-up. Cost: relay and siren faults stay latent, so the LFM may miss the ASIL C target."
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md §3.3, OI-4", "assurance/05-software/WP-W-03-software-architecture.md ATC-03", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-515"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-166
   question: "Which interrupt-priority and ISR-timing scheme should the panda safety MCU adopt?"
@@ -4009,7 +4026,8 @@
       title: "Also turn the lock on for every release build"
       detail: "A stronger default that does not depend on the release check. Cost: every release build differs from upstream, including builds for other cars."
   sources: ["assurance/00-assessment/gap-assessment.md GAP-09", "assurance/01-management/WP-M-07-risk-management.md R-28", "assurance/07-supporting/WP-P-10-release-management.md"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-168
   question: "Which signing algorithm and boot-chain implementation replace RSA-1024/SHA-1 for LionDriver panda firmware?"
@@ -4056,7 +4074,8 @@
       title: "A commercial suite"
       detail: "One supported product. Cost: a licence."
   sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4", "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md SCAN-03, SCAN-04, OI-1", "DQ-192 (merged here)"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-170
   question: "Should pickle-based model loading be replaced, or protected by a verified-hash check before loading (RM-1)?"
@@ -6251,7 +6270,8 @@
       title: "3 m/s², as DQ-365 described (about 10 s and 150 m)"
       detail: "Shortest time at speed. Cost: a firm stop that following drivers may not expect (rear-end risk, HZ-006), and the same planner change."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
 
 - id: DQ-425
   question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
@@ -6430,7 +6450,11 @@
     itself carries no evidence credit.
   reversibility: easy
   blocks: "assurance/models/autosar README OI-1; schema check in the 'autosar description' CI job"
+  gate: G3
   decider: lead
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-16
   options:
     - key: A
       recommended: true
@@ -6443,7 +6467,7 @@
       title: "Ask AUTOSAR for written permission (or use an integration partner's licensed tool) first"
       detail: "Removes the doubt. Cost: time and an external request; B applies meanwhile."
   sources: ["assurance/models/autosar/README.md §4", "AUTOSAR_MMOD_XMLSchema R22-11 _disclaimer.txt"]
-  status: queued
+  status: open
 - id: DQ-431
   question: "The firmware can take up to 0.21 s to notice that the EPS status message (0x262) has stopped, against a 0.2 s requirement. What do we do?"
   context: >-

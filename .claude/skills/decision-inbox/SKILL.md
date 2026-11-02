@@ -30,7 +30,10 @@ capabilities, and its store holds two collections keyed by register id. `answers
 3. **Copy each new answer** into its entry, in the register's flow style, and set `status: answered`:
    `answer: {choice: A, via: inbox, at: 2026-11-02, by: u_…, note: "…"}`. Keep `note` only when the lead wrote
    one. `at` is the date only. For `choice: other`, the note *is* the answer: work out what it means, and if it is
-   ambiguous, ask in chat.
+   ambiguous, ask in chat. An unsure note ("not sure", "tbd") is **not** an answer. Leave the entry `open` and write
+   an `explanation` aimed at what made it hard to choose; the page returns the card to the lead. If the entry is
+   `decider: claude`, go ahead with the recommendation instead (`assumed` if it is easy and past `proceed_after`),
+   and say so in chat.
 4. **Answer each explanation request.** Write `explanation: {text: "…", at: <today>}` on the entry. Answer the
    lead's `question` when there is one; otherwise explain what is at stake in plainer words than `context` does.
    Give two to five sentences with the numbers and the sources. The card stays open; the page hides the request

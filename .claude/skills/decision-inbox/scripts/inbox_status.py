@@ -60,7 +60,12 @@ def summary(items: list[dict], store: dict | None, today: str) -> list[str]:
         new_ans.append(f"  {i}: not in the register (check the id)")
         continue
       reg = d.get("answer") or {}
-      if day(doc.get("at")) > day(reg.get("at")) or doc.get("choice") != reg.get("choice"):
+      live, have = day(doc.get("at")), day(reg.get("at"))
+      explained = day((d.get("explanation") or {}).get("at"))
+      if doc.get("choice") == "other" and d["status"] == "open" and explained >= live:
+        continue   # an unsure "other" Claude answered with an explanation: the card is back with the lead
+      # newer than the register, or the same day with another choice (a chat answer that day wins: it came later)
+      if live > have or (live == have and doc.get("choice") != reg.get("choice") and reg.get("via") != "chat"):
         note = f' note: "{short(doc.get("note", ""), 60)}"' if doc.get("note") else ""
         new_ans.append(f"  {i} [{d['status']}] chose {doc.get('choice')} on {day(doc.get('at'))}{note} | {short(d['question'], 60)}")
     for i, doc in (store.get("explain") or {}).items():
