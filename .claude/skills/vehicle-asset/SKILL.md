@@ -62,8 +62,10 @@ Read [`references/pipeline.md`](references/pipeline.md) for commands, inputs, ou
 
 1. **Front and rear: never trust mesh names.** The separate `wheel_1/2`, `tire_1/2` are the **front** wheels. The fused
    `wheels_forward`, `tires_forward` and `brake_discs_3` are the **rear** (§4). Tell the ends apart by the tail lamps.
-   The file faces −y. On a side view the rear has the higher deck and the shark-fin antenna. The Blender script and the
-   wheel labels in `vehicle_figures.py` still follow the names; fix that on purpose before you rely on either.
+   The file faces −y. On a side view the rear has the higher deck and the shark-fin antenna. `vehicle_figures.py`
+   names wheels by the sign of their y (−y is front) since 2026-11-02, but the committed silhouette JSON still carries
+   the old swapped names until it is re-extracted with the GLB, and the Blender script still follows the mesh names;
+   fix those on purpose before you rely on them. Look at every side view: front to the left, device at the windshield.
 2. **MetaDrive layout (§2):** `vehicle.gltf` is the body only, origin on the ground under the body centre, **+Y
    forward**, X lateral, Z up. Each wheel is its own file (`right_tire_front.gltf`, `right_tire_back.gltf`), origin at
    the hub, and MetaDrive mirrors them for the left. The class's wheelbase constants must match the mesh's arches; take
