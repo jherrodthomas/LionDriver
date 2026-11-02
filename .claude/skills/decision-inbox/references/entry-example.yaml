@@ -1,0 +1,34 @@
+# A complete open entry that meets the standard (DQ-424, copied from register.yaml on 2026-11-02).
+# Copy its shape: plain question, two or three lines of context with the deciding fact in bold,
+# options with what each does and costs (recommended first), reversibility, blocks, gate, sources, and a figure
+# that shows the difference between the options.
+
+- id: DQ-424
+  question: "When the driver does not respond and LionDriver stops the car in its lane, how firmly should it brake?"
+  context: >-
+    If the driver ignores every alert, LionDriver slows the car to a stop in its lane and holds it there until the
+    driver takes over (your DQ-365 answer, TSR-633). Today it brakes at 1.2 m/s², the gentlest rate the planner has:
+    about 25 s and 390 m from 110 km/h. DQ-365 was described as about 3 m/s², and no requirement sets the rate. **A
+    firmer stop shortens the time an unresponsive driver rides at speed; a gentler one gives following traffic more
+    warning.** Found in the software FMEA re-rating at BL-007 (SWF-086.C2).
+  reversibility: easy
+  blocks: "SW FMEA SWF-086.C2, SWF-ACT-073; TSR-633 stop rate and time; WP-S-04 §3.8"
+  gate: G2
+  decider: lead
+  asked: 2026-10-27
+  batch: 19
+  figure: figures/dq-424.svg
+  caption: "Speed after the stop starts, from 110 km/h, at each braking rate."
+  options:
+    - key: A
+      recommended: true
+      title: "2 m/s², ramped in (about 15 s and 230 m from 110 km/h)"
+      detail: "Halves the time at speed and stays at an ordinary braking level for following traffic; the ramp keeps the jerk within its limit. Cost: a planner change for the forced stop, a rate in TSR-633, tests."
+    - key: B
+      title: "Keep 1.2 m/s² (about 25 s and 390 m)"
+      detail: "No change; the gentlest for following traffic. Cost: the longest ride at speed with an unresponsive driver; the DQ-365 description is corrected instead."
+    - key: C
+      title: "3 m/s², as DQ-365 described (about 10 s and 150 m)"
+      detail: "Shortest time at speed. Cost: a firm stop that following drivers may not expect (rear-end risk, HZ-006), and the same planner change."
+  sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
+  status: open

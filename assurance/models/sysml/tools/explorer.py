@@ -30,7 +30,7 @@ import sysml_lite
 import svgkit as k
 
 OUT = render_views.OUT / "explorer.html"
-EXPLORER_URL = "https://claude.ai/artifact/BtL3sDAq4JsqJdCEQEnco4"
+EXPLORER_URL = "https://claude.ai/artifact/3ZLwHiNmqwePZtDnBbLBCb"
 FINGERPRINT = HERE / "explorer.sha256"
 VIEW_ORDER = ["V-01", "V-03", "V-02", "V-04", "V-05", "V-06", "V-07"]
 

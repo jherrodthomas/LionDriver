@@ -962,6 +962,7 @@
       title: "NCAT at Auburn, as a research partner"
       detail: "Not a rental; could bring an independent reviewer and test subjects. Cost: a slower, partnership-style arrangement two hours from Atlanta."
   sources: ["assurance/06-validation/test-sites/README.md §2, §3, §4", "assurance/06-validation/WP-V-01-safety-validation.md OI-1", "assurance/06-validation/WP-V-07-vehicle-test-operations.md §4, §8.1, §12"]
+  explanation: {text: "You don't need to commit to a site to answer this: the question is only which one to phone first, and you can call a second one later. ITIC (Greenville) and Michelin Laurens are the only two candidates that look able to host both the low-speed tests and the 90 km/h ones; the others cover low speed only, or are a research partnership (NCAT). What decides it is not the track but three yeses on the first call: will they let an aftermarket driver-assistance device and its test firmware run, will they accept your insurance for a borrowed or rented car, and what does a half day cost. Picking A means Claude drafts that call sheet (test-sites §5) for ITIC; nothing is booked or paid. If you would rather wait until a car and insurance are in place (DQ-039, DQ-045), leave it open; it blocks every closed-course test.", at: 2026-11-02}
   status: open
   note: "Inbox answer 2026-10-30: other, \"not sure yet\". Not applied; the coordinator is discussing it with the lead"
 
