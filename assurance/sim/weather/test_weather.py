@@ -67,6 +67,14 @@ A stopped car ahead
   P1  The model's input focal lengths (910, 455 px) and radard's lead rules are read from openpilot; the car's width
       in pixels is f·W/d.
   P2  The stopping distances are the wet-braking study's: reaction distance plus v²/2a.
+Lane markings at night
+  N1  The contrast ratio is the RL ratio with no veil and tends to 1 under a strong one; the RL needed inverts it.
+  N2  NCHRP 20-102(06)'s own pairs come back: 34 mcd/m²/lx on its dry pavement is a ratio of 2.5, 4 on its wet one 2.
+Fog
+  V1  Koschmieder: a black object at the visibility keeps exactly the WMO's 5 % contrast; at 2 % it is seen ln 50 / ln 20
+      times farther.
+  V2  A line against a road as bright as the horizon fades by Koschmieder's law itself; a brighter airlight makes it
+      fade sooner.
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -109,6 +117,8 @@ import device_sun as dsun  # noqa: E402
 import wet_curves as wcv  # noqa: E402
 import crest as cst  # noqa: E402
 import stopped_car as stc  # noqa: E402
+import markings as mk  # noqa: E402
+import fog_visibility as fv  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -588,6 +598,29 @@ class StoppedCar(unittest.TestCase):
     r = stc.run(P)
     v = 110 / 3.6
     self.assertAlmostEqual(r["stop_m"]["item"], round(v * 0.5 + v * v / 7.0, 1), places=6)
+
+
+class Markings(unittest.TestCase):
+  def test_n1_ratio(self):
+    self.assertAlmostEqual(mk.ratio(50.0, 13.6), 50.0 / 13.6, places=9)
+    self.assertLess(abs(mk.ratio(50.0, 13.6, 1e6) - 1.0), 1e-4)
+    for v in (0.0, 0.5, 3.0):
+      self.assertAlmostEqual(mk.ratio(mk.rl_needed(2.5, 13.6, v), 13.6, v), 2.5, places=9)
+
+  def test_n2_nchrp_pairs(self):
+    m = P["markings"]
+    self.assertAlmostEqual(mk.ratio(34.0, m["pavement_rl"]["dry"]), 2.5, places=6)
+    self.assertAlmostEqual(mk.ratio(4.0, m["pavement_rl"]["wet"]), 2.0, places=6)
+
+
+class FogVisibility(unittest.TestCase):
+  def test_v1_koschmieder(self):
+    self.assertAlmostEqual(fv.against_sky(1.0, 0.05, 300.0), 300.0, places=9)
+    self.assertAlmostEqual(fv.against_sky(1.0, 0.02, 300.0) / 300.0, math.log(50) / math.log(20), places=9)
+
+  def test_v2_against_road(self):
+    self.assertAlmostEqual(fv.against_road(0.6, 0.05, 300.0, 1.0), fv.against_sky(0.6, 0.05, 300.0), places=9)
+    self.assertLess(fv.against_road(0.6, 0.05, 300.0, 8.0), fv.against_road(0.6, 0.05, 300.0, 1.0))
 
 if __name__ == "__main__":
   unittest.main(verbosity=2)

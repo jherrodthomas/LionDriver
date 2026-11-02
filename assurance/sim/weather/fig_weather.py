@@ -1114,3 +1114,93 @@ def stopped_car_figures(p, r, out: Path):
   out.mkdir(exist_ok=True)
   _stopped_car(p, r, out / "fig-wx-23-stopped-car.webp")
   _report(out, "fig-wx-23")
+
+
+# ------------------------------------------------------------------------------------------------ markings
+
+def _markings(p, r, path):
+  m = p["markings"]
+  req = m["required_ratio"]
+  cases = [("none", "no glare"), ("divided-8-low", "low beams,\n8 m median"), ("divided-8-high", "high beams,\n8 m median"),
+           ("undivided-3.7-high", "high beams,\nundivided\n(outside ODD)")]
+  fig = plt.figure(figsize=(9, 11), dpi=100)
+  fig.text(0.05, 0.965, "Lane lines at night: the contrast the camera gets", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.94, "Line-to-road ratio under the car's low beams · glare from the headlight study · NCHRP thresholds",
+           fontsize=11.5, color=INK2)
+  for k, (cond, line_key, line_lab, need, col) in enumerate((
+      ("dry", "fhwa_min", f"dry line at the US minimum ({m['line_rl']['dry']['fhwa_min']:.0f} mcd/m²/lx)", req["dry_glare"], "#2a78d6"),
+      ("wet", "good", f"wet line, a good marking ({m['line_rl']['wet']['good']:.0f} mcd/m²/lx)", req["wet"], "#104281"))):
+    ax = fig.add_axes([0.1, 0.56 - k * 0.4, 0.86, 0.3])
+    vals_lo, vals_mid, vals_hi = [], [], []
+    for ck, _ in cases:
+      if ck == "none":
+        v = r["no_glare"][f"{cond}_{line_key}"]["ratio"]
+        vals_lo.append(v); vals_mid.append(v); vals_hi.append(v)
+      else:
+        key = "dry_fhwa_min_ratio" if cond == "dry" else "wet_good_ratio"
+        vals_lo.append(r["glare"][f"{ck}-high"][key]); vals_mid.append(r["glare"][f"{ck}-value"][key])
+        vals_hi.append(r["glare"][f"{ck}-low"][key])
+    x = np.arange(len(cases))
+    ax.bar(x, vals_mid, color=col, width=0.55)
+    ax.errorbar(x, vals_mid, yerr=[np.array(vals_mid) - np.array(vals_lo), np.array(vals_hi) - np.array(vals_mid)],
+                fmt="none", ecolor=INK, capsize=6, lw=1.4)
+    for xi, v in zip(x, vals_mid, strict=True):
+      ax.text(xi + 0.3, v, f"{v:.1f}", ha="left", va="center", fontsize=11, color=INK, weight="bold")
+    ax.axhline(need, color=CRIT, lw=1.8)
+    ax.text(len(cases) - 0.5, need + 0.25, f"needed: {need:.1f}" + (" with glare" if cond == "dry" else ""),
+            ha="right", color=CRIT, fontsize=11)
+    if cond == "dry":
+      ax.axhline(req["dry"], color=CRIT, lw=1.2, ls=(0, (4, 2)))
+      ax.text(len(cases) - 0.5, req["dry"] - 0.7, f"{req['dry']:.1f} without", ha="right", color=CRIT, fontsize=10)
+    ax.set_xticks(x); ax.set_xticklabels([c[1] for c in cases], fontsize=10.5)
+    ax.set_ylim(0, max(vals_hi) * 1.15 + 1); ax.set_ylabel("contrast ratio, line / road")
+    ax.set_title(("Dry: " if cond == "dry" else "Wet: ") + line_lab, loc="left", fontsize=13, color=INK)
+    ax.grid(axis="y", color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.065, "Bars: 3 % scatter in the lens and windshield; whiskers 1–10 %. The thresholds are a Mobileye "
+           "camera's on a\nclosed course (NCHRP 20-102(06)), not openpilot's model.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def markings_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _markings(p, r, out / "fig-wx-24-markings.webp")
+  _report(out, "fig-wx-24")
+
+
+# ------------------------------------------------------------------------------------------------ fog visibility
+
+def _fog_visibility(p, r, path):
+  rows = r["rows"]
+  V = np.array([x["visibility_m"] for x in rows], float)
+  fig, ax = plt.subplots(figsize=(9, 9.5), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.84, bottom=0.2)
+  fig.text(0.05, 0.95, "Fog: how far the road camera sees", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.92, "Koschmieder's law · camera threshold 2–5 % contrast · 110 km/h", fontsize=12, color=INK2)
+  ax.fill_between(V, [x["car_m"][0] for x in rows], [x["car_m"][1] for x in rows], color="#86b6ef", alpha=0.5, lw=0,
+                  label="a stopped car, against the fog-lit horizon")
+  ax.fill_between(V, [x["line_m"][0] for x in rows], [x["line_m"][1] for x in rows], color="#104281", alpha=0.35, lw=0,
+                  label="the lane lines, against the road")
+  ax.plot(V, [x["line_nominal_m"] for x in rows], color="#104281", lw=2, label="the lane lines, nominal")
+  s = r["stop_m"]
+  for y, lab in ((s["item"], f"the item stops in {s['item']:.0f} m"), (r["preview_m"], f"2 s of lines: {r['preview_m']:.0f} m")):
+    ax.axhline(y, color=CRIT, lw=1.4, ls=(0, (4, 2)))
+    ax.text(990, y + 6, lab, ha="right", fontsize=10.5, color=CRIT)
+  ax.axvline(r["odd_visibility_m"], color=INK, lw=1.6)
+  ax.text(r["odd_visibility_m"] + 10, 380, f"ODD bound\n{r['odd_visibility_m']:.0f} m (WP-C-02)", fontsize=10.5, color=INK)
+  ax.set_xlim(0, 1000); ax.set_ylim(0, 600)
+  ax.set_xlabel("visibility (meteorological optical range), m"); ax.set_ylabel("distance seen, m")
+  ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  ax.legend(loc="upper left", frameon=False, fontsize=10.5)
+  n = r["visibility_needed_m"]
+  fig.text(0.05, 0.075, f"The lines fade first: 2 s of them needs {n['lines_preview_nominal']:.0f} m of visibility nominally, "
+           f"up to {n['lines_preview'][1]:.0f} m at the cautious end.\nThe camera's real contrast threshold is not known; "
+           "local logs in fog would show it.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def fog_visibility_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _fog_visibility(p, r, out / "fig-wx-25-fog-visibility.webp")
+  _report(out, "fig-wx-25")
