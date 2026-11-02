@@ -4,8 +4,8 @@
 |---|---|
 | Work product | Closed-course test site requirements and candidate list (supports [WP-V-01](../WP-V-01-safety-validation.md) OI-1 and [WP-V-07](../WP-V-07-vehicle-test-operations.md) §12) |
 | Standard reference | ISO 26262-4:2018 §8 (safety validation); ISO 21448:2022 §10 (verification and validation); UL 4600 principles (test safety) |
-| Version | 0.1 |
-| Status | Draft: desk research only, no site contacted |
+| Version | 0.2 (§4: ITIC first, then Michelin Laurens, the lead's decision DQ-041 A, timing to be decided; §5.1 first-call sheet for ITIC; nothing booked or paid; 2026-11-02). 0.1 |
+| Status | Draft: desk research only, no site contacted; first-call sheet for TS-01 drafted (§5.1) |
 | Author | Assurance team |
 | Reviewer(s) | TBD |
 | Region | Atlanta GA – Greenville SC – Charlotte NC corridor (I-85) |
@@ -73,7 +73,7 @@ The speeds come from the WP-V-01 test specifications and the WP-V-07 §8.1 close
 
 ## 4. Recommendation
 
-1. **Contact TS-01 (ITIC) and TS-02 (Michelin Laurens) first.** Both are real proving grounds near Greenville, the middle of the corridor, and both appear to cover T1 and T2.
+1. **Contact TS-01 (ITIC) first, then TS-02 (Michelin Laurens).** Decided by the project lead on 2026-11-02 (decision register DQ-041, A; the timing of the first call is still to be decided). Both are real proving grounds near Greenville, the middle of the corridor, and both appear to cover T1 and T2.
 2. **Keep TS-03 (Road Atlanta skid pad) as the low-speed option near Atlanta** if the proving grounds are too costly for early T1 sessions.
 3. **Approach TS-08 (NCAT/Auburn)** only if a university partnership becomes part of the plan, for example for an independent reviewer or test subjects.
 
@@ -90,11 +90,48 @@ Ask these in the first contact and record the answers in §6:
 7. Are logging and video allowed (S-5)? Are night runs and a wet surface available (S-7)?
 8. Price per half day and full day, and lead time for booking.
 
+### 5.1 First-call sheet: TS-01 ITIC
+
+For the first call to ITIC (DQ-041 A). It prepares the call only: **nothing is booked, priced or paid, and nothing on this
+call commits the project.** When the call happens is still to be decided by the project lead. Check the phone number
+and the contact route against ITIC's own site before calling (§3 lists the number as published, not confirmed).
+
+**Who we are, in two sentences.** LionDriver is an open-source driver-assistance project developed to ISO 26262 and ISO
+21448, with an aftermarket device on a production Toyota Corolla (2020+, TSS 2.0). We need a closed course for
+low-speed and up-to-90 km/h tests of how the car and driver react to steering and braking faults, run by a trained
+safety driver.
+
+**What we would book first.** A half day on the 1,000 ft brake lane or a large paved area for T1 (≤ 60 km/h), then, if
+it fits, a half day on the 1-mile straightaway for T2 (up to 90 km/h). One car, one safety driver, one or two
+observers. No public-road element.
+
+**Ask, in this order, and write the answers in §6:**
+
+| # | Question | Listen for | §2 / §5 |
+|---|---|---|---|
+| 1 | Do you host testing of an aftermarket driver-assistance device on a production car, including runs with modified firmware and injected faults? | A plain yes or the conditions; any OEM-only restriction | S-2, Q1 |
+| 2 | Which areas can be booked exclusively, and what are their lengths, widths and run-off? Is the ~3-mile highway loop built and bookable? | Brake lane and straightaway dimensions; loop status (sources disagree) | S-1, T1, T2, Q2 |
+| 3 | Are painted lane lines available anywhere, and may we place cones for a 3.5 m lane? | Lines on the straightaway or a pad | S-6, Q4 |
+| 4 | Are radar-reflective soft targets allowed, and do you hire target systems or a carrier? | Own targets allowed; hire terms | T3, Q3 |
+| 5 | What insurance do you require from a testing customer, and do you accept a policy for development testing of an aftermarket device? | Minimum cover, named-insured wording | S-3, Q5 |
+| 6 | Is a range safety officer or site staff included, and do you have a site risk assessment and emergency access we can review? | RSO cost; written site rules | S-4, Q6 |
+| 7 | May we log data and record video? Are night runs and a wet surface available? | Any camera restrictions | S-5, S-7, Q7 |
+| 8 | Price per half day and full day for those areas, and the booking lead time | Figures to bring back, not to accept | Q8 |
+
+**What to have ready.** The test tiers of §2.1; the closed-course rules of [WP-V-07](../WP-V-07-vehicle-test-operations.md)
+§8.1, to send if asked; the car's make and model. Not yet available, so say so if asked: the insurance policy (WP-V-07
+OI-4), the test dates, and a named second safety driver.
+
+**Do not** agree a date, accept a quote, sign or pay anything on this call. Any offer goes back to the project lead.
+
+**After the call.** Record the date, the contact and the answers in §6, mark §3's TS-01 row with what was confirmed,
+and call TS-02 (Michelin Laurens) with the same sheet.
+
 ## 6. Contact log
 
 | Date | Site | Who | Outcome | Next step |
 |---|---|---|---|---|
-| — | — | — | No site contacted yet | Contact TS-01 and TS-02 |
+| — | — | — | No site contacted yet | Call TS-01 (ITIC) first with the §5.1 sheet, then TS-02 (DQ-041 A); timing to be decided by the project lead |
 
 When a site is confirmed, record it here with its agreement reference, then close [WP-V-01](../WP-V-01-safety-validation.md) OI-1 and update the site entries in [WP-V-07](../WP-V-07-vehicle-test-operations.md) §12.
 

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-07 Vehicle test operations and safety-driver procedures |
 | Standard reference | ISO 26262-4:2018 §8 (validation environment and conditions); ISO 21448:2022 §10–11 (testing in real conditions); ASPICE 4.0 VAL.1. Informative: SAE J3018 (safety-relevant guidance for on-road testing of prototype automated driving system-operated vehicles) |
-| Version | 0.3 (§8.1.1 added: what the B2 paired runs against stock TSS2 need, DQ-138 A: a site, still queued for the lead as DQ-041, soft targets for stopped and cut-in vehicles, stage 2 of DQ-043 B, and several runs per pair; §12 site row; 2026-10-25). 0.2 (the lead's decisions applied: the drafted (TBC) values adopted, OI-6, DQ-046 A; external reviewer engaged once a second safety driver is in view, OI-1, DQ-044 A; own insurance policy for development testing, OI-4, §12, DQ-045 A; closed-course rules for the CAN-injection test TC-09 added to §8.1, DQ-110 A; tests above 90 km/h up to 110 km/h after the risk review, DQ-091 A, and the 110 km/h ODD bound, DQ-260 A, in §8.1 and §8.2; 2026-10-23). 0.1 |
+| Version | 0.4 (§8.1.1 and §12: ITIC first, then Michelin Laurens, DQ-041 A; nothing booked; 2026-11-02). 0.3 (§8.1.1 added: what the B2 paired runs against stock TSS2 need, DQ-138 A: a site, still queued for the lead as DQ-041, soft targets for stopped and cut-in vehicles, stage 2 of DQ-043 B, and several runs per pair; §12 site row; 2026-10-25). 0.2 (the lead's decisions applied: the drafted (TBC) values adopted, OI-6, DQ-046 A; external reviewer engaged once a second safety driver is in view, OI-1, DQ-044 A; own insurance policy for development testing, OI-4, §12, DQ-045 A; closed-course rules for the CAN-injection test TC-09 added to §8.1, DQ-110 A; tests above 90 km/h up to 110 km/h after the risk review, DQ-091 A, and the 110 km/h ODD bound, DQ-260 A, in §8.1 and §8.2; 2026-10-23). 0.1 |
 | Status | Draft |
 | ASIL / scope | All vehicle operation of LD-SDA during development (FuSa, SOTIF, AI, CS tests) |
 | Author | Assurance team (initial draft) |
@@ -214,7 +214,7 @@ The project lead decided on 2026-10-25 that the B2 comparison is made by paired 
 
 | Need | Status |
 |---|---|
-| Closed-course site | None booked. Which site to contact first is a separate question, still queued for the project lead (DQ-041); the site agreement is §12. For KS-27 the site also needs a curve that hides the target until a set distance |
+| Closed-course site | None booked. The lead decided to contact ITIC first, then Michelin Laurens (DQ-041 A; timing to be decided; first-call sheet in [test-sites §5.1](test-sites/README.md)); the site agreement is §12. For KS-27 the site also needs a curve that hides the target until a set distance |
 | Soft targets | Radar-reflective soft targets for a stopped vehicle (KS-05, KS-09) and for a moving or cut-in vehicle on a trolley or platform (KS-07, KS-08, KS-27). Stage 2 of the equipment purchase, which waits on a site booking (DQ-043 B; [WP-V-01](WP-V-01-safety-validation.md) OI-6) |
 | Runs | Several runs per arm at each parameter point (count per WP-V-03 §2). Plan the session time for both arms and the swap between them |
 | Swap between arms | The stock arm runs with the item passive, so the device keeps logging; this rests on OI-3. Otherwise the harness is removed and the independent CAN logger records the stock arm. The procedure and time per swap are WP-V-03 OI-4. The drive sheet (§10) records the arm of every run |
@@ -344,7 +344,7 @@ Drive sheets are retained with the validation records ([WP-P-04](../07-supportin
 |---|---|
 | Legal status of L2 development testing in the test state(s) | Open ([WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-6) — must be confirmed before L4 |
 | Insurance cover for development testing of an aftermarket driving assistance device | Decided: a policy that explicitly covers development testing, closed course and public road (DQ-045 A); not yet obtained (OI-4) — must be confirmed before L3 |
-| Closed-course site agreement and site rules | Open ([WP-V-01](WP-V-01-safety-validation.md) OI-1). Which site to contact first is queued for the project lead (DQ-041). The B2 paired runs add their needs (§8.1.1, DQ-138 A) |
+| Closed-course site agreement and site rules | Open ([WP-V-01](WP-V-01-safety-validation.md) OI-1). Contact order decided: ITIC, then Michelin Laurens (DQ-041 A); nothing booked. The B2 paired runs add their needs (§8.1.1, DQ-138 A) |
 | Vehicle registration and inspection current | Checked per session (PD-01…PD-06) |
 
 ## 13. Deviations

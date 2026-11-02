@@ -2,7 +2,8 @@
 """Check an ARXML file without the AUTOSAR schema (A1-A8), and against it when one is given (A0).
 
 The AUTOSAR XML schema may be used for informational purposes only under its licence and is not committed here
-(README §4, decision register). CI therefore runs A1-A8, a documented structural check written for this project:
+(README §4). CI runs A1-A8, a documented structural check written for this project, and then A0 against the schema that
+tools/fetch_schema.py downloads at run time and checks by SHA-256 (decision register DQ-430, A):
 
   A1  well-formed XML, root AUTOSAR in the r4.0 namespace, schemaLocation names the target schema
   A2  every SHORT-NAME is an AUTOSAR identifier ([a-zA-Z][a-zA-Z0-9_]*, at most 128 characters)

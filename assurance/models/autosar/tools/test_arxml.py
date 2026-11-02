@@ -5,15 +5,19 @@
 """
 from __future__ import annotations
 
+import hashlib
+import io
 import re
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import check_arxml  # noqa: E402
+import fetch_schema  # noqa: E402
 import gen_arxml  # noqa: E402
 import sources as src  # noqa: E402
 
@@ -144,6 +148,38 @@ class Check(unittest.TestCase):
 
   def test_a8(self):
     self.assertIn("A8", self.codes(self.broken('GID="LionDriver.Nature"', 'GID="Other"')))
+
+
+class FetchSchema(unittest.TestCase):
+  """The CI schema step (DQ-430 A): pinned by hash, never written inside the repository. No network."""
+
+  def archive(self) -> bytes:
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+      for name in fetch_schema.MEMBERS:
+        z.writestr(name, f"<!-- {name} -->")
+    return buf.getvalue()
+
+  def test_pinned_hash_unpacks_both_files(self):
+    data = self.archive()
+    with tempfile.TemporaryDirectory() as d:
+      path = fetch_schema.unpack(data, Path(d), hashlib.sha256(data).hexdigest())
+      self.assertEqual(path.name, "AUTOSAR_00051.xsd")
+      self.assertTrue((Path(d) / "xml.xsd").is_file())
+
+  def test_other_hash_fails_and_writes_nothing(self):
+    with tempfile.TemporaryDirectory() as d:
+      with self.assertRaisesRegex(ValueError, "SHA-256"):
+        fetch_schema.unpack(self.archive(), Path(d) / "out")
+      self.assertFalse((Path(d) / "out").exists())
+
+  def test_refuses_a_directory_inside_the_repository(self):
+    argv = sys.argv
+    sys.argv = ["fetch_schema.py", str(fetch_schema.ROOT / "generated")]
+    try:
+      self.assertEqual(fetch_schema.main(), 2)
+    finally:
+      sys.argv = argv
 
 
 if __name__ == "__main__":
