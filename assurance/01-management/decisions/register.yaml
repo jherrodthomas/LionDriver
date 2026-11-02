@@ -3574,8 +3574,9 @@
       title: "Keep the target and raise a change request"
       detail: "Covers the time before the relay is driven too. Cost: the bootloader and flasher paths are reworked and retested."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-501b, OI-10", "assurance/05-software/WP-W-03-software-architecture.md ATC-02", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-501"]
-  status: open
-  note: "Inbox answer 2026-10-30: other, \"not sure\". Not applied; the coordinator is discussing it with the lead"
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-02, note: "go with A on the watchdog and model loading (relayed by the coordinator session). The inbox answer of 2026-10-30 was other, not sure"}
+  applied: {ref: "jherrodthomas/LionDriver#562", record: "WP-W-02 v0.50 SWSR-501b (bootstub target dropped) and OI-10 closed; WP-W-03 v0.22 ATC-02 rewritten; WP-H-02 v0.13 DC-01; WP-H-01 v0.11", at: 2026-11-02}
 
 - id: DQ-150
   question: "How should SWSR-408 be worded: when does command-arrival supervision start, and does a frame refused for its content count as 'accepted'?"
@@ -3905,8 +3906,9 @@
       title: "Both: the hash check now, the new format later"
       detail: "Meets the requirements now and removes the risk later. Cost: the two changes in sequence."
   sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-5", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md AIR-19, AIR-20, OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-6", "assurance/00-assessment/gap-assessment.md GAP-22", "DQ-170 (merged here)", "DQ-188 (merged here)"]
-  status: open
-  note: "Inbox answer 2026-10-30: other, \"tbd\". Not applied; the coordinator is discussing it with the lead"
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-11-02, note: "go with A on the watchdog and model loading (relayed by the coordinator session). The inbox answer of 2026-10-30 was other, tbd"}
+  note: "Recorded in WP-W-10 v0.4 OI-5, WP-C-11 v0.9 OI-4 and WP-M-10 v0.3 OI-6. Left: the signed release manifest (RM-1), the hash check in modeld and dmonitoringmodeld with engagement refused on mismatch and the tampered-file test VS-ML-11, then GAP-22 (jherrodthomas/LionDriver#562)"
 
 - id: DQ-163
   question: "Can tests on the red panda board count as development evidence for the watchdog, or must they wait for the reference device?"
