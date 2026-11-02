@@ -3362,7 +3362,7 @@
   sources: ["assurance/models/README.md item 4", "assurance/03-system/WP-S-08-system-integration-test.md I-3", "assurance/05-software/hil-bench/README.md §2 (B3)"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-08 v0.9 plant-model row (I-3): ordinary OS accepted only with a measured jitter bound (99.9 % within 1 ms, none a full period late)", at: 2026-11-02}
+  applied: {ref: "jherrodthomas/LionDriver#562", record: "WP-S-08 v0.9 plant-model row (I-3): ordinary OS accepted only with a measured jitter bound (99.9 % within 1 ms, none a full period late)", at: 2026-11-02}
 
 - id: DQ-142
   question: "Until the panda tests its intercept switch at every start, how often should the hardware metrics assume a hidden fault in it is found?"
@@ -3389,7 +3389,7 @@
   sources: ["assurance/03-system/WP-S-06-requirements-production-operation.md OI-2", "assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md PM-03", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-H-04 v0.13 §3.3 (6-month PM-03 interval for the intercept switch until TSR-515); WP-S-06 v0.5 OI-2 closed", at: 2026-11-02}
+  applied: {ref: "jherrodthomas/LionDriver#562", record: "WP-H-04 v0.13 §3.3 (6-month PM-03 interval for the intercept switch until TSR-515); WP-S-06 v0.5 OI-2 closed", at: 2026-11-02}
 
 - id: DQ-143
   question: "How should the CRC that protects commands from the main computer to the panda be chosen?"
@@ -3466,7 +3466,7 @@
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §3 (SPI buffer size), OI-5", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-07"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-05 v0.23 OI-5: sizes documented as intended; the panda's own length check (TSR-412) tested by VS-FI-07", at: 2026-11-02}
+  applied: {ref: "jherrodthomas/LionDriver#562", record: "WP-S-05 v0.23 OI-5: sizes documented as intended; the panda's own length check (TSR-412) tested by VS-FI-07", at: 2026-11-02}
 
 - id: DQ-146
   question: "For closed-loop integration tests, what should play the car around a real panda: the existing Corolla plant model, or openpilot's driving simulator adapted to Toyota?"
@@ -3496,7 +3496,7 @@
   sources: ["assurance/03-system/WP-S-08-system-integration-test.md I-3, OI-5", "assurance/sim/README.md (layers 1 and 3)", "assurance/05-software/hil-bench/README.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-08 v0.9 plant-model row and OI-5 closed: the layer-1 Corolla plant drives a real panda; tools/sim stays at layer 3", at: 2026-11-02}
+  applied: {ref: "jherrodthomas/LionDriver#562", record: "WP-S-08 v0.9 plant-model row and OI-5 closed: the layer-1 Corolla plant drives a real panda; tools/sim stays at layer 3", at: 2026-11-02}
 
 - id: DQ-147
   question: "While the car is under control, should the panda refuse every command the main computer does not need, instead of only the ones known to be dangerous?"
@@ -3623,7 +3623,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-02 v0.50 OI-12. Left: the four host SWSRs (X2, E2, O2, P1, including soft disable in preEnabled) and their QM tests (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-02 v0.50 OI-12. Left: the four host SWSRs (X2, E2, O2, P1, including soft disable in preEnabled) and their QM tests (jherrodthomas/LionDriver#562)"
 
 - id: DQ-152
   question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
@@ -3650,7 +3650,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-108a, OI-8", "assurance/03-system/WP-S-05-hsi-specification.md §4.2", "openpilot/cereal/log.capnp (PandaState)"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-02 v0.50 OI-8 and WP-S-05 v0.23 §4.2. Left: the field layout, the panda health-packet and cereal pandaStates change with tests (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-02 v0.50 OI-8 and WP-S-05 v0.23 §4.2. Left: the field layout, the panda health-packet and cereal pandaStates change with tests (jherrodthomas/LionDriver#562)"
 
 - id: DQ-153
   question: "Should the panda's safety checks get a higher interrupt priority than its communication, or stay at the same level?"
@@ -3701,7 +3701,7 @@
   sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, ATC-18", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-406"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-03 v0.22 ATC-18. Left: the panda change with a test (panda fork, outside this repository) (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-03 v0.22 ATC-18. Left: the panda change with a test (panda fork, outside this repository) (jherrodthomas/LionDriver#562)"
 
 - id: DQ-155
   question: "Should the reference firmware leave out the safety code for car brands other than Toyota?"
@@ -3779,7 +3779,7 @@
   sources: ["assurance/05-software/WP-W-04-software-safety-analysis.md SDF-05, OI-2", "assurance/05-software/design-notes/DN-01-tx-rate-supervision.md §7", "DQ-134"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-04 v1.8 OI-2. Left: the queue-occupancy measurement on the HIL bench, with the DQ-134 PCS timing (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-04 v1.8 OI-2. Left: the queue-occupancy measurement on the HIL bench, with the DQ-134 PCS timing (jherrodthomas/LionDriver#562)"
 
 - id: DQ-158
   question: "How should the size and complexity limit for the panda's big functions be checked: with a measuring tool, or by review?"
@@ -3805,7 +3805,7 @@
   sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2", "assurance/05-software/WP-W-01-software-development-environment-guidelines.md ENV-R-07"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-01 v0.7 ENV-R-07 and OI-5, WP-W-05 v0.9.4 OI-2. Left: the lizard CI step, its WP-P-07 classification and the justified-exception list (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-01 v0.7 ENV-R-07 and OI-5, WP-W-05 v0.9.4 OI-2. Left: the lizard CI step, its WP-P-07 classification and the justified-exception list (jherrodthomas/LionDriver#562)"
 
 - id: DQ-159
   question: "Which MC/DC coverage measurement approach should the envelope tests use, plus a branch-coverage gate?"
@@ -3852,7 +3852,7 @@
   sources: ["assurance/05-software/WP-W-06-software-unit-verification.md OI-2, VS-UV-S3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-06 v0.6.8 OI-2. Left: CBMC harnesses for the safety modes and the envelope core, and the WP-P-07 record (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-06 v0.6.8 OI-2. Left: CBMC harnesses for the safety modes and the envelope core, and the WP-P-07 record (jherrodthomas/LionDriver#562)"
 
 - id: DQ-161
   question: "Should the min, max, clamp and abs macros in the safety code be replaced with typed inline functions, removing four standing MISRA deviations?"
@@ -3878,7 +3878,7 @@
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-9, DEV-09, DEV-10, DEV-12, DEV-13", "opendbc_repo/opendbc/safety/helpers.h", "panda/board/utils.h"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-01 v0.7 OI-9. Left: the change in opendbc and the panda firmware with tests and mutation tests (forks, outside this repository); DEV-09/10/12/13 stay until it lands (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-01 v0.7 OI-9. Left: the change in opendbc and the panda firmware with tests and mutation tests (forks, outside this repository); DEV-09/10/12/13 stay until it lands (jherrodthomas/LionDriver#562)"
 
 - id: DQ-162
   question: "How should the driving and monitoring models be loaded safely: check their hash first and keep today's format, or move to a format that cannot run code?"
@@ -3932,7 +3932,7 @@
   sources: ["assurance/05-software/hil-bench/README.md R-2, §2 (B1, B4)"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "hil-bench README v0.10 R-2: red panda results are development evidence for VS-FI-17 and VS-SWQ-14; device-specific parts repeated at B4", at: 2026-11-02}
+  applied: {ref: "jherrodthomas/LionDriver#562", record: "hil-bench README v0.10 R-2: red panda results are development evidence for VS-FI-17 and VS-SWQ-14; device-specific parts repeated at B4", at: 2026-11-02}
 
 - id: DQ-164
   question: "When the panda decides whether the car is moving, should it add up the four wheel speeds (as coded) or check that any wheel is turning (as SWSR-302 says)?"
@@ -3957,7 +3957,7 @@
   sources: ["assurance/05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md B2B-02", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-02 v0.50 OI-19 and B2B-TOY-AUTH-2026-10-13 B2B-02. Left: a reference-car log that includes reversing (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-W-02 v0.50 OI-19 and B2B-TOY-AUTH-2026-10-13 B2B-02. Left: a reference-car log that includes reversing (jherrodthomas/LionDriver#562)"
 
 - id: DQ-165
   question: "Which self-tests should the panda run at every start (watchdog reset, memory ECC, relay toggle with readback, siren), knowing each can block a drive if it fails?"
@@ -3982,7 +3982,7 @@
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md §3.3, OI-4", "assurance/05-software/WP-W-03-software-architecture.md ATC-03", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-515"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-H-04 v0.13 OI-4 and WP-W-03 v0.22 ATC-03. Left: the four start-up tests, the false-block campaign on the HIL bench, then the choice and the LFM update (jherrodthomas/LionDriver#PRNUM)"
+  note: "Recorded in WP-H-04 v0.13 OI-4 and WP-W-03 v0.22 ATC-03. Left: the four start-up tests, the false-block campaign on the HIL bench, then the choice and the LFM update (jherrodthomas/LionDriver#562)"
 
 - id: DQ-166
   question: "Which interrupt-priority and ISR-timing scheme should the panda safety MCU adopt?"
@@ -4027,7 +4027,7 @@
   sources: ["assurance/00-assessment/gap-assessment.md GAP-09", "assurance/01-management/WP-M-07-risk-management.md R-28", "assurance/07-supporting/WP-P-10-release-management.md"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-M-07 v0.10 R-28: lock stays tied to LIONDRIVER_REFERENCE, enforced by the WP-P-10 §6 release check", at: 2026-11-02}
+  applied: {ref: "jherrodthomas/LionDriver#562", record: "WP-M-07 v0.10 R-28: lock stays tied to LIONDRIVER_REFERENCE, enforced by the WP-P-10 §6 release check", at: 2026-11-02}
 
 - id: DQ-168
   question: "Which signing algorithm and boot-chain implementation replace RSA-1024/SHA-1 for LionDriver panda firmware?"
@@ -4075,7 +4075,7 @@
   sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4", "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md SCAN-03, SCAN-04, OI-1", "DQ-192 (merged here)"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Option B, not the recommendation. Recorded in WP-M-09 v0.8 OI-4, WP-W-11 v0.6 §5.1 and OI-1, WP-O-05 v0.6. Left: turn on the alerts in the repository settings (admin) and classify the tooling in WP-P-07; the components GitHub does not cover (AGNOS image, vendored code, LFS artefacts, toolchain) are asked as DQ-432 (jherrodthomas/LionDriver#PRNUM)"
+  note: "Option B, not the recommendation. Recorded in WP-M-09 v0.8 OI-4, WP-W-11 v0.6 §5.1 and OI-1, WP-O-05 v0.6. Left: turn on the alerts in the repository settings (admin) and classify the tooling in WP-P-07; the components GitHub does not cover (AGNOS image, vendored code, LFS artefacts, toolchain) are asked as DQ-432 (jherrodthomas/LionDriver#562)"
 
 - id: DQ-170
   question: "Should pickle-based model loading be replaced, or protected by a verified-hash check before loading (RM-1)?"
@@ -6334,7 +6334,7 @@
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Set in WP-S-02 v0.65 TSR-633 (2 m/s², ramped in, about 15 s and 230 m from 110 km/h), WP-S-04 v0.30 §3.8 and SW FMEA SWF-086.C2. Left: the planner change for the forced stop and its tests (openpilot longitudinal_planner) (jherrodthomas/LionDriver#PRNUM)"
+  note: "Set in WP-S-02 v0.65 TSR-633 (2 m/s², ramped in, about 15 s and 230 m from 110 km/h), WP-S-04 v0.30 §3.8 and SW FMEA SWF-086.C2. Left: the planner change for the forced stop and its tests (openpilot longitudinal_planner) (jherrodthomas/LionDriver#562)"
 
 - id: DQ-425
   question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
