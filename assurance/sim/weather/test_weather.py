@@ -75,6 +75,11 @@ Fog
       times farther.
   V2  A line against a road as bright as the horizon fades by Koschmieder's law itself; a brighter airlight makes it
       fade sooner.
+Losing GPS in a tunnel
+  L1  The lines the study rests on are found in openpilot: locationd has no GPS input, controlsd takes deviceMotion,
+      selfdrived ignores the GPS service and its noGps event carries no alert.
+  L2  The scan for GPS readers finds the two GPS drivers (it is not blind), finds no reader it has not reviewed, and the
+      noGps distance is 1500 m, 49 s at 110 km/h.
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -119,6 +124,7 @@ import crest as cst  # noqa: E402
 import stopped_car as stc  # noqa: E402
 import markings as mk  # noqa: E402
 import fog_visibility as fv  # noqa: E402
+import gnss_tunnel as gt  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -621,6 +627,21 @@ class FogVisibility(unittest.TestCase):
   def test_v2_against_road(self):
     self.assertAlmostEqual(fv.against_road(0.6, 0.05, 300.0, 1.0), fv.against_sky(0.6, 0.05, 300.0), places=9)
     self.assertLess(fv.against_road(0.6, 0.05, 300.0, 8.0), fv.against_road(0.6, 0.05, 300.0, 1.0))
+
+
+class GnssTunnel(unittest.TestCase):
+  def test_l1_pins(self):
+    c = gt.code()
+    self.assertEqual(len(c["pins"]), sum(len(lines) for _, lines in gt.PINS))
+
+  def test_l2_readers_and_distance(self):
+    r = gt.run(P)
+    files = [x["file"] for x in r["gps_readers"]]
+    self.assertIn("openpilot/system/ubloxd/ubloxd.py", files)
+    self.assertIn("openpilot/system/qcomgpsd/qcomgpsd.py", files)
+    self.assertEqual(r["unreviewed_readers"], [])
+    self.assertEqual(r["no_gps_after_m"], 1500.0)
+    self.assertAlmostEqual(r["no_gps_after_s"], round(1500 / (110 / 3.6), 1), places=6)
 
 if __name__ == "__main__":
   unittest.main(verbosity=2)
