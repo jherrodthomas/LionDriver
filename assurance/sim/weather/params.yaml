@@ -245,3 +245,35 @@ stopped_car:
   sizes_px: [32, 20, 10]
   driver_reaction_s: {value: 2.5, low: 1.5, status: published,
                       source: "AASHTO's 2.5 s for an unwarned driver; WP-S-04's 1.5 s for an attentive one after a warning"}
+
+markings:
+  # Lane markings at night in rain (markings.py, physics plan round 3 study 16): the line-to-road contrast a camera
+  # gets under the car's own low beams, dry and wet, with oncoming glare (the headlight study's veil), against what a
+  # machine-vision system needed in NCHRP Project 20-102(06) (Mobileye, 4-inch markings, closed course).
+  pavement_rl: {dry: 13.6, wet: 2.0, status: published,
+                source: "NCHRP 20-102(06) final report: wet recovery RL of the test pavement 2 mcd/m²/lx; dry from its own pair 34 mcd/m²/lx at a contrast ratio of 2.5 (13.6)"}
+  required_ratio: {dry: 2.5, dry_glare: 3.0, wet: 2.1, wet_robust: 4.7, status: published,
+                   source: "NCHRP 20-102(06): RL contrast ratio (marking over pavement) above which every marking got adequate MV detection confidence: night dry 2.5 (34 mcd), night dry with oncoming glare 3.0 (53 mcd), night wet recovery 2.1 (4 mcd), all wet markings above 4.7 (9 mcd)"}
+  line_rl:
+    dry: {fhwa_min: 50.0, fhwa_70mph: 100.0, good: 150.0, status: published,
+          source: "MUTCD 2009 Rev. 3 (FR 2022-16781): maintain at least 50 mcd/m²/lx dry on roads of 35 mph and more, 100 recommended at 70 mph and more; 150 dry the 'good road marking' cited in NCHRP 20-102(06) ch. 1"}
+    wet: {low: 4.0, robust: 9.0, good: 35.0, status: published,
+          source: "NCHRP 20-102(06): 4 and 9 mcd/m²/lx wet recovery (its thresholds); 35 the wet value of the 'good road marking' it cites. The MUTCD sets no wet level"}
+  glare_cases: [["divided", 8, "low"], ["divided", 8, "high"], ["undivided", 3.7, "high"]]
+
+fog_visibility:
+  # Fog (fog_visibility.py, physics plan round 3 study 17): how far the road camera sees a stopped car and the lane
+  # lines in fog of a given visibility, by Koschmieder's law, against the distances to stop and to steer.
+  mor_contrast: {value: 0.05, status: published,
+                 source: "WMO: meteorological optical range is the distance at which a black object's contrast against the horizon falls to 5 %; so the extinction coefficient is ln(20)/V"}
+  camera_threshold: {value: 0.05, low: 0.02, status: assumed,
+                     source: "the contrast the camera and its model need to see an object: 5 % (the WMO and human figure) to 2 % (Koschmieder's own); no figure for openpilot's model"}
+  car_contrast: {value: 1.0, low: 0.6, status: assumed, source: "a stopped car's rear against the fog-lit horizon: 1 for a black car, less for a light one"}
+  line_contrast: {value: 0.6, status: published,
+                  source: "NCHRP 20-102(06): daytime lines with a CIE Y contrast ratio of 1.6 to the pavement got adequate MV detection (contrast 0.6)"}
+  sky_to_road: {value: 8.0, low: 5.0, high: 12.0, status: assumed,
+                source: "the fog-lit horizon over the road's own luminance, about 1 / the albedo of asphalt (0.08–0.2)"}
+  visibilities_m: [50, 100, 150, 200, 300, 400, 600, 1000]
+  dense_fog_m: {value: 400.0, status: published, source: "NWS: dense fog advisory at visibility of 1/4 mile (400 m) or less"}
+  odd_visibility_m: {value: 200.0, status: published, source: "WP-C-02 §3.1 weather: visibility at least 200 m (LIMITATIONS.md:10)"}
+  preview_s: {value: 2.0, status: assumed, source: "the lane lines the lane keeping needs to see ahead, in seconds of travel"}

@@ -1,0 +1,117 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. NCHRP 20-102(06) thresholds (a Mobileye camera, closed course); the headlight study's veil.",
+ "pavement_rl": {
+  "dry": 13.6,
+  "wet": 2.0
+ },
+ "no_glare": {
+  "dry_fhwa_min": {
+   "rl": 50.0,
+   "ratio": 3.68,
+   "needed": 2.5
+  },
+  "dry_fhwa_70mph": {
+   "rl": 100.0,
+   "ratio": 7.35,
+   "needed": 2.5
+  },
+  "dry_good": {
+   "rl": 150.0,
+   "ratio": 11.03,
+   "needed": 2.5
+  },
+  "wet_low": {
+   "rl": 4.0,
+   "ratio": 2.0,
+   "needed": 2.1
+  },
+  "wet_robust": {
+   "rl": 9.0,
+   "ratio": 4.5,
+   "needed": 2.1
+  },
+  "wet_good": {
+   "rl": 35.0,
+   "ratio": 17.5,
+   "needed": 2.1
+  }
+ },
+ "glare": {
+  "divided-8-low-low": {
+   "veil_dry": 0.0034,
+   "veil_wet": 0.023,
+   "dry_fhwa_min_ratio": 3.67,
+   "dry_rl_needed": 40.9,
+   "wet_good_ratio": 17.13,
+   "wet_rl_needed": 4.3
+  },
+  "divided-8-low-value": {
+   "veil_dry": 0.0103,
+   "veil_wet": 0.07,
+   "dry_fhwa_min_ratio": 3.65,
+   "dry_rl_needed": 41.1,
+   "wet_good_ratio": 16.42,
+   "wet_rl_needed": 4.4
+  },
+  "divided-8-low-high": {
+   "veil_dry": 0.0344,
+   "veil_wet": 0.234,
+   "dry_fhwa_min_ratio": 3.59,
+   "dry_rl_needed": 41.7,
+   "wet_good_ratio": 14.37,
+   "wet_rl_needed": 4.7
+  },
+  "divided-8-high-low": {
+   "veil_dry": 0.3979,
+   "veil_wet": 2.706,
+   "dry_fhwa_min_ratio": 2.91,
+   "dry_rl_needed": 51.6,
+   "wet_good_ratio": 5.45,
+   "wet_rl_needed": 10.2
+  },
+  "divided-8-high-value": {
+   "veil_dry": 1.1936,
+   "veil_wet": 8.116,
+   "dry_fhwa_min_ratio": 2.22,
+   "dry_rl_needed": 73.3,
+   "wet_good_ratio": 2.81,
+   "wet_rl_needed": 22.1
+  },
+  "divided-8-high-high": {
+   "veil_dry": 3.9787,
+   "veil_wet": 27.055,
+   "dry_fhwa_min_ratio": 1.54,
+   "dry_rl_needed": 149.0,
+   "wet_good_ratio": 1.59,
+   "wet_rl_needed": 63.7
+  },
+  "undivided-3.7-high-low": {
+   "veil_dry": 1.649,
+   "veil_wet": 11.213,
+   "dry_fhwa_min_ratio": 2.01,
+   "dry_rl_needed": 85.7,
+   "wet_good_ratio": 2.35,
+   "wet_rl_needed": 28.9
+  },
+  "undivided-3.7-high-value": {
+   "veil_dry": 4.9469,
+   "veil_wet": 33.639,
+   "dry_fhwa_min_ratio": 1.45,
+   "dry_rl_needed": 175.4,
+   "wet_good_ratio": 1.48,
+   "wet_rl_needed": 78.2
+  },
+  "undivided-3.7-high-high": {
+   "veil_dry": 16.4896,
+   "veil_wet": 112.129,
+   "dry_fhwa_min_ratio": 1.15,
+   "dry_rl_needed": 489.3,
+   "wet_good_ratio": 1.15,
+   "wet_rl_needed": 250.9
+  }
+ },
+ "rl_needed_no_glare": {
+  "dry": 34.0,
+  "wet": 4.2
+ }
+}

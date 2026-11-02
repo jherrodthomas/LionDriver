@@ -6535,7 +6535,7 @@
   sources: ["assurance/models/autosar/README.md §4", "AUTOSAR_MMOD_XMLSchema R22-11 _disclaimer.txt"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-11-02, by: u_X1u501HWo3YGVNlzcvkvmg}
-  applied: {ref: "jherrodthomas/LionDriver#565", record: "autosar description CI job: fetch_schema.py downloads the R22-11 schema archive, checks its SHA-256 and runs check_arxml A0; models/autosar README §4 and OI-1 closed; WP-P-07 v0.9.32 TL-61", at: 2026-11-02}
+  applied: {ref: "jherrodthomas/LionDriver#565", record: "autosar description CI job: fetch_schema.py downloads the R22-11 schema archive, checks its SHA-256 and runs check_arxml A0; models/autosar README §4 and OI-1 closed; WP-P-07 v0.9.33 TL-61", at: 2026-11-02}
 - id: DQ-431
   question: "The firmware can take up to 0.21 s to notice that the EPS status message (0x262) has stopped, against a 0.2 s requirement. What do we do?"
   context: >-
