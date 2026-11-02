@@ -963,8 +963,9 @@
       detail: "Not a rental; could bring an independent reviewer and test subjects. Cost: a slower, partnership-style arrangement two hours from Atlanta."
   sources: ["assurance/06-validation/test-sites/README.md §2, §3, §4", "assurance/06-validation/WP-V-01-safety-validation.md OI-1", "assurance/06-validation/WP-V-07-vehicle-test-operations.md §4, §8.1, §12"]
   explanation: {text: "You don't need to commit to a site to answer this: the question is only which one to phone first, and you can call a second one later. ITIC (Greenville) and Michelin Laurens are the only two candidates that look able to host both the low-speed tests and the 90 km/h ones; the others cover low speed only, or are a research partnership (NCAT). What decides it is not the track but three yeses on the first call: will they let an aftermarket driver-assistance device and its test firmware run, will they accept your insurance for a borrowed or rented car, and what does a half day cost. Picking A means Claude drafts that call sheet (test-sites §5) for ITIC; nothing is booked or paid. If you would rather wait until a car and insurance are in place (DQ-039, DQ-045), leave it open; it blocks every closed-course test.", at: 2026-11-02}
-  status: open
-  note: "Inbox answer 2026-10-30: other, \"not sure yet\". Not applied; the coordinator is discussing it with the lead"
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-02, by: u_X1u501HWo3YGVNlzcvkvmg, note: "tbd"}
+  note: "The lead's note tbd is read as: timing to be decided. Recorded in test-sites README v0.2 §4 and §5.1 (first-call sheet for ITIC), WP-V-01 v0.12 OI-1, WP-V-07 v0.4, WP-V-02, WP-V-03 and WP-M-08. Nothing booked or paid. Left: the calls (ITIC, then Michelin Laurens), an agreement and the site risk assessment. Earlier inbox answer 2026-10-30: other, not sure yet (jherrodthomas/LionDriver#565)"
 
 - id: DQ-042
   question: "When should the pass/fail limits for the controllability tests be fixed: override force and lateral margin?"
@@ -6532,7 +6533,9 @@
       title: "Ask AUTOSAR for written permission (or use an integration partner's licensed tool) first"
       detail: "Removes the doubt. Cost: time and an external request; B applies meanwhile."
   sources: ["assurance/models/autosar/README.md §4", "AUTOSAR_MMOD_XMLSchema R22-11 _disclaimer.txt"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-02, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#565", record: "autosar description CI job: fetch_schema.py downloads the R22-11 schema archive, checks its SHA-256 and runs check_arxml A0; models/autosar README §4 and OI-1 closed; WP-P-07 v0.9.33 TL-61", at: 2026-11-02}
 - id: DQ-431
   question: "The firmware can take up to 0.21 s to notice that the EPS status message (0x262) has stopped, against a 0.2 s requirement. What do we do?"
   context: >-
