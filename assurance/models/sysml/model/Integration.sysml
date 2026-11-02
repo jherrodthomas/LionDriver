@@ -33,7 +33,7 @@ package LionDriverIntegration {
     }
     action <'I-3'> closedLoopBench : IntegrationStep {
         doc /* Closed loop with a plant model */
-        :>> elements = "I-2 in closed loop with a vehicle model (Corolla lateral/longitudinal plant on the bench PC, producing `0x260`, `0xAA`, `0x1D2`, `0x226` responses to `0x2E4`/`0x343`)";
+        :>> elements = "I-2 in closed loop with a vehicle model: the layer-1 Corolla lateral/longitudinal plant of [`assurance/sim`](../sim/README.md) on the bench PC drives the real panda through the panda jungle, producing `0x260`, `0xAA`, `0x1D2`, `0x226` responses to `0x2E4`/`0x343` (DQ-146 A; openpilot's simulator `tools/sim` stays for layer 3). The bench PC may run an ordinary OS, accepted only with a measured jitter bound (§4, DQ-141 A)";
         :>> interfaces = "Closed control loop through the panda";
         :>> stimulus = "Scenario scripts";
         :>> purpose = "Dynamic behaviour at limits; FTTI-relevant timing with plant response";

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-11 Cybersecurity implementation and verification |
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: implementation, integration and verification; weakness analysis), §6 (off-the-shelf and open-source components); ISO 26262-6:2018 §5 (coding guidelines, as shared base); ASPICE 4.0 SEC.2, SEC.3 |
-| Version | 0.5 (§8 note and OI-7: CAL 2 rigour for CSR-016 and CSR-053 decided by the project lead, recorded for a later assessor (DQ-106 A); 2026-10-23). 0.4 (§7 and OI-9: the release script and the root `SConstruct` set `LIONDRIVER_REFERENCE=1`, and `panda/tests/reference_lock` runs in CI; OI-9 narrowed to the BA-01 audit and the release key; 2026-10-22). 0.3 (merge of PR #47 software alignment with the base; PR #47's §8 status kept, the base's status notes for CSR-016 and CSR-092 added; the panda host tests run in LionDriver CI (`panda_host_tests`); 2026-10-13). It carries PR #47's draft, numbered 0.2 there: RR-2026-009 F-20: §8 CSR status and summary counts at `682f184`, BA-01 reference-build check, CSR-136 citation resolved in WP-S-07; F-28: author and baseline. History on the base: 0.2 (status update 2026-10-12: §8 status of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; host unit tests only, no CS verification executed). 0.1 |
+| Version | 0.6 (§4, §5, OI-1: SBOM and dependency scanning by GitHub's dependency graph and Dependabot alerts only (DQ-169 B); AGNOS image, panda toolchain and firmware, LFS artefacts and vendored code not scanned, an accepted limitation; no new static-analysis tool selected; 2026-11-02). 0.5 (§8 note and OI-7: CAL 2 rigour for CSR-016 and CSR-053 decided by the project lead, recorded for a later assessor (DQ-106 A); 2026-10-23). 0.4 (§7 and OI-9: the release script and the root `SConstruct` set `LIONDRIVER_REFERENCE=1`, and `panda/tests/reference_lock` runs in CI; OI-9 narrowed to the BA-01 audit and the release key; 2026-10-22). 0.3 (merge of PR #47 software alignment with the base; PR #47's §8 status kept, the base's status notes for CSR-016 and CSR-092 added; the panda host tests run in LionDriver CI (`panda_host_tests`); 2026-10-13). It carries PR #47's draft, numbered 0.2 there: RR-2026-009 F-20: §8 CSR status and summary counts at `682f184`, BA-01 reference-build check, CSR-136 citation resolved in WP-S-07; F-28: author and baseline. History on the base: 0.2 (status update 2026-10-12: §8 status of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; host unit tests only, no CS verification executed). 0.1 |
 | Status | Draft — rules and plan proposed; no verification activity of this plan (VS-CS-nnn, BA, SAST, FZ, PT) has been executed. The §8 status column records code review at `682f184` and, for CSR-011…CSR-015 and CSR-024, the host unit-test runs recorded in the change records (UT executed, not reviewed); nothing is verified on hardware |
 | ASIL / scope | CS (CAL 1–3); shared coding rules apply to the envelope code (B‡ per WP-S-02: ASIL C until SG-01 is re-rated) |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -100,6 +100,8 @@ The checklist becomes part of the PR template proposed in [WP-P-02 §8](../07-su
 | SAST-05 | Secret scanning | Whole history and every PR | Repository secret scanning plus a pre-merge scanner; documented allow-list entry only for the known-public panda debug key (§6) | Block on new secrets | Not configured |
 | SAST-06 | Workflow and CI hardening lint | `.github/workflows/**` | Check pinned action versions by SHA, no secrets to fork PRs, least-privilege tokens | Block on high findings | Not configured (GAP-31) |
 
+Tool choice (decided 2026-10-30, register DQ-169, B): the decision covers the SBOM and known-vulnerability scanning of §5 and selects no further static-analysis tool. SAST-01 and SAST-02 keep cppcheck and clang-tidy as planned above; SAST-03 to SAST-06 stay not configured, and their tools stay with OI-1.
+
 Tool classification and qualification of SAST tools is done under [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md). Results are stored per release in the evidence package ([WP-P-10 §5](../07-supporting/WP-P-10-release-management.md)).
 
 Finding handling: each finding is fixed, or justified as a recorded deviation, or raised as a problem report labelled `cat-cs` ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)). Weaknesses that may be exploitable go to vulnerability analysis in [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md).
@@ -117,7 +119,7 @@ Finding handling: each finding is fixed, or justified as a recorded deviation, o
 | panda toolchain and firmware | Toolchain wheel version; built image hash | Compiler version, image hash, signing key ID | — |
 | Vendored code in tree | Directory scan | Name, version where known | e.g. vendored CMSIS headers in `panda/board/stm32h7/inc/` |
 
-Format: CycloneDX or SPDX JSON, one per release, stored with the release record ([WP-K-06](../10-safety-case/WP-K-06-release-record.md)). Tool selection is [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-4.
+Format: CycloneDX or SPDX JSON, one per release, stored with the release record ([WP-K-06](../10-safety-case/WP-K-06-release-record.md)). Tool (decided 2026-10-30, register DQ-169, B; [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-4): GitHub's own dependency graph and Dependabot alerts only, so the SBOM is the dependency graph's SPDX export, taken at the release tag. **Accepted limitation:** it lists only what GitHub reads from the manifests and lockfiles (the Python and native wheels of `uv.lock`; whether it reads `.gitmodules` is to be confirmed). The OS image, the panda toolchain and firmware image, the Git LFS artefacts and the vendored code above are not in it; for these the release record keeps the inventory of this table by hand, and they get no automated scan. This was not the recommended option, which added an open-source SBOM generator and scanner in CI.
 
 ### 5.2 Scanning
 
@@ -127,6 +129,8 @@ Format: CycloneDX or SPDX JSON, one per release, stored with the release record 
 | SCAN-02 Release scan | Release candidate | Same | Release scan report in the evidence package; each finding assessed (affected? reachable? CAL?) |
 | SCAN-03 Continuous scan | Weekly on the current release SBOM | Same | New findings → event evaluation in [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) §3 |
 | SCAN-04 Upstream advisory watch | Weekly | `commaai/*` and `tinygrad/tinygrad` security advisories and security-tagged commits | Per [WP-M-11](../01-management/WP-M-11-upstream-and-supplier-management.md) §6 |
+
+With DQ-169 B, SCAN-01 to SCAN-03 are Dependabot alerts: they are raised on the repository's dependency graph as advisories are published, rather than as a scan on a schedule, and they cover only the components the graph lists. The OSV and NVD sources are not queried by a tool; the OS image, toolchain and vendored code are searched by hand (WP-O-05 §3.1 MS-04, MS-05). SCAN-04 is not covered by Dependabot and stays a watch of the upstream repositories (WP-M-11 §6).
 
 Release criterion: no known vulnerability in a shipped component that is assessed as reachable with risk value ≥ 3 (TARA scale, [WP-C-09 §7](../02-concept/WP-C-09-tara.md)) remains untreated; retained findings are listed in the CS case ([WP-K-03](../10-safety-case/WP-K-03-cybersecurity-case.md)).
 
@@ -248,7 +252,7 @@ Summary at `682f184` (opendbc `7993399`, panda `8aa8671`): of 64 CSRs, 0 verifie
 
 | ID | Item |
 |---|---|
-| OI-1 | Select and qualify SAST, SBOM and scanning tools (WP-P-07; [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-4) |
+| OI-1 | Select and qualify SAST, SBOM and scanning tools (WP-P-07; [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-4). SBOM and scanning selected 2026-10-30 (register DQ-169, B): GitHub's dependency graph and Dependabot alerts only, with the gaps of §5.1 accepted. Open: enable them, confirm which manifests the graph reads, classify the tool in WP-P-07, and choose the tools for SAST-03 to SAST-06 |
 | OI-2 | Closed (2026-10-12): the CERT C subset for SAST-02 is recorded in [WP-W-01 §5.5](WP-W-01-software-development-environment-guidelines.md), with the checker or review that covers each rule. Implementation in CI is WP-W-01 OI-13 |
 | OI-3 | Triage each `shell=True` call in non-test host code (SC-PY-02) |
 | OI-4 | Review athena/uploader path handling for symlinks under the log root (SC-PY-03) |

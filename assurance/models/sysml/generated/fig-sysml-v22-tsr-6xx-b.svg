@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-22 · TSR requirement diagram · host monitoring, DM, HMI</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">TSR-619…TSR-635 of WP-S-02 with the FSRs they derive from, the elements that satisfy them, the mechanisms that cite them and the cases that verify them</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::tsrBlocks</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model 7a0643ba7263</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model 28c60d460af2</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <text x="40" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">DERIVED FROM · «requirement» FSR</text>
 <text x="360" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">TECHNICAL SAFETY REQUIREMENTS · «requirement»</text>
@@ -168,7 +168,7 @@
 <rect x="360" y="1304" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
 <rect x="372" y="1312" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1324.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-633</text>
 <text x="432.9" y="1325" font-size="12" fill="#0F172A" font-weight="600">When driver awareness has reached zero (terminal DM alert) and the driver has…</text>
-<text x="372" y="1342" font-size="10.5" fill="#64748B">responded for 5 s, the item shall keep the lane and decelerate in lane to a standstill within a_min and j_do…</text>
+<text x="372" y="1342" font-size="10.5" fill="#64748B">responded for 5 s, the item shall keep the lane and decelerate in lane to a standstill with the terminal alert…</text>
 <text x="372" y="1356" font-size="10.5" fill="#64748B">ASIL A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11) · SM FR, WRN · reaction starts ≤ 5 s after…</text>
 <text x="950" y="1324" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
 <rect x="1016" y="1313" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1323.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>

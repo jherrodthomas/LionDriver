@@ -233,7 +233,7 @@ package LionDriverTiming {
     }
     constraint <'SG-08 no-response reaction (§3.8.4; DQ-365 A)'> budget_17 : TimingBudget {
         doc /* SG-08 no-response reaction (§3.8.4; DQ-365 A) */
-        :>> ftti = "preliminary: reaction starts ≤ 18 s (vision) / ≤ 30 s (wheel-touch) from loss of attention; standstill about 10 s later from 110 km/h at 3 m/s² (OI-11)";
+        :>> ftti = "preliminary: reaction starts ≤ 18 s (vision) / ≤ 30 s (wheel-touch) from loss of attention; standstill about 15 s and 230–240 m later from 110 km/h, ramped in to 2 m/s² (DQ-424 A; planner today −1.2 m/s², about 25 s; OI-11)";
         :>> fdti = "terminal alert at 13 s vision / 25 s wheel-touch (T-24); DM invalid → take-over request ≤ 2 s (TSR-609)";
         :>> frti = "reaction ≤ 5 s after the terminal alert (TSR-633, T-33)";
         :>> margin = "TBD";
@@ -500,8 +500,8 @@ package LionDriverTiming {
         doc /* Terminal DM reaction (added 2026-10-16) */
         :>> mechanism = "Terminal DM reaction (added 2026-10-16)";
         :>> code = "selfdrive/monitoring/policy.py:44, 457; selfdrive/selfdrived/minimum_risk.py; selfdrive/controls/controlsd.py:237-239";
-        :>> derivation = "forced deceleration 5 s after the terminal alert, latched until the driver takes over; the vehicle stops in lane and stays held (TSR-633)";
-        :>> worstCase = "5 s to deceleration; safe state reached at standstill, held while the PCM holds (AOU-16, not verified)";
+        :>> derivation = "forced deceleration 5 s after the terminal alert, latched until the driver takes over; the vehicle stops in lane and stays held (TSR-633); the stop slows at A_CRUISE_MIN, −1.2 m/s² (longitudinal_planner.py:22, 50, 84-85), not the 2 m/s² of DQ-424 A";
+        :>> worstCase = "5 s to deceleration; standstill about 25 s and 390 m later from 110 km/h (about 15 s and 230–240 m once the 2 m/s² change is made); safe state reached at standstill, held while the PCM holds (AOU-16, not verified)";
     }
     item <'T-34'> t_34 : CodeDerivedTime {
         doc /* SoC command arrival (TSR-408; reference build, added 2026-10-16) */

@@ -147,6 +147,10 @@
 # rev 1.18 (after BL-007, ratings within BL-007): SWF-ACT-055 completed. Call-site tests for the panda status supervision in selfdrived and the TSR-602
 #   gate in controlsd, and mutants CM-1..CM-6, TB-1..TB-5, IF-1..IF-3, FG-1..FG-4 (81 host mutants, all killed). SWF-034.C1 and SWF-032.C3 D 8 -> 4;
 #   SWF-040.C1 and SWF-043.C1 stay D 8 (their remaining parts are not implemented, SWF-ACT-040). AP stays H on all four (S 10, O 5).
+# rev 1.19 (after BL-007, ratings within BL-007, the code is unchanged; 2026-11-02): DQ-424 A (the lead, 2026-10-30): TSR-633 (WP-S-02 v0.65) now sets
+#   the forced stop to ramp in to 2 m/s² within j_down and a_min, about 15 s and 230-240 m from 110 km/h (WP-S-04 v0.30 §3.8.4). SWF-086.C2 rewritten: the
+#   planner still stops at -1.2 m/s², so the cause is a requirement not met by design; O 8 D 8 AP H kept. New action SWF-ACT-082 (planner change for the
+#   forced stop, with tests; open); SWF-ACT-073 checks the stop against the TSR-633 rate and time. Nothing implemented or verified by this revision.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -196,7 +200,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.18"
+  revision: "1.19"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -5579,12 +5583,13 @@ failure_modes:
     - SWF-ACT-073
   - id: SWF-086.C2
     description: 'By design the forced stop is only v_cruise = 0 on the cruise candidate: the planner slows at A_CRUISE_MIN, -1.2 m/s², jerk-limited (longitudinal_planner.py:22,
-      50-52, 84-85), about 25 s and 390 m from 110 km/h, with no stop-time requirement. BL-007: TSR-633 is implemented for the hold and the lockout (SWF-062.C1), but it sets no stop time or deceleration,
-      and the -1.2 m/s² stop is gentler than the about 3 m/s² (10 s from 30 m/s) that DQ-365 A described; queued for the lead. The Toyota port does
+      50-52, 84-85), about 25 s and 390 m from 110 km/h. BL-007: TSR-633 is implemented for the hold and the lockout (SWF-062.C1). Since WP-S-02 v0.65 TSR-633
+      sets the stop rate (DQ-424 A, decided 2026-10-30): ramp in to 2 m/s² within j_down and a_min, about 15 s and 230-240 m from 110 km/h (WP-S-04 §3.8.4). The
+      planner does not implement it (SWF-ACT-082 open), so the stop takes about 10 s and 150 m longer than required. The Toyota port does
       not use CC.driverMonitoringEscalation (read only by the Volkswagen port, carcontroller.py:131)'
     element: SWF-SE-071
     prevention_controls:
-    - description: Upstream design; no LionDriver requirement for the stop time or deceleration (TSR-633 sets none), so O 8 (RT-2 §2)
+    - description: Upstream design; TSR-633 requires the 2 m/s² ramped stop (DQ-424 A) and the code does not meet it, so O 8 (present by design, RT-2 §2)
       ref: openpilot/selfdrive/controls/lib/longitudinal_planner.py
     detection_controls:
     - description: test_longitudinal force_decel maneuvers (CI) fail only if the plant does not decelerate at all (acceleration above -0.04 m/s² while moving, maneuver.py:84-86);
@@ -5596,6 +5601,7 @@ failure_modes:
     actions:
     - SWF-ACT-059
     - SWF-ACT-073
+    - SWF-ACT-082
   safety_mechanisms:
   - description: selfdrived soft disable when dmonitoringd or controlsd stops (commIssue, processNotRunning; SWF-064)
     ref: openpilot/selfdrive/selfdrived/events.py
@@ -6508,7 +6514,8 @@ actions:
 - id: SWF-ACT-073
   kind: detection
   description: 'End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that
-    forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633; add a freshness check on driverMonitoringState
+    forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633 (ramp to 2 m/s² within j_down and a_min,
+    about 15 s and 230-240 m from 110 km/h; DQ-424 A, WP-S-04 §3.8.4); add a freshness check on driverMonitoringState
     in controlsd, and do not route the terminal reaction through plannerd alone (WP-A-03 DFI-33)'
   owner: Jherrod Thomas
   status: open
@@ -6603,3 +6610,11 @@ actions:
     occurrence: 5
     detection: 4
     ap: H
+- id: SWF-ACT-082
+  kind: design_change
+  description: 'Forced-stop deceleration per TSR-633 (DQ-424 A): when controlsState.forceDecel is set, plannerd ramps the target deceleration in to 2 m/s² within
+    j_down (TSR-205) and holds it to standstill within a_min (TSR-202), in place of v_cruise = 0 at A_CRUISE_MIN (-1.2 m/s², longitudinal_planner.py:22, 50, 84-85).
+    Tests: a test_longitudinal force_decel maneuver from 110 km/h that checks the ramp rate, the 2 m/s² plateau and standstill in about 15 s and 230-240 m
+    (WP-S-04 §3.8.4), unit tests of the planner branch and mutants of it in tools/ci/host_mutants.toml'
+  owner: Jherrod Thomas
+  status: open

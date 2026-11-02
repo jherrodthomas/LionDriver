@@ -3363,6 +3363,7 @@
   sources: ["assurance/models/README.md item 4", "assurance/03-system/WP-S-08-system-integration-test.md I-3", "assurance/05-software/hil-bench/README.md §2 (B3)"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-S-08 v0.9 §3.1 I-3, §4, OI-2 and hil-bench README v0.10 §2 B3, §7: accepted with 99.9 % of frames within 1 ms of their slot, none a full period late, bound recorded with each result. Left: the jitter measurement; the bench is not built (jherrodthomas/LionDriver#561)."
 
 - id: DQ-142
   question: "Until the panda tests its intercept switch at every start, how often should the hardware metrics assume a hidden fault in it is found?"
@@ -3390,6 +3391,7 @@
   sources: ["assurance/03-system/WP-S-06-requirements-production-operation.md OI-2", "assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md PM-03", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-H-04 v0.13 §3.3 and WP-S-06 v0.5 OI-2: an intercept-switch latent fault counts as found at the 6-month PM-03 check (TSR-809) until a start-up test exists. Left: the TSR-515 start-up test, then the metric with one drive cycle (jherrodthomas/LionDriver#561)."
 
 - id: DQ-143
   question: "How should the CRC that protects commands from the main computer to the panda be chosen?"
@@ -3467,6 +3469,7 @@
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §3 (SPI buffer size), OI-5", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-07"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-S-05 v0.23 §3 (SPI buffer size row), OI-5 and WP-V-05 v0.15 VS-FI-07 (lengths above 4096 B and between 2048 and 4096 B). Left: the panda's own length check (TSR-412, NF-04) and running VS-FI-07 (jherrodthomas/LionDriver#561)."
 
 - id: DQ-146
   question: "For closed-loop integration tests, what should play the car around a real panda: the existing Corolla plant model, or openpilot's driving simulator adapted to Toyota?"
@@ -3497,6 +3500,7 @@
   sources: ["assurance/03-system/WP-S-08-system-integration-test.md I-3, OI-5", "assurance/sim/README.md (layers 1 and 3)", "assurance/05-software/hil-bench/README.md"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-S-08 v0.9 §3.1 I-3, §4, OI-5 (closed), OI-2 and hil-bench README v0.10 §2 B3; SysML Integration.sysml I-3 follows. Left: the plant's CAN output and the bench (WP-S-08 OI-2) (jherrodthomas/LionDriver#561)."
 
 - id: DQ-147
   question: "While the car is under control, should the panda refuse every command the main computer does not need, instead of only the ones known to be dangerous?"
@@ -3577,6 +3581,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-501b, OI-10", "assurance/05-software/WP-W-03-software-architecture.md ATC-02", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-501"]
   status: assumed
   answer: {choice: A, via: assumed, at: 2026-11-02, note: "The lead answered 'not sure' on the inbox (2026-10-30). A reversible technical choice (decider: claude), so Claude went ahead with the recommendation at proceed_after; the lead can change it"}
+  note: "Recorded in WP-W-02 v0.50 SWSR-501b, OI-10 (closed) and WP-W-03 v0.22 ATC-02, §6.2. Left: the lead's confirmation (assumed), SWSR-501b verified on hardware (VS-SWQ-14) (jherrodthomas/LionDriver#561)."
 
 - id: DQ-150
   question: "How should SWSR-408 be worded: when does command-arrival supervision start, and does a frame refused for its content count as 'accepted'?"
@@ -3625,6 +3630,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 SWSR-301h, 302h, 304h, 305h (new, draft, QM (C-sup)), OI-12, §2.2, §13 and WP-W-05 v0.9.4 §5.3. Left: review of the four requirements and their ratings (SWSR-301h ends an engagement attempt on SOFT_DISABLE instead of ignoring it), the preEnabled code change, host unit tests, citing them in sm-selfdrived.yaml (jherrodthomas/LionDriver#561)."
 
 - id: DQ-152
   question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
@@ -3652,6 +3658,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-108a, OI-8", "assurance/03-system/WP-S-05-hsi-specification.md §4.2", "openpilot/cereal/log.capnp (PandaState)"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 SWSR-108a, OI-8 and WP-S-05 v0.23 §4.2b (proposed layout: 17 reason codes plus OTHER, saturating per-cause counters, health packet and PandaState fields). Left: agreeing the layout, the panda, pandad and cereal change with unit and HIL tests (jherrodthomas/LionDriver#561)."
 
 - id: DQ-153
   question: "Should the panda's safety checks get a higher interrupt priority than its communication, or stay at the same level?"
@@ -3703,6 +3710,7 @@
   sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, ATC-18", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-406"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 SWSR-406 and WP-W-03 v0.22 ATC-18, §5.4 R-5. Left: the panda re-check with interrupts masked, and a test that injects the R-5 race (jherrodthomas/LionDriver#561)."
 
 - id: DQ-155
   question: "Should the reference firmware leave out the safety code for car brands other than Toyota?"
@@ -3781,6 +3789,7 @@
   sources: ["assurance/05-software/WP-W-04-software-safety-analysis.md SDF-05, OI-2", "assurance/05-software/design-notes/DN-01-tx-rate-supervision.md §7", "DQ-134"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-04 v1.8 OI-2, SDF-05 and hil-bench README v0.10 §7: queue occupancy measured at B3 with the DQ-134 PCS timing. Left: the measurement and the decision it supports (jherrodthomas/LionDriver#561)."
 
 - id: DQ-158
   question: "How should the size and complexity limit for the panda's big functions be checked: with a measuring tool, or by review?"
@@ -3807,6 +3816,7 @@
   sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2", "assurance/05-software/WP-W-01-software-development-environment-guidelines.md ENV-R-07"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-01 v0.7 ENV-R-07, OI-5, WP-W-05 v0.9.4 OI-2, WP-W-03 v0.22 ATC-17 and WP-P-07 v0.9.32 TL-63 (lizard, proposed TCL2). Left: pinned version, the CI job, the first measured run, justified exceptions, TQR-63 (jherrodthomas/LionDriver#561)."
 
 - id: DQ-159
   question: "Which MC/DC coverage measurement approach should the envelope tests use, plus a branch-coverage gate?"
@@ -3854,6 +3864,7 @@
   sources: ["assurance/05-software/WP-W-06-software-unit-verification.md OI-2, VS-UV-S3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-06 v0.6.8 VS-UV-S3, OI-2 and WP-P-07 v0.9.32 TL-64 (CBMC, proposed TCL3). Left: pinned version and solver, the harnesses, the CI job, TQR-64 (jherrodthomas/LionDriver#561)."
 
 - id: DQ-161
   question: "Should the min, max, clamp and abs macros in the safety code be replaced with typed inline functions, removing four standing MISRA deviations?"
@@ -3879,6 +3890,7 @@
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-9, DEV-09, DEV-10, DEV-12, DEV-13", "opendbc_repo/opendbc/safety/helpers.h", "panda/board/utils.h"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-01 v0.7 OI-9, DEV-09, DEV-10, DEV-12, DEV-13. Left: the macro replacement in the opendbc and panda forks, re-running the unit, mutation and MISRA jobs, closing the four DEV records (jherrodthomas/LionDriver#561)."
 
 - id: DQ-162
   question: "How should the driving and monitoring models be loaded safely: check their hash first and keep today's format, or move to a format that cannot run code?"
@@ -3933,6 +3945,7 @@
   sources: ["assurance/05-software/hil-bench/README.md R-2, §2 (B1, B4)"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in hil-bench README v0.10 R-2, WP-V-05 v0.15 §5.4 (VS-FI-17) and WP-W-08 v0.4.3 VS-SWQ-14. Left: the B1 runs and the B4 repeat on the reference device (jherrodthomas/LionDriver#561)."
 
 - id: DQ-164
   question: "When the panda decides whether the car is moving, should it add up the four wheel speeds (as coded) or check that any wheel is turning (as SWSR-302 says)?"
@@ -3958,6 +3971,7 @@
   sources: ["assurance/05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md B2B-02", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 SWSR-302 (Baseline column). Left: a reference-car CAN log that includes reversing; the per-wheel check only if signed speeds occur; B2B-02 stays open (jherrodthomas/LionDriver#561)."
 
 - id: DQ-165
   question: "Which self-tests should the panda run at every start (watchdog reset, memory ECC, relay toggle with readback, siren), knowing each can block a drive if it fails?"
@@ -3983,6 +3997,7 @@
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md §3.3, OI-4", "assurance/05-software/WP-W-03-software-architecture.md ATC-03", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-515"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 SWSR-515, WP-W-03 v0.22 ATC-03 and WP-H-04 v0.13 OI-4, §3.3. Left: the four test definitions, the bench false-block campaign, the choice, and the LFM with the chosen set (jherrodthomas/LionDriver#561)."
 
 - id: DQ-166
   question: "Which interrupt-priority and ISR-timing scheme should the panda safety MCU adopt?"
@@ -4028,6 +4043,7 @@
   sources: ["assurance/00-assessment/gap-assessment.md GAP-09", "assurance/01-management/WP-M-07-risk-management.md R-28", "assurance/07-supporting/WP-P-10-release-management.md"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in gap-assessment v0.4 GAP-09, WP-M-07 v0.10 R-28, WP-P-10 v0.7 §6, new OI-7 and WP-S-02 v0.65 TSR-512, TSR-513 status; the CI job panda_reference_release_build already checks the variant and flags. Left: the same check on the signed release image in the release script and checklist, and the flag in every release record (WP-P-10 OI-7) (jherrodthomas/LionDriver#561)."
 
 - id: DQ-168
   question: "Which signing algorithm and boot-chain implementation replace RSA-1024/SHA-1 for LionDriver panda firmware?"
@@ -4076,6 +4092,7 @@
   sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4", "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md SCAN-03, SCAN-04, OI-1", "DQ-192 (merged here)"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-M-09 v0.8 §10, OI-4, WP-W-11 v0.6 §4, §5.1, §5.2, OI-1 and WP-O-05 v0.6 §3.1, §10, with what B gives up as an accepted limitation: AGNOS, the panda toolchain and firmware image, LFS artefacts and vendored code are searched by hand (MS-04, MS-05); no OSV or NVD query. Left: enable the dependency graph and Dependabot alerts, confirm the manifests it reads, a WP-P-07 tool row, tools for SAST-03..06 (jherrodthomas/LionDriver#561)."
 
 - id: DQ-170
   question: "Should pickle-based model loading be replaced, or protected by a verified-hash check before loading (RM-1)?"
@@ -6272,6 +6289,7 @@
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-S-02 v0.65 TSR-633 (trace copy synced), WP-S-04 v0.30 §3.7, §3.8.4, T-33 (15.5 s and 241 m from 110 km/h with the ramp-in) and SW FMEA rev 1.19 SWF-086.C2, SWF-ACT-073, new SWF-ACT-082. Left: the openpilot planner change for the forced stop with its tests (SWF-ACT-082), then the stop measured on the vehicle (T-33, AOU-16) (jherrodthomas/LionDriver#561)."
 
 - id: DQ-425
   question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
