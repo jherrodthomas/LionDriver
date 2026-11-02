@@ -1,31 +1,32 @@
-<svg viewBox="0 0 640 250" role="img" aria-labelledby="dq424t">
-<title id="dq424t">Speed after the in-lane stop starts, from 110 km/h: A, 2 m/s², stops after about 15 s and 230 m; B, 1.2 m/s², about 25 s and 390 m; C, 3 m/s², about 10 s and 150 m</title>
-<text x="0" y="14" class="s-muted" font-size="12" font-weight="600" letter-spacing=".06em">UNRESPONSIVE DRIVER: SPEED AFTER THE STOP STARTS</text>
-<text x="0" y="32" font-size="12" font-weight="700"><tspan class="s-acc">A 2 m/s² (recommended)</tspan><tspan class="s-muted" dx="14">B 1.2 m/s² (today)</tspan><tspan class="s-bad" dx="14">C 3 m/s²</tspan></text>
+<svg viewBox="0 0 640 272" role="img" aria-labelledby="dq424t">
+<title id="dq424t">Speed after the in-lane stop starts, from 110 km/h: A, 2 m/s² ramped in at 5 m/s³, stops after 15.5 s and 240 m; B, 1.2 m/s² (today), stops after 25.5 s and 389 m; C, 3 m/s², stops after 10.2 s and 156 m</title>
+<text x="0" y="14" class="s-muted" font-size="12" font-weight="600" letter-spacing=".06em">UNRESPONSIVE DRIVER: SPEED AFTER THE STOP STARTS, FROM 110 KM/H</text>
+<text x="0" y="34" font-size="12" font-weight="700"><tspan class="s-acc">A 2 m/s² (ramped in, recommended)</tspan><tspan class="s-muted" dx="14">B 1.2 m/s² (today)</tspan><tspan class="s-bad" dx="14">C 3 m/s²</tspan></text>
 <line x1="70" y1="48" x2="70" y2="200" stroke="var(--line)" stroke-width="1"/>
-<text x="70" y="216" text-anchor="middle" class="s-muted" font-size="11">0 s</text>
-<line x1="172" y1="48" x2="172" y2="200" stroke="var(--line)" stroke-width="1"/>
-<text x="172" y="216" text-anchor="middle" class="s-muted" font-size="11">5 s</text>
-<line x1="274" y1="48" x2="274" y2="200" stroke="var(--line)" stroke-width="1"/>
-<text x="274" y="216" text-anchor="middle" class="s-muted" font-size="11">10 s</text>
-<line x1="376" y1="48" x2="376" y2="200" stroke="var(--line)" stroke-width="1"/>
-<text x="376" y="216" text-anchor="middle" class="s-muted" font-size="11">15 s</text>
-<line x1="477" y1="48" x2="477" y2="200" stroke="var(--line)" stroke-width="1"/>
-<text x="477" y="216" text-anchor="middle" class="s-muted" font-size="11">20 s</text>
-<line x1="579" y1="48" x2="579" y2="200" stroke="var(--line)" stroke-width="1"/>
-<text x="579" y="216" text-anchor="middle" class="s-muted" font-size="11">25 s</text>
-<text x="62" y="204" text-anchor="end" class="s-muted" font-size="11">0 km/h</text>
-<text x="62" y="141" text-anchor="end" class="s-muted" font-size="11">50 km/h</text>
-<text x="62" y="65" text-anchor="end" class="s-muted" font-size="11">110 km/h</text>
+<text x="70" y="218" class="s-muted" font-size="12" text-anchor="middle">0 s</text>
+<line x1="175.8" y1="48" x2="175.8" y2="200" stroke="var(--line)" stroke-width="1"/>
+<text x="175.8" y="218" class="s-muted" font-size="12" text-anchor="middle">5 s</text>
+<line x1="281.5" y1="48" x2="281.5" y2="200" stroke="var(--line)" stroke-width="1"/>
+<text x="281.5" y="218" class="s-muted" font-size="12" text-anchor="middle">10 s</text>
+<line x1="387.3" y1="48" x2="387.3" y2="200" stroke="var(--line)" stroke-width="1"/>
+<text x="387.3" y="218" class="s-muted" font-size="12" text-anchor="middle">15 s</text>
+<line x1="493.1" y1="48" x2="493.1" y2="200" stroke="var(--line)" stroke-width="1"/>
+<text x="493.1" y="218" class="s-muted" font-size="12" text-anchor="middle">20 s</text>
+<line x1="598.8" y1="48" x2="598.8" y2="200" stroke="var(--line)" stroke-width="1"/>
+<text x="598.8" y="218" class="s-muted" font-size="12" text-anchor="middle">25 s</text>
+<text x="62" y="204" class="s-muted" font-size="12" text-anchor="end">0 km/h</text>
+<text x="62" y="140.4" class="s-muted" font-size="12" text-anchor="end">50 km/h</text>
+<text x="62" y="64" class="s-muted" font-size="12" text-anchor="end">110 km/h</text>
 <line x1="70" y1="200" x2="620" y2="200" stroke="var(--ink)" stroke-width="1"/>
-<line x1="70.0" y1="60.7" x2="588.7" y2="200.0" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/>
-<circle cx="588.7" cy="200.0" r="4" fill="var(--muted)"/>
-<text x="592.7" y="192.0" class="s-muted" font-size="11.5" font-weight="700">B · 25 s, 390 m</text>
-<line x1="70.0" y1="60.7" x2="277.5" y2="200.0" stroke="var(--bad)" stroke-width="2"/>
-<circle cx="277.5" cy="200.0" r="4" fill="var(--bad)"/>
-<text x="281.5" y="192.0" class="s-bad" font-size="11.5" font-weight="700">C · 10 s, 150 m</text>
-<line x1="70.0" y1="60.7" x2="381.2" y2="200.0" stroke="var(--accent)" stroke-width="3.5"/>
-<circle cx="381.2" cy="200.0" r="4" fill="var(--accent)"/>
-<text x="385.2" y="192.0" class="s-acc" font-size="11.5" font-weight="700">A · 15 s, 230 m</text>
-<text x="0" y="244" class="s-muted" font-size="11">Straight lines at constant deceleration; the ramp of A adds about a second.</text>
+<path d="M70,60 L608.6,200" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round"/>
+<circle cx="608.6" cy="200" r="4.5" fill="var(--muted)"/>
+<text x="536.6" y="174" class="s-muted" font-size="13" font-weight="700">B · 25 s, 390 m</text>
+<path d="M70,60 L285.5,200" fill="none" stroke="var(--bad)" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="285.5" cy="200" r="4.5" fill="var(--bad)"/>
+<text x="143.5" y="192" class="s-bad" font-size="13" font-weight="700">C · 10 s, 155 m</text>
+<path d="M70,60 L71.1,60 L72.1,60.1 L73.2,60.3 L74.2,60.5 L75.3,60.7 L76.3,61 L77.4,61.4 L78.5,61.8 L78.5,61.8 L397.4,200" fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="397.4" cy="200" r="4.5" fill="var(--accent)"/>
+<text x="415.4" y="192" class="s-acc" font-size="13" font-weight="700">A · 15 s, 240 m</text>
+<text x="0" y="246" class="s-muted" font-size="12">A ramps in at j_down = 5 m/s³ over 0.4 s, which adds 0.2 s and 6 m; B and C brake at a constant rate.</text>
+<text x="0" y="264" class="s-muted" font-size="12">Kinematic estimate from TSR-633 and the options, not a measurement.</text>
 </svg>

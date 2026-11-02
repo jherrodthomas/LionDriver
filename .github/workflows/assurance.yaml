@@ -97,6 +97,8 @@ jobs:
         python3 assurance/01-management/decisions/test_decisions.py
         python3 assurance/01-management/decisions/fig_lifecycle.py --check
         python3 assurance/01-management/decisions/test_fig_lifecycle.py
+        python3 assurance/01-management/decisions/fig_dq424.py --check
+        python3 assurance/01-management/decisions/test_fig_dq424.py
     - name: Work-product figures match their source tables and records (and their tests)
       run: |
         python3 assurance/01-management/figures/fig_m_management.py --check
