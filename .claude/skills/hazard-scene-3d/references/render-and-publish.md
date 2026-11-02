@@ -86,6 +86,6 @@ To republish:
 5. Keep the page's honesty note (synthetic, DSR-12, no evidence credit; contact not modelled; HARA ratings are
    proposals until accepted) and add the CC-BY credits if a re-render brought the kits onto the page.
 
-As of 2026-11-02 the page lists 119 scenes; the repository has 125. Missing are the six SH-14 and SH-06 emergency
-vehicle scenes (`sh-06-stopped-emergency-vehicle`, `sh-14-ambulance-behind`, `sh-14-move-over` and their variants),
-so the next republish should add them.
+Since 2026-11-02 (page version 19) the page lists all 125 scenes, the SH-06 and SH-14 emergency-vehicle scenes
+included. Check the count against `dashboards/README.md` before each republish; the page has no generator, so it
+drifts silently.

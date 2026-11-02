@@ -1537,8 +1537,10 @@ const deg = Math.PI / 180
 
 /* The real thing, as the heat model has it (assurance/sim/thermal/params.yaml, estimates until T1 measures them):
    comma 3X box 120 x 60 x 25 mm; the SoC under an aluminium spreader; the panda STM32H725 lower right; a fan on the
-   right face; road cameras on the face toward the glass; a bracket to the windshield, raked 25.8 deg from horizontal
-   on the Corolla E210 (measured on the 3D model, sim/figures/corolla-e210-geometry.json). */
+   right face; road cameras on the face toward the glass; a bracket to the windshield, raked 26.3 deg from horizontal
+   on the device's line on the Corolla E210 (params.yaml vibration.glass_tilt_deg, mesh-derived from
+   sim/figures/corolla-e210-device-shading.json; the whole windshield's mean, 25.8 deg in corolla-e210-geometry.json,
+   is not the one drawn here). */
 const lab = new Lab({
   prompt: 'the comma 3X behind a sun-loaded windshield, and the safety MCU next to its SoC',
   no: 1, title: 'comma 3X', sub: 'behind the windshield, in the sun',
@@ -1549,7 +1551,7 @@ const lab = new Lab({
 })
 
 // windshield (with its black band at the top edge) and dash
-const RAKE = 25.8 * deg
+const RAKE = 26.3 * deg  // params.yaml vibration.glass_tilt_deg
 const glass = new THREE.Group(); glass.position.set(0, 0.195, 0); glass.rotation.set(RAKE, 0, 0)
 lab.add(glass, { name: 'Windshield', explode: [0, 0.12, 0] })
 lab.mesh(GEO.rbox(0.62, 0.006, 0.9, 0.002), MAT.glass({ color: [0.62, 0.8, 0.74], transmission: 0.7, roughness: 0.05, thickness: 0.006 }),
