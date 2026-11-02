@@ -216,6 +216,8 @@ TERMS = {
   "UI": "user interface: the device's screen",
   "TLS": "transport layer security: encrypted network connections",
   "SBOM": "software bill of materials: the list of every component and version",
+  "NLOC": "non-comment lines of code: the lines of a function that are neither blank nor only comment (lizard's count)",
+  "CCN": "cyclomatic complexity number: the count of independent paths through a function (McCabe)",
   "PC": "personal computer",
   "NaN": "not a number: an invalid floating-point value",
   "IMU": "inertial measurement unit: accelerometers and gyroscopes",

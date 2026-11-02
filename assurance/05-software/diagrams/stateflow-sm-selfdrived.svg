@@ -58,8 +58,6 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <path class="arrow " d="M104.3,274.0 L102.5,266.6 L108.7,267.7 Z"/>
 <rect class="lbl" x="126.3" y="160.1" width="44.5" height="17.0" rx="3"/>
 <text x="148.6" y="171.1" class="tm" text-anchor="middle">X1, X2</text>
-<rect class="k8" x="110.1" y="178.6" width="76.9" height="15" rx="7"/>
-<text x="148.6" y="190.1" class="ts" text-anchor="middle">no SWSR: X2</text>
 <path class="edge " d="M611.6,274.0 Q675.0,242.0 738.4,274.0"/>
 <path class="arrow " d="M738.4,274.0 L730.8,273.8 L733.5,268.1 Z"/>
 <rect class="lbl" x="664.9" y="249.5" width="20.2" height="17.0" rx="3"/>
@@ -74,14 +72,10 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <path class="arrow " d="M425.0,429.0 L431.3,424.6 L432.5,430.8 Z"/>
 <rect class="lbl" x="479.1" y="389.0" width="20.2" height="17.0" rx="3"/>
 <text x="489.2" y="400.0" class="tm" text-anchor="middle">E2</text>
-<rect class="k8" x="462.5" y="407.5" width="53.3" height="15" rx="7"/>
-<text x="489.2" y="419.0" class="ts" text-anchor="middle">no SWSR</text>
 <path class="edge " d="M374.8,414.0 Q426.7,322.5 495.0,311.0"/>
 <path class="arrow " d="M495.0,311.0 L488.7,315.4 L487.5,309.2 Z"/>
 <rect class="lbl" x="420.7" y="334.0" width="20.2" height="17.0" rx="3"/>
 <text x="430.8" y="345.0" class="tm" text-anchor="middle">O2</text>
-<rect class="k8" x="404.2" y="352.5" width="53.3" height="15" rx="7"/>
-<text x="430.8" y="364.0" class="ts" text-anchor="middle">no SWSR</text>
 <path class="edge " d="M770.5,326.0 Q445.0,760.0 119.5,326.0"/>
 <path class="arrow " d="M119.5,326.0 L126.3,329.6 L121.3,333.5 Z"/>
 <rect class="lbl" x="431.9" y="534.5" width="26.2" height="17.0" rx="3"/>
@@ -90,8 +84,6 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <path class="arrow " d="M525.3,274.0 L517.8,272.3 L521.6,267.3 Z"/>
 <rect class="lbl" x="449.9" y="216.5" width="20.2" height="17.0" rx="3"/>
 <text x="460.0" y="227.5" class="tm" text-anchor="middle">P1</text>
-<rect class="k8" x="433.4" y="235.0" width="53.3" height="15" rx="7"/>
-<text x="460.0" y="246.5" class="ts" text-anchor="middle">no SWSR</text>
 <path class="edge " d="M425.0,451.4 Q612.2,484.1 764.9,326.0"/>
 <path class="arrow " d="M764.9,326.0 L762.2,333.2 L757.7,328.8 Z"/>
 <rect class="lbl" x="593.5" y="427.9" width="20.2" height="17.0" rx="3"/>
@@ -152,10 +144,8 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="52.0" y="602.0" class="t2" text-anchor="start">in the code</text>
 <path class="edge todo" d="M144.4,598 L170.4,598"/>
 <text x="176.4" y="602.0" class="t2" text-anchor="start">not in the code (target state)</text>
-<rect class="k8" x="20" y="611" width="26" height="14" rx="7"/>
-<text x="52.0" y="622.0" class="t2" text-anchor="start">no SWSR cited (checker S7)</text>
-<rect class="k4" x="308.0" y="611" width="26" height="14" rx="7"/>
-<text x="340.0" y="622.0" class="t2" text-anchor="start">in the code, SWSR not met (checker S5)</text>
+<rect class="k4" x="20" y="611" width="26" height="14" rx="7"/>
+<text x="52.0" y="622.0" class="t2" text-anchor="start">in the code, SWSR not met (checker S5)</text>
 <text x="20.0" y="652.0" class="tb" text-anchor="start">Transitions (Stateflow label notation: event [guard] / {action})</text>
 <line class="grid" x1="20" y1="666" x2="880" y2="666"/>
 <text x="20.0" y="680.0" class="t2" text-anchor="start">ID</text>
@@ -173,7 +163,7 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="70.0" y="737.0" class="t" text-anchor="start">preEnabled, enabled, softDisabling, overriding → disabled: update (100 Hz)</text>
 <text x="70.0" y="751.0" class="t" text-anchor="start">[USER_DISABLE present, no IMMEDIATE_DISABLE] / {USER_DISABLE alert}</text>
 <text x="620.0" y="737.0" class="t2" text-anchor="start">all</text>
-<text x="690.0" y="737.0" class="t2" text-anchor="start">Not assessed</text>
+<text x="690.0" y="737.0" class="t2" text-anchor="start">Implemented</text>
 <line class="grid" x1="20" y1="758" x2="880" y2="758"/>
 <text x="20.0" y="771.0" class="tb" text-anchor="start">E1</text>
 <text x="70.0" y="771.0" class="t" text-anchor="start">enabled → softDisabling: update (100 Hz) [SOFT_DISABLE present, no</text>
@@ -186,7 +176,7 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="70.0" y="819.0" class="t" text-anchor="start">enabled → overriding: update (100 Hz) [OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL</text>
 <text x="70.0" y="833.0" class="t" text-anchor="start">present, no disable event] / {override alerts}</text>
 <text x="620.0" y="819.0" class="t2" text-anchor="start">all</text>
-<text x="690.0" y="819.0" class="t2" text-anchor="start">Not assessed</text>
+<text x="690.0" y="819.0" class="t2" text-anchor="start">Implemented</text>
 <line class="grid" x1="20" y1="840" x2="880" y2="840"/>
 <text x="20.0" y="853.0" class="tb" text-anchor="start">SD1</text>
 <text x="70.0" y="853.0" class="t" text-anchor="start">softDisabling → enabled: update (100 Hz) [SOFT_DISABLE no longer present, no</text>
@@ -204,7 +194,7 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="70.0" y="921.0" class="t" text-anchor="start">preEnabled → enabled: update (100 Hz) [PRE_ENABLE no longer present, no disable</text>
 <text x="70.0" y="935.0" class="t" text-anchor="start">event] / {none}</text>
 <text x="620.0" y="921.0" class="t2" text-anchor="start">all</text>
-<text x="690.0" y="921.0" class="t2" text-anchor="start">Not assessed</text>
+<text x="690.0" y="921.0" class="t2" text-anchor="start">Implemented</text>
 <line class="grid" x1="20" y1="942" x2="880" y2="942"/>
 <text x="20.0" y="955.0" class="tb" text-anchor="start">O1</text>
 <text x="70.0" y="955.0" class="t" text-anchor="start">overriding → softDisabling: update (100 Hz) [SOFT_DISABLE present, no</text>
@@ -216,7 +206,7 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="70.0" y="989.0" class="t" text-anchor="start">overriding → enabled: update (100 Hz) [no override event and no SOFT_DISABLE, no</text>
 <text x="70.0" y="1003.0" class="t" text-anchor="start">disable event] / {none}</text>
 <text x="620.0" y="989.0" class="t2" text-anchor="start">all</text>
-<text x="690.0" y="989.0" class="t2" text-anchor="start">Not assessed</text>
+<text x="690.0" y="989.0" class="t2" text-anchor="start">Implemented</text>
 <line class="grid" x1="20" y1="1010" x2="880" y2="1010"/>
 <text x="20.0" y="1023.0" class="tb" text-anchor="start">N1</text>
 <text x="70.0" y="1023.0" class="t" text-anchor="start">disabled → same: update (100 Hz) [ENABLE and NO_ENTRY present] / {NO_ENTRY alert,</text>

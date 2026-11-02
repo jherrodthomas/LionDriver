@@ -744,3 +744,67 @@ replace = "LONG_INPUTS = ('selfdriveState', 'carState')"
 tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
 fmea = ["SWF-043.C1"]
 why = "a stale longitudinalPlan does not end longitudinal control"
+
+# minimum-risk forced stop rate (TSR-633, DQ-424 A; longitudinal_planner.py)
+[[mutants]]
+id = "MS-1"
+file = "openpilot/selfdrive/controls/lib/longitudinal_planner.py"
+find = "minimum_risk_stop = bool(sm['controlsState'].forceDecel and sm['selfdriveState'].minimumRiskManeuver)"
+replace = "minimum_risk_stop = False"
+tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
+fmea = ["SWF-086.C2"]
+why = "the minimum-risk stop slows at A_CRUISE_MIN, -1.2 m/s² (the behaviour before DQ-424: about 27 s from 110 km/h)"
+
+[[mutants]]
+id = "MS-2"
+file = "openpilot/selfdrive/controls/lib/longitudinal_planner.py"
+find = "minimum_risk_stop = bool(sm['controlsState'].forceDecel and sm['selfdriveState'].minimumRiskManeuver)"
+replace = "minimum_risk_stop = bool(sm['controlsState'].forceDecel)"
+tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
+fmea = ["SWF-086.C2"]
+why = "the fault soft-disable slow-down also brakes at the minimum-risk rate"
+
+[[mutants]]
+id = "MS-3"
+file = "openpilot/selfdrive/controls/lib/longitudinal_planner.py"
+find = "minimum_risk_stop = bool(sm['controlsState'].forceDecel and sm['selfdriveState'].minimumRiskManeuver)"
+replace = "minimum_risk_stop = bool(sm['selfdriveState'].minimumRiskManeuver)"
+tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
+fmea = ["SWF-086.C2"]
+why = "a latch flag without the forced deceleration slows normal cruise"
+
+[[mutants]]
+id = "MS-4"
+file = "openpilot/selfdrive/controls/lib/longitudinal_planner.py"
+find = "A_MINIMUM_RISK_STOP = -2.0"
+replace = "A_MINIMUM_RISK_STOP = -3.0"
+tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
+fmea = ["SWF-086.C2"]
+why = "the stop brakes at 3 m/s² instead of the decided 2 m/s² (DQ-424 option C)"
+
+[[mutants]]
+id = "MS-5"
+file = "openpilot/selfdrive/controls/lib/longitudinal_planner.py"
+find = "    j_cruise = J_MINIMUM_RISK_STOP"
+replace = "    j_cruise = 100."
+tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
+fmea = ["SWF-086.C2"]
+why = "the stop steps to 2 m/s² with no ramp, beyond j_down"
+
+[[mutants]]
+id = "MS-6"
+file = "openpilot/selfdrive/controls/lib/longitudinal_planner.py"
+find = "    target_accel = A_MINIMUM_RISK_STOP"
+replace = "    target_accel = max(A_MINIMUM_RISK_STOP, v_cruise - v_ego)"
+tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
+fmea = ["SWF-086.C2"]
+why = "the stop rate tapers below 2 m/s and the last metres take longer"
+
+[[mutants]]
+id = "MS-7"
+file = "openpilot/selfdrive/controls/lib/longitudinal_planner.py"
+find = "accel_coast, self.allow_throttle, minimum_risk_stop)"
+replace = "accel_coast, self.allow_throttle)"
+tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
+fmea = ["SWF-086.C2"]
+why = "the planner does not pass the stop to the cruise candidate"

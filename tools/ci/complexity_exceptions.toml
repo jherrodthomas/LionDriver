@@ -1,0 +1,193 @@
+# ENV-R-07 size and complexity check of the envelope code (WP-W-01 §6 ENV-R-07, OI-5; WP-W-05 §7, OI-2;
+# decision DQ-158 A). Read by check_complexity.py, which runs lizard (WP-P-07 TL-63) on `files` and fails when
+# a function exceeds a limit and is not listed below, when a listed function has grown past its recorded
+# figures, or when an entry is stale (the function is gone or back within the limits).
+#
+# NLOC is lizard's count of non-blank, non-comment lines in the function, the "logical lines" of ENV-R-07
+# (WP-W-05 §7 uses the same reading). CCN is lizard's standard cyclomatic complexity: every `case` counts.
+# lizard reads the source as written, so code under every #if branch (reference, debug and other builds)
+# is counted: the figures are for the superset of the build variants.
+#
+# Every exception needs a written justification ("unless justified", ENV-R-07) or a split of the function.
+# `reason = "to justify"` means no justification is recorded yet; `structure` is a factual description of
+# the function taken from WP-W-05 or WP-W-01 §2 and is not a justification.
+schema_version = 1
+lizard_version = "1.24.1"
+measured_at = "opendbc f23b4fa, panda 131320c (2026-11-02)"
+
+[limits]
+nloc = 60
+ccn = 15
+
+[scope]
+# The envelope (E-03) as WP-W-01 §2 defines it: the opendbc safety logic with the safety modes of the
+# reference configuration (toyota.h and defaults.h; the other brand modes are not in the item), the panda
+# platform files and the bootstub; plus the panda files of the WP-W-05 §2 envelope units added since
+# (heartbeat, watchdog, sirens, IRQ priorities, reference lock, timers) and engaged_mismatch.h, the LionDriver
+# engaged-state cross-check added after WP-W-05's inventory pin (change-2026-10-21-panda-engaged-mismatch).
+# Left out: UN-44 fault_injection.h (debug builds only) and the startup assembly. Entries may be globs.
+files = [
+  "opendbc_repo/opendbc/safety/safety.h",
+  "opendbc_repo/opendbc/safety/lateral.h",
+  "opendbc_repo/opendbc/safety/longitudinal.h",
+  "opendbc_repo/opendbc/safety/helpers.h",
+  "opendbc_repo/opendbc/safety/declarations.h",
+  "opendbc_repo/opendbc/safety/can.h",
+  "opendbc_repo/opendbc/safety/ignition.h",
+  "opendbc_repo/opendbc/safety/modes/toyota.h",
+  "opendbc_repo/opendbc/safety/modes/defaults.h",
+  "panda/board/main.c",
+  "panda/board/main_comms.h",
+  "panda/board/can_comms.h",
+  "panda/board/reference_lock.h",
+  "panda/board/early_init.h",
+  "panda/board/drivers/fdcan.h",
+  "panda/board/drivers/spi.h",
+  "panda/board/drivers/harness.h",
+  "panda/board/drivers/simple_watchdog.h",
+  "panda/board/drivers/registers.h",
+  "panda/board/drivers/interrupts.h",
+  "panda/board/drivers/can_common.h",
+  "panda/board/drivers/timers.h",
+  "panda/board/drivers/hw_watchdog.h",
+  "panda/board/drivers/heartbeat_monitor.h",
+  "panda/board/drivers/irq_priorities.h",
+  "panda/board/drivers/eps_fault_siren.h",
+  "panda/board/drivers/heartbeat_siren.h",
+  "panda/board/drivers/engaged_mismatch.h",
+  "panda/board/sys/*.h",
+  "panda/board/stm32h7/*.h",
+  "panda/board/bootstub.c",
+  "panda/board/flasher.h",
+  "panda/board/crypto/rsa.c",
+  "panda/board/crypto/sha.c",
+]
+
+# Functions over a limit at the pins above. `nloc` and `ccn` are the figures measured then: a listed
+# function may shrink but not grow past them without a new entry.
+
+[[exceptions]]
+file = "opendbc_repo/opendbc/safety/safety.h"
+function = "set_safety_hooks"
+unit = "UN-07"
+nloc = 94
+ccn = 10
+structure = "Resets every safety state variable, then searches the mode registry and calls the brand init (WP-W-05 UN-07)"
+reason = "to justify"
+
+[[exceptions]]
+file = "opendbc_repo/opendbc/safety/lateral.h"
+function = "steer_torque_cmd_checks"
+unit = "UN-10"
+nloc = 69
+ccn = 17
+structure = "Seven sequential torque checks on one lateral command (WP-W-05 UN-10)"
+reason = "to justify"
+
+[[exceptions]]
+file = "opendbc_repo/opendbc/safety/modes/toyota.h"
+function = "toyota_rx_hook"
+unit = "UN-14"
+nloc = 66
+ccn = 20
+structure = "One branch per received Toyota signal, with reference-build branches (WP-W-05 UN-14)"
+reason = "to justify"
+
+[[exceptions]]
+file = "opendbc_repo/opendbc/safety/modes/toyota.h"
+function = "toyota_tx_hook"
+unit = "UN-15"
+nloc = 143
+ccn = 48
+structure = "Per-address checks of every Toyota TX frame, including LTA and SecOC paths unused by the reference configuration (WP-W-05 UN-15)"
+reason = "to justify"
+
+[[exceptions]]
+file = "opendbc_repo/opendbc/safety/modes/toyota.h"
+function = "toyota_init"
+unit = "UN-16"
+nloc = 89
+ccn = 14
+structure = "Decodes the safety parameter and selects the TX list, RX check table and TX rate rows (WP-W-05 UN-16)"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/main.c"
+function = "tick_handler"
+unit = "UN-19"
+nloc = 95
+ccn = 31
+structure = "8 Hz tick ISR with a 1 Hz part (WP-W-05 UN-19)"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/main.c"
+function = "main"
+unit = "UN-20"
+nloc = 86
+ccn = 14
+structure = "Start-up sequence followed by the main loop (WP-W-05 UN-20)"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/main_comms.h"
+function = "comms_control_handler"
+unit = "UN-21"
+nloc = 224
+ccn = 60
+structure = "One switch over the control-request byte (WP-W-05 UN-21)"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/reference_lock.h"
+function = "reference_request_allowed"
+unit = "UN-40"
+nloc = 50
+ccn = 29
+structure = "Allow or refuse each control request in the reference build (WP-W-05 UN-40); over the CCN limit only"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/drivers/spi.h"
+function = "spi_rx_done"
+unit = "UN-23"
+nloc = 101
+ccn = 22
+structure = "SPI protocol state machine step (WP-W-05 UN-23)"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/drivers/fdcan.h"
+function = "can_rx"
+unit = "UN-25"
+nloc = 63
+ccn = 16
+structure = "Per-frame receive path of FIFO 0 (WP-W-05 UN-25)"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/sys/power_saving.h"
+function = "enter_stop_mode"
+unit = "UN-33"
+nloc = 67
+ccn = 5
+structure = "Stop-mode entry sequence (WP-W-05 UN-33); over the NLOC limit only"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/flasher.h"
+function = "comms_control_handler"
+unit = "UN-35"
+nloc = 72
+ccn = 15
+structure = "The bootstub's control-request switch (WP-W-01 §2 bootstub row); over the NLOC limit only"
+reason = "to justify"
+
+[[exceptions]]
+file = "panda/board/crypto/rsa.c"
+function = "RSA_verify"
+unit = "UN-35"
+nloc = 41
+ccn = 23
+structure = "RSA signature check of the firmware image in the bootstub (WP-W-05 UN-35); over the CCN limit only"
+reason = "to justify"

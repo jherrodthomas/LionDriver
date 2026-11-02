@@ -147,6 +147,11 @@
 # rev 1.18 (after BL-007, ratings within BL-007): SWF-ACT-055 completed. Call-site tests for the panda status supervision in selfdrived and the TSR-602
 #   gate in controlsd, and mutants CM-1..CM-6, TB-1..TB-5, IF-1..IF-3, FG-1..FG-4 (81 host mutants, all killed). SWF-034.C1 and SWF-032.C3 D 8 -> 4;
 #   SWF-040.C1 and SWF-043.C1 stay D 8 (their remaining parts are not implemented, SWF-ACT-040). AP stays H on all four (S 10, O 5).
+# rev 1.19 (after BL-007, ratings within BL-007): DQ-424 A (the lead's decision): the planner's minimum-risk forced stop ramps in to 2 m/s² at
+#   4 m/s³ and holds it to standstill (A_MINIMUM_RISK_STOP, longitudinal_planner.py; change-2026-11-02-minimum-risk-stop-rate), about 15.5 s and
+#   240 m from 110 km/h; cruise and the fault soft-disable slow-down keep A_CRUISE_MIN. SWF-086.C2 rewritten to a defect in that stop rate, O 8 D 8 ->
+#   O 5 D 4 (test_minimum_risk_stop.py, mutants MS-1..MS-7, 88 in all); AP stays H (S 10). New action SWF-ACT-082 completed. Not verified on the
+#   vehicle (WP-S-04 T-33). Author Claude (AI-drafted, I0).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -196,7 +201,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.18"
+  revision: "1.19"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -227,7 +232,8 @@ analysis:
     - assurance/07-supporting/impact/change-2026-10-17-pin-62b89a3.md
     - assurance/07-supporting/impact/change-2026-10-13-opendbc-rx-length-fault.md
     - assurance/07-supporting/impact/change-2026-10-17-relay-malfunction-latch.md
-  updated: 2026-10-17
+    - assurance/07-supporting/impact/change-2026-11-02-minimum-risk-stop-rate.md
+  updated: 2026-11-02
 structure:
 - id: SWF-SE-001
   name: Panda safety model (opendbc safety + panda firmware integration)
@@ -4454,7 +4460,7 @@ failure_modes:
     actions:
     - SWF-ACT-059
   notes: 'controlsd also sets CC.driverMonitoringEscalation, which no Toyota code consumes (only Volkswagen). Re-rated at BL-007 (rev 1.9). The stop
-    deceleration itself (A_CRUISE_MIN, -1.2 m/s²) is SWF-086.C2.'
+    deceleration itself (2 m/s², ramped in, since rev 1.19; A_CRUISE_MIN, -1.2 m/s² before) is SWF-086.C2.'
 - id: SWF-063
   element: SWF-SE-061
   function: SWF-FN-060
@@ -5551,7 +5557,7 @@ failure_modes:
   - level: local
     description: noResponseForceDecel false, stale, or not turned into controlsState.forceDecel; or the planner decelerates too weakly to stop in a useful time
   - level: next_higher
-    description: plannerd keeps v_cruise at the set speed, or slows at -1.2 m/s² only; lateral control continues
+    description: plannerd keeps v_cruise at the set speed, or slows more gently than the 2 m/s² TSR-633 sets (up to rev 1.18 by design at -1.2 m/s²); lateral control continues
   - level: end
     description: Automated control continues with an unresponsive driver, or the stop takes too long
     hazard: HZ-013
@@ -5578,24 +5584,32 @@ failure_modes:
     actions:
     - SWF-ACT-073
   - id: SWF-086.C2
-    description: 'By design the forced stop is only v_cruise = 0 on the cruise candidate: the planner slows at A_CRUISE_MIN, -1.2 m/s², jerk-limited (longitudinal_planner.py:22,
-      50-52, 84-85), about 25 s and 390 m from 110 km/h, with no stop-time requirement. BL-007: TSR-633 is implemented for the hold and the lockout (SWF-062.C1), but it sets no stop time or deceleration,
-      and the -1.2 m/s² stop is gentler than the about 3 m/s² (10 s from 30 m/s) that DQ-365 A described; the lead chose 2 m/s², ramped in, set in TSR-633 (DQ-424 A, 2026-10-30), the planner change is open. The Toyota port does
-      not use CC.driverMonitoringEscalation (read only by the Volkswagen port, carcontroller.py:131)'
+    description: 'Defect in the minimum-risk stop rate (after BL-007, change-2026-11-02-minimum-risk-stop-rate): the planner does not recognise the stop
+      (forceDecel together with selfdriveState.minimumRiskManeuver), or its cruise candidate does not ramp in to A_MINIMUM_RISK_STOP = -2.0 m/s² at
+      J_MINIMUM_RISK_STOP = 4 m/s³ and hold it to standstill (longitudinal_planner.py:23-30, 59-64, 99-100), so the stop takes too long, tapers near
+      standstill, or steps beyond j_down. Up to rev 1.18 the stop was by design only v_cruise = 0 on the cruise candidate at A_CRUISE_MIN, -1.2 m/s², with
+      the cruise jerk limit (about 27 s and 410 m from 110 km/h in the planner, O 8 D 8); the lead chose 2 m/s², ramped in (DQ-424 A, TSR-633). An input that never
+      reaches the planner is SWF-086.C1. The Toyota port does not use CC.driverMonitoringEscalation (read only by the Volkswagen port, carcontroller.py:131);
+      its request rate limit (ACCEL_WINDDOWN_LIMIT, 4 m/s³) and final-command limit (4.5 m/s³) pass the ramp on'
     element: SWF-SE-071
     prevention_controls:
-    - description: Upstream design; no LionDriver requirement for the stop time or deceleration (TSR-633 sets none), so O 8 (RT-2 §2)
-      ref: openpilot/selfdrive/controls/lib/longitudinal_planner.py
+    - description: 'LionDriver change: one named stop rate and ramp citing TSR-633 and DQ-424, applied only to the latched minimum-risk stop; cruise and the
+        fault soft-disable slow-down are upstream code; targeted unit tests; reviewed in the PR, not independently; O 5'
+      ref: assurance/07-supporting/impact/change-2026-11-02-minimum-risk-stop-rate.md
     detection_controls:
-    - description: test_longitudinal force_decel maneuvers (CI) fail only if the plant does not decelerate at all (acceleration above -0.04 m/s² while moving, maneuver.py:84-86);
-        no check of the stop time
-      test: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
-    occurrence: 8
-    detection: 8
+    - description: 'Proven by mutation in CI: test_minimum_risk_stop.py (the planner on the reference Corolla TSS2 closed over a kinematic plant: standstill
+        from 110 km/h within 0.25 s of 15.5 s and 2 % of 240 m, the rate held to standstill, never beyond 2 m/s² or a_min, onset never faster than j_down
+        from five starting states; cruise and the soft-disable slow-down unchanged) fails on each hand-written mutant of this cause (MS-1..MS-7),
+        tools/ci/host_mutation.py in the tests.yaml unit_tests job; so D 4 (RT-2), from D 8 (rev 1.19). Not measured on the vehicle (WP-S-04 T-33)'
+      ref: tools/ci/host_mutants.toml
+      test: openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py
+    occurrence: 5
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-059
     - SWF-ACT-073
+    - SWF-ACT-082
   safety_mechanisms:
   - description: selfdrived soft disable when dmonitoringd or controlsd stops (commIssue, processNotRunning; SWF-064)
     ref: openpilot/selfdrive/selfdrived/events.py
@@ -6584,6 +6598,23 @@ actions:
   status: in_progress
   evidence: 'Mutation done (DT-1..DT-11, host_mutation.py in CI): SWF-091.C1 D 4 (rev 1.10); SWF-091.C2 D 4 (rev 1.12), with test_selfdrived_start.py
     running the real SelfdriveD constructor (the start-up read, a missing record, the REPLAY and simulator exemption). Open: the vehicle check VS-SQ-20'
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 4
+    ap: H
+- id: SWF-ACT-082
+  kind: design_change
+  description: 'Apply the lead''s decision on the minimum-risk stop rate (DQ-424 A, TSR-633): the planner ramps the forced stop in to 2 m/s² within j_down and
+    holds it to standstill, within a_min, with cruise and the fault soft-disable slow-down unchanged; unit tests of stop time and distance, deceleration and
+    jerk, and mutation'
+  owner: Jherrod Thomas
+  status: completed
+  evidence: 'longitudinal_planner.py A_MINIMUM_RISK_STOP = -2.0 m/s², J_MINIMUM_RISK_STOP = 4 m/s³ (change-2026-11-02-minimum-risk-stop-rate);
+    test_minimum_risk_stop.py (8 tests: 15.55 s and 239.5 m from 110 km/h in the closed loop, against 15.53 s and 241.0 m in closed form; rate held to
+    standstill; within 2 m/s², a_min and j_down; cruise and soft disable unchanged), collected by the unit_tests job; mutants MS-1..MS-7 killed;
+    plannerd process replay unchanged on its two reference segments. Implemented and unit-tested, not verified on the vehicle: the deceleration
+    against a_min and j_down and the stop on the road are WP-S-04 T-33 (with SWF-ACT-073). Achieved: SWF-086.C2 O5 D4 (rev 1.19)'
   revised:
     severity: 10
     occurrence: 5

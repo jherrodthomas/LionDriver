@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-16 · State-machine records · safety mode, authority, engagement</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">The three records of WP-W-05 §5 as SysML state machines: every record transition with its trigger, its states, its status and the SWSRs it realises</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::stateMachineRecords</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">StateView · render asElementTable · model c44e6015bb27</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">StateView · render asElementTable · model c58b483374a8</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <rect x="30" y="104" width="1460" height="284" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
 <text x="46" y="130" font-size="15" fill="#0F172A" font-weight="700">SM-SAFETY-MODE · Panda safety mode</text>
@@ -255,11 +255,11 @@
 <rect x="1129.6" y="1148" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1144.7" y="1159.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">621</text>
 <rect x="1162.8" y="1148" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1177.9" y="1159.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">626</text>
 <rect x="1196" y="1148" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1213.8" y="1159.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">307h</text>
-<rect x="54" y="1171" width="25.4" height="18" rx="9" fill="#B45309"/><text x="66.7" y="1183.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">X2</text>
+<rect x="54" y="1171" width="25.4" height="18" rx="9" fill="#334155"/><text x="66.7" y="1183.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">X2</text>
 <text x="120" y="1184" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · USER_DISABLE present, no IMMEDIATE_DISABLE</tspan></text>
 <text x="560" y="1184" font-size="10.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">preEnabled, enabled, softDisabling, overriding → d…</text>
-<rect x="900" y="1172" width="31.5" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="915.7" y="1183.4" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">gap</text>
-<text x="1030" y="1184" font-size="10" fill="#B45309" font-weight="600">no SWSR</text>
+<rect x="900" y="1172" width="66" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/><text x="933" y="1183.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle">every build</text>
+<rect x="1030" y="1172" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1047.8" y="1183.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">302h</text>
 <rect x="40" y="1192" width="1440" height="24" rx="4" fill="#FFFFFF"/>
 <rect x="54" y="1195" width="25.4" height="18" rx="9" fill="#334155"/><text x="66.7" y="1207.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E1</text>
 <text x="120" y="1208" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISA…</tspan></text>
@@ -267,11 +267,11 @@
 <rect x="900" y="1196" width="66" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/><text x="933" y="1207.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle">every build</text>
 <rect x="1030" y="1196" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1045.1" y="1207.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">601</text>
 <rect x="1063.2" y="1196" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1078.3" y="1207.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">624</text>
-<rect x="54" y="1219" width="25.4" height="18" rx="9" fill="#B45309"/><text x="66.7" y="1231.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E2</text>
+<rect x="54" y="1219" width="25.4" height="18" rx="9" fill="#334155"/><text x="66.7" y="1231.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E2</text>
 <text x="120" y="1232" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL present, no…</tspan></text>
 <text x="560" y="1232" font-size="10.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">enabled → overriding</text>
-<rect x="900" y="1220" width="31.5" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="915.7" y="1231.4" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">gap</text>
-<text x="1030" y="1232" font-size="10" fill="#B45309" font-weight="600">no SWSR</text>
+<rect x="900" y="1220" width="66" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/><text x="933" y="1231.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle">every build</text>
+<rect x="1030" y="1220" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1047.8" y="1231.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">305h</text>
 <rect x="40" y="1240" width="1440" height="24" rx="4" fill="#FFFFFF"/>
 <rect x="54" y="1243" width="31.1" height="18" rx="9" fill="#334155"/><text x="69.5" y="1255.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SD1</text>
 <text x="120" y="1256" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · SOFT_DISABLE no longer present, no IMMEDIATE_DISABLE or…</tspan></text>
@@ -285,11 +285,11 @@
 <rect x="1030" y="1268" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1045.1" y="1279.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">601</text>
 <rect x="1063.2" y="1268" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1078.3" y="1279.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">624</text>
 <rect x="40" y="1288" width="1440" height="24" rx="4" fill="#FFFFFF"/>
-<rect x="54" y="1291" width="25.4" height="18" rx="9" fill="#B45309"/><text x="66.7" y="1303.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">P1</text>
+<rect x="54" y="1291" width="25.4" height="18" rx="9" fill="#334155"/><text x="66.7" y="1303.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">P1</text>
 <text x="120" y="1304" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · PRE_ENABLE no longer present, no disable event</tspan></text>
 <text x="560" y="1304" font-size="10.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">preEnabled → enabled</text>
-<rect x="900" y="1292" width="31.5" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="915.7" y="1303.4" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">gap</text>
-<text x="1030" y="1304" font-size="10" fill="#B45309" font-weight="600">no SWSR</text>
+<rect x="900" y="1292" width="66" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/><text x="933" y="1303.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle">every build</text>
+<rect x="1030" y="1292" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1047.8" y="1303.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">302i</text>
 <rect x="54" y="1315" width="25.4" height="18" rx="9" fill="#334155"/><text x="66.7" y="1327.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">O1</text>
 <text x="120" y="1328" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISA…</tspan></text>
 <text x="560" y="1328" font-size="10.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">overriding → softDisabling</text>
@@ -297,11 +297,11 @@
 <rect x="1030" y="1316" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1045.1" y="1327.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">601</text>
 <rect x="1063.2" y="1316" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1078.3" y="1327.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">624</text>
 <rect x="40" y="1336" width="1440" height="24" rx="4" fill="#FFFFFF"/>
-<rect x="54" y="1339" width="25.4" height="18" rx="9" fill="#B45309"/><text x="66.7" y="1351.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">O2</text>
+<rect x="54" y="1339" width="25.4" height="18" rx="9" fill="#334155"/><text x="66.7" y="1351.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">O2</text>
 <text x="120" y="1352" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · no override event and no SOFT_DISABLE, no disable event</tspan></text>
 <text x="560" y="1352" font-size="10.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">overriding → enabled</text>
-<rect x="900" y="1340" width="31.5" height="16" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="915.7" y="1351.4" font-size="9.5" fill="#B45309" font-weight="700" text-anchor="middle">gap</text>
-<text x="1030" y="1352" font-size="10" fill="#B45309" font-weight="600">no SWSR</text>
+<rect x="900" y="1340" width="66" height="16" rx="8" fill="#F8FAFC" stroke="#334155" stroke-width="1"/><text x="933" y="1351.4" font-size="9.5" fill="#334155" font-weight="700" text-anchor="middle">every build</text>
+<rect x="1030" y="1340" width="35.6" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1047.8" y="1351.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">305i</text>
 <rect x="54" y="1363" width="25.4" height="18" rx="9" fill="#334155"/><text x="66.7" y="1375.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">N1</text>
 <text x="120" y="1376" font-size="10.5" fill="#0F172A">update (100 Hz)<tspan fill="#64748B"> · ENABLE and NO_ENTRY present</tspan></text>
 <text x="560" y="1376" font-size="10.5" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">disabled → same</text>
@@ -340,7 +340,7 @@
 <rect x="1101.8" y="1436" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1116.9" y="1447.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">619</text>
 <rect x="1135" y="1436" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1150.1" y="1447.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">620</text>
 <rect x="1168.2" y="1436" width="30.2" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/><text x="1183.3" y="1447.2" font-size="9" fill="#334155" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">623</text>
-<text x="40" y="1492" font-size="12" fill="#0F172A" font-weight="600">44 record transitions: 7 not implemented · 5 gap · 10 reference build · 2 upstream build · 20 every build. A transition from any state or to the requested mode is one record row and several model transitions (gen_behaviour.py).</text>
+<text x="40" y="1492" font-size="12" fill="#0F172A" font-weight="600">44 record transitions: 7 not implemented · 1 gap · 10 reference build · 2 upstream build · 24 every build. A transition from any state or to the requested mode is one record row and several model transitions (gen_behaviour.py).</text>
 <line x1="40" y1="1510" x2="1480" y2="1510" stroke="#E2E8F0"/>
 <rect x="40" y="1531" width="92.4" height="16" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="86.2" y="1542.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">not implemented</text>
 <text x="140.4" y="1543" font-size="11" fill="#334155">not implemented: the record says what is required</text>

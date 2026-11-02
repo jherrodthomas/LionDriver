@@ -32,6 +32,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | BOR | brown-out reset (MCU supply monitor) |
 | CAL | cybersecurity assurance level, 1 to 4 (ISO/SAE 21434) |
 | CAN | controller area network: the vehicle's data bus |
+| CCN | cyclomatic complexity number: the count of independent paths through a function (McCabe) |
 | CI | continuous integration: the checks that run on every pull request |
 | CLU | instrument cluster |
 | CRC | cyclic redundancy check |
@@ -115,6 +116,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | NA | not applicable |
 | NACK | not acknowledge |
 | NaN | not a number: an invalid floating-point value |
+| NLOC | non-comment lines of code: the lines of a function that are neither blank nor only comment (lizard's count) |
 | NOOUTPUT | the panda's safety mode that receives but sends nothing |
 | NRST | the MCU's reset line (BOOT0 is its boot-mode line) |
 | NSC | not safety-critical |
