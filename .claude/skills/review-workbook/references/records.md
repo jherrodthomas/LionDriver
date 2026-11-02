@@ -83,9 +83,16 @@ The builder scripts (hara-builder, fsc-builder, dfmea-builder, sw-fmea-builder, 
 at the model and its `--check`; never patch a committed builder workbook by hand. Exports render the YAML as is; the
 builders' and reviewers' heuristic ratings are never written back into the analyses.
 
-On 2026-11-02 `hsi_to_xlsx.py` runs against the current documents, but `tsc_to_xlsx.py` stops with
-`KeyError: 'Interface'` at line 140: the WP-S-05 HSI table it reads no longer has an `Interface` column. Fix the
-converter's column mapping (copy, invent nothing) before the next TSC review record needs it.
+Both converters run against the current documents. `tsc_to_xlsx.py` stopped with `KeyError: 'Interface'` until
+2026-11-02: WP-S-05 §11.4 had added a second table whose first heading is `HSI` (and has no `Interface` column), and
+the converter took every table starting with `HSI`. It now finds each table by its column headings, reads cells by
+heading name, and exits 2 with `tsc_to_xlsx: <doc>: <section>: … missing '<column>'` (or `key '<key>' not found`)
+instead of a traceback. Sheet 08_System_FMEA now comes from `system-fmea.yaml`, because WP-A-04 §10 retired its
+SFMEA table (v1.19, DQ-127 A); its "Linked SG" is traced HZ- → `hara-mapping.yaml` events → WP-C-03 §6 "Source HEs".
+FTTIs come from WP-C-04 §3 and the trace's SG columns from its headings (SG-08 included). Tested by
+`test_tsc_to_xlsx.py` (runs on the current documents, checks sheets and rows, and that a renamed heading, a renamed
+YAML key and a missing source fail with the plain message) and `test_hsi_to_xlsx.py`, both next to the converters:
+`python3 -m unittest discover -s assurance/03-system/reviews/tools -p 'test_*.py'`.
 
 A new review record gets new `RR-NNNN-*-input.xlsx` files written next to its `RR-NNNN.md`; the earlier records keep
 theirs and their old viewer links (they record what was reviewed).
