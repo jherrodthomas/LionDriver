@@ -255,6 +255,8 @@ function stateOf(d){
   const liveDay = live && live.at ? live.at.slice(0, 10) : '';
   const liveNewer = !!live && (!regAt || liveDay > regAt || (liveDay === regAt && live.choice !== (d.answer || {}).choice));
   if (d.status === 'withdrawn') return 'done';
+  /* An unsure "something else" that Claude answered with an explanation goes back to the lead, still open. */
+  if (liveNewer && live.choice === 'other' && d.status === 'open' && d.explanation && d.explanation.at >= liveDay) return 'you';
   if (liveNewer) return 'claude';
   return {applied:'done', answered:'claude', assumed:'assumed'}[d.status] || 'you';
 }

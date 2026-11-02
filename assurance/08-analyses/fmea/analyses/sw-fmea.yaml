@@ -5580,7 +5580,7 @@ failure_modes:
   - id: SWF-086.C2
     description: 'By design the forced stop is only v_cruise = 0 on the cruise candidate: the planner slows at A_CRUISE_MIN, -1.2 m/s², jerk-limited (longitudinal_planner.py:22,
       50-52, 84-85), about 25 s and 390 m from 110 km/h, with no stop-time requirement. BL-007: TSR-633 is implemented for the hold and the lockout (SWF-062.C1), but it sets no stop time or deceleration,
-      and the -1.2 m/s² stop is gentler than the about 3 m/s² (10 s from 30 m/s) that DQ-365 A described; queued for the lead. The Toyota port does
+      and the -1.2 m/s² stop is gentler than the about 3 m/s² (10 s from 30 m/s) that DQ-365 A described; the lead chose 2 m/s², ramped in, set in TSR-633 (DQ-424 A, 2026-10-30), the planner change is open. The Toyota port does
       not use CC.driverMonitoringEscalation (read only by the Volkswagen port, carcontroller.py:131)'
     element: SWF-SE-071
     prevention_controls:

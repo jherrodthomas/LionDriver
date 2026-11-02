@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-05 Cybersecurity incident response, vulnerability management and software updates |
 | Standard reference | ISO/SAE 21434:2021 §8 (continual cybersecurity activities: monitoring, event evaluation, vulnerability analysis, vulnerability management), §13 (operations and maintenance: incident response, updates), §14 (end of cybersecurity support and decommissioning); UN R156 (informative, software update management); ASPICE 4.0 SEC.* |
-| Version | 0.5 (§4.4 item 7: no second sweep; the remaining public files follow the rule at their next edit, historical records unchanged; DQ-423 A; 2026-11-01). 0.4 (§4.4 items 5 to 8: weaknesses the project finds itself are embargoed until their control is verified; details in the private repository as GD records; DQ-421 A; 2026-10-26). 0.3 (§6: Figures 6-1 to 6-3, the update path today and the target, five update threats with their gates, and an update's states, generated from WP-S-07 §3.6 and §4.12 and this section; no change to the process or the requirements; 2026-10-24). 0.2 (§2 and OI-1: only the maintainer's own installation is supported until a deputy is named (DQ-101 A); OI-4: the timelines of §4.3 and §5.3 and the support period of §7 agreed as proposed (DQ-102 A); 2026-10-23). 0.1 |
+| Version | 0.6 (SBOM and automated scanning: GitHub's dependency graph and alerts, DQ-169 B, not yet on; 2026-11-02). 0.5 (§4.4 item 7: no second sweep; the remaining public files follow the rule at their next edit, historical records unchanged; DQ-423 A; 2026-11-01). 0.4 (§4.4 items 5 to 8: weaknesses the project finds itself are embargoed until their control is verified; details in the private repository as GD records; DQ-421 A; 2026-10-26). 0.3 (§6: Figures 6-1 to 6-3, the update path today and the target, five update threats with their gates, and an update's states, generated from WP-S-07 §3.6 and §4.12 and this section; no change to the process or the requirements; 2026-10-24). 0.2 (§2 and OI-1: only the maintainer's own installation is supported until a deputy is named (DQ-101 A); OI-4: the timelines of §4.3 and §5.3 and the support period of §7 agreed as proposed (DQ-102 A); 2026-10-23). 0.1 |
 | Status | Draft — process defined; **not running**. No monitoring, intake or incident record exists yet (GAP-28) |
 | ASIL / scope | CS; safety coordination for SG-01…SG-08 |
 | Author | Assurance team (initial draft) |
@@ -275,7 +275,7 @@ end-of-support date of each release.
 | Capability | Status at `8b8c6ae` |
 |---|---|
 | LionDriver vulnerability intake | **Not available** (GAP-28) |
-| SBOM and automated scanning | Not available ([WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-4) |
+| SBOM and automated scanning | Not available; decided as GitHub's dependency graph and alerts, not yet turned on, and not covering the AGNOS image or vendored code ([WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-4, DQ-169 B) |
 | Upstream advisory watch | Not started (WP-M-11 §6) |
 | Signed updates | Not available (GAP-26); manual updates only |
 | Field-action notification channel | Not available ([WP-O-04](WP-O-04-field-monitoring.md) OI-7) |

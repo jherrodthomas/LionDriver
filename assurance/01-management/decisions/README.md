@@ -53,6 +53,11 @@ Answers and requests for more explanation are saved in the page's own store, in 
 copies answers into this file (`via: inbox`), writes any requested explanation into `explanation`,
 applies what can be applied, rebuilds the page and republishes it.
 
+An answer of **Something else** whose note says the lead is unsure ("not sure", "tbd") is not a decision. Claude
+leaves the entry `open` and writes an `explanation` aimed at what made it hard to choose. The page then puts the card
+back in front of the lead, with the explanation above the options. A `decider: claude` question answered that way
+goes ahead with the recommendation (`assumed` when it is easy and past `proceed_after`), and Claude says so in chat.
+
 ```sh
 python3 assurance/01-management/decisions/check_decisions.py
 python3 assurance/01-management/decisions/build_inbox.py --out <scratch>/inbox.html

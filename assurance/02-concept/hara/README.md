@@ -222,7 +222,7 @@ Where these hazards meet the TARA's threats, and where a safety measure changes 
 | [`hara-cartesian-summary.md`](hara-cartesian-summary.md) | Generated step counts and worst cases per hazard |
 | [`WP-C-03-hara-cartesian.xlsx`](WP-C-03-hara-cartesian.xlsx) | Generated workbook, reference scope (Chill mode only) |
 | [`WP-C-03-hara-cartesian_experimental.xlsx`](WP-C-03-hara-cartesian_experimental.xlsx) | Generated workbook, Experimental Mode variant (D-08 option B) |
-| [Workbook viewer](https://claude.ai/artifact/WHMhKBZQywWzDetcTKaDe3) | Both workbooks (and every other assurance workbook) in a spreadsheet-style page that opens on a phone: one tab per sheet, frozen header and HARA ID, filters by function, guide word, ASIL, S/E/C, location and weather, search, and every field of a row, rationale included. Private claude.ai page, built by [`tools/xlsx_viewer.py`](../../../tools/xlsx_viewer.py) |
+| [Workbook viewer](https://claude.ai/artifact/8raovSPWh354z9GvLzoXpx) | Both workbooks (and every other assurance workbook) in a spreadsheet-style page that opens on a phone: one tab per sheet, frozen header and HARA ID, filters by function, guide word, ASIL, S/E/C, location and weather, search, and every field of a row, rationale included. Private claude.ai page, built by [`tools/xlsx_viewer.py`](../../../tools/xlsx_viewer.py) |
 | [`hara-events.csv`](hara-events.csv) | Generated. All 3 840 hazardous-event rows of the reference workbook (tab 12), one per line, with S/E/C rationale, ASIL, ASIL if the ⚠ AoUs fail, and safety goal. A PR diff of it shows exactly which rows a rule change moves. At 2.4 MB it is too large for GitHub to show as a table; to read the rows, use the workbook viewer above |
 | [`hara-events_experimental.csv`](hara-events_experimental.csv) | Generated. The same for the Experimental Mode variant (4 080 rows) |
 | [`hara_figures.py`](hara_figures.py) | Figure generator. It draws WP-C-03 Figure 2-1 (rows per S × E × C cell, as rated and if every ⚠ AoU fails) from the model, and Figure 6-1 (hazards → hazardous events → safety goals) from WP-C-03 §4–§6 and the model. It fails if a goal's ASIL is not the highest ASIL of its source events, or if a rated event has no goal |
@@ -261,7 +261,7 @@ Where these hazards meet the TARA's threats, and where a safety measure changes 
    python3 hara_figures.py
    ```
 
-4. Rebuild the [workbook viewer](https://claude.ai/artifact/WHMhKBZQywWzDetcTKaDe3) from the repository root, then republish the page it writes to that URL:
+4. Rebuild the [workbook viewer](https://claude.ai/artifact/8raovSPWh354z9GvLzoXpx) from the repository root, then republish the page it writes to that URL:
 
    ```bash
    python3 tools/xlsx_viewer.py --out <scratch>/workbook-viewer.html
@@ -271,7 +271,7 @@ Where these hazards meet the TARA's threats, and where a safety measure changes 
 
 ## Reviewing
 
-- To read the workbooks without downloading them, a phone included, open the [workbook viewer](https://claude.ai/artifact/WHMhKBZQywWzDetcTKaDe3). On the HARA Worksheet tab, filter by function, guide word or ASIL and tap a row for its S, E and C rationale.
+- To read the workbooks without downloading them, a phone included, open the [workbook viewer](https://claude.ai/artifact/8raovSPWh354z9GvLzoXpx). On the HARA Worksheet tab, filter by function, guide word or ASIL and tap a row for its S, E and C rationale.
 - Each CSV row has a stable key, `function/guide word/situation/condition` (e.g. `F-01/M04/OS-02/W02`), and the workbook row ID (`H-0001`…) for cross-reference. To comment on a row, open the CSV in a PR and comment on its line, quoting the key.
 - Changing a rating means changing a rule in `hara_model.py`. Regenerate, and the CSV diff shows every row the rule affects.
 - The CSVs and workbooks come from the same model; every ASIL in the CSVs equals the workbook's tab 12, row for row.
