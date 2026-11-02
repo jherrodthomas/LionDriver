@@ -759,8 +759,8 @@ events:
     class: systematic_sw
     fmea: [SWF-086]
     note: >-
-      SWF-086.C1 (no freshness check on the flag across policy, controlsd and plannerd), SWF-086.C2 (stop only at -1.2 m/s²,
-      no stop-time requirement; TSR-633, DQ-365). SW FMEA rev 1.1 closes the SW part of F-37
+      SWF-086.C1 (no freshness check on the flag across policy, controlsd and plannerd), SWF-086.C2 (a defect in the stop rate:
+      2 m/s², ramped in, since SW FMEA rev 1.19; up to rev 1.18 only -1.2 m/s²; TSR-633, DQ-424 A). SW FMEA rev 1.1 closes the SW part of F-37
   - id: UE-8.09
     class: external
     ref: AOU-05R

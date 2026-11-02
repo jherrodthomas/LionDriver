@@ -1356,8 +1356,9 @@
       title: "Add an AI architecture view at G2"
       detail: "The models, their inputs, outputs and monitors drawn in WP-S-03 or WP-C-11. Cost: one more G2 work product to write and keep with model updates."
   sources: ["assurance/process/README.md (finding 2, no AI-lane work product gated at G2)", "assurance/01-management/WP-M-10-ai-safety-plan.md", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-23, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "32b5c8b", record: "WP-M-10 v0.4 §5 (tailoring: no separate AI architecture view at G2, IX-13 and IX-14); process README v0.6 §6.2 finding 2", at: 2026-11-02}
 
 - id: DQ-059
   question: "On the tightest curve allowed, the car would drift 0.6 m in 0.7 s if steering silently failed. Tighten the curve limit, or re-rate?"
@@ -3626,7 +3627,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-02 v0.50 OI-12. Left: the four host SWSRs (X2, E2, O2, P1, including soft disable in preEnabled) and their QM tests (jherrodthomas/LionDriver#562)"
+  note: "Applied in part 2026-11-02 in WP-W-02 v0.51: SWSR-302h (X2), SWSR-302i (P1), SWSR-305h (E2), SWSR-305i (O2), QM (B-sup), worded to today's code; 18 unit tests in openpilot selfdrive/selfdrived/tests/test_driver_transitions.py; no code change; WP-W-05 v0.9.5 §5.3 has no S7 gap left; impact record change-2026-11-02-selfdrived-driver-transitions. Left: the lead's answer to DQ-433 (soft disable in preEnabled), then SWSR-302i, its test and state.py follow; TSR-304(b) as parent after WP-S-02 OI-2; I1 review; host mutants once SW FMEA causes exist."
 
 - id: DQ-152
   question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
@@ -3808,7 +3809,7 @@
   sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2", "assurance/05-software/WP-W-01-software-development-environment-guidelines.md ENV-R-07"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-01 v0.7 ENV-R-07 and OI-5, WP-W-05 v0.9.4 OI-2. Left: the lizard CI step, its WP-P-07 classification and the justified-exception list (jherrodthomas/LionDriver#562)"
+  note: "Applied in part 2026-11-02: lizard 1.24.1 (pinned by hash) runs in the safety workflow's panda MISRA job via tools/ci/check_complexity.py; 14 of 376 envelope functions exceed NLOC 60 or CCN 15 and are listed in tools/ci/complexity_exceptions.toml, all 'to justify'; WP-P-07 v0.9.34 TL-63 (TCL2 proposed, not qualified), WP-W-01 v0.8 ENV-R-07 and OI-5, WP-W-05 v0.9.6 OI-2, impact record change-2026-11-02-lizard-complexity-ci. Left: justify or split the 14 (who approves an ENV-R-07 justification is not yet defined in WP-W-01); TQR-63; WP-W-05 §7 measured figures."
 
 - id: DQ-159
   question: "Which MC/DC coverage measurement approach should the envelope tests use, plus a branch-coverage gate?"
@@ -4079,7 +4080,7 @@
   sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4", "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md SCAN-03, SCAN-04, OI-1", "DQ-192 (merged here)"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Option B, not the recommendation. Recorded in WP-M-09 v0.8 OI-4, WP-W-11 v0.6 §5.1 and OI-1, WP-O-05 v0.6. Left: turn on the alerts in the repository settings (admin) and classify the tooling in WP-P-07; the components GitHub does not cover (AGNOS image, vendored code, LFS artefacts, toolchain) are asked as DQ-432 (jherrodthomas/LionDriver#562)"
+  note: "Classified 2026-11-02 in WP-P-07 v0.9.34 as TL-64 (TCL1), with coverage and gaps (including the submodule manifests); WP-W-11 v0.7 OI-1, WP-M-09 v0.9 OI-4. Left: a repository admin turns on Dependabot alerts (Settings, Code security) and confirms what the dependency graph reads (WP-P-07 OI-15); components it does not cover stay manual (DQ-432)."
 
 - id: DQ-170
   question: "Should pickle-based model loading be replaced, or protected by a verified-hash check before loading (RM-1)?"
@@ -4431,6 +4432,7 @@
   sources: ["assurance/models/sysml/README.md SY-01"]
   status: answered
   answer: {choice: B, via: chat, at: 2026-10-24, note: "Lead in chat: SysML MBSE for everything, in the readable in-house style. Adopt SY-01 to SY-03 as proposed; SY-04 revised: the model becomes the record (DQ-186), not a checked copy."}
+  note: "Applied in part (jherrodthomas/LionDriver#457): sysml README §2 SY-01…SY-04, SY-04 revised to \"the model becomes the record\". Left: revise WP-P-07 TL-26 and TL-27 for that (the model as record; full generator list), a WP-P-07 version row; confirming them at TCL1 stays with WP-P-07 OI-12 / model README OI-8."
 
 - id: DQ-186
   question: "Generate the architecture tables (WP-S-03 §3.1/3.3/§6, WP-W-03 §3.1) from the SysML model (SY-05)?"
@@ -4451,6 +4453,7 @@
   sources: ["assurance/models/sysml/README.md OI-5"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: the model is the record too. The model is AI-drafted (I0, WP-M-02 §3.3): its human review comes before the generated tables replace the hand-written ones."}
+  note: "Applied in part (jherrodthomas/LionDriver#462): gen_tables.py, the T1 cell-by-cell check and record.toml (model README §2 SY-05; WP-S-03 v0.16, WP-W-03 v0.19). Left: the model review (I1, model README OI-8) by a human reviewer, then record.toml set to \"model\" and gen_tables.py --write (OI-5). No model review record exists yet."
 
 - id: DQ-187
   question: "Replace hand-drawn architecture figures with generated views (SY-06)?"
@@ -4471,6 +4474,7 @@
   sources: ["assurance/models/sysml/README.md OI-6"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: generated views replace the hand-drawn architecture figures, in the V-01/V-03 style."}
+  note: "Applied in part (jherrodthomas/LionDriver#487): WP-S-03 v0.19 Figure 4-1 is view V-17. Left (model README §2.1, OI-6): WP-S-03 Figures 3-1 and 3-2, WP-C-01 Figures 3-1 and 4-1, WP-W-03 Figure 3-1 and WP-H-02 Figure 3-2, each waiting on content the views lack (TSR tags, data flow, functions, units, hardware parts)."
 
 - id: DQ-188
   question: "What replaces Python pickle for loading model artefacts?"
@@ -5744,8 +5748,9 @@
       title: "Placeholders until measured"
       detail: "Positions only, no colours or parts, until the spare harness is measured on the bench. Cost: drawings and FMEDA references stay unusable until the bench run."
   sources: ["assurance/04-hardware/wiring/README.md OI-W-1", "assurance/04-hardware/reviews/RR-2026-010.md §2", "DQ-209", "DQ-211"]
-  status: assumed
+  status: applied
   answer: {choice: A, via: assumed, at: 2026-10-20, note: "Agreed with the coordinator; no lead question needed, since measuring is already in VS-HW-02 (DQ-209 A)"}
+  applied: {ref: "jherrodthomas/LionDriver#344, #350", record: "WP-H-02 v0.10 §3.6 Figures 3-4 to 3-6 (transcribed, not measured); wiring/README.md OI-W-1; wiring/wire-ends.tsv; FMEDA SG-001/SG-009 rev 0.6 ref_des", at: 2026-11-02}
 
 - id: DQ-406
   question: "Should the HARA add a hazardous event for an assisted lane change that does not stop in the target lane?"
@@ -6272,8 +6277,9 @@
       title: "A vendor simulator (LTspice)"
       detail: "Free and widely known. Cost: closed source, Windows-first, hard to pin and run in CI."
   sources: ["assurance/sim/physics-plan.md §4 study 8", "assurance/sim/supply/README.md", "WP-P-07 TL-58"]
-  status: assumed
+  status: applied
   answer: {choice: A, via: assumed, at: 2026-10-25, note: "Decided by Claude when phase C started, as the physics plan said; the lead can change it"}
+  applied: {ref: "jherrodthomas/LionDriver#468", record: "WP-P-07 v0.9.22 TL-58; assurance/sim/supply/supply-linux-64.lock (ngspice 41, conda-forge)", at: 2026-11-02}
 
 - id: DQ-423
   question: "Should the details of unfixed security weaknesses also be taken out of the public safety requirements and records now, or only when each is next edited?"
@@ -6338,7 +6344,7 @@
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Set in WP-S-02 v0.65 TSR-633 (2 m/s², ramped in, about 15 s and 230 m from 110 km/h), WP-S-04 v0.30 §3.8 and SW FMEA SWF-086.C2. Left: the planner change for the forced stop and its tests (openpilot longitudinal_planner) (jherrodthomas/LionDriver#562)"
+  note: "Implemented 2026-11-02: openpilot longitudinal_planner.py A_MINIMUM_RISK_STOP -2.0 m/s², ramped in at J_MINIMUM_RISK_STOP 4 m/s³, only while selfdrived's minimum-risk latch and forceDecel are both set (fault soft disable keeps -1.2 m/s²); test_minimum_risk_stop.py: 15.55 s and 239.5 m from 110 km/h; mutants MS-1..MS-7; impact record change-2026-11-02-minimum-risk-stop-rate; WP-S-02 v0.66 TSR-633 status; SW FMEA rev 1.19 SWF-086.C2 (O5 D4), SWF-ACT-082 completed. Left: vehicle verification T-33 (stop, deceleration and jerk on 0x343, hold at standstill, AOU-16); SWF-ACT-073 end-to-end test; an SWSR for TSR-633 in WP-W-02; the layer-1 plant (assurance/sim/plant/simulate.py) still models the stop at -1.2 m/s² (impact OI-5). Option B's '25 s and 390 m' was really about 27 s and 413 m with the planner's taper; no decision rests on it."
 
 - id: DQ-425
   question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
@@ -6591,3 +6597,31 @@
       detail: "Least work. Cost: relies on comma reporting what affects LionDriver's pinned version."
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md §5.1", "assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md MS-04", "DQ-169"]
   status: queued
+
+- id: DQ-433
+  question: "If a fault appears while you hold the brake at a standstill to engage, should LionDriver end the engagement at once, or carry on as openpilot does today?"
+  context: >-
+    When you engage while holding the brake at a standstill, LionDriver waits in a pre-enable state until you release
+    the brake. If a fault that calls for a soft disable appears during that wait, today's code (same as upstream
+    openpilot) ignores it: on brake release the car engages for one cycle, then winds down over 3 s with the alert.
+    **So steering assist can run for up to 3 s with the fault already present.** Found while writing the host
+    requirement SWSR-302i (DQ-151 A), which now describes today's behaviour and leaves this open (WP-W-02 OI-12).
+  reversibility: easy
+  blocks: "WP-W-02 OI-12; SWSR-302i, its test and selfdrived state.py"
+  gate: G3
+  decider: lead
+  asked: 2026-11-02
+  batch: 20
+  options:
+    - key: A
+      recommended: true
+      title: "End the engagement at once, with the soft-disable alert"
+      detail: "No steering or speed control ever starts with the fault present. Cost: a small change in selfdrived state.py and its test, carried as a difference from upstream at every sync."
+    - key: B
+      title: "Keep today's behaviour (upstream openpilot)"
+      detail: "No change. Cost: up to 3 s of assist after brake release with the fault present, before the wind-down ends it."
+    - key: C
+      title: "Start the 3 s wind-down already while waiting"
+      detail: "The alert sounds at once and the timer runs during the wait. Cost: a new state path to design and test; assist may still start if the brake is released early in the 3 s."
+  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302i, OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3 (P1)", "openpilot/selfdrive/selfdrived/state.py", "assurance/07-supporting/impact/change-2026-11-02-selfdrived-driver-transitions.md"]
+  status: open

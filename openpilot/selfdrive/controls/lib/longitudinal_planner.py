@@ -20,6 +20,14 @@ A_CRUISE_MAX_VALS = [1.6, 1.2, 0.8, 0.6]
 A_CRUISE_MAX_BP = [0., 10.0, 25., 40.]
 J_CRUISE_VALS = [1.6, 1.2, 0.8, 0.6]
 A_CRUISE_MIN = -1.2
+# LionDriver TSR-633 (register DQ-424, option A, the lead's decision of 2026-10-30): the minimum-risk forced stop after an
+# unresponsive driver ramps in to this deceleration and holds it to standstill, about 15.5 s and 240 m from 110 km/h.
+# It stays inside the envelope's a_min of -3.5 m/s² (TSR-202). Only that stop uses it: normal cruise and the fault
+# soft-disable slow-down keep A_CRUISE_MIN.
+A_MINIMUM_RISK_STOP = -2.0
+# the ramp-in rate of that stop, m/s³: below the provisional j_down of 5 m/s³ (TSR-205, TSR-624, WP-W-02 §2.5) and equal
+# to the Toyota host's request rate limit (ACCEL_WINDDOWN_LIMIT), so the car controller passes the ramp on unchanged
+J_MINIMUM_RISK_STOP = 4.0
 CONTROL_N_T_IDX = ModelConstants.T_IDXS[:CONTROL_N]
 ALLOW_THROTTLE_THRESHOLD = 0.4
 MIN_ALLOW_THROTTLE_SPEED = 2.5
@@ -34,7 +42,8 @@ def get_max_accel(v_ego):
 def get_coast_accel(pitch):
   return np.sin(pitch) * -5.65 - 0.3  # fitted from data using xx/projects/allow_throttle/compute_coast_accel.py
 
-def get_cruise_accel(e2e, v_cruise, v_ego, a_cruise_prev, angle_steers, CP, dt, accel_coast, allow_throttle):
+def get_cruise_accel(e2e, v_cruise, v_ego, a_cruise_prev, angle_steers, CP, dt, accel_coast, allow_throttle,
+                     minimum_risk_stop=False):
   max_accel = ACCEL_MAX if e2e else get_max_accel(v_ego)
 
   if not e2e:
@@ -49,6 +58,10 @@ def get_cruise_accel(e2e, v_cruise, v_ego, a_cruise_prev, angle_steers, CP, dt, 
 
   target_accel = np.clip(v_cruise - v_ego, A_CRUISE_MIN, max_accel)
   j_cruise = np.interp(v_ego, A_CRUISE_MAX_BP, J_CRUISE_VALS)
+  if minimum_risk_stop:
+    # TSR-633: the full stop rate down to standstill (no taper as the speed falls), ramped in at J_MINIMUM_RISK_STOP
+    target_accel = A_MINIMUM_RISK_STOP
+    j_cruise = J_MINIMUM_RISK_STOP
   target_accel = float(np.clip(target_accel, a_cruise_prev - j_cruise * dt, a_cruise_prev + j_cruise * dt))
 
   return target_accel
@@ -83,6 +96,8 @@ class LongitudinalPlanner:
     v_cruise = v_cruise_kph * CV.KPH_TO_MS
     if sm['controlsState'].forceDecel:
       v_cruise = 0.0
+    # TSR-633: selfdrived's minimum-risk latch, while controlsd forces the stop (a fault soft disable forces it without)
+    minimum_risk_stop = bool(sm['controlsState'].forceDecel and sm['selfdriveState'].minimumRiskManeuver)
 
     long_control_off = sm['controlsState'].longControlState == LongCtrlState.off
 
@@ -134,7 +149,7 @@ class LongitudinalPlanner:
 
     self.a_cruise = get_cruise_accel(sm['selfdriveState'].experimentalMode, v_cruise, v_ego,
                                      self.a_cruise, steer_angle_without_offset, self.CP, self.dt,
-                                     accel_coast, self.allow_throttle)
+                                     accel_coast, self.allow_throttle, minimum_risk_stop)
     cruise_should_stop = should_stop(v_ego, self.a_cruise)
 
     output_a_target_e2e = self.accel_boost.update(sm, output_a_target_e2e, output_a_target_mpc, self.a_cruise)

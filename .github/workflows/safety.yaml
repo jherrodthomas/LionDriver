@@ -2,7 +2,8 @@ name: safety
 
 # Safety-envelope verification (WP-W-06): opendbc safety unit tests under UBSan with the 100%
 # line-coverage gate, MISRA C:2012 for the opendbc safety code and the panda firmware, mutation
-# testing, and host tests of the LionDriver panda firmware changes. Upstream runs the first three
+# testing, host tests of the LionDriver panda firmware changes, and the ENV-R-07 size and complexity check
+# of the envelope code with lizard (in the panda MISRA job, WP-P-07 TL-63). Upstream runs the first three
 # only in opendbc's and panda's own CI; running them here keeps the evidence under LionDriver
 # control (GAP-39). Everything runs against the pinned submodules: panda MISRA uses the pinned
 # opendbc_repo, not panda's opendbc@master dependency.
@@ -17,6 +18,9 @@ on:
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
       - 'tools/ci/coverage/**'
+      - 'tools/ci/check_complexity.py'
+      - 'tools/ci/complexity_exceptions.toml'
+      - 'tools/ci/lizard-requirements.txt'
       - 'assurance/05-software/coverage/**'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
@@ -28,6 +32,9 @@ on:
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
       - 'tools/ci/coverage/**'
+      - 'tools/ci/check_complexity.py'
+      - 'tools/ci/complexity_exceptions.toml'
+      - 'tools/ci/lizard-requirements.txt'
       - 'assurance/05-software/coverage/**'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
@@ -107,15 +114,26 @@ jobs:
       env:
         PYTHONPATH: ${{ github.workspace }}/opendbc_repo
       run: panda/tests/misra/test_misra.sh
+    - name: Size and complexity of the envelope code (WP-W-01 ENV-R-07, lizard, WP-P-07 TL-63)
+      # Static analysis of the same pinned opendbc safety and panda sources, so it sits with MISRA. Runs even when
+      # MISRA fails. lizard is installed by hash into the runner's system Python (python3 on PATH is opendbc's venv
+      # here); the checker fails on a function over NLOC 60 or CCN 15 that is not in
+      # tools/ci/complexity_exceptions.toml, on a listed function that grew, and on a stale entry (DQ-158 A).
+      if: ${{ !cancelled() }}
+      run: |
+        /usr/bin/python3 -m pip install --quiet --user --break-system-packages --require-hashes --no-deps -r tools/ci/lizard-requirements.txt
+        /usr/bin/python3 tools/ci/check_complexity.py --lizard "$HOME/.local/bin/lizard" --report complexity/env-r-07.md
     - name: Build manifest and tool versions (WP-W-01 ENV-01)
       if: always()
       run: python3 tools/ci/build_manifest.py build-manifest/panda_misra.json
-    - name: Upload build manifest
+    - name: Upload build manifest and complexity report
       if: always()
       uses: actions/upload-artifact@v7
       with:
         name: build-manifest-panda_misra
-        path: build-manifest/panda_misra.json
+        path: |
+          build-manifest/panda_misra.json
+          complexity/env-r-07.md
 
   panda_reference_release_build:
     name: panda reference release build

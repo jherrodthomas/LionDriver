@@ -419,6 +419,38 @@
   status: proposed
   source: WP-W-02
 
+- id: SWSR-302h
+  kind: swsr
+  text: "When the driver disengages, `selfdrived` shall end the engagement in the same 100 Hz cycle: in a cycle in which a USER_DISABLE event is raised (cruise off `pcmDisable`, cancel button `buttonCancel`, brake press `pedalPressed` (also the accelerator when `DisengageOnAccelerator` is set), `steerDisengage`, parking brake, wrong gear or cruise mode) and no IMMEDIATE_DISABLE event, it shall go from preEnabled, enabled, softDisabling or overriding to disabled, report enabled and active false, and give the USER_DISABLE alert. USER_DISABLE shall take priority over SOFT_DISABLE, override and PRE_ENABLE events of the same cycle, and IMMEDIATE_DISABLE over USER_DISABLE (WP-W-05 §5.3 X1, X2)."
+  asil: "QM (B-sup)"
+  parents: [TSR-302, TSR-308]
+  parent_text: "TSR-302, TSR-308"
+  other_parents: false
+  allocated_to: "`host.selfdrived`"
+  verification: "UT"
+  acceptance: "From each of the four states, with USER_DISABLE alone, with the events that keep the state, and with SOFT_DISABLE, both override types and PRE_ENABLE in the same cycle (soft-disable timer full or about to run out): disabled, enabled and active false and the USER_DISABLE alert in that cycle; with IMMEDIATE_DISABLE as well, the IMMEDIATE_DISABLE alert instead; `pcmDisable`, `buttonCancel`, `pedalPressed` and `steerDisengage` each carry USER_DISABLE"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented, unit-tested; not verified on the vehicle: `selfdrive/selfdrived/state.py:25-33`, unchanged upstream code; `selfdrive/selfdrived/tests/test_driver_transitions.py` `TestDriverDisengagement` (DQ-151 A)"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-302i
+  kind: swsr
+  text: "While `selfdrived` is preEnabled (engagement accepted with the brake held at standstill, `preEnableStandstill`), it shall report enabled true and active false, so that `controlsd` keeps lateral control off, give the PRE_ENABLE alert, and stay preEnabled in each cycle in which a PRE_ENABLE event is raised; in the first cycle without a PRE_ENABLE event and without a disable event it shall go to enabled, without a new engagement request. An IMMEDIATE_DISABLE or USER_DISABLE event ends the attempt (X1, SWSR-302h). A SOFT_DISABLE event is not acted on in preEnabled: the state, the alert and the soft-disable timer stay as they are while PRE_ENABLE is raised, and when PRE_ENABLE ends the machine goes to enabled and starts the soft disable (E1: 3 s, SOFT_DISABLE alert) in the next cycle. Whether a SOFT_DISABLE event shall instead end the attempt in preEnabled is open (OI-12)."
+  asil: "QM (B-sup)"
+  parents: [TSR-302]
+  parent_text: "TSR-302"
+  other_parents: false
+  allocated_to: "`host.selfdrived`"
+  verification: "UT"
+  acceptance: "`buttonEnable` with `preEnableStandstill` gives preEnabled; in preEnabled with PRE_ENABLE: enabled true, active false, only the PRE_ENABLE alert; without it: enabled and active in that cycle, no ENABLE alert; USER_DISABLE or IMMEDIATE_DISABLE: disabled; PRE_ENABLE with SOFT_DISABLE for 310 cycles: preEnabled, no SOFT_DISABLE alert, timer not started; SOFT_DISABLE when PRE_ENABLE ends: enabled, then softDisabling with the 300-cycle timer and alert, disabled 300 cycles later"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented as worded, unit-tested; not verified on the vehicle: `state.py:59-64` (preEnabled), `:93-95` (enabled, active), `:37-41` (E1), unchanged upstream code; `selfdrive/selfdrived/tests/test_driver_transitions.py` `TestPreEnable`. The SOFT_DISABLE handling is the current behaviour, written down so that a change is a decision (OI-12)"
+  status: proposed
+  source: WP-W-02
+
 - id: SWSR-303h
   kind: swsr
   text: "`controlsd` and the Toyota carcontroller shall set CANCEL_REQ in ACC_CONTROL on every fault-induced disengagement while PCM cruise is on, with or without openpilot longitudinal."
@@ -480,6 +512,38 @@
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:146`; `longitudinal.h:3-5`"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-305h
+  kind: swsr
+  text: "While `selfdrived` is enabled, in a cycle in which a driver override event is raised (OVERRIDE_LATERAL: `steerOverride` while the driver steers; OVERRIDE_LONGITUDINAL: `gasPressedOverride` while the accelerator is pressed) and no IMMEDIATE_DISABLE, USER_DISABLE or SOFT_DISABLE event, it shall go to overriding in that cycle and keep the engagement (enabled and active true) with the override alerts, for as long as the override lasts. An override event shall not end the engagement; a SOFT_DISABLE event in the same cycle takes priority (E1)."
+  asil: "QM (B-sup)"
+  parents: [TSR-305]
+  parent_text: "TSR-305"
+  other_parents: false
+  allocated_to: "`host.selfdrived`"
+  verification: "UT"
+  acceptance: "From enabled, with each override type and with both: overriding, enabled and active true, override and WARNING alert types, no USER_DISABLE, held for 500 cycles; with SOFT_DISABLE as well: softDisabling with the 300-cycle timer; `steerOverride` and `gasPressedOverride` carry their override type and neither USER_DISABLE nor IMMEDIATE_DISABLE"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented, unit-tested; not verified on the vehicle: `state.py:37-45`, unchanged upstream code; `selfdrive/selfdrived/tests/test_driver_transitions.py` `TestOverrideEntry`. `controlsd` withdraws longitudinal control while OVERRIDE_LONGITUDINAL is raised (`controls/controlsd.py:116`). The steering-override part traces to TSR-304(b), which this QM (B-sup) row cannot take as a parent (K5, TSR-304 is B‡; OI-12)"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-305i
+  kind: swsr
+  text: "While `selfdrived` is overriding, it shall stay overriding with the override alerts in each cycle in which an override event is raised; in the first cycle without an override event, without SOFT_DISABLE and without a disable event it shall return to enabled without a new engagement request (no ENABLE alert); a SOFT_DISABLE event shall take it to softDisabling with the 3 s timer and the SOFT_DISABLE alert (O1), with or without an override event."
+  asil: "QM (B-sup)"
+  parents: [TSR-305]
+  parent_text: "TSR-305"
+  other_parents: false
+  allocated_to: "`host.selfdrived`"
+  verification: "UT"
+  acceptance: "From overriding: no event gives enabled, enabled and active true and only the PERMANENT and WARNING alert types; each override type keeps overriding; SOFT_DISABLE, alone or with each override type, gives softDisabling with the 300-cycle timer and alert; enabled → overriding → enabled round trip"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented, unit-tested; not verified on the vehicle: `state.py:66-75`, unchanged upstream code; `selfdrive/selfdrived/tests/test_driver_transitions.py` `TestOverrideEnd`. That the return to enabled has no cue is WP-A-05 LS-36 (HMI), not this requirement"
   status: proposed
   source: WP-W-02
 

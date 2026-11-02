@@ -1,23 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1706" viewBox="0 0 1280 1706" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1738" viewBox="0 0 1280 1738" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-13. SW FMEA detection evidence</title>
-  <desc id="d">SW FMEA (SWF rev 1.18): 149 causes by the evidence behind their detection rating: proven 45, targeted 14, generic 22, not run 2, hardware 8, none 58. One row per element, and the 43 cited test files with how CI treats each (2 not run in CI).</desc>
+  <desc id="d">SW FMEA (SWF rev 1.19): 149 causes by the evidence behind their detection rating: proven 46, targeted 13, generic 22, not run 2, hardware 8, none 58. One row per element, and the 44 cited test files with how CI treats each (2 not run in CI).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1706" fill="#FFFFFF"/>
+  <rect width="1280" height="1738" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-13 · SW FMEA — what each detection rating rests on</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.18 · BL-007 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.19 · BL-007 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="104" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">ALL CAUSES BY WHAT THEIR DETECTION RATING RESTS ON</text>
-  <rect x="40" y="114" width="362.4" height="22" fill="#2E9E6A"/>
-  <text x="221.2" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">45</text>
-  <rect x="402.4" y="114" width="112.8" height="22" fill="#0F766E"/>
-  <text x="458.8" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">14</text>
+  <rect x="40" y="114" width="370.5" height="22" fill="#2E9E6A"/>
+  <text x="225.2" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">46</text>
+  <rect x="410.5" y="114" width="104.7" height="22" fill="#0F766E"/>
+  <text x="462.8" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">13</text>
   <rect x="515.2" y="114" width="177.2" height="22" fill="#94A3B8"/>
   <text x="603.8" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">22</text>
   <rect x="692.3" y="114" width="16.1" height="22" fill="#C2410C"/>
@@ -27,9 +27,9 @@
   <rect x="772.9" y="114" width="467.1" height="22" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
   <text x="1006.4" y="129" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">58</text>
   <rect x="40" y="145" width="13" height="13" fill="#2E9E6A" rx="2"/>
-  <text x="59" y="156" font-size="10.5" fill="#0F172A">Test run in CI, D 1–4 (rated as proven: mutation or fault injection) · 45</text>
+  <text x="59" y="156" font-size="10.5" fill="#0F172A">Test run in CI, D 1–4 (rated as proven: mutation or fault injection) · 46</text>
   <rect x="440.5" y="145" width="13" height="13" fill="#0F766E" rx="2"/>
-  <text x="459.5" y="156" font-size="10.5" fill="#0F172A">Targeted test run in CI, not proven (D 5–8) · 14</text>
+  <text x="459.5" y="156" font-size="10.5" fill="#0F172A">Targeted test run in CI, not proven (D 5–8) · 13</text>
   <rect x="724.3" y="145" width="13" height="13" fill="#94A3B8" rx="2"/>
   <text x="743.3" y="156" font-size="10.5" fill="#0F172A">Only a generic test run in CI (D 9–10) · 22</text>
   <rect x="982.2" y="145" width="13" height="13" fill="#C2410C" rx="2"/>
@@ -271,7 +271,7 @@
   <text x="86" y="962" font-size="10" fill="#475569">Longitudinal planner and MPC</text>
   <rect x="340" y="952" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-067.C1 D4 AP H: openpilot/selfdrive/selfdrived/tests/test_assured_config.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="355" y="952" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-067.C2 D4 AP H: openpilot/selfdrive/selfdrived/tests/test_assured_config.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <rect x="370" y="952" width="12" height="14" fill="#0F766E" rx="2"><title>SWF-086.C2 D8 AP H: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py (unit test, collected by tools/test_runner.py)</title></rect>
+  <rect x="370" y="952" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-086.C2 D4 AP H: openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="385" y="952" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-065.C1 D9 AP H: openpilot/selfdrive/test/process_replay/test_processes.py (named in a CI workflow)</title></rect>
   <rect x="400" y="952" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-065.C2 D9 AP H: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py (unit test, collected by tools/test_runner.py)</title></rect>
   <rect x="415" y="952" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-066.C1 D9 AP H: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py (unit test, collected by tools/test_runner.py)</title></rect>
@@ -405,116 +405,120 @@
   <text x="1240" y="723" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="736" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="744" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="754.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="755" font-size="10" fill="#0F172A" font-weight="600">selfdrive/controls/tests/test_stock_aeb.py</text>
+  <text x="732" y="755" font-size="10" fill="#0F172A" font-weight="600">selfdrive/controls/tests/test_minimum_risk_stop.py</text>
   <text x="1240" y="755" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="768" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="776" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="786.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="787" font-size="10" fill="#0F172A" font-weight="600">selfdrive/locationd/test/test_calibrationd.py</text>
+  <text x="732" y="787" font-size="10" fill="#0F172A" font-weight="600">selfdrive/controls/tests/test_stock_aeb.py</text>
   <text x="1240" y="787" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="800" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="808" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="818.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="819" font-size="10" fill="#0F172A" font-weight="600">selfdrive/locationd/test/test_locationd_scenarios.py</text>
+  <text x="732" y="819" font-size="10" fill="#0F172A" font-weight="600">selfdrive/locationd/test/test_calibrationd.py</text>
   <text x="1240" y="819" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="832" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="840" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="850.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="851" font-size="10" fill="#0F172A" font-weight="600">selfdrive/locationd/test/test_paramsd.py</text>
+  <text x="732" y="851" font-size="10" fill="#0F172A" font-weight="600">selfdrive/locationd/test/test_locationd_scenarios.py</text>
   <text x="1240" y="851" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="864" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="872" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="882.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="883" font-size="10" fill="#0F172A" font-weight="600">selfdrive/monitoring/test_monitoring.py</text>
-  <text x="1240" y="883" font-size="10" fill="#475569" font-weight="700" text-anchor="end">5</text>
+  <text x="732" y="883" font-size="10" fill="#0F172A" font-weight="600">selfdrive/locationd/test/test_paramsd.py</text>
+  <text x="1240" y="883" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="896" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="904" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="914.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="915" font-size="10" fill="#0F172A" font-weight="600">selfdrive/pandad/tests/test_pandad_faults.cc</text>
-  <text x="1240" y="915" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="928" font-size="9.5" fill="#475569" font-style="italic">native test, run by test_native.py</text>
+  <text x="732" y="915" font-size="10" fill="#0F172A" font-weight="600">selfdrive/monitoring/test_monitoring.py</text>
+  <text x="1240" y="915" font-size="10" fill="#475569" font-weight="700" text-anchor="end">5</text>
+  <text x="732" y="928" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="936" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="946.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="947" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_alertmanager.py</text>
+  <text x="732" y="947" font-size="10" fill="#0F172A" font-weight="600">selfdrive/pandad/tests/test_pandad_faults.cc</text>
   <text x="1240" y="947" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="960" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
+  <text x="732" y="960" font-size="9.5" fill="#475569" font-style="italic">native test, run by test_native.py</text>
   <rect x="640" y="968" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="978.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="979" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_alerts.py</text>
+  <text x="732" y="979" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_alertmanager.py</text>
   <text x="1240" y="979" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="992" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1000" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1010.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1011" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_assured_config.py</text>
-  <text x="1240" y="1011" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
+  <text x="732" y="1011" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_alerts.py</text>
+  <text x="1240" y="1011" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="1024" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1032" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1042.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1043" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_driver_view.py</text>
+  <text x="732" y="1043" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_assured_config.py</text>
   <text x="1240" y="1043" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
   <text x="732" y="1056" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1064" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1074.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1075" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_fcw_freshness.py</text>
-  <text x="1240" y="1075" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
+  <text x="732" y="1075" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_driver_view.py</text>
+  <text x="1240" y="1075" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
   <text x="732" y="1088" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1096" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1106.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1107" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_minimum_risk.py</text>
+  <text x="732" y="1107" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_fcw_freshness.py</text>
   <text x="1240" y="1107" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="1120" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1128" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1138.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1139" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_state_machine.py</text>
-  <text x="1240" y="1139" font-size="10" fill="#475569" font-weight="700" text-anchor="end">4</text>
+  <text x="732" y="1139" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_minimum_risk.py</text>
+  <text x="1240" y="1139" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="1152" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1160" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1170.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1171" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_supervision.py</text>
-  <text x="1240" y="1171" font-size="10" fill="#475569" font-weight="700" text-anchor="end">3</text>
+  <text x="732" y="1171" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_state_machine.py</text>
+  <text x="1240" y="1171" font-size="10" fill="#475569" font-weight="700" text-anchor="end">4</text>
   <text x="732" y="1184" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1192" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1202.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1203" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_supervision_call_sites.py</text>
-  <text x="1240" y="1203" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
+  <text x="732" y="1203" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_supervision.py</text>
+  <text x="1240" y="1203" font-size="10" fill="#475569" font-weight="700" text-anchor="end">3</text>
   <text x="732" y="1216" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1224" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1234.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1235" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py</text>
-  <text x="1240" y="1235" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
+  <text x="732" y="1235" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_supervision_call_sites.py</text>
+  <text x="1240" y="1235" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
   <text x="732" y="1248" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1256" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1266.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1267" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</text>
-  <text x="1240" y="1267" font-size="10" fill="#475569" font-weight="700" text-anchor="end">4</text>
+  <text x="732" y="1267" font-size="10" fill="#0F172A" font-weight="600">selfdrive/selfdrived/tests/test_vehicle_dtc_entry.py</text>
+  <text x="1240" y="1267" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="1280" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1288" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1298.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1299" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/process_replay/test_fuzzy.py</text>
-  <text x="1240" y="1299" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
+  <text x="732" y="1299" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</text>
+  <text x="1240" y="1299" font-size="10" fill="#475569" font-weight="700" text-anchor="end">3</text>
   <text x="732" y="1312" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1320" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1330.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1331" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/process_replay/test_processes.py</text>
-  <text x="1240" y="1331" font-size="10" fill="#475569" font-weight="700" text-anchor="end">7</text>
-  <text x="732" y="1344" font-size="9.5" fill="#475569" font-style="italic">named in a CI workflow</text>
+  <text x="732" y="1331" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/process_replay/test_fuzzy.py</text>
+  <text x="1240" y="1331" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
+  <text x="732" y="1344" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1352" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1362.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1363" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/stopped_vehicle/test_stopped_vehicle.py</text>
-  <text x="1240" y="1363" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
-  <text x="732" y="1376" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
+  <text x="732" y="1363" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/process_replay/test_processes.py</text>
+  <text x="1240" y="1363" font-size="10" fill="#475569" font-weight="700" text-anchor="end">7</text>
+  <text x="732" y="1376" font-size="9.5" fill="#475569" font-style="italic">named in a CI workflow</text>
   <rect x="640" y="1384" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1394.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1395" font-size="10" fill="#0F172A" font-weight="600">system/manager/test/test_manager.py</text>
+  <text x="732" y="1395" font-size="10" fill="#0F172A" font-weight="600">selfdrive/test/stopped_vehicle/test_stopped_vehicle.py</text>
   <text x="1240" y="1395" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
   <text x="732" y="1408" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1416" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1426.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1427" font-size="10" fill="#0F172A" font-weight="600">system/manager/test/test_reference_build.py</text>
-  <text x="1240" y="1427" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
+  <text x="732" y="1427" font-size="10" fill="#0F172A" font-weight="600">system/manager/test/test_manager.py</text>
+  <text x="1240" y="1427" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
   <text x="732" y="1440" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1448" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1458.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1459" font-size="10" fill="#0F172A" font-weight="600">system/manager/test/test_reference_env.py</text>
-  <text x="1240" y="1459" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
+  <text x="732" y="1459" font-size="10" fill="#0F172A" font-weight="600">system/manager/test/test_reference_build.py</text>
+  <text x="1240" y="1459" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
   <text x="732" y="1472" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1480" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1490.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1491" font-size="10" fill="#0F172A" font-weight="600">panda/tests/engaged_mismatch/test_engaged_mismatch.py</text>
-  <text x="1240" y="1491" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="1504" font-size="9.5" fill="#475569" font-style="italic">panda suite engaged_mismatch, run by safety.yaml</text>
+  <text x="732" y="1491" font-size="10" fill="#0F172A" font-weight="600">system/manager/test/test_reference_env.py</text>
+  <text x="1240" y="1491" font-size="10" fill="#475569" font-weight="700" text-anchor="end">2</text>
+  <text x="732" y="1504" font-size="9.5" fill="#475569" font-style="italic">unit test, collected by tools/test_runner.py</text>
   <rect x="640" y="1512" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1522.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1523" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_monitor/test_heartbeat_monitor.py</text>
+  <text x="732" y="1523" font-size="10" fill="#0F172A" font-weight="600">panda/tests/engaged_mismatch/test_engaged_mismatch.py</text>
   <text x="1240" y="1523" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="1536" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_monitor, run by safety.yaml</text>
+  <text x="732" y="1536" font-size="9.5" fill="#475569" font-style="italic">panda suite engaged_mismatch, run by safety.yaml</text>
   <rect x="640" y="1544" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1554.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1555" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_siren/test_heartbeat_siren.py</text>
+  <text x="732" y="1555" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_monitor/test_heartbeat_monitor.py</text>
   <text x="1240" y="1555" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
-  <text x="732" y="1568" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_siren, run by safety.yaml</text>
+  <text x="732" y="1568" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_monitor, run by safety.yaml</text>
   <rect x="640" y="1576" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1586.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
-  <text x="732" y="1587" font-size="10" fill="#0F172A" font-weight="600">panda/tests/reference_lock/test_reference_lock.py</text>
-  <text x="1240" y="1587" font-size="10" fill="#475569" font-weight="700" text-anchor="end">8</text>
-  <text x="732" y="1600" font-size="9.5" fill="#475569" font-style="italic">panda suite reference_lock, run by safety.yaml</text>
-  <line x1="40" y1="1618" x2="1240" y2="1618" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1638" font-size="10" fill="#475569">Each square is one cause, coloured by its strongest cited test (detection_controls[].test) and its D rating; hover for the cause and its tests. How CI treats a file is worked out from the repository, not from the analysis text:</text>
-  <text x="40" y="1653" font-size="10" fill="#475569">unit tests need a unittest TestCase that tools/test_runner.py collects; COMMA_HARDWARE_TEST or a device skip means hardware only; panda suites count when safety.yaml runs them; opendbc safety tests and files named in a workflow count as CI.</text>
-  <text x="40" y="1668" font-size="10" fill="#475569">Green means the D rating claims proof, not that this figure checked the proof. A test run in CI says nothing about whether it would fail on the fault.</text>
-  <text x="40" y="1686" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml, .github/workflows/, tools/test_runner.py. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="732" y="1587" font-size="10" fill="#0F172A" font-weight="600">panda/tests/heartbeat_siren/test_heartbeat_siren.py</text>
+  <text x="1240" y="1587" font-size="10" fill="#475569" font-weight="700" text-anchor="end">1</text>
+  <text x="732" y="1600" font-size="9.5" fill="#475569" font-style="italic">panda suite heartbeat_siren, run by safety.yaml</text>
+  <rect x="640" y="1608" width="52.8" height="15" rx="7.5" fill="#0F766E"/><text x="666.4" y="1618.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">run in CI</text>
+  <text x="732" y="1619" font-size="10" fill="#0F172A" font-weight="600">panda/tests/reference_lock/test_reference_lock.py</text>
+  <text x="1240" y="1619" font-size="10" fill="#475569" font-weight="700" text-anchor="end">8</text>
+  <text x="732" y="1632" font-size="9.5" fill="#475569" font-style="italic">panda suite reference_lock, run by safety.yaml</text>
+  <line x1="40" y1="1650" x2="1240" y2="1650" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1670" font-size="10" fill="#475569">Each square is one cause, coloured by its strongest cited test (detection_controls[].test) and its D rating; hover for the cause and its tests. How CI treats a file is worked out from the repository, not from the analysis text:</text>
+  <text x="40" y="1685" font-size="10" fill="#475569">unit tests need a unittest TestCase that tools/test_runner.py collects; COMMA_HARDWARE_TEST or a device skip means hardware only; panda suites count when safety.yaml runs them; opendbc safety tests and files named in a workflow count as CI.</text>
+  <text x="40" y="1700" font-size="10" fill="#475569">Green means the D rating claims proof, not that this figure checked the proof. A test run in CI says nothing about whether it would fail on the fault.</text>
+  <text x="40" y="1718" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml, .github/workflows/, tools/test_runner.py. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
