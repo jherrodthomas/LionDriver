@@ -963,6 +963,7 @@
       detail: "Not a rental; could bring an independent reviewer and test subjects. Cost: a slower, partnership-style arrangement two hours from Atlanta."
   sources: ["assurance/06-validation/test-sites/README.md §2, §3, §4", "assurance/06-validation/WP-V-01-safety-validation.md OI-1", "assurance/06-validation/WP-V-07-vehicle-test-operations.md §4, §8.1, §12"]
   status: open
+  note: "Inbox answer 2026-10-30: other, \"not sure yet\". Not applied; the coordinator is discussing it with the lead"
 
 - id: DQ-042
   question: "When should the pass/fail limits for the controllability tests be fixed: override force and lateral margin?"
@@ -3350,7 +3351,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3360,7 +3360,9 @@
       title: "Real-time kernel (PREEMPT_RT) or a dedicated real-time target from the start"
       detail: "Tight timing without measuring first. Cost: a kernel build or extra hardware, and keeping it working."
   sources: ["assurance/models/README.md item 4", "assurance/03-system/WP-S-08-system-integration-test.md I-3", "assurance/05-software/hil-bench/README.md §2 (B3)"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-08 v0.9 plant-model row (I-3): ordinary OS accepted only with a measured jitter bound (99.9 % within 1 ms, none a full period late)", at: 2026-11-02}
 
 - id: DQ-142
   question: "Until the panda tests its intercept switch at every start, how often should the hardware metrics assume a hidden fault in it is found?"
@@ -3376,7 +3378,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3386,7 +3387,9 @@
       title: "Assume a shorter interval now"
       detail: "A better number. Cost: it needs a check the driver or a technician really performs that often, which no procedure has yet."
   sources: ["assurance/03-system/WP-S-06-requirements-production-operation.md OI-2", "assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md PM-03", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-H-04 v0.13 §3.3 (6-month PM-03 interval for the intercept switch until TSR-515); WP-S-06 v0.5 OI-2 closed", at: 2026-11-02}
 
 - id: DQ-143
   question: "How should the CRC that protects commands from the main computer to the panda be chosen?"
@@ -3452,7 +3455,6 @@
   decider: claude
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -3462,7 +3464,9 @@
       title: "Align the sizes"
       detail: "One size on both ends. Cost: a change to pandad or the firmware, carried at every sync."
   sources: ["assurance/03-system/WP-S-05-hsi-specification.md §3 (SPI buffer size), OI-5", "assurance/06-validation/WP-V-05-fault-injection.md VS-FI-07"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-05 v0.23 OI-5: sizes documented as intended; the panda's own length check (TSR-412) tested by VS-FI-07", at: 2026-11-02}
 
 - id: DQ-146
   question: "For closed-loop integration tests, what should play the car around a real panda: the existing Corolla plant model, or openpilot's driving simulator adapted to Toyota?"
@@ -3478,7 +3482,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3491,7 +3494,9 @@
       title: "No closed loop; replay recorded traffic only"
       detail: "Least effort. Cost: no test of how the system behaves when the car responds to its commands."
   sources: ["assurance/03-system/WP-S-08-system-integration-test.md I-3, OI-5", "assurance/sim/README.md (layers 1 and 3)", "assurance/05-software/hil-bench/README.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-S-08 v0.9 plant-model row and OI-5 closed: the layer-1 Corolla plant drives a real panda; tools/sim stays at layer 3", at: 2026-11-02}
 
 - id: DQ-147
   question: "While the car is under control, should the panda refuse every command the main computer does not need, instead of only the ones known to be dangerous?"
@@ -3560,7 +3565,6 @@
   decider: claude
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -3571,6 +3575,7 @@
       detail: "Covers the time before the relay is driven too. Cost: the bootloader and flasher paths are reworked and retested."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-501b, OI-10", "assurance/05-software/WP-W-03-software-architecture.md ATC-02", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-501"]
   status: open
+  note: "Inbox answer 2026-10-30: other, \"not sure\". Not applied; the coordinator is discussing it with the lead"
 
 - id: DQ-150
   question: "How should SWSR-408 be worded: when does command-arrival supervision start, and does a frame refused for its content count as 'accepted'?"
@@ -3607,7 +3612,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3617,7 +3621,9 @@
       title: "Record why none is needed"
       detail: "Less work. Cost: a written argument that the envelope requirements alone suffice, which the pre-enable case makes harder."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 OI-12. Left: the four host SWSRs (X2, E2, O2, P1, including soft disable in preEnabled) and their QM tests (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-152
   question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
@@ -3633,7 +3639,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3643,7 +3648,9 @@
       title: "Pack the cause into spare bits of the existing health flags"
       detail: "No schema change. Cost: few bits, no counters, and the meaning hidden in bit positions."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-108a, OI-8", "assurance/03-system/WP-S-05-hsi-specification.md §4.2", "openpilot/cereal/log.capnp (PandaState)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 OI-8 and WP-S-05 v0.23 §4.2. Left: the field layout, the panda health-packet and cereal pandaStates change with tests (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-153
   question: "Should the panda's safety checks get a higher interrupt priority than its communication, or stay at the same level?"
@@ -3683,7 +3690,6 @@
   decider: claude
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -3693,7 +3699,9 @@
       title: "Rely on the race analysis"
       detail: "No code change. Cost: the one-frame residual stays and has to be argued in the safety case."
   sources: ["assurance/05-software/WP-W-03-software-architecture.md §5.4, ATC-18", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-406"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-03 v0.22 ATC-18. Left: the panda change with a test (panda fork, outside this repository) (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-155
   question: "Should the reference firmware leave out the safety code for car brands other than Toyota?"
@@ -3760,7 +3768,6 @@
   after: [DQ-134]
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -3770,7 +3777,9 @@
       title: "Add a reserved forwarding queue now"
       detail: "Removes the dependency on host behaviour. Cost: a change in the CAN driver of the safety MCU, with its own analysis and tests."
   sources: ["assurance/05-software/WP-W-04-software-safety-analysis.md SDF-05, OI-2", "assurance/05-software/design-notes/DN-01-tx-rate-supervision.md §7", "DQ-134"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-04 v1.8 OI-2. Left: the queue-occupancy measurement on the HIL bench, with the DQ-134 PCS timing (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-158
   question: "How should the size and complexity limit for the panda's big functions be checked: with a measuring tool, or by review?"
@@ -3785,7 +3794,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3795,7 +3803,9 @@
       title: "Judge it in review"
       detail: "No tool. Cost: weaker evidence and no automatic check."
   sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2", "assurance/05-software/WP-W-01-software-development-environment-guidelines.md ENV-R-07"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-01 v0.7 ENV-R-07 and OI-5, WP-W-05 v0.9.4 OI-2. Left: the lizard CI step, its WP-P-07 classification and the justified-exception list (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-159
   question: "Which MC/DC coverage measurement approach should the envelope tests use, plus a branch-coverage gate?"
@@ -3831,7 +3841,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3841,7 +3850,9 @@
       title: "A commercial abstract-interpretation analyser"
       detail: "Whole-program results with vendor support. Cost: licence fees, and results others cannot rerun."
   sources: ["assurance/05-software/WP-W-06-software-unit-verification.md OI-2, VS-UV-S3"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-06 v0.6.8 OI-2. Left: CBMC harnesses for the safety modes and the envelope core, and the WP-P-07 record (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-161
   question: "Should the min, max, clamp and abs macros in the safety code be replaced with typed inline functions, removing four standing MISRA deviations?"
@@ -3865,7 +3876,9 @@
       title: "Keep them with approved deviations"
       detail: "No code churn. Cost: four deviation records with rationale, and the two mandatory-rule entries argued as tool false positives."
   sources: ["assurance/05-software/WP-W-01-software-development-environment-guidelines.md OI-9, DEV-09, DEV-10, DEV-12, DEV-13", "opendbc_repo/opendbc/safety/helpers.h", "panda/board/utils.h"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-01 v0.7 OI-9. Left: the change in opendbc and the panda firmware with tests and mutation tests (forks, outside this repository); DEV-09/10/12/13 stay until it lands (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-162
   question: "How should the driving and monitoring models be loaded safely: check their hash first and keep today's format, or move to a format that cannot run code?"
@@ -3893,6 +3906,7 @@
       detail: "Meets the requirements now and removes the risk later. Cost: the two changes in sequence."
   sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-5", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md AIR-19, AIR-20, OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-6", "assurance/00-assessment/gap-assessment.md GAP-22", "DQ-170 (merged here)", "DQ-188 (merged here)"]
   status: open
+  note: "Inbox answer 2026-10-30: other, \"tbd\". Not applied; the coordinator is discussing it with the lead"
 
 - id: DQ-163
   question: "Can tests on the red panda board count as development evidence for the watchdog, or must they wait for the reference device?"
@@ -3907,7 +3921,6 @@
   decider: claude
   asked: 2026-10-27
   batch: 19
-  proceed_after: 2026-11-03
   options:
     - key: A
       recommended: true
@@ -3917,7 +3930,9 @@
       title: "Test only on the reference device"
       detail: "One set of evidence. Cost: waits for the B4 bench and the reference device."
   sources: ["assurance/05-software/hil-bench/README.md R-2, §2 (B1, B4)"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "hil-bench README v0.10 R-2: red panda results are development evidence for VS-FI-17 and VS-SWQ-14; device-specific parts repeated at B4", at: 2026-11-02}
 
 - id: DQ-164
   question: "When the panda decides whether the car is moving, should it add up the four wheel speeds (as coded) or check that any wheel is turning (as SWSR-302 says)?"
@@ -3931,7 +3946,6 @@
   decider: claude
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -3941,7 +3955,9 @@
       title: "Change SWSR-302 to the sum now"
       detail: "Closes the finding at once. Cost: wrong if signed speeds do occur."
   sources: ["assurance/05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md B2B-02", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-W-02 v0.50 OI-19 and B2B-TOY-AUTH-2026-10-13 B2B-02. Left: a reference-car log that includes reversing (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-165
   question: "Which self-tests should the panda run at every start (watchdog reset, memory ECC, relay toggle with readback, siren), knowing each can block a drive if it fails?"
@@ -3955,7 +3971,6 @@
   decider: claude
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -3965,7 +3980,9 @@
       title: "A minimal set: watchdog reset and ECC test"
       detail: "Little effect on start-up. Cost: relay and siren faults stay latent, so the LFM may miss the ASIL C target."
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md §3.3, OI-4", "assurance/05-software/WP-W-03-software-architecture.md ATC-03", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-515"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Recorded in WP-H-04 v0.13 OI-4 and WP-W-03 v0.22 ATC-03. Left: the four start-up tests, the false-block campaign on the HIL bench, then the choice and the LFM update (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-166
   question: "Which interrupt-priority and ISR-timing scheme should the panda safety MCU adopt?"
@@ -3999,7 +4016,6 @@
   decider: claude
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -4009,7 +4025,9 @@
       title: "Also turn the lock on for every release build"
       detail: "A stronger default that does not depend on the release check. Cost: every release build differs from upstream, including builds for other cars."
   sources: ["assurance/00-assessment/gap-assessment.md GAP-09", "assurance/01-management/WP-M-07-risk-management.md R-28", "assurance/07-supporting/WP-P-10-release-management.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "jherrodthomas/LionDriver#PRNUM", record: "WP-M-07 v0.10 R-28: lock stays tied to LIONDRIVER_REFERENCE, enforced by the WP-P-10 §6 release check", at: 2026-11-02}
 
 - id: DQ-168
   question: "Which signing algorithm and boot-chain implementation replace RSA-1024/SHA-1 for LionDriver panda firmware?"
@@ -4043,7 +4061,6 @@
   decider: claude
   asked: 2026-10-26
   batch: 18
-  proceed_after: 2026-11-02
   options:
     - key: A
       recommended: true
@@ -4056,7 +4073,9 @@
       title: "A commercial suite"
       detail: "One supported product. Cost: a licence."
   sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4", "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md SCAN-03, SCAN-04, OI-1", "DQ-192 (merged here)"]
-  status: open
+  status: answered
+  answer: {choice: B, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Option B, not the recommendation. Recorded in WP-M-09 v0.8 OI-4, WP-W-11 v0.6 §5.1 and OI-1, WP-O-05 v0.6. Left: turn on the alerts in the repository settings (admin) and classify the tooling in WP-P-07; the components GitHub does not cover (AGNOS image, vendored code, LFS artefacts, toolchain) are asked as DQ-432 (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-170
   question: "Should pickle-based model loading be replaced, or protected by a verified-hash check before loading (RM-1)?"
@@ -4079,112 +4098,155 @@
   note: "Withdrawn before it was asked: the same question as DQ-162 (hash check or a safe format for model loading); merged there."
 
 - id: DQ-171
-  question: "Should AGNOS images and toolchain wheels be mirrored under LionDriver control?"
-  context: "AGNOS images come from comma's CDN and toolchain wheels from comma-deps; a mirror protects availability and integrity if comma changes or bans access (R-12)."
+  question: "Should LionDriver keep its own copy of the AGNOS images and the toolchain wheels it pins, instead of relying on comma's servers?"
+  context: >-
+    The operating system images come from comma's CDN and some build wheels from comma's package index. Both are
+    checked by hash, so a changed file is caught, but if comma removes them or blocks forks (R-12) a release can no
+    longer be rebuilt or reinstalled. **A copy keeps releases reproducible whatever comma does; hashes alone only
+    detect the loss.**
   reversibility: easy
-  blocks: "R-12, release reproducibility"
+  blocks: "WP-M-11 OI-7; R-12; rebuilding a release from its tag (WP-P-10 §6)"
   gate: G3
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
-      title: "Mirror pinned versions"
-      detail: "Storage cost; independence from comma."
+      title: "Keep a copy of every pinned version, stored with the release evidence"
+      detail: "Each release's AGNOS images and wheels are copied, by hash, next to its signed release assets (DQ-093 B). Cost: several GB of storage per AGNOS version, and a copy step in the release checklist."
     - key: B
-      title: "Rely on hashes only"
-      detail: "No cost; availability risk."
-  sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-7"]
-  status: queued
+      title: "Rely on the hashes only"
+      detail: "Nothing to store. Cost: if comma's copies disappear, old releases cannot be rebuilt or reinstalled."
+  sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-7, SV-3, U-11", "assurance/01-management/WP-M-07-risk-management.md R-12", "DQ-093"]
+  status: open
 
 - id: DQ-172
-  question: "Should the extra statuses (Planned, Verified, Superseded) be adopted project-wide or only for Part 6 records?"
-  context: "WP-M-14 §2.2 maps a richer status set onto the current Skeleton/Draft/In review/Approved/Baselined convention; it is to be adopted in Phase B."
+  question: "Should the three new document statuses (Planned, Verified, Superseded) be used across the whole project, or only for the ISO 26262 Part 6 software records?"
+  context: >-
+    The Part 6 implementation plan needs statuses that the project's convention (Skeleton, Draft, In review, Approved,
+    Baselined) lacks: Planned, Verified and Superseded. WP-M-14 §2.2 maps them and adopts them in Phase B.
+    **One vocabulary everywhere is easier to read and check; Part 6 only means less churn now but two sets of words.**
   reversibility: easy
-  blocks: "WP-M-14 Phase B, README conventions"
+  blocks: "WP-M-14 OI-3 and Phase B; assurance/README.md conventions"
   gate: G3
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
       title: "Project-wide"
-      detail: "One vocabulary; README and tooling updates."
+      detail: "All work products use the extended set from Phase B on. Cost: the README, the status checks and the existing documents' status lines are updated once."
     - key: B
       title: "Part 6 records only"
-      detail: "Less churn; two vocabularies."
-  sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md OI-3"]
-  status: queued
+      detail: "Only the software records change. Cost: two vocabularies, and a reader has to know which one a document uses."
+  sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §2.2, OI-3", "assurance/README.md (status convention)"]
+  status: open
 
 - id: DQ-173
-  question: "Where are raw verification results stored: CI artifacts with retention, or a committed results folder?"
-  context: "Hosted CI logs expire (R-25), and release evidence must survive; WP-M-05 OI-4 asks the same for CI log archiving."
+  question: "Where should raw verification results (test logs, reports) be kept so they outlive CI: in the signed release assets, or committed to the repository?"
+  context: >-
+    GitHub deletes CI logs and artefacts after a retention period (R-25), so evidence linked only to a CI run is lost.
+    You already decided that release evidence is kept as signed GitHub release assets with an offline copy (DQ-093 B).
+    **This question is whether raw results follow the same route, or go into the repository where they never expire
+    but make it grow.**
   reversibility: easy
-  blocks: "R-25, WP-P-10, WP-M-14 §8.3"
+  blocks: "R-25; WP-M-14 OI-4 and §8.3; WP-M-05 OI-4; WP-P-10 release checklist"
   gate: G3
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
-      title: "Committed results folder for release-relevant runs"
-      detail: "Durable; repo growth."
+      title: "Release-relevant results go into the signed release assets; everyday runs stay as CI artefacts"
+      detail: "Same store as DQ-093 B, so one archive and one offline copy. Cost: a release step that collects the results of the evidence runs; results between releases still expire."
     - key: B
-      title: "CI artifacts with extended retention"
-      detail: "No repo growth; retention limits."
-  sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md OI-4"]
-  status: queued
+      title: "Commit release-relevant results to a results folder in the repository"
+      detail: "Never expires and is versioned with the code. Cost: the repository grows with every release, and large logs need LFS."
+    - key: C
+      title: "CI artefacts with the longest retention only"
+      detail: "No extra step. Cost: GitHub's maximum retention is still shorter than the product's life, so R-25 stays open."
+  sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md OI-4, §8.3", "assurance/01-management/WP-M-07-risk-management.md R-25", "assurance/07-supporting/WP-P-10-release-management.md OI-2 (DQ-093 B)", "WP-M-05 OI-4"]
+  status: open
 
 - id: DQ-174
-  question: "Should the Part 6 register be a trace/items/register-part6.yaml file or a case/ record kind?"
-  context: "Phase B adds a machine-readable Part 6 register generated into WP-M-00 §3.5."
+  question: "Should the machine-readable register of Part 6 work products be a file in the trace data or a new kind of safety-case record?"
+  context: >-
+    Phase B adds a register of the ISO 26262 Part 6 work products (clause, owner, ASIL, status, evidence) that is
+    generated into WP-M-00 §3.5, so the two cannot drift. It can live with the requirements trace
+    (`trace/items/register-part6.yaml`) or as a record kind of the living safety case (`case-records/`).
+    **The trace tooling already checks IDs and links; the case tooling already checks evidence and review status.**
   reversibility: easy
-  blocks: "WP-M-14 Phase B"
+  blocks: "WP-M-14 Phase B (Part 6 register, §9)"
   gate: G3
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
       title: "trace/items/register-part6.yaml"
-      detail: "Reuses trace tooling."
+      detail: "Reuses the trace schema, ID and link checks, next to the requirements it points at. Cost: evidence and review status are linked, not checked, by that tooling."
     - key: B
-      title: "case/ kind"
-      detail: "Reuses case tooling."
-  sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md “[WP-M-00](WP-M-00-work-product-register.md) remains the mast”"]
-  status: queued
+      title: "A case-records kind"
+      detail: "Reuses the case schema with evidence and review states. Cost: a new record kind and its schema, and the work-product IDs leave the trace data."
+  sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §9 (WP-M-00 remains the master register)"]
+  status: open
 
 - id: DQ-175
-  question: "What mount-position and calibration-angle tolerance band should installation accept (narrower than calibrationd's validity limits)?"
-  context: "The installer must check the device mount and camera calibration. The band should come from the angles at which the driving model was validated, not from the much wider software validity limits."
+  question: "What range of mounting position and camera angles should the installer accept: the range the driving model was validated for, or the much wider range openpilot's calibration accepts?"
+  context: >-
+    openpilot's calibration only rejects a device tilted far outside its limits; a small, stable mounting error
+    inside them goes unnoticed. TSR-807 asks for a narrower band from the model's validation range, and the
+    installation checks (INS-09, INS-25, SPC-03) need a number. **The band decides which installs pass; too wide
+    accepts mounts the model was never tested at.**
   reversibility: easy
-  blocks: "Installation procedure, PFM-009"
+  blocks: "WP-O-01 OI-2 (INS-09, INS-25, INS-26, SPC-03); TSR-807; PFM-009"
   gate: G4
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
-      title: "Band from model-validation angles"
-      detail: "Tight, evidence-based acceptance; needs the validated angle range."
+      title: "A band derived from the angles the model was validated at"
+      detail: "Accepts only mounts inside the validated range. Cost: the validated angle range has to be found or measured first (WP-W-10), and some installs will need remounting."
     - key: B
-      title: "Use calibrationd limits"
-      detail: "Simple; accepts mounts the model was never validated for."
-  sources: ["assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md OI-2"]
-  status: queued
+      title: "openpilot's calibration limits"
+      detail: "Available now, nothing to derive. Cost: accepts mounts outside anything validated, which TSR-807 does not allow."
+  sources: ["assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md OI-2, INS-25, SPC-03", "assurance/03-system/WP-S-06-requirements-production-operation.md TSR-807", "openpilot/selfdrive/locationd/calibrationd.py"]
+  status: open
 
 - id: DQ-176
-  question: "What validated IMU/carState criterion should flag crash candidates (replacing the interim aEgo < -6 m/s² placeholder)?"
-  context: "The maintainer accepted an interim crash flag on 2026-10-13 as a placeholder. A validated criterion is needed for automatic flagging by G4."
+  question: "How should field logs flag a possible crash for review: derive a validated rule from the accelerometer and car signals, or keep today's placeholder of braking harder than 6 m/s²?"
+  context: >-
+    Field monitoring item MON-14 flags crash candidates in the logs so every one is investigated the same day (T1).
+    The rule today, `carState.aEgo` below −6 m/s², was accepted on 2026-10-13 as a placeholder. **A placeholder can
+    miss low-speed impacts and flag hard stops; a missed crash is a safety-goal violation nobody looks at.**
   reversibility: easy
-  blocks: "MON-14"
+  blocks: "MON-14; WP-O-04 OI-8; K-01 crash indicator"
   gate: G4
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
-      title: "Derive from logged events and literature"
-      detail: "Validated threshold; needs data."
+      title: "Derive the rule from logged events and published crash-pulse data"
+      detail: "A threshold on the accelerometer and carState checked against known events. Cost: needs logs of hard stops and published crash pulses; until then the placeholder stays."
     - key: B
-      title: "Keep placeholder"
-      detail: "No work; unvalidated flagging."
-  sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-8"]
-  status: queued
+      title: "Keep the placeholder"
+      detail: "No work. Cost: the flag is unvalidated, so missed and false crash candidates are unknown."
+  sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-8, MON-14, K-01"]
+  status: open
 
 - id: DQ-177
   question: "When and how to add a configuration-independent claim layer for reusing platform evidence across configurations?"
@@ -4205,58 +4267,77 @@
   status: queued
 
 - id: DQ-178
-  question: "Should fault injection for release-image tests use a debug probe (SWD) or a debug build with a representativeness argument?"
-  context: "Fault-injection hooks exist only in debug builds, so evidence is for a different image than the one shipped."
+  question: "For fault-injection tests of the panda release image, should faults be injected with a debug probe into the shipped image, or in a debug build argued to be representative?"
+  context: >-
+    The fault-injection hooks exist only in debug builds, so today's fault cases test an image that is not the one
+    shipped. A debug probe (SWD) can halt the chip and write memory in the release image itself, but needs pad access
+    and the probe (HIL bench P-10). **Testing the shipped image is stronger evidence; a debug build is available now.**
   reversibility: easy
-  blocks: "VS-SWQ, VS-SWI fault cases"
+  blocks: "WP-W-08 OI-2; VS-SWQ and VS-SWI fault cases; VS-FI-18"
   gate: G4
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
-      title: "SWD-probe injection on the release image"
-      detail: "Tests the shipped image; needs probe and pad access (P-10)."
+      title: "Probe injection on the release image, debug build only where the probe cannot reach"
+      detail: "Evidence is for the image that ships. Cost: an SWD probe and pad adapter (P-10), and confirming pad access on the red panda."
     - key: B
-      title: "Debug build plus representativeness argument"
-      detail: "Available now; weaker evidence."
-  sources: ["assurance/05-software/WP-W-08-embedded-software-testing.md OI-2"]
-  status: queued
+      title: "Debug build with a written representativeness argument"
+      detail: "Available now. Cost: weaker evidence; the argument must show the hooks change nothing else."
+  sources: ["assurance/05-software/WP-W-08-embedded-software-testing.md OI-2", "assurance/05-software/hil-bench/README.md P-10"]
+  status: open
 
 - id: DQ-179
-  question: "What FP16 error budget sets the per-field tolerances of the compile-equivalence test VS-ML-01?"
-  context: "The device runs the model in FP16 and is compared with FP32 ONNX; tolerances need a documented budget."
+  question: "How should the tolerances of the model compile-equivalence test be set: from an analysed half-precision error budget, or from differences observed in runs?"
+  context: >-
+    The device runs the driving model in half precision (FP16), and VS-ML-01 compares its outputs with the
+    full-precision reference model. Each output field needs a tolerance. **Tolerances fitted to what is observed can
+    hide a real compile defect; an analysed budget says what difference is explainable by FP16 alone.**
   reversibility: easy
-  blocks: "VS-ML-01"
+  blocks: "VS-ML-01; WP-W-10 OI-6; MLR-14; release criterion A4"
   gate: G4
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
-      title: "Derive analytically and confirm on DS-REF"
-      detail: "Defensible tolerances."
+      title: "Derive the budget analytically, then confirm it on the reference data set"
+      detail: "Defensible tolerances per field. Cost: an analysis of FP16 rounding through the network, then runs on DS-REF."
     - key: B
-      title: "Empirical from observed differences"
-      detail: "Faster; risk of fitting tolerances to defects."
-  sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-6"]
-  status: queued
+      title: "Set tolerances from observed differences"
+      detail: "Faster. Cost: risk of accepting a defect as normal rounding."
+  sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-6, MLR-14"]
+  status: open
 
 - id: DQ-180
-  question: "How are release signatures recorded: signed git tag plus signed commit of the filled record?"
-  context: "The release record needs signatures from five roles; the mechanism must be verifiable later."
+  question: "How should the five signatures on a release record be recorded: a signed git tag plus a signed commit of the filled record, or approving reviews on GitHub?"
+  context: >-
+    A release is valid only when every role has signed its record (WP-K-06 §8), and the record is never edited
+    afterwards. The signatures must still be checkable years later and bound to exactly that release. Releases are
+    already signed with an offline key (DQ-075 A, DQ-086). **Git signatures stay with the code wherever it is
+    mirrored; GitHub reviews exist only on GitHub.**
   reversibility: easy
-  blocks: "Release record"
+  blocks: "WP-K-06 OI-2 and §8; the first release record"
   gate: G5
   decider: claude
+  asked: 2026-11-02
+  batch: 20
+  proceed_after: 2026-11-09
   options:
     - key: A
       recommended: true
-      title: "Signed tag + signed commit"
-      detail: "Verifiable in git; each signer needs a signing key."
+      title: "Signed tag plus a signed commit of the filled record by each signer"
+      detail: "Verifiable offline with git alone. Cost: each signer needs a signing key and to sign a commit."
     - key: B
-      title: "GitHub approving reviews"
-      detail: "Easier; weaker binding to the release."
-  sources: ["assurance/10-safety-case/WP-K-06-release-record.md OI-2"]
-  status: queued
+      title: "Approving reviews on the release pull request"
+      detail: "Easiest for signers. Cost: the binding to the release lives in GitHub, and is lost if the repository moves."
+  sources: ["assurance/10-safety-case/WP-K-06-release-record.md OI-2, §8", "assurance/07-supporting/WP-P-10-release-management.md OI-3, OI-4 (DQ-075, DQ-086)"]
+  status: open
 
 - id: DQ-181
   question: "What is the field-report path for users once a release exists?"
@@ -6251,7 +6332,9 @@
       title: "3 m/s², as DQ-365 described (about 10 s and 150 m)"
       detail: "Shortest time at speed. Cost: a firm stop that following drivers may not expect (rear-end risk, HZ-006), and the same planner change."
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
+  note: "Set in WP-S-02 v0.65 TSR-633 (2 m/s², ramped in, about 15 s and 230 m from 110 km/h), WP-S-04 v0.30 §3.8 and SW FMEA SWF-086.C2. Left: the planner change for the forced stop and its tests (openpilot longitudinal_planner) (jherrodthomas/LionDriver#PRNUM)"
 
 - id: DQ-425
   question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
@@ -6430,7 +6513,10 @@
     itself carries no evidence credit.
   reversibility: easy
   blocks: "assurance/models/autosar README OI-1; schema check in the 'autosar description' CI job"
+  gate: G3
   decider: lead
+  asked: 2026-11-02
+  batch: 20
   options:
     - key: A
       recommended: true
@@ -6443,7 +6529,7 @@
       title: "Ask AUTOSAR for written permission (or use an integration partner's licensed tool) first"
       detail: "Removes the doubt. Cost: time and an external request; B applies meanwhile."
   sources: ["assurance/models/autosar/README.md §4", "AUTOSAR_MMOD_XMLSchema R22-11 _disclaimer.txt"]
-  status: queued
+  status: open
 - id: DQ-431
   question: "The firmware can take up to 0.21 s to notice that the EPS status message (0x262) has stopped, against a 0.2 s requirement. What do we do?"
   context: >-
@@ -6474,3 +6560,28 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-11-01, note: "go with A on DQ-431, measure the rate first"}
   applied: {ref: "jherrodthomas/LionDriver#550", record: "WP-S-04 v0.29 T-01 and §5 RX loss row; WP-S-05 v0.22 OI-7; assurance/sim/vhil README §3 and run_vhil.py KNOWN_OPEN", at: 2026-11-01}
+
+- id: DQ-432
+  question: "GitHub's dependency alerts do not see the AGNOS operating system, vendored code or the model files. How should known weaknesses in those be watched?"
+  context: >-
+    You chose GitHub's own dependency alerts for the SBOM and scanning (DQ-169 B). They read the Python lockfile and
+    manifests only. The AGNOS image (Linux kernel and userland), vendored code such as the panda's CMSIS headers, the
+    LFS model artefacts and the panda toolchain are outside them, and today only a monthly manual search covers
+    them (WP-O-05 MS-04). **Leaving that as it is accepts a slower, manual watch over the operating system the
+    whole stack runs on.**
+  reversibility: easy
+  blocks: "WP-M-09 OI-4; WP-W-11 §5.1 and SCAN-03 coverage; WP-O-05 MS-04"
+  gate: G3
+  options:
+    - key: A
+      recommended: true
+      title: "Keep the monthly manual search for those components, with a written list of what it covers"
+      detail: "No new tool, and the gap is written down. Cost: up to a month before a known weakness in AGNOS or vendored code is noticed."
+    - key: B
+      title: "Add an open-source scanner for the AGNOS image and vendored code only"
+      detail: "Weekly automated coverage of the rest. Cost: a second tool to set up and classify, partly reversing DQ-169 B."
+    - key: C
+      title: "Treat AGNOS as comma's responsibility and follow comma's notices only"
+      detail: "Least work. Cost: relies on comma reporting what affects LionDriver's pinned version."
+  sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md §5.1", "assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md MS-04", "DQ-169"]
+  status: queued
