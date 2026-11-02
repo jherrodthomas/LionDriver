@@ -1,4 +1,4 @@
-# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests, a stopped car, lane markings and fog
+# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests, a stopped car, lane markings, fog and GPS in a tunnel
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01), oncoming headlights (TC-02), rain (TC-03), crown and wind (TC-15),
@@ -593,7 +593,29 @@ Results: [`results/fog-visibility.md`](../results/fog-visibility.md).
 
 *Figure 25. Fog: how far the road camera sees.*
 
-## 17. Checks
+## 17. Losing GPS in a tunnel (TC-18)
+
+**Question.** TC-18 names a tunnel's loss of GPS beside its lighting. How far does openpilot's position estimate drift
+in a long tunnel, and does anything engaged depend on it?
+
+**Method.** [`gnss_tunnel.py`](gnss_tunnel.py) reads openpilot's code and pins every line it rests on. It also scans
+`selfdrive`, `system` and `common` for every reader of a GPS service, and fails on one it has not reviewed.
+
+**Result.**
+- **There is no position to drift.** `locationd` reads no GPS. It fuses the inertial sensors, the camera's odometry
+  and the car's state into the device's motion (`deviceMotion`), which the controller uses.
+- **`selfdrived` notices but does nothing visible.** It puts the GPS service on its ignore lists, so a lost fix is
+  never a communication fault. After 1500 m without one (49 s at 110 km/h) it raises `noGps`, which carries no alert.
+- **The other readers don't drive:** the GPS drivers, the UI, and the device's status message.
+- **For TC-18:** the tunnel's risk is its light ([§9](#9-tunnel-entry-and-exit-tc-18-ks-12)). The GNSS-loss half needs
+  no drive of its own while these pins hold.
+
+**Changed from the plan.** The plan was a drift simulation. The code shows there is nothing to simulate, so the study
+is a pinned code reading. It has no figure, because a table says it.
+
+Results: [`results/gnss-tunnel.md`](../results/gnss-tunnel.md).
+
+## 18. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -654,6 +676,8 @@ Results: [`results/fog-visibility.md`](../results/fog-visibility.md).
 | N2 NCHRP 20-102(06)'s own pairs come back (34 on its dry pavement is 2.5) | a wrong pavement value |
 | V1 Koschmieder: a black object at the visibility keeps 5 %; at 2 % it is seen ln 50 / ln 20 farther | a wrong extinction |
 | V2 A line against a road as bright as the horizon fades by Koschmieder itself; brighter airlight, sooner | a wrong airlight term |
+| L1 The lines the GPS study rests on are found in openpilot (locationd's inputs, controlsd's motion, selfdrived's ignore lists, noGps with no alert) | openpilot starting to use the GPS while engaged |
+| L2 The reader scan finds the GPS drivers, finds no unreviewed reader, and the noGps distance is 1500 m | a blind scan or a new reader |
 
 Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
 study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
@@ -678,4 +702,5 @@ python3 assurance/sim/weather/crest.py --figures
 python3 assurance/sim/weather/stopped_car.py --figures     # reads model.py and radard.py
 python3 assurance/sim/weather/markings.py --figures        # reads results/headlights.json
 python3 assurance/sim/weather/fog_visibility.py --figures  # reads results/stopped-car.json
+python3 assurance/sim/weather/gnss_tunnel.py               # reads openpilot's locationd, controlsd, selfdrived
 ```

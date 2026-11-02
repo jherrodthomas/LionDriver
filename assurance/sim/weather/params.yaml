@@ -277,3 +277,9 @@ fog_visibility:
   dense_fog_m: {value: 400.0, status: published, source: "NWS: dense fog advisory at visibility of 1/4 mile (400 m) or less"}
   odd_visibility_m: {value: 200.0, status: published, source: "WP-C-02 §3.1 weather: visibility at least 200 m (LIMITATIONS.md:10)"}
   preview_s: {value: 2.0, status: assumed, source: "the lane lines the lane keeping needs to see ahead, in seconds of travel"}
+
+gnss_tunnel:
+  # Losing GPS in a tunnel (gnss_tunnel.py, physics plan round 3 study 20): which of openpilot's processes read the
+  # GPS, read from the code, and what a long tunnel does to them.
+  speed_kph: 110.0
+  tunnel_m: {value: [1000.0, 2000.0, 4000.0], status: assumed, source: "road tunnels of 1, 2 and 4 km (the longest US road tunnels are a few km)"}
