@@ -6,6 +6,7 @@
 | Status | Draft, AI-assisted (Claude), not reviewed. Decisions SY-01 to SY-06 taken by the lead on 2026-10-24 (DQ-185 to DQ-187); SY-05 and SY-06 wait for the model review (OI-8) |
 | Documents of record | [WP-C-01](../../02-concept/WP-C-01-item-definition.md) §3, [WP-S-03](../../03-system/WP-S-03-technical-safety-concept-architecture.md) §3, §6, §8, §9, [WP-W-03](../../05-software/WP-W-03-software-architecture.md) §3.1, §4.1; for behaviour the state-machine records ([`05-software/state-machines`](../../05-software/state-machines)) and WP-S-03 §4.1; WP-S-04 §3.7 and WP-S-05 §11 for timing and signals; for requirements the trace data ([`trace/items`](../../trace/items)), [WP-S-01](../../03-system/WP-S-01-system-requirements.md) §1.2–§10.1, [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) §4 and the test specifications. The model is a checked copy of them (§4) |
 | Tool classification | [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-26 (OMG pilot implementation), TL-27 (in-house reader, checks, renderer); TCL1, no verification credit |
+| Version | 2026-11-02 (Claude, I0, not reviewed): counts in §1, §3, §5 and §6.1 brought up to date with `tools/check_model.py` and its two reports (309 requirements; 479 allocations, 392 resolved) |
 | Explorer | [Live explorer](https://claude.ai/artifact/3ZLwHiNmqwePZtDnBbLBCb) (private page of the project lead; works on a phone), or [`generated/explorer.html`](generated/explorer.html) opened locally in a browser. `tools/explorer.py --check` fails when the live page needs republishing |
 
 The model is description, not code generation: LionDriver does not use model-based development for production code ([WP-W-01](../../05-software/WP-W-01-software-development-environment-guidelines.md)). Nothing here is verification evidence. A figure or check result in this folder may support a review, but it does not replace one.
@@ -14,7 +15,7 @@ The model is description, not code generation: LionDriver does not use model-bas
 
 The architecture is already written down, in tables in five work products and in hand-drawn figures. Three things are missing that a model provides:
 
-1. **One set of element names.** The 351 `allocated_to` fields in [`trace/items`](../../trace/items) use 161 different strings in four vocabularies (`E-03`, `P-SW`, `U-SAF-TOY`, `host.selfdrived`). [WP-P-06](../../07-supporting/WP-P-06-requirements-management-traceability.md) OI-4 asks for an element catalogue. The model is that catalogue, and §5 measures how much of the allocation data it already resolves.
+1. **One set of element names.** The 479 `allocated_to` fields in [`trace/items`](../../trace/items) use 193 different strings in four vocabularies (`E-03`, `P-SW`, `U-SAF-TOY`, `host.selfdrived`). [WP-P-06](../../07-supporting/WP-P-06-requirements-management-traceability.md) OI-4 asks for an element catalogue. The model is that catalogue, and §5 measures how much of the allocation data it already resolves.
 2. **Consistency by construction.** WP-S-03 says of Figure 3-2 "change it together with §3.1, §3.3, §5 and §6". Here a table and the model are compared on every pull request (§4), and every figure is regenerated from the model, so a figure cannot drift from the tables it shows.
 3. **A semi-formal notation** for architectural design. ISO 26262-6:2018 Table 2 highly recommends semi-formal notations for the software architecture from ASIL B, and ASPICE SYS.3 and SWE.2 ask for static and dynamic aspects with their interfaces. Check the clause and table numbers against your licensed copy.
 
@@ -56,7 +57,7 @@ A generated view replaces a hand-drawn figure when it carries the same facts; un
 | [`model/Behaviour.sysml`](model/Behaviour.sysml) | The operating modes of WP-C-01 §4 as the state machine SM-SYS: states with their §4 row and record states, transitions with the record transitions they stand for and who enforces them |
 | [`model/Mechanisms.sysml`](model/Mechanisms.sysml) | SM-01 to SM-45 as `action` usages of `SafetyMechanism` with coverage, DC target and TSRs (WP-S-03 §6) |
 | [`model/Architecture.sysml`](model/Architecture.sysml) | E-01 to E-05 with their parts and software units, allocation of software to hardware, interfaces IF-01 to IF-10, the 23 cereal services of WP-S-03 §9 between modelled processes, `perform` statements, the vehicle context and the allocation short forms `P-SW`, `P-HW`, `SoC`, `HAR` as aliases |
-| [`model/Requirements.sysml`](model/Requirements.sysml) | **Generated.** 282 requirements as `requirement` usages: safety goals SG, FSRs and TSRs from the trace data, system requirements SYS of WP-S-01, cybersecurity requirements CSR of WP-S-07 §4, each with its text, ASIL, allocation text and verification method; the parent links of the trace data as `#derivation` connections |
+| [`model/Requirements.sysml`](model/Requirements.sysml) | **Generated.** 309 requirements as `requirement` usages: safety goals SG, FSRs and TSRs from the trace data, system requirements SYS of WP-S-01, cybersecurity requirements CSR of WP-S-07 §4, each with its text, ASIL, allocation text and verification method; the parent links of the trace data as `#derivation` connections |
 | [`model/Satisfaction.sysml`](model/Satisfaction.sysml) | **Generated.** `satisfy` relationships from each requirement's allocation: `allocated_to` of the trace data (resolved as in M8), WP-S-01 §10.1, the Alloc column of WP-S-07 §4 (FW → E-03, SoC → E-01); a safety goal is satisfied by the item. EXT, OPS, ENV and USR give no relationship |
 | [`model/Verification.sysml`](model/Verification.sysml) | **Generated.** Every test case of a specification table (VS-…) as a `verification` usage whose objective verifies the modelled requirements it names, ranges expanded |
 | [`model/Needs.sysml`](model/Needs.sysml) | **Generated.** The stakeholders and actors of WP-S-01 §1.2 as part definitions; the 12 stakeholder needs of §1.3 as `requirement` usages with their `stakeholder` parameters and a `#derivation` to each SYS requirement and safety goal that refines them; the 11 use cases of §1.4 as `use case` usages with LD-SDA as subject, their `actor`s, an objective that `require`s the needs they serve, and a `perform` of each function they use |
@@ -141,10 +142,15 @@ Writing the model found one difference worth recording. WP-S-03 §3.3 defines IF
 
 | Requirement kind | Allocations | Resolved | Not resolved |
 |---|---|---|---|
-| FSR | 54 | 53 | 1 |
-| TSR | 118 | 118 | 0 |
-| SWSR | 134 | 124 | 10 |
-| HWSR | 45 | 3 | 42 |
+| FSR | 58 | 57 | 1 |
+| TSR | 128 | 128 | 0 |
+| SYS | 39 | 39 | 0 |
+| CSR | 64 | 31 | 33 |
+| SWSR | 144 | 134 | 10 |
+| HWSR | 46 | 3 | 43 |
+| **All** | **479** | **392** | **87** |
+
+No allocation is partly resolved. The 33 unresolved CSR allocations are `FW`, `ENV`, `USR` or combinations of them, in which the report finds no element identifier.
 
 HWSRs are allocated to chip-level parts (RAMECC, PVD, relay driver, codec) that no catalogue defines yet. Modelling the parts of [WP-H-02](../../04-hardware/WP-H-02-hardware-design.md) is the next increment (OI-1). The report is informational and does not fail CI. Because CI asks for it to be regenerated whenever an allocation or the model changes, a new unresolved allocation is visible in review.
 
@@ -262,7 +268,7 @@ Every figure below is generated. The explorer shows V-01 to V-04 with the model 
 
 ### 6.1 Requirements coverage
 
-[`generated/requirements-coverage.md`](generated/requirements-coverage.md) is read from the model on every build. At this baseline: all 39 SYS requirements are satisfied and 25 are verified by a case; 96 of 118 TSRs are satisfied inside the item and the other 22 are allocated to EXT or OPS; 89 TSRs are verified by a case; no test specification names a CSR yet. "Verified" means a case is specified, not that it has passed: execution results are not in the model.
+[`generated/requirements-coverage.md`](generated/requirements-coverage.md) is read from the model on every build. At this baseline: all 39 SYS requirements are satisfied and 25 are verified by a case; 106 of 128 TSRs are satisfied inside the item and the other 22 are allocated to EXT or OPS; 91 TSRs are verified by a case; no test specification names a CSR yet. "Verified" means a case is specified, not that it has passed: execution results are not in the model.
 
 ## 7. Changing the model
 

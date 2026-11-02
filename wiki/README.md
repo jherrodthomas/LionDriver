@@ -8,7 +8,8 @@ the sync stamp and the infographics follow every merge. The same workflow checks
 whichever files it touches, so a change that moves a file the pages link to fails before it is merged. The wiki is
 never edited in place; an edit made there is overwritten by the next sync.
 
-This file describes the folder and is not published.
+This file describes the folder and is not published. Last changed 2026-11-02: the figures of how_animations,
+dec_animations and comms_animations listed (Claude, I0, not reviewed).
 
 ## What the wiki is for
 
@@ -78,6 +79,21 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `integrated-coverage.svg`, `integrated-log.svg`, `integrated-mechanism.svg`, `integrated-case.svg`) are rendered by
   [`tools/wiki/integrated_animations.py`](../tools/wiki/integrated_animations.py): lanes, interfaces, register coverage,
   the hazard log, trace lanes and case status are read from their records.
+- The figures of "How LionDriver works" (`how-hookup.svg`, `how-one-command.svg`, `how-envelope.svg`,
+  `how-in-charge.svg`, `how-failures.svg`, `how-stock.svg`, `how-odd.svg`) are rendered by
+  [`tools/wiki/how_animations.py`](../tools/wiki/how_animations.py): the envelope limits are read from WP-W-09 CD-02,
+  the stall times and the forwarding rule from WP-S-02, the FTTI and fault budgets from WP-S-04 §3.7, the assumptions
+  of use from WP-C-01 §7 and the operating domain from WP-C-02; with opendbc checked out the limits are also compared
+  with `toyota.h`.
+- The figures of "ASIL decomposition: what it is and what it isn't" (`dec-idea.svg`, `dec-myths.svg`,
+  `dec-schemes.svg`, `dec-independence.svg`, `dec-liondriver.svg`) are rendered by
+  [`tools/wiki/dec_animations.py`](../tools/wiki/dec_animations.py): the decision, the independence requirements and
+  the scheme records are read from WP-A-01, the hardware-metric gap from WP-H-04 OI-6 and the ASIL notations from
+  WP-S-02 §2.1. The allowed splits are those of ISO 26262-9:2018 clause 5, which is not in the repository.
+- The figures of "CAN, CAN FD and end-to-end protection" (`comms-frames.svg`, `comms-e2e.svg`, `comms-path.svg`,
+  `comms-timeline.svg`) are rendered by [`tools/wiki/comms_animations.py`](../tools/wiki/comms_animations.py): the
+  hops, checks and faults are those of WP-S-05 §12.3, the check statuses are read from the TSR list, the counter and
+  checksum facts from WP-S-05 §5 and §11 and the times from WP-S-04 §3.7 and §4.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:

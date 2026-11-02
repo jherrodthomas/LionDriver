@@ -108,7 +108,10 @@ def _profile(pts, along, across, step=0.02):
 
 
 def extract_silhouette(glb: Path) -> dict:
-  """Top-down and side outlines (metres, car frame: x right, y forward is -y in the file, z up) from vertex data."""
+  """Top-down and side outlines (metres, file frame: car faces -y, z up) from vertex data.
+
+  Front and rear come from the geometry, never from the mesh names (vehicle-3d-model.md §4): the separate wheel_1/2 sit
+  at the headlight end (-y, the front) and the fused wheels_forward pair at the tail-lamp end (+y, the rear)."""
   g, buf = _glb_json_and_buffer(glb)
   byname = {n.get("name"): n["mesh"] for n in g["nodes"] if "mesh" in n}
   groups = {
@@ -123,10 +126,12 @@ def extract_silhouette(glb: Path) -> dict:
   wheels = []
   for name in ("wheels_forward", "wheel_1", "wheel_2"):
     w = [tuple(c / 100.0 for c in p) for p in _positions(g, buf, byname[name])]
-    parts = [("L", [p for p in w if p[0] < 0]), ("R", [p for p in w if p[0] > 0])] if name == "wheels_forward" else [("", w)]
+    split = name == "wheels_forward"   # the fused pair: split by the sign of x
+    parts = [("L", [p for p in w if p[0] < 0]), ("R", [p for p in w if p[0] > 0])] if split else [("", w)]
     for side, q in parts:
       ys = [p[1] for p in q]; zs = [p[2] for p in q]; xs = [p[0] for p in q]
-      wheels.append({"name": (f"front_{side}" if side else ("rear_R" if sum(xs) > 0 else "rear_L")),
+      end = "front" if sum(ys) < 0 else "rear"   # the car faces -y; tail lamps at +y (§4)
+      wheels.append({"name": f"{end}_{side or ('R' if sum(xs) > 0 else 'L')}",
                      "x": round((min(xs) + max(xs)) / 2, 3), "y": round((min(ys) + max(ys)) / 2, 3),
                      "z": round((min(zs) + max(zs)) / 2, 3), "r_rim": round((max(zs) - min(zs)) / 2, 3)})
   tz = [p[2] / 100.0 for p in _positions(g, buf, byname["tire_1"])]
@@ -175,20 +180,20 @@ def car_top(sil, cx, cy, scale, heading_deg=0.0, mirrors=True, cls="car"):
 
 
 def car_side(sil, x0, ground_y, scale, cls="car"):
-  """Side outline, car facing left, rear at x0 px; returns svg and the wheel circles."""
+  """Side outline, car facing left: the front bumper at x0 px, the rear to the right; returns the body and wheel circles.
+
+  The file's -y is the front (§4: headlights, shorter overhang; the high trunk deck and the shark-fin antenna are at +y),
+  so the file's y maps straight to page x: x = x0 + (y - ymin) * scale. No flip: a flip would put the front on the right."""
   o = sil["side_outline"]
-  top = [(x0 + (2.4 - (-y)) * 0 + (y - sil["extent_m"]["min"][1]) * scale, ground_y - z * scale) for y, z in o["top"]]
-  bot = [(x0 + (y - sil["extent_m"]["min"][1]) * scale, ground_y - z * scale) for y, z in o["bottom"]]
-  # the file's -y is the front; draw front on the left: mirror by mapping y -> (y - ymin) and flipping around the span
-  span = sil["extent_m"]["max"][1] - sil["extent_m"]["min"][1]
-  top = [(x0 + (span - (p[0] - x0) / scale) * scale, p[1]) for p in top]
-  bot = [(x0 + (span - (p[0] - x0) / scale) * scale, p[1]) for p in bot]
+  ymin = sil["extent_m"]["min"][1]
+  top = [(x0 + (y - ymin) * scale, ground_y - z * scale) for y, z in o["top"]]
+  bot = [(x0 + (y - ymin) * scale, ground_y - z * scale) for y, z in o["bottom"]]
   body = _poly(top + list(reversed(bot)), cls)
   wheels = ""
   for w in sil["wheels"]:
     if w["name"].endswith("_R"):
       continue
-    wx = x0 + (span - (w["y"] - sil["extent_m"]["min"][1])) * scale
+    wx = x0 + (w["y"] - ymin) * scale
     wheels += f'<circle class="carl" cx="{wx:.1f}" cy="{ground_y - w["z"] * scale:.1f}" r="{sil["r_tire"] * scale:.1f}"/>'
     wheels += f'<circle class="carl" cx="{wx:.1f}" cy="{ground_y - w["z"] * scale:.1f}" r="{w["r_rim"] * scale:.1f}"/>'
   return body + wheels
@@ -325,15 +330,20 @@ def fig_camera_geometry(sil) -> str:
               "Side silhouette of the Corolla from the mesh with the comma device at the windshield, its vertical field of view, "
               "the hood occlusion distance on flat ground, and a following vehicle's sight line. Device position and angles are "
               "to be measured on the reference car; the values shown are placeholders.")
-  s = 62.0; gy = 400; x0 = 340
-  span = sil["extent_m"]["max"][1] - sil["extent_m"]["min"][1]
+  s = 62.0; gy = 400; x0 = 340       # x0: the front bumper (car faces left)
+  ymin = sil["extent_m"]["min"][1]
+  span = sil["extent_m"]["max"][1] - ymin
   out.append(f'<line class="axis" x1="60" y1="{gy}" x2="{W - 60}" y2="{gy}"/>')
   out.append(car_side(sil, x0, gy, s))
-  # device: near the top of the windshield, about 1.0 m back from the front, 1.25 m high (placeholders)
-  dx = x0 + (1.95) * s; dz = gy - 1.26 * s
+  # device: just under the top of the windshield, 1.95 m behind the front bumper, 1.26 m high (placeholders)
+  dev_back, dev_h = 1.95, 1.26
+  dx = x0 + dev_back * s; dz = gy - dev_h * s
   out.append(f'<rect class="m5" x="{dx - 6:.1f}" y="{dz - 5:.1f}" width="12" height="10" rx="2"/>')
-  out.append(_t(dx + 12, dz - 8, "comma device (position: placeholder, to measure)", "t2"))
-  # vertical FOV cone, pitched slightly down; hood occlusion where lower ray meets ground
+  # label above the roof and the 1 m grid, with a leader, so it does not sit on the outline
+  ly = gy - 2.2 * s - 10
+  out.append(f'<line class="axis" x1="{dx:.1f}" y1="{dz - 6:.1f}" x2="{dx + 24:.1f}" y2="{ly + 4:.1f}"/>')
+  out.append(_t(dx + 28, ly, "comma device at the windshield (position: placeholder, to measure)", "t2"))
+  # vertical FOV cone, looking forward (to the left), pitched slightly down
   import math
   pitch = math.radians(-4); half = math.radians(29)
   L_up = 4.5
@@ -342,12 +352,17 @@ def fig_camera_geometry(sil) -> str:
   lx, ly_ = dx - L_dn * s * math.cos(pitch - half), gy
   out.append(f'<polygon class="fov" points="{dx:.1f},{dz:.1f} {ux:.1f},{uy:.1f} {lx:.1f},{ly_:.1f}"/>')
   out.append(_t(ux + 6, uy + 4, "vertical field of view (placeholder 58°, pitch −4°)", "t2"))
-  gx = dx - ((dz - gy) / (s * math.sin(pitch - half))) * s * math.cos(pitch - half) * -1
-  gx = dx - abs((dz - gy) / (s * math.sin(pitch - half))) * s * math.cos(pitch - half)
+  # hood occlusion: the steepest ray that clears the hood (bumper to cowl) from the placeholder device position
+  top = sil["side_outline"]["top"]
+  cowl = next(y for (y, z), (y2, z2) in zip(top, top[5:]) if y - ymin > 0.3 and (z2 - z) / (y2 - y) > 0.3)
+  graze = min((dev_h - z) / (dev_back - (y - ymin)) for y, z in top if y < cowl and dev_back - (y - ymin) > 0.05)
+  d_hood = dev_h / graze - dev_back   # ahead of the bumper
+  gx = x0 - d_hood * s
+  out.append(f'<line class="thr" x1="{dx:.1f}" y1="{dz:.1f}" x2="{gx:.1f}" y2="{gy}"/>')
   out.append(f'<line class="thr" x1="{gx:.1f}" y1="{gy}" x2="{gx:.1f}" y2="{gy - 30}"/>')
-  front_x = x0 + span * s * 0 + 0  # front of car is at x0 (car faces left)
   out.append(f'<line class="thrn" x1="{x0:.1f}" y1="{gy + 26}" x2="{gx:.1f}" y2="{gy + 26}"/>')
-  out.append(_t((x0 + gx) / 2, gy + 44, "ground first seen at d_hood ≈ 4.2 m ahead of the bumper (placeholder)", "t2", "middle"))
+  out.append(_t(60, gy + 44, f"red dashed: hood sight line; ground first seen at d_hood ≈ {d_hood:.1f} m ahead of the bumper "
+                            "(from the outline and the placeholder device position)", "t2"))
   out.append(_t(60, 95, "Side view, front to the left, 1 m grid; silhouette from the purchased mesh (18-inch wheels: sport trim)", "tb"))
   for m in range(0, 16):
     x = 60 + m * s

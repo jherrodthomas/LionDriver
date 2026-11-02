@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | A 3D mesh of the reference car (Corolla E210, CFG-001) for simulation layer 3 (MetaDrive) renders and for figures. Procurement comparison, what the mesh does and does not change, and the handover for whoever picks this up next |
-| Version | 0.6 (§1: the lead's choice recorded, DQ-368 A, 2026-10-23). 0.5 (pure-Python glTF export, load-tested in Panda3D, 2026-10-17). 0.4 (Blender export script, MetaDrive vehicle class and bridge hook, 2026-10-17). 0.3 (renders, use, mock-ups, target results, 2026-10-17). 0.2 (receipt check, 2026-10-17). 0.1 (2026-10-17) |
+| Version | 0.7 (§7 mock-up 3 redrawn: the side view had been mirrored, so the car, the device and the field of view faced backwards; now front to the left with the device at the windshield looking forward, and the hood-occlusion distance computed from the outline and the placeholder device position; AI-drafted, I0, 2026-11-02). 0.6 (§1: the lead's choice recorded, DQ-368 A, 2026-10-23). 0.5 (pure-Python glTF export, load-tested in Panda3D, 2026-10-17). 0.4 (Blender export script, MetaDrive vehicle class and bridge hook, 2026-10-17). 0.3 (renders, use, mock-ups, target results, 2026-10-17). 0.2 (receipt check, 2026-10-17). 0.1 (2026-10-17) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. DQ-368 answered A (bought 2026-10-17, Standard licence) |
 | Feeds | [README](README.md) §2 layer 3; the WP-V-02/WP-V-03 figures that show the reference car; nothing in the safety case |
 
@@ -194,7 +194,7 @@ trajectory is illustrative; the real figure takes it from the plant results.*
 *Mock-up 2: what one frame of a layer-3 clip carries. The lead vehicle is a plain box on purpose; only the ego uses the
 licensed mesh.*
 
-![Mock-up 3: side silhouette of the Corolla with the comma device at the windshield, its vertical field of view, the hood-occlusion distance on flat ground and a following vehicle's sight line. Device position and angles are placeholders. Mock-up.](figures/fig-sim-mock-03-camera-geometry.svg)
+![Mock-up 3: side silhouette of the Corolla, front to the left, with the comma device at the windshield, its vertical field of view looking forward, the hood sight line and the hood-occlusion distance on flat ground ahead of the bumper, and a following vehicle's sight line from the rear. Device position and angles are placeholders. Mock-up.](figures/fig-sim-mock-03-camera-geometry.svg)
 
 *Mock-up 3: the camera-geometry figure for WP-C-01 / WP-C-06 / WP-S-05. Every number on it is a placeholder until the device
 position is measured on the reference car.*
