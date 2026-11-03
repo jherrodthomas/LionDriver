@@ -827,3 +827,40 @@ replace = "            self.state = State.enabled\n            self.current_aler
 tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_transitions.py"]
 fmea = ["SWF-033.C1"]
 why = "a soft-disable fault in preEnabled engages the car (active) instead of ending the attempt"
+
+# controlsd non-finite input guards (TSR-604; controlsd.py; SWF-ACT-044)
+[[mutants]]
+id = "NF-1"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    if not (math.isfinite(requested_curvature) and math.isfinite(lp.roll)):\n      CC.latActive = False"
+replace = "    if False:\n      CC.latActive = False"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-045.C1"]
+why = "a non-finite desired curvature reaches the lateral controller and its integrator keeps it"
+
+[[mutants]]
+id = "NF-2"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    roll = lp.roll if math.isfinite(lp.roll) else 0.0"
+replace = "    roll = lp.roll"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-045.C1"]
+why = "a non-finite roll makes the measured and desired curvature non-finite"
+
+[[mutants]]
+id = "NF-3"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    if not math.isfinite(a_target):\n      CC.longActive = False\n      a_target = 0.0"
+replace = "    if False:\n      CC.longActive = False\n      a_target = 0.0"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-045.C2"]
+why = "a non-finite acceleration target reaches LongControl and its integrator keeps it"
+
+[[mutants]]
+id = "NF-4"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    if not math.isfinite(lateral_delay):\n      lateral_delay = self.CP.steerActuatorDelay"
+replace = "    if False:\n      lateral_delay = self.CP.steerActuatorDelay"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-047.C1"]
+why = "a non-finite lateralDelay reaches int() in the torque controller and controlsd raises"
