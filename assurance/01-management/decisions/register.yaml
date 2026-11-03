@@ -3627,7 +3627,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Applied in part 2026-11-02 in WP-W-02 v0.51: SWSR-302h (X2), SWSR-302i (P1), SWSR-305h (E2), SWSR-305i (O2), QM (B-sup), worded to today's code; 18 unit tests in openpilot selfdrive/selfdrived/tests/test_driver_transitions.py; no code change; WP-W-05 v0.9.5 §5.3 has no S7 gap left; impact record change-2026-11-02-selfdrived-driver-transitions. Left: the lead's answer to DQ-433 (soft disable in preEnabled), then SWSR-302i, its test and state.py follow; TSR-304(b) as parent after WP-S-02 OI-2; I1 review; host mutants once SW FMEA causes exist."
+  note: "Applied in part 2026-11-02 in WP-W-02 v0.51: SWSR-302h (X2), SWSR-302i (P1), SWSR-305h (E2), SWSR-305i (O2), QM (B-sup); 18 unit tests in openpilot selfdrive/selfdrived/tests/test_driver_transitions.py; WP-W-05 §5.3 has no S7 gap left; impact record change-2026-11-02-selfdrived-driver-transitions. The pre-enable soft disable was decided by the lead (DQ-433 A) and applied in 80882f4 (SWSR-302i, P2). Left: TSR-304(b) as parent of 305h/305i after WP-S-02 OI-2; I1 review."
 
 - id: DQ-152
   question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
@@ -6624,4 +6624,7 @@
       title: "Start the 3 s wind-down already while waiting"
       detail: "The alert sounds at once and the timer runs during the wait. Cost: a new state path to design and test; assist may still start if the brake is released early in the 3 s."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302i, OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3 (P1)", "openpilot/selfdrive/selfdrived/state.py", "assurance/07-supporting/impact/change-2026-11-02-selfdrived-driver-transitions.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-03, note: "go with A on the pre-enable fault question"}
+  applied: {ref: "80882f4", record: "openpilot selfdrived/state.py (transition P2); WP-W-02 v0.52 SWSR-302i, OI-12 item (1) closed; sm-selfdrived.yaml P2; WP-W-05 v0.9.7 §5.3; impact record change-2026-11-03-pre-enable-soft-disable", at: 2026-11-03}
+  note: "Implemented and unit-tested (test_driver_transitions.py, mutants MP-1, MP-2); not verified on the vehicle (impact OI-1)."
