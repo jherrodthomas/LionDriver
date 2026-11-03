@@ -1221,17 +1221,17 @@
 
 - id: SWSR-511a
   kind: swsr
-  text: "Request `0xd1` param 1 (softloader entry) shall be rejected while a car safety mode is active or the ignition is on; `0xd1` param 0 shall stay debug-only."
+  text: "Request `0xd1` param 1 (softloader entry) shall be rejected while a car safety mode is active and, once TOYOTA has been accepted, until the ignition is seen off (SWSR-513a); `0xd1` param 0 shall stay debug-only."
   asil: "C (+ CS)"
   parents: [TSR-511]
   parent_text: "TSR-511"
   other_parents: false
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL, IT"
-  acceptance: "No reset into softloader from car mode"
+  acceptance: "No reset into softloader from car mode, nor after a downgrade in the same ignition cycle"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: softloader entry (`0xd1` param 1) refused in a car mode in the reference build (panda `9f60e17`); still allowed outside a car mode (GAP-24) (IA mode lock (assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  baseline_impl: "Implemented in the reference build: refused in a car mode (panda `9f60e17`, since `fd0a6a7` by the allow-list of SWSR-513) and after a downgrade until ignition off (SWSR-513a, panda `fd0a6a7`); not verified on hardware. Before TOYOTA in an ignition cycle it stays allowed, for the start-up flash (GAP-24) (IA mode lock (assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1253,17 +1253,49 @@
 
 - id: SWSR-513
   kind: swsr
-  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a). A rejected request is ignored: it shall not change the actuation state and does not by itself end actuation authority (register DQ-082 B)."
+  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), while a car safety mode is active, the control-request handler shall accept only `0xf3`, `0xd2`, `0xc2`, `0xb0`, `0xb1`, `0xb2`, `0xc0`, `0xe0` (what `pandad` sends while driving), `0xc3`, `0xc1`, `0xdd`, `0xd6`, `0xd3`, `0xd4` (the reads of a `pandad` restart), `0xdc` as SWSR-512 restricts it and `0xe7` with param1 0, and shall reject every other request, later ones included (WP-S-05 §4.2a, DQ-147 A). A rejected request is ignored: it shall not change the actuation state and does not by itself end actuation authority (register DQ-082 B)."
   asil: "B‡"
   parents: [TSR-513]
   parent_text: "TSR-513"
   other_parents: false
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL, IT"
-  acceptance: "Each request has no effect in TOYOTA mode"
+  acceptance: "In TOYOTA, each of the 256 request codes accepted exactly when listed; `0xe7` param1 1 rejected"
   applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Met in the reference build for the listed requests (panda `9f60e17`, `board/reference_lock.h`); not verified on hardware (IA mode lock (assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  baseline_impl: "Implemented in the reference build (panda `fd0a6a7`, `board/reference_lock.h`; host test `tests/reference_lock` sweeps all 256 codes; HIL `test_11` not run); not verified on hardware. Each rejection is counted in the health packet; `pandad` logs it"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-513a
+  kind: swsr
+  text: "In the reference release build, once TOYOTA has been accepted in the current ignition cycle, `0xd1` param 1 (softloader entry) and `0xdb` (OBD multiplexing) shall be rejected in every other safety mode until the ignition is seen off."
+  asil: "B‡"
+  parents: [TSR-513, TSR-511]
+  parent_text: "TSR-513, TSR-511"
+  other_parents: false
+  allocated_to: "U-PND-COMMS"
+  verification: "UT, HIL, IT"
+  acceptance: "After TOYOTA and a downgrade with ignition on, both rejected in SILENT, NOOUTPUT and ELM327; accepted again after an ignition-off tick"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented in the reference build (panda `fd0a6a7`, the `reference_car_mode_this_ignition` latch; host test `test_softloader_and_obd_latched_after_toyota_until_ignition_off`); not verified on hardware"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-513b
+  kind: swsr
+  text: "In the reference release build, requests `0xc5` (relay drive), `0xde`, `0xf9`, `0xfc` (CAN bit rates), `0xe5` (loopback), `0xe6` (clock output) and `0xf8` (heartbeat check disable) shall be rejected in every safety mode, so a downgrade from TOYOTA cannot use them and no setting carries into the next TOYOTA."
+  asil: "B‡"
+  parents: [TSR-513]
+  parent_text: "TSR-513"
+  other_parents: false
+  allocated_to: "U-PND-COMMS"
+  verification: "UT, HIL, IT"
+  acceptance: "Each rejected in SILENT, NOOUTPUT, ELM327 and TOYOTA"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented in the reference build (panda `fd0a6a7`; host test `test_requests_refused_in_every_mode`, HIL `test_11` CAN bit rate case not run); not verified on hardware. The Python library's `connect()` still writes `0xf8` and `0xde` at every `pandad.py` start, so about 4 rejections are counted per boot until the host follow-up (OI-5)"
   status: proposed
   source: WP-W-02
 

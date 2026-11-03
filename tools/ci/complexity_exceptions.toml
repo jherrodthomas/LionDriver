@@ -140,15 +140,6 @@ structure = "One switch over the control-request byte (WP-W-05 UN-21)"
 reason = "to justify"
 
 [[exceptions]]
-file = "panda/board/reference_lock.h"
-function = "reference_request_allowed"
-unit = "UN-40"
-nloc = 50
-ccn = 29
-structure = "Allow or refuse each control request in the reference build (WP-W-05 UN-40); over the CCN limit only"
-reason = "to justify"
-
-[[exceptions]]
 file = "panda/board/drivers/spi.h"
 function = "spi_rx_done"
 unit = "UN-23"
