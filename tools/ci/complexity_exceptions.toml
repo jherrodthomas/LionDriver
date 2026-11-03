@@ -133,8 +133,9 @@ reason = "to justify"
 file = "panda/board/main_comms.h"
 function = "comms_control_handler"
 unit = "UN-21"
-nloc = 224
-ccn = 60
+# 224 / 60 at panda 131320c; +2 / +1 at panda 0e8a7b9 for the 0xe8 bus-index bound (SWSR-412a)
+nloc = 226
+ccn = 61
 structure = "One switch over the control-request byte (WP-W-05 UN-21)"
 reason = "to justify"
 
