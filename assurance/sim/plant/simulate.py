@@ -92,6 +92,10 @@ def _code_value(path: Path, name: str) -> float:
 # openpilot values used by the longitudinal edge-case search (real code, read at import)
 SOFT_DISABLE_TIME = _code_value(OP / "selfdrived" / "state.py", "SOFT_DISABLE_TIME")            # 3 s
 A_CRUISE_MIN = _code_value(OP / "controls" / "lib" / "longitudinal_planner.py", "A_CRUISE_MIN")  # -1.2 m/s² (forceDecel)
+# the minimum-risk stop after an unresponsive driver (TSR-633, DQ-424 A): the planner ramps in to this rate and holds it
+# to standstill while selfdrived's latch and the forced deceleration are both set; the soft disable keeps A_CRUISE_MIN
+A_MINIMUM_RISK_STOP = _code_value(OP / "controls" / "lib" / "longitudinal_planner.py", "A_MINIMUM_RISK_STOP")  # -2.0 m/s²
+J_MINIMUM_RISK_STOP = _code_value(OP / "controls" / "lib" / "longitudinal_planner.py", "J_MINIMUM_RISK_STOP")  # 4 m/s³
 NO_RESPONSE_TIMEOUT = _code_value(OP / "monitoring" / "policy.py", "self._NO_RESPONSE_TIMEOUT")  # 5 s countdown
 STOP_DISTANCE = _code_value(OP / "controls" / "lib" / "longitudinal_mpc_lib" / "long_mpc.py", "STOP_DISTANCE")  # 6 m
 J_CRUISE_BP, J_CRUISE_V = [0., 10.0, 25., 40.], [1.6, 1.2, 0.8, 0.6]   # longitudinal_planner.py A_CRUISE_MAX_BP, J_CRUISE_VALS
@@ -503,8 +507,11 @@ def _simulate(case: Case) -> Result:
     # ------------------------------------------------ SoC -> panda -> car bus (TX), 100 Hz
     if k % 30 == 0 and (case.acc_follow or decel_t is not None):
       req = acc_request(v, v0, lead_s - s - 4.6, lead_v, lead_a, t_gap) if case.acc_follow else soc.accel_cmd
-      if decel_t is not None and t >= decel_t:   # forceDecel: cruise target 0, A_CRUISE_MIN at the J_CRUISE rate
-        fd_a = max(A_CRUISE_MIN, fd_a - float(np.interp(v, J_CRUISE_BP, J_CRUISE_V)) * 0.03)
+      if decel_t is not None and t >= decel_t:
+        if case.fault == "dm_stop":   # minimum-risk stop: A_MINIMUM_RISK_STOP at J_MINIMUM_RISK_STOP, to standstill
+          fd_a = max(A_MINIMUM_RISK_STOP, fd_a - J_MINIMUM_RISK_STOP * 0.03)
+        else:                         # soft disable: cruise target 0, A_CRUISE_MIN at the J_CRUISE rate
+          fd_a = max(A_CRUISE_MIN, fd_a - float(np.interp(v, J_CRUISE_BP, J_CRUISE_V)) * 0.03)
         req = min(req, fd_a)
         res.event("slow-down starts", decel_t)
       soc.acc_request = req
