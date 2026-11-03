@@ -42,24 +42,24 @@ Monte Carlo: 32 uniform samples. Cross-entropy: 3 rounds of 12, elite share 0.25
 | sd-as-built | 8 | 0 | 0% | 40.55 | — |
 | sd-dq407-b | 9 | 0 | 0% | 37.35 | — |
 | sd-dq407-c | 7 | 0 | 0% | 39.30 | — |
-| dm-stop | 8 | 0 | 0% | 33.89 | — |
+| dm-stop | 8 | 0 | 0% | 34.01 | — |
 
 | `respond` | Samples | Contacts | Share | Smallest rho (m) | Median time to contact (s) |
 |---|---|---|---|---|---|
 | takes-over | 11 | 0 | 0% | 37.35 | — |
-| ignores-alert | 21 | 0 | 0% | 33.89 | — |
+| ignores-alert | 21 | 0 | 0% | 34.01 | — |
 
 | `dv_kph` | Samples | Contacts | Share | Smallest gap rho (m) |
 |---|---|---|---|---|
 | 10–20 | 9 | 0 | 0% | 47.02 |
 | 20–30 | 13 | 0 | 0% | 39.30 |
-| 30–40 | 10 | 0 | 0% | 33.89 |
+| 30–40 | 10 | 0 | 0% | 34.01 |
 
 | `gap_s` | Samples | Contacts | Share | Smallest gap rho (m) |
 |---|---|---|---|---|
-| 2–3 | 8 | 0 | 0% | 33.89 |
-| 3–4 | 7 | 0 | 0% | 41.82 |
-| 4–6 | 17 | 0 | 0% | 34.95 |
+| 2–3 | 8 | 0 | 0% | 34.01 |
+| 3–4 | 7 | 0 | 0% | 43.11 |
+| 4–6 | 17 | 0 | 0% | 36.05 |
 
 ## Cross-entropy falsification: worst cases found
 
@@ -68,7 +68,7 @@ Monte Carlo: 32 uniform samples. Cross-entropy: 3 rounds of 12, elite share 0.25
 | 1 | dm-stop | takes-over | 70.0 | 29.61 | 2.22 | 6.00 | 1.47 | 5.46 | 16.74 | — | — | lead |
 | 3 | sd-dq407-c | ignores-alert | 72.2 | 38.71 | 2.92 | 1.50 | 1.26 | 6.17 | 17.76 | — | — | lead |
 | 3 | sd-dq407-c | ignores-alert | 71.9 | 36.14 | 2.28 | 1.50 | 1.31 | 4.09 | 21.29 | — | — | lead |
-| 3 | dm-stop | ignores-alert | 70.0 | 38.26 | 2.56 | 1.53 | 1.30 | 4.91 | 22.04 | — | — | lead |
+| 3 | dm-stop | ignores-alert | 70.0 | 38.26 | 2.56 | 1.53 | 1.30 | 4.91 | 22.16 | — | — | lead |
 | 2 | sd-dq407-c | takes-over | 70.0 | 36.98 | 2.31 | 1.50 | 1.27 | 6.45 | 25.15 | — | — | lead |
 
 The worst case of each fault (or behaviour), re-run with rounded parameters, without the fault and under assumption probes, is in the [edge-case catalogue](edge-cases.md).

@@ -12,7 +12,7 @@
 | credit | none |
 | camera frame rate | not applicable (no camera) |
 
-A fault soft disable (openpilot's `softDisabling`, SOFT_DISABLE_TIME 3 s) or the driver-monitoring no-response stop (`noResponseForceDecel`, after the 5 s "Car Stops in N s" countdown), following a lead at the same speed 2 s ahead, with a close follower. Both set the cruise target to zero, so the request ramps to A_CRUISE_MIN, −1.2 m/s², at the planner's jerk limit; the soft disable then hands control back (the item stops steering and braking). `timing` is the order of alert and slow-down: as built (both at once, 3 s; register DQ-407 option A), DQ-407 B (alert, 1 s, then 2 s of slowing), DQ-407 C (alert, 1 s, then 3 s), or the DM stop (5 s countdown, then slowing to a stop). The driver either takes over at the alert (after the reaction time, with the accelerator) or ignores it, as one who takes it for a false alarm would; then only the deceleration itself and the siren cue them.
+A fault soft disable (openpilot's `softDisabling`, SOFT_DISABLE_TIME 3 s) or the driver-monitoring no-response stop (`noResponseForceDecel`, after the 5 s "Car Stops in N s" countdown), following a lead at the same speed 2 s ahead, with a close follower. Both set the cruise target to zero. The soft disable ramps the request to A_CRUISE_MIN, −1.2 m/s², at the planner's jerk limit, then hands control back (the item stops steering and braking); the DM stop is the minimum-risk stop, ramped at J_MINIMUM_RISK_STOP, 4 m/s³, to A_MINIMUM_RISK_STOP, −2.0 m/s², held to standstill (TSR-633, DQ-424 A). `timing` is the order of alert and slow-down: as built (both at once, 3 s; register DQ-407 option A), DQ-407 B (alert, 1 s, then 2 s of slowing), DQ-407 C (alert, 1 s, then 3 s), or the DM stop (5 s countdown, then slowing to a stop). The driver either takes over at the alert (after the reaction time, with the accelerator) or ignores it, as one who takes it for a false alarm would; then only the deceleration itself and the siren cue them.
 
 Faults: ='dm_stop' if timing == 'dm-stop' else 'soft_disable'. Robustness: rho = the smallest bumper gap to the following vehicle after the fault; rho < 0 means contact. Past contact the plant lets the vehicles overlap, so a negative magnitude means little; the sign, the time to contact and the closing speed at contact are what count.
 
@@ -40,22 +40,22 @@ Monte Carlo: 32 uniform samples. Cross-entropy: 3 rounds of 12, elite share 0.25
 | sd-as-built | 10 | 0 | 0% | 7.21 | — |
 | sd-dq407-b | 3 | 0 | 0% | 15.41 | — |
 | sd-dq407-c | 14 | 0 | 0% | 8.20 | — |
-| dm-stop | 5 | 0 | 0% | 6.94 | — |
+| dm-stop | 5 | 0 | 0% | 7.16 | — |
 
 | `respond` | Samples | Contacts | Share | Smallest rho (m) | Median time to contact (s) |
 |---|---|---|---|---|---|
 | takes-over | 15 | 0 | 0% | 8.47 | — |
-| ignores-alert | 17 | 0 | 0% | 6.94 | — |
+| ignores-alert | 17 | 0 | 0% | 7.16 | — |
 
 | `follow_gap` | Samples | Contacts | Share | Smallest gap rho (m) |
 |---|---|---|---|---|
-| 0.5–0.75 | 7 | 0 | 0% | 6.94 |
+| 0.5–0.75 | 7 | 0 | 0% | 7.16 |
 | 0.75–1 | 8 | 0 | 0% | 7.21 |
 | 1–1.5 | 17 | 0 | 0% | 10.01 |
 
 | `f_t_r` | Samples | Contacts | Share | Smallest gap rho (m) |
 |---|---|---|---|---|
-| 0.75–1 | 7 | 0 | 0% | 6.94 |
+| 0.75–1 | 7 | 0 | 0% | 7.16 |
 | 1–1.5 | 15 | 0 | 0% | 7.21 |
 | 1.5–2 | 10 | 0 | 0% | 8.20 |
 
