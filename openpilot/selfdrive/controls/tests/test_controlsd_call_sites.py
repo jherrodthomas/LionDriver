@@ -1,3 +1,4 @@
+import math
 from types import SimpleNamespace
 from unittest import mock
 
@@ -166,3 +167,56 @@ class TestLateralResetCallSite(OpenpilotTestCase):
     t.sm['selfdriveState'].active = False
     step(t)
     assert t.c.LaC.pid.i == 0.
+
+
+class TestNonFiniteInputs(OpenpilotTestCase):
+  # SWF-045.C1, SWF-045.C2, SWF-047.C1 (TSR-604, SWF-ACT-044): a non-finite input for one step must not reach the
+  # controllers, whose state (integrator, desired curvature) would otherwise keep it for the rest of the drive, and must not
+  # raise. Run through the real Controls.state_control with the reference CarParams
+  WARM, BAD, AFTER = 200, 1, 50
+
+  def run_with(self, set_bad, set_good):
+    t = controls()
+    t.sm['modelV2'].action.desiredCurvature = 0.0005
+    for _ in range(self.WARM):
+      step(t)
+    set_bad(t.sm)
+    bad = t.c.state_control()[0]
+    finite_during = math.isfinite(t.c.curvature) and math.isfinite(t.c.desired_curvature)
+    set_good(t.sm)
+    for _ in range(self.AFTER):
+      CC, _ = t.c.state_control()
+    return t, bad, CC, finite_during
+
+  def assert_controllers_finite(self, t, CC):
+    for name, v in (('lateral integrator', t.c.LaC.pid.i), ('longitudinal integrator', t.c.LoC.pid.i),
+                    ('desired curvature', t.c.desired_curvature), ('torque', CC.actuators.torque), ('accel', CC.actuators.accel)):
+      self.assertTrue(math.isfinite(v), f'{name} is {v}')
+    self.assertNotEqual(CC.actuators.torque, 0.0)  # lateral control works again, not a sanitized 0
+    self.assertGreater(CC.actuators.accel, 0.0)
+
+  def test_non_finite_desired_curvature(self):
+    for bad in (float('nan'), float('inf')):
+      def set_bad(sm, bad=bad):
+        sm['modelV2'].action.desiredCurvature = bad
+      t, CCbad, CC, _ = self.run_with(set_bad, lambda sm: setattr(sm['modelV2'].action, 'desiredCurvature', 0.0005))
+      self.assertFalse(CCbad.latActive)
+      self.assert_controllers_finite(t, CC)
+
+  def test_non_finite_roll(self):
+    t, CCbad, CC, finite_during = self.run_with(lambda sm: setattr(sm['vehicleParameters'], 'roll', float('nan')),
+                                                lambda sm: setattr(sm['vehicleParameters'], 'roll', 0.0))
+    self.assertFalse(CCbad.latActive)
+    self.assertTrue(finite_during)
+    self.assert_controllers_finite(t, CC)
+
+  def test_non_finite_acceleration_target(self):
+    t, CCbad, CC, _ = self.run_with(lambda sm: setattr(sm['longitudinalPlan'], 'aTarget', float('nan')),
+                                    lambda sm: setattr(sm['longitudinalPlan'], 'aTarget', 1.5))
+    self.assertFalse(CCbad.longActive)
+    self.assert_controllers_finite(t, CC)
+
+  def test_non_finite_lateral_delay_does_not_raise(self):
+    t, _, CC, _ = self.run_with(lambda sm: setattr(sm['lateralDelay'], 'lateralDelay', float('nan')),
+                                lambda sm: setattr(sm['lateralDelay'], 'lateralDelay', 0.2))
+    self.assert_controllers_finite(t, CC)
