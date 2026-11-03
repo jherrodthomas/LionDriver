@@ -114,8 +114,10 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | LOG | verification by analysis of drive logs |
 | LTA | lane tracing assist: Toyota's stock lane-centring function |
 | MB | megabyte |
+| MC/DC | modified condition/decision coverage: each condition shown to affect its decision independently |
 | MCU | microcontroller: the panda safety processor (STM32H7) |
 | MDN | mixture density network (how the model reports a spread of possible values) |
+| MISRA | MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) |
 | ML | machine learning |
 | MPU | memory protection unit |
 | MQB | Volkswagen's transverse modular platform (Modularer Querbaukasten) |
@@ -191,6 +193,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | STRIDE | spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege |
 | SVG | scalable vector graphics (the figure format) |
 | SW | software |
+| SWE | software engineering process group of ASPICE (SWE.1 requirements … SWE.6 qualification test) |
 | SYS | system requirement SYS-nnn of WP-S-01 |
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | T-HIL | verification by bench test with the real panda (hardware in the loop) |
