@@ -189,6 +189,152 @@ def impact():
          ", ".join(f"{v} {k}" for k, v, _ in segs) + "; by month " + ", ".join(f"{m} {n}" for m, n in sorted(months.items()))))
 
 
+def fmdtools():
+  goals = sorted(d.name for d in (A / "models/fmdtools").iterdir() if d.is_dir() and re.fullmatch(r"sg\d\d", d.name))
+  if not goals:
+    raise FigureError("fmdtools: no goal folders")
+  rows_, agree_all, total_all, gaps_all = [], 0, 0, 0
+  for g in goals:
+    base = A / "models/fmdtools" / g
+    ev = fmd.load_yaml((base / "events.yaml").read_text(encoding="utf-8"))
+    modes = ev.get("modes") or ev.get("events") or []
+    p2 = (base / "p2-single-faults.md").read_text(encoding="utf-8")
+    verdicts = re.findall(r"^\|.*\| (yes|\*\*no\*\*) \|\s*$", p2, re.M)
+    if not verdicts:
+      raise FigureError(f"fmdtools {g}: no Agree column in p2-single-faults.md")
+    yes = verdicts.count("yes")
+    p3 = (base / "p3-joint-faults.md").read_text(encoding="utf-8")
+    m = re.search(r"\*\*In the model, not predicted by the (?:drawn )?tree\*\*[^|]*\| \*\*(\d+)\*\*", p3)
+    if not m:
+      raise FigureError(f"fmdtools {g}: p3 no longer states the possible gaps in the tree")
+    steps = ["1", "2", "3"] + (["4"] if (base / "p4-timing.md").exists() else []) + (["5"] if (base / "fault-lab.html").exists() else [])
+    rows_.append((g.upper().replace("SG", "SG-"), [("single faults agree", yes, "ok"), ("differ", len(verdicts) - yes, "part")], "steps " + " ".join(steps), int(m.group(1))))
+    agree_all, total_all, gaps_all = agree_all + yes, total_all + len(verdicts), gaps_all + int(m.group(1))
+  ev_ = field(read("models/fmdtools/README.md"), "Evidence")
+  return dict(
+    tiles=[(len(goals), "goals modelled", "n"), (f"{agree_all}/{total_all}", "single faults agree", "ok" if agree_all == total_all else "part"),
+           (total_all - agree_all, "differ: for review", "part" if total_all - agree_all else "ok"), (gaps_all, "possible tree gaps", "bad" if gaps_all else "ok")],
+    chips=[("pilot TE-02", "n"), ("synthetic, no evidence credit" if ev_.lower().startswith("none") else ev_, "bad"), ("trees change only after review", "n")],
+    picture=("stacks", rows_),
+    caption=(f"Each goal's model against its fault tree: {agree_all} of {total_all} single faults give the tree's answer; "
+             f"joint faults found {gaps_all} set{'s' if gaps_all != 1 else ''} the tree does not predict."),
+    alt=(f"{len(goals)} goals modelled; {agree_all} of {total_all} single faults agree with the tree, {total_all - agree_all} differ; "
+         f"{gaps_all} joint-fault sets the tree does not predict; synthetic, no evidence credit"))
+
+
+def autosar():
+  md = read("models/autosar/generated/summary.md")
+  head, swc = rows(md, "## Software components")
+  ecu = fk.col(head, "Mapped to ECU")
+  item = [r for r in swc if fk.plain(r[ecu]).startswith("LD_")]
+  head, fr = rows(md, "## CAN frames")
+  ck, ct, by = fk.col(head, "Checksum"), fk.col(head, "Counter"), fk.col(head, "Checked by")
+  none_ = lambda c: fk.plain(c).lower() in ("none", "—", "")
+  both = [r for r in fr if not none_(r[ck]) and not none_(r[ct])]
+  only = [r for r in fr if not none_(r[ck]) and none_(r[ct])]
+  bare = [r for r in fr if none_(r[ck])]
+  unchecked = [r for r in fr if "not checked by the item" in fk.plain(r[by]).lower()]
+  rd = read("models/autosar/README.md")
+  ois = re.findall(r"^\| (AR-OI-\d+|OI-\d+) \|", fk.section(rd, "## 5. Open items"), re.M)
+  return dict(
+    tiles=[(len(swc), "software components", "n"), (len(fr), "CAN frames", "n"),
+           (len(bare), "unprotected frames", "bad" if bare else "ok"), (len(ois), "open items", "part" if ois else "ok")],
+    chips=[("CFG-001 reference car", "n"), ("no AUTOSAR E2E profile", "bad"), ("no SecOC (AOU-18)", "bad")],
+    picture=("stacks", [("Protection", [("checksum and counter", len(both), "ok"), ("checksum only", len(only), "part"), ("none", len(bare), "bad")], "", None),
+                        ("Item checks it", [("some check, a timeout at least", len(fr) - len(unchecked), "ok"), ("no check", len(unchecked), "grey")], "", None)]),
+    caption=(f"The {len(fr)} CAN frames the description holds: {len(both)} carry a checksum and a counter, {len(only)} a checksum only, "
+             f"{len(bare)} neither; the item runs some check, a timeout at least, on {len(fr) - len(unchecked)}."),
+    alt=(f"{len(swc)} software components, {len(item)} of them the item's; {len(fr)} CAN frames: {len(both)} with checksum and counter, "
+         f"{len(only)} checksum only, {len(bare)} unprotected, {len(unchecked)} not checked by the item; {len(ois)} open items"))
+
+
+def vhil():
+  rd = read("sim/vhil/README.md")
+  scope = field(rd, "Scope")
+  tests = re.findall(r"test_(\d\d)", scope)
+  if len(tests) < 2:
+    raise FigureError("vhil: Scope no longer names the HIL tests")
+  n_tests = int(tests[-1]) - int(tests[0]) + 1
+  m = re.search(r"Before the fixes (\d+) of (\d+) cases passed; after them, (\d+) of (\d+)", rd)
+  if not m:
+    raise FigureError("vhil: §4 no longer states the first runs' results")
+  b, bt, a, at = map(int, m.groups())
+  bugs = re.findall(r"^\d\. ", fk.section(rd, "## 4. What the first runs found"), re.M)
+  src = read("sim/vhil/run_vhil.py")
+  known = re.search(r"KNOWN_OPEN = \{(.*?)\n\}", src, re.S)
+  n_open = len(re.findall(r'^\s+"test_', known.group(1), re.M)) if known else 0
+  status = field(rd, "Status")
+  return dict(
+    tiles=[(n_tests, "HIL tests", "n"), (len(bugs), "test bugs found", "part"),
+           (f"{a}/{at}", "cases pass now", "ok" if a == at else "part"), (n_open, "known open item", "part" if n_open else "ok")],
+    chips=[("tier 1: virtual panda", "n"), ("no evidence credit" if "no evidence credit" in status.lower() else "credit claimed", "bad"), ("not the real bench", "n")],
+    picture=("stacks", [("Before the fixes", [("pass", b, "ok"), ("fail", bt - b, "bad")], "", None),
+                        ("After the fixes", [("pass", a, "ok"), ("known open", at - a, "part")], "", None)]),
+    caption=(f"The first runs found {len(bugs)} bugs in the HIL tests themselves: {b} of {bt} cases passed before the fixes, "
+             f"{a} of {at} after, the rest a known open item."),
+    alt=(f"{n_tests} panda HIL tests run on a virtual bench; {len(bugs)} test bugs found; {b} of {bt} cases passed before the fixes, "
+         f"{a} of {at} after; {n_open} known open item; no evidence credit"))
+
+
+SPICE_OK = ("levels OK", "pass-through default holds")
+SPICE_BAD = ("dominant lost", "outside the receiver common-mode range", "too slow", "switch state undefined", "intercept not reached",
+             "must source")
+
+
+def spice():
+  lines = read("04-hardware/spice/predictions.tsv").strip().splitlines()
+  head = lines[0].split("\t")
+  vi, gi, ti = head.index("verdict"), head.index("group"), head.index("prediction for")
+  data = [ln.split("\t") for ln in lines[1:]]
+  groups: dict[str, list[int]] = {}
+  for r in data:
+    v = r[vi]
+    ok = any(k in v for k in SPICE_OK)
+    if not ok and not any(k in v for k in SPICE_BAD):
+      raise FigureError(f"spice: verdict '{v}' is neither a known pass nor a known effect")
+    groups.setdefault(r[gi], [0, 0])[0 if ok else 1] += 1
+  benches = sorted({b for r in data for b in re.findall(r"VS-HW-\d+", r[ti])})
+  effects = sum(g[1] for g in groups.values())
+  return dict(
+    tiles=[(len(data), "fault cases", "n"), (len(data) - effects, "levels still fine", "ok"), (effects, "visible on the bus", "part"),
+           (len(benches), "bench tests sharpened", "n")],
+    chips=[("ngspice pilot", "n"), ("predictions, not measurements", "bad"), ("no FMEDA credit", "bad")],
+    picture=("stacks", [(g, [("levels fine", v[0], "ok"), ("effect", v[1], "part")], "", None) for g, v in sorted(groups.items())]),
+    caption=(f"{len(data)} simulated faults on the harness box by kind: {effects} would show on the bus, "
+             f"{len(data) - effects} leave the levels fine; they set pass criteria for {', '.join(benches)}."),
+    alt=(f"{len(data)} simulated harness-box faults: {effects} with a visible effect, {len(data) - effects} with levels fine; "
+         f"pass criteria for {', '.join(benches)}; predictions, not measurements, no FMEDA credit"))
+
+
+CLAUSE_TONE = (("pass", "ok"), ("partial", "part"), ("manual", "grey"), ("gap", "bad"), ("open", "bad"))
+
+
+def clauses():
+  regs, tot, verified = [], 0, 0
+  for p in sorted((A / "trace/clauses").glob("*-coverage.md")):
+    md = p.read_text(encoding="utf-8")
+    m = re.search(r"\*\*(\d+) obligations\.\*\*(.*?)\*\*Checked against the licensed standard: (\d+) of (\d+)\.\*\*", md)
+    if not m:
+      raise FigureError(f"clauses: {p.name} has no summary line")
+    counts = {k: int(re.search(rf"{k}: (\d+)", m.group(2)).group(1)) for k, _ in CLAUSE_TONE}
+    if sum(counts.values()) != int(m.group(1)):
+      raise FigureError(f"clauses: {p.name} statuses do not add up to {m.group(1)}")
+    name = re.match(r"# (.+?) clause checks", md).group(1)
+    regs.append((name, [(k, counts[k], t) for k, t in CLAUSE_TONE], "", None))
+    tot, verified = tot + int(m.group(1)), verified + int(m.group(3))
+  passed = sum(v for _, segs, _, _ in regs for k, v, _ in segs if k == "pass")
+  open_ = sum(v for _, segs, _, _ in regs for k, v, _ in segs if k in ("gap", "open"))
+  return dict(
+    tiles=[(tot, "obligations", "n"), (passed, "pass their checks", "ok"), (open_, "open or gap", "bad" if open_ else "ok"),
+           (f"{verified}/{tot}", "verified on the standard", "bad" if verified < tot else "ok")],
+    chips=[("pilot", "n"), ("every row a proposal (I0)", "bad"), ("checked on every PR", "n")],
+    picture=("stacks", regs),
+    caption=(f"{tot} obligations across {len(regs)} standards, as the checks find them today: {passed} pass, {open_} open; "
+             f"none is yet verified against the licensed text."),
+    alt=(f"{tot} clause obligations in {len(regs)} registers: {passed} pass, {open_} open or gap, the rest manual; {verified} of {tot} "
+         "verified against the licensed standard"))
+
+
 CARDS = {
   "06-validation/test-sites": dict(
     title="Closed-course test sites", phase="06", fn=test_sites,
@@ -196,7 +342,7 @@ CARDS = {
     purpose="Where the vehicle tests the HARA relies on can run safely, between Atlanta and Charlotte.",
     ins=[("WP-V-01 Validation", "the tests and their speeds", "06-validation/WP-V-01-safety-validation.md"),
          ("WP-V-07 Test operations", "closed-course rules", "06-validation/WP-V-07-vehicle-test-operations.md")],
-    me="8 candidate sites",
+    me="candidate sites, TS-nn",
     outs=[("WP-V-01 OI-1", "where the tests run", "06-validation/WP-V-01-safety-validation.md"),
           ("Decision register", "the lead's choice", "01-management/decisions/register.yaml")]),
   "models/fret": dict(
@@ -217,6 +363,51 @@ CARDS = {
     me="impact records",
     outs=[("WP-P-02 change requests", "take, modify or reject", "07-supporting/WP-P-02-change-management.md"),
           ("Affected work products", "re-verify what changed", "07-supporting/safety-relevant-paths.txt")]),
+  "models/fmdtools": dict(
+    title="fmdtools fault-propagation models", serves=("07", "08"), fn=fmdtools,
+    quote="NASA fmdtools",
+    purpose="Each goal's fault tree rebuilt as a running model, to find faults or pairs the tree misses.",
+    ins=[("WP-A-04 fault trees", "the events and timing", "08-analyses/WP-A-04-system-fta-fmea.md"),
+         ("TE-02 plan", "the pilot's steps", "07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md")],
+    me="one model per goal",
+    outs=[("WP-A-04 findings", "possible tree gaps, for review", "08-analyses/WP-A-04-system-fta-fmea.md"),
+          ("TE-02 result", "keep the tool or not", "07-supporting/tool-evaluations/TE-02-fmdtools-fault-propagation.md")]),
+  "models/autosar": dict(
+    title="AUTOSAR description", serves=("03", "05"), fn=autosar,
+    quote="import it into a standard AUTOSAR",
+    purpose="LionDriver in AUTOSAR terms, for an OEM or Tier-1 toolchain: components, ports, frames, protection.",
+    ins=[("SysML model", "components and ports", "models/sysml/README.md"),
+         ("WP-S-05 HSI", "frames, signals, checksums", "03-system/WP-S-05-hsi-specification.md")],
+    me="one ARXML file, CFG-001",
+    outs=[("Integrators", "import into their tools", "models/autosar/generated/liondriver-reference.arxml"),
+          ("WP-S-05 §12", "what is and isn't protected", "03-system/WP-S-05-hsi-specification.md")]),
+  "sim/vhil": dict(
+    title="Virtual HIL bench", serves=("05",), fn=vhil,
+    quote="before the real bench",
+    purpose="The panda's HIL tests run against its firmware on the host, in CI, before the real bench exists.",
+    ins=[("panda HIL tests", "test_12 to test_16", "05-software/hil-bench/README.md"),
+         ("WP-S-04 timing", "what the tests expect", "03-system/WP-S-04-timing-ftti-budget.md")],
+    me="HIL tests on a virtual panda",
+    outs=[("panda test fixes", "bugs found before hardware", "05-software/hil-bench/README.md"),
+          ("Decision register", "open items like DQ-431", "01-management/decisions/register.yaml")]),
+  "04-hardware/spice": dict(
+    title="Harness box circuit simulation", phase="04", fn=spice,
+    quote="passive-network faults only",
+    purpose="An ngspice pilot on the harness box: what each passive fault does to the bus, before the bench test.",
+    ins=[("Harness box drawing", "comma's box v3", "04-hardware/WP-H-02-hardware-design.md"),
+         ("sim/harness_box", "the sibling model", "sim/harness_box/README.md")],
+    me="predicted fault cases",
+    outs=[("WP-H-06 §3.1", "pass criteria, VS-HW-22 to 24", "04-hardware/WP-H-06-hardware-integration-verification.md"),
+          ("DFMEA", "causes to re-rate after the bench", "08-analyses/fmea/fmea-plan.md")]),
+  "trace/clauses": dict(
+    title="Clause-check register", serves=("02", "10"), fn=clauses,
+    quote="Each obligation names a clause",
+    purpose="Each clause of a standard as one checkable sentence about a work product, run on every PR.",
+    ins=[("ISO 26262-3, ISO 21448", "the clauses, in our own words", "trace/clauses/iso26262-3-2018.yaml"),
+         ("WP-C-01, -03, -04 and others", "what the checks read", "02-concept/WP-C-03-hara.md")],
+    me="clause obligations",
+    outs=[("Coverage pages", "status per obligation", "trace/clauses/iso26262-3-2018-coverage.md"),
+          ("Assessor", "verifies each row", "00-assessment/README.md")]),
 }
 
 
@@ -327,6 +518,39 @@ def picture(kind, y):
       b += [fk.text(M, my + 20 + i * 18, m, size=10, fill=fk.MUTED), fk.rect(M + 60, my + 10 + i * 18, w, 12, fill=fk.LINE, stroke="none", rx=2),
             fk.text(M + 66 + w, my + 20 + i * 18, str(n), size=10, fill=fk.INK, weight=700)]
     return b, 64 + 14 + len(months) * 18
+  if kind[0] == "stacks":
+    out, yy = [], y
+    lw = 130
+    for lab, segs, note, flag in kind[1]:
+      total = sum(v for _, v, _ in segs) or 1
+      out.append(fk.text(M, yy + 15, fk.fit(lab, lw - 8, 10.5, True), size=10.5, weight=700))
+      x, bw = M + lw, W - 2 * M - lw - (90 if note or flag is not None else 0)
+      for sl, v, tone in segs:
+        if not v:
+          continue
+        w = bw * v / total
+        out.append(fk.rect(x, yy + 2, w, 20, fill=TONE[tone][0], stroke="#FFFFFF", rx=0, sw=1))
+        if w > 22:
+          out.append(fk.text(x + w / 2, yy + 16, str(v), size=10, weight=700, fill="#FFFFFF", anchor="middle"))
+        x += w
+      if note:
+        out.append(fk.text(W - M, yy + 11, note, size=9, fill=fk.MUTED, anchor="end"))
+      if flag is not None:
+        out.append(fk.text(W - M, yy + 22, f"{flag} tree gap{'s' if flag != 1 else ''}", size=9, weight=700,
+                           fill=fk.RED if flag else fk.GREEN, anchor="end"))
+      yy += 28
+    lx, seen = M + lw, []
+    for _, segs, _, _ in kind[1]:
+      for sl, _, tone in segs:
+        if (sl, tone) not in seen:
+          seen.append((sl, tone))
+    for sl, tone in seen:
+      if lx + 26 + fk.text_w(sl, 9.5) > W - M:
+        lx, yy = M + lw, yy + 16
+      out.append(fk.rect(lx, yy + 4, 10, 10, fill=TONE[tone][0], stroke="none", rx=2))
+      out.append(fk.text(lx + 14, yy + 13, sl, size=9.5, fill=fk.MUTED))
+      lx += 26 + fk.text_w(sl, 9.5)
+    return out, yy - y + 20
   raise FigureError(f"unknown picture kind {kind[0]}")
 
 

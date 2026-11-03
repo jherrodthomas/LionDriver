@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="409" viewBox="0 0 600 409" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Clause-check register: where it sits</title>
+<desc>Clause-check register: cross-cutting: serves 02 Concept, 10 Safety case. Fed by ISO 26262-3, ISO 21448 (the clauses, in our own words); WP-C-01, -03, -04 and others (what the checks read). Feeds Coverage pages (status per obligation); Assessor (verifies each row).</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="409" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="36" font-size="17" fill="#0F172A" font-weight="700">Clause-check register</text>
+<text x="40" y="56" font-size="11" fill="#475569">Each clause of a standard as one checkable sentence about a work product, run on every PR.</text>
+<line x1="40" y1="70" x2="560" y2="70" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="92" font-size="10" fill="#94A3B8" font-weight="700">Which phases it serves</text>
+<rect x="40" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="62.3" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">00</text>
+<rect x="87.5" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="109.8" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">01</text>
+<rect x="135.1" y="100" width="44.5" height="24" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="157.4" y="116" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">02</text>
+<rect x="182.6" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="204.9" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">03</text>
+<rect x="230.2" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="252.5" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">04</text>
+<rect x="277.7" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="300" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">05</text>
+<rect x="325.3" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="347.5" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">06</text>
+<rect x="372.8" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="395.1" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">07</text>
+<rect x="420.4" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="442.6" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">08</text>
+<rect x="467.9" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="490.2" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">09</text>
+<rect x="515.5" y="100" width="44.5" height="24" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="537.7" y="116" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">10</text>
+<text x="135.1" y="140" font-size="10" fill="#C2410C" font-weight="700">cross-cutting: serves 02 Concept, 10 Safety case</text>
+<text x="40" y="164" font-size="10" fill="#94A3B8" font-weight="700">What feeds it, what it feeds</text>
+<rect x="40" y="174" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="50" y="190" font-size="10.5" fill="#0F172A" font-weight="700">ISO 26262-3, ISO 21448</text>
+<text x="50" y="204" font-size="9.5" fill="#475569">the clauses, in our own words</text>
+<rect x="306" y="174" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="316" y="190" font-size="10.5" fill="#0F172A" font-weight="700">WP-C-01, -03, -04 and others</text>
+<text x="316" y="204" font-size="9.5" fill="#475569">what the checks read</text>
+<path d="M300.0 216 L300.0 232" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<path d="M295.0 227 L300.0 233 L305.0 227" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="180" y="236" width="240" height="38" rx="7" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="190" y="252" font-size="10.5" fill="#C2410C" font-weight="700">This folder</text>
+<text x="190" y="266" font-size="9.5" fill="#475569">clause obligations</text>
+<path d="M300.0 278 L300.0 294" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<path d="M295.0 289 L300.0 295 L305.0 289" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="40" y="298" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="50" y="314" font-size="10.5" fill="#0F172A" font-weight="700">Coverage pages</text>
+<text x="50" y="328" font-size="9.5" fill="#475569">status per obligation</text>
+<rect x="306" y="298" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="316" y="314" font-size="10.5" fill="#0F172A" font-weight="700">Assessor</text>
+<text x="316" y="328" font-size="9.5" fill="#475569">verifies each row</text>
+<g class="terms">
+<text x="40" y="358" font-size="10.5" fill="#475569">Terms: ISO International Organization for Standardization · PR pull request · WP-nn work</text>
+<text x="40" y="372.5" font-size="10.5" fill="#475569">product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware,</text>
+<text x="40" y="387" font-size="10.5" fill="#475569">W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

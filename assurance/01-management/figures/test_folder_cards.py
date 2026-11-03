@@ -63,6 +63,25 @@ class TestFolderCards(unittest.TestCase):
     self.assertEqual(d["tiles"][0][0], len(recs))
     self.assertEqual(sum(v for _, v, _ in d["picture"][1]), len(recs))
 
+  def test_stacks_add_up_to_their_totals(self):
+    a = fc.autosar()
+    n_frames = a["tiles"][1][0]
+    for lab, segs, _, _ in a["picture"][1]:
+      self.assertEqual(sum(v for _, v, _ in segs), n_frames, lab)
+    c = fc.clauses()
+    self.assertEqual(sum(v for _, segs, _, _ in c["picture"][1] for _, v, _ in segs), c["tiles"][0][0])
+    s = fc.spice()
+    self.assertEqual(sum(v for _, segs, _, _ in s["picture"][1] for _, v, _ in segs), s["tiles"][0][0])
+    f = fc.fmdtools()
+    agree, total = map(int, f["tiles"][1][0].split("/"))
+    self.assertEqual(sum(segs[0][1] for _, segs, _, _ in f["picture"][1]), agree)
+    self.assertEqual(sum(segs[0][1] + segs[1][1] for _, segs, _, _ in f["picture"][1]), total)
+
+  def test_unknown_spice_verdict_fails(self):
+    with mock.patch.object(fc, "SPICE_OK", ()), mock.patch.object(fc, "SPICE_BAD", ()):
+      with self.assertRaisesRegex(fc.FigureError, "neither a known pass"):
+        fc.spice()
+
   def test_deterministic(self):
     self.assertEqual(self.out, fc.build())
 
