@@ -71,6 +71,8 @@ FIGURES = [
   A / "05-software/figures/fig-w05-5-1-uml-sm-toy-auth.svg",
   A / "05-software/figures/fig-w05-5-2-uml-sm-selfdrived.svg",
   A / "05-software/figures/fig-w05-5-3-toy-auth-walk.svg",
+  A / "05-software/figures/fig-w00-1-software-v.svg",
+  A / "05-software/figures/fig-w00-2-status.svg",
   A / "03-system/figures/fig-s07-4-1-csr-status.svg",
   A / "03-system/figures/fig-s08-6-1-cases.svg",
   A / "03-system/figures/fig-s09-5-1-cases.svg",
@@ -209,6 +211,9 @@ TERMS = {
   "PVD": "programmable voltage detector (MCU supply monitor)",
   "PDR": "power-down reset (MCU supply monitor, the lowest threshold)",
   "UML": "Unified Modeling Language (OMG): state machine, sequence and component diagrams",
+  "SWE": "software engineering process group of ASPICE (SWE.1 requirements … SWE.6 qualification test)",
+  "MISRA": "MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5)",
+  "MC/DC": "modified condition/decision coverage: each condition shown to affect its decision independently",
   "ATC-": "architecture target-state change of WP-W-03 §10",
   "SI-": "software interface between components (WP-W-03 §3.3)",
   "U-": "software component of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1)",
@@ -452,8 +457,12 @@ def find(text: str) -> tuple[list[str], list[str]]:
     hits.append((m.start(), m.group(1) + "#"))
   for m in re.finditer(r"(?<![\w/])E/E(?![\w/])", text):
     hits.append((m.start(), "E/E"))
+  mcdc = [m.span() for m in re.finditer(r"(?<![\w/])MC/DC(?![\w/])", text)]
+  hits += [(a_, "MC/DC") for a_, _ in mcdc]
   for m in WORD_RE.finditer(text):
     w = m.group(1)
+    if any(a_ <= m.start() < b_ for a_, b_ in mcdc):
+      continue                       # the MC and DC of MC/DC, matched above
     if text[m.end():m.end() + 1] == "-" and re.match(r"-[\dA-Z]", text[m.end():m.end() + 2]):
       continue                       # a code prefix, matched above
     hits.append((m.start(), w))

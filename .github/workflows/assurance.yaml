@@ -161,6 +161,8 @@ jobs:
         python3 assurance/04-hardware/figures/test_fig_h02_crank_anim.py
         python3 assurance/05-software/figures/fig_w05_uml_states.py --check
         python3 assurance/05-software/figures/test_fig_w05_uml_states.py
+        python3 assurance/05-software/figures/fig_w00_overview.py --check
+        python3 assurance/05-software/figures/test_fig_w00_overview.py
         python3 assurance/03-system/figures/fig_s08_cases.py --check
         python3 assurance/03-system/figures/test_fig_s08_cases.py
         python3 assurance/03-system/figures/fig_s09_cases.py --check
