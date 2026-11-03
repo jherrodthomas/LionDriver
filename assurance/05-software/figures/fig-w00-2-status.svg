@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="792" viewBox="0 0 500 792" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="820" viewBox="0 0 500 820" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure W-0-2. Where the software stands</title>
 <desc>147 SWSRs: 56 in the code, 31 partly, 54 not in the code, 6 not assessed. Coverage: U-SAF-CORE branch 81 %, MC/DC 71 %; U-SAF-LAT branch 43 %, MC/DC 40 %; U-SAF-LONG branch 43 %, MC/DC 43 %; U-SAF-TOY branch 100 %, MC/DC 100 %</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="500" height="792" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="500" height="820" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="16" y="30" font-size="18" fill="#0F172A" font-weight="700">Where the software stands</text>
 <text x="16" y="50" font-size="11.5" fill="#475569">Requirements in the code, structural coverage, and the</text>
 <text x="16" y="66" font-size="11.5" fill="#475569">state-machine transitions, at the current pins.</text>
@@ -112,12 +112,12 @@
 <rect x="237.1" y="530" width="29" height="18" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
 <text x="251.7" y="543" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
 <text x="16" y="567" font-size="10.5" fill="#0F172A">SM-SELFDRIVED</text>
-<rect x="150" y="554" width="58.1" height="18" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
-<text x="179" y="567" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-<rect x="208.1" y="554" width="58.1" height="18" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
-<text x="237.1" y="567" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
-<rect x="266.2" y="554" width="72.6" height="18" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
-<text x="302.5" y="567" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="150" y="554" width="72.6" height="18" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="186.3" y="567" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="222.6" y="554" width="58.1" height="18" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="251.7" y="567" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="280.7" y="554" width="72.6" height="18" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<text x="317" y="567" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
 <text x="16" y="591" font-size="10.5" fill="#0F172A">SM-TOY-AUTH</text>
 <rect x="150" y="578" width="87.1" height="18" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
 <text x="193.6" y="591" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
@@ -132,12 +132,14 @@
 <text x="16" y="648" font-size="10" fill="#475569">Terms: CI continuous integration: the checks that run on every pull request · MC/DC</text>
 <text x="16" y="662" font-size="10" fill="#475569">modified condition/decision coverage: each condition shown to affect its decision</text>
 <text x="16" y="676" font-size="10" fill="#475569">independently · MCU microcontroller: the panda safety processor (STM32H7) · PCS</text>
-<text x="16" y="690" font-size="10" fill="#475569">pre-collision system: Toyota's stock collision warning and braking · SM-nn safety</text>
-<text x="16" y="704" font-size="10" fill="#475569">mechanism (TSC §6) · SWSR-nn software safety requirement (WP-W-02) · U-nn software</text>
-<text x="16" y="718" font-size="10" fill="#475569">component of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03</text>
-<text x="16" y="732" font-size="10" fill="#475569">§3.1) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
-<text x="16" y="746" font-size="10" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A analyses, O</text>
-<text x="16" y="760" font-size="10" fill="#475569">operation, K safety case)</text>
+<text x="16" y="690" font-size="10" fill="#475569">pre-collision system: Toyota's stock collision warning and braking · SM-SAFETY</text>
+<text x="16" y="704" font-size="10" fill="#475569">SM-SAFETY-MODE, the state machine of the panda's safety mode (WP-W-05 §5.1) ·</text>
+<text x="16" y="718" font-size="10" fill="#475569">SM-SELFDRIVED the state machine of the host's engagement state in selfdrived (WP-W-05</text>
+<text x="16" y="732" font-size="10" fill="#475569">§5.3) · SM-TOY SM-TOY-AUTH, the state machine of the Toyota authority controls_allowed</text>
+<text x="16" y="746" font-size="10" fill="#475569">(WP-W-05 §5.2) · SWSR-nn software safety requirement (WP-W-02) · U-nn software component</text>
+<text x="16" y="760" font-size="10" fill="#475569">of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1) · WP-nn</text>
+<text x="16" y="774" font-size="10" fill="#475569">work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
+<text x="16" y="788" font-size="10" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
-<text x="484" y="780" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_w00_overview.py</text>
+<text x="484" y="808" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_w00_overview.py</text>
 </svg>

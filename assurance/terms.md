@@ -182,6 +182,9 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |
 | SIM | verification by scenario simulation |
+| SM-SAFETY | SM-SAFETY-MODE, the state machine of the panda's safety mode (WP-W-05 §5.1) |
+| SM-SELFDRIVED | the state machine of the host's engagement state in selfdrived (WP-W-05 §5.3) |
+| SM-TOY | SM-TOY-AUTH, the state machine of the Toyota authority controls_allowed (WP-W-05 §5.2) |
 | SMPS | switched-mode power supply (the STM32H7's internal step-down regulator) |
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
@@ -213,6 +216,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | UML | Unified Modeling Language (OMG): state machine, sequence and component diagrams |
 | URL | web address |
 | US | United States; in an ISO 16750-2 starting profile, the supply voltage the car settles at after cranking |
+| USB | universal serial bus (on the panda, a second host link the reference device does not use) |
 | USB-C | USB Type-C connector |
 | USR | owner, installer or maintainer acting under a procedure (allocation class) |
 | VIN | vehicle identification number; in the harness box and its simulations, the box supply voltage |
