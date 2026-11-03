@@ -53,6 +53,8 @@ PAGES = [
   A / "03-system/tsc/README.md",
   A / "08-analyses/dfa/README.md",
   A / "models/autosar/README.md",
+  A / "04-hardware/design/README.md",
+  A / "05-software/design/README.md",
 ]
 FIGURES = [
   A / "02-concept/figures/fig-c00-1-concept-flow.svg",
@@ -64,6 +66,11 @@ FIGURES = [
   A / "03-system/figures/fig-s03-7-1-ffi.svg",
   A / "03-system/figures/fig-s05-4-1-control-requests.svg",
   A / "03-system/figures/fig-s04-5-3-verdicts.svg",
+  A / "04-hardware/figures/fig-h02-3-7-box-switch-anim.svg",
+  A / "04-hardware/figures/fig-h02-3-8-crank-anim.svg",
+  A / "05-software/figures/fig-w05-5-1-uml-sm-toy-auth.svg",
+  A / "05-software/figures/fig-w05-5-2-uml-sm-selfdrived.svg",
+  A / "05-software/figures/fig-w05-5-3-toy-auth-walk.svg",
   A / "03-system/figures/fig-s07-4-1-csr-status.svg",
   A / "03-system/figures/fig-s08-6-1-cases.svg",
   A / "03-system/figures/fig-s09-5-1-cases.svg",
@@ -102,6 +109,8 @@ TERMS = {
   "STPA": "system-theoretic process analysis",
   "FMEA": "failure mode and effects analysis",
   "FMEDA": "failure modes, effects and diagnostic analysis (hardware metrics)",
+  "DFMEA": "design FMEA: failure modes and effects analysis of a design (here the harness box and device)",
+  "DFM-": "DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea)",
   "FTA": "fault tree analysis",
   "DFA": "dependent failure analysis",
   "FFI": "freedom from interference",
@@ -126,8 +135,8 @@ TERMS = {
   # vehicle and item
   "LD-SDA": "LionDriver Supervised Driving Assistance, the item",
   "TSS": "Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package)",
-  "VIN": "vehicle identification number",
-  "US": "United States",
+  "VIN": "vehicle identification number; in the harness box and its simulations, the box supply voltage",
+  "US": "United States; in an ISO 16750-2 starting profile, the supply voltage the car settles at after cranking",
   "SoC": "system on chip: the comma device's main processor, running openpilot (QM)",
   "MCU": "microcontroller: the panda safety processor (STM32H7)",
   "E/E": "electrical and electronic (systems)",
@@ -198,6 +207,29 @@ TERMS = {
   "CSS": "clock security system (MCU clock monitor)",
   "BOR": "brown-out reset (MCU supply monitor)",
   "PVD": "programmable voltage detector (MCU supply monitor)",
+  "PDR": "power-down reset (MCU supply monitor, the lowest threshold)",
+  "UML": "Unified Modeling Language (OMG): state machine, sequence and component diagrams",
+  "ATC-": "architecture target-state change of WP-W-03 §10",
+  "SI-": "software interface between components (WP-W-03 §3.3)",
+  "U-": "software component of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1)",
+  "UN-": "software unit (WP-W-05 §2)",
+  "SBU": "sideband-use pins of a USB-C connector (in the harness, the intercept drive, orientation and ignition lines)",
+  "USB-C": "USB Type-C connector",
+  "BOM": "bill of materials",
+  "UK-": "unknown that WP-H-02 must obtain (UK-01…UK-09, WP-H-02 §5)",
+  "PMHF": "probabilistic metric for random hardware failures (ISO 26262-5)",
+  "SRAM": "static RAM: the MCU's working memory",
+  "PMIC": "power-management IC of the SoC",
+  "SMPS": "switched-mode power supply (the STM32H7's internal step-down regulator)",
+  "LDO": "low-dropout linear regulator",
+  "IGN": "ignition line",
+  "NMI": "non-maskable interrupt",
+  "VTH": "threshold voltage of an input (in the harness box, the DG419LE input threshold)",
+  "VL": "logic supply pin of the DG419LE switch (in the harness box, tied to VIN)",
+  "GND": "ground",
+  "COM": "common terminal of a changeover switch",
+  "NC": "normally closed terminal of a changeover switch (connected to COM when not driven)",
+  "NO": "normally open terminal of a changeover switch (connected to COM when driven)",
   "RT": "real time",
   "FW": "firmware",
   "SW": "software",
@@ -377,12 +409,12 @@ NOT_TERMS = {
   "SAFE", "SITUATION", "SITUATIONS", "SPEED", "STATES", "SURFACE", "TO", "TRIGGER", "TRIGGERING", "VALIDATION",
   "WEATHER", "WHAT", "SAFETY", "GOAL", "SOTIF HAZARD", "ELEMENT", "STATE", "THE", "OF", "VIEW", "IN", "ON", "AT",
   "WAY", "OUT", "DOES", "NOTICE", "TODAY", "CLOSES", "BRAKE",
-  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator",
+  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IV", "YAML", "OpenpilotState", "ENABLE", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator",
 }
 
 WORD_RE = re.compile(r"(?<![\w-])([A-Za-z]*[A-Z][A-Za-z]*[A-Z][A-Za-z]*(?:-[A-Z]+)?)(?![\w])")
 CODE_RE = re.compile(r"(?<![\w-])(WP|[A-Z]{1,4})(?:-[A-Z]{1,2})?-(?=\d|[A-Z]{2,})")
-CLASS_RE = re.compile(r"(?<![\w-])([SECMWLPGI])\d{1,2}(?![\w.])")
+CLASS_RE = re.compile(r"(?<![\w.-])([SECMWLPGI])\d{1,2}(?![\w.])")
 
 
 def plain_markdown(s: str) -> str:

@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="922" viewBox="0 0 1280 922" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-7. Harness box intercept switch, animated (WP-H-02)</title>
+<desc>Animated circuit, 4 frames: 1. SBU1 undriven: stock path (nominal): SBU1 0.00 V, VTH 4.20 V, stock path. 2. Device drives SBU1: intercept (nominal): SBU1 4.62 V, VTH 4.20 V, intercept. 3. Pull-down open, SBU1 undriven, IN leaks to VIN (DFM-010.C3): SBU1 13.86 V, VTH 4.20 V, intercept. 4. Drive at the low band, threshold and VIN at the high band (DFM-011.C2): SBU1 3.35 V, VTH 8.00 V, stock path.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="922" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-7 · Harness box intercept switch, animated</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">ngspice scenarios of the harness box v3 switch path, 4 frames of 4 s: the stock path, intercept, and two DFMEA faults that leave the box in the wrong state</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-H-02 §3.6 · HE-08</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<style>.fr{opacity:0;animation:16s steps(1,end) infinite}@keyframes k0{0%{opacity:1}0.00%{opacity:1}25.00%{opacity:0}100%{opacity:1}}.f0{animation-name:k0}@keyframes k1{0%{opacity:0}25.00%{opacity:1}50.00%{opacity:0}100%{opacity:0}}.f1{animation-name:k1}@keyframes k2{0%{opacity:0}50.00%{opacity:1}75.00%{opacity:0}100%{opacity:0}}.f2{animation-name:k2}@keyframes k3{0%{opacity:0}75.00%{opacity:1}100.00%{opacity:0}100%{opacity:0}}.f3{animation-name:k3}@media (prefers-reduced-motion:reduce){.fr{animation:none}.f1{opacity:1}}</style>
+<rect x="30" y="100" width="420" height="420" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="46" y="124" font-size="13" fill="#0F172A" font-weight="700">Switch drive · HE-08</text>
+<text x="46" y="141" font-size="10.5" fill="#475569">SBU1 against the DG419LE input threshold; VIN is the box supply</text>
+<circle cx="110" cy="175" r="16" fill="#FFFFFF" stroke="#475569" stroke-width="1.6"/>
+<text x="110" y="179" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">5 V</text>
+<text x="84" y="179" font-size="9.5" fill="#475569" text-anchor="end">device</text>
+<line x1="110" y1="191" x2="110" y2="205" stroke="#475569" stroke-width="1.4"/>
+<path d="M110 205 L117 208.7 L103 216.0 L117 223.3 L103 230.7 L117 238.0 L103 245.3 L110 249" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<text x="124" y="231" font-size="9.5" fill="#475569">R out 20 Ω</text>
+<line x1="110" y1="249" x2="110" y2="259" stroke="#475569" stroke-width="1.4"/>
+<text x="96" y="299" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="end">SBU1</text>
+<circle cx="110" cy="295" r="3.2" fill="#0F172A"/>
+<line x1="110" y1="315" x2="110" y2="329" stroke="#475569" stroke-width="1.4"/>
+<path d="M110 329 L117 333.2 L103 341.5 L117 349.8 L103 358.2 L117 366.5 L103 374.8 L110 379" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<text x="124" y="359" font-size="9.5" fill="#475569">R2/R3 240 Ω</text>
+<line x1="110" y1="379" x2="110" y2="387" stroke="#475569" stroke-width="1.4"/>
+<line x1="100" y1="387" x2="120" y2="387" stroke="#475569" stroke-width="1.6"/>
+<line x1="104" y1="391" x2="116" y2="391" stroke="#475569" stroke-width="1.4"/>
+<line x1="108" y1="395" x2="112" y2="395" stroke="#475569" stroke-width="1.4"/>
+<path d="M300 261 L300 329 L358 295 Z" stroke="#0F172A" stroke-width="1.6" fill="#FFFFFF" stroke-linejoin="round"/>
+<text x="306" y="283" font-size="12" fill="#0F172A" font-weight="700">+</text>
+<text x="306" y="317" font-size="12" fill="#0F172A" font-weight="700">−</text>
+<line x1="110" y1="295" x2="300" y2="279" stroke="#0F172A" stroke-width="1.4"/>
+<line x1="270" y1="313" x2="300" y2="313" stroke="#0F172A" stroke-width="1.4"/>
+<text x="266" y="317" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="end">VTH</text>
+<text x="266" y="331" font-size="9.5" fill="#475569" text-anchor="end">= k × VIN</text>
+<line x1="358" y1="295" x2="390" y2="295" stroke="#0F172A" stroke-width="1.4"/>
+<text x="330" y="349" font-size="9.5" fill="#475569" text-anchor="middle">DG419LE IN</text>
+<text x="394" y="287" font-size="10.5" fill="#0F172A" font-weight="700">IN</text>
+<rect x="470" y="100" width="780" height="420" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="486" y="124" font-size="13" fill="#0F172A" font-weight="700">CAN switch path · harness box v3</text>
+<text x="486" y="141" font-size="10.5" fill="#475569">U1 on CAN_H, U2 on CAN_L (DG419LE, R on 30 Ω); 8 clamp diodes to VIN and GND not drawn</text>
+<rect x="490" y="176" width="50" height="208" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="515" y="168" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">camera</text>
+<text x="515" y="402" font-size="9.5" fill="#475569" text-anchor="middle">CAN2</text>
+<rect x="1200" y="176" width="50" height="208" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1225" y="168" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">car</text>
+<text x="1225" y="402" font-size="9.5" fill="#475569" text-anchor="middle">CAN0</text>
+<path d="M540 210 L800 210" stroke="#CBD5E1" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<path d="M846 210 L1200 210" stroke="#CBD5E1" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<path d="M846 244 L920 244 L920 280" stroke="#CBD5E1" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<path d="M540 350 L844 350" stroke="#CBD5E1" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<path d="M890 350 L1200 350" stroke="#CBD5E1" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<path d="M844 384 L770 384 L770 414" stroke="#CBD5E1" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<circle cx="800" cy="210" r="3.6" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<circle cx="846" cy="210" r="3.6" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<circle cx="846" cy="244" r="3.6" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<circle cx="890" cy="350" r="3.6" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<circle cx="844" cy="350" r="3.6" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<circle cx="844" cy="384" r="3.6" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="823" y="184" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">U1</text>
+<text x="867" y="324" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">U2</text>
+<text x="796" y="202" font-size="8.5" fill="#475569" text-anchor="end">COM</text>
+<text x="850" y="202" font-size="8.5" fill="#475569" text-anchor="start">NC</text>
+<text x="850" y="258" font-size="8.5" fill="#475569" text-anchor="start">NO</text>
+<text x="894" y="342" font-size="8.5" fill="#475569" text-anchor="start">COM</text>
+<text x="840" y="342" font-size="8.5" fill="#475569" text-anchor="end">NC</text>
+<text x="840" y="398" font-size="8.5" fill="#475569" text-anchor="end">NO</text>
+<text x="548" y="202" font-size="9.5" fill="#475569" text-anchor="start">CAN2_H camera</text>
+<text x="1186" y="202" font-size="9.5" fill="#475569" text-anchor="end">CAN0_H car</text>
+<text x="548" y="342" font-size="9.5" fill="#475569" text-anchor="start">CAN2_L camera</text>
+<text x="1186" y="342" font-size="9.5" fill="#475569" text-anchor="end">CAN0_L car</text>
+<path d="M920 280 L927 283.5 L913 290.5 L927 297.5 L913 304.5 L927 311.5 L913 318.5 L920 322" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<text x="934" y="302" font-size="9.5" fill="#475569">R7 120 Ω, R8 120 Ω</text>
+<text x="934" y="316" font-size="9" fill="#94A3B8">CAN2_H' to CAN2_L camera</text>
+<path d="M920 322 L920 330 L820 330 L820 350" stroke="#CBD5E1" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<circle cx="820" cy="350" r="3.2" fill="#475569"/>
+<path d="M770 414 L777 417.3 L763 424.0 L777 430.7 L763 437.3 L777 444.0 L763 450.7 L770 454" stroke="#475569" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<text x="756" y="436" font-size="9.5" fill="#475569" text-anchor="end">R6 120 Ω</text>
+<text x="756" y="450" font-size="9" fill="#94A3B8" text-anchor="end">CAN0_L' to can0hpp</text>
+<rect x="510" y="484" width="700" height="24" rx="6" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="522" y="500" font-size="10" fill="#4F46E5" font-weight="700">J3 · device (panda safety MCU)</text>
+<line x1="570" y1="210" x2="570" y2="484" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="4 3"/>
+<circle cx="570" cy="210" r="3.2" fill="#4F46E5"/>
+<text x="578" y="476" font-size="9.5" fill="#4F46E5" font-weight="700">bus 2</text>
+<line x1="594" y1="350" x2="594" y2="484" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="4 3"/>
+<circle cx="594" cy="350" r="3.2" fill="#4F46E5"/>
+<line x1="1140" y1="210" x2="1140" y2="484" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="4 3"/>
+<circle cx="1140" cy="210" r="3.2" fill="#4F46E5"/>
+<text x="1148" y="476" font-size="9.5" fill="#4F46E5" font-weight="700">bus 0</text>
+<line x1="1164" y1="350" x2="1164" y2="484" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="4 3"/>
+<circle cx="1164" cy="350" r="3.2" fill="#4F46E5"/>
+<g class="fr f0">
+<line x1="110" y1="259" x2="92" y2="289" stroke="#0F172A" stroke-width="2"/>
+<text x="86" y="279" font-size="9.5" fill="#475569" text-anchor="end">not driven</text>
+<circle cx="110" cy="259" r="3.2" fill="#0F172A"/>
+<text x="126" y="287" font-size="12" fill="#2E9E6A" font-weight="700">0.00 V</text>
+<text x="266" y="347" font-size="10" fill="#0F172A" font-weight="700" text-anchor="end">4.20 V at VIN 14 V</text>
+<rect x="394" y="299" width="64.3" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="426.1" y="311.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">stock path</text>
+<text x="860" y="274" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">camera ⇄ car: stock path</text>
+<path d="M540 210 L1200 210" stroke="#2E9E6A" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M540 350 L1200 350" stroke="#2E9E6A" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<line x1="800" y1="210" x2="846" y2="210" stroke="#0F172A" stroke-width="2.6"/>
+<line x1="890" y1="350" x2="844" y2="350" stroke="#0F172A" stroke-width="2.6"/>
+<rect x="30" y="540" width="1220" height="96" rx="10" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<rect x="46" y="554" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="63.7" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1 / 4</text>
+<text x="96" y="567" font-size="13" fill="#0F172A" font-weight="700">SBU1 undriven: stock path</text>
+<rect x="1185.3" y="554" width="48.7" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1209.7" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">nominal</text>
+<text x="46" y="592" font-size="11.5" fill="#0F172A">SBU1 is not driven, so the box rests in the stock path: the camera's CAN reaches the car directly and the device only listens on both buses.</text>
+<text x="46" y="614" font-size="10.5" fill="#475569">ngspice: IN reads pass-through (SBU1 -4.20 V from the threshold)</text>
+</g>
+<g class="fr f1">
+<line x1="110" y1="259" x2="110" y2="295" stroke="#0F172A" stroke-width="2"/>
+<circle cx="110" cy="259" r="3.2" fill="#0F172A"/>
+<text x="126" y="287" font-size="12" fill="#C2410C" font-weight="700">4.62 V</text>
+<text x="266" y="347" font-size="10" fill="#0F172A" font-weight="700" text-anchor="end">4.20 V at VIN 14 V</text>
+<rect x="394" y="299" width="55.6" height="18" rx="9.0" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="421.8" y="311.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">intercept</text>
+<text x="670" y="274" font-size="10.5" fill="#C2410C" font-weight="700">camera ⇄ device bus 2</text>
+<text x="1160" y="432" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="end">device bus 0 ⇄ car</text>
+<path d="M540 210 L800 210" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M846 244 L920 244 L920 280" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M540 350 L844 350" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M846 210 L1200 210" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M890 350 L1200 350" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M844 384 L770 384 L770 414" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<line x1="800" y1="210" x2="844" y2="242" stroke="#0F172A" stroke-width="2.6"/>
+<line x1="890" y1="350" x2="846" y2="382" stroke="#0F172A" stroke-width="2.6"/>
+<rect x="30" y="540" width="1220" height="96" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<rect x="46" y="554" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="63.7" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2 / 4</text>
+<text x="96" y="567" font-size="13" fill="#0F172A" font-weight="700">Device drives SBU1: intercept</text>
+<rect x="1185.3" y="554" width="48.7" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1209.7" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">nominal</text>
+<text x="46" y="592" font-size="11.5" fill="#0F172A">The device drives SBU1 above the threshold: U1 and U2 change over. The camera now talks only to device bus 2, terminated in the box, and device bus 0 drives the car.</text>
+<text x="46" y="614" font-size="10.5" fill="#475569">ngspice: IN reads intercept (SBU1 +0.42 V from the threshold)</text>
+</g>
+<g class="fr f2">
+<line x1="110" y1="259" x2="92" y2="289" stroke="#0F172A" stroke-width="2"/>
+<text x="86" y="279" font-size="9.5" fill="#475569" text-anchor="end">not driven</text>
+<circle cx="110" cy="259" r="3.2" fill="#0F172A"/>
+<line x1="100" y1="337" x2="120" y2="357" stroke="#D2553F" stroke-width="2.4"/>
+<line x1="100" y1="357" x2="120" y2="337" stroke="#D2553F" stroke-width="2.4"/>
+<text x="94" y="351" font-size="10" fill="#D2553F" font-weight="700" text-anchor="end">open</text>
+<text x="126" y="287" font-size="12" fill="#C2410C" font-weight="700">13.86 V</text>
+<text x="266" y="347" font-size="10" fill="#0F172A" font-weight="700" text-anchor="end">4.20 V at VIN 14 V</text>
+<rect x="394" y="299" width="55.6" height="18" rx="9.0" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="421.8" y="311.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">intercept</text>
+<text x="670" y="274" font-size="10.5" fill="#C2410C" font-weight="700">camera ⇄ device bus 2</text>
+<text x="1160" y="432" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="end">device bus 0 ⇄ car</text>
+<path d="M540 210 L800 210" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M846 244 L920 244 L920 280" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M540 350 L844 350" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M846 210 L1200 210" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M890 350 L1200 350" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M844 384 L770 384 L770 414" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<line x1="800" y1="210" x2="844" y2="242" stroke="#0F172A" stroke-width="2.6"/>
+<line x1="890" y1="350" x2="846" y2="382" stroke="#0F172A" stroke-width="2.6"/>
+<rect x="30" y="540" width="1220" height="96" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<rect x="46" y="554" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="63.7" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3 / 4</text>
+<text x="96" y="567" font-size="13" fill="#0F172A" font-weight="700">Pull-down open, SBU1 undriven, IN leaks to VIN</text>
+<rect x="1161.8" y="554" width="72.2" height="18" rx="9.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1197.9" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">DFM-010.C3</text>
+<text x="46" y="592" font-size="11.5" fill="#0F172A">With R2/R3 open and SBU1 undriven, IN floats up on its leakage: the box sits in intercept with the device off, so the stock camera stays cut off from the car.</text>
+<text x="46" y="614" font-size="10.5" fill="#475569">ngspice: IN reads intercept (SBU1 +9.66 V from the threshold)</text>
+</g>
+<g class="fr f3">
+<line x1="110" y1="259" x2="110" y2="295" stroke="#0F172A" stroke-width="2"/>
+<circle cx="110" cy="259" r="3.2" fill="#0F172A"/>
+<text x="126" y="287" font-size="12" fill="#2E9E6A" font-weight="700">3.35 V</text>
+<text x="266" y="347" font-size="10" fill="#0F172A" font-weight="700" text-anchor="end">8.00 V at VIN 16 V</text>
+<rect x="394" y="299" width="64.3" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="426.1" y="311.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">stock path</text>
+<text x="860" y="274" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">camera ⇄ car: stock path</text>
+<path d="M540 210 L1200 210" stroke="#2E9E6A" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M540 350 L1200 350" stroke="#2E9E6A" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<line x1="800" y1="210" x2="846" y2="210" stroke="#0F172A" stroke-width="2.6"/>
+<line x1="890" y1="350" x2="844" y2="350" stroke="#0F172A" stroke-width="2.6"/>
+<rect x="30" y="540" width="1220" height="96" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<rect x="46" y="554" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="63.7" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4 / 4</text>
+<text x="96" y="567" font-size="13" fill="#0F172A" font-weight="700">Drive at the low band, threshold and VIN at the high band</text>
+<rect x="1161.8" y="554" width="72.2" height="18" rx="9.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1197.9" y="566.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">DFM-011.C2</text>
+<text x="46" y="592" font-size="11.5" fill="#0F172A">At high VIN with a high threshold and a weak drive, SBU1 stays below VTH: the device asks for intercept but the box stays in the stock path.</text>
+<text x="46" y="614" font-size="10.5" fill="#475569">ngspice: IN reads pass-through (SBU1 -4.65 V from the threshold)</text>
+</g>
+<text x="40" y="664" font-size="12" fill="#0F172A" font-weight="700">All frames</text>
+<text x="40" y="686" font-size="10" fill="#475569" font-weight="700">Scenario</text>
+<text x="520" y="686" font-size="10" fill="#475569" font-weight="700">DFMEA</text>
+<text x="640" y="686" font-size="10" fill="#475569" font-weight="700">SBU1</text>
+<text x="730" y="686" font-size="10" fill="#475569" font-weight="700">VTH</text>
+<text x="830" y="686" font-size="10" fill="#475569" font-weight="700">VIN</text>
+<text x="920" y="686" font-size="10" fill="#475569" font-weight="700">Box state</text>
+<text x="40" y="706" font-size="10.5" fill="#0F172A">1. SBU1 undriven: stock path</text>
+<text x="520" y="706" font-size="10.5" fill="#475569">nominal</text>
+<text x="640" y="706" font-size="10.5" fill="#0F172A">0.00 V</text>
+<text x="730" y="706" font-size="10.5" fill="#0F172A">4.20 V</text>
+<text x="830" y="706" font-size="10.5" fill="#0F172A">14.00 V</text>
+<text x="920" y="706" font-size="10.5" fill="#2E9E6A" font-weight="700">stock path</text>
+<text x="40" y="726" font-size="10.5" fill="#0F172A">2. Device drives SBU1: intercept</text>
+<text x="520" y="726" font-size="10.5" fill="#475569">nominal</text>
+<text x="640" y="726" font-size="10.5" fill="#0F172A">4.62 V</text>
+<text x="730" y="726" font-size="10.5" fill="#0F172A">4.20 V</text>
+<text x="830" y="726" font-size="10.5" fill="#0F172A">14.00 V</text>
+<text x="920" y="726" font-size="10.5" fill="#C2410C" font-weight="700">intercept</text>
+<text x="40" y="746" font-size="10.5" fill="#0F172A">3. Pull-down open, SBU1 undriven, IN leaks to VIN</text>
+<text x="520" y="746" font-size="10.5" fill="#D2553F">DFM-010.C3</text>
+<text x="640" y="746" font-size="10.5" fill="#0F172A">13.86 V</text>
+<text x="730" y="746" font-size="10.5" fill="#0F172A">4.20 V</text>
+<text x="830" y="746" font-size="10.5" fill="#0F172A">14.00 V</text>
+<text x="920" y="746" font-size="10.5" fill="#C2410C" font-weight="700">intercept</text>
+<text x="40" y="766" font-size="10.5" fill="#0F172A">4. Drive at the low band, threshold and VIN at the high band</text>
+<text x="520" y="766" font-size="10.5" fill="#D2553F">DFM-011.C2</text>
+<text x="640" y="766" font-size="10.5" fill="#0F172A">3.35 V</text>
+<text x="730" y="766" font-size="10.5" fill="#0F172A">8.00 V</text>
+<text x="830" y="766" font-size="10.5" fill="#0F172A">16.00 V</text>
+<text x="920" y="766" font-size="10.5" fill="#2E9E6A" font-weight="700">stock path</text>
+<text x="40" y="798" font-size="10.5" fill="#475569">Synthetic data, no evidence credit (DQ-413). Idealised switches; the DG419LE threshold at VL = VIN and the device's SBU1 driver are bands, not published values.</text>
+<text x="40" y="816" font-size="10.5" fill="#475569">Generated by fig_h02_box_anim.py from spice/box-v3-nominal.cir and sim/results/harness-box.json; nothing is hand-listed but the frame order and each frame's sentence.</text>
+<g class="terms">
+<text x="40" y="838" font-size="10.5" fill="#475569">Terms: CAN controller area network: the vehicle's data bus · COM common terminal of a changeover switch · DFM-nn DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea) · DFMEA design FMEA: failure modes and</text>
+<text x="40" y="852.5" font-size="10.5" fill="#475569">effects analysis of a design (here the harness box and device) · DQ-nn decision of the project lead (decision register) · GND ground · HE-nn hazardous event (HARA) · MCU microcontroller: the panda safety processor</text>
+<text x="40" y="867" font-size="10.5" fill="#475569">(STM32H7) · NC normally closed terminal of a changeover switch (connected to COM when not driven) · NO normally open terminal of a changeover switch (connected to COM when driven) · VIN vehicle identification</text>
+<text x="40" y="881.5" font-size="10.5" fill="#475569">number; in the harness box and its simulations, the box supply voltage · VL logic supply pin of the DG419LE switch (in the harness box, tied to VIN) · VTH threshold voltage of an input (in the harness box, the</text>
+<text x="40" y="896" font-size="10.5" fill="#475569">DG419LE input threshold) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

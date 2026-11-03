@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1079" viewBox="0 0 1280 1079" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5-2. SM-SELFDRIVED as a UML state machine (WP-W-05)</title>
+<desc>UML state machine of SM-SELFDRIVED: X1 preEnabled, enabled, softDisabling, overriding to disabled (partly). X2 preEnabled, enabled, softDisabling, overriding to disabled (implemented). E1 enabled to softDisabling (partly). E2 enabled to overriding (implemented). SD1 softDisabling to enabled (not implemented). SD2 softDisabling to disabled (partly). P1 preEnabled to enabled (implemented). P2 preEnabled to disabled (implemented). O1 overriding to softDisabling (partly). O2 overriding to enabled (implemented). N1 disabled to same (not implemented). D1 disabled to preEnabled (not implemented). D2 disabled to overriding (not implemented). D3 disabled to enabled (not implemented).</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1079" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-2 · SM-SELFDRIVED as a UML state machine</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">selfdrived engagement state (OpenpilotState): 5 states, 14 transitions; 5 implemented, 4 partly, 5 not implemented</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-W-05 §5.3</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="120" width="1200" height="540" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M40 138 L40 120 L446.79780000000005 120 L446.79780000000005 134 L434.79780000000005 146 L40 146" stroke="#0F172A" stroke-width="1.2" fill="#F8FAFC" stroke-linejoin="round"/>
+<text x="50" y="137" font-size="11" fill="#0F172A" font-weight="700">stm SM-SELFDRIVED · selfdrived engagement state (OpenpilotState)</text>
+<line x1="519.2" y1="215.1" x2="290.9" y2="319.1" stroke="#475569" stroke-width="1.4"/>
+<path d="M290.9 319.1 L296.4 311.9 L299.9 319.6 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="358" y="231.6" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="370" y="242.3" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">X1</text>
+<rect x="385.1" y="231.6" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="397.1" y="242.3" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">X2</text>
+<rect x="412.1" y="231.6" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="424.1" y="242.3" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">P2</text>
+<line x1="850" y1="348" x2="330" y2="348" stroke="#475569" stroke-width="1.4"/>
+<path d="M330.0 348.0 L337.9 343.8 L337.9 352.2 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="564.5" y="310.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="576.5" y="321.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">X1</text>
+<rect x="591.5" y="310.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="603.5" y="321.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">X2</text>
+<line x1="980" y1="536.5" x2="330" y2="383.5" stroke="#475569" stroke-width="1.4"/>
+<path d="M330.0 383.5 L338.7 381.2 L336.8 389.5 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="612.6" y="460" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="624.6" y="470.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">X1</text>
+<rect x="639.7" y="460" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="651.7" y="470.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">X2</text>
+<rect x="666.7" y="460" width="30.7" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="682" y="470.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">SD2</text>
+<line x1="527.4" y1="479" x2="302.4" y2="379" stroke="#475569" stroke-width="1.4"/>
+<path d="M302.4 379.0 L311.4 378.4 L307.9 386.1 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="397.2" y="393.5" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="409.2" y="404.2" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">X1</text>
+<rect x="424.2" y="393.5" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="436.2" y="404.2" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">X2</text>
+<line x1="959.4" y1="396.5" x2="1050.4" y2="536.5" stroke="#475569" stroke-width="1.4"/>
+<path d="M1050.4 536.5 L1042.6 532.2 L1049.7 527.6 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="976.8" y="477" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="988.8" y="487.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">E1</text>
+<line x1="877.6" y1="379" x2="652.6" y2="479" stroke="#475569" stroke-width="1.4"/>
+<path d="M652.6 479.0 L658.2 471.9 L661.6 479.7 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="745.3" y="393.5" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="757.3" y="404.2" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">E2</text>
+<line x1="1070.6" y1="523.5" x2="979.6" y2="383.5" stroke="#475569" stroke-width="1.4"/>
+<path d="M979.6 383.5 L987.4 387.8 L980.3 392.4 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="1025.8" y="425" width="30.7" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="1041.2" y="435.7" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SD1</text>
+<line x1="655.9" y1="226" x2="884.1" y2="330" stroke="#475569" stroke-width="1.4"/>
+<path d="M884.1 330.0 L875.2 330.6 L878.7 322.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="758" y="278" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="770" y="288.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">P1</text>
+<line x1="690" y1="528.2" x2="980" y2="551.8" stroke="#475569" stroke-width="1.4"/>
+<path d="M980.0 551.8 L971.7 555.4 L972.4 547.0 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="823" y="540" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="835" y="550.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">O1</text>
+<line x1="662.4" y1="501" x2="887.4" y2="401" stroke="#475569" stroke-width="1.4"/>
+<path d="M887.4 401.0 L881.8 408.1 L878.4 400.3 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="770.7" y="468.5" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="782.7" y="479.3" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">O2</text>
+<path d="M200 330.0 C190 278.0 270 278.0 260 330.0" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M260.0 330.0 L257.2 321.4 L265.5 322.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="218" y="266" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="230" y="276.7" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">N1</text>
+<line x1="300.8" y1="340.9" x2="529.1" y2="236.9" stroke="#475569" stroke-width="1.4"/>
+<path d="M529.1 236.9 L523.6 244.1 L520.1 236.4 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="410.9" y="306.4" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="422.9" y="317.1" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">D1</text>
+<line x1="292.6" y1="401" x2="517.6" y2="501" stroke="#475569" stroke-width="1.4"/>
+<path d="M517.6 501.0 L508.6 501.6 L512.1 493.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="385.3" y="468.5" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="397.3" y="479.3" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">D2</text>
+<line x1="330" y1="372" x2="850" y2="372" stroke="#475569" stroke-width="1.4"/>
+<path d="M850.0 372.0 L842.1 376.2 L842.1 367.8 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="578" y="391.2" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="590" y="401.9" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">D3</text>
+<circle cx="60.0" cy="360" r="8" fill="#0F172A"/>
+<line x1="68" y1="360" x2="128" y2="360" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M128.0 360.0 L120.1 364.2 L120.1 355.8 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="130" y="330" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="230" y="365" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">disabled</text>
+<rect x="490" y="166" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="590" y="201" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">preEnabled</text>
+<rect x="850" y="330" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="950" y="365" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">enabled</text>
+<rect x="980" y="530" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="1080" y="565" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">softDisabling</text>
+<rect x="490" y="490" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="590" y="525" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">overriding</text>
+<rect x="40" y="679" width="18.7" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="49.3" y="689.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T</text>
+<text x="64.7" y="690" font-size="10.5" fill="#475569">implemented</text>
+<rect x="133.7" y="679" width="18.7" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="143" y="689.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T</text>
+<text x="158.4" y="690" font-size="10.5" fill="#475569">partly</text>
+<rect x="196.2" y="679" width="18.7" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="205.5" y="689.7" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T</text>
+<text x="220.9" y="690" font-size="10.5" fill="#475569">not implemented</text>
+<rect x="309" y="679" width="18.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="318.3" y="689.7" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T</text>
+<text x="333.7" y="690" font-size="10.5" fill="#475569">not assessed</text>
+<rect x="409" y="679" width="18.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="418.3" y="689.7" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T</text>
+<text x="433.7" y="690" font-size="10.5" fill="#475569">reference build only</text>
+<text x="550.7" y="690" font-size="10.5" fill="#94A3B8">status as WP-W-05 §5 gives it, from the SWSRs each transition realises</text>
+<text x="40" y="720" font-size="12" fill="#0F172A" font-weight="700">Transitions (the record is normative; WP-W-05 §5.3 has them in full)</text>
+<text x="40" y="740" font-size="10" fill="#475569" font-weight="700">ID</text>
+<text x="100" y="740" font-size="10" fill="#475569" font-weight="700">From → to</text>
+<text x="380" y="740" font-size="10" fill="#475569" font-weight="700">Event [guard] / action</text>
+<text x="1110" y="740" font-size="10" fill="#475569" font-weight="700">Build</text>
+<text x="1180" y="740" font-size="10" fill="#475569" font-weight="700">Status</text>
+<text x="40" y="763" font-size="10" fill="#D97706" font-weight="700">X1</text>
+<text x="100" y="763" font-size="10" fill="#0F172A">preEnabled, enabled, softDisabling, overriding → disabled</text>
+<text x="380" y="763" font-size="10" fill="#0F172A">update (100 Hz) [IMMEDIATE_DISABLE present] / IMMEDIATE_DISABLE alert</text>
+<text x="1110" y="763" font-size="10" fill="#475569">all</text>
+<text x="1180" y="763" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="780" font-size="10" fill="#2E9E6A" font-weight="700">X2</text>
+<text x="100" y="780" font-size="10" fill="#0F172A">preEnabled, enabled, softDisabling, overriding → disabled</text>
+<text x="380" y="780" font-size="10" fill="#0F172A">update (100 Hz) [USER_DISABLE present, no IMMEDIATE_DISABLE] / USER_DISABLE alert</text>
+<text x="1110" y="780" font-size="10" fill="#475569">all</text>
+<text x="1180" y="780" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="797" font-size="10" fill="#D97706" font-weight="700">E1</text>
+<text x="100" y="797" font-size="10" fill="#0F172A">enabled → softDisabling</text>
+<text x="380" y="797" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE] / soft-disable timer = 3 s (300 cycles) …</text>
+<text x="1110" y="797" font-size="10" fill="#475569">all</text>
+<text x="1180" y="797" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="814" font-size="10" fill="#2E9E6A" font-weight="700">E2</text>
+<text x="100" y="814" font-size="10" fill="#0F172A">enabled → overriding</text>
+<text x="380" y="814" font-size="10" fill="#0F172A">update (100 Hz) [OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL present, no disable event] / override alerts</text>
+<text x="1110" y="814" font-size="10" fill="#475569">all</text>
+<text x="1180" y="814" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="831" font-size="10" fill="#D2553F" font-weight="700">SD1</text>
+<text x="100" y="831" font-size="10" fill="#0F172A">softDisabling → enabled</text>
+<text x="380" y="831" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE no longer present, no IMMEDIATE_DISABLE or USER_DISABLE]</text>
+<text x="1110" y="831" font-size="10" fill="#475569">all</text>
+<text x="1180" y="831" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="848" font-size="10" fill="#D97706" font-weight="700">SD2</text>
+<text x="100" y="848" font-size="10" fill="#0F172A">softDisabling → disabled</text>
+<text x="380" y="848" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE still present and the timer has run out (3 s after E1/O1)]</text>
+<text x="1110" y="848" font-size="10" fill="#475569">all</text>
+<text x="1180" y="848" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="865" font-size="10" fill="#2E9E6A" font-weight="700">P1</text>
+<text x="100" y="865" font-size="10" fill="#0F172A">preEnabled → enabled</text>
+<text x="380" y="865" font-size="10" fill="#0F172A">update (100 Hz) [PRE_ENABLE no longer present, no disable event, no SOFT_DISABLE]</text>
+<text x="1110" y="865" font-size="10" fill="#475569">all</text>
+<text x="1180" y="865" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="882" font-size="10" fill="#2E9E6A" font-weight="700">P2</text>
+<text x="100" y="882" font-size="10" fill="#0F172A">preEnabled → disabled</text>
+<text x="380" y="882" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE (DQ-433 A)] / SOFT_DISABLE alert; engagement …</text>
+<text x="1110" y="882" font-size="10" fill="#475569">all</text>
+<text x="1180" y="882" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="899" font-size="10" fill="#D97706" font-weight="700">O1</text>
+<text x="100" y="899" font-size="10" fill="#0F172A">overriding → softDisabling</text>
+<text x="380" y="899" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE] / soft-disable timer = 3 s; SOFT_DISABLE alert</text>
+<text x="1110" y="899" font-size="10" fill="#475569">all</text>
+<text x="1180" y="899" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="916" font-size="10" fill="#2E9E6A" font-weight="700">O2</text>
+<text x="100" y="916" font-size="10" fill="#0F172A">overriding → enabled</text>
+<text x="380" y="916" font-size="10" fill="#0F172A">update (100 Hz) [no override event and no SOFT_DISABLE, no disable event]</text>
+<text x="1110" y="916" font-size="10" fill="#475569">all</text>
+<text x="1180" y="916" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="933" font-size="10" fill="#D2553F" font-weight="700">N1</text>
+<text x="100" y="933" font-size="10" fill="#0F172A">disabled → same</text>
+<text x="380" y="933" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and NO_ENTRY present] / NO_ENTRY alert, engagement refused</text>
+<text x="1110" y="933" font-size="10" fill="#475569">all</text>
+<text x="1180" y="933" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="950" font-size="10" fill="#D2553F" font-weight="700">D1</text>
+<text x="100" y="950" font-size="10" fill="#0F172A">disabled → preEnabled</text>
+<text x="380" y="950" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and PRE_ENABLE present, no NO_ENTRY] / ENABLE alert</text>
+<text x="1110" y="950" font-size="10" fill="#475569">all</text>
+<text x="1180" y="950" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="967" font-size="10" fill="#D2553F" font-weight="700">D2</text>
+<text x="100" y="967" font-size="10" fill="#0F172A">disabled → overriding</text>
+<text x="380" y="967" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and an override event present, no NO_ENTRY or PRE_ENABLE] / ENABLE alert</text>
+<text x="1110" y="967" font-size="10" fill="#475569">all</text>
+<text x="1180" y="967" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="984" font-size="10" fill="#D2553F" font-weight="700">D3</text>
+<text x="100" y="984" font-size="10" fill="#0F172A">disabled → enabled</text>
+<text x="380" y="984" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE present, no NO_ENTRY, PRE_ENABLE or override event] / ENABLE alert</text>
+<text x="1110" y="984" font-size="10" fill="#475569">all</text>
+<text x="1180" y="984" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="1002" font-size="10.5" fill="#475569">Generated by fig_w05_uml_states.py from state-machines/sm-selfdrived.yaml; nothing is hand-listed but the positions of the states.</text>
+<g class="terms">
+<text x="40" y="1024" font-size="10.5" fill="#475569">Terms: DQ-nn decision of the project lead (decision register) · ID identifier · SM-nn safety mechanism (TSC §6) · SWSR-nn software safety requirement (WP-W-02) · UML Unified Modeling Language (OMG): state machine,</text>
+<text x="40" y="1038.5" font-size="10.5" fill="#475569">sequence and component diagrams · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety</text>
+<text x="40" y="1053" font-size="10.5" fill="#475569">case)</text>
+</g>
+</svg>
