@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1048" viewBox="0 0 1280 1048" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1079" viewBox="0 0 1280 1079" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 5-2. SM-SELFDRIVED as a UML state machine (WP-W-05)</title>
-<desc>UML state machine of SM-SELFDRIVED: X1 preEnabled, enabled, softDisabling, overriding to disabled (partly). X2 preEnabled, enabled, softDisabling, overriding to disabled (implemented). E1 enabled to softDisabling (partly). E2 enabled to overriding (implemented). SD1 softDisabling to enabled (not implemented). SD2 softDisabling to disabled (partly). P1 preEnabled to enabled (implemented). O1 overriding to softDisabling (partly). O2 overriding to enabled (implemented). N1 disabled to same (not implemented). D1 disabled to preEnabled (not implemented). D2 disabled to overriding (not implemented). D3 disabled to enabled (not implemented).</desc>
+<desc>UML state machine of SM-SELFDRIVED: X1 preEnabled, enabled, softDisabling, overriding to disabled (partly). X2 preEnabled, enabled, softDisabling, overriding to disabled (implemented). E1 enabled to softDisabling (partly). E2 enabled to overriding (implemented). SD1 softDisabling to enabled (not implemented). SD2 softDisabling to disabled (partly). P1 preEnabled to enabled (implemented). P2 preEnabled to disabled (implemented). O1 overriding to softDisabling (partly). O2 overriding to enabled (implemented). N1 disabled to same (not implemented). D1 disabled to preEnabled (not implemented). D2 disabled to overriding (not implemented). D3 disabled to enabled (not implemented).</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="1280" height="1048" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1280" height="1079" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-2 · SM-SELFDRIVED as a UML state machine</text>
-<text x="40" y="66" font-size="12.5" fill="#475569">selfdrived engagement state (OpenpilotState): 5 states, 13 transitions; 4 implemented, 4 partly, 5 not implemented</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">selfdrived engagement state (OpenpilotState): 5 states, 14 transitions; 5 implemented, 4 partly, 5 not implemented</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-W-05 §5.3</text>
 <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
 <rect x="40" y="120" width="1200" height="540" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
@@ -12,10 +12,12 @@
 <text x="50" y="137" font-size="11" fill="#0F172A" font-weight="700">stm SM-SELFDRIVED · selfdrived engagement state (OpenpilotState)</text>
 <line x1="519.2" y1="215.1" x2="290.9" y2="319.1" stroke="#475569" stroke-width="1.4"/>
 <path d="M290.9 319.1 L296.4 311.9 L299.9 319.6 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
-<rect x="371.5" y="231.6" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
-<text x="383.6" y="242.3" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">X1</text>
-<rect x="398.6" y="231.6" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
-<text x="410.6" y="242.3" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">X2</text>
+<rect x="358" y="231.6" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="370" y="242.3" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">X1</text>
+<rect x="385.1" y="231.6" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="397.1" y="242.3" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">X2</text>
+<rect x="412.1" y="231.6" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="424.1" y="242.3" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">P2</text>
 <line x1="850" y1="348" x2="330" y2="348" stroke="#475569" stroke-width="1.4"/>
 <path d="M330.0 348.0 L337.9 343.8 L337.9 352.2 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
 <rect x="564.5" y="310.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
@@ -143,42 +145,48 @@
 <text x="1180" y="848" font-size="10" fill="#D97706">partly</text>
 <text x="40" y="865" font-size="10" fill="#2E9E6A" font-weight="700">P1</text>
 <text x="100" y="865" font-size="10" fill="#0F172A">preEnabled → enabled</text>
-<text x="380" y="865" font-size="10" fill="#0F172A">update (100 Hz) [PRE_ENABLE no longer present, no disable event]</text>
+<text x="380" y="865" font-size="10" fill="#0F172A">update (100 Hz) [PRE_ENABLE no longer present, no disable event, no SOFT_DISABLE]</text>
 <text x="1110" y="865" font-size="10" fill="#475569">all</text>
 <text x="1180" y="865" font-size="10" fill="#2E9E6A">implemented</text>
-<text x="40" y="882" font-size="10" fill="#D97706" font-weight="700">O1</text>
-<text x="100" y="882" font-size="10" fill="#0F172A">overriding → softDisabling</text>
-<text x="380" y="882" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE] / soft-disable timer = 3 s; SOFT_DISABLE alert</text>
+<text x="40" y="882" font-size="10" fill="#2E9E6A" font-weight="700">P2</text>
+<text x="100" y="882" font-size="10" fill="#0F172A">preEnabled → disabled</text>
+<text x="380" y="882" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE (DQ-433 A)] / SOFT_DISABLE alert; engagement …</text>
 <text x="1110" y="882" font-size="10" fill="#475569">all</text>
-<text x="1180" y="882" font-size="10" fill="#D97706">partly</text>
-<text x="40" y="899" font-size="10" fill="#2E9E6A" font-weight="700">O2</text>
-<text x="100" y="899" font-size="10" fill="#0F172A">overriding → enabled</text>
-<text x="380" y="899" font-size="10" fill="#0F172A">update (100 Hz) [no override event and no SOFT_DISABLE, no disable event]</text>
+<text x="1180" y="882" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="899" font-size="10" fill="#D97706" font-weight="700">O1</text>
+<text x="100" y="899" font-size="10" fill="#0F172A">overriding → softDisabling</text>
+<text x="380" y="899" font-size="10" fill="#0F172A">update (100 Hz) [SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE] / soft-disable timer = 3 s; SOFT_DISABLE alert</text>
 <text x="1110" y="899" font-size="10" fill="#475569">all</text>
-<text x="1180" y="899" font-size="10" fill="#2E9E6A">implemented</text>
-<text x="40" y="916" font-size="10" fill="#D2553F" font-weight="700">N1</text>
-<text x="100" y="916" font-size="10" fill="#0F172A">disabled → same</text>
-<text x="380" y="916" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and NO_ENTRY present] / NO_ENTRY alert, engagement refused</text>
+<text x="1180" y="899" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="916" font-size="10" fill="#2E9E6A" font-weight="700">O2</text>
+<text x="100" y="916" font-size="10" fill="#0F172A">overriding → enabled</text>
+<text x="380" y="916" font-size="10" fill="#0F172A">update (100 Hz) [no override event and no SOFT_DISABLE, no disable event]</text>
 <text x="1110" y="916" font-size="10" fill="#475569">all</text>
-<text x="1180" y="916" font-size="10" fill="#D2553F">not implemented</text>
-<text x="40" y="933" font-size="10" fill="#D2553F" font-weight="700">D1</text>
-<text x="100" y="933" font-size="10" fill="#0F172A">disabled → preEnabled</text>
-<text x="380" y="933" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and PRE_ENABLE present, no NO_ENTRY] / ENABLE alert</text>
+<text x="1180" y="916" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="933" font-size="10" fill="#D2553F" font-weight="700">N1</text>
+<text x="100" y="933" font-size="10" fill="#0F172A">disabled → same</text>
+<text x="380" y="933" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and NO_ENTRY present] / NO_ENTRY alert, engagement refused</text>
 <text x="1110" y="933" font-size="10" fill="#475569">all</text>
 <text x="1180" y="933" font-size="10" fill="#D2553F">not implemented</text>
-<text x="40" y="950" font-size="10" fill="#D2553F" font-weight="700">D2</text>
-<text x="100" y="950" font-size="10" fill="#0F172A">disabled → overriding</text>
-<text x="380" y="950" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and an override event present, no NO_ENTRY or PRE_ENABLE] / ENABLE alert</text>
+<text x="40" y="950" font-size="10" fill="#D2553F" font-weight="700">D1</text>
+<text x="100" y="950" font-size="10" fill="#0F172A">disabled → preEnabled</text>
+<text x="380" y="950" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and PRE_ENABLE present, no NO_ENTRY] / ENABLE alert</text>
 <text x="1110" y="950" font-size="10" fill="#475569">all</text>
 <text x="1180" y="950" font-size="10" fill="#D2553F">not implemented</text>
-<text x="40" y="967" font-size="10" fill="#D2553F" font-weight="700">D3</text>
-<text x="100" y="967" font-size="10" fill="#0F172A">disabled → enabled</text>
-<text x="380" y="967" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE present, no NO_ENTRY, PRE_ENABLE or override event] / ENABLE alert</text>
+<text x="40" y="967" font-size="10" fill="#D2553F" font-weight="700">D2</text>
+<text x="100" y="967" font-size="10" fill="#0F172A">disabled → overriding</text>
+<text x="380" y="967" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE and an override event present, no NO_ENTRY or PRE_ENABLE] / ENABLE alert</text>
 <text x="1110" y="967" font-size="10" fill="#475569">all</text>
 <text x="1180" y="967" font-size="10" fill="#D2553F">not implemented</text>
-<text x="40" y="985" font-size="10.5" fill="#475569">Generated by fig_w05_uml_states.py from state-machines/sm-selfdrived.yaml; nothing is hand-listed but the positions of the states.</text>
+<text x="40" y="984" font-size="10" fill="#D2553F" font-weight="700">D3</text>
+<text x="100" y="984" font-size="10" fill="#0F172A">disabled → enabled</text>
+<text x="380" y="984" font-size="10" fill="#0F172A">update (100 Hz) [ENABLE present, no NO_ENTRY, PRE_ENABLE or override event] / ENABLE alert</text>
+<text x="1110" y="984" font-size="10" fill="#475569">all</text>
+<text x="1180" y="984" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="1002" font-size="10.5" fill="#475569">Generated by fig_w05_uml_states.py from state-machines/sm-selfdrived.yaml; nothing is hand-listed but the positions of the states.</text>
 <g class="terms">
-<text x="40" y="1007" font-size="10.5" fill="#475569">Terms: ID identifier · SM-nn safety mechanism (TSC §6) · SWSR-nn software safety requirement (WP-W-02) · UML Unified Modeling Language (OMG): state machine, sequence and component diagrams · WP-nn work product, e.g.</text>
-<text x="40" y="1021.5" font-size="10.5" fill="#475569">WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="40" y="1024" font-size="10.5" fill="#475569">Terms: DQ-nn decision of the project lead (decision register) · ID identifier · SM-nn safety mechanism (TSC §6) · SWSR-nn software safety requirement (WP-W-02) · UML Unified Modeling Language (OMG): state machine,</text>
+<text x="40" y="1038.5" font-size="10.5" fill="#475569">sequence and component diagrams · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety</text>
+<text x="40" y="1053" font-size="10.5" fill="#475569">case)</text>
 </g>
 </svg>

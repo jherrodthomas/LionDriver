@@ -808,3 +808,22 @@ replace = "accel_coast, self.allow_throttle)"
 tests = ["openpilot/selfdrive/controls/tests/test_minimum_risk_stop.py"]
 fmea = ["SWF-086.C2"]
 why = "the planner does not pass the stop to the cruise candidate"
+
+# soft disable during the pre-enable wait ends the attempt (SWSR-302i, DQ-433 A; selfdrived state.py)
+[[mutants]]
+id = "MP-1"
+file = "openpilot/selfdrive/selfdrived/state.py"
+find = "            self.state = State.disabled\n            self.current_alert_types.append(ET.SOFT_DISABLE)"
+replace = "            self.current_alert_types.append(ET.PRE_ENABLE)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_transitions.py"]
+fmea = ["SWF-033.C1"]
+why = "a soft-disable fault in preEnabled is ignored, so the car engages with the fault present on brake release (the behaviour before DQ-433)"
+
+[[mutants]]
+id = "MP-2"
+file = "openpilot/selfdrive/selfdrived/state.py"
+find = "            self.state = State.disabled\n            self.current_alert_types.append(ET.SOFT_DISABLE)"
+replace = "            self.state = State.enabled\n            self.current_alert_types.append(ET.SOFT_DISABLE)"
+tests = ["openpilot/selfdrive/selfdrived/tests/test_driver_transitions.py"]
+fmea = ["SWF-033.C1"]
+why = "a soft-disable fault in preEnabled engages the car (active) instead of ending the attempt"

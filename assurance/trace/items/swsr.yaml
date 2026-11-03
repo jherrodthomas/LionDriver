@@ -437,17 +437,17 @@
 
 - id: SWSR-302i
   kind: swsr
-  text: "While `selfdrived` is preEnabled (engagement accepted with the brake held at standstill, `preEnableStandstill`), it shall report enabled true and active false, so that `controlsd` keeps lateral control off, give the PRE_ENABLE alert, and stay preEnabled in each cycle in which a PRE_ENABLE event is raised; in the first cycle without a PRE_ENABLE event and without a disable event it shall go to enabled, without a new engagement request. An IMMEDIATE_DISABLE or USER_DISABLE event ends the attempt (X1, SWSR-302h). A SOFT_DISABLE event is not acted on in preEnabled: the state, the alert and the soft-disable timer stay as they are while PRE_ENABLE is raised, and when PRE_ENABLE ends the machine goes to enabled and starts the soft disable (E1: 3 s, SOFT_DISABLE alert) in the next cycle. Whether a SOFT_DISABLE event shall instead end the attempt in preEnabled is open (OI-12)."
+  text: "While `selfdrived` is preEnabled (engagement accepted with the brake held at standstill, `preEnableStandstill`), it shall report enabled true and active false, so that `controlsd` keeps lateral control off, give the PRE_ENABLE alert, and stay preEnabled in each cycle in which a PRE_ENABLE event is raised; in the first cycle without a PRE_ENABLE event and without a disable event it shall go to enabled, without a new engagement request. An IMMEDIATE_DISABLE or USER_DISABLE event ends the attempt (X1, SWSR-302h). In a cycle in which a SOFT_DISABLE event is raised and no IMMEDIATE_DISABLE or USER_DISABLE event, it shall end the attempt at once: go to disabled with the SOFT_DISABLE alert, whether or not PRE_ENABLE is still raised, so that actuation never starts with the fault present (P2; register DQ-433, A, decided 2026-11-03)."
   asil: "QM (B-sup)"
   parents: [TSR-302]
   parent_text: "TSR-302"
   other_parents: false
   allocated_to: "`host.selfdrived`"
   verification: "UT"
-  acceptance: "`buttonEnable` with `preEnableStandstill` gives preEnabled; in preEnabled with PRE_ENABLE: enabled true, active false, only the PRE_ENABLE alert; without it: enabled and active in that cycle, no ENABLE alert; USER_DISABLE or IMMEDIATE_DISABLE: disabled; PRE_ENABLE with SOFT_DISABLE for 310 cycles: preEnabled, no SOFT_DISABLE alert, timer not started; SOFT_DISABLE when PRE_ENABLE ends: enabled, then softDisabling with the 300-cycle timer and alert, disabled 300 cycles later"
+  acceptance: "`buttonEnable` with `preEnableStandstill` gives preEnabled; in preEnabled with PRE_ENABLE: enabled true, active false, only the PRE_ENABLE alert; without it: enabled and active in that cycle, no ENABLE alert; USER_DISABLE or IMMEDIATE_DISABLE: disabled, and either takes priority over SOFT_DISABLE; SOFT_DISABLE with or without PRE_ENABLE: disabled in that cycle with the SOFT_DISABLE alert and no PRE_ENABLE alert, and enabled and active stay false for the next 310 cycles"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Implemented as worded, unit-tested; not verified on the vehicle: `state.py:59-64` (preEnabled), `:93-95` (enabled, active), `:37-41` (E1), unchanged upstream code; `selfdrive/selfdrived/tests/test_driver_transitions.py` `TestPreEnable`. The SOFT_DISABLE handling is the current behaviour, written down so that a change is a decision (OI-12)"
+  baseline_impl: "Implemented, unit-tested; not verified on the vehicle: `state.py:60-69` (preEnabled; the SOFT_DISABLE branch, lines 61-65, is a LionDriver change from upstream for DQ-433 A, carried at each sync), `:98-99` (enabled, active); `selfdrive/selfdrived/tests/test_driver_transitions.py` `TestPreEnable`; host mutants MP-1, MP-2 (`tools/ci/host_mutants.toml`); impact record change-2026-11-03-pre-enable-soft-disable"
   status: proposed
   source: WP-W-02
 
