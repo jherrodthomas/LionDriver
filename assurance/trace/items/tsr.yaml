@@ -629,7 +629,7 @@
   mechanism: "ISO, PLB"
   timing: "per transfer"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Not met (NF-04):** MOSI/MISO lengths are taken from the header (`drivers/spi.h:115-116`) and the data DMA is started with `spi_data_len_mosi + 1` into a 4096-byte buffer (`drivers/spi.h:233`, `drivers/drivers.h:216`) without a bound check; `comms_can_read` fills `spi_buf_tx` up to the requested MISO length (`drivers/spi.h:150`); request `0xe8` indexes `bus_config[param1]` without a bound check (`main_comms.h:262-264`). The nominal host keeps lengths below the buffer size (`selfdrive/pandad/spi.cc:319-320`), but freedom from interference cannot rely on the QM host"
+  baseline_impl: "**Not met (NF-04):** MOSI/MISO lengths are taken from the header (`drivers/spi.h:115-116`) and the data DMA is started with `spi_data_len_mosi + 1` into a 4096-byte buffer (`drivers/spi.h:233`, `drivers/drivers.h:216`) without a bound check; `comms_can_read` fills `spi_buf_tx` up to the requested MISO length (`drivers/spi.h:150`); the control-request indices are bounded since panda `0e8a7b9` (SWSR-412a partly met: an out-of-range request is ignored in all builds, not yet counted). The nominal host keeps lengths below the buffer size (`selfdrive/pandad/spi.cc:319-320`), but freedom from interference cannot rely on the QM host"
   status: proposed
   source: WP-S-02
 
