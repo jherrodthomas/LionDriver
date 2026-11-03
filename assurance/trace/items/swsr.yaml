@@ -911,7 +911,7 @@
   acceptance: "`0xe8` with param1 ≥ `PANDA_CAN_CNT` has no effect"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: `bus_config[param1]` (`main_comms.h:262-264`) (GAP-47); others checked (`:117, 135, 235, 298, 309`)"
+  baseline_impl: "Partial (panda `0e8a7b9`, all builds): every index is checked before use, `0xe8` included, and an out-of-range request is ignored; host test `tests/comms_bounds` fails on any `[req->paramN]` index without a prior bound check in its case. Not counted yet (with the refusal counters of the per-mode allow-list, WP-S-05 §4.2a)"
   status: proposed
   source: WP-W-02
 
