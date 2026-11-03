@@ -31,6 +31,7 @@ Standard clauses: 26262-6, SWE.1–6, MLE.1–4, SUP.11.
 | Folder | What it holds |
 |---|---|
 | [`coverage/`](coverage/) | — |
+| [`design/`](design/README.md) | Software design |
 | [`design-notes/`](design-notes/) | — |
 | [`diagrams/`](diagrams/README.md) | Design diagrams (generated) |
 | [`hil-bench/`](hil-bench/README.md) | HIL bench plan |

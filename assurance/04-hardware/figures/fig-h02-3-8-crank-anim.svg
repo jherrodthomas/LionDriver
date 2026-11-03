@@ -1,0 +1,365 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1016" viewBox="0 0 1280 1016" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-8. Cranking dip through the power path, animated (WP-H-02)</title>
+<desc>Level II, nominal circuit: the device input falls to 4.28 V, the 5 V rail to 0.17 V and the MCU rail to 0.0 V; outcome resets, restarts at US. 7 of 21 runs reset.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1016" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-8 · Cranking dip through the power path, animated</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">ngspice, ISO 16750-2 starting profile level II, nominal generic circuit: each node's voltage and the MCU's state as the car's supply dips</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-H-02 §3.4 · HWSR-505</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<style>.st{opacity:0;animation:9s steps(1,end) infinite}@keyframes s0{0%{opacity:1}0.00%{opacity:1}4.00%{opacity:0}100%{opacity:1}}.s0{animation-name:s0}@keyframes s1{0%{opacity:0}4.00%{opacity:1}8.00%{opacity:0}100%{opacity:0}}.s1{animation-name:s1}@keyframes s2{0%{opacity:0}8.00%{opacity:1}12.00%{opacity:0}100%{opacity:0}}.s2{animation-name:s2}@keyframes s3{0%{opacity:0}12.00%{opacity:1}16.00%{opacity:0}100%{opacity:0}}.s3{animation-name:s3}@keyframes s4{0%{opacity:0}16.00%{opacity:1}20.00%{opacity:0}100%{opacity:0}}.s4{animation-name:s4}@keyframes s5{0%{opacity:0}20.00%{opacity:1}24.00%{opacity:0}100%{opacity:0}}.s5{animation-name:s5}@keyframes s6{0%{opacity:0}24.00%{opacity:1}28.00%{opacity:0}100%{opacity:0}}.s6{animation-name:s6}@keyframes s7{0%{opacity:0}28.00%{opacity:1}32.00%{opacity:0}100%{opacity:0}}.s7{animation-name:s7}@keyframes s8{0%{opacity:0}32.00%{opacity:1}36.00%{opacity:0}100%{opacity:0}}.s8{animation-name:s8}@keyframes s9{0%{opacity:0}36.00%{opacity:1}40.00%{opacity:0}100%{opacity:0}}.s9{animation-name:s9}@keyframes s10{0%{opacity:0}40.00%{opacity:1}44.00%{opacity:0}100%{opacity:0}}.s10{animation-name:s10}@keyframes s11{0%{opacity:0}44.00%{opacity:1}48.00%{opacity:0}100%{opacity:0}}.s11{animation-name:s11}@keyframes s12{0%{opacity:0}48.00%{opacity:1}52.00%{opacity:0}100%{opacity:0}}.s12{animation-name:s12}@keyframes s13{0%{opacity:0}52.00%{opacity:1}56.00%{opacity:0}100%{opacity:0}}.s13{animation-name:s13}@keyframes s14{0%{opacity:0}56.00%{opacity:1}60.00%{opacity:0}100%{opacity:0}}.s14{animation-name:s14}@keyframes s15{0%{opacity:0}60.00%{opacity:1}64.00%{opacity:0}100%{opacity:0}}.s15{animation-name:s15}@keyframes s16{0%{opacity:0}64.00%{opacity:1}68.00%{opacity:0}100%{opacity:0}}.s16{animation-name:s16}@keyframes s17{0%{opacity:0}68.00%{opacity:1}72.00%{opacity:0}100%{opacity:0}}.s17{animation-name:s17}@keyframes s18{0%{opacity:0}72.00%{opacity:1}76.00%{opacity:0}100%{opacity:0}}.s18{animation-name:s18}@keyframes s19{0%{opacity:0}76.00%{opacity:1}80.00%{opacity:0}100%{opacity:0}}.s19{animation-name:s19}@keyframes s20{0%{opacity:0}80.00%{opacity:1}84.00%{opacity:0}100%{opacity:0}}.s20{animation-name:s20}@keyframes s21{0%{opacity:0}84.00%{opacity:1}88.00%{opacity:0}100%{opacity:0}}.s21{animation-name:s21}@keyframes s22{0%{opacity:0}88.00%{opacity:1}92.00%{opacity:0}100%{opacity:0}}.s22{animation-name:s22}@keyframes s23{0%{opacity:0}92.00%{opacity:1}96.00%{opacity:0}100%{opacity:0}}.s23{animation-name:s23}@keyframes s24{0%{opacity:0}96.00%{opacity:1}100.00%{opacity:0}100%{opacity:0}}.s24{animation-name:s24}@keyframes cur{0%{transform:translateX(0)}96.00%{transform:translateX(1100px)}100%{transform:translateX(1100px)}}.cur{animation:cur 9s linear infinite}@media (prefers-reduced-motion:reduce){.st{animation:none}.s6{opacity:1}.cur{animation:none;transform:translateX(275.0px)}}</style>
+<rect x="40" y="104" width="170" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="50" y="124" font-size="11.5" fill="#0F172A" font-weight="700">car 12 V</text>
+<text x="50" y="139" font-size="9.5" fill="#475569">ISO 16750-2</text>
+<line x1="210" y1="141" x2="232" y2="141" stroke="#475569" stroke-width="1.6"/>
+<path d="M232 137 l5 4 -5 4z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="236" y="104" width="170" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="246" y="124" font-size="11.5" fill="#0F172A" font-weight="700">harness</text>
+<text x="246" y="139" font-size="9.5" fill="#475569">wiring, fuse</text>
+<line x1="406" y1="141" x2="428" y2="141" stroke="#475569" stroke-width="1.6"/>
+<path d="M428 137 l5 4 -5 4z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="432" y="104" width="170" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="442" y="124" font-size="11.5" fill="#0F172A" font-weight="700">Schottky + hold-up C</text>
+<text x="442" y="139" font-size="9.5" fill="#475569">device input</text>
+<line x1="602" y1="141" x2="624" y2="141" stroke="#475569" stroke-width="1.6"/>
+<path d="M624 137 l5 4 -5 4z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="628" y="104" width="170" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="638" y="124" font-size="11.5" fill="#0F172A" font-weight="700">buck to 5 V</text>
+<text x="638" y="139" font-size="9.5" fill="#475569">under-voltage lockout</text>
+<line x1="798" y1="141" x2="820" y2="141" stroke="#475569" stroke-width="1.6"/>
+<path d="M820 137 l5 4 -5 4z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="824" y="104" width="170" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="834" y="124" font-size="11.5" fill="#0F172A" font-weight="700">regulator 3.3 V</text>
+<text x="834" y="139" font-size="9.5" fill="#475569">MCU rail</text>
+<line x1="994" y1="141" x2="1016" y2="141" stroke="#475569" stroke-width="1.6"/>
+<path d="M1016 137 l5 4 -5 4z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="1020" y="104" width="170" height="74" rx="8" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="1030" y="124" font-size="11.5" fill="#0F172A" font-weight="700">STM32H725</text>
+<text x="1030" y="139" font-size="9.5" fill="#475569">BOR, PDR thresholds</text>
+<g class="st s0">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">14.00 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">13.60 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 0 ms</text>
+</g>
+<g class="st s1">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">14.00 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">13.60 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 5 ms</text>
+</g>
+<g class="st s2">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">14.00 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">13.60 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 10 ms</text>
+</g>
+<g class="st s3">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">14.00 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">13.60 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 15 ms</text>
+</g>
+<g class="st s4">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">14.00 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">13.60 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 20 ms</text>
+</g>
+<g class="st s5">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">4.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.34 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">3.41 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.11 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 25 ms</text>
+</g>
+<g class="st s6">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">4.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.30 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">0.17 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">0.00 V</text>
+<rect x="1030" y="150" width="94.1" height="18" rx="9.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1077" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">power-down reset</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 30 ms</text>
+</g>
+<g class="st s7">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">4.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.30 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">0.17 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">0.00 V</text>
+<rect x="1030" y="150" width="94.1" height="18" rx="9.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1077" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">power-down reset</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 35 ms</text>
+</g>
+<g class="st s8">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">4.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.30 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">0.17 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">0.00 V</text>
+<rect x="1030" y="150" width="94.1" height="18" rx="9.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1077" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">power-down reset</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 40 ms</text>
+</g>
+<g class="st s9">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">4.70 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.36 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">1.01 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">0.71 V</text>
+<rect x="1030" y="150" width="94.1" height="18" rx="9.0" fill="#D2553F" stroke="none" stroke-width="1"/>
+<text x="1077" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">power-down reset</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 45 ms</text>
+</g>
+<g class="st s10">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">4.90 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.43 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">3.31 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.01 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 50 ms</text>
+</g>
+<g class="st s11">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">5.10 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.60 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.16 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 55 ms</text>
+</g>
+<g class="st s12">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">5.30 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">4.80 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.37 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 60 ms</text>
+</g>
+<g class="st s13">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">5.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">5.01 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.58 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 65 ms</text>
+</g>
+<g class="st s14">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">5.70 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">5.21 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.78 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 70 ms</text>
+</g>
+<g class="st s15">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">5.90 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">5.42 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 75 ms</text>
+</g>
+<g class="st s16">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.10 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">5.62 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 80 ms</text>
+</g>
+<g class="st s17">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.30 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">5.83 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 85 ms</text>
+</g>
+<g class="st s18">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">6.03 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 90 ms</text>
+</g>
+<g class="st s19">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">6.03 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 95 ms</text>
+</g>
+<g class="st s20">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">6.03 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 100 ms</text>
+</g>
+<g class="st s21">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">6.03 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 105 ms</text>
+</g>
+<g class="st s22">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">6.03 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 110 ms</text>
+</g>
+<g class="st s23">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">6.03 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 115 ms</text>
+</g>
+<g class="st s24">
+<text x="50" y="166" font-size="16" fill="#475569" font-weight="700">6.50 V</text>
+<text x="442" y="166" font-size="16" fill="#4F46E5" font-weight="700">6.03 V</text>
+<text x="638" y="166" font-size="16" fill="#C2410C" font-weight="700">4.97 V</text>
+<text x="834" y="166" font-size="16" fill="#0F172A" font-weight="700">3.30 V</text>
+<rect x="1030" y="150" width="46.1" height="18" rx="9.0" fill="#2E9E6A" stroke="none" stroke-width="1"/>
+<text x="1053.1" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">running</text>
+<text x="1240" y="202" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">t = 120 ms</text>
+</g>
+<rect x="120" y="248" width="1100" height="110" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="120" y="242" font-size="11" fill="#0F172A" font-weight="700">car supply and device input</text>
+<text x="112" y="362" font-size="9.5" fill="#94A3B8" text-anchor="end">0 V</text>
+<text x="112" y="307" font-size="9.5" fill="#94A3B8" text-anchor="end">7.5 V</text>
+<text x="112" y="252" font-size="9.5" fill="#94A3B8" text-anchor="end">15 V</text>
+<path d="M120.0 255.3 L124.6 255.3 L129.2 255.3 L133.8 255.3 L138.3 255.3 L142.9 255.3 L147.5 255.3 L152.1 255.3 L156.7 255.3 L161.2 255.3 L165.8 255.3 L170.4 255.3 L175.0 255.3 L179.6 255.3 L184.2 255.3 L188.8 255.3 L193.3 255.3 L197.9 255.3 L202.5 255.3 L207.1 255.3 L211.7 255.3 L216.2 255.3 L220.8 255.3 L225.4 255.3 L230.0 255.3 L234.6 255.3 L239.2 255.3 L243.8 255.3 L248.3 255.3 L252.9 255.3 L257.5 255.3 L262.1 255.3 L266.7 255.3 L271.2 255.3 L275.8 255.3 L280.4 255.3 L285.0 255.3 L289.6 255.3 L294.2 255.3 L298.8 255.3 L303.3 255.3 L307.9 262.4 L312.5 269.3 L317.1 276.3 L321.7 283.3 L326.2 290.2 L330.8 297.2 L335.4 304.2 L340.0 311.1 L344.6 318.1 L349.2 325.0 L353.8 325.0 L358.3 325.0 L362.9 325.0 L367.5 325.0 L372.1 325.0 L376.7 325.0 L381.2 325.0 L385.8 325.0 L390.4 325.0 L395.0 325.0 L399.6 325.0 L404.2 325.0 L408.8 325.0 L413.3 325.0 L417.9 325.0 L422.5 325.0 L427.1 325.0 L431.7 325.0 L436.3 325.0 L440.8 325.0 L445.4 325.0 L450.0 325.0 L454.6 325.0 L459.2 325.0 L463.8 325.0 L468.3 325.0 L472.9 325.0 L477.5 325.0 L482.1 325.0 L486.7 325.0 L491.3 324.9 L495.8 324.7 L500.4 324.6 L505.0 324.4 L509.6 324.3 L514.2 324.1 L518.8 324.0 L523.3 323.8 L527.9 323.7 L532.5 323.5 L537.1 323.4 L541.7 323.2 L546.2 323.1 L550.8 322.9 L555.4 322.8 L560.0 322.7 L564.6 322.5 L569.2 322.4 L573.8 322.2 L578.3 322.1 L582.9 321.9 L587.5 321.8 L592.1 321.6 L596.7 321.5 L601.2 321.3 L605.8 321.2 L610.4 321.0 L615.0 320.9 L619.6 320.7 L624.2 320.6 L628.8 320.5 L633.3 320.3 L637.9 320.2 L642.5 320.0 L647.1 319.9 L651.7 319.7 L656.3 319.6 L660.8 319.4 L665.4 319.3 L670.0 319.1 L674.6 319.0 L679.2 318.8 L683.8 318.7 L688.3 318.5 L692.9 318.4 L697.5 318.3 L702.1 318.1 L706.7 318.0 L711.2 317.8 L715.8 317.7 L720.4 317.5 L725.0 317.4 L729.6 317.2 L734.2 317.1 L738.8 316.9 L743.3 316.8 L747.9 316.6 L752.5 316.5 L757.1 316.3 L761.7 316.2 L766.2 316.1 L770.8 315.9 L775.4 315.8 L780.0 315.6 L784.6 315.5 L789.2 315.3 L793.8 315.2 L798.3 315.0 L802.9 314.9 L807.5 314.7 L812.1 314.6 L816.7 314.4 L821.2 314.3 L825.8 314.1 L830.4 314.0 L835.0 313.9 L839.6 313.7 L844.2 313.6 L848.8 313.4 L853.3 313.3 L857.9 313.1 L862.5 313.0 L867.1 312.8 L871.7 312.7 L876.2 312.5 L880.8 312.4 L885.4 312.2 L890.0 312.1 L894.6 311.9 L899.2 311.8 L903.8 311.7 L908.3 311.5 L912.9 311.4 L917.5 311.2 L922.1 311.1 L926.7 310.9 L931.2 310.8 L935.8 310.6 L940.4 310.5 L945.0 310.3 L949.6 310.3 L954.2 310.3 L958.8 310.3 L963.3 310.3 L967.9 310.3 L972.5 310.3 L977.1 310.3 L981.7 310.3 L986.2 310.3 L990.8 310.3 L995.4 310.3 L1000.0 310.3 L1004.6 310.3 L1009.2 310.3 L1013.8 310.3 L1018.3 310.3 L1022.9 310.3 L1027.5 310.3 L1032.1 310.3 L1036.7 310.3 L1041.2 310.3 L1045.8 310.3 L1050.4 310.3 L1055.0 310.3 L1059.6 310.3 L1064.2 310.3 L1068.8 310.3 L1073.3 310.3 L1077.9 310.3 L1082.5 310.3 L1087.1 310.3 L1091.7 310.3 L1096.2 310.3 L1100.8 310.3 L1105.4 310.3 L1110.0 310.3 L1114.6 310.3 L1119.2 310.3 L1123.8 310.3 L1128.3 310.3 L1132.9 310.3 L1137.5 310.3 L1142.1 310.3 L1146.7 310.3 L1151.2 310.3 L1155.8 310.3 L1160.4 310.3 L1165.0 310.3 L1169.6 310.3 L1174.2 310.3 L1178.8 310.3 L1183.3 310.3 L1187.9 310.3 L1192.5 310.3 L1197.1 310.3 L1201.7 310.3 L1206.2 310.3 L1210.8 310.3 L1215.4 310.3 L1220.0 310.3" stroke="#475569" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<text x="1036.7" y="304.3" font-size="10" fill="#475569" font-weight="700">car supply</text>
+<path d="M120.0 258.3 L124.6 258.3 L129.2 258.3 L133.8 258.3 L138.3 258.3 L142.9 258.3 L147.5 258.3 L152.1 258.3 L156.7 258.3 L161.2 258.3 L165.8 258.3 L170.4 258.3 L175.0 258.3 L179.6 258.3 L184.2 258.3 L188.8 258.3 L193.3 258.3 L197.9 258.3 L202.5 258.3 L207.1 258.3 L211.7 258.3 L216.2 258.3 L220.8 258.3 L225.4 258.3 L230.0 258.3 L234.6 258.3 L239.2 258.3 L243.8 258.3 L248.3 258.3 L252.9 258.3 L257.5 258.3 L262.1 258.3 L266.7 258.3 L271.2 258.3 L275.8 258.3 L280.4 258.3 L285.0 258.3 L289.6 258.3 L294.2 258.3 L298.8 258.3 L303.3 258.3 L307.9 265.2 L312.5 272.2 L317.1 279.2 L321.7 286.3 L326.2 293.3 L330.8 300.3 L335.4 307.4 L340.0 314.5 L344.6 321.0 L349.2 326.2 L353.8 326.6 L358.3 326.6 L362.9 326.6 L367.5 326.6 L372.1 326.5 L376.7 326.5 L381.2 326.5 L385.8 326.5 L390.4 326.4 L395.0 326.4 L399.6 326.4 L404.2 326.4 L408.8 326.4 L413.3 326.4 L417.9 326.4 L422.5 326.4 L427.1 326.4 L431.7 326.4 L436.3 326.4 L440.8 326.4 L445.4 326.4 L450.0 326.4 L454.6 326.4 L459.2 326.4 L463.8 326.4 L468.3 326.4 L472.9 326.4 L477.5 326.4 L482.1 326.4 L486.7 326.4 L491.3 326.4 L495.8 326.3 L500.4 326.3 L505.0 326.3 L509.6 326.2 L514.2 326.2 L518.8 326.1 L523.3 326.1 L527.9 326.0 L532.5 326.0 L537.1 326.0 L541.7 325.9 L546.2 325.9 L550.8 325.8 L555.4 325.8 L560.0 325.7 L564.6 325.7 L569.2 325.7 L573.8 325.6 L578.3 325.5 L582.9 325.5 L587.5 325.4 L592.1 325.3 L596.7 325.2 L601.2 325.0 L605.8 324.9 L610.4 324.7 L615.0 324.6 L619.6 324.4 L624.2 324.3 L628.8 324.1 L633.3 324.0 L637.9 323.8 L642.5 323.7 L647.1 323.5 L651.7 323.4 L656.3 323.2 L660.8 323.1 L665.4 322.9 L670.0 322.8 L674.6 322.6 L679.2 322.5 L683.8 322.3 L688.3 322.2 L692.9 322.0 L697.5 321.9 L702.1 321.7 L706.7 321.6 L711.2 321.4 L715.8 321.3 L720.4 321.1 L725.0 321.0 L729.6 320.8 L734.2 320.7 L738.8 320.5 L743.3 320.4 L747.9 320.2 L752.5 320.1 L757.1 319.9 L761.7 319.8 L766.2 319.6 L770.8 319.5 L775.4 319.3 L780.0 319.2 L784.6 319.0 L789.2 318.9 L793.8 318.7 L798.3 318.6 L802.9 318.4 L807.5 318.3 L812.1 318.1 L816.7 318.0 L821.2 317.8 L825.8 317.7 L830.4 317.5 L835.0 317.4 L839.6 317.2 L844.2 317.1 L848.8 316.9 L853.3 316.8 L857.9 316.6 L862.5 316.5 L867.1 316.3 L871.7 316.2 L876.2 316.0 L880.8 315.9 L885.4 315.7 L890.0 315.6 L894.6 315.4 L899.2 315.3 L903.8 315.1 L908.3 315.0 L912.9 314.8 L917.5 314.7 L922.1 314.5 L926.7 314.4 L931.2 314.2 L935.8 314.1 L940.4 313.9 L945.0 313.8 L949.6 313.8 L954.2 313.8 L958.8 313.8 L963.3 313.8 L967.9 313.8 L972.5 313.8 L977.1 313.8 L981.7 313.8 L986.2 313.8 L990.8 313.8 L995.4 313.8 L1000.0 313.8 L1004.6 313.8 L1009.2 313.8 L1013.8 313.8 L1018.3 313.8 L1022.9 313.8 L1027.5 313.8 L1032.1 313.8 L1036.7 313.8 L1041.2 313.8 L1045.8 313.8 L1050.4 313.8 L1055.0 313.8 L1059.6 313.8 L1064.2 313.8 L1068.8 313.8 L1073.3 313.8 L1077.9 313.8 L1082.5 313.8 L1087.1 313.8 L1091.7 313.8 L1096.2 313.8 L1100.8 313.8 L1105.4 313.8 L1110.0 313.8 L1114.6 313.8 L1119.2 313.8 L1123.8 313.8 L1128.3 313.8 L1132.9 313.8 L1137.5 313.8 L1142.1 313.8 L1146.7 313.8 L1151.2 313.8 L1155.8 313.8 L1160.4 313.8 L1165.0 313.8 L1169.6 313.8 L1174.2 313.8 L1178.8 313.8 L1183.3 313.8 L1187.9 313.8 L1192.5 313.8 L1197.1 313.8 L1201.7 313.8 L1206.2 313.8 L1210.8 313.8 L1215.4 313.8 L1220.0 313.8" stroke="#4F46E5" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<text x="1036.7" y="327.8" font-size="10" fill="#4F46E5" font-weight="700">device input</text>
+<rect x="120" y="388" width="1100" height="110" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="120" y="382" font-size="11" fill="#0F172A" font-weight="700">5 V rail</text>
+<text x="112" y="502" font-size="9.5" fill="#94A3B8" text-anchor="end">0 V</text>
+<text x="112" y="447" font-size="9.5" fill="#94A3B8" text-anchor="end">3 V</text>
+<text x="112" y="392" font-size="9.5" fill="#94A3B8" text-anchor="end">6 V</text>
+<path d="M120.0 406.9 L124.6 406.9 L129.2 406.9 L133.8 406.9 L138.3 406.9 L142.9 406.9 L147.5 406.9 L152.1 406.9 L156.7 406.9 L161.2 406.9 L165.8 406.9 L170.4 406.9 L175.0 406.9 L179.6 406.9 L184.2 406.9 L188.8 406.9 L193.3 406.9 L197.9 406.9 L202.5 406.9 L207.1 406.9 L211.7 406.9 L216.2 406.9 L220.8 406.9 L225.4 406.9 L230.0 406.9 L234.6 406.9 L239.2 406.9 L243.8 406.9 L248.3 406.9 L252.9 406.9 L257.5 406.9 L262.1 406.9 L266.7 406.9 L271.2 406.9 L275.8 406.9 L280.4 406.9 L285.0 406.9 L289.6 406.9 L294.2 406.9 L298.8 406.9 L303.3 406.9 L307.9 406.9 L312.5 406.9 L317.1 406.9 L321.7 406.9 L326.2 406.9 L330.8 406.9 L335.4 406.9 L340.0 406.9 L344.6 413.1 L349.2 435.5 L353.8 459.3 L358.3 473.8 L362.9 482.7 L367.5 488.0 L372.1 491.2 L376.7 493.0 L381.2 494.0 L385.8 494.5 L390.4 494.8 L395.0 494.9 L399.6 494.9 L404.2 494.9 L408.8 494.9 L413.3 494.9 L417.9 494.9 L422.5 494.9 L427.1 494.9 L431.7 494.9 L436.3 494.9 L440.8 494.9 L445.4 494.9 L450.0 494.9 L454.6 494.9 L459.2 494.9 L463.8 494.9 L468.3 494.9 L472.9 494.9 L477.5 494.9 L482.1 494.9 L486.7 494.9 L491.3 494.8 L495.8 494.4 L500.4 493.6 L505.0 492.4 L509.6 491.1 L514.2 489.5 L518.8 487.5 L523.3 485.2 L527.9 482.5 L532.5 479.4 L537.1 475.9 L541.7 472.0 L546.2 467.8 L550.8 463.5 L555.4 458.9 L560.0 454.4 L564.6 449.9 L569.2 445.5 L573.8 441.3 L578.3 437.3 L582.9 433.7 L587.5 430.5 L592.1 427.8 L596.7 425.8 L601.2 424.5 L605.8 423.6 L610.4 423.0 L615.0 422.5 L619.6 422.1 L624.2 421.7 L628.8 421.3 L633.3 420.9 L637.9 420.5 L642.5 420.2 L647.1 419.8 L651.7 419.4 L656.3 419.0 L660.8 418.6 L665.4 418.3 L670.0 417.9 L674.6 417.5 L679.2 417.1 L683.8 416.7 L688.3 416.4 L692.9 416.0 L697.5 415.6 L702.1 415.2 L706.7 414.9 L711.2 414.5 L715.8 414.1 L720.4 413.7 L725.0 413.3 L729.6 413.0 L734.2 412.6 L738.8 412.2 L743.3 411.8 L747.9 411.5 L752.5 411.1 L757.1 410.7 L761.7 410.3 L766.2 410.0 L770.8 409.6 L775.4 409.2 L780.0 408.8 L784.6 408.5 L789.2 408.1 L793.8 407.7 L798.3 407.3 L802.9 406.9 L807.5 406.9 L812.1 406.9 L816.7 406.9 L821.2 406.9 L825.8 406.9 L830.4 406.9 L835.0 406.9 L839.6 406.9 L844.2 406.9 L848.8 406.9 L853.3 406.9 L857.9 406.9 L862.5 406.9 L867.1 406.9 L871.7 406.9 L876.2 406.9 L880.8 406.9 L885.4 406.9 L890.0 406.9 L894.6 406.9 L899.2 406.9 L903.8 406.9 L908.3 406.9 L912.9 406.9 L917.5 406.9 L922.1 406.9 L926.7 406.9 L931.2 406.9 L935.8 406.9 L940.4 406.9 L945.0 406.9 L949.6 406.9 L954.2 406.9 L958.8 406.9 L963.3 406.9 L967.9 406.9 L972.5 406.9 L977.1 406.9 L981.7 406.9 L986.2 406.9 L990.8 406.9 L995.4 406.9 L1000.0 406.9 L1004.6 406.9 L1009.2 406.9 L1013.8 406.9 L1018.3 406.9 L1022.9 406.9 L1027.5 406.9 L1032.1 406.9 L1036.7 406.9 L1041.2 406.9 L1045.8 406.9 L1050.4 406.9 L1055.0 406.9 L1059.6 406.9 L1064.2 406.9 L1068.8 406.9 L1073.3 406.9 L1077.9 406.9 L1082.5 406.9 L1087.1 406.9 L1091.7 406.9 L1096.2 406.9 L1100.8 406.9 L1105.4 406.9 L1110.0 406.9 L1114.6 406.9 L1119.2 406.9 L1123.8 406.9 L1128.3 406.9 L1132.9 406.9 L1137.5 406.9 L1142.1 406.9 L1146.7 406.9 L1151.2 406.9 L1155.8 406.9 L1160.4 406.9 L1165.0 406.9 L1169.6 406.9 L1174.2 406.9 L1178.8 406.9 L1183.3 406.9 L1187.9 406.9 L1192.5 406.9 L1197.1 406.9 L1201.7 406.9 L1206.2 406.9 L1210.8 406.9 L1215.4 406.9 L1220.0 406.9" stroke="#C2410C" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<text x="1036.7" y="400.9" font-size="10" fill="#C2410C" font-weight="700">5 V rail</text>
+<rect x="120" y="528" width="1100" height="110" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="120" y="522" font-size="11" fill="#0F172A" font-weight="700">MCU rail and its thresholds</text>
+<text x="112" y="642" font-size="9.5" fill="#94A3B8" text-anchor="end">0 V</text>
+<text x="112" y="587" font-size="9.5" fill="#94A3B8" text-anchor="end">2 V</text>
+<text x="112" y="532" font-size="9.5" fill="#94A3B8" text-anchor="end">4 V</text>
+<line x1="120" y1="566.2" x2="1220" y2="566.2" stroke="#D97706" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1216" y="563.2" font-size="9" fill="#475569" text-anchor="end">BOR3 2.61 V</text>
+<line x1="120" y1="583" x2="1220" y2="583" stroke="#D97706" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1216" y="580" font-size="9" fill="#475569" text-anchor="end">BOR1 2 V</text>
+<line x1="120" y1="591" x2="1220" y2="591" stroke="#D2553F" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="880" y="588" font-size="9" fill="#475569" text-anchor="start">rated min 1.71 V</text>
+<line x1="120" y1="593.5" x2="1220" y2="593.5" stroke="#D2553F" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="880" y="603.5" font-size="9" fill="#475569" text-anchor="start">PDR 1.62 V</text>
+<path d="M120.0 547.3 L124.6 547.3 L129.2 547.3 L133.8 547.3 L138.3 547.3 L142.9 547.3 L147.5 547.3 L152.1 547.3 L156.7 547.3 L161.2 547.3 L165.8 547.3 L170.4 547.3 L175.0 547.3 L179.6 547.3 L184.2 547.3 L188.8 547.3 L193.3 547.3 L197.9 547.3 L202.5 547.3 L207.1 547.3 L211.7 547.3 L216.2 547.3 L220.8 547.3 L225.4 547.3 L230.0 547.3 L234.6 547.3 L239.2 547.3 L243.8 547.3 L248.3 547.3 L252.9 547.3 L257.5 547.3 L262.1 547.3 L266.7 547.3 L271.2 547.3 L275.8 547.3 L280.4 547.3 L285.0 547.3 L289.6 547.3 L294.2 547.3 L298.8 547.3 L303.3 547.3 L307.9 547.3 L312.5 547.3 L317.1 547.3 L321.7 547.3 L326.2 547.3 L330.8 547.3 L335.4 547.3 L340.0 547.3 L344.6 547.3 L349.2 552.5 L353.8 588.3 L358.3 610.0 L362.9 623.3 L367.5 631.3 L372.1 636.0 L376.7 637.6 L381.2 637.9 L385.8 638.0 L390.4 638.0 L395.0 638.0 L399.6 638.0 L404.2 638.0 L408.8 638.0 L413.3 638.0 L417.9 638.0 L422.5 638.0 L427.1 638.0 L431.7 638.0 L436.3 638.0 L440.8 638.0 L445.4 638.0 L450.0 638.0 L454.6 638.0 L459.2 638.0 L463.8 638.0 L468.3 638.0 L472.9 638.0 L477.5 638.0 L482.1 638.0 L486.7 638.0 L491.3 638.0 L495.8 638.0 L500.4 638.0 L505.0 637.9 L509.6 635.9 L514.2 633.4 L518.8 630.5 L523.3 627.1 L527.9 623.0 L532.5 618.4 L537.1 613.1 L541.7 607.3 L546.2 601.0 L550.8 594.5 L555.4 587.7 L560.0 580.9 L564.6 574.1 L569.2 567.5 L573.8 561.2 L578.3 555.3 L582.9 549.8 L587.5 547.3 L592.1 547.3 L596.7 547.3 L601.2 547.3 L605.8 547.3 L610.4 547.3 L615.0 547.3 L619.6 547.3 L624.2 547.3 L628.8 547.3 L633.3 547.3 L637.9 547.3 L642.5 547.3 L647.1 547.3 L651.7 547.3 L656.3 547.3 L660.8 547.3 L665.4 547.3 L670.0 547.3 L674.6 547.3 L679.2 547.3 L683.8 547.3 L688.3 547.3 L692.9 547.3 L697.5 547.3 L702.1 547.3 L706.7 547.3 L711.2 547.3 L715.8 547.3 L720.4 547.3 L725.0 547.3 L729.6 547.3 L734.2 547.3 L738.8 547.3 L743.3 547.3 L747.9 547.3 L752.5 547.3 L757.1 547.3 L761.7 547.3 L766.2 547.3 L770.8 547.3 L775.4 547.3 L780.0 547.3 L784.6 547.3 L789.2 547.3 L793.8 547.3 L798.3 547.3 L802.9 547.3 L807.5 547.3 L812.1 547.3 L816.7 547.3 L821.2 547.3 L825.8 547.3 L830.4 547.3 L835.0 547.3 L839.6 547.3 L844.2 547.3 L848.8 547.3 L853.3 547.3 L857.9 547.3 L862.5 547.3 L867.1 547.3 L871.7 547.3 L876.2 547.3 L880.8 547.3 L885.4 547.3 L890.0 547.3 L894.6 547.3 L899.2 547.3 L903.8 547.3 L908.3 547.3 L912.9 547.3 L917.5 547.3 L922.1 547.3 L926.7 547.3 L931.2 547.3 L935.8 547.3 L940.4 547.3 L945.0 547.3 L949.6 547.3 L954.2 547.3 L958.8 547.3 L963.3 547.3 L967.9 547.3 L972.5 547.3 L977.1 547.3 L981.7 547.3 L986.2 547.3 L990.8 547.3 L995.4 547.3 L1000.0 547.3 L1004.6 547.3 L1009.2 547.3 L1013.8 547.3 L1018.3 547.3 L1022.9 547.3 L1027.5 547.3 L1032.1 547.3 L1036.7 547.3 L1041.2 547.3 L1045.8 547.3 L1050.4 547.3 L1055.0 547.3 L1059.6 547.3 L1064.2 547.3 L1068.8 547.3 L1073.3 547.3 L1077.9 547.3 L1082.5 547.3 L1087.1 547.3 L1091.7 547.3 L1096.2 547.3 L1100.8 547.3 L1105.4 547.3 L1110.0 547.3 L1114.6 547.3 L1119.2 547.3 L1123.8 547.3 L1128.3 547.3 L1132.9 547.3 L1137.5 547.3 L1142.1 547.3 L1146.7 547.3 L1151.2 547.3 L1155.8 547.3 L1160.4 547.3 L1165.0 547.3 L1169.6 547.3 L1174.2 547.3 L1178.8 547.3 L1183.3 547.3 L1187.9 547.3 L1192.5 547.3 L1197.1 547.3 L1201.7 547.3 L1206.2 547.3 L1210.8 547.3 L1215.4 547.3 L1220.0 547.3" stroke="#0F172A" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<text x="1036.7" y="541.3" font-size="10" fill="#0F172A" font-weight="700">MCU rail</text>
+<text x="120" y="656" font-size="9.5" fill="#94A3B8" text-anchor="middle">0 ms</text>
+<text x="303.3" y="656" font-size="9.5" fill="#94A3B8" text-anchor="middle">20 ms</text>
+<text x="486.7" y="656" font-size="9.5" fill="#94A3B8" text-anchor="middle">40 ms</text>
+<text x="670" y="656" font-size="9.5" fill="#94A3B8" text-anchor="middle">60 ms</text>
+<text x="853.3" y="656" font-size="9.5" fill="#94A3B8" text-anchor="middle">80 ms</text>
+<text x="1036.7" y="656" font-size="9.5" fill="#94A3B8" text-anchor="middle">100 ms</text>
+<text x="1220" y="656" font-size="9.5" fill="#94A3B8" text-anchor="middle">120 ms</text>
+<g class="cur"><line x1="120" y1="248" x2="120" y2="638" stroke="#0F172A" stroke-width="1.4"/></g>
+<text x="40" y="682" font-size="12" fill="#0F172A" font-weight="700">All 21 runs: outcome by starting-profile level and circuit variant</text>
+<text x="406.7" y="706" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">I (8 → 9.5 V)</text>
+<text x="740" y="706" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">II (4.5 → 6.5 V)</text>
+<text x="1073.3" y="706" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">IV (6 → 6.5 V)</text>
+<text x="40" y="729" font-size="10.5" fill="#0F172A">nominal</text>
+<rect x="244" y="716" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="406.7" y="729" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="577.3" y="716" width="325.3" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="740" y="729" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">resets, restarts at US</text>
+<rect x="910.7" y="716" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="1073.3" y="729" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<text x="40" y="751" font-size="10.5" fill="#0F172A">lockout 3.5 V</text>
+<rect x="244" y="738" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="406.7" y="751" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="577.3" y="738" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="740" y="751" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="910.7" y="738" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="1073.3" y="751" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<text x="40" y="773" font-size="10.5" fill="#0F172A">lockout 6.0 V</text>
+<rect x="244" y="760" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="406.7" y="773" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="577.3" y="760" width="325.3" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="740" y="773" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">resets, restarts at US</text>
+<rect x="910.7" y="760" width="325.3" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="1073.3" y="773" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">resets, restarts at US</text>
+<text x="40" y="795" font-size="10.5" fill="#0F172A">hold-up 22 µF</text>
+<rect x="244" y="782" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="406.7" y="795" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="577.3" y="782" width="325.3" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="740" y="795" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">resets, restarts at US</text>
+<rect x="910.7" y="782" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="1073.3" y="795" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<text x="40" y="817" font-size="10.5" fill="#0F172A">hold-up 470 µF</text>
+<rect x="244" y="804" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="406.7" y="817" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="577.3" y="804" width="325.3" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="740" y="817" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">resets, restarts at US</text>
+<rect x="910.7" y="804" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="1073.3" y="817" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<text x="40" y="839" font-size="10.5" fill="#0F172A">9 W</text>
+<rect x="244" y="826" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="406.7" y="839" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="577.3" y="826" width="325.3" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="740" y="839" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">resets, restarts at US</text>
+<rect x="910.7" y="826" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="1073.3" y="839" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<text x="40" y="861" font-size="10.5" fill="#0F172A">harness 0.15 Ω</text>
+<rect x="244" y="848" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="406.7" y="861" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<rect x="577.3" y="848" width="325.3" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="740" y="861" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">resets, restarts at US</text>
+<rect x="910.7" y="848" width="325.3" height="18" rx="9" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="1073.3" y="861" font-size="10" fill="#2E9E6A" font-weight="700" text-anchor="middle">rides through</text>
+<text x="40" y="888" font-size="11" fill="#0F172A">7 of the 21 runs reset the device; it restarts once the supply recovers to US. BOR and PVD are not configured today (HWSR-505, HWSR-505a).</text>
+<text x="40" y="906" font-size="10.5" fill="#475569">Synthetic (DSR-12), design aid, no evidence credit. A generic device power path with a band on each part; ISO 16750-2 starting profiles (levels I, II, IV). (DQ-413)</text>
+<text x="40" y="924" font-size="10.5" fill="#475569">Generated by fig_h02_crank_anim.py from sim/results/crank-dip.json and crank-dip.md; nothing is hand-listed but the node names of the power path.</text>
+<g class="terms">
+<text x="40" y="946" font-size="10.5" fill="#475569">Terms: BOR brown-out reset (MCU supply monitor) · DQ-nn decision of the project lead (decision register) · DSR-nn dataset requirement (WP-C-11 §7) · HWSR-nn hardware safety requirement (WP-H-01) · ISO International</text>
+<text x="40" y="960.5" font-size="10.5" fill="#475569">Organization for Standardization · MCU microcontroller: the panda safety processor (STM32H7) · PDR power-down reset (MCU supply monitor, the lowest threshold) · PVD programmable voltage detector (MCU supply monitor)</text>
+<text x="40" y="975" font-size="10.5" fill="#475569">· US United States; in an ISO 16750-2 starting profile, the supply voltage the car settles at after cranking · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware,</text>
+<text x="40" y="989.5" font-size="10.5" fill="#475569">W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

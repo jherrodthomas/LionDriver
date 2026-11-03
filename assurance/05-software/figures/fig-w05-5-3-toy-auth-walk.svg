@@ -1,0 +1,352 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="771" viewBox="0 0 1280 771" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5-3. SM-TOY-AUTH, animated (WP-W-05)</title>
+<desc>Animated walk through SM-TOY-AUTH: T1a from NOT_ALLOWED to ENGAGE_PENDING on 0x1D2 valid. T1b from ENGAGE_PENDING to ALLOWED on safety task (100 Hz). T10a from ALLOWED to NOT_ALLOWED on safety task: heartbeat check.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="771" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-3 · SM-TOY-AUTH, animated: engage, then lose the heartbeat</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">A walk through the record: NOT_ALLOWED → ENGAGE_PENDING → ALLOWED → NOT_ALLOWED, firing T1a, T1b, T10a; 4 s per step</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-W-05 §5.2</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<style>.fr{opacity:0;animation:16s steps(1,end) infinite}@keyframes k0{0%{opacity:1}0.00%{opacity:1}25.00%{opacity:0}100%{opacity:1}}.f0{animation-name:k0}@keyframes k1{0%{opacity:0}25.00%{opacity:1}50.00%{opacity:0}100%{opacity:0}}.f1{animation-name:k1}@keyframes k2{0%{opacity:0}50.00%{opacity:1}75.00%{opacity:0}100%{opacity:0}}.f2{animation-name:k2}@keyframes k3{0%{opacity:0}75.00%{opacity:1}100.00%{opacity:0}100%{opacity:0}}.f3{animation-name:k3}@media (prefers-reduced-motion:reduce){.fr{animation:none}.f3{opacity:1}}</style>
+<g class="fr f0">
+<rect x="40" y="120" width="1200" height="410" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M40 138 L40 120 L373.6896000000001 120 L373.6896000000001 134 L361.6896000000001 146 L40 146" stroke="#0F172A" stroke-width="1.2" fill="#F8FAFC" stroke-linejoin="round"/>
+<text x="50" y="137" font-size="11" fill="#0F172A" font-weight="700">stm SM-TOY-AUTH · Toyota authority (controls_allowed)</text>
+<line x1="400" y1="442" x2="880" y2="442" stroke="#475569" stroke-width="1.4"/>
+<path d="M880.0 442.0 L872.1 446.2 L872.1 437.8 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="628" y="461.2" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="471.9" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1</text>
+<line x1="350.4" y1="409.9" x2="603.2" y2="235.9" stroke="#475569" stroke-width="1.4"/>
+<path d="M603.2 235.9 L599.1 243.9 L594.3 236.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="473.1" y="338.7" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="487.7" y="349.4" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1a</text>
+<line x1="683.6" y1="226" x2="936.4" y2="400" stroke="#475569" stroke-width="1.4"/>
+<path d="M936.4 400.0 L927.5 399.0 L932.3 392.0 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="795.4" y="313" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="810" y="323.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1b</text>
+<line x1="589.6" y1="216.1" x2="336.8" y2="390.1" stroke="#475569" stroke-width="1.4"/>
+<path d="M336.8 390.1 L340.9 382.1 L345.7 389.1 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="437.7" y="269.3" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="452.3" y="280" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1c</text>
+<path d="M270 400.0 C260 348.0 340 348.0 330 400.0" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M330.0 400.0 L327.2 391.4 L335.5 392.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="288" y="336" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="300" y="346.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T8</text>
+<line x1="880" y1="418" x2="400" y2="418" stroke="#475569" stroke-width="1.4"/>
+<path d="M400.0 418.0 L407.9 413.8 L407.9 422.2 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="557.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="569.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T2</text>
+<rect x="584.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="596.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T3</text>
+<rect x="611.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="623.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T4</text>
+<rect x="638.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="650.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T5</text>
+<rect x="665.9" y="344.8" width="24" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="677.9" y="355.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T6</text>
+<rect x="692.9" y="344.8" width="29.3" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="707.6" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T6a</text>
+<rect x="534" y="362.8" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="546" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T9</text>
+<rect x="561" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="578.3" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10a</text>
+<rect x="598.6" y="362.8" width="34.6" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="615.9" y="373.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T10b</text>
+<rect x="636.2" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="653.5" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10c</text>
+<rect x="673.8" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="691.1" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10d</text>
+<rect x="711.4" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="728.7" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10e</text>
+<rect x="560.6" y="380.8" width="29.4" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="575.3" y="391.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T11</text>
+<rect x="593" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="607.6" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T12</text>
+<rect x="625.3" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T13</text>
+<rect x="657.7" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="672.4" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T14</text>
+<rect x="690" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="704.7" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T15</text>
+<line x1="260" y1="530" x2="260" y2="462" stroke="#475569" stroke-width="1.4"/>
+<path d="M260.0 462.0 L264.2 469.9 L255.8 469.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="268" y="506" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="280" y="516.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T7</text>
+<circle cx="130.0" cy="430" r="8" fill="#0F172A"/>
+<line x1="138" y1="430" x2="198" y2="430" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M198.0 430.0 L190.1 434.2 L190.1 425.8 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="200" y="400" width="200" height="60" rx="16" fill="#F0FDFA" stroke="#0F766E" stroke-width="2.6"/>
+<text x="300" y="435" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">NOT_ALLOWED</text>
+<rect x="540" y="166" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="640" y="201" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ENGAGE_PENDING</text>
+<rect x="880" y="400" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="980" y="435" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ALLOWED</text>
+<rect x="40" y="554" width="1200" height="92" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="56" y="568" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="73.7" y="580.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1 / 4</text>
+<text x="108" y="581" font-size="13" fill="#0F172A" font-weight="700">Start: NOT_ALLOWED</text>
+<text x="56" y="608" font-size="11.5" fill="#0F172A">After a safety mode is set, authority is not granted; the envelope waits for a cruise edge from the car.</text>
+</g>
+<g class="fr f1">
+<rect x="40" y="120" width="1200" height="410" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M40 138 L40 120 L373.6896000000001 120 L373.6896000000001 134 L361.6896000000001 146 L40 146" stroke="#0F172A" stroke-width="1.2" fill="#F8FAFC" stroke-linejoin="round"/>
+<text x="50" y="137" font-size="11" fill="#0F172A" font-weight="700">stm SM-TOY-AUTH · Toyota authority (controls_allowed)</text>
+<line x1="400" y1="442" x2="880" y2="442" stroke="#475569" stroke-width="1.4"/>
+<path d="M880.0 442.0 L872.1 446.2 L872.1 437.8 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="628" y="461.2" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="471.9" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1</text>
+<line x1="350.4" y1="409.9" x2="603.2" y2="235.9" stroke="#0F766E" stroke-width="3"/>
+<path d="M603.2 235.9 L599.1 243.9 L594.3 236.9 Z" stroke="none" stroke-width="1.4" fill="#0F766E" stroke-linejoin="round"/>
+<rect x="473.1" y="338.7" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="487.7" y="349.4" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1a</text>
+<line x1="683.6" y1="226" x2="936.4" y2="400" stroke="#475569" stroke-width="1.4"/>
+<path d="M936.4 400.0 L927.5 399.0 L932.3 392.0 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="795.4" y="313" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="810" y="323.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1b</text>
+<line x1="589.6" y1="216.1" x2="336.8" y2="390.1" stroke="#475569" stroke-width="1.4"/>
+<path d="M336.8 390.1 L340.9 382.1 L345.7 389.1 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="437.7" y="269.3" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="452.3" y="280" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1c</text>
+<path d="M270 400.0 C260 348.0 340 348.0 330 400.0" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M330.0 400.0 L327.2 391.4 L335.5 392.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="288" y="336" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="300" y="346.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T8</text>
+<line x1="880" y1="418" x2="400" y2="418" stroke="#475569" stroke-width="1.4"/>
+<path d="M400.0 418.0 L407.9 413.8 L407.9 422.2 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="557.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="569.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T2</text>
+<rect x="584.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="596.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T3</text>
+<rect x="611.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="623.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T4</text>
+<rect x="638.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="650.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T5</text>
+<rect x="665.9" y="344.8" width="24" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="677.9" y="355.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T6</text>
+<rect x="692.9" y="344.8" width="29.3" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="707.6" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T6a</text>
+<rect x="534" y="362.8" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="546" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T9</text>
+<rect x="561" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="578.3" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10a</text>
+<rect x="598.6" y="362.8" width="34.6" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="615.9" y="373.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T10b</text>
+<rect x="636.2" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="653.5" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10c</text>
+<rect x="673.8" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="691.1" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10d</text>
+<rect x="711.4" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="728.7" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10e</text>
+<rect x="560.6" y="380.8" width="29.4" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="575.3" y="391.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T11</text>
+<rect x="593" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="607.6" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T12</text>
+<rect x="625.3" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T13</text>
+<rect x="657.7" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="672.4" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T14</text>
+<rect x="690" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="704.7" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T15</text>
+<line x1="260" y1="530" x2="260" y2="462" stroke="#475569" stroke-width="1.4"/>
+<path d="M260.0 462.0 L264.2 469.9 L255.8 469.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="268" y="506" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="280" y="516.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T7</text>
+<circle cx="130.0" cy="430" r="8" fill="#0F172A"/>
+<line x1="138" y1="430" x2="198" y2="430" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M198.0 430.0 L190.1 434.2 L190.1 425.8 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="200" y="400" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="300" y="435" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">NOT_ALLOWED</text>
+<rect x="540" y="166" width="200" height="60" rx="16" fill="#F0FDFA" stroke="#0F766E" stroke-width="2.6"/>
+<text x="640" y="201" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">ENGAGE_PENDING</text>
+<rect x="880" y="400" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="980" y="435" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ALLOWED</text>
+<rect x="40" y="554" width="1200" height="92" rx="10" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<rect x="56" y="568" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="73.7" y="580.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2 / 4</text>
+<text x="108" y="581" font-size="13" fill="#0F172A" font-weight="700">T1a: NOT_ALLOWED → ENGAGE_PENDING on 0x1D2 valid</text>
+<text x="56" y="606" font-size="10.5" fill="#0F172A">[CRUISE_ACTIVE 0→1, rx_checks_allow_engagement(), CRUISE_ACTIVE = 0 received since the safety mode was set, heartbeat engaged = 0 at the edge, MAIN_ON = 1 (an edge while MAIN_ON = 0 opens the window and closes it …</text>
+<text x="56" y="626" font-size="10.5" fill="#475569">/ open the 1 s window (pcm_engage_pending, pcm_engage_ts) · build reference · SWSR-301, SWSR-306, SWSR-311, SWSR-405, SWSR-518 · partly</text>
+</g>
+<g class="fr f2">
+<rect x="40" y="120" width="1200" height="410" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M40 138 L40 120 L373.6896000000001 120 L373.6896000000001 134 L361.6896000000001 146 L40 146" stroke="#0F172A" stroke-width="1.2" fill="#F8FAFC" stroke-linejoin="round"/>
+<text x="50" y="137" font-size="11" fill="#0F172A" font-weight="700">stm SM-TOY-AUTH · Toyota authority (controls_allowed)</text>
+<line x1="400" y1="442" x2="880" y2="442" stroke="#475569" stroke-width="1.4"/>
+<path d="M880.0 442.0 L872.1 446.2 L872.1 437.8 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="628" y="461.2" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="471.9" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1</text>
+<line x1="350.4" y1="409.9" x2="603.2" y2="235.9" stroke="#475569" stroke-width="1.4"/>
+<path d="M603.2 235.9 L599.1 243.9 L594.3 236.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="473.1" y="338.7" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="487.7" y="349.4" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1a</text>
+<line x1="683.6" y1="226" x2="936.4" y2="400" stroke="#0F766E" stroke-width="3"/>
+<path d="M936.4 400.0 L927.5 399.0 L932.3 392.0 Z" stroke="none" stroke-width="1.4" fill="#0F766E" stroke-linejoin="round"/>
+<rect x="795.4" y="313" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="810" y="323.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1b</text>
+<line x1="589.6" y1="216.1" x2="336.8" y2="390.1" stroke="#475569" stroke-width="1.4"/>
+<path d="M336.8 390.1 L340.9 382.1 L345.7 389.1 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="437.7" y="269.3" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="452.3" y="280" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1c</text>
+<path d="M270 400.0 C260 348.0 340 348.0 330 400.0" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M330.0 400.0 L327.2 391.4 L335.5 392.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="288" y="336" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="300" y="346.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T8</text>
+<line x1="880" y1="418" x2="400" y2="418" stroke="#475569" stroke-width="1.4"/>
+<path d="M400.0 418.0 L407.9 413.8 L407.9 422.2 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="557.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="569.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T2</text>
+<rect x="584.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="596.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T3</text>
+<rect x="611.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="623.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T4</text>
+<rect x="638.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="650.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T5</text>
+<rect x="665.9" y="344.8" width="24" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="677.9" y="355.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T6</text>
+<rect x="692.9" y="344.8" width="29.3" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="707.6" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T6a</text>
+<rect x="534" y="362.8" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="546" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T9</text>
+<rect x="561" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="578.3" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10a</text>
+<rect x="598.6" y="362.8" width="34.6" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="615.9" y="373.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T10b</text>
+<rect x="636.2" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="653.5" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10c</text>
+<rect x="673.8" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="691.1" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10d</text>
+<rect x="711.4" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="728.7" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10e</text>
+<rect x="560.6" y="380.8" width="29.4" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="575.3" y="391.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T11</text>
+<rect x="593" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="607.6" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T12</text>
+<rect x="625.3" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T13</text>
+<rect x="657.7" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="672.4" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T14</text>
+<rect x="690" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="704.7" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T15</text>
+<line x1="260" y1="530" x2="260" y2="462" stroke="#475569" stroke-width="1.4"/>
+<path d="M260.0 462.0 L264.2 469.9 L255.8 469.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="268" y="506" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="280" y="516.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T7</text>
+<circle cx="130.0" cy="430" r="8" fill="#0F172A"/>
+<line x1="138" y1="430" x2="198" y2="430" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M198.0 430.0 L190.1 434.2 L190.1 425.8 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="200" y="400" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="300" y="435" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">NOT_ALLOWED</text>
+<rect x="540" y="166" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="640" y="201" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ENGAGE_PENDING</text>
+<rect x="880" y="400" width="200" height="60" rx="16" fill="#F0FDFA" stroke="#0F766E" stroke-width="2.6"/>
+<text x="980" y="435" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">ALLOWED</text>
+<rect x="40" y="554" width="1200" height="92" rx="10" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<rect x="56" y="568" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="73.7" y="580.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3 / 4</text>
+<text x="108" y="581" font-size="13" fill="#0F172A" font-weight="700">T1b: ENGAGE_PENDING → ALLOWED on safety task (100 Hz)</text>
+<text x="56" y="606" font-size="10.5" fill="#0F172A">[heartbeat engaged = 1 within 1 s of the edge, and rx_checks_allow_engagement()]</text>
+<text x="56" y="626" font-size="10.5" fill="#475569">/ set, close the window · build reference · SWSR-301, SWSR-306, SWSR-405, SWSR-518 · partly</text>
+</g>
+<g class="fr f3">
+<rect x="40" y="120" width="1200" height="410" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M40 138 L40 120 L373.6896000000001 120 L373.6896000000001 134 L361.6896000000001 146 L40 146" stroke="#0F172A" stroke-width="1.2" fill="#F8FAFC" stroke-linejoin="round"/>
+<text x="50" y="137" font-size="11" fill="#0F172A" font-weight="700">stm SM-TOY-AUTH · Toyota authority (controls_allowed)</text>
+<line x1="400" y1="442" x2="880" y2="442" stroke="#475569" stroke-width="1.4"/>
+<path d="M880.0 442.0 L872.1 446.2 L872.1 437.8 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="628" y="461.2" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="471.9" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1</text>
+<line x1="350.4" y1="409.9" x2="603.2" y2="235.9" stroke="#475569" stroke-width="1.4"/>
+<path d="M603.2 235.9 L599.1 243.9 L594.3 236.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="473.1" y="338.7" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="487.7" y="349.4" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1a</text>
+<line x1="683.6" y1="226" x2="936.4" y2="400" stroke="#475569" stroke-width="1.4"/>
+<path d="M936.4 400.0 L927.5 399.0 L932.3 392.0 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="795.4" y="313" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="810" y="323.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1b</text>
+<line x1="589.6" y1="216.1" x2="336.8" y2="390.1" stroke="#475569" stroke-width="1.4"/>
+<path d="M336.8 390.1 L340.9 382.1 L345.7 389.1 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="437.7" y="269.3" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="452.3" y="280" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1c</text>
+<path d="M270 400.0 C260 348.0 340 348.0 330 400.0" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M330.0 400.0 L327.2 391.4 L335.5 392.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="288" y="336" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="300" y="346.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T8</text>
+<line x1="880" y1="418" x2="400" y2="418" stroke="#0F766E" stroke-width="3"/>
+<path d="M400.0 418.0 L407.9 413.8 L407.9 422.2 Z" stroke="none" stroke-width="1.4" fill="#0F766E" stroke-linejoin="round"/>
+<rect x="557.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="569.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T2</text>
+<rect x="584.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="596.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T3</text>
+<rect x="611.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="623.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T4</text>
+<rect x="638.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="650.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T5</text>
+<rect x="665.9" y="344.8" width="24" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="677.9" y="355.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T6</text>
+<rect x="692.9" y="344.8" width="29.3" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="707.6" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T6a</text>
+<rect x="534" y="362.8" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="546" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T9</text>
+<rect x="561" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="578.3" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10a</text>
+<rect x="598.6" y="362.8" width="34.6" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="615.9" y="373.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T10b</text>
+<rect x="636.2" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="653.5" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10c</text>
+<rect x="673.8" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="691.1" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10d</text>
+<rect x="711.4" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="728.7" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10e</text>
+<rect x="560.6" y="380.8" width="29.4" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="575.3" y="391.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T11</text>
+<rect x="593" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="607.6" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T12</text>
+<rect x="625.3" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T13</text>
+<rect x="657.7" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="672.4" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T14</text>
+<rect x="690" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="704.7" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T15</text>
+<line x1="260" y1="530" x2="260" y2="462" stroke="#475569" stroke-width="1.4"/>
+<path d="M260.0 462.0 L264.2 469.9 L255.8 469.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="268" y="506" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="280" y="516.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T7</text>
+<circle cx="130.0" cy="430" r="8" fill="#0F172A"/>
+<line x1="138" y1="430" x2="198" y2="430" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M198.0 430.0 L190.1 434.2 L190.1 425.8 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="200" y="400" width="200" height="60" rx="16" fill="#F0FDFA" stroke="#0F766E" stroke-width="2.6"/>
+<text x="300" y="435" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">NOT_ALLOWED</text>
+<rect x="540" y="166" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="640" y="201" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ENGAGE_PENDING</text>
+<rect x="880" y="400" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="980" y="435" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ALLOWED</text>
+<rect x="40" y="554" width="1200" height="92" rx="10" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<rect x="56" y="568" width="35.3" height="18" rx="9.0" fill="#0F172A" stroke="none" stroke-width="1"/>
+<text x="73.7" y="580.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4 / 4</text>
+<text x="108" y="581" font-size="13" fill="#0F172A" font-weight="700">T10a: ALLOWED → NOT_ALLOWED on safety task: heartbeat check</text>
+<text x="56" y="606" font-size="10.5" fill="#0F172A">[no SoC heartbeat for &gt; 0.3 s in a car mode]</text>
+<text x="56" y="626" font-size="10.5" fill="#475569">/ clear; siren 3 s when authority was granted (panda c33343b) · build all · SWSR-407, SWSR-516 · partly</text>
+</g>
+<rect x="40" y="661" width="18.7" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="49.3" y="671.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T</text>
+<text x="64.7" y="672" font-size="10.5" fill="#475569">implemented</text>
+<rect x="133.7" y="661" width="18.7" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="143" y="671.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T</text>
+<text x="158.4" y="672" font-size="10.5" fill="#475569">partly</text>
+<rect x="196.2" y="661" width="18.7" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="205.5" y="671.7" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T</text>
+<text x="220.9" y="672" font-size="10.5" fill="#475569">not implemented</text>
+<rect x="309" y="661" width="18.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="318.3" y="671.7" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T</text>
+<text x="333.7" y="672" font-size="10.5" fill="#475569">not assessed</text>
+<rect x="409" y="661" width="18.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="418.3" y="671.7" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T</text>
+<text x="433.7" y="672" font-size="10.5" fill="#475569">reference build only</text>
+<text x="550.7" y="672" font-size="10.5" fill="#94A3B8">status as WP-W-05 §5 gives it, from the SWSRs each transition realises</text>
+<text x="40" y="694" font-size="10.5" fill="#475569">Generated by fig_w05_uml_states.py from state-machines/sm-toy-auth.yaml; the walk (T1a, T1b, T10a) is chosen here and checked to chain from the initial state.</text>
+<g class="terms">
+<text x="40" y="716" font-size="10.5" fill="#475569">Terms: ALLOWED the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 · SM-nn safety mechanism (TSC §6) · SoC system on chip: the comma device's main processor, running openpilot</text>
+<text x="40" y="730.5" font-size="10.5" fill="#475569">(QM) · SWSR-nn software safety requirement (WP-W-02) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O</text>
+<text x="40" y="745" font-size="10.5" fill="#475569">operation, K safety case)</text>
+</g>
+</svg>
