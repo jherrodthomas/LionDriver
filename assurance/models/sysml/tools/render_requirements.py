@@ -839,3 +839,129 @@ def render_tsr_blocks(m: sysml_lite.Model, vid: str, spec: dict, digest: str) ->
 
 
 RENDERERS["tsrblocks"] = render_tsr_blocks
+
+
+# ---------------------------------------------------------------- V-28 CSR requirement diagrams
+
+CSR_STATUS = {"in": ("in place", BLUE, "#EFF6FF"), "partly": ("partly", "#B45309", "#FFFBEB"),
+              "not": ("not met", RED, RED_BG), "check": ("not determined", "#64748B", "#F1F5F9")}
+SAFETY_REF = re.compile(r"\b(?:TSR-\d{3}|FSR-\d\d\.\d+|HWSR-\d{3}[a-z]?|SWSR-\d{3}[a-z]?)\b")
+
+
+def render_csr_groups(m: sysml_lite.Model, vid: str, spec: dict, digest: str) -> dict[str, str]:
+  """One SysML requirement diagram per sheet of CSR-C groups: each detailed cybersecurity requirement of WP-S-07 §4
+  with its status (WP-S-07 Figure 4-1), a «deriveReqt» arrow to its concept-level parent CSR-C-nn, the elements it is
+  allocated to («satisfy»), the safety requirements it states the same mechanism as («trace», WP-S-07 §8) and the
+  verification cases that name it («verify»)."""
+  out = {}
+  view = m.views[vid]
+  w = spec["width"]
+  csrs = [r for r in m.requirements.values() if r.short.startswith("CSR-")]
+  seen = set()
+  for g in spec["sheets"]:
+    groups = [f"CSR-C-{n:02d}" for n in range(int(g["from"][6:]), int(g["to"][6:]) + 1)]
+    reqs = sorted((r for r in csrs if r.values.get("group") in groups), key=lambda r: sort_key(r.short))
+    missing = [x for x in groups if not any(r.values.get("group") == x for r in reqs)]
+    if missing:
+      raise sysml_lite.ModelError(f"layout.toml {vid}: no CSR in {', '.join(missing)}")
+    seen.update(r.short for r in reqs)
+    for r in reqs:
+      if r.values.get("status") not in CSR_STATUS:
+        raise sysml_lite.ModelError(f"{r.short}: status {r.values.get('status')!r} is not one of {', '.join(CSR_STATUS)}")
+    body = rv.header(w, view, f"CSR requirement diagram · {g['title']}",
+                     f"{g['from']}…{g['to']} of WP-S-07 §4: status, parent, allocation, shared safety mechanisms and cases",
+                     digest)
+    top, rh, gap = 156, 80, 8
+    fx, fw, tx, tw, cx = 40, 270, 360, 560, 950
+    body.append(column_title(fx, 140, "DERIVED FROM · «requirement» CSR-C"))
+    body.append(column_title(tx, 140, "CYBERSECURITY REQUIREMENTS · «requirement»"))
+    body.append(column_title(cx, 140, "«satisfy» · «trace» SAFETY · «verify»"))
+    ty = {}
+    for i, r in enumerate(reqs):
+      y = top + i * (rh + gap)
+      chip = k.UNTRUSTED["chip"]
+      name, col, bg = CSR_STATUS[r.values["status"]]
+      txt = k.wrap(r.doc, tw - 200, 11, 600)
+      rest = k.wrap(" ".join(txt[1:]), tw - 24, 10.5) if len(txt) > 1 else []
+      more = rest[:2]
+      if len(rest) > 2:
+        more[1] = k.clip(more[1] + " " + " ".join(rest[2:]), tw - 24, 10.5)
+      attrs = " · ".join(x for x in (f"allocated {r.values.get('allocText')}" if r.values.get("allocText") else "",
+                                      f"verified by {r.values.get('verifMethod')}" if r.values.get("verifMethod") else "") if x)
+      body += card(tx, y, tw, rh, txt[0] if txt else "", r.short, chip, "#FFFFFF", col, [*more, k.clip(attrs, tw - 24, 10.5)],
+                   None, 1.8 if r.values["status"] == "not" else 1.3)
+      p, pw = k.pill(tx + tw - 12 - k.text_w(name, 8.5, 700) - 16, y + 8, name, bg, col, 15, 8.5, 700, col)
+      body.append(p)
+      ty[r.short] = y + rh / 2
+      safety = sorted(set(SAFETY_REF.findall(str(r.values.get("safetyRelation") or ""))), key=sort_key)
+      rows = [("«satisfy»", [label(m, p_)[0] or label(m, p_)[1] for p_ in r.satisfied_by], TEAL, "#F0FDFA", "outside the item"),
+              ("«trace»", safety, ENV["chip"], ENV["fill"], "none"),
+              ("«verify»", [c.replace("VS-", "") for c in sorted(r.verified_by, key=sort_key)], BLUE, "#EFF6FF", "no case")]
+      yy = y + 8
+      for lab, items, col_, bg_, empty in rows:
+        body.append(k.text(cx, yy + 12, lab, 9.5, col_, 700, None, True))
+        xx = cx + 66
+        if not items:
+          body.append(k.text(xx, yy + 12, empty, 9.5, RED if lab == "«verify»" else k.FAINT, 600))
+        for j, it in enumerate(items):
+          p_, pw_ = k.pill(xx, yy + 1, it, bg_, col_, 15, 8.5, 700, col_, mono=True)
+          if xx + pw_ > w - 40:
+            body.append(k.text(xx, yy + 12, f"+{len(items) - j}", 9.5, col_, 700))
+            break
+          body.append(p_)
+          xx += pw_ + 3
+        yy += 20
+    # concept-level parents, each beside the middle of its own requirements
+    fy = {}
+    for grp in groups:
+      own = [r for r in reqs if r.values["group"] == grp]
+      y0, y1 = ty[own[0].short] - rh / 2, ty[own[-1].short] + rh / 2
+      title = str(own[0].values.get("groupTitle") or "")
+      head, _, tail = title.partition(" (")
+      lines = k.wrap(head, fw - 24, 12, 600)
+      ch = 52 + 16 * len(lines)
+      y = max((y0 + y1) / 2 - ch / 2, y0)
+      body.append(k.rect(fx, y, fw, ch, k.UNTRUSTED["fill"], k.UNTRUSTED["stroke"], 8, 1.2, None, ' filter="url(#lift)"'))
+      body.append(k.pill(fx + 12, y + 10, grp, k.UNTRUSTED["chip"], size=9.5, mono=True)[0])
+      for j, ln in enumerate(lines):
+        body.append(k.text(fx + 12, y + 46 + 16 * j, ln, 12, k.INK, 600))
+      body.append(k.text(fx + 12, y + 46 + 16 * len(lines), tail.rstrip(")"), 10.5, k.MUTED))
+      fy[grp] = y + ch / 2
+    for r in reqs:
+      grp = r.values["group"]
+      xm = fx + fw + 14 + 6 * (groups.index(grp) % 5)
+      body.append(edge([(tx, ty[r.short]), (xm, ty[r.short]), (xm, fy[grp]), (fx + fw, fy[grp])], "#64748B", 1.0, "4 3",
+                       "rq-mut"))
+    body += tag(fx + fw + 26, 150, "«deriveReqt»", k.MUTED)
+    bottom = top + len(reqs) * (rh + gap) + 4
+    body += sysml_frame(24, 100, w - 48, bottom - 92, "req", "LionDriverRequirements",
+                        f"{g['from']}…{g['to']} {g['title']}")
+    count = {s_: sum(1 for r in reqs if r.values["status"] == s_) for s_ in CSR_STATUS}
+    named = sum(1 for r in reqs if r.verified_by)
+    note = (f"{len(reqs)} CSRs from {len(groups)} concept requirements: "
+            + ", ".join(f"{count[s_]} {CSR_STATUS[s_][0]}" for s_ in CSR_STATUS if count[s_])
+            + f"; {named} named by a verification case. None is verified yet.")
+    for i, ln in enumerate(k.wrap(note, w - 80, 11.5)):
+      body.append(k.text(40, bottom + 26 + i * 16, ln, 11.5, k.INK2))
+    legend_y = bottom + 26 + 16 * len(k.wrap(note, w - 80, 11.5))
+    items = [edge([(40, legend_y + 30), (66, legend_y + 30)], "#64748B", 1.6, "4 3", "rq-mut"),
+             k.text(74, legend_y + 34, "«deriveReqt»: refines its CSR-C", 11, k.INK2)]
+    x = 290
+    for s_, (name, col, bg) in CSR_STATUS.items():
+      p, pw = k.pill(x, legend_y + 22, name, bg, col, 15, 8.5, 700, col)
+      items.append(p)
+      x += pw + 6
+    items += [k.text(x + 4, legend_y + 34, "status (WP-S-07 Figure 4-1)", 11, k.INK2),
+              k.pill(x + 190, legend_y + 22, "TSR-512", ENV["fill"], ENV["chip"], 15, 8.5, 700, ENV["chip"], mono=True)[0],
+              k.text(x + 252, legend_y + 34, "safety requirement with the same mechanism (§8)", 11, k.INK2)]
+    body += rv.footer(w, legend_y, items)
+    out[spec["file"].format(f=g["key"])] = k.svg_doc(
+      w, legend_y + 92, f"{view.short}. CSR requirement diagram {g['from']}…{g['to']} (SysML v2 view {view.name})",
+      spec.get("desc", view.doc), body, MARKERS)
+  left = sorted({r.short for r in csrs} - seen, key=sort_key)
+  if left:
+    raise sysml_lite.ModelError(f"layout.toml {vid}: no sheet shows {', '.join(left)}")
+  return out
+
+
+RENDERERS["csrgroups"] = render_csr_groups

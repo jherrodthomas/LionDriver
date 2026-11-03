@@ -122,16 +122,23 @@ def system_requirements() -> list[dict]:
 
 
 def cyber_requirements() -> list[dict]:
+  """WP-S-07 §4 rows, with the title of their CSR-C group and the status WP-S-07 Figure 4-1 sorts them into
+  (fig_s07_csr_status.STATUS_OF, held to the "Evidence at baseline" cell by a quoted phrase)."""
+  sys.path.insert(0, str(ASSURANCE / "03-system" / "figures"))
+  import fig_s07_csr_status as fc
   out = []
   for heading, head, rows in tables(WP_S07):
-    m = re.match(r"4\.\d+ (CSR-C-\d\d)", heading)
+    m = re.match(r"4\.\d+ (CSR-C-\d\d) (.+)", heading)
     if not m or head[:3] != ["ID", "Statement", "Alloc"]:
       continue
     col = {h: i for i, h in enumerate(head)}
     for r in rows:
       if re.fullmatch(r"CSR-\d{3}", r[0]):
-        out.append({"id": r[0], "text": r[1], "group": m.group(1), "allocation": r[2],
-                    "safetyRelation": r[col.get("Safety relation", 3)], "verification": r[col.get("Verif", 4)], "source": "WP-S-07"})
+        if r[0] not in fc.STATUS_OF:
+          raise SystemExit(f"WP-S-07 §4 {r[0]} is not sorted by fig_s07_csr_status.STATUS_OF")
+        out.append({"id": r[0], "text": r[1], "group": m.group(1), "groupTitle": m.group(2), "allocation": r[2],
+                    "safetyRelation": r[col.get("Safety relation", 3)], "verification": r[col.get("Verif", 4)],
+                    "status": fc.STATUS_OF[r[0]][0], "source": "WP-S-07"})
   return out
 
 
@@ -278,14 +285,16 @@ DEFS = """    requirement def LionDriverRequirement {
     requirement def CybersecurityRequirement :> LionDriverRequirement {
         doc /* Detailed cybersecurity requirement (WP-S-07 §4). */
         attribute group : String;
+        attribute groupTitle : String;
         attribute safetyRelation : String;
         attribute verifMethod : String;
+        attribute status : String;   // in, partly, not, check (WP-S-07 Figure 4-1)
     }
 """
 ATTRS = {"SafetyGoal": ["asil", "safeState", "timing:ftti"], "FunctionalSafetyRequirement": ["asil", "verification:verifMethod"],
          "TechnicalSafetyRequirement": ["asil", "mechanism", "timing", "verification:verifMethod"],
          "SystemRequirement": ["function:functionId", "reqType", "target", "verification:verifMethod"],
-         "CybersecurityRequirement": ["group", "safetyRelation", "verification:verifMethod"]}
+         "CybersecurityRequirement": ["group", "groupTitle", "safetyRelation", "verification:verifMethod", "status"]}
 
 
 def build() -> dict[str, str]:

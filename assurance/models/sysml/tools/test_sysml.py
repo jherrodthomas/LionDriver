@@ -156,7 +156,7 @@ class Rendering(unittest.TestCase):
       self.assertTrue(any(f.startswith(f"fig-sysml-{vid.lower().replace('-', '')}-") for f in svgs), vid)
     self.assertEqual(len([f for f in svgs if f.startswith("fig-sysml-v06-")]), 8)
     layout = render_views.tomllib.loads(render_views.LAYOUT.read_text(encoding="utf-8"))["views"]
-    per_view = sum(len(s.get("functions") or s.get("blocks") or [1]) + ("phone" in s) for s in layout.values())
+    per_view = sum(len(s.get("functions") or s.get("blocks") or s.get("sheets") or [1]) + ("phone" in s) for s in layout.values())
     self.assertEqual(len(svgs), per_view)
     v03 = files["fig-sysml-v03-system-interconnection.svg"]
     for iid in ("IF-01", "IF-03", "IF-04", "IF-04b", "IF-07", "IF-08", "IF-09", "IF-10"):
@@ -198,6 +198,20 @@ class Rendering(unittest.TestCase):
         self.assertEqual(svg.count(f'data-sm="{m_.short}" data-goal="{g}"'), 1, (g, m_.short))
     for f, kind in kinds.items():  # every open FSR drawn with its kind
       self.assertIn(f'data-fsr="{f}" data-kind="{kind}"', svg)
+
+  def test_v28_csr_diagrams(self):
+    m = sysml_lite.load()
+    files = render_views.render_all(m)
+    sheets = {k: v for k, v in files.items() if k.startswith("fig-sysml-v28-csr-")}
+    self.assertEqual(len(sheets), 6)
+    csrs = [r for r in m.requirements.values() if r.short.startswith("CSR-")]
+    self.assertEqual(len(csrs), 64)
+    for r in csrs:  # every CSR on exactly one sheet, with a status from WP-S-07 Figure 4-1
+      self.assertIn(r.values.get("status"), ("in", "partly", "not", "check"), r.short)
+      self.assertEqual(sum(f">{r.short}<" in svg for svg in sheets.values()), 1, r.short)
+    for n in range(1, 17):
+      self.assertEqual(sum(f">CSR-C-{n:02d}<" in svg for svg in sheets.values()), 1, n)
+    self.assertIn(">TSR-512<", sheets["fig-sysml-v28-csr-c01-c02.svg"])  # CSR-011 shares the mode lock (WP-S-07 §8)
 
   def test_v03_phone_layout(self):
     m = sysml_lite.load()

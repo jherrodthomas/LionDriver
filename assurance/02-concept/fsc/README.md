@@ -49,7 +49,7 @@ through it with the figures. The document is the source of record, and every fig
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |
-| V-nn | view of the SysML model (V-01…V-27) |
+| V-nn | view of the SysML model (V-01…V-28) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
 All terms: [abbreviations and record codes](../../terms.md).
