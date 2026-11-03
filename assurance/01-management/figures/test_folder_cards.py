@@ -77,6 +77,28 @@ class TestFolderCards(unittest.TestCase):
     self.assertEqual(sum(segs[0][1] for _, segs, _, _ in f["picture"][1]), agree)
     self.assertEqual(sum(segs[0][1] + segs[1][1] for _, segs, _, _ in f["picture"][1]), total)
 
+  def test_batch3_numbers_come_from_their_records(self):
+    import json
+    base = json.loads((fc.A / "05-software/coverage/structural-baseline.json").read_text(encoding="utf-8"))["units"]
+    cov = fc.coverage()
+    self.assertEqual(sum(segs[0][1] + segs[1][1] for _, segs, _, _ in cov["picture"][1]), sum(u["branches_total"] for u in base.values()))
+    conf = fc.confirmation()
+    self.assertEqual(sum(v for _, segs, _, _ in conf["picture"][1] for _, v, _ in segs), conf["tiles"][0][0])
+    dn = fc.design_notes()
+    self.assertEqual(len(dn["picture"][1]), len(list((fc.A / "05-software/design-notes").glob("DN-*.md"))))
+
+  def test_confirmation_readme_must_agree_with_the_records(self):
+    real = Path.glob
+
+    def fake(p, pattern):
+      out = list(real(p, pattern))
+      if p.name == "confirmation" and pattern == "*.md":
+        out.append(p / "CR-01-WP-C-01-v1.0.md")
+      return iter(out)
+    with mock.patch.object(Path, "glob", fake):
+      with self.assertRaisesRegex(fc.FigureError, "disagrees"):
+        fc.confirmation()
+
   def test_unknown_spice_verdict_fails(self):
     with mock.patch.object(fc, "SPICE_OK", ()), mock.patch.object(fc, "SPICE_BAD", ()):
       with self.assertRaisesRegex(fc.FigureError, "neither a known pass"):

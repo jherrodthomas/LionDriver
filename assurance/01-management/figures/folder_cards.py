@@ -26,6 +26,7 @@ Standard library only (YAML through tools/safety/fmea_diagrams' loader). Output 
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -130,7 +131,7 @@ def fret():
   mon = read("models/fret/monitor/monitor-results.md")
   _, mutants = rows(mon, "## Defects injected on purpose")
   caught = [r for r in mutants if fk.plain(r[-1]).lower() == "yes"]
-  formal = __import__("json").loads(read("models/fret/fretish-formalizations.json"))["requirements"]
+  formal = json.loads(read("models/fret/fretish-formalizations.json"))["requirements"]
   readme = read("models/fret/README.md")
   evidence = field(readme, "Evidence")
   steps = [("TSRs restated", f"{len(tsrs)} TSRs"), ("FRETish", f"{len(fr)} + {len(fa)} assumptions"),
@@ -335,6 +336,175 @@ def clauses():
          "verified against the licensed standard"))
 
 
+def coverage():
+  base = json.loads(read("05-software/coverage/structural-baseline.json"))
+  units = base["units"]
+  if not units:
+    raise FigureError("coverage: no units in structural-baseline.json")
+  rows_, bt, bu, mt, mu = [], 0, 0, 0, 0
+  for u in sorted(units):
+    v = units[u]
+    rows_.append((u, [("branches covered", v["branches_total"] - v["branches_uncovered"], "ok"), ("uncovered", v["branches_uncovered"], "part")], "", None))
+    bt, bu, mt, mu = bt + v["branches_total"], bu + v["branches_uncovered"], mt + v["mcdc_total"], mu + v["mcdc_uncovered"]
+  cj = re.findall(r"^\| (CJ-\d+) \|", read("05-software/coverage/justifications.md"), re.M)
+  pct = lambda a, b: f"{round(100 * (b - a) / b)} %"
+  return dict(
+    tiles=[(len(units), "safety-layer units", "n"), (pct(bu, bt), "branch coverage", "part"), (pct(mu, mt), "MC/DC coverage", "part"),
+           (len(cj), "justified gaps", "n")],
+    chips=[(f"opendbc {base['opendbc']}", "n"), ("target 100 % with justified gaps", "n"), ("justifications not reviewed", "bad")],
+    picture=("stacks", rows_),
+    caption=(f"Branches covered per safety-layer unit at opendbc {base['opendbc']}: {bt - bu} of {bt} overall; every gap needs a justification "
+             f"row, and {len(cj)} exist."),
+    alt=(f"{len(units)} safety-layer units; branch coverage {pct(bu, bt)} ({bt - bu} of {bt}), MC/DC {pct(mu, mt)} ({mt - mu} of {mt}); "
+         f"{len(cj)} justified gaps; opendbc {base['opendbc']}"))
+
+
+def design_notes():
+  md = read("05-software/design-notes/README.md")
+  head, body = fk.table(md.split("\n\n", 2)[2] if md.count("\n\n") >= 2 else md, "Note")
+  notes = [(fk.plain(r[0]), fk.plain(r[1])) for r in body]
+  files = sorted(p.name for p in (A / "05-software/design-notes").glob("DN-*.md"))
+  if len(files) != len(notes):
+    raise FigureError(f"design notes: {len(files)} DN files but {len(notes)} rows in the README table")
+  refs = sorted({x for _, sub in notes for x in re.findall(r"TSR-\d+|SWSR-\d+", sub)})
+  return dict(
+    tiles=[(len(notes), "design notes", "n"), (len([r for r in refs if r.startswith("TSR")]), "TSRs they serve", "n"),
+           (len([r for r in refs if r.startswith("SWSR")]), "SWSRs they serve", "n"), ("WP-W-03", "architecture", "n")],
+    chips=[("supports WP-W-03 and WP-W-05", "n")],
+    picture=("list", notes),
+    caption=(f"The {len(notes)} design notes and what each one explains." if len(notes) != 1 else "The design note and what it explains."),
+    alt=f"{len(notes)} design notes: " + "; ".join(f"{a} {b}" for a, b in notes))
+
+
+def reviews():
+  folder = A / "05-software/reviews"
+  recs = sorted(p for p in folder.glob("RR-*.md"))
+  if not recs:
+    raise FigureError("reviews: no review record")
+  owners: dict[str, int] = {}
+  open3 = open6 = 0
+  for p in recs:
+    md = p.read_text(encoding="utf-8")
+    for heading, bucket in (("## 3. Findings needing engineering judgement (open)", 3), ("## 6. New findings raised while applying the fixes (open, not yet decided)", 6)):
+      try:
+        head, body = fk.table(fk.section(md, heading))
+      except FigureError:
+        continue
+      if bucket == 3:
+        oc = fk.col(head, "Suggested owner")
+        for r in body:
+          o = fk.plain(r[oc]) or "unassigned"
+          owners[o] = owners.get(o, 0) + 1
+        open3 += len(body)
+      else:
+        open6 += len(body)
+  segs = [(o, [("findings", n, "part")], "", None) for o, n in sorted(owners.items(), key=lambda kv: -kv[1])]
+  return dict(
+    tiles=[(len(recs), "review records", "n"), (open3, "findings for judgement", "part"), (open6, "raised while fixing", "part"),
+           ("R1–R4", "not yet held", "bad")],
+    chips=[("pre-review audit", "n"), ("not a verification review", "bad")],
+    picture=("stacks", segs),
+    caption=f"The {open3} findings that need an engineering judgement, by the owner the record suggests.",
+    alt=(f"{len(recs)} review record; {open3} findings needing engineering judgement, {open6} raised while applying the fixes; "
+         "a pre-review audit, not an R1 to R4 verification review"))
+
+
+def fmea_diagrams():
+  rows_, blocks, ifs, errs = [], 0, 0, 0
+  for name in ("system-fmea", "sw-fmea", "dfmea", "pfmea"):
+    d = fmd.load_yaml(read(f"08-analyses/fmea/diagrams/{name}.yaml"))
+    pd = d.get("p_diagram") or {}
+    if not pd:
+      raise FigureError(f"fmea diagrams: {name} has no p_diagram")
+    if "block_diagram" in d:
+      bl = d["block_diagram"]["blocks"]
+      inside = sum(1 for b in bl if b.get("inside"))
+      segs = [("blocks inside", inside, "ok"), ("outside", len(bl) - inside, "grey")]
+      blocks, ifs = blocks + len(bl), ifs + len(d["block_diagram"].get("interfaces", []))
+    elif "process_flow" in d:
+      segs = [("process steps", len(d["process_flow"]["steps"]), "n")]
+    else:
+      raise FigureError(f"fmea diagrams: {name} has neither a block diagram nor a process flow")
+    errs += len(pd.get("error_states", []))
+    rows_.append((ANALYSIS_NAME[name], segs, f"{len(pd.get('error_states', []))} error states", None))
+  return dict(
+    tiles=[(len(rows_), "FMEAs framed", "n"), (blocks, "blocks drawn", "n"), (ifs, "interfaces", "n"), (errs, "P-diagram error states", "n")],
+    chips=[("drawn into the review pages", "n"), ("every ID checked against its FMEA", "ok")],
+    picture=("stacks", rows_),
+    caption=f"What frames each FMEA: its blocks inside and outside the boundary (process steps for the PFMEA) and its P-diagram error states.",
+    alt=f"{len(rows_)} FMEAs framed: {blocks} blocks, {ifs} interfaces, {errs} P-diagram error states")
+
+
+ANALYSIS_NAME = {"system-fmea": "System FMEA", "sw-fmea": "SW FMEA", "dfmea": "DFMEA", "pfmea": "PFMEA"}
+CONF_KINDS = (("Confirmation reviews", r"CR-\d\d"), ("SOTIF reviews", r"SR-0\d"), ("Interim assessments", r"FSA-I\d"))
+
+
+def confirmation():
+  plan = read("01-management/WP-M-06-confirmation-measures-plan.md")
+  folder = A / "10-safety-case/confirmation"
+  done_files = [p.name for p in folder.glob("*.md") if p.name != "README.md"]
+  rows_, planned, done = [], 0, 0
+  for lab, rx in CONF_KINDS:
+    ids = sorted(set(re.findall(rf"\b{rx}\b", plan)))
+    if not ids:
+      raise FigureError(f"confirmation: WP-M-06 names no {lab}")
+    d = sum(1 for i in ids if any(f.startswith(i) for f in done_files))
+    rows_.append((lab, [("performed", d, "ok"), ("planned", len(ids) - d, "grey")], "", None))
+    planned, done = planned + len(ids), done + d
+  readme = read("10-safety-case/confirmation/README.md")
+  said = "No confirmation measure has been performed yet." in readme
+  if said != (done == 0):
+    raise FigureError("confirmation: the README's 'none performed yet' line disagrees with the records in the folder")
+  return dict(
+    tiles=[(planned, "measures planned", "n"), (done, "performed", "ok" if done else "bad"), (planned - done, "to do", "part" if planned - done else "ok"),
+           ("I3", "highest independence", "n")],
+    chips=[("planned in WP-M-06", "n"), ("records by the reviewer, not the author", "n")],
+    picture=("stacks", rows_),
+    caption=f"The confirmation measures WP-M-06 plans and how many have a record here: {done} of {planned}.",
+    alt=f"{planned} confirmation measures planned in WP-M-06 (reviews, SOTIF reviews, interim assessments); {done} performed")
+
+
+def people():
+  md = read("sim/blender/library/people/README.md")
+  head, body = fk.table(md, "File")
+  figs = [(fk.plain(r[0]), fk.plain(r[1])) for r in body]
+  for f, _ in figs:
+    if not (A / "sim/blender/library/people" / f).exists():
+      raise FigureError(f"people: {f} is in the table but not in the folder")
+  heights = re.findall(r"(\d\.\d+) m", " ".join(x for _, x in figs))
+  bones = re.search(r"(\d+)-bone rig", md)
+  lic = "CC0 1.0" if "CC0 1.0" in md else None
+  if not (bones and lic):
+    raise FigureError("people: the rig or the licence is no longer stated")
+  return dict(
+    tiles=[(len(figs), "walking figures", "n"), (bones.group(1), "bones in the rig", "n"), (" / ".join(heights) + " m", "heights", "n"),
+           ("CC0", "licence, committed here", "ok")],
+    chips=[("synthetic, pictures only", "bad"), ("Quaternius packs", "n")],
+    picture=("list", figs),
+    caption=f"The {len(figs)} pedestrians the hazard scenes can place, both walking by the distance they cover.",
+    alt=f"{len(figs)} walking figures, {bones.group(1)}-bone rig, heights {', '.join(heights)} m, licence {lic}; pictures only, synthetic")
+
+
+def harness_box():
+  md = read("sim/harness_box/README.md")
+  head, body = fk.table(md, "Fault")
+  faults = [(fk.plain(r[1]), fk.plain(r[0])) for r in body]
+  res = read("sim/results/harness-box.md")
+  sc = re.findall(r"^\| (?!Scenario|---)[^|]+\| (nominal|DFM-\d+\.C\d+) \|", res, re.M)
+  if not sc:
+    raise FigureError("harness box: no scenario rows in results/harness-box.md")
+  params = read("sim/harness_box/params.yaml")
+  pub, est = len(re.findall(r"status: published", params)), len(re.findall(r"status: estimate", params))
+  return dict(
+    tiles=[(len(faults), "DFMEA faults shown", "n"), (len(sc), "scenarios computed", "n"), (f"{est}/{pub + est}", "inputs still estimates", "part" if est else "ok"),
+           ("5 mV", "Falstad vs ngspice", "ok")],
+    chips=[("synthetic, no evidence credit", "bad"), ("steady state only", "n"), ("not the real box", "n")],
+    picture=("list", faults),
+    caption=f"The {len(faults)} harness-box faults of the DFMEA, each run as a circuit; {est} of {pub + est} inputs are bands until the bench measures them.",
+    alt=(f"{len(faults)} DFMEA harness-box faults shown in {len(sc)} computed scenarios; {est} of {pub + est} inputs are estimates; "
+         "Falstad agrees with ngspice within 5 mV; synthetic, no evidence credit"))
+
+
 CARDS = {
   "06-validation/test-sites": dict(
     title="Closed-course test sites", phase="06", fn=test_sites,
@@ -408,6 +578,62 @@ CARDS = {
     me="clause obligations",
     outs=[("Coverage pages", "status per obligation", "trace/clauses/iso26262-3-2018-coverage.md"),
           ("Assessor", "verifies each row", "00-assessment/README.md")]),
+  "05-software/coverage": dict(
+    title="Structural coverage", phase="05", fn=coverage, quote="Branch and MC/DC coverage",
+    purpose="How much of the safety layer's branches and conditions the tests reach, and why each gap is acceptable.",
+    ins=[("opendbc safety tests", "run on the reference build", "05-software/WP-W-06-software-unit-verification.md"),
+         ("WP-W-06 §3", "the 100 % target", "05-software/WP-W-06-software-unit-verification.md")],
+    me="baseline and justifications",
+    outs=[("CI ratchet", "fails on a new gap", "05-software/coverage/structural-baseline.json"),
+          ("05-software page", "coverage per unit", "05-software/README.md")]),
+  "05-software/design-notes": dict(
+    title="Design notes", phase="05", fn=design_notes, quote="Short design notes",
+    purpose="Notes for a mechanism that needs more room than a row of the architecture or unit design.",
+    ins=[("WP-S-02 TSRs", "what the mechanism must do", "03-system/WP-S-02-technical-safety-requirements.md"),
+         ("WP-W-02 SWSRs", "the software requirement", "05-software/WP-W-02-software-safety-requirements.md")],
+    me="design notes, DN-nn",
+    outs=[("WP-W-03", "software architecture", "05-software/WP-W-03-software-architecture.md"),
+          ("WP-W-05", "unit design", "05-software/WP-W-05-software-unit-design.md")]),
+  "05-software/reviews": dict(
+    title="Software reviews", phase="05", fn=reviews, quote="Review records of the software work products",
+    purpose="Review records of the software work products: what was checked, the findings and what became of them.",
+    ins=[("WP-W-01 to WP-W-11", "the software work products", "05-software/README.md"),
+         ("WP-P-05", "the review procedure", "07-supporting/WP-P-05-verification-review-procedure.md")],
+    me="review records, RR-nnnn",
+    outs=[("Work product fixes", "mechanical changes made", "05-software/README.md"),
+          ("Owners", "findings needing judgement", "01-management/decisions/register.yaml")]),
+  "08-analyses/fmea/diagrams": dict(
+    title="FMEA diagram data", phase="08", fn=fmea_diagrams, quote="One file per FMEA holding the diagrams",
+    purpose="The block, boundary, process and P-diagrams that frame each FMEA's worksheet, as checked data.",
+    ins=[("FMEA analyses", "the IDs each diagram uses", "08-analyses/fmea/fmea-plan.md"),
+         ("WP-S-03 architecture", "blocks and interfaces", "03-system/WP-S-03-technical-safety-concept-architecture.md")],
+    me="one YAML per FMEA",
+    outs=[("FMEA review pages", "diagrams, then worksheet", "08-analyses/fmea/exports/review/README.md"),
+          ("fmea-plan", "step 2 and 3 records", "08-analyses/fmea/fmea-plan.md")]),
+  "10-safety-case/confirmation": dict(
+    title="Confirmation measure records", phase="10", fn=confirmation, quote="Records of confirmation reviews",
+    purpose="Where the independent reviews, audits and assessments of WP-M-06 are recorded once they are held.",
+    ins=[("WP-M-06", "the planned measures", "01-management/WP-M-06-confirmation-measures-plan.md"),
+         ("WP-P-05 §7.2", "the record template", "07-supporting/WP-P-05-verification-review-procedure.md")],
+    me="confirmation records",
+    outs=[("Living safety case", "accepted reviews", "case-records/reviews/reviews.yaml"),
+          ("Gate reviews", "go or no-go", "10-safety-case/gates/README.md")]),
+  "sim/blender/library/people": dict(
+    title="Pedestrians", serves=("02", "06"), fn=people, quote="Two walking figures",
+    purpose="The walking figures the 3D hazardous-event scenes use for pedestrians.",
+    ins=[("Quaternius packs", "CC0 characters and walk", "sim/blender/library/people/build_people.py"),
+         ("scenes.yaml", "which actor walks where", "sim/blender/scenes.yaml")],
+    me="two rigged figures",
+    outs=[("Hazard scenes", "pedestrians in 3D", "sim/blender/README.md"),
+          ("Dashboards", "the review gallery", "sim/blender/dashboards/README.md")]),
+  "sim/harness_box": dict(
+    title="Harness box switch path", serves=("04", "08"), fn=harness_box, quote="What does each harness box fault of the DFMEA do",
+    purpose="The harness box's DFMEA faults as a circuit you can look at, and the voltages each one leaves.",
+    ins=[("RR-2026-010", "the box drawing as read", "04-hardware/reviews/RR-2026-010.md"),
+         ("params.yaml", "every input and its source", "sim/harness_box/params.yaml")],
+    me="one circuit, two solvers",
+    outs=[("DFMEA causes", "what each fault does", "08-analyses/fmea/fmea-plan.md"),
+          ("VS-HW-24", "the bench measures the bands", "04-hardware/WP-H-06-hardware-integration-verification.md")]),
 }
 
 
@@ -551,6 +777,14 @@ def picture(kind, y):
       out.append(fk.text(lx + 14, yy + 13, sl, size=9.5, fill=fk.MUTED))
       lx += 26 + fk.text_w(sl, 9.5)
     return out, yy - y + 20
+  if kind[0] == "list":
+    out, yy = [], y
+    for a, b in kind[1]:
+      out += [fk.rect(M, yy, W - 2 * M, 34, fill=fk.GREY_BG, stroke="none", rx=6),
+              fk.text(M + 10, yy + 21, fk.fit(a, 150, 10.5, True), size=10.5, weight=700),
+              fk.text(M + 170, yy + 21, fk.fit(b, W - 2 * M - 180, 10), size=10, fill=fk.INK)]
+      yy += 40
+    return out, yy - y
   raise FigureError(f"unknown picture kind {kind[0]}")
 
 
