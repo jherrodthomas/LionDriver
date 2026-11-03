@@ -6,7 +6,8 @@ from openpilot.selfdrive.selfdrived.state import SOFT_DISABLE_TIME, StateMachine
 
 # Requirements-based tests of the selfdrived transitions the driver causes (WP-W-05 §5.3 X2, E2, O2, P1; DQ-151 A):
 #   SWSR-302h (TSR-302, TSR-308)  X2: a driver disengagement (USER_DISABLE) ends the engagement in the same cycle
-#   SWSR-302i (TSR-302)           P1: the pre-enable phase (brake held at standstill) and how it ends
+#   SWSR-302i (TSR-302)           P1, P2: the pre-enable phase (brake held at standstill) and how it ends;
+#                                 P2: a soft disable ends the attempt at once (DQ-433 A)
 #   SWSR-305h (TSR-305)           E2: a driver override while enabled keeps the engagement (overriding)
 #   SWSR-305i (TSR-305)           O2: the end of an override returns to enabled without a new engagement request
 
@@ -109,27 +110,27 @@ class TestPreEnable(_Base):
       assert self.sm.state == State.disabled
       assert et in self.sm.current_alert_types
 
-  def test_soft_disable_is_not_acted_on_in_pre_enabled(self):
-    # as the code does today (OI-12: whether it should end the attempt instead is open for the lead)
-    self.sm.state = State.preEnabled
-    self.sm.soft_disable_timer = 0
-    for _ in range(SOFT_DISABLE_CYCLES + 10):
-      assert self.step(None, [ET.PRE_ENABLE, ET.SOFT_DISABLE]) == (True, False)
-      assert self.sm.state == State.preEnabled
-      assert ET.SOFT_DISABLE not in self.sm.current_alert_types
-      assert self.sm.soft_disable_timer == 0
+  def test_soft_disable_ends_the_attempt_at_once(self):
+    # DQ-433 A: a soft-disable fault during the wait ends the attempt in the same cycle, with the soft-disable alert,
+    # whether or not the brake is still held
+    for held in ([ET.PRE_ENABLE], []):
+      assert self.step(State.preEnabled, held + [ET.SOFT_DISABLE], 0) == (False, False), held
+      assert self.sm.state == State.disabled
+      assert ET.SOFT_DISABLE in self.sm.current_alert_types
+      assert ET.PRE_ENABLE not in self.sm.current_alert_types
 
-  def test_soft_disable_starts_one_cycle_after_pre_enable_ends(self):
-    assert self.step(State.preEnabled, [ET.SOFT_DISABLE], 0) == (True, True)
-    assert self.sm.state == State.enabled
-    assert ET.SOFT_DISABLE not in self.sm.current_alert_types
-    assert self.step(None, [ET.SOFT_DISABLE]) == (True, True)
-    assert self.sm.state == State.softDisabling
-    assert self.sm.soft_disable_timer == SOFT_DISABLE_CYCLES
-    assert ET.SOFT_DISABLE in self.sm.current_alert_types
-    for _ in range(SOFT_DISABLE_CYCLES):
-      self.step(None, [ET.SOFT_DISABLE])
-    assert self.sm.state == State.disabled
+  def test_no_actuation_after_a_soft_disable_in_pre_enabled(self):
+    # the car never becomes active: brake release afterwards needs a new engagement request
+    self.step(State.preEnabled, [ET.PRE_ENABLE, ET.SOFT_DISABLE], 0)
+    for _ in range(SOFT_DISABLE_CYCLES + 10):
+      assert self.step(None, []) == (False, False)
+      assert self.sm.state == State.disabled
+
+  def test_user_and_immediate_disable_keep_priority_over_soft_disable(self):
+    for et in (ET.USER_DISABLE, ET.IMMEDIATE_DISABLE):
+      assert self.step(State.preEnabled, [ET.PRE_ENABLE, ET.SOFT_DISABLE, et]) == (False, False)
+      assert et in self.sm.current_alert_types
+      assert ET.SOFT_DISABLE not in self.sm.current_alert_types
 
 
 class TestOverrideEntry(_Base):

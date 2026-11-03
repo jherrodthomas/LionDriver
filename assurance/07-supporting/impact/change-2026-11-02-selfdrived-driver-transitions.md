@@ -32,7 +32,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Lead decision: on a SOFT_DISABLE event in preEnabled, keep today's behaviour, end the attempt (disabled with the soft-disable alert), or go to softDisabling. SWSR-302i, its test and `state.py` follow the answer (WP-W-02 OI-12) | Project lead, G3 |
+| OI-1 | ~~Lead decision on a SOFT_DISABLE event in preEnabled~~ Decided 2026-11-03, DQ-433 A: the attempt ends at once; applied in [change-2026-11-03-pre-enable-soft-disable](change-2026-11-03-pre-enable-soft-disable.md) | Closed |
 | OI-2 | Re-derive the host SWSR ASILs (WP-S-02 OI-2) and then give SWSR-305h/305i TSR-304(b) as a parent | Safety engineer, G3 |
 | OI-3 | SW FMEA causes for these transitions, then the eight mutants in `host_mutants.toml` | SW FMEA owner |
 | OI-4 | Independent review (I1) of the four SWSRs and the test module | Reviewer, G3 |
