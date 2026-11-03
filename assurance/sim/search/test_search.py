@@ -21,6 +21,8 @@ import search  # noqa: E402
 sys.path.insert(0, str(search.SIM / "blender"))
 import export_scene  # noqa: E402
 import simulate  # noqa: E402
+import cases  # noqa: E402
+import dataclasses  # noqa: E402
 
 
 class TestSearch(unittest.TestCase):
@@ -95,6 +97,20 @@ class TestFamilies(unittest.TestCase):
   def test_openpilot_values_read_from_the_code(self):
     self.assertEqual((simulate.SOFT_DISABLE_TIME, simulate.A_CRUISE_MIN, simulate.NO_RESPONSE_TIMEOUT,
                       simulate.STOP_DISTANCE), (3.0, -1.2, 5.0, 6.0))
+    # the minimum-risk stop of the DM stop (TSR-633, DQ-424 A)
+    self.assertEqual((simulate.A_MINIMUM_RISK_STOP, simulate.J_MINIMUM_RISK_STOP), (-2.0, 4.0))
+
+  def test_dm_stop_is_the_minimum_risk_stop(self):
+    """The DM stop decelerates at A_MINIMUM_RISK_STOP (TSR-633, DQ-424 A); the soft disable still at A_CRUISE_MIN."""
+    base = {c.id: c for c in cases.all_cases()}["L-03"]
+    for fault, want in (("dm_stop", simulate.A_MINIMUM_RISK_STOP), ("soft_disable", simulate.A_CRUISE_MIN)):
+      case = dataclasses.replace(base, fault=fault, road="straight", speed_kph=110.0, t_fault=5.0, duration=4.0,
+                                 alert_lead_s=0.0, acc_follow=False)
+      r = simulate.simulate(case, {"driver_ignores_alert": 1.0})
+      ev = r.metrics["events"]
+      end = 5.0 + min(ev.get("driver correction", 4.0), ev.get("soft disable ends: control handed back", 4.0))
+      ax = [a for t, a in zip(r.t, r.ax) if 5.0 <= t < end]
+      self.assertAlmostEqual(min(ax), want, delta=0.02, msg=fault)
 
   def test_lead_gap_measure(self):
     """The ACC alone follows a lead braking at 4 m/s²; a silent loss of deceleration at its onset ends in contact."""
