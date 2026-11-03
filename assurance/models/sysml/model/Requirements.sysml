@@ -40,8 +40,10 @@ package LionDriverRequirements {
     requirement def CybersecurityRequirement :> LionDriverRequirement {
         doc /* Detailed cybersecurity requirement (WP-S-07 §4). */
         attribute group : String;
+        attribute groupTitle : String;
         attribute safetyRelation : String;
         attribute verifMethod : String;
+        attribute status : String;   // in, partly, not, check (WP-S-07 Figure 4-1)
     }
 
     requirement <'SG-01'> sg_01 : SafetyGoal {
@@ -2022,512 +2024,640 @@ package LionDriverRequirements {
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-01";
+        :>> groupTitle = "Safety configuration lock (CSG-01, CAL 3)";
         :>> safetyRelation = "TSR-512, FSR-01.10, B‡";
         :>> verifMethod = "R, UT, HIL";
+        :>> status = "in";
     }
     requirement <'CSR-012'> csr_012 : CybersecurityRequirement {
         doc /* A rejected safety-configuration request shall leave the panda in a non-actuating mode and set a fault flag reported to the SoC in the health packet. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-01";
+        :>> groupTitle = "Safety configuration lock (CSG-01, CAL 3)";
         :>> safetyRelation = "TSR-512, B‡";
         :>> verifMethod = "UT, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-013'> csr_013 : CybersecurityRequirement {
         doc /* Transitions from the locked car mode to SILENT or NOOUTPUT shall remain permitted at all times. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-01";
+        :>> groupTitle = "Safety configuration lock (CSG-01, CAL 3)";
         :>> safetyRelation = "TSR-512, B‡ (safe state reachable)";
         :>> verifMethod = "UT, HIL";
+        :>> status = "in";
     }
     requirement <'CSR-014'> csr_014 : CybersecurityRequirement {
         doc /* While a car safety mode is active, release firmware shall reject host commands outside a documented allow-list, including relay drive (0xc5), CAN mode/speed changes (0xdb, 0xde) and loopback. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-01";
+        :>> groupTitle = "Safety configuration lock (CSG-01, CAL 3)";
         :>> safetyRelation = "TSR-513, B‡";
         :>> verifMethod = "R, UT, FZ";
+        :>> status = "partly";
     }
     requirement <'CSR-015'> csr_015 : CybersecurityRequirement {
         doc /* Alternative experience shall not be changeable in release firmware for the reference configuration. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-01";
+        :>> groupTitle = "Safety configuration lock (CSG-01, CAL 3)";
         :>> safetyRelation = "TSR-512, TSR-804";
         :>> verifMethod = "UT";
+        :>> status = "in";
     }
     requirement <'CSR-016'> csr_016 : CybersecurityRequirement {
         doc /* pandad shall compare the panda-reported safety model, parameter and alternative experience with the release-record values and prevent engagement and raise an alert on mismatch. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-01";
+        :>> groupTitle = "Safety configuration lock (CSG-01, CAL 3)";
         :>> safetyRelation = "QM (B-sup: TSR-512); no matching TSR-6xx (proposed addition, OI-1). 2026-10-12: TSR-619 of WP-S-02 now refines this CSR";
         :>> verifMethod = "UT, HIL";
+        :>> status = "not";
     }
     requirement <'CSR-021'> csr_021 : CybersecurityRequirement {
         doc /* The release panda firmware and bootstub shall be built with RELEASE and the LionDriver certificate, and the release build shall fail if ALLOW_DEBUG is defined. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW; ENV";
         :>> group = "CSR-C-02";
+        :>> groupTitle = "No debug capability in release firmware (CSG-01/CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-514, FSR-01.10, B‡";
         :>> verifMethod = "BA";
+        :>> status = "not";
     }
     requirement <'CSR-022'> csr_022 : CybersecurityRequirement {
         doc /* The release bootstub shall not contain the debug public key and shall accept no key other than the LionDriver release key. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-02";
+        :>> groupTitle = "No debug capability in release firmware (CSG-01/CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-514, B‡";
         :>> verifMethod = "BA, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-023'> csr_023 : CybersecurityRequirement {
         doc /* Debug-only host commands (relay drive 0xc5, ALLOUTPUT mode, bootloader entry, debug sleep) shall be absent from release firmware. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-02";
+        :>> groupTitle = "No debug capability in release firmware (CSG-01/CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-514, TSR-513, HWSR-506c";
         :>> verifMethod = "BA, R, FZ";
+        :>> status = "partly";
     }
     requirement <'CSR-024'> csr_024 : CybersecurityRequirement {
         doc /* Softloader entry (0xd1 param 1) shall be accepted only while the panda is in a non-actuating mode and no car mode has been active in the current ignition cycle (refused after a drive this ignition cycle). */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-02";
+        :>> groupTitle = "No debug capability in release firmware (CSG-01/CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511 (softloader refused in car mode), B‡; ignition-off condition is an additional CS constraint";
         :>> verifMethod = "UT, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-031'> csr_031 : CybersecurityRequirement {
         doc /* The bootstub shall verify the application image with an ECDSA signature over P-256 and a SHA-256 digest (128-bit security strength; decided 2026-10-19, DQ-191 A) before transferring control. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-03";
+        :>> groupTitle = "Authenticated firmware boot (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511, C";
         :>> verifMethod = "R, HIL";
+        :>> status = "not";
     }
     requirement <'CSR-032'> csr_032 : CybersecurityRequirement {
         doc /* The verifying public key shall be the LionDriver panda release key, whose private key is generated and held offline and never stored in the repository, CI or logs. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW; ENV";
         :>> group = "CSR-C-03";
+        :>> groupTitle = "Authenticated firmware boot (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511, TSR-514";
         :>> verifMethod = "CM, PR";
+        :>> status = "not";
     }
     requirement <'CSR-033'> csr_033 : CybersecurityRequirement {
         doc /* The bootstub shall reject an image whose version is below a minimum version held in write-protected storage. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-03";
+        :>> groupTitle = "Authenticated firmware boot (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511";
         :>> verifMethod = "UT, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-034'> csr_034 : CybersecurityRequirement {
         doc /* The application image integrity shall be re-checked at start-up and periodically at run time, with mismatch leading to the safe state. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-03";
+        :>> groupTitle = "Authenticated firmware boot (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-503, TSR-515, HWSR-503c, B‡";
         :>> verifMethod = "HIL, FI";
+        :>> status = "not";
     }
     requirement <'CSR-041'> csr_041 : CybersecurityRequirement {
         doc /* The panda option bytes shall be set at provisioning to an RDP level chosen by CS-AD-02 that prevents read-out and debug-port access to the firmware. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW; USR";
         :>> group = "CSR-C-04";
+        :>> groupTitle = "Flash protection (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511, HWSR-502c";
         :>> verifMethod = "HIL (option-byte read), PR";
+        :>> status = "not";
     }
     requirement <'CSR-042'> csr_042 : CybersecurityRequirement {
         doc /* Write protection shall be set on the bootstub sector(s) so that neither the application nor the softloader can modify them. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW; USR";
         :>> group = "CSR-C-04";
+        :>> groupTitle = "Flash protection (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511";
         :>> verifMethod = "HIL";
+        :>> status = "not";
     }
     requirement <'CSR-043'> csr_043 : CybersecurityRequirement {
         doc /* Installation shall record the option-byte values and the bootstub and application hashes, and compare them with the release record. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR";
         :>> group = "CSR-C-04";
+        :>> groupTitle = "Flash protection (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-802";
         :>> verifMethod = "PR";
+        :>> status = "not";
     }
     requirement <'CSR-051'> csr_051 : CybersecurityRequirement {
         doc /* Release pandad shall not flash a development bootstub; recovery shall flash only the release-signed bootstub and application of the installed release. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-05";
+        :>> groupTitle = "No unauthenticated recovery path (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511";
         :>> verifMethod = "R, HIL";
+        :>> status = "not";
     }
     requirement <'CSR-052'> csr_052 : CybersecurityRequirement {
         doc /* SoC use of STM_BOOT0 for recovery shall occur only on explicit offroad owner action and shall be logged as a security event. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; USR";
         :>> group = "CSR-C-05";
+        :>> groupTitle = "No unauthenticated recovery path (CSG-02, CAL 3)";
         :>> safetyRelation = "TSR-511";
         :>> verifMethod = "R, HIL";
+        :>> status = "not";
     }
     requirement <'CSR-053'> csr_053 : CybersecurityRequirement {
         doc /* pandad shall not set a car safety mode unless the panda reports the firmware version and signature recorded in the release record. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-05";
+        :>> groupTitle = "No unauthenticated recovery path (CSG-02, CAL 3)";
         :>> safetyRelation = "QM (B-sup: TSR-511); TSR-802 at installation";
         :>> verifMethod = "UT, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-054'> csr_054 : CybersecurityRequirement {
         doc /* The architecture shall prevent SoC control of STM_BOOT0/STM_RST_N from resulting in execution of firmware not signed with the LionDriver release key, or the residual shall be recorded as a cybersecurity claim per CS-AD-03. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW; SoC; USR";
         :>> group = "CSR-C-05";
+        :>> groupTitle = "No unauthenticated recovery path (CSG-02, CAL 3)";
         :>> safetyRelation = "HWSR-502c, TSR-511";
         :>> verifMethod = "A, HIL";
+        :>> status = "not";
     }
     requirement <'CSR-061'> csr_061 : CybersecurityRequirement {
         doc /* The panda envelope limits and checks shall not depend on any value from the SoC params store or msgq other than the locked safety configuration of CSR-011. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-06";
+        :>> groupTitle = "Params and IPC (CSG-03, CAL 2)";
         :>> safetyRelation = "TSR-1xx/2xx/3xx, TSR-512, TSR-507; FFI (WP-A-02)";
         :>> verifMethod = "R, A";
+        :>> status = "partly";
     }
     requirement <'CSR-062'> csr_062 : CybersecurityRequirement {
         doc /* Safety-relevant params (§3.8) shall be writable only by their designated writer processes, enforced by OS file permissions, and their values shall be checked against the release record at manager start with engagement blocked on mismatch. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-06";
+        :>> groupTitle = "Params and IPC (CSG-03, CAL 2)";
         :>> safetyRelation = "TSR-806 (installation check), QM";
         :>> verifMethod = "R, UT";
+        :>> status = "not";
     }
     requirement <'CSR-063'> csr_063 : CybersecurityRequirement {
         doc /* Each safety-relevant msgq topic consumed by controlsd, selfdrived, plannerd or dmonitoringd shall be publishable only by its designated process, and a second publisher shall be detected and reported. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-06";
+        :>> groupTitle = "Params and IPC (CSG-03, CAL 2)";
         :>> safetyRelation = "QM; no TSR";
         :>> verifMethod = "R, UT";
+        :>> status = "not";
     }
     requirement <'CSR-064'> csr_064 : CybersecurityRequirement {
         doc /* Network-facing processes (athenad, uploader, updated, webrtcd, UI) shall run without permission to write safety-relevant params or publish safety-relevant topics. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-06";
+        :>> groupTitle = "Params and IPC (CSG-03, CAL 2)";
         :>> safetyRelation = "— (likelihood reduction)";
         :>> verifMethod = "R, PT";
+        :>> status = "check";
     }
     requirement <'CSR-071'> csr_071 : CybersecurityRequirement {
         doc /* Release builds shall not start the joystick, longitudinal-maneuver or lateral-maneuver replacement processes regardless of params. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-07";
+        :>> groupTitle = "Developer modes (CSG-03, CAL 2)";
         :>> safetyRelation = "TSR-613, QM (B-sup)";
         :>> verifMethod = "BA, UT";
+        :>> status = "in";
     }
     requirement <'CSR-072'> csr_072 : CybersecurityRequirement {
         doc /* Driver-view demo mode (IsDriverViewEnabled) shall not affect driver-monitoring output while onroad. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-07";
+        :>> groupTitle = "Developer modes (CSG-03, CAL 2)";
         :>> safetyRelation = "TSR-610, QM";
         :>> verifMethod = "UT";
+        :>> status = "in";
     }
     requirement <'CSR-073'> csr_073 : CybersecurityRequirement {
         doc /* The release build check shall fail if any developer-mode entry point is reachable in the release configuration. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV";
         :>> group = "CSR-C-07";
+        :>> groupTitle = "Developer modes (CSG-03, CAL 2)";
         :>> safetyRelation = "—";
         :>> verifMethod = "BA";
+        :>> status = "partly";
     }
     requirement <'CSR-081'> csr_081 : CybersecurityRequirement {
         doc /* modeld and dmonitoringmodeld shall load model artefacts and metadata without deserializing executable objects (no pickle of artefact content). */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-08";
+        :>> groupTitle = "Model artefacts (CSG-04, CAL 2)";
         :>> safetyRelation = "AIR (WP-C-11); GAP-22";
         :>> verifMethod = "R, UT";
+        :>> status = "not";
     }
     requirement <'CSR-082'> csr_082 : CybersecurityRequirement {
         doc /* Before loading, every model artefact shall be verified against a SHA-256 hash in the authenticated release manifest, and the process shall refuse to run on mismatch so that engagement is blocked. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-08";
+        :>> groupTitle = "Model artefacts (CSG-04, CAL 2)";
         :>> safetyRelation = "AIR; TSR-801 (model hashes at installation)";
         :>> verifMethod = "UT, HIL";
+        :>> status = "not";
     }
     requirement <'CSR-083'> csr_083 : CybersecurityRequirement {
         doc /* Model artefacts shall be fetched from LionDriver-controlled storage and their hashes recorded in the release record. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV; USR";
         :>> group = "CSR-C-08";
+        :>> groupTitle = "Model artefacts (CSG-04, CAL 2)";
         :>> safetyRelation = "D-05";
         :>> verifMethod = "CM";
+        :>> status = "not";
     }
     requirement <'CSR-091'> csr_091 : CybersecurityRequirement {
         doc /* Panda firmware shall verify every checksum and counter that the vehicle provides on safety-relevant RX messages, and shall cross-check messages that carry none (brake 0x226, wheel speed 0xAA) for plausibility against independent signals. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-09";
+        :>> groupTitle = "Vehicle CAN (CSG-05, CAL 2)";
         :>> safetyRelation = "TSR-401…405, B‡; GAP-01";
         :>> verifMethod = "R, UT, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-092'> csr_092 : CybersecurityRequirement {
         doc /* Panda firmware shall transmit only allow-listed actuation messages on the car-side bus and shall not alter camera-originated PCS messages it forwards. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-09";
+        :>> groupTitle = "Vehicle CAN (CSG-05, CAL 2)";
         :>> safetyRelation = "TSR-7xx, SG-07";
         :>> verifMethod = "R, UT";
+        :>> status = "partly";
     }
     requirement <'CSR-093'> csr_093 : CybersecurityRequirement {
         doc /* Reception on the car-side bus of an actuation message ID that the panda transmits, while the relay intercepts, shall be detected and lead to actuation inhibit. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "FW";
         :>> group = "CSR-C-09";
+        :>> groupTitle = "Vehicle CAN (CSG-05, CAL 2)";
         :>> safetyRelation = "TSR-506, HWSR-506b, B‡";
         :>> verifMethod = "UT, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-101'> csr_101 : CybersecurityRequirement {
         doc /* LionDriver installer and image builds shall not contain an embedded authorized SSH key or set SshEnabled. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; ENV";
         :>> group = "CSR-C-10";
+        :>> groupTitle = "SSH (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "BA";
+        :>> status = "not";
     }
     requirement <'CSR-102'> csr_102 : CybersecurityRequirement {
         doc /* SshEnabled shall be false in the reference configuration and checked at installation. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR";
         :>> group = "CSR-C-10";
+        :>> groupTitle = "SSH (CSG-06, CAL 3)";
         :>> safetyRelation = "TSR-806";
         :>> verifMethod = "PR";
+        :>> status = "in";
     }
     requirement <'CSR-103'> csr_103 : CybersecurityRequirement {
         doc /* When the owner enables SSH, only key authentication with owner-provided keys shall be accepted. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-10";
+        :>> groupTitle = "SSH (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "R, PT";
+        :>> status = "check";
     }
     requirement <'CSR-104'> csr_104 : CybersecurityRequirement {
         doc /* SSH shall not accept new sessions while the vehicle is onroad. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-10";
+        :>> groupTitle = "SSH (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "HIL, PT";
+        :>> status = "not";
     }
     requirement <'CSR-111'> csr_111 : CybersecurityRequirement {
         doc /* athenad shall not run in the reference configuration unless the owner opts in. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; USR";
         :>> group = "CSR-C-11";
+        :>> groupTitle = "Remote RPC (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "BA, PR";
+        :>> status = "not";
     }
     requirement <'CSR-112'> csr_112 : CybersecurityRequirement {
         doc /* If enabled, file uploads requested over athena shall go only to allow-listed destination hosts over TLS with certificate validation. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
+        :>> groupTitle = "Remote RPC (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "UT, PT";
+        :>> status = "partly";
     }
     requirement <'CSR-113'> csr_113 : CybersecurityRequirement {
         doc /* If enabled, the SSH-tunnel and authorized-key RPCs shall be absent. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
+        :>> groupTitle = "Remote RPC (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "UT, PT";
+        :>> status = "not";
     }
     requirement <'CSR-114'> csr_114 : CybersecurityRequirement {
         doc /* If enabled, getMessage shall serve only allow-listed, non-personal services. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
+        :>> groupTitle = "Remote RPC (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "UT";
+        :>> status = "not";
     }
     requirement <'CSR-115'> csr_115 : CybersecurityRequirement {
         doc /* Release builds shall ignore the ATHENA_HOST environment override. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
+        :>> groupTitle = "Remote RPC (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "BA, UT";
+        :>> status = "not";
     }
     requirement <'CSR-116'> csr_116 : CybersecurityRequirement {
         doc /* Onroad camera streaming shall remain impossible, and webrtcd shall bind only to the loopback interface. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
+        :>> groupTitle = "Remote RPC (CSG-06, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "UT, PT";
+        :>> status = "in";
     }
     requirement <'CSR-117'> csr_117 : CybersecurityRequirement {
         doc /* No safety function shall depend on athena or any back-end availability. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-11";
+        :>> groupTitle = "Remote RPC (CSG-06, CAL 3)";
         :>> safetyRelation = "CA-01";
         :>> verifMethod = "HIL (network off)";
+        :>> status = "check";
     }
     requirement <'CSR-121'> csr_121 : CybersecurityRequirement {
         doc /* The updater shall stage an update only after verifying a LionDriver-signed release manifest (§3.6) and every artefact against it; the manifest signature uses the firmware scheme, ECDSA over P-256 with SHA-256 (DQ-191 A), with the offline update key. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; ENV";
         :>> group = "CSR-C-12";
+        :>> groupTitle = "Software updates (CSG-07, CAL 3)";
         :>> safetyRelation = "TSR-810, TSR-801";
         :>> verifMethod = "R, UT, PT";
+        :>> status = "not";
     }
     requirement <'CSR-122'> csr_122 : CybersecurityRequirement {
         doc /* Release builds shall fix the update origin and accept only release-channel branches, ignoring UpdaterTargetBranch values outside it. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-12";
+        :>> groupTitle = "Software updates (CSG-07, CAL 3)";
         :>> safetyRelation = "TSR-810";
         :>> verifMethod = "UT";
+        :>> status = "not";
     }
     requirement <'CSR-123'> csr_123 : CybersecurityRequirement {
         doc /* The updater shall reject a manifest whose release version is lower than the installed one unless the manifest is a signed rollback release. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; ENV";
         :>> group = "CSR-C-12";
+        :>> groupTitle = "Software updates (CSG-07, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "UT";
+        :>> status = "not";
     }
     requirement <'CSR-124'> csr_124 : CybersecurityRequirement {
         doc /* Until CSR-121 is implemented, DisableUpdates shall be set in the reference configuration and updates installed manually per WP-O-02 UPD-02. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR";
         :>> group = "CSR-C-12";
+        :>> groupTitle = "Software updates (CSG-07, CAL 3)";
         :>> safetyRelation = "TSR-810";
         :>> verifMethod = "PR";
+        :>> status = "in";
     }
     requirement <'CSR-125'> csr_125 : CybersecurityRequirement {
         doc /* Update installation shall be offroad-only and atomic, with the previous release remaining bootable if finalization fails. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-12";
+        :>> groupTitle = "Software updates (CSG-07, CAL 3)";
         :>> safetyRelation = "UPD-05";
         :>> verifMethod = "R, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-126'> csr_126 : CybersecurityRequirement {
         doc /* The update-signing key shall be distinct from the panda release key, held offline, and covered by a re-keying procedure. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV";
         :>> group = "CSR-C-12";
+        :>> groupTitle = "Software updates (CSG-07, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "PR";
+        :>> status = "not";
     }
     requirement <'CSR-131'> csr_131 : CybersecurityRequirement {
         doc /* All submodules shall point to LionDriver-controlled forks and be pinned by commit. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV";
         :>> group = "CSR-C-13";
+        :>> groupTitle = "Supply chain (CSG-07, CAL 3)";
         :>> safetyRelation = "D-01";
         :>> verifMethod = "CM";
+        :>> status = "not";
     }
     requirement <'CSR-132'> csr_132 : CybersecurityRequirement {
         doc /* No release dependency or tool shall be resolved from a mutable reference (branch or tag without hash). */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV";
         :>> group = "CSR-C-13";
+        :>> groupTitle = "Supply chain (CSG-07, CAL 3)";
         :>> safetyRelation = "GAP-34";
         :>> verifMethod = "CM, BA";
+        :>> status = "not";
     }
     requirement <'CSR-133'> csr_133 : CybersecurityRequirement {
         doc /* Every release shall have an SBOM covering uv.lock packages, submodule commits, LFS artefacts, AGNOS version and images, comma-deps wheels and the panda toolchain. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV";
         :>> group = "CSR-C-13";
+        :>> groupTitle = "Supply chain (CSG-07, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "CM";
+        :>> status = "not";
     }
     requirement <'CSR-134'> csr_134 : CybersecurityRequirement {
         doc /* Every release and the current release weekly shall be scanned against public vulnerability data, with each finding assessed before release. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV";
         :>> group = "CSR-C-13";
+        :>> groupTitle = "Supply chain (CSG-07, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "CM";
+        :>> status = "not";
     }
     requirement <'CSR-135'> csr_135 : CybersecurityRequirement {
         doc /* Release signing material shall never be available to CI jobs triggered from pull requests or forks. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "ENV";
         :>> group = "CSR-C-13";
+        :>> groupTitle = "Supply chain (CSG-07, CAL 3)";
         :>> safetyRelation = "—";
         :>> verifMethod = "CM, R";
+        :>> status = "not";
     }
     requirement <'CSR-141'> csr_141 : CybersecurityRequirement {
         doc /* The device identity private key shall be readable only by the processes that sign with it and shall not be exposed through any RPC, log or upload. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC";
         :>> group = "CSR-C-14";
+        :>> groupTitle = "Personal data and identity key (CSG-08, CAL 2)";
         :>> safetyRelation = "—";
         :>> verifMethod = "R, PT";
+        :>> status = "check";
     }
     requirement <'CSR-142'> csr_142 : CybersecurityRequirement {
         doc /* Driver-facing video, cabin imagery and location logs shall be encrypted at rest, or, if AGNOS cannot provide this, driver-camera recording shall be off by default and retention bounded. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; USR";
         :>> group = "CSR-C-14";
+        :>> groupTitle = "Personal data and identity key (CSG-08, CAL 2)";
         :>> safetyRelation = "—";
         :>> verifMethod = "R, HIL";
+        :>> status = "check";
     }
     requirement <'CSR-143'> csr_143 : CybersecurityRequirement {
         doc /* Any data upload shall use TLS with certificate validation to an approved endpoint. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; ENV";
         :>> group = "CSR-C-14";
+        :>> groupTitle = "Personal data and identity key (CSG-08, CAL 2)";
         :>> safetyRelation = "—";
         :>> verifMethod = "R, PT";
+        :>> status = "check";
     }
     requirement <'CSR-144'> csr_144 : CybersecurityRequirement {
         doc /* Driver-camera video shall not be uploaded unless the owner opts in. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "SoC; USR";
         :>> group = "CSR-C-14";
+        :>> groupTitle = "Personal data and identity key (CSG-08, CAL 2)";
         :>> safetyRelation = "—";
         :>> verifMethod = "R, PR";
+        :>> status = "check";
     }
     requirement <'CSR-151'> csr_151 : CybersecurityRequirement {
         doc /* The decommissioning procedure shall erase user data and the device identity keys in /persist/comma/. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR; SoC";
         :>> group = "CSR-C-15";
+        :>> groupTitle = "Decommissioning (CSG-08, CAL 2)";
         :>> safetyRelation = "TSR-814";
         :>> verifMethod = "PR, HIL";
+        :>> status = "partly";
     }
     requirement <'CSR-152'> csr_152 : CybersecurityRequirement {
         doc /* Decommissioning shall revoke the device's credentials at every LionDriver endpoint and remove owner SSH keys. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR; ENV";
         :>> group = "CSR-C-15";
+        :>> groupTitle = "Decommissioning (CSG-08, CAL 2)";
         :>> safetyRelation = "TSR-814";
         :>> verifMethod = "PR";
+        :>> status = "partly";
     }
     requirement <'CSR-161'> csr_161 : CybersecurityRequirement {
         doc /* LionDriver shall publish a security policy with a private reporting channel it controls. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR; ENV";
         :>> group = "CSR-C-16";
+        :>> groupTitle = "Vulnerability handling (CAL 1)";
         :>> safetyRelation = "—";
         :>> verifMethod = "PR";
+        :>> status = "not";
     }
     requirement <'CSR-162'> csr_162 : CybersecurityRequirement {
         doc /* Vulnerability analysis, incident response and update management shall run per WP-O-05 from G6. */
         :>> workProduct = "WP-S-07";
         :>> allocText = "USR";
         :>> group = "CSR-C-16";
+        :>> groupTitle = "Vulnerability handling (CAL 1)";
         :>> safetyRelation = "WP-O-04 field actions";
         :>> verifMethod = "PR";
+        :>> status = "not";
     }
 
     // derivation: each requirement from its parents in the trace data

@@ -56,7 +56,7 @@ counter protection the system has today. It is the first part of what the projec
 | TSR-nn | technical safety requirement (WP-S-02) |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
 | TX | transmit |
-| V-nn | view of the SysML model (V-01…V-27) |
+| V-nn | view of the SysML model (V-01…V-28) |
 | VSC | vehicle stability control (Toyota's stability system) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 | XML | extensible markup language |

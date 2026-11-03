@@ -33,7 +33,7 @@ boundaries between them, the secure boot chain, the safety-mode lock, the update
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
 | TSR-nn | technical safety requirement (WP-S-02) |
-| V-nn | view of the SysML model (V-01…V-27) |
+| V-nn | view of the SysML model (V-01…V-28) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
 All terms: [abbreviations and record codes](../../terms.md).
@@ -49,7 +49,7 @@ from it or from the SysML model that mirrors it.
 1. **Only the safety MCU has to survive an attack.** Everything on the comma device's main processor (the SoC) is
    assumed compromisable. Controls there reduce the likelihood of an attack; they are never the last line of defence
    for a safety goal (§3.2).
-2. **64 requirements, none verified.** 7 are in place, 16 partly, 34 not met, and 7 not yet determined.
+2. **64 requirements, none verified.** 8 are in place, 16 partly, 33 not met, and 7 not yet determined.
 3. **One boundary is open.** The SoC drives the MCU's boot and reset lines, so with root on the SoC it could replace
    the firmware (TB-2, GAP-38; details: private record GD-03, WP-O-05 §4.4). Whether a read-protection level closes
    this is open (CS-AD-02, OI-2).
@@ -81,6 +81,13 @@ release environment (Z6) and the physical device (Z7). Seven boundaries join the
 | TB-5 MCU ↔ vehicle CAN | received signals, actuation, forwarding | injection on the car's bus |
 | TB-6 release → device | signed images and manifests | the keys never cross it |
 | TB-7 physical | data and keys at rest | theft, loss, resale |
+
+![WP-S-07 Figure 3-2a, animated: the seven trust boundaries one by one, each lit on the stack of zones with what crosses it, its threats and its controls coloured by status; the last frame shows all seven side by side](../figures/fig-s07-3-2a-boundaries-anim.svg)
+
+*The boundaries one by one (§3.2, Figure 3-2a).* The same seven boundaries, from the outside in, each with the
+requirements that control it coloured by status. The last frame puts them side by side. On TB-2 (the boot lines), TB-5
+(the vehicle bus), TB-6 (the signed release path) and TB-7 (the device at rest), none of the controls is in place yet.
+TB-1 (the command channel) is the best covered, because the mode lock and command gating are in the reference build.
 
 ## 2. The firmware: boot, flash and the boot lines
 
@@ -129,6 +136,31 @@ debug-removal group partly. Authenticated boot, flash protection and the recover
 firmware-substitution threat, are mostly not met. So is the whole supply-chain group. The personal-data group cannot be
 judged yet: each of its requirements still has to be checked against the device.
 
+### The requirements as SysML requirement diagrams
+
+The same requirements drawn from the [system model](../../models/sysml/README.md) (SysML view V-28), one diagram per
+area. Each requirement is a «requirement» with its status, linked by «deriveReqt» to the concept requirement CSR-C-nn
+it refines. Beside it are the elements it is allocated to («satisfy»), the safety requirements it shares a mechanism
+with («trace», §8), and the verification cases that name it («verify»). No case names one yet: their verification is
+specified in WP-W-11.
+
+| Sheet | Area |
+|---|---|
+| [CSR-C-01 and 02](../../models/sysml/generated/fig-sysml-v28-csr-c01-c02.svg) | configuration lock and release firmware |
+| [CSR-C-03 to 05](../../models/sysml/generated/fig-sysml-v28-csr-c03-c05.svg) | boot, flash and recovery |
+| [CSR-C-06 to 09](../../models/sysml/generated/fig-sysml-v28-csr-c06-c09.svg) | host, models and vehicle CAN |
+| [CSR-C-10 and 11](../../models/sysml/generated/fig-sysml-v28-csr-c10-c11.svg) | remote access |
+| [CSR-C-12 and 13](../../models/sysml/generated/fig-sysml-v28-csr-c12-c13.svg) | updates and supply chain |
+| [CSR-C-14 to 16](../../models/sysml/generated/fig-sysml-v28-csr-c14-c16.svg) | personal data, decommissioning, vulnerabilities |
+
+![SysML view V-28: CSR requirement diagram for CSR-C-01 and CSR-C-02, the configuration lock and release firmware: each requirement with its status, its parent, its satisfying element, the TSRs it shares a mechanism with and its verification cases](../../models/sysml/generated/fig-sysml-v28-csr-c01-c02.svg)
+
+*The first sheet (V-28).* The configuration lock is the most advanced group. Three of its six requirements are in
+place in the reference build. Each of them traces to TSR-512 or TSR-513, so one implementation serves both the
+cybersecurity and the safety requirement.
+
+### Where they meet the safety requirements
+
 Where a requirement and a safety requirement state the same mechanism, one implementation serves both and the stricter
 verification applies (§8). The main pairs are the firmware signature (TSR-511), the mode lock (TSR-512), command
 gating (TSR-513) and the release build (TSR-514).
@@ -151,3 +183,5 @@ This folder has no files of its own besides this page. The figures live next to 
 |---|---|
 | WP-S-07 Figure 4-1, the requirements | [`fig_s07_csr_status.py`](../figures/fig_s07_csr_status.py), from §4; each status is listed with a phrase from its evidence cell, and CI fails when the cell changes |
 | SysML view V-11, the security zones | [`render_views.py`](../../models/sysml/tools/render_views.py), from the SysML model, which mirrors WP-S-07 §3 |
+| WP-S-07 Figure 3-2a, the boundaries one by one | [`fig_s07_boundaries_anim.py`](../figures/fig_s07_boundaries_anim.py), from §3.2 and the statuses of Figure 4-1 |
+| SysML view V-28, the CSR requirement diagrams | [`render_requirements.py`](../../models/sysml/tools/render_requirements.py), from the model's CSRs, which [`gen_requirements.py`](../../models/sysml/tools/gen_requirements.py) copies from §4 with their Figure 4-1 status |

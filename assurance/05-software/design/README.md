@@ -43,7 +43,7 @@ the safety argument: E-03, the panda firmware on the safety MCU (ASIL C), and E-
 | U-nn | software component of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1) |
 | UML | Unified Modeling Language (OMG): state machine, sequence and component diagrams |
 | UN-nn | software unit (WP-W-05 §2) |
-| V-nn | view of the SysML model (V-01…V-27) |
+| V-nn | view of the SysML model (V-01…V-28) |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
 All terms: [abbreviations and record codes](../../terms.md).

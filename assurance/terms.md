@@ -312,7 +312,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | UK-nn | unknown that WP-H-02 must obtain (UK-01…UK-09, WP-H-02 §5) |
 | UN-nn | software unit (WP-W-05 §2) |
 | UPD-nn | update procedure step (WP-O-02) |
-| V-nn | view of the SysML model (V-01…V-27) |
+| V-nn | view of the SysML model (V-01…V-28) |
 | VF-nn | vehicle family in the vehicle register |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | VT-nn | validation target (WP-V-02) |

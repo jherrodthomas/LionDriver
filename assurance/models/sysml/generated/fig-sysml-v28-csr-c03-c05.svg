@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1262" viewBox="0 0 1520 1262" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-28. CSR requirement diagram CSR-C-03…CSR-C-05 (SysML v2 view csrGroups)</title>
+<desc id="d">SysML requirement diagram generated from the model for a sheet of WP-S-07 §4: each detailed cybersecurity requirement with its status (in place, partly, not met, not determined; WP-S-07 Figure 4-1), its allocation and verification methods, a «deriveReqt» arrow to the concept requirement CSR-C-nn it refines, the elements that satisfy it, the safety requirements it states the same mechanism as («trace», WP-S-07 §8) and the verification cases that name it.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1520" height="1262" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-28 · CSR requirement diagram · boot, flash and recovery</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">CSR-C-03…CSR-C-05 of WP-S-07 §4: status, parent, allocation, shared safety mechanisms and cases</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::csrGroups</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model d4bd8b5b796b</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text x="40" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">DERIVED FROM · «requirement» CSR-C</text>
+<text x="360" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">CYBERSECURITY REQUIREMENTS · «requirement»</text>
+<text x="950" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">«satisfy» · «trace» SAFETY · «verify»</text>
+<rect x="360" y="156" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="164" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="176.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-031</text>
+<text x="432.9" y="177" font-size="12" fill="#0F172A" font-weight="600">The bootstub shall verify the application image with an ECDSA</text>
+<text x="372" y="194" font-size="10.5" fill="#64748B">signature over P-256 and a SHA-256 digest (128-bit security strength; decided 2026-10-19, DQ-191 A)</text>
+<text x="372" y="208" font-size="10.5" fill="#64748B">before transferring control.</text>
+<text x="372" y="222" font-size="10.5" fill="#64748B">allocated FW · verified by R, HIL</text>
+<rect x="860.4" y="164" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="174.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="176" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="165" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="175.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="950" y="196" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="185" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="195.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<text x="950" y="216" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="216" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="244" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="252" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="264.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-032</text>
+<text x="432.9" y="265" font-size="12" fill="#0F172A" font-weight="600">The verifying public key shall be the LionDriver panda release key,</text>
+<text x="372" y="282" font-size="10.5" fill="#64748B">whose private key is generated and held offline and never stored in the repository, CI or logs.</text>
+<text x="372" y="296" font-size="10.5" fill="#64748B">allocated FW; ENV · verified by CM, PR</text>
+<rect x="860.4" y="252" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="262.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="264" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="253" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="263.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="950" y="284" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="273" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="283.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<rect x="1068.7" y="273" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1093.5" y="283.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-514</text>
+<text x="950" y="304" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="304" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="332" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="372" y="340" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="352.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-033</text>
+<text x="432.9" y="353" font-size="12" fill="#0F172A" font-weight="600">The bootstub shall reject an image whose version is below a</text>
+<text x="372" y="370" font-size="10.5" fill="#64748B">minimum version held in write-protected storage.</text>
+<text x="372" y="384" font-size="10.5" fill="#64748B">allocated FW · verified by UT, HIL</text>
+<rect x="867.7" y="340" width="38.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="886.8" y="350.6" font-size="8.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="950" y="352" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="341" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="351.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="950" y="372" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="361" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="371.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<text x="950" y="392" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="392" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="420" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="428" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="440.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-034</text>
+<text x="432.9" y="441" font-size="12" fill="#0F172A" font-weight="600">The application image integrity shall be re-checked at start-up and</text>
+<text x="372" y="458" font-size="10.5" fill="#64748B">periodically at run time, with mismatch leading to the safe state.</text>
+<text x="372" y="472" font-size="10.5" fill="#64748B">allocated FW · verified by HIL, FI</text>
+<rect x="860.4" y="428" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="438.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="440" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="429" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="439.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="950" y="460" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="449" width="59.9" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1046" y="459.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HWSR-503c</text>
+<rect x="1078.9" y="449" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1103.8" y="459.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-503</text>
+<rect x="1131.6" y="449" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1156.5" y="459.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-515</text>
+<text x="950" y="480" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="480" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="508" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="516" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="528.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-041</text>
+<text x="432.9" y="529" font-size="12" fill="#0F172A" font-weight="600">The panda option bytes shall be set at provisioning to an RDP level</text>
+<text x="372" y="546" font-size="10.5" fill="#64748B">chosen by CS-AD-02 that prevents read-out and debug-port access to the firmware.</text>
+<text x="372" y="560" font-size="10.5" fill="#64748B">allocated FW; USR · verified by HIL (option-byte read), PR</text>
+<rect x="860.4" y="516" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="526.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="528" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="517" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="527.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="950" y="548" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="537" width="59.9" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1046" y="547.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HWSR-502c</text>
+<rect x="1078.9" y="537" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1103.8" y="547.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<text x="950" y="568" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="568" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="596" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="604" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="616.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-042</text>
+<text x="432.9" y="617" font-size="12" fill="#0F172A" font-weight="600">Write protection shall be set on the bootstub sector(s) so that</text>
+<text x="372" y="634" font-size="10.5" fill="#64748B">neither the application nor the softloader can modify them.</text>
+<text x="372" y="648" font-size="10.5" fill="#64748B">allocated FW; USR · verified by HIL</text>
+<rect x="860.4" y="604" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="614.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="616" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="605" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="615.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="950" y="636" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="625" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="635.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<text x="950" y="656" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="656" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="684" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="692" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="704.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-043</text>
+<text x="432.9" y="705" font-size="12" fill="#0F172A" font-weight="600">Installation shall record the option-byte values and the bootstub</text>
+<text x="372" y="722" font-size="10.5" fill="#64748B">and application hashes, and compare them with the release record.</text>
+<text x="372" y="736" font-size="10.5" fill="#64748B">allocated USR · verified by PR</text>
+<rect x="860.4" y="692" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="702.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="704" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<text x="1016" y="704" font-size="9.5" fill="#94A3B8" font-weight="600">outside the item</text>
+<text x="950" y="724" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="713" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="723.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-802</text>
+<text x="950" y="744" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="744" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="772" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="780" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="792.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-051</text>
+<text x="432.9" y="793" font-size="12" fill="#0F172A" font-weight="600">Release pandad shall not flash a development bootstub; recovery</text>
+<text x="372" y="810" font-size="10.5" fill="#64748B">shall flash only the release-signed bootstub and application of the installed release.</text>
+<text x="372" y="824" font-size="10.5" fill="#64748B">allocated SoC · verified by R, HIL</text>
+<rect x="860.4" y="780" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="790.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="792" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="781" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="791.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="812" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="801" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="811.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<text x="950" y="832" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="832" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="860" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="868" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="880.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-052</text>
+<text x="432.9" y="881" font-size="12" fill="#0F172A" font-weight="600">SoC use of STM_BOOT0 for recovery shall occur only on explicit</text>
+<text x="372" y="898" font-size="10.5" fill="#64748B">offroad owner action and shall be logged as a security event.</text>
+<text x="372" y="912" font-size="10.5" fill="#64748B">allocated SoC; USR · verified by R, HIL</text>
+<rect x="860.4" y="868" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="878.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="880" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="869" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="879.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="900" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="889" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="899.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<text x="950" y="920" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="920" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="948" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="372" y="956" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="968.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-053</text>
+<text x="432.9" y="969" font-size="12" fill="#0F172A" font-weight="600">pandad shall not set a car safety mode unless the panda reports the</text>
+<text x="372" y="986" font-size="10.5" fill="#64748B">firmware version and signature recorded in the release record.</text>
+<text x="372" y="1000" font-size="10.5" fill="#64748B">allocated SoC · verified by UT, HIL</text>
+<rect x="867.7" y="956" width="38.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="886.8" y="966.6" font-size="8.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<text x="950" y="968" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="957" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="967.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="988" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="977" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1040.8" y="987.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<rect x="1068.7" y="977" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1093.5" y="987.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-802</text>
+<text x="950" y="1008" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="1008" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="360" y="1036" width="560" height="80" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.8" filter="url(#lift)"/>
+<rect x="372" y="1044" width="53.9" height="18" rx="9" fill="#9333EA"/><text x="398.9" y="1056.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-054</text>
+<text x="432.9" y="1057" font-size="12" fill="#0F172A" font-weight="600">The architecture shall prevent SoC control of</text>
+<text x="372" y="1074" font-size="10.5" fill="#64748B">STM_BOOT0/STM_RST_N from resulting in execution of firmware not signed with the LionDriver release</text>
+<text x="372" y="1088" font-size="10.5" fill="#64748B">key, or the residual shall be recorded as a cybersecurity claim per CS-AD-03.</text>
+<text x="372" y="1102" font-size="10.5" fill="#64748B">allocated FW; SoC; USR · verified by A, HIL</text>
+<rect x="860.4" y="1044" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="883.2" y="1054.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<text x="950" y="1056" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<rect x="1016" y="1045" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1055.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<rect x="1053.4" y="1045" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1070.6" y="1055.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-01</text>
+<text x="950" y="1076" font-size="9.5" fill="#C2410C" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«trace»</text>
+<rect x="1016" y="1065" width="59.9" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1046" y="1075.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">HWSR-502c</text>
+<rect x="1078.9" y="1065" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="1103.8" y="1075.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-511</text>
+<text x="950" y="1096" font-size="9.5" fill="#2563EB" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify»</text>
+<text x="1016" y="1096" font-size="9.5" fill="#D2553F" font-weight="600">no case</text>
+<rect x="40" y="294" width="270" height="68" rx="8" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="304" width="59.6" height="18" rx="9" fill="#9333EA"/><text x="81.8" y="316.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-C-03</text>
+<text x="52" y="340" font-size="12" fill="#0F172A" font-weight="600">Authenticated firmware boot</text>
+<text x="52" y="356" font-size="10.5" fill="#64748B">CSG-02, CAL 3</text>
+<rect x="40" y="602" width="270" height="68" rx="8" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="612" width="59.6" height="18" rx="9" fill="#9333EA"/><text x="81.8" y="624.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-C-04</text>
+<text x="52" y="648" font-size="12" fill="#0F172A" font-weight="600">Flash protection</text>
+<text x="52" y="664" font-size="10.5" fill="#64748B">CSG-02, CAL 3</text>
+<rect x="40" y="910" width="270" height="68" rx="8" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="52" y="920" width="59.6" height="18" rx="9" fill="#9333EA"/><text x="81.8" y="932.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">CSR-C-05</text>
+<text x="52" y="956" font-size="12" fill="#0F172A" font-weight="600">No unauthenticated recovery path</text>
+<text x="52" y="972" font-size="10.5" fill="#64748B">CSG-02, CAL 3</text>
+<path d="M360 196L331 196Q324 196 324 203L324 321Q324 328 317 328L310 328" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 284L331 284Q324 284 324 291L324 321Q324 328 317 328L310 328" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 372L331 372Q324 372 324 365L324 335Q324 328 317 328L310 328" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 460L331 460Q324 460 324 453L324 335Q324 328 317 328L310 328" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 548L337 548Q330 548 330 555L330 629Q330 636 323 636L310 636" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 636L330 636L310 636" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 724L337 724Q330 724 330 717L330 643Q330 636 323 636L310 636" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 812L343 812Q336 812 336 819L336 937Q336 944 329 944L310 944" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 900L343 900Q336 900 336 907L336 937Q336 944 329 944L310 944" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 988L343 988Q336 988 336 981L336 951Q336 944 329 944L310 944" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<path d="M360 1076L343 1076Q336 1076 336 1069L336 951Q336 944 329 944L310 944" fill="none" stroke="#64748B" stroke-width="1.0" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<rect x="296.8" y="141" width="78.4" height="16" rx="4" fill="#FFFFFF"/>
+<text x="336" y="153" font-size="9.5" fill="#64748B" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«deriveReqt»</text>
+<rect x="24" y="100" width="1472" height="1036" rx="4" fill="none" stroke="#94A3B8" stroke-width="1.2"/>
+<path d="M24 100h439.7v12l-10 10h-429.7z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="34" y="115" font-size="11" fill="#334155" font-weight="600">req [LionDriverRequirements] CSR-C-03…CSR-C-05 boot, flash and recovery</text>
+<text x="40" y="1154" font-size="11.5" fill="#334155">11 CSRs from 3 concept requirements: 2 partly, 9 not met; 0 named by a verification case. None is verified yet.</text>
+<line x1="40" y1="1170" x2="1480" y2="1170" stroke="#E2E8F0"/>
+<path d="M40 1200L66 1200" fill="none" stroke="#64748B" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#rq-mut)"/>
+<text x="74" y="1204" font-size="11" fill="#334155">«deriveReqt»: refines its CSR-C</text>
+<rect x="290" y="1192" width="46.3" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="313.1" y="1202.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle">in place</text>
+<rect x="342.3" y="1192" width="38.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1"/><text x="361.5" y="1202.6" font-size="8.5" fill="#B45309" font-weight="700" text-anchor="middle">partly</text>
+<rect x="386.6" y="1192" width="45.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/><text x="409.4" y="1202.6" font-size="8.5" fill="#D2553F" font-weight="700" text-anchor="middle">not met</text>
+<rect x="438.2" y="1192" width="77.6" height="15" rx="7.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/><text x="477" y="1202.6" font-size="8.5" fill="#64748B" font-weight="700" text-anchor="middle">not determined</text>
+<text x="525.8" y="1204" font-size="11" fill="#334155">status (WP-S-07 Figure 4-1)</text>
+<rect x="711.8" y="1192" width="49.7" height="15" rx="7.5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/><text x="736.7" y="1202.6" font-size="8.5" fill="#C2410C" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-512</text>
+<text x="773.8" y="1204" font-size="11" fill="#334155">safety requirement with the same mechanism (§8)</text>
+<text x="40" y="1246" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>
