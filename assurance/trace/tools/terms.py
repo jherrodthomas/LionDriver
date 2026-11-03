@@ -57,6 +57,16 @@ PAGES = [
   A / "05-software/design/README.md",
 ]
 FIGURES = [
+  A / "models/fmdtools/card-overview.svg",
+  A / "models/fmdtools/card-status.svg",
+  A / "models/autosar/card-overview.svg",
+  A / "models/autosar/card-status.svg",
+  A / "sim/vhil/card-overview.svg",
+  A / "sim/vhil/card-status.svg",
+  A / "04-hardware/spice/card-overview.svg",
+  A / "04-hardware/spice/card-status.svg",
+  A / "trace/clauses/card-overview.svg",
+  A / "trace/clauses/card-status.svg",
   A / "06-validation/test-sites/card-overview.svg",
   A / "06-validation/test-sites/card-status.svg",
   A / "07-supporting/impact/card-overview.svg",

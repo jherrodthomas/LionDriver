@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="438" viewBox="0 0 600 438" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Virtual HIL bench: where it sits</title>
+<desc>Virtual HIL bench: cross-cutting: serves 05 Software. Fed by panda HIL tests (test_12 to test_16); WP-S-04 timing (what the tests expect). Feeds panda test fixes (bugs found before hardware); Decision register (open items like DQ-431).</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="438" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="36" font-size="17" fill="#0F172A" font-weight="700">Virtual HIL bench</text>
+<text x="40" y="56" font-size="11" fill="#475569">The panda's HIL tests run against its firmware on the host, in CI, before the real bench exists.</text>
+<line x1="40" y1="70" x2="560" y2="70" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="92" font-size="10" fill="#94A3B8" font-weight="700">Which phases it serves</text>
+<rect x="40" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="62.3" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">00</text>
+<rect x="87.5" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="109.8" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">01</text>
+<rect x="135.1" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="157.4" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">02</text>
+<rect x="182.6" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="204.9" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">03</text>
+<rect x="230.2" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="252.5" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">04</text>
+<rect x="277.7" y="100" width="44.5" height="24" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="300" y="116" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">05</text>
+<rect x="325.3" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="347.5" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">06</text>
+<rect x="372.8" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="395.1" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">07</text>
+<rect x="420.4" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="442.6" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">08</text>
+<rect x="467.9" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="490.2" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">09</text>
+<rect x="515.5" y="100" width="44.5" height="24" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="537.7" y="116" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">10</text>
+<text x="277.7" y="140" font-size="10" fill="#C2410C" font-weight="700">cross-cutting: serves 05 Software</text>
+<text x="40" y="164" font-size="10" fill="#94A3B8" font-weight="700">What feeds it, what it feeds</text>
+<rect x="40" y="174" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="50" y="190" font-size="10.5" fill="#0F172A" font-weight="700">panda HIL tests</text>
+<text x="50" y="204" font-size="9.5" fill="#475569">test_12 to test_16</text>
+<rect x="306" y="174" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="316" y="190" font-size="10.5" fill="#0F172A" font-weight="700">WP-S-04 timing</text>
+<text x="316" y="204" font-size="9.5" fill="#475569">what the tests expect</text>
+<path d="M300.0 216 L300.0 232" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<path d="M295.0 227 L300.0 233 L305.0 227" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="180" y="236" width="240" height="38" rx="7" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="190" y="252" font-size="10.5" fill="#C2410C" font-weight="700">This folder</text>
+<text x="190" y="266" font-size="9.5" fill="#475569">HIL tests on a virtual panda</text>
+<path d="M300.0 278 L300.0 294" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<path d="M295.0 289 L300.0 295 L305.0 289" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="40" y="298" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="50" y="314" font-size="10.5" fill="#0F172A" font-weight="700">panda test fixes</text>
+<text x="50" y="328" font-size="9.5" fill="#475569">bugs found before hardware</text>
+<rect x="306" y="298" width="254" height="38" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="316" y="314" font-size="10.5" fill="#0F172A" font-weight="700">Decision register</text>
+<text x="316" y="328" font-size="9.5" fill="#475569">open items like DQ-431</text>
+<g class="terms">
+<text x="40" y="358" font-size="10.5" fill="#475569">Terms: CI continuous integration: the checks that run on every pull request · DQ-nn decision</text>
+<text x="40" y="372.5" font-size="10.5" fill="#475569">of the project lead (decision register) · HIL hardware in the loop: the bench with the real</text>
+<text x="40" y="387" font-size="10.5" fill="#475569">panda and simulated car buses · WP-nn work product, e.g. WP-C-04; the letter is its area (M</text>
+<text x="40" y="401.5" font-size="10.5" fill="#475569">management, C concept, S system, H hardware, W software, V validation, P processes, A</text>
+<text x="40" y="416" font-size="10.5" fill="#475569">analyses, O operation, K safety case)</text>
+</g>
+</svg>
