@@ -54,6 +54,7 @@ PAGES = [
   A / "08-analyses/dfa/README.md",
   A / "models/autosar/README.md",
   A / "04-hardware/design/README.md",
+  A / "05-software/design/README.md",
 ]
 FIGURES = [
   A / "02-concept/figures/fig-c00-1-concept-flow.svg",
@@ -67,6 +68,9 @@ FIGURES = [
   A / "03-system/figures/fig-s04-5-3-verdicts.svg",
   A / "04-hardware/figures/fig-h02-3-7-box-switch-anim.svg",
   A / "04-hardware/figures/fig-h02-3-8-crank-anim.svg",
+  A / "05-software/figures/fig-w05-5-1-uml-sm-toy-auth.svg",
+  A / "05-software/figures/fig-w05-5-2-uml-sm-selfdrived.svg",
+  A / "05-software/figures/fig-w05-5-3-toy-auth-walk.svg",
   A / "03-system/figures/fig-s07-4-1-csr-status.svg",
   A / "03-system/figures/fig-s08-6-1-cases.svg",
   A / "03-system/figures/fig-s09-5-1-cases.svg",
@@ -204,6 +208,11 @@ TERMS = {
   "BOR": "brown-out reset (MCU supply monitor)",
   "PVD": "programmable voltage detector (MCU supply monitor)",
   "PDR": "power-down reset (MCU supply monitor, the lowest threshold)",
+  "UML": "Unified Modeling Language (OMG): state machine, sequence and component diagrams",
+  "ATC-": "architecture target-state change of WP-W-03 §10",
+  "SI-": "software interface between components (WP-W-03 §3.3)",
+  "U-": "software component of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1)",
+  "UN-": "software unit (WP-W-05 §2)",
   "SBU": "sideband-use pins of a USB-C connector (in the harness, the intercept drive, orientation and ignition lines)",
   "USB-C": "USB Type-C connector",
   "BOM": "bill of materials",
@@ -400,7 +409,7 @@ NOT_TERMS = {
   "SAFE", "SITUATION", "SITUATIONS", "SPEED", "STATES", "SURFACE", "TO", "TRIGGER", "TRIGGERING", "VALIDATION",
   "WEATHER", "WHAT", "SAFETY", "GOAL", "SOTIF HAZARD", "ELEMENT", "STATE", "THE", "OF", "VIEW", "IN", "ON", "AT",
   "WAY", "OUT", "DOES", "NOTICE", "TODAY", "CLOSES", "BRAKE",
-  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IV", "YAML", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator",
+  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IV", "YAML", "OpenpilotState", "ENABLE", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator",
 }
 
 WORD_RE = re.compile(r"(?<![\w-])([A-Za-z]*[A-Z][A-Za-z]*[A-Z][A-Za-z]*(?:-[A-Z]+)?)(?![\w])")

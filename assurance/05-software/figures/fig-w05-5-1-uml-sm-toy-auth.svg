@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1117" viewBox="0 0 1280 1117" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5-1. SM-TOY-AUTH as a UML state machine (WP-W-05)</title>
+<desc>UML state machine of SM-TOY-AUTH: T1 NOT_ALLOWED to ALLOWED (partly). T1a NOT_ALLOWED to ENGAGE_PENDING (partly). T1b ENGAGE_PENDING to ALLOWED (partly). T1c ENGAGE_PENDING to NOT_ALLOWED (partly). T8 NOT_ALLOWED to NOT_ALLOWED (partly). T2 ALLOWED to NOT_ALLOWED (implemented). T3 ALLOWED to NOT_ALLOWED (implemented). T4 ALLOWED to NOT_ALLOWED (partly). T5 ALLOWED to NOT_ALLOWED (partly). T6 ALLOWED to NOT_ALLOWED (not assessed). T6a ALLOWED to NOT_ALLOWED (implemented). T7 any to NOT_ALLOWED (implemented). T9 ALLOWED to NOT_ALLOWED (not implemented). T10a ALLOWED to NOT_ALLOWED (partly). T10b ALLOWED to NOT_ALLOWED (implemented). T10c ALLOWED to NOT_ALLOWED (partly). T10d ALLOWED to NOT_ALLOWED (not implemented). T10e ALLOWED to NOT_ALLOWED (not implemented). T11 ALLOWED to NOT_ALLOWED (implemented). T12 ALLOWED to NOT_ALLOWED (not implemented). T13 ALLOWED to NOT_ALLOWED (partly). T14 ALLOWED to NOT_ALLOWED (partly). T15 ALLOWED to NOT_ALLOWED (not implemented).</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1117" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · SM-TOY-AUTH as a UML state machine</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Toyota authority (controls_allowed): 3 states, 23 transitions; 6 implemented, 11 partly, 5 not implemented</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-W-05 §5.2</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="120" width="1200" height="410" rx="18" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M40 138 L40 120 L373.6896000000001 120 L373.6896000000001 134 L361.6896000000001 146 L40 146" stroke="#0F172A" stroke-width="1.2" fill="#F8FAFC" stroke-linejoin="round"/>
+<text x="50" y="137" font-size="11" fill="#0F172A" font-weight="700">stm SM-TOY-AUTH · Toyota authority (controls_allowed)</text>
+<line x1="400" y1="442" x2="880" y2="442" stroke="#475569" stroke-width="1.4"/>
+<path d="M880.0 442.0 L872.1 446.2 L872.1 437.8 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="628" y="461.2" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="471.9" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1</text>
+<line x1="350.4" y1="409.9" x2="603.2" y2="235.9" stroke="#475569" stroke-width="1.4"/>
+<path d="M603.2 235.9 L599.1 243.9 L594.3 236.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="473.1" y="338.7" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="487.7" y="349.4" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1a</text>
+<line x1="683.6" y1="226" x2="936.4" y2="400" stroke="#475569" stroke-width="1.4"/>
+<path d="M936.4 400.0 L927.5 399.0 L932.3 392.0 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="795.4" y="313" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="810" y="323.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1b</text>
+<line x1="589.6" y1="216.1" x2="336.8" y2="390.1" stroke="#475569" stroke-width="1.4"/>
+<path d="M336.8 390.1 L340.9 382.1 L345.7 389.1 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="437.7" y="269.3" width="29.3" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="452.3" y="280" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T1c</text>
+<path d="M270 400.0 C260 348.0 340 348.0 330 400.0" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M330.0 400.0 L327.2 391.4 L335.5 392.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="288" y="336" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="300" y="346.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T8</text>
+<line x1="880" y1="418" x2="400" y2="418" stroke="#475569" stroke-width="1.4"/>
+<path d="M400.0 418.0 L407.9 413.8 L407.9 422.2 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="557.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="569.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T2</text>
+<rect x="584.8" y="344.8" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="596.8" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T3</text>
+<rect x="611.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="623.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T4</text>
+<rect x="638.9" y="344.8" width="24" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="650.9" y="355.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T5</text>
+<rect x="665.9" y="344.8" width="24" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="677.9" y="355.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T6</text>
+<rect x="692.9" y="344.8" width="29.3" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="707.6" y="355.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T6a</text>
+<rect x="534" y="362.8" width="24" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="546" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T9</text>
+<rect x="561" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="578.3" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10a</text>
+<rect x="598.6" y="362.8" width="34.6" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="615.9" y="373.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T10b</text>
+<rect x="636.2" y="362.8" width="34.6" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="653.5" y="373.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T10c</text>
+<rect x="673.8" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="691.1" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10d</text>
+<rect x="711.4" y="362.8" width="34.6" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="728.7" y="373.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T10e</text>
+<rect x="560.6" y="380.8" width="29.4" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="575.3" y="391.5" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T11</text>
+<rect x="593" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="607.6" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T12</text>
+<rect x="625.3" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="640" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T13</text>
+<rect x="657.7" y="380.8" width="29.4" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="672.4" y="391.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T14</text>
+<rect x="690" y="380.8" width="29.4" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="704.7" y="391.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T15</text>
+<line x1="260" y1="530" x2="260" y2="462" stroke="#475569" stroke-width="1.4"/>
+<path d="M260.0 462.0 L264.2 469.9 L255.8 469.9 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<rect x="268" y="506" width="24" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="280" y="516.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T7</text>
+<circle cx="130.0" cy="430" r="8" fill="#0F172A"/>
+<line x1="138" y1="430" x2="198" y2="430" stroke="#0F172A" stroke-width="1.4"/>
+<path d="M198.0 430.0 L190.1 434.2 L190.1 425.8 Z" stroke="none" stroke-width="1.4" fill="#0F172A" stroke-linejoin="round"/>
+<rect x="200" y="400" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="300" y="435" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">NOT_ALLOWED</text>
+<rect x="540" y="166" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="640" y="201" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ENGAGE_PENDING</text>
+<rect x="880" y="400" width="200" height="60" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+<text x="980" y="435" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">ALLOWED</text>
+<rect x="40" y="549" width="18.7" height="15" rx="7.5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="49.3" y="559.7" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">T</text>
+<text x="64.7" y="560" font-size="10.5" fill="#475569">implemented</text>
+<rect x="133.7" y="549" width="18.7" height="15" rx="7.5" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="143" y="559.7" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">T</text>
+<text x="158.4" y="560" font-size="10.5" fill="#475569">partly</text>
+<rect x="196.2" y="549" width="18.7" height="15" rx="7.5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="205.5" y="559.7" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">T</text>
+<text x="220.9" y="560" font-size="10.5" fill="#475569">not implemented</text>
+<rect x="309" y="549" width="18.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#475569" stroke-width="1"/>
+<text x="318.3" y="559.7" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T</text>
+<text x="333.7" y="560" font-size="10.5" fill="#475569">not assessed</text>
+<rect x="409" y="549" width="18.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="418.3" y="559.7" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">T</text>
+<text x="433.7" y="560" font-size="10.5" fill="#475569">reference build only</text>
+<text x="550.7" y="560" font-size="10.5" fill="#94A3B8">status as WP-W-05 §5 gives it, from the SWSRs each transition realises</text>
+<text x="40" y="590" font-size="12" fill="#0F172A" font-weight="700">Transitions (the record is normative; WP-W-05 §5.2 has them in full)</text>
+<text x="40" y="610" font-size="10" fill="#475569" font-weight="700">ID</text>
+<text x="100" y="610" font-size="10" fill="#475569" font-weight="700">From → to</text>
+<text x="380" y="610" font-size="10" fill="#475569" font-weight="700">Event [guard] / action</text>
+<text x="1110" y="610" font-size="10" fill="#475569" font-weight="700">Build</text>
+<text x="1180" y="610" font-size="10" fill="#475569" font-weight="700">Status</text>
+<text x="40" y="633" font-size="10" fill="#D97706" font-weight="700">T1</text>
+<text x="100" y="633" font-size="10" fill="#0F172A">NOT_ALLOWED → ALLOWED</text>
+<text x="380" y="633" font-size="10" fill="#0F172A">0x1D2 valid [CRUISE_ACTIVE 0→1 and rx_checks_allow_engagement() (every RX check valid; reference build also no TX-rate block); reference …</text>
+<text x="1110" y="633" font-size="10" fill="#475569">all</text>
+<text x="1180" y="633" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="650" font-size="10" fill="#D97706" font-weight="700">T1a</text>
+<text x="100" y="650" font-size="10" fill="#0F172A">NOT_ALLOWED → ENGAGE_PENDING</text>
+<text x="380" y="650" font-size="10" fill="#0F172A">0x1D2 valid [CRUISE_ACTIVE 0→1, rx_checks_allow_engagement(), CRUISE_ACTIVE = 0 received since the safety mode was set, heartbeat …</text>
+<text x="1110" y="650" font-size="10" fill="#475569">reference</text>
+<text x="1180" y="650" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="667" font-size="10" fill="#D97706" font-weight="700">T1b</text>
+<text x="100" y="667" font-size="10" fill="#0F172A">ENGAGE_PENDING → ALLOWED</text>
+<text x="380" y="667" font-size="10" fill="#0F172A">safety task (100 Hz) [heartbeat engaged = 1 within 1 s of the edge, and rx_checks_allow_engagement()] / set, close the window</text>
+<text x="1110" y="667" font-size="10" fill="#475569">reference</text>
+<text x="1180" y="667" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="684" font-size="10" fill="#D97706" font-weight="700">T1c</text>
+<text x="100" y="684" font-size="10" fill="#0F172A">ENGAGE_PENDING → NOT_ALLOWED</text>
+<text x="380" y="684" font-size="10" fill="#0F172A">safety task, 0x1D2 or any RX [1 s passed without heartbeat engaged = 1; or CRUISE_ACTIVE = 0; or brake rising, or pressed while moving; or an …</text>
+<text x="1110" y="684" font-size="10" fill="#475569">reference</text>
+<text x="1180" y="684" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="701" font-size="10" fill="#D97706" font-weight="700">T8</text>
+<text x="100" y="701" font-size="10" fill="#0F172A">NOT_ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="701" font-size="10" fill="#0F172A">0x1D2 valid [CRUISE_ACTIVE held 1; or 0→1 with rx_checks_allow_engagement() false; or (reference build) 0→1 before CRUISE_ACTIVE = 0 has …</text>
+<text x="1110" y="701" font-size="10" fill="#475569">all</text>
+<text x="1180" y="701" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="718" font-size="10" fill="#2E9E6A" font-weight="700">T2</text>
+<text x="100" y="718" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="718" font-size="10" fill="#0F172A">0x1D2 valid [CRUISE_ACTIVE = 0] / clear</text>
+<text x="1110" y="718" font-size="10" fill="#475569">all</text>
+<text x="1180" y="718" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="735" font-size="10" fill="#2E9E6A" font-weight="700">T3</text>
+<text x="100" y="735" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="735" font-size="10" fill="#0F172A">any RX [brake rising, or pressed while moving] / clear</text>
+<text x="1110" y="735" font-size="10" fill="#475569">all</text>
+<text x="1180" y="735" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="752" font-size="10" fill="#D97706" font-weight="700">T4</text>
+<text x="100" y="752" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="752" font-size="10" fill="#0F172A">RX of checked message [checksum, quality flag or counter invalid; reference build: or a frame of another length (ATC-25), the entry then invalid until a …</text>
+<text x="1110" y="752" font-size="10" fill="#475569">all</text>
+<text x="1180" y="752" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="769" font-size="10" fill="#D97706" font-weight="700">T5</text>
+<text x="100" y="769" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="769" font-size="10" fill="#0F172A">safety_tick (100 Hz safety task) [any RX check lagging (5 periods), below 10 Hz, or invalid] / clear</text>
+<text x="1110" y="769" font-size="10" fill="#475569">all</text>
+<text x="1180" y="769" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="786" font-size="10" fill="#475569" font-weight="700">T6</text>
+<text x="100" y="786" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="786" font-size="10" fill="#0F172A">1 Hz tick [heartbeat engaged=0 for 3 consecutive ticks] / clear</text>
+<text x="1110" y="786" font-size="10" fill="#475569">all</text>
+<text x="1180" y="786" font-size="10" fill="#475569">not assessed</text>
+<text x="40" y="803" font-size="10" fill="#2E9E6A" font-weight="700">T6a</text>
+<text x="100" y="803" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="803" font-size="10" fill="#0F172A">safety task: engaged-mismatch check [heartbeat engaged=0 for 30 safety tasks (0.3 s) since the first such heartbeat while authority was granted] / …</text>
+<text x="1110" y="803" font-size="10" fill="#475569">reference</text>
+<text x="1180" y="803" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="820" font-size="10" fill="#2E9E6A" font-weight="700">T7</text>
+<text x="100" y="820" font-size="10" fill="#0F172A">any → NOT_ALLOWED</text>
+<text x="380" y="820" font-size="10" fill="#0F172A">safety mode set (0xdc, heartbeat loss, harness change) / clear</text>
+<text x="1110" y="820" font-size="10" fill="#475569">all</text>
+<text x="1180" y="820" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="837" font-size="10" fill="#D2553F" font-weight="700">T9</text>
+<text x="100" y="837" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="837" font-size="10" fill="#0F172A">TX frame rejected by a content check / clear, reason</text>
+<text x="1110" y="837" font-size="10" fill="#475569">all</text>
+<text x="1180" y="837" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="854" font-size="10" fill="#D97706" font-weight="700">T10a</text>
+<text x="100" y="854" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="854" font-size="10" fill="#0F172A">safety task: heartbeat check [no SoC heartbeat for &gt; 0.3 s in a car mode] / clear; siren 3 s when authority was granted (panda c33343b)</text>
+<text x="1110" y="854" font-size="10" fill="#475569">all</text>
+<text x="1180" y="854" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="871" font-size="10" fill="#2E9E6A" font-weight="700">T10b</text>
+<text x="100" y="871" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="871" font-size="10" fill="#0F172A">safety task: command freshness check [no accepted 0x2E4/0x343 for 50/100 ms (accepted: passed by the TX hook; supervision starts at the first …</text>
+<text x="1110" y="871" font-size="10" fill="#475569">reference</text>
+<text x="1180" y="871" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="888" font-size="10" fill="#D97706" font-weight="700">T10c</text>
+<text x="100" y="888" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="888" font-size="10" fill="#0F172A">0x1D2 / 0x1D3 [CRUISE_ACTIVE while MAIN_ON is off for &gt; 150 ms] / clear</text>
+<text x="1110" y="888" font-size="10" fill="#475569">reference</text>
+<text x="1180" y="888" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="905" font-size="10" fill="#D2553F" font-weight="700">T10d</text>
+<text x="100" y="905" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="905" font-size="10" fill="#0F172A">platform fault / clear, SS-S</text>
+<text x="1110" y="905" font-size="10" fill="#475569">all</text>
+<text x="1180" y="905" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="922" font-size="10" fill="#D2553F" font-weight="700">T10e</text>
+<text x="100" y="922" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="922" font-size="10" fill="#0F172A">driver steering override / clear, reason</text>
+<text x="1110" y="922" font-size="10" fill="#475569">all</text>
+<text x="1180" y="922" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="939" font-size="10" fill="#2E9E6A" font-weight="700">T11</text>
+<text x="100" y="939" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="939" font-size="10" fill="#0F172A">TX frame over the per-ID rate budget [3 rejected frames in one 125 ms half-window] / clear, report txRateExceeded</text>
+<text x="1110" y="939" font-size="10" fill="#475569">reference</text>
+<text x="1180" y="939" font-size="10" fill="#2E9E6A">implemented</text>
+<text x="40" y="956" font-size="10" fill="#D2553F" font-weight="700">T12</text>
+<text x="100" y="956" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="956" font-size="10" fill="#0F172A">safety task: driver torque check [|driver torque| &gt; T_ovr for &gt; t_ovr] / clear (steering_disengage)</text>
+<text x="1110" y="956" font-size="10" fill="#475569">all</text>
+<text x="1180" y="956" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="973" font-size="10" fill="#D97706" font-weight="700">T13</text>
+<text x="100" y="973" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="973" font-size="10" fill="#0F172A">SPI error [more than N_spi errors within 100 ms] / clear, report</text>
+<text x="1110" y="973" font-size="10" fill="#475569">all</text>
+<text x="1180" y="973" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="990" font-size="10" fill="#D97706" font-weight="700">T14</text>
+<text x="100" y="990" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="990" font-size="10" fill="#0F172A">car-side CAN bus-off or persistent TX failure / clear, report</text>
+<text x="1110" y="990" font-size="10" fill="#475569">all</text>
+<text x="1180" y="990" font-size="10" fill="#D97706">partly</text>
+<text x="40" y="1007" font-size="10" fill="#D2553F" font-weight="700">T15</text>
+<text x="100" y="1007" font-size="10" fill="#0F172A">ALLOWED → NOT_ALLOWED</text>
+<text x="380" y="1007" font-size="10" fill="#0F172A">safety task: forwarding supervision [relay driven and no camera-side frame for &gt; t_fwd, or camera-side bus-off] / clear all, release relay</text>
+<text x="1110" y="1007" font-size="10" fill="#475569">all</text>
+<text x="1180" y="1007" font-size="10" fill="#D2553F">not implemented</text>
+<text x="40" y="1025" font-size="10.5" fill="#475569">Generated by fig_w05_uml_states.py from state-machines/sm-toy-auth.yaml; nothing is hand-listed but the positions of the states.</text>
+<g class="terms">
+<text x="40" y="1047" font-size="10.5" fill="#475569">Terms: ALLOWED the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 · ATC-nn architecture target-state change of WP-W-03 §10 · CAN controller area network: the vehicle's data bus ·</text>
+<text x="40" y="1061.5" font-size="10.5" fill="#475569">ID identifier · RX receive · SM-nn safety mechanism (TSC §6) · SoC system on chip: the comma device's main processor, running openpilot (QM) · SPI serial peripheral interface (the link between SoC and MCU) · SS-nn</text>
+<text x="40" y="1076" font-size="10.5" fill="#475569">safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent · SWSR-nn software safety requirement (WP-W-02) · TX transmit · UML Unified Modeling Language (OMG): state machine, sequence and component</text>
+<text x="40" y="1090.5" font-size="10.5" fill="#475569">diagrams · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
