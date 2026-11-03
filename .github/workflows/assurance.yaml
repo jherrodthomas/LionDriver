@@ -155,6 +155,10 @@ jobs:
         python3 assurance/03-system/figures/test_fig_s04_verdicts.py
         python3 assurance/03-system/figures/fig_s07_csr_status.py --check
         python3 assurance/03-system/figures/test_fig_s07_csr_status.py
+        python3 assurance/04-hardware/figures/fig_h02_box_anim.py --check
+        python3 assurance/04-hardware/figures/test_fig_h02_box_anim.py
+        python3 assurance/04-hardware/figures/fig_h02_crank_anim.py --check
+        python3 assurance/04-hardware/figures/test_fig_h02_crank_anim.py
         python3 assurance/03-system/figures/fig_s08_cases.py --check
         python3 assurance/03-system/figures/test_fig_s08_cases.py
         python3 assurance/03-system/figures/fig_s09_cases.py --check
