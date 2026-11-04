@@ -152,6 +152,10 @@
 #   240 m from 110 km/h; cruise and the fault soft-disable slow-down keep A_CRUISE_MIN. SWF-086.C2 rewritten to a defect in that stop rate, O 8 D 8 ->
 #   O 5 D 4 (test_minimum_risk_stop.py, mutants MS-1..MS-7, 88 in all); AP stays H (S 10). New action SWF-ACT-082 completed. Not verified on the
 #   vehicle (WP-S-04 T-33). Author Claude (AI-drafted, I0).
+# rev 1.20 (after BL-007, ratings within BL-007): non-finite input injection through the real Controls.state_control (test_controlsd_call_sites.py
+#   TestNonFiniteInputs: NaN/inf desired curvature, NaN roll, NaN aTarget, NaN lateralDelay) and mutants NF-1..NF-4 (94 host mutants, all killed).
+#   SWF-045.C1 and SWF-045.C2 D 10 -> 4; SWF-047.C1 D 10 -> 8 (the known lateralDelay instance only). AP stays H (S 10). SWF-ACT-044 in progress:
+#   card (SWF-060.C1) still has no injection test.
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -201,7 +205,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.19"
+  revision: "1.20"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -3499,10 +3503,14 @@ failure_modes:
         upstream sanitiser still replaces non-finite actuators by 0 and logs. TSR-604 met in part (GAP-19); modeld checks finiteness only for the big model'
       ref: openpilot/selfdrive/controls/controlsd.py:122-131
     detection_controls:
-    - description: controlsd and card are excluded from the process fuzz test because NaN/inf break them (test_fuzzy.py:10-13); no NaN injection test
+    - description: controlsd and card are excluded from the process fuzz test because NaN/inf break them (test_fuzzy.py:10-13)
       ref: openpilot/selfdrive/test/process_replay/test_fuzzy.py
+    - description: 'Since rev 1.20, NaN and inf injection through the real Controls.state_control (test_controlsd_call_sites.py TestNonFiniteInputs): a
+        non-finite desired curvature or roll for one step leaves lateral control off for that step, and afterwards the integrator, the desired curvature
+        and the torque are finite and steering works. Proven by mutants NF-1 and NF-2 (host_mutation.py, unit_tests job), so D 4 (RT-2), from D 10'
+      test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
     occurrence: 5
-    detection: 10
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-041
@@ -3518,8 +3526,12 @@ failure_modes:
     detection_controls:
     - description: test_longcontrol.py covers state transitions only
       ref: openpilot/selfdrive/controls/tests/test_longcontrol.py
+    - description: 'Since rev 1.20, NaN injection of aTarget through the real Controls.state_control (TestNonFiniteInputs): longitudinal control is off
+        for that step, and afterwards the LongControl integrator and the acceleration are finite and positive again. Proven by mutant NF-3, so D 4 (RT-2),
+        from D 10'
+      test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
     occurrence: 5
-    detection: 10
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-041
@@ -3612,9 +3624,12 @@ failure_modes:
     prevention_controls:
     - description: Upstream review, ruff, ty; excluded from fuzzing (test_fuzzy.py:13)
     detection_controls:
-    - description: No test injects non-finite lateralDelay
+    - description: 'Since rev 1.20, TestNonFiniteInputs injects a NaN lateralDelay through the real Controls.state_control: no exception, and the outputs stay
+        finite; mutant NF-4 (the guard removed, int(NaN) raises) is killed. This tests the known instance, not the class of unguarded inputs that can raise, so
+        D 8 (targeted), from D 10'
+      test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
     occurrence: 6
-    detection: 10
+    detection: 8
     ap: H
     actions:
     - SWF-ACT-041
@@ -6287,7 +6302,10 @@ actions:
   description: Add NaN/inf and stale-input injection for controlsd and card (enable them in test_fuzzy.py with the Corolla fingerprint, or a
     dedicated test), and run the opendbc car tests (test_models, test_car_interfaces, test_lateral_limits) for Toyota in LionDriver CI
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'controlsd part (rev 1.20): test_controlsd_call_sites.py TestNonFiniteInputs injects NaN/inf desired curvature, NaN roll, NaN aTarget and NaN
+    lateralDelay through the real Controls.state_control; mutants NF-1..NF-4 killed. SWF-045.C1, C2 D 4, SWF-047.C1 D 8. The opendbc Toyota car tests
+    run in the unit_tests job (rev 1.10). Open: card (non-finite actuators into the CarController, SWF-060.C1) and stale-input injection for card'
 - id: SWF-ACT-045
   kind: design_change
   description: 'Implement TSR-605 margins on the host: bound latAccelOffset and torque parameters in controlsd, apply the acceleration rate

@@ -72,6 +72,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FMEA | failure mode and effects analysis |
 | FMEDA | failure modes, effects and diagnostic analysis (hardware metrics) |
 | FRET | NASA's Formal Requirements Elicitation Tool |
+| FRETish | FRET's structured natural language for requirements |
 | FRTI | fault reaction time interval |
 | FSC | functional safety concept |
 | FTA | fault tree analysis |
@@ -151,6 +152,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | PCS | pre-collision system: Toyota's stock collision warning and braking |
 | PDR | power-down reset (MCU supply monitor, the lowest threshold) |
 | PDU | protocol data unit: the payload of a frame (AUTOSAR I-PDU) |
+| PFMEA | process FMEA: failure modes of making, installing or updating the item |
 | PMHF | probabilistic metric for random hardware failures (ISO 26262-5) |
 | PMIC | power-management IC of the SoC |
 | PR | pull request |
@@ -250,11 +252,13 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | CSC-nn | cybersecurity claim: a risk retained, shared or avoided, with its condition (WP-C-10 §5) |
 | CSG-nn | cybersecurity goal (WP-C-10) |
 | CSR-nn | cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07) |
+| CT-nn | change type of WP-P-02 (CT-3 is an upstream sync) |
 | D-nn | design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision) |
 | DEC-nn | decommissioning step (WP-O-02 §7) |
 | DFI-nn | dependent failure initiator (WP-A-03 §4): one cause that could defeat two elements at once |
 | DFM-nn | DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea) |
 | DMP-nn | driver monitoring performance requirement (WP-C-08 §5) |
+| DN-nn | software design note (05-software/design-notes) |
 | DQ-nn | decision of the project lead (decision register) |
 | DS-nn | damage scenario (TARA §3) |
 | DSR-nn | dataset requirement (WP-C-11 §7) |
@@ -303,6 +307,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | T-nn | code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
 | TC-nn | triggering condition (WP-C-06) |
+| TE-nn | tool evaluation record (07-supporting/tool-evaluations) |
 | TL-nn | tool entry in the tool register (WP-P-07) |
 | TS-nn | threat scenario (TARA §4) |
 | TSR-nn | technical safety requirement (WP-S-02) |

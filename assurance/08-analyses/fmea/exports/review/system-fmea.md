@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.41 | draft | BL-007 | RT-3 | 2026-10-25 |
+| 0.42 | draft | BL-007 | RT-3 | 2026-10-25 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005; re-checked at BL-006 and BL-007), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -219,7 +219,7 @@ Effects:
 | `SFM-005.C1` EPS stops accepting requests without a fault signal on CAN | • Series-production Toyota ECU with long field exposure; assumed developed to ISO 26262 by the OEM (assumption of use, not verified by LionDriver) | • No pre-release test targets this cause | 3 | 10 | 🔴 **H** | SFM-ACT-003 |
 | `SFM-005.C2` pandad stops forwarding TX without the state being reported | • None specific. Whether the comma 3X ever suspends after boot while openpilot runs (offset > 0) is not established | • No test targets this cause; no test exercises the age gate | 5 | 10 | 🔴 **H** | — |
 | `SFM-005.C3` Process crash or hang not detected by liveness checks | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub><br>• manager restarts and reports processes; selfdrived raises processNotRunning and commIssue from SubMaster alive/frequency checks <sub>openpilot/selfdrive/selfdrived/selfdrived.py</sub> | • No pre-release test targets this cause | 6 | 10 | 🔴 **H** | SFM-ACT-002 |
-| `SFM-005.C4` A non-finite controller input (desired curvature, roll) zeroes the lateral output without an event while the item shows engaged (controlsd.py:122-131; TSR-604 met in part, GAP-19) | • Per-step finiteness guard on the desired curvature, roll, aTarget and lateralDelay (#51); rated in the SW FMEA <sub>openpilot/selfdrive/controls/controlsd.py</sub> | • As rated in the SW FMEA (SWF-045.C1, D 10): no NaN injection test; controlsd is excluded from the process fuzz test <sub>openpilot/selfdrive/test/process_replay/test_fuzzy.py</sub> | 5 | 10 | 🔴 **H** | — |
+| `SFM-005.C4` A non-finite controller input (desired curvature, roll) zeroes the lateral output without an event while the item shows engaged (controlsd.py:122-131; TSR-604 met in part, GAP-19) | • Per-step finiteness guard on the desired curvature, roll, aTarget and lateralDelay (#51); rated in the SW FMEA <sub>openpilot/selfdrive/controls/controlsd.py</sub> | • As rated in the SW FMEA (SWF-045.C1, D 4 since rev 1.20): NaN and inf injection through the real Controls.state_control, guards proven by mutants NF-1 and NF-2 (System FMEA rev 0.42, from D 10) <sub>openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py</sub> | 5 | 4 | 🔴 **H** | — |
 
 Safety mechanisms: (1) steerUnavailable (IMMEDIATE_DISABLE) and steerTempUnavailable (SOFT_DISABLE) from EPS fault signals · (2) Process liveness/frequency checks raise commIssue / processNotRunning (SOFT_DISABLE) · (3) BL-005, reference build (default): the panda revokes authority when STEERING_LKA has not arrived from the SoC for 50 ms (ACC_CONTROL 100 ms) while authority is granted, checked by the 100 Hz safety task (TSR-408) · (4) BL-005: controlsMismatch (IMMEDIATE_DISABLE) when the panda reports controlsAllowed false while engaged, after 2 consecutive pandaStates samples and at most 0.5 s after the first mismatched frame (TSR-621) · (5) BL-007, reference build: the panda sounds its own siren when the TX-arrival check revokes granted authority (panda 8a69ccf, opendbc 0ff85e6 safety_tx_arrival_revoked; DQ-404 A, TSR-516(b)), and a not-engaged heartbeat revokes within 0.3 s with the siren 0.5 s after it while PCM cruise stays on (panda f4803c5, engaged_mismatch.h; TSR-307(a), TSR-516(c)); independent of the SoC alerts. Host-compiled tests in CI (panda host tests job; opendbc reference-variant tests and mutation); the bench HIL test test_16 is not run in CI
 
@@ -239,7 +239,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-006.C1` controlsd hangs while card keeps sending the last carControl | • Upstream review, ruff, ty; excluded from fuzzing (test_fuzzy.py:13) | • No test injects non-finite lateralDelay | 6 | 10 | 🔴 **H** | — |
+| `SFM-006.C1` controlsd hangs while card keeps sending the last carControl | • Upstream review, ruff, ty; excluded from fuzzing (test_fuzzy.py:13) | • As rated in the SW FMEA (SWF-047.C1, D 8 since rev 1.20): a NaN lateralDelay is injected through the real Controls.state_control and mutant NF-4 is killed; the known instance only, not every unguarded input that can raise (System FMEA rev 0.42, from D 10) <sub>openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py</sub> | 6 | 8 | 🔴 **H** | — |
 | `SFM-006.C2` modeld output frozen (stale frame) but still published as valid | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub><br>• modeld publishes frame drop percentage and raises modeldLagging; selfdrived checks modelV2 validity and frequency <sub>openpilot/selfdrive/modeld/modeld.py</sub> | • As rated in the SW FMEA (SWF-072.C2, D 10 at BL-005): modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad timing checks are device-only<br>• No pre-release test targets this cause | 4 | 10 | 🔴 **H** | SFM-ACT-002 |
 | `SFM-006.C3` Messaging delivers stale data with fresh timestamps | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub><br>• msgq/cereal stamp logMonoTime at publication; SubMaster tracks arrival time and frequency <sub>openpilot/cereal/messaging/__init__.py</sub> | • No pre-release test targets this cause | 5 | 10 | 🔴 **H** | SFM-ACT-002 |
 
@@ -346,7 +346,7 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `SFM-011.C1` Powertrain ignores requests without fault signal | • Series-production Toyota ECU with long field exposure; assumed developed to ISO 26262 by the OEM (assumption of use, not verified by LionDriver) | • No pre-release test targets this cause | 3 | 10 | 🔴 **H** | SFM-ACT-003 |
 | `SFM-011.C2` TX path to vehicle lost silently | • None specific. Whether the comma 3X ever suspends after boot while openpilot runs (offset > 0) is not established | • No test targets this cause; no test exercises the age gate | 5 | 10 | 🔴 **H** | — |
-| `SFM-011.C3` A non-finite aTarget zeroes the acceleration request without an event while ACC is shown engaged (controlsd.py:129-131; TSR-604 met in part, GAP-19) | • controlsd finiteness guard on aTarget (#51); the planner clip keeps NaN; rated in the SW FMEA <sub>openpilot/selfdrive/controls/controlsd.py</sub> | • As rated in the SW FMEA (SWF-045.C2, D 10): test_longcontrol.py covers state transitions only; no NaN injection test <sub>openpilot/selfdrive/controls/tests/test_longcontrol.py</sub> | 5 | 10 | 🔴 **H** | — |
+| `SFM-011.C3` A non-finite aTarget zeroes the acceleration request without an event while ACC is shown engaged (controlsd.py:129-131; TSR-604 met in part, GAP-19) | • controlsd finiteness guard on aTarget (#51); the planner clip keeps NaN; rated in the SW FMEA <sub>openpilot/selfdrive/controls/controlsd.py</sub> | • As rated in the SW FMEA (SWF-045.C2, D 4 since rev 1.20): NaN aTarget injection through the real Controls.state_control, guard proven by mutant NF-3 (System FMEA rev 0.42, from D 10) <sub>openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py</sub> | 5 | 4 | 🔴 **H** | — |
 
 Safety mechanisms: (1) accFaulted (IMMEDIATE_DISABLE), cruiseDisabled (IMMEDIATE_DISABLE) · (2) canBusMissing (IMMEDIATE_DISABLE), canError · (3) BL-005, reference build (default): the panda revokes authority when ACC_CONTROL has not arrived for 100 ms (STEERING_LKA 50 ms) while authority is granted (TSR-408); selfdrived raises controlsMismatch (IMMEDIATE_DISABLE) within 0.5 s (TSR-621)
 
@@ -963,8 +963,8 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-005.C1` | Loss of lateral control without driver alert | 10/3/10 | SFM-ACT-003 |
 | `SFM-005.C2` | Loss of lateral control without driver alert | 10/5/10 | **none** |
 | `SFM-005.C3` | Loss of lateral control without driver alert | 10/6/10 | SFM-ACT-002 |
-| `SFM-005.C4` | Loss of lateral control without driver alert | 10/5/10 | **none** |
-| `SFM-006.C1` | Lateral command frozen at last value | 10/6/10 | **none** |
+| `SFM-005.C4` | Loss of lateral control without driver alert | 10/5/4 | **none** |
+| `SFM-006.C1` | Lateral command frozen at last value | 10/6/8 | **none** |
 | `SFM-006.C2` | Lateral command frozen at last value | 10/4/10 | SFM-ACT-002 |
 | `SFM-006.C3` | Lateral command frozen at last value | 10/5/10 | SFM-ACT-002 |
 | `SFM-007.C2` | Oscillating lateral control | 7/5/10 | SFM-ACT-003 |
@@ -981,7 +981,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-010.C3` | Insufficient deceleration for lead vehicle or stop | 10/3/10 | SFM-ACT-003 |
 | `SFM-011.C1` | Loss of longitudinal control without driver alert | 10/3/10 | SFM-ACT-003 |
 | `SFM-011.C2` | Loss of longitudinal control without driver alert | 10/5/10 | **none** |
-| `SFM-011.C3` | Loss of longitudinal control without driver alert | 10/5/10 | **none** |
+| `SFM-011.C3` | Loss of longitudinal control without driver alert | 10/5/4 | **none** |
 | `SFM-012.C1` | Late reaction to lead vehicle braking | 10/6/10 | SFM-ACT-003 |
 | `SFM-012.C2` | Late reaction to lead vehicle braking | 10/6/8 | SFM-ACT-009 |
 | `SFM-013.C1` | Engagement without driver request or with entry conditions not met | 10/6/8 | **none** |

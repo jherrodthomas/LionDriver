@@ -159,6 +159,8 @@
 #   part of the stand-down is proven by mutation in CI. AP stays H (S 10, O 5).
 # Rev 0.41 (after BL-007, ratings within BL-007): SFM-016.C2 D 8 -> 4, re-inherited from SWF-034.C1 once the controlsMismatch supervision and its
 #   selfdrived call sites were proven by mutation (CM-1..CM-6, SW FMEA rev 1.18, SWF-ACT-055). AP stays H (S 10, O 5).
+# Rev 0.42 (after BL-007, ratings within BL-007): SFM-005.C4 and SFM-011.C3 D 10 -> 4, SFM-006.C1 D 10 -> 8, re-inherited from SW FMEA rev 1.20
+#   (non-finite input injection through the real controlsd, mutants NF-1..NF-4). AP stays H (S 10).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -167,7 +169,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.41"
+  revision: "0.42"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -1155,12 +1157,13 @@ failure_modes:
         - description: Per-step finiteness guard on the desired curvature, roll, aTarget and lateralDelay (#51); rated in the SW FMEA
           ref: openpilot/selfdrive/controls/controlsd.py
         detection_controls:
-        - description: 'As rated in the SW FMEA (SWF-045.C1, D 10): no NaN injection test; controlsd is excluded from the process fuzz test'
+        - description: 'As rated in the SW FMEA (SWF-045.C1, D 4 since rev 1.20): NaN and inf injection through the real Controls.state_control, guards proven by mutants NF-1 and NF-2 (System FMEA rev 0.42, from D 10)'
+          test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
           ref: openpilot/selfdrive/test/process_replay/test_fuzzy.py
         occurrence: 5
-        detection: 10
+        detection: 4
         ap: H
-        rationale: Rated, and actioned, in the SW FMEA (SWF-045.C1, SWF-ACT-041, SWF-ACT-044); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        rationale: Rated, and actioned, in the SW FMEA (SWF-045.C1 D 4 since rev 1.20; SWF-ACT-041, SWF-ACT-044); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
         msr:
           mechanisms:
           - 2
@@ -1206,11 +1209,13 @@ failure_modes:
         prevention_controls:
         - description: Upstream review, ruff, ty; excluded from fuzzing (test_fuzzy.py:13)
         detection_controls:
-        - description: No test injects non-finite lateralDelay
+        - description: 'As rated in the SW FMEA (SWF-047.C1, D 8 since rev 1.20): a NaN lateralDelay is injected through the real Controls.state_control
+            and mutant NF-4 is killed; the known instance only, not every unguarded input that can raise (System FMEA rev 0.42, from D 10)'
+          test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
         occurrence: 6
-        detection: 10
+        detection: 8
         ap: H
-        rationale: Rated, and actioned, in the SW FMEA (SWF-047.C1, SWF-ACT-041, SWF-ACT-044); this row inherits that rating
+        rationale: Rated, and actioned, in the SW FMEA (SWF-047.C1 D 8 since rev 1.20; SWF-ACT-041, SWF-ACT-044); this row inherits that rating
         msr:
           mechanisms:
           - 1
@@ -1950,12 +1955,13 @@ failure_modes:
         - description: controlsd finiteness guard on aTarget (#51); the planner clip keeps NaN; rated in the SW FMEA
           ref: openpilot/selfdrive/controls/controlsd.py
         detection_controls:
-        - description: 'As rated in the SW FMEA (SWF-045.C2, D 10): test_longcontrol.py covers state transitions only; no NaN injection test'
+        - description: 'As rated in the SW FMEA (SWF-045.C2, D 4 since rev 1.20): NaN aTarget injection through the real Controls.state_control, guard proven by mutant NF-3 (System FMEA rev 0.42, from D 10)'
+          test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
           ref: openpilot/selfdrive/controls/tests/test_longcontrol.py
         occurrence: 5
-        detection: 10
+        detection: 4
         ap: H
-        rationale: Rated, and actioned, in the SW FMEA (SWF-045.C2, SWF-ACT-041, SWF-ACT-044); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
+        rationale: Rated, and actioned, in the SW FMEA (SWF-045.C2 D 4 since rev 1.20; SWF-ACT-041, SWF-ACT-044); this row inherits that rating. Taken in from the retired WP-A-04 §10 table (DQ-127)
         msr:
           mechanisms:
           - 3
