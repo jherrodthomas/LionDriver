@@ -6,7 +6,7 @@
 ![Confirmation measure records, at a glance: 18 confirmation measures planned in WP-M-06 (reviews, SOTIF reviews, interim assessments); 0 performed](card-status.svg)
 <!-- folder-card:end -->
 
-Records of confirmation reviews (CR-01…CR-12), SOTIF reviews (SR-01…SR-03), functional safety audits (`AUD-<n>.md`) and interim functional safety assessments (`FSA-I1.md`, `FSA-I2.md`), as planned in [WP-M-06](../../01-management/WP-M-06-confirmation-measures-plan.md). The final assessment report is [WP-K-04](../WP-K-04-functional-safety-assessment.md).
+Records of confirmation reviews (CR-01…CR-12), SOTIF and AI reviews (SR-01…SR-04), functional safety audits (`AUD-<n>.md`) and interim functional safety assessments (`FSA-I1.md`, `FSA-I2.md`), as planned in [WP-M-06](../../01-management/WP-M-06-confirmation-measures-plan.md). The final assessment report is [WP-K-04](../WP-K-04-functional-safety-assessment.md).
 
 No confirmation measure has been performed yet.
 
