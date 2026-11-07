@@ -227,14 +227,15 @@ class TestNonFiniteInputs(OpenpilotTestCase):
 
 class TestNonFinitePoseToCard(OpenpilotTestCase):
   # SWF-060.C1 (SWF-ACT-044): controlsd forwards the calibrated orientation to card, and the reference car's CarController filters the
-  # pitch for its compensation. A single non-finite orientation must not reach it (controlsd sends the last finite one again): the NaN would stay in the filter and card would
-  # raise on packing the acceleration (card has no exception handling), ending lateral and longitudinal control. Run through the real
-  # controlsd publish and the real Toyota CarInterface.apply
+  # pitch for its compensation. A single non-finite orientation must not reach it (controlsd sends the last finite one again): the NaN
+  # would stay in the filter and card would raise on packing the acceleration (card has no exception handling), ending lateral and
+  # longitudinal control. Run through the real controlsd publish and the real Toyota CarInterface.apply
   STEPS = 100
 
   @staticmethod
   def pose(pitch):
-    m = lambda xyz: Measurement(np.array(xyz, dtype=float), np.zeros(3))
+    def m(xyz):
+      return Measurement(np.array(xyz, dtype=float), np.zeros(3))
     return Pose(orientation=m([0., pitch, 0.]), velocity=m([25., 0., 0.]), acceleration=m([0., 0., 0.]),
                 angular_velocity=m([0., 0., pitch]))
 
