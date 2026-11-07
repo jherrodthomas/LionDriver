@@ -156,6 +156,12 @@
 #   TestNonFiniteInputs: NaN/inf desired curvature, NaN roll, NaN aTarget, NaN lateralDelay) and mutants NF-1..NF-4 (94 host mutants, all killed).
 #   SWF-045.C1 and SWF-045.C2 D 10 -> 4; SWF-047.C1 D 10 -> 8 (the known lateralDelay instance only). AP stays H (S 10). SWF-ACT-044 in progress:
 #   card (SWF-060.C1) still has no injection test.
+# rev 1.21 (after BL-007, ratings within BL-007): SWF-060.C1, the known path found: one non-finite calibrated orientation, which controlsd
+#   forwarded unchecked, stays in the Toyota CarController pitch filter, and card raises ValueError on packing the acceleration from the next
+#   step on. controlsd now sends only a finite orientation and angular velocity and otherwise resends the last finite one (so the planner keeps
+#   its coast limit, SWF-065.C3). TestNonFinitePoseToCard runs the real controlsd publish into the real Toyota CarInterface.apply; mutant NF-5
+#   (95 host mutants). SWF-060.C1 D 9 -> 8 (this path only; a non-finite CarState value is not injected). AP stays H (S 10). SWF-ACT-044 in
+#   progress: stale-input injection for card. Author Claude (AI-drafted, I0).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -205,7 +211,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.20"
+  revision: "1.21"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -4306,11 +4312,18 @@ failure_modes:
     prevention_controls:
     - description: Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure
         credit (RT-1 §2.2)
+    - description: 'Since rev 1.21, controlsd sends only a finite orientationNED and angularVelocity and otherwise the last finite one, so a non-finite
+        pose cannot reach the pitch filter (controlsd.py publish)'
+      ref: openpilot/selfdrive/controls/controlsd.py
     detection_controls:
     - description: test_car_interfaces fuzzes update and apply for all platforms in CI; generic, not designed for non-finite input. card is in the test_fuzzy NOT_TESTED list
       test: openpilot/selfdrive/car/tests/test_car_interfaces.py
+    - description: 'Since rev 1.21, TestNonFinitePoseToCard injects a NaN and an inf orientation through the real controlsd publish into the real Toyota
+        CarInterface.apply: no exception, the acceleration stays finite and positive. Proven by mutant NF-5. It covers the pose path only; a non-finite
+        CarState value is not injected, so D 8 (RT-2), from D 9'
+      test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
     occurrence: 5
-    detection: 9
+    detection: 8
     ap: H
     actions:
     - SWF-ACT-044
@@ -6305,7 +6318,8 @@ actions:
   status: in_progress
   evidence: 'controlsd part (rev 1.20): test_controlsd_call_sites.py TestNonFiniteInputs injects NaN/inf desired curvature, NaN roll, NaN aTarget and NaN
     lateralDelay through the real Controls.state_control; mutants NF-1..NF-4 killed. SWF-045.C1, C2 D 4, SWF-047.C1 D 8. The opendbc Toyota car tests
-    run in the unit_tests job (rev 1.10). Open: card (non-finite actuators into the CarController, SWF-060.C1) and stale-input injection for card'
+    run in the unit_tests job (rev 1.10). Card part (rev 1.21): TestNonFinitePoseToCard injects a NaN and an inf orientation through controlsd publish into the Toyota CarInterface.apply,
+    the path that crashed card (fixed in controlsd); mutant NF-5 killed; SWF-060.C1 D 8. Open: stale-input injection for card'
 - id: SWF-ACT-045
   kind: design_change
   description: 'Implement TSR-605 margins on the host: bound latAccelOffset and torque parameters in controlsd, apply the acceleration rate

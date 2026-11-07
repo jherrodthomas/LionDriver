@@ -2,12 +2,15 @@ import math
 from types import SimpleNamespace
 from unittest import mock
 
+import numpy as np
+
 from opendbc.car.car_helpers import interfaces
 from opendbc.car.toyota.values import CAR as TOYOTA
 from openpilot.cereal import log
 from openpilot.common.params import Params
 from openpilot.common.test import OpenpilotTestCase
 from openpilot.selfdrive.controls import controlsd
+from openpilot.selfdrive.locationd.helpers import Measurement, Pose
 
 # The controlsd call sites of two LionDriver safety measures, run through the real Controls.state_control and publish
 # with the reference CarParams. The measures themselves are tested in test_stock_aeb.py (stock_aeb_stand_down) and
@@ -220,3 +223,45 @@ class TestNonFiniteInputs(OpenpilotTestCase):
     t, _, CC, _ = self.run_with(lambda sm: setattr(sm['lateralDelay'], 'lateralDelay', float('nan')),
                                 lambda sm: setattr(sm['lateralDelay'], 'lateralDelay', 0.2))
     self.assert_controllers_finite(t, CC)
+
+
+class TestNonFinitePoseToCard(OpenpilotTestCase):
+  # SWF-060.C1 (SWF-ACT-044): controlsd forwards the calibrated orientation to card, and the reference car's CarController filters the
+  # pitch for its compensation. A single non-finite orientation must not reach it (controlsd sends the last finite one again): the NaN
+  # would stay in the filter and card would raise on packing the acceleration (card has no exception handling), ending lateral and
+  # longitudinal control. Run through the real controlsd publish and the real Toyota CarInterface.apply
+  STEPS = 100
+
+  @staticmethod
+  def pose(pitch):
+    def m(xyz):
+      return Measurement(np.array(xyz, dtype=float), np.zeros(3))
+    return Pose(orientation=m([0., pitch, 0.]), velocity=m([25., 0., 0.]), acceleration=m([0., 0., 0.]),
+                angular_velocity=m([0., 0., pitch]))
+
+  def drive(self, bad):
+    t = controls()
+    CI = interfaces[REFERENCE](t.c.CP)
+    out = []
+    for i in range(self.STEPS):
+      t.c.calibrated_pose = self.pose(bad if i == self.STEPS // 2 else 0.02)
+      CC, lac_log = t.c.state_control()
+      t.c.publish(CC, lac_log)
+      sent = t.pm.sent['carControl'].carControl
+      actuators, _ = CI.apply(sent.as_reader(), int(i * 1e7))  # raises if a NaN reaches the packer
+      out.append((sent, actuators.accel))
+    return out
+
+  def test_non_finite_orientation_not_sent_and_card_keeps_running(self):
+    for bad in (float('nan'), float('inf')):
+      out = self.drive(bad)
+      sent, _ = out[self.STEPS // 2]
+      # the last finite values are sent again, so the planner keeps its coast limit (SWF-065.C3)
+      self.assertAlmostEqual(sent.orientationNED[1], 0.02, places=6)
+      self.assertAlmostEqual(sent.angularVelocity[2], 0.02, places=6)
+      self.assertTrue(all(math.isfinite(a) for _, a in out), bad)
+      self.assertGreater(out[-1][1], 0.)
+
+  def test_finite_orientation_sent(self):
+    sent, _ = self.drive(0.02)[-1]
+    self.assertAlmostEqual(sent.orientationNED[1], 0.02, places=6)

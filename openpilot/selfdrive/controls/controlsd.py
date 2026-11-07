@@ -57,6 +57,8 @@ class Controls:
 
     self.pose_calibrator = PoseCalibrator()
     self.calibrated_pose: Pose | None = None
+    self.last_orientation: list[float] | None = None  # the last finite values sent in carControl (SWF-060.C1)
+    self.last_angular_velocity: list[float] | None = None
 
     self.LoC = LongControl(self.CP)
     self.VM = VehicleModel(self.CP)
@@ -187,9 +189,20 @@ class Controls:
     # Orientation and angle rates can be useful for carcontroller
     # Only calibrated (car) frame is relevant for the carcontroller
     CC.currentCurvature = self.curvature
+    # LionDriver SWF-060.C1 (SWF-ACT-044): a non-finite orientation or angular velocity is not sent; the last finite one is sent
+    # again. The Toyota CarController filters the pitch, so a single NaN would stay in its filter and card would raise on packing the
+    # acceleration. The last value is resent, not left out, because the planner drops its coast limit without an orientation (SWF-065.C3)
     if self.calibrated_pose is not None:
-      CC.orientationNED = self.calibrated_pose.orientation.xyz.tolist()
-      CC.angularVelocity = self.calibrated_pose.angular_velocity.xyz.tolist()
+      orientation = self.calibrated_pose.orientation.xyz.tolist()
+      angular_velocity = self.calibrated_pose.angular_velocity.xyz.tolist()
+      if all(math.isfinite(v) for v in orientation):
+        self.last_orientation = orientation
+      if all(math.isfinite(v) for v in angular_velocity):
+        self.last_angular_velocity = angular_velocity
+    if self.last_orientation is not None:
+      CC.orientationNED = self.last_orientation
+    if self.last_angular_velocity is not None:
+      CC.angularVelocity = self.last_angular_velocity
 
     CC.cruiseControl.override = CC.enabled and not CC.longActive and self.CP.openpilotLongitudinalControl
     CC.cruiseControl.cancel = CS.cruiseState.enabled and (not CC.enabled or not self.CP.pcmCruise)

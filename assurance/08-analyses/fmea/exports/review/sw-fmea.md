@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 1.20 | draft | BL-007 | RT-2 | 2026-11-02 |
+| 1.21 | draft | BL-007 | RT-2 | 2026-11-02 |
 
 **Scope.** P1 elements for AC-001 at BL-007 (frozen; liondriver-dev 9fe3eb2, panda 3a8b7c2, opendbc 4d1a056; the LIONDRIVER_REFERENCE build is the default; rows of code unchanged since an earlier baseline keep that rating): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28. Rev 1.9: start-up fault-code read (SWF-091), panda siren (SWF-092), stock-AEB stand-down (SWF-093).
 
@@ -1434,7 +1434,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-060.C1` Unhandled exception: the loop has no exception handling (card.py:277-284). A non-finite torque or acceleration raises in the CarController (int(round(nan)), carcontroller.py:105; math.floor in packer.py:24); controlsd sanitises its actuators (controlsd.py:172-181), so the path needs a value made non-finite inside card (CarState or pitch compensation) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_car_interfaces fuzzes update and apply for all platforms in CI; generic, not designed for non-finite input. card is in the test_fuzzy NOT_TESTED list <sub>openpilot/selfdrive/car/tests/test_car_interfaces.py</sub> | 5 | 9 | 🔴 **H** | SWF-ACT-044 |
+| `SWF-060.C1` Unhandled exception: the loop has no exception handling (card.py:277-284). A non-finite torque or acceleration raises in the CarController (int(round(nan)), carcontroller.py:105; math.floor in packer.py:24); controlsd sanitises its actuators (controlsd.py:172-181), so the path needs a value made non-finite inside card (CarState or pitch compensation) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2)<br>• Since rev 1.21, controlsd sends only a finite orientationNED and angularVelocity and otherwise the last finite one, so a non-finite pose cannot reach the pitch filter (controlsd.py publish) <sub>openpilot/selfdrive/controls/controlsd.py</sub> | • test_car_interfaces fuzzes update and apply for all platforms in CI; generic, not designed for non-finite input. card is in the test_fuzzy NOT_TESTED list <sub>openpilot/selfdrive/car/tests/test_car_interfaces.py</sub><br>• Since rev 1.21, TestNonFinitePoseToCard injects a NaN and an inf orientation through the real controlsd publish into the real Toyota CarInterface.apply: no exception, the acceleration stays finite and positive. Proven by mutant NF-5. It covers the pose path only; a non-finite CarState value is not injected, so D 8 (RT-2), from D 9 <sub>openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py</sub> | 5 | 8 | 🔴 **H** | SWF-ACT-044 |
 
 Safety mechanisms: (1) Panda TX arrival supervision (TSR-408, reference build) and selfdrived controlsMismatch within 0.5 s (TSR-621)
 
@@ -2155,7 +2155,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-058.C1` | CarParams of another platform or parameter set used on the reference car | 10/4/9 | SWF-ACT-057 |
 | `SWF-058.C2` | CarParams of another platform or parameter set used on the reference car | 10/2/10 | SWF-ACT-057 |
 | `SWF-059.C1` | Actuation frame packed with a value other than the one commanded | 10/4/9 | SWF-ACT-044 |
-| `SWF-060.C1` | card stops while engaged | 10/5/9 | SWF-ACT-044 |
+| `SWF-060.C1` | card stops while engaged | 10/5/8 | SWF-ACT-044 |
 | `SWF-061.C1` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/5/4 | SWF-ACT-058 |
 | `SWF-061.C2` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/6/8 | SWF-ACT-058 |
 | `SWF-061.C3` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/6/9 | SWF-ACT-058 |
