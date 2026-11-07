@@ -873,3 +873,39 @@ replace = "      if True:\n        self.last_orientation = orientation"
 tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
 fmea = ["SWF-060.C1"]
 why = "a non-finite orientation reaches the Toyota pitch filter and card raises on packing the acceleration"
+
+[[mutants]]
+id = "SC-1"
+file = "opendbc_repo/opendbc/can/parser.py"
+find = "        self.timeout_threshold = (1_000_000_000 / self.frequency) * 10"
+replace = "        self.timeout_threshold = (1_000_000_000 / self.frequency) * 100"
+tests = ["openpilot/selfdrive/car/tests/test_card_stale_inputs.py"]
+fmea = ["SWF-056.C2"]
+why = "a stopped carState message is seen 1 s late instead of 10 periods once its rate is learned"
+
+[[mutants]]
+id = "SC-2"
+file = "opendbc_repo/opendbc/can/parser.py"
+find = "    if checksum_failed or counter_failed:\n      return False"
+replace = "    if counter_failed:\n      return False"
+tests = ["openpilot/selfdrive/car/tests/test_card_stale_inputs.py"]
+fmea = ["SWF-056.C3"]
+why = "frames with a bad checksum update carState and keep canValid true"
+
+[[mutants]]
+id = "SC-3"
+file = "opendbc_repo/opendbc/can/parser.py"
+find = "      if not state.valid(self._last_update_nanos, bus_timeout):\n        valid = False"
+replace = "      if False:\n        valid = False"
+tests = ["openpilot/selfdrive/car/tests/test_card_stale_inputs.py"]
+fmea = ["SWF-056.C2", "SWF-056.C3"]
+why = "a timed-out carState message never makes canValid false"
+
+[[mutants]]
+id = "SC-4"
+file = "openpilot/selfdrive/car/card.py"
+find = "    if self.sm.all_alive(['carControl']):"
+replace = "    if True:"
+tests = ["openpilot/selfdrive/car/tests/test_card_stale_inputs.py"]
+fmea = ["SWF-047.C2"]
+why = "card keeps actuating the last carControl after controlsd stops"
