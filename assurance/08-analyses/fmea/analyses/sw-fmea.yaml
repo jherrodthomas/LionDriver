@@ -162,6 +162,12 @@
 #   its coast limit, SWF-065.C3). TestNonFinitePoseToCard runs the real controlsd publish into the real Toyota CarInterface.apply; mutant NF-5
 #   (95 host mutants). SWF-060.C1 D 9 -> 8 (this path only; a non-finite CarState value is not injected). AP stays H (S 10). SWF-ACT-044 in
 #   progress: stale-input injection for card. Author Claude (AI-drafted, I0).
+# rev 1.22 (after BL-007, ratings within BL-007): stale-input injection for card (test_card_stale_inputs.py), through the real Toyota
+#   CarInterface.update with the reference car's parsers fed packed frames at 100 Hz. Measured: a supervised message that stops, or a frame
+#   with a bad checksum, makes canValid false in 0.15 s once its rate is learned (10 periods + 5 evaluations); in the first second a stopped
+#   message takes 10.05 s (SWF-056.C2 confirmed, the fix stays SWF-ACT-056); BLINKERS_STATE is unsupervised by design; card sends no CAN
+#   while carControl is not alive. Mutants SC-1..SC-4 (99 host mutants). SWF-056.C3 D 9 -> 4; SWF-056.C2 D 9 -> 8 (the bound is tested,
+#   the 10 s window remains by design). AP stays H (S 10). SWF-ACT-044 completed. Author Claude (AI-drafted, I0).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -211,7 +217,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.21"
+  revision: "1.22"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -3652,6 +3658,9 @@ failure_modes:
     - description: test_onroad test_timings checks carControl/controlsState period (max/min and RSD); targeted at this cause but needs device
         hardware (Jenkinsfile:265) and is not run by LionDriver CI
       test: openpilot/selfdrive/test/test_onroad.py
+    - description: 'Since rev 1.22, test_card_stale_inputs.py checks the card reaction: no CAN is sent while carControl is not alive (mutant SC-4).
+        It tests the mechanism, not the overrun, so D stays 8'
+      test: openpilot/selfdrive/car/tests/test_card_stale_inputs.py
     occurrence: 6
     detection: 8
     ap: H
@@ -4092,8 +4101,12 @@ failure_modes:
     detection_controls:
     - description: opendbc can tests (test_packer_parser can_valid and timeout cases) exist but are not run by LionDriver CI
       ref: opendbc_repo/opendbc/can/tests/test_packer_parser.py
+    - description: 'Since rev 1.22, test_card_stale_inputs.py stops each supervised carState message of the reference car in the real Toyota
+        CarInterface.update: canValid false within 0.15 s once the rate is learned, and within 10.05 s in the first second (the cause, measured
+        and bounded; the fix is SWF-ACT-056). Proven by mutants SC-1 and SC-3. The test bounds the window but does not remove it, so D 8 (RT-2), from D 9'
+      test: openpilot/selfdrive/car/tests/test_card_stale_inputs.py
     occurrence: 3
-    detection: 9
+    detection: 8
     ap: H
     actions:
     - SWF-ACT-056
@@ -4108,8 +4121,12 @@ failure_modes:
     detection_controls:
     - description: As SWF-056.C2 (opendbc can tests not run by LionDriver CI)
       ref: opendbc_repo/opendbc/can/tests/test_packer_parser.py
+    - description: 'Since rev 1.22, test_card_stale_inputs.py corrupts the checksum of each checksummed carState message of the reference car in the
+        real Toyota CarInterface.update: canValid false within 0.15 s at 100 Hz. Proven by mutants SC-2 and SC-3, so D 4 (RT-2), from D 9. Messages
+        without a checksum are SWF-056.C1'
+      test: openpilot/selfdrive/car/tests/test_card_stale_inputs.py
     occurrence: 6
-    detection: 9
+    detection: 4
     ap: H
     actions:
     - SWF-ACT-056
@@ -6315,11 +6332,12 @@ actions:
   description: Add NaN/inf and stale-input injection for controlsd and card (enable them in test_fuzzy.py with the Corolla fingerprint, or a
     dedicated test), and run the opendbc car tests (test_models, test_car_interfaces, test_lateral_limits) for Toyota in LionDriver CI
   owner: Jherrod Thomas
-  status: in_progress
+  status: completed
   evidence: 'controlsd part (rev 1.20): test_controlsd_call_sites.py TestNonFiniteInputs injects NaN/inf desired curvature, NaN roll, NaN aTarget and NaN
     lateralDelay through the real Controls.state_control; mutants NF-1..NF-4 killed. SWF-045.C1, C2 D 4, SWF-047.C1 D 8. The opendbc Toyota car tests
     run in the unit_tests job (rev 1.10). Card part (rev 1.21): TestNonFinitePoseToCard injects a NaN and an inf orientation through controlsd publish into the Toyota CarInterface.apply,
-    the path that crashed card (fixed in controlsd); mutant NF-5 killed; SWF-060.C1 D 8. Open: stale-input injection for card'
+    the path that crashed card (fixed in controlsd); mutant NF-5 killed; SWF-060.C1 D 8. Stale-input part (rev 1.22): test_card_stale_inputs.py stops and corrupts each carState message through
+    the Toyota CarInterface.update and checks the carControl alive gate in card; mutants SC-1..SC-4 killed; SWF-056.C3 D 4, SWF-056.C2 D 8'
 - id: SWF-ACT-045
   kind: design_change
   description: 'Implement TSR-605 margins on the host: bound latAccelOffset and torque parameters in controlsd, apply the acceleration rate
