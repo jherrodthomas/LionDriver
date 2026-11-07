@@ -27,7 +27,7 @@ import openpyxl
 
 ROOT = Path(__file__).resolve().parents[1]
 FINGERPRINT = Path(__file__).with_name("xlsx_viewer.sha256")
-VIEWER_URL = "https://claude.ai/artifact/8raovSPWh354z9GvLzoXpx"
+VIEWER_URL = "https://claude.ai/artifact/QB1X8yPHBFitzEtAkB3PjT"
 # A readable name where the file name alone is not one; the others are named from their file.
 TITLES = {
   "assurance/02-concept/hara/WP-C-03-hara-cartesian.xlsx": "WP-C-03 HARA (reference scope, Chill mode)",

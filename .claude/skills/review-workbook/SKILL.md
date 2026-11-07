@@ -35,7 +35,7 @@ checked and, for the two pages, republished.
 | DFA (and the withdrawn FSC) | `analyses/dfa.yaml` (`fsc.yaml`) | DFA figure 2-1, `dfa_gates.py`, `fig_a03_two_channel.py`; checklist exports |
 | HARA, FSC workbooks | `assurance/02-concept/hara/hara_model.py`, `fsc/fsc_model.py` | `WP-C-03-hara-cartesian*.xlsx`, `WP-C-04-fsc-completeness.xlsx` (external builders) |
 | Review-record inputs | WP-S-02…05, WP-A-03, WP-C-03/04 Markdown, `system-fmea.yaml`, `hara-mapping.yaml` | `RR-NNNN-{tsc,hsi}-input.xlsx` (`assurance/03-system/reviews/tools/`) |
-| Workbook viewer | every tracked `assurance/**/*.xlsx` | <https://claude.ai/artifact/8raovSPWh354z9GvLzoXpx>, `tools/xlsx_viewer.sha256` |
+| Workbook viewer | every tracked `assurance/**/*.xlsx` | <https://claude.ai/artifact/QB1X8yPHBFitzEtAkB3PjT>, `tools/xlsx_viewer.sha256` |
 
 Rules and tables: `fmea/rating-tables.md` (RT-3: S/O/D, AP table §5, FMEDA §6, MSR §7). Method and ID scheme:
 `fmea/fmea-plan.md` §5. Schemas: `fmea/schema/*.schema.json`. `references/records.md` has the editing detail.

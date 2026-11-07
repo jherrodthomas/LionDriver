@@ -5,7 +5,7 @@ self-contained HTML file built from the repository; the published copy has to fo
 
 | Page | Built by | URL constant (and other places it is written) | Fingerprint | CI |
 |---|---|---|---|---|
-| Workbook viewer: every tracked `assurance/**/*.xlsx` | `python3 tools/xlsx_viewer.py --out <scratchpad>/workbook-viewer.html` | `VIEWER_URL` in `tools/xlsx_viewer.py` = <https://claude.ai/artifact/8raovSPWh354z9GvLzoXpx>; linked from `assurance/02-concept/hara/README.md` and `fsc/README.md` | `tools/xlsx_viewer.sha256` | `xlsx_viewer.py --check`, `tools/test_xlsx_viewer.py` |
+| Workbook viewer: every tracked `assurance/**/*.xlsx` | `python3 tools/xlsx_viewer.py --out <scratchpad>/workbook-viewer.html` | `VIEWER_URL` in `tools/xlsx_viewer.py` = <https://claude.ai/artifact/QB1X8yPHBFitzEtAkB3PjT>; linked from `assurance/02-concept/hara/README.md` and `fsc/README.md` | `tools/xlsx_viewer.sha256` | `xlsx_viewer.py --check`, `tools/test_xlsx_viewer.py` |
 | Live FMEDA worksheet (template `tools/safety/fmeda_views_page.html`) | `python3 tools/safety/fmeda_views.py --html <scratchpad>/fmeda-worksheet.html` | `WORKSHEET_URL` in `fmeda_views.py` and `WORKSHEET` in `fmeda_review_md.py` = <https://claude.ai/artifact/PCbGoJH1mrjZGDmEzegu7N>; linked from the generated `exports/review/fmeda-*.md` | `tools/safety/fmeda_views.sha256` | `fmeda_views.py --check`, `test_fmeda_views.py` |
 | FMEDA what-if | `python3 tools/safety/fmeda_whatif.py --out <scratchpad>/fmeda-whatif.html` | `WHAT_IF` in `fmeda_review_md.py` = <https://claude.ai/artifact/6btZjojvGtcyZdYrhzsR8Z> (also in `fmeda_whatif.py`'s docstring) | none | none: republish by hand when an FMEDA file changes |
 

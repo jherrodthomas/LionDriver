@@ -2,7 +2,7 @@
 
 The explorer is one self-contained page (`generated/explorer.html`): the views in `VIEW_ORDER`, the model tree and
 an inspector. The lead opens it on a phone at `EXPLORER_URL` in `tools/explorer.py` (currently
-<https://claude.ai/artifact/3ZLwHiNmqwePZtDnBbLBCb>, also linked in the README "Explorer" row).
+<https://claude.ai/artifact/K7ttKxrqZxzVPoWiXZknix>, also linked in the README "Explorer" row).
 `tools/explorer.sha256` holds `<fingerprint>  published at <url>` for the fragment last published, and
 `explorer.py --check` fails with "the published explorer is out of date" when the model, layout or explorer assets
 changed and the page was not rebuilt and republished.
