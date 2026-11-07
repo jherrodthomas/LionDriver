@@ -107,7 +107,7 @@ their alt text and counts when a view's content changes (`grep -rn fig-sysml-vNN
 
 `tools/explorer.py` builds one self-contained page (views V-01 to V-07, the model tree and an inspector). It is
 published as the lead's private page at `EXPLORER_URL` in `explorer.py`, currently
-<https://claude.ai/artifact/3ZLwHiNmqwePZtDnBbLBCb>. `tools/explorer.sha256` records the fingerprint of the fragment
+<https://claude.ai/artifact/K7ttKxrqZxzVPoWiXZknix>. `tools/explorer.sha256` records the fingerprint of the fragment
 last published, and `explorer.py --check` fails when the model moved on without a republish. The steps and what to
 do when publishing fails are in [references/explorer.md](references/explorer.md). In short: `--fragment` writes the
 fingerprint **before** you publish, so if the publish does not succeed, restore `tools/explorer.sha256`
