@@ -99,7 +99,7 @@ class TestStaleVehicleInput(unittest.TestCase):
 
   def test_bad_checksum_invalid_within_learned_bound(self):
     checked = [n for n in self.names if self.feed.has_checksum(n)]
-    self.assertIn('STEER_TORQUE_SENSOR', checked)
+    assert 'STEER_TORQUE_SENSOR' in checked, checked
     for name in checked:
       with self.subTest(name):
         feed = CanFeed()
