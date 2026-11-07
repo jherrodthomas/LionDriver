@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="381" viewBox="0 0 600 381" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Upstream sync impact analyses: at a glance</title>
-<desc>56 impact records, 2 of them sync reports: 18 integrated, 1 implemented, 33 proposed, 2 draft, 2 no status row; by month 2026-10 50, 2026-11 6. The 56 impact records by the status each one states: 19 integrated or implemented, 33 still say proposed.</desc>
+<desc>57 impact records, 2 of them sync reports: 18 integrated, 1 implemented, 34 proposed, 2 draft, 2 no status row; by month 2026-10 50, 2026-11 7. The 57 impact records by the status each one states: 19 integrated or implemented, 34 still say proposed.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="600" height="381" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="22" font-size="10" fill="#94A3B8" font-weight="700">At a glance</text>
 <rect x="40" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
-<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">56</text>
+<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">57</text>
 <text x="50" y="74" font-size="9.5" fill="#475569">impact records</text>
 <rect x="172" y="30" width="124" height="54" rx="7" fill="#ECFDF5" stroke="none" stroke-width="1.2"/>
 <text x="182" y="56" font-size="19" fill="#2E9E6A" font-weight="700">19</text>
 <text x="182" y="74" font-size="9.5" fill="#475569">integrated</text>
 <rect x="304" y="30" width="124" height="54" rx="7" fill="#FFFBEB" stroke="none" stroke-width="1.2"/>
-<text x="314" y="56" font-size="19" fill="#D97706" font-weight="700">33</text>
+<text x="314" y="56" font-size="19" fill="#D97706" font-weight="700">34</text>
 <text x="314" y="74" font-size="9.5" fill="#475569">still say proposed</text>
 <rect x="436" y="30" width="124" height="54" rx="7" fill="#FEF2F2" stroke="none" stroke-width="1.2"/>
 <text x="446" y="56" font-size="19" fill="#D2553F" font-weight="700">2</text>
@@ -21,19 +21,19 @@
 <rect x="158.3" y="92" width="117.8" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
 <text x="217.2" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">WP-M-12 §7.3 template</text>
 <text x="40" y="132" font-size="10" fill="#94A3B8" font-weight="700">Where it stands</text>
-<rect x="40" y="142" width="167.1" height="26" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
-<text x="123.6" y="159" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">18</text>
-<rect x="207.1" y="142" width="9.3" height="26" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
-<rect x="216.4" y="142" width="306.4" height="26" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
-<text x="369.6" y="159" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">33</text>
-<rect x="522.9" y="142" width="18.6" height="26" rx="0" fill="#94A3B8" stroke="#FFFFFF" stroke-width="1"/>
-<rect x="541.4" y="142" width="18.6" height="26" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="40" y="142" width="164.2" height="26" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="122.1" y="159" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">18</text>
+<rect x="204.2" y="142" width="9.1" height="26" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="213.3" y="142" width="310.2" height="26" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="368.4" y="159" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">34</text>
+<rect x="523.5" y="142" width="18.2" height="26" rx="0" fill="#94A3B8" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="541.8" y="142" width="18.2" height="26" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
 <rect x="40" y="176" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
 <text x="54" y="185" font-size="9.5" fill="#475569">integrated 18</text>
 <rect x="124.3" y="176" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
 <text x="138.3" y="185" font-size="9.5" fill="#475569">implemented 1</text>
 <rect x="212.5" y="176" width="10" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
-<text x="226.5" y="185" font-size="9.5" fill="#475569">proposed 33</text>
+<text x="226.5" y="185" font-size="9.5" fill="#475569">proposed 34</text>
 <rect x="292.5" y="176" width="10" height="10" rx="2" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
 <text x="306.5" y="185" font-size="9.5" fill="#475569">draft 2</text>
 <rect x="348" y="176" width="10" height="10" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
@@ -43,9 +43,9 @@
 <rect x="100" y="216" width="450" height="12" rx="2" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
 <text x="556" y="226" font-size="10" fill="#0F172A" font-weight="700">50</text>
 <text x="40" y="244" font-size="10" fill="#475569">2026-11</text>
-<rect x="100" y="234" width="54" height="12" rx="2" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
-<text x="160" y="244" font-size="10" fill="#0F172A" font-weight="700">6</text>
-<text x="40" y="274" font-size="10.5" fill="#0F172A">The 56 impact records by the status each one states: 19 integrated or implemented, 33 still say</text>
+<rect x="100" y="234" width="63" height="12" rx="2" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
+<text x="169" y="244" font-size="10" fill="#0F172A" font-weight="700">7</text>
+<text x="40" y="274" font-size="10.5" fill="#0F172A">The 57 impact records by the status each one states: 19 integrated or implemented, 34 still say</text>
 <text x="40" y="289" font-size="10.5" fill="#0F172A">proposed.</text>
 <text x="40" y="310" font-size="9.5" fill="#94A3B8">Generated by folder_cards.py from this folder's own records; the page's text follows below.</text>
 <g class="terms">
