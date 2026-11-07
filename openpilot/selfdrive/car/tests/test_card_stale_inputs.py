@@ -1,3 +1,5 @@
+import importlib
+import sys
 import unittest
 from unittest import mock
 
@@ -6,7 +8,6 @@ from opendbc.car.can_definitions import CanData
 from opendbc.car.car_helpers import interfaces
 from opendbc.car.structs import car
 from opendbc.car.toyota.values import CAR as TOYOTA
-from openpilot.selfdrive.car import card
 
 # Stale-input injection for card (SW FMEA SWF-056.C2, SWF-056.C3, SWF-047; SWF-ACT-044). The vehicle CAN input runs through the real
 # Toyota CarInterface.update with the reference car's parsers, fed every message they read as packed frames at 100 Hz:
@@ -109,10 +110,25 @@ class TestStaleVehicleInput(unittest.TestCase):
         self.assertLessEqual(t, LEARNED_BOUND_S + 1e-9)
 
 
+CARD = 'openpilot.selfdrive.car.card'
+
+
 class TestCardActuatesOnlyAliveCarControl(unittest.TestCase):
-  # SWF-047: card sends the latest carControl only while carControl is alive (SubMaster all_alive: 10 periods)
-  def card(self, alive):
-    c = card.Car.__new__(card.Car)
+  # SWF-047: card sends the latest carControl only while carControl is alive (SubMaster all_alive: 10 periods).
+  # card reads REPLAY from the environment when imported, and process replay forks it from this process, so the module is
+  # dropped again after these tests: a replay later in the same worker then imports it with REPLAY set
+  @classmethod
+  def setUpClass(cls):
+    cls.loaded_before = CARD in sys.modules
+    cls.card = importlib.import_module(CARD)
+
+  @classmethod
+  def tearDownClass(cls):
+    if not cls.loaded_before:
+      sys.modules.pop(CARD, None)
+
+  def make(self, alive):
+    c = self.card.Car.__new__(self.card.Car)
     c.CI = interfaces[REFERENCE](interfaces[REFERENCE].get_non_essential_params(REFERENCE))
     c.CP = c.CI.CP
     c.initialized_prev = True
@@ -125,16 +141,16 @@ class TestCardActuatesOnlyAliveCarControl(unittest.TestCase):
   def step(self, c):
     CC = car.CarControl.new_message()
     CS = car.CarState.new_message(canValid=True)
-    with mock.patch.object(card, 'REPLAY', False):
+    with mock.patch.object(self.card, 'REPLAY', False):
       c.controls_update(CS.as_reader(), CC.as_reader())
 
   def test_sends_while_alive(self):
-    c = self.card(alive=True)
+    c = self.make(alive=True)
     self.step(c)
     self.assertEqual([call.args[0] for call in c.pm.send.call_args_list], ['sendcan'])
 
   def test_no_can_when_car_control_not_alive(self):
-    c = self.card(alive=False)
+    c = self.make(alive=False)
     for _ in range(10):
       self.step(c)
     c.pm.send.assert_not_called()
