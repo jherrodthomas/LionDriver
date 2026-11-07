@@ -864,3 +864,12 @@ replace = "    if False:\n      lateral_delay = self.CP.steerActuatorDelay"
 tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
 fmea = ["SWF-047.C1"]
 why = "a non-finite lateralDelay reaches int() in the torque controller and controlsd raises"
+
+[[mutants]]
+id = "NF-5"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "      if all(math.isfinite(v) for v in orientation):\n        self.last_orientation = orientation"
+replace = "      if True:\n        self.last_orientation = orientation"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-060.C1"]
+why = "a non-finite orientation reaches the Toyota pitch filter and card raises on packing the acceleration"
