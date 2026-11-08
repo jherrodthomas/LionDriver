@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-22 · TSR requirement diagram · safety-MCU platform integrity</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">TSR-501…TSR-519 of WP-S-02 with the FSRs they derive from, the elements that satisfy them, the mechanisms that cite them and the cases that verify them</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::tsrBlocks</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model d4bd8b5b796b</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementView · render asTreeDiagram · model a7a09554226f</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <text x="40" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">DERIVED FROM · «requirement» FSR</text>
 <text x="360" y="140" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">TECHNICAL SAFETY REQUIREMENTS · «requirement»</text>
@@ -173,8 +173,8 @@
 <rect x="1143.5" y="1107" width="44.6" height="15" rx="7.5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1"/><text x="1165.8" y="1117.6" font-size="8.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VAL-25</text>
 <rect x="360" y="1140" width="560" height="74" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
 <rect x="372" y="1148" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="1160.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-513</text>
-<text x="432.9" y="1161" font-size="12" fill="#0F172A" font-weight="600">In release builds, control requests that can change actuation, relay, CAN</text>
-<text x="372" y="1178" font-size="10.5" fill="#64748B">configuration or comms state shall be rejected while a car safety mode is active: at least 0xc5 (relay drive…</text>
+<text x="432.9" y="1161" font-size="12" fill="#0F172A" font-weight="600">In release builds for the reference configuration, while a car safety mode is active,</text>
+<text x="372" y="1178" font-size="10.5" fill="#64748B">the safety MCU shall accept only the control requests the main computer sends while driving or when pan…</text>
 <text x="372" y="1192" font-size="10.5" fill="#64748B">ASIL C · SM CFG · per request</text>
 <text x="950" y="1160" font-size="9.5" fill="#0F766E" font-weight="700" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
 <rect x="1016" y="1149" width="34.4" height="15" rx="7.5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/><text x="1033.2" y="1159.6" font-size="8.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
