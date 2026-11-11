@@ -4125,9 +4125,10 @@
       title: "Rely on the hashes only"
       detail: "Nothing to store. Cost: if comma's copies disappear, old releases cannot be rebuilt or reinstalled."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-7, SV-3, U-11", "assurance/01-management/WP-M-07-risk-management.md R-12", "DQ-093"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-11 v0.3.10 U-9, U-11, SV-3, OI-7; WP-M-07 v0.11 R-12; WP-P-10 v0.7 §4 step 4, §5", at: 2026-11-11}
+  note: "Applied in the plans; the copy step runs and the first copy is made at the first release (WP-M-11 OI-7)."
 - id: DQ-172
   question: "Should the three new document statuses (Planned, Verified, Superseded) be used across the whole project, or only for the ISO 26262 Part 6 software records?"
   context: >-
@@ -4150,9 +4151,10 @@
       title: "Part 6 records only"
       detail: "Only the software records change. Cost: two vocabularies, and a reader has to know which one a document uses."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §2.2, OI-3", "assurance/README.md (status convention)"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-14 v0.6 §2.2, OI-3 closed; assurance/README.md status meanings", at: 2026-11-11}
+  note: "The allowed status values in vmodel.py, process_model.py and fig_m_management.py, and the documents' status lines, change in Phase B."
 - id: DQ-173
   question: "Where should raw verification results (test logs, reports) be kept so they outlive CI: in the signed release assets, or committed to the repository?"
   context: >-
@@ -4179,9 +4181,10 @@
       title: "CI artefacts with the longest retention only"
       detail: "No extra step. Cost: GitHub's maximum retention is still shorter than the product's life, so R-25 stays open."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md OI-4, §8.3", "assurance/01-management/WP-M-07-risk-management.md R-25", "assurance/07-supporting/WP-P-10-release-management.md OI-2 (DQ-093 B)", "WP-M-05 OI-4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-14 v0.6 §8.3, §10, OI-4 closed; WP-M-07 v0.11 R-25; WP-P-10 v0.7 §5, OI-2; WP-M-05 v0.4 §9, OI-4 closed", at: 2026-11-11}
+  note: "The collecting step in the release script stays open (WP-P-10 OI-1)."
 - id: DQ-174
   question: "Should the machine-readable register of Part 6 work products be a file in the trace data or a new kind of safety-case record?"
   context: >-
@@ -4205,9 +4208,10 @@
       title: "A case-records kind"
       detail: "Reuses the case schema with evidence and review states. Cost: a new record kind and its schema, and the work-product IDs leave the trace data."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §9 (WP-M-00 remains the master register)"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-14 v0.6 §11", at: 2026-11-11}
+  note: "The file trace/items/register-part6.yaml is created in Phase B, with its schema."
 - id: DQ-175
   question: "What range of mounting position and camera angles should the installer accept: the range the driving model was validated for, or the much wider range openpilot's calibration accepts?"
   context: >-
@@ -4231,9 +4235,10 @@
       title: "openpilot's calibration limits"
       detail: "Available now, nothing to derive. Cost: accepts mounts outside anything validated, which TSR-807 does not allow."
   sources: ["assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md OI-2, INS-25, SPC-03", "assurance/03-system/WP-S-06-requirements-production-operation.md TSR-807", "openpilot/selfdrive/locationd/calibrationd.py"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-O-01 v0.6 OI-2 (narrowed)", at: 2026-11-11}
+  note: "Open: find or measure the validated angle range (WP-W-10), then set INS-09, INS-25, INS-26 and SPC-03. TSR-807 already reads 'derived from the model validation range'."
 - id: DQ-176
   question: "How should field logs flag a possible crash for review: derive a validated rule from the accelerometer and car signals, or keep today's placeholder of braking harder than 6 m/s²?"
   context: >-
@@ -4256,9 +4261,10 @@
       title: "Keep the placeholder"
       detail: "No work. Cost: the flag is unvalidated, so missed and false crash candidates are unknown."
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-8, MON-14, K-01"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-O-04 v0.5 OI-8 (narrowed)", at: 2026-11-11}
+  note: "The -6 m/s² placeholder stays until the threshold is derived from hard-stop logs and published crash pulses."
 - id: DQ-177
   question: "When and how to add a configuration-independent claim layer for reusing platform evidence across configurations?"
   context: "Only needed once a second configuration is evaluated."
@@ -4299,9 +4305,10 @@
       title: "Debug build with a written representativeness argument"
       detail: "Available now. Cost: weaker evidence; the argument must show the hooks change nothing else."
   sources: ["assurance/05-software/WP-W-08-embedded-software-testing.md OI-2", "assurance/05-software/hil-bench/README.md P-10"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-W-08 v0.4.3 OI-2 (narrowed); hil-bench README v0.11 R-5", at: 2026-11-11}
+  note: "Open: the SWD probe and pad adapter (P-10), pad access on the red panda, and the list of cases the probe cannot reach."
 - id: DQ-179
   question: "How should the tolerances of the model compile-equivalence test be set: from an analysed half-precision error budget, or from differences observed in runs?"
   context: >-
@@ -4324,9 +4331,10 @@
       title: "Set tolerances from observed differences"
       detail: "Faster. Cost: risk of accepting a defect as normal rounding."
   sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-6, MLR-14"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-W-10 v0.5 OI-6 (narrowed)", at: 2026-11-11}
+  note: "Open: the FP16 error-budget analysis and the runs on DS-REF."
 - id: DQ-180
   question: "How should the five signatures on a release record be recorded: a signed git tag plus a signed commit of the filled record, or approving reviews on GitHub?"
   context: >-
@@ -4350,9 +4358,10 @@
       title: "Approving reviews on the release pull request"
       detail: "Easiest for signers. Cost: the binding to the release lives in GitHub, and is lost if the repository moves."
   sources: ["assurance/10-safety-case/WP-K-06-release-record.md OI-2, §8", "assurance/07-supporting/WP-P-10-release-management.md OI-3, OI-4 (DQ-075, DQ-086)"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
-
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-K-06 v0.4 §8, OI-2 closed; WP-P-10 v0.7 §7", at: 2026-11-11}
+  note: "Each signer needs a signing key before the first release."
 - id: DQ-181
   question: "What is the field-report path for users once a release exists?"
   context: "Users need a way to report incidents and problems after release; the path depends on the field monitoring process in WP-O-04. A field_report.yml issue template already exists."
