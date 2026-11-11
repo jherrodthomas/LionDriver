@@ -6617,8 +6617,10 @@
   asked: 2026-11-11
   batch: 22
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md §5.1", "assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md MS-04", "DQ-169"]
-  status: open
-
+  status: applied
+  answer: {choice: C, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver (this follow-up PR)", record: "WP-M-09 v0.10 OI-4; WP-W-11 v0.8 §5.1; WP-O-05 v0.7 MS-04", at: 2026-11-11}
+  note: "Option C covers AGNOS only; vendored code, LFS artefacts and the panda toolchain keep the monthly manual search (the status quo for them). Accepted: LionDriver relies on comma to report what affects the pinned AGNOS version."
 - id: DQ-433
   question: "If a fault appears while you hold the brake at a standstill to engage, should LionDriver end the engagement at once, or carry on as openpilot does today?"
   context: >-
@@ -6785,7 +6787,10 @@
       title: "A product you already have in mind (name it in the note)"
       detail: "A pilot you care about. Cost: Claude sizes it first, and it may need more hardware or access."
   sources: ["docs/kit/README.md §5, §7", "DQ-435"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver (this follow-up PR)", record: "docs/kit/README.md v0.3 §7", at: 2026-11-11}
+  note: "The purchase and the 3D model step go in the pilot project's first batch of questions."
 - id: DQ-439
   question: "When selfdrived stops responding while engaged, should LionDriver also cancel the car's cruise control, instead of leaving it on for you to cancel?"
   context: >-
@@ -6809,4 +6814,7 @@
       title: "Keep today's behaviour: the panda withdraws authority and sounds the siren, you cancel cruise"
       detail: "No change. Cost: cruise stays on after the system has stopped controlling, with only the siren and, after 5 s, the screen to tell you."
   sources: ["openpilot/selfdrive/controls/controlsd.py (CC.enabled, cruiseControl.cancel)", "panda/board/drivers/engaged_mismatch.h (TSR-307(a), TSR-516(b)/(c))", "openpilot/selfdrive/ui/onroad/alert_renderer.py (System Unresponsive)", "assurance/sim/results/engaged-mismatch.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "6dd722e", record: "openpilot controlsd.py (CC.enabled); WP-W-02 v0.55 SWSR-303i; SW FMEA rev 1.23; impact record change-2026-11-11-selfdrived-loss-cruise-cancel", at: 2026-11-11}
+  note: "Implemented and unit-tested (TestSelfdrivedLossCancelsCruise, mutant CA-1); not verified on the vehicle. Open (impact record): whether PCM cruise drops within 0.5 s of the cancel (WP-W-02 OI-18), and the plant model of the engaged mismatch, which still models no cancel (impact OI-3)."
