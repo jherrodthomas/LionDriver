@@ -85,4 +85,4 @@ project, of which 1,057 are generated outputs that a new project regenerates. Tw
 - **Licensed material.** The purchased Corolla mesh and the CC-BY scenery kits never ship in the kit (DQ-436 keeps that
   whatever the licence).
 - **Page links.** Each project's pages are its own and their links are settings: the old page links became unreachable
-  once, and the decision inbox link is unreachable from the sessions today.
+  once, and the decision inbox moved to a new link for the same reason on 2026-11-11 (DQ-437).

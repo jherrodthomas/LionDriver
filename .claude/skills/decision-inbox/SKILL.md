@@ -11,7 +11,7 @@ answered/assumed → applied, or withdrawn) is in the register's
 [README](../../../assurance/01-management/decisions/README.md); read it once per session if you have not.
 `check_decisions.py` enforces it in CI.
 
-The inbox page: <https://claude.ai/artifact/3m2JQKLyS9f62fydjXa4gE>. It is published with the `db` and `user`
+The inbox page: <https://claude.ai/artifact/4pJHygV3rQz2zB1NmJqDsv>. It is published with the `db` and `user`
 capabilities, and its store holds two collections keyed by register id. `answers` docs have
 `{choice, note, at, by}`. `explain` docs have `{question, at, by}`.
 

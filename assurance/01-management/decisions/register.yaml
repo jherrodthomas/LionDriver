@@ -6707,3 +6707,27 @@
       detail: "Keeps every option open, including selling it. Cost: nobody else can use it without a separate licence; can be opened later, which is easy, but not taken back once open."
   sources: ["docs/kit/README.md", "LICENSE"]
   status: open
+- id: DQ-437
+  question: "The decision inbox page can no longer be opened from the sessions. Should it be published at a new link?"
+  context: >-
+    Since 2026-11-11 the sessions get "no such artifact" for the inbox page (3m2JQKLyS9f62fydjXa4gE), as happened to the
+    SysML explorer and the workbook viewer before #580. **Without the page, no answer can be read and no new question
+    shown.** A new page starts with an empty store, so any answer saved on the old page after its last read is lost.
+  reversibility: easy
+  blocks: "Reading answers at the start of each session (CLAUDE.md step 4); showing batch 21"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  options:
+    - key: A
+      recommended: true
+      title: "Publish the inbox at a new link"
+      detail: "The same choice as for the explorer and the workbook viewer. Cost: answers saved on the old page since its last read are re-entered."
+    - key: B
+      title: "Check whether you can still open the old link"
+      detail: "If you can, re-share it or give the answers in chat. Cost: the sessions still cannot read or republish it."
+  sources: ["assurance/01-management/decisions/README.md", ".claude/skills/decision-inbox/SKILL.md"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-11, note: "publish the inbox at a new link"}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "assurance/01-management/decisions/README.md (inbox page link); .claude/skills/decision-inbox/SKILL.md", at: 2026-11-11}
+  note: "New page https://claude.ai/artifact/4pJHygV3rQz2zB1NmJqDsv (db and user, as before); its store was read empty after publishing."

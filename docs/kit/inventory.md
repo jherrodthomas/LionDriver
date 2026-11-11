@@ -12,8 +12,8 @@ to this product, or an output that a new project regenerates rather than copies.
 | Layer | Files | Lines (not counting generated outputs) |
 |---|---|---|
 | method | 442 | 89,088 |
-| pack | 576 | 189,869 |
-| project | 1312 | 51,348 |
+| pack | 576 | 189,893 |
+| project | 1312 | 51,350 |
 
 2,330 LionDriver files in all, of which 1,057 are generated outputs.
 
