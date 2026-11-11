@@ -109,7 +109,10 @@ class Controls:
     model_v2 = self.sm['modelV2']
 
     CC = car.CarControl.new_message()
-    CC.enabled = self.sm['selfdriveState'].enabled
+    # LionDriver DQ-439 (SWSR-303i): selfdrived's last message does not keep the engagement once selfdriveState is no longer
+    # alive (10 nominal periods, 0.1 s, as the TSR-602 gate below). CC.enabled drops, so the cruise cancel in publish() is sent
+    # as on any other disengagement, and the panda siren is left for a cancel that fails (TSR-307(a), TSR-516(c))
+    CC.enabled = bool(self.sm['selfdriveState'].enabled and self.sm.alive['selfdriveState'])
 
     # Check which actuators can be enabled
     standstill = abs(CS.vEgo) <= max(self.CP.minSteerSpeed, 0.3) or CS.standstill

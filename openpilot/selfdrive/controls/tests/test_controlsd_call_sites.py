@@ -4,8 +4,10 @@ from unittest import mock
 
 import numpy as np
 
+from opendbc.can import CANParser
+from opendbc.car import Bus
 from opendbc.car.car_helpers import interfaces
-from opendbc.car.toyota.values import CAR as TOYOTA
+from opendbc.car.toyota.values import CAR as TOYOTA, DBC
 from openpilot.cereal import log
 from openpilot.common.params import Params
 from openpilot.common.test import OpenpilotTestCase
@@ -17,6 +19,7 @@ from openpilot.selfdrive.locationd.helpers import Measurement, Pose
 # test_minimum_risk.py (the selfdrived latch); this checks that controlsd applies them:
 #   SWF-093.C1 (DQ-300): during a stock AEB event no positive acceleration is requested, from the first frame
 #   SWF-062.C1 (TSR-633): forceDecel is held while selfdrived reports the minimum-risk maneuver, and reaches the car
+#   SWSR-303i (DQ-439 A): when selfdriveState is not alive, carControl is not enabled and the cruise cancel reaches the car
 
 REFERENCE = TOYOTA.TOYOTA_COROLLA_TSS2
 State = log.SelfdriveState.OpenpilotState
@@ -265,3 +268,86 @@ class TestNonFinitePoseToCard(OpenpilotTestCase):
   def test_finite_orientation_sent(self):
     sent, _ = self.drive(0.02)[-1]
     self.assertAlmostEqual(sent.orientationNED[1], 0.02, places=6)
+
+
+class TestSelfdrivedLossCancelsCruise(OpenpilotTestCase):
+  # SWSR-303i (TSR-303, DQ-439 A): when selfdriveState is no longer alive, controlsd does not keep the engagement from selfdrived's
+  # last message: carControl.enabled is false and the PCM cruise cancel is requested from the first such frame, as on any other
+  # disengagement. Run through the real Controls.state_control and publish with the reference CarParams
+  def engaged(self):
+    t = controls()
+    t.sm['carState'].cruiseState.enabled = True
+    return t
+
+  @staticmethod
+  def sent(t):
+    step(t)
+    return t.pm.sent['carControl'].carControl
+
+  def test_no_cancel_while_alive(self):
+    t = self.engaged()
+    for _ in range(50):
+      CC = self.sent(t)
+      assert CC.enabled
+      assert not CC.cruiseControl.cancel
+
+  def test_cancel_from_the_first_frame_not_alive(self):
+    t = self.engaged()
+    for _ in range(50):
+      self.sent(t)
+    # selfdrived stops: its last message still says enabled, but it is no longer alive
+    t.sm.alive['selfdriveState'] = False
+    for i in range(50):
+      CC = self.sent(t)
+      assert not CC.enabled, i
+      assert CC.cruiseControl.cancel, i
+      assert not CC.latActive and not CC.longActive, i
+      assert not CC.cruiseControl.resume, i
+
+  def test_no_cancel_when_alive_again(self):
+    t = self.engaged()
+    t.sm.alive['selfdriveState'] = False
+    assert self.sent(t).cruiseControl.cancel
+    t.sm.alive['selfdriveState'] = True
+    for _ in range(10):
+      CC = self.sent(t)
+      assert CC.enabled
+      assert not CC.cruiseControl.cancel
+
+  def test_cancel_on_an_ordinary_disengagement(self):
+    # unchanged: selfdrived alive and no longer enabled
+    t = self.engaged()
+    t.sm['selfdriveState'].enabled = t.sm['selfdriveState'].active = False
+    CC = self.sent(t)
+    assert not CC.enabled
+    assert CC.cruiseControl.cancel
+
+  def test_not_alive_and_not_enabled(self):
+    # the start-up case: selfdriveState not alive and its default message, enabled false; nothing raises and the cancel is requested
+    t = self.engaged()
+    t.sm['selfdriveState'].enabled = t.sm['selfdriveState'].active = False
+    t.sm.alive['selfdriveState'] = False
+    CC = self.sent(t)
+    assert not CC.enabled
+    assert CC.cruiseControl.cancel
+
+  def test_cancel_reaches_the_car(self):
+    # through the real Toyota CarInterface.apply: the reference car runs openpilot longitudinal control, so the cancel is the
+    # CANCEL_REQ bit of ACC_CONTROL (0x343, every third frame)
+    t = self.engaged()
+    CI = interfaces[REFERENCE](t.c.CP)
+    parser = CANParser(DBC[REFERENCE][Bus.pt], [("ACC_CONTROL", 0)], 0)
+    cancel = []
+    for i in range(60):
+      if i == 30:
+        t.sm.alive['selfdriveState'] = False
+      CC = self.sent(t)
+      _, can_sends = CI.apply(CC.as_reader(), int(i * 1e7))
+      for addr, dat, bus in can_sends:
+        if addr == 0x343 and bus == 0:
+          parser.update([(int(i * 1e7), [(addr, dat, bus)])])
+          cancel.append((i, parser.vl["ACC_CONTROL"]["CANCEL_REQ"]))
+    assert [c for i, c in cancel if i < 30] and all(c == 0 for i, c in cancel if i < 30), cancel
+    after = [c for i, c in cancel if i >= 30]
+    assert after and all(c == 1 for c in after), cancel
+    assert min(i for i, _ in cancel if i >= 30) <= 32  # set in the first 0x343 frame after the stop
