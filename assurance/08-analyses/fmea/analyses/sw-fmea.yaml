@@ -168,6 +168,12 @@
 #   message takes 10.05 s (SWF-056.C2 confirmed, the fix stays SWF-ACT-056); BLINKERS_STATE is unsupervised by design; card sends no CAN
 #   while carControl is not alive. Mutants SC-1..SC-4 (99 host mutants). SWF-056.C3 D 9 -> 4; SWF-056.C2 D 9 -> 8 (the bound is tested,
 #   the 10 s window remains by design). AP stays H (S 10). SWF-ACT-044 completed. Author Claude (AI-drafted, I0).
+# rev 1.23 (after BL-007, ratings within BL-007): the lead's decision DQ-439 A (SWSR-303i): controlsd publishes carControl not enabled while
+#   selfdriveState is not alive, so it requests the PCM cruise cancel when selfdrived stops, as on any other disengagement, and the panda siren
+#   (TSR-516(c)) is left for a cancel that fails. test_controlsd_call_sites.py TestSelfdrivedLossCancelsCruise, through the real Toyota
+#   CarInterface.apply for the CAN frame; mutant CA-1 (100 host mutants). SWF-048.C1 D 9 -> 8 (the stall path only; the selfdrived
+#   backstop and the other disengagement paths are not proven); SWF-040.C1 text only (D stays 8, the 10-period bound remains); SWF-036 gains
+#   the host cancel as a safety mechanism. AP stays H (S 10). Author Claude (AI-drafted, I0).
 # Post rev 1.4, FTA WP-A-04 v1.12 (BE-1.25 in the SG-04 tree), ratings unchanged: SWF-055 and SWF-089 gain HZ-006 end effects (an authority
 #   grant covers longitudinal commands, as SWF-007). SWF-002 stays steering-only (HZ-001); its note says why HZ-006 and HZ-010 do not apply.
 #
@@ -217,7 +223,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.22"
+  revision: "1.23"
   status: draft
   baseline: BL-007
   rating_tables: RT-2
@@ -249,7 +255,8 @@ analysis:
     - assurance/07-supporting/impact/change-2026-10-13-opendbc-rx-length-fault.md
     - assurance/07-supporting/impact/change-2026-10-17-relay-malfunction-latch.md
     - assurance/07-supporting/impact/change-2026-11-02-minimum-risk-stop-rate.md
-  updated: 2026-11-02
+    - assurance/07-supporting/impact/change-2026-11-11-selfdrived-loss-cruise-cancel.md
+  updated: 2026-11-11
 structure:
 - id: SWF-SE-001
   name: Panda safety model (opendbc safety + panda firmware integration)
@@ -2998,8 +3005,8 @@ failure_modes:
   - level: local
     description: No selfdriveState; no alerts generated
   - level: next_higher
-    description: 'pandad sends heartbeat engaged=0 after about 0.1 s (pandad.cc:424); controlsd blocks on poll (controlsd.py:43); card stops sendcan once carControl
-      is not alive (card.py:234); ui and soundd show the critical "System Unresponsive" alert only after 5 s (ui/onroad/alert_renderer.py:30, 100-102; soundd.py:23, 56-59)'
+    description: 'pandad sends heartbeat engaged=0 after about 0.1 s (pandad.cc:424); controlsd runs on at its 15 ms poll timeout and, 0.1 s after the last selfdriveState, drops
+      latActive and longActive (TSR-602) and, since rev 1.23 (DQ-439 A, SWSR-303i), carControl enabled, so it requests the PCM cruise cancel; ui and soundd show the critical "System Unresponsive" alert only after 5 s (ui/onroad/alert_renderer.py:30, 100-102; soundd.py:23, 56-59)'
   - level: end
     description: Steering and ACC stop within about 0.1 s with no device takeover warning for 5 s
     hazard: HZ-004
@@ -3050,6 +3057,15 @@ failure_modes:
     reaction_s: 5.0
     timing_basis: code_derived
     timing_ref: 'openpilot/selfdrive/ui/soundd.py:23 (SELFDRIVE_STATE_TIMEOUT)'
+  - description: 'Since rev 1.23 (DQ-439 A, SWSR-303i): controlsd publishes carControl not enabled once selfdriveState is not alive, so the PCM
+      cruise cancel is requested as on any other disengagement and the car''s cruise drops with its own indication; the panda siren of TSR-516(c)
+      then sounds only if the cancel has no effect within 0.5 s of the first not-engaged heartbeat (OI-18 of WP-W-02: the cancel lag is not
+      measured). Not verified on the vehicle (SWF-ACT-049)'
+    ref: openpilot/selfdrive/controls/controlsd.py
+    layer: host
+    reaction_s: 0.1
+    timing_basis: code_derived
+    timing_ref: 'openpilot/cereal/messaging/__init__.py:265 (alive: 10 periods at 100 Hz)'
   - description: Cluster indication from stock ECUs when item frames stop (XM-04, unverified)
   notes: 'Re-rated at BL-007 (rev 1.9), O and D unchanged, since the cause is in a host element whose code did not change, and the 0.3 s engaged-mismatch revoke with its siren (SWF-014.C3) is a mechanism of another element, listed under safety mechanisms (rev 0.8 rule). It bounds the effect and gives the driver an SoC-independent warning; the System FMEA credits it at item level.'
 - id: SWF-037
@@ -3213,9 +3229,9 @@ failure_modes:
   causes:
   - id: SWF-040.C1
     description: 'At BL-004 controlsd read selfdriveState.enabled/active with no alive, valid or age check. Since #51 (BL-005) latActive and longActive need
-      selfdriveState alive on the wall clock (10 periods, 0.1 s; controlsd.py:118-120, input_freshness.py, TSR-602). Remaining: CC.enabled still takes the
-      unchecked selfdriveState (controlsd.py:110), so the cancel request and HUD follow a stale state (SWF-048); the bound is 10 periods, not the 2 of TSR-602
-      (IA host-supervision OI-1); no event is raised by controlsd itself; carControl.valid is still CS.canValid only'
+      selfdriveState alive on the wall clock (10 periods, 0.1 s; controlsd.py:118-120, input_freshness.py, TSR-602). Since rev 1.23 (DQ-439 A, SWSR-303i) CC.enabled also
+      needs selfdriveState alive (controlsd.py:115), so the cancel request and HUD no longer follow a stale state (SWF-048). Remaining: the bound is 10 periods,
+      not the 2 of TSR-602 (IA host-supervision OI-1); no event is raised by controlsd itself; carControl.valid is still CS.canValid only'
     element: SWF-SE-041
     prevention_controls:
     - description: TSR-602 gate in controlsd (inputs_fresh), new LionDriver code reviewed by its author only; ruff and ty in CI
@@ -3223,8 +3239,9 @@ failure_modes:
     detection_controls:
     - description: 'test_input_freshness.py (6 tests: bound per service, wall clock for selfdriveState, inputs not yet seen). Not run in CI at BL-005 (plain classes, collected as 0 tests; passed by hand 2026-10-16); run in CI since #179 (487d4ef, SWF-ACT-055).
         Since rev 1.18 the gate and its controlsd call site are proven by mutants IF-1, IF-2, FG-1, FG-2 (test_controlsd_call_sites.py
-        TestFreshnessGateCallSite, the real Controls.state_control). D stays 8: the remaining parts of the cause have no implementation to test
-        (CC.enabled from the unchecked selfdriveState, 10 periods instead of 2, SWF-ACT-040), and no test stops selfdrived while engaged'
+        TestFreshnessGateCallSite, the real Controls.state_control). Since rev 1.23 TestSelfdrivedLossCancelsCruise makes selfdriveState not alive
+        while engaged: carControl is not enabled and the cancel is requested from the first frame (mutant CA-1). D stays 8: the remaining part of the
+        cause has no implementation to test (10 periods instead of 2, SWF-ACT-040)'
       test: openpilot/selfdrive/controls/tests/test_input_freshness.py
     occurrence: 5
     detection: 8
@@ -3720,16 +3737,24 @@ failure_modes:
     description: 'cancel = CS.cruiseState.enabled and not CC.enabled (controlsd.py:163), where CC.enabled is the unchecked selfdriveState
       (SWF-040.C1), and it is sent only inside the 33 Hz ACC_CONTROL frame (carcontroller.py:187, 253) while card is actuating. The
       selfdrived backstop does nothing: cruiseMismatch fires after 6 s (selfdrived.py:428-431) but has no alert or disable type
-      (events.py:458-460, commented out)'
+      (events.py:458-460, commented out). Since rev 1.23 (DQ-439 A, SWSR-303i) CC.enabled is false while selfdriveState is not alive, so a
+      selfdrived stall requests the cancel; the other parts remain'
     element: SWF-SE-041
     prevention_controls:
-    - description: Upstream review and lint
+    - description: 'Upstream review and lint; for the stall path, a LionDriver change with a requirement (SWSR-303i), reviewed by its author only. O
+        unchanged: the rest of the cause is upstream code without a requirement'
     detection_controls:
     - description: opendbc test_models checks that a cancel frame passes the panda model, not that cancel is requested on each disengagement
         path; not run in LionDriver CI
       ref: opendbc_repo/opendbc/car/tests/test_models.py
+    - description: 'Since rev 1.23, TestSelfdrivedLossCancelsCruise (CI unit_tests job): engaged with PCM cruise on, selfdriveState not alive gives
+        carControl not enabled with the cancel from the first frame, and CANCEL_REQ 1 in the next 0x343 frame through the real Toyota
+        CarInterface.apply; an ordinary disengagement also cancels; alive, no cancel. Proven by mutant CA-1 for the stall path only; the selfdrived
+        backstop and the cancel on every other disengagement path are not proven, so D 8 (targeted), from D 9'
+      test: openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py
+      ref: tools/ci/host_mutants.toml
     occurrence: 6
-    detection: 9
+    detection: 8
     ap: H
     actions:
     - SWF-ACT-040

@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="820" viewBox="0 0 500 820" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure W-0-2. Where the software stands</title>
-<desc>149 SWSRs: 59 in the code, 31 partly, 53 not in the code, 6 not assessed. Coverage: U-SAF-CORE branch 81 %, MC/DC 71 %; U-SAF-LAT branch 43 %, MC/DC 40 %; U-SAF-LONG branch 43 %, MC/DC 43 %; U-SAF-TOY branch 100 %, MC/DC 100 %</desc>
+<desc>150 SWSRs: 60 in the code, 31 partly, 53 not in the code, 6 not assessed. Coverage: U-SAF-CORE branch 81 %, MC/DC 71 %; U-SAF-LAT branch 43 %, MC/DC 40 %; U-SAF-LONG branch 43 %, MC/DC 43 %; U-SAF-TOY branch 100 %, MC/DC 100 %</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="500" height="820" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="16" y="30" font-size="18" fill="#0F172A" font-weight="700">Where the software stands</text>
 <text x="16" y="50" font-size="11.5" fill="#475569">Requirements in the code, structural coverage, and the</text>
 <text x="16" y="66" font-size="11.5" fill="#475569">state-machine transitions, at the current pins.</text>
-<text x="16" y="96" font-size="12.5" fill="#0F172A" font-weight="700">149 software safety requirements (WP-W-02)</text>
+<text x="16" y="96" font-size="12.5" fill="#0F172A" font-weight="700">150 software safety requirements (WP-W-02)</text>
 <text x="16" y="123" font-size="10.5" fill="#0F172A">1xx lateral</text>
 <rect x="150" y="110" width="68.5" height="18" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
 <text x="184.3" y="123" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
@@ -21,12 +21,12 @@
 <rect x="192.8" y="134" width="25.7" height="18" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
 <text x="205.7" y="147" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
 <text x="16" y="171" font-size="10.5" fill="#0F172A">3xx engagement</text>
-<rect x="150" y="158" width="102.8" height="18" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
-<text x="201.4" y="171" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
-<rect x="252.8" y="158" width="17.1" height="18" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
-<text x="261.3" y="171" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
-<rect x="269.9" y="158" width="17.1" height="18" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
-<text x="278.5" y="171" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<rect x="150" y="158" width="111.3" height="18" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="205.7" y="171" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">13</text>
+<rect x="261.3" y="158" width="17.1" height="18" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="269.9" y="171" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<rect x="278.5" y="158" width="17.1" height="18" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<text x="287" y="171" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
 <text x="16" y="195" font-size="10.5" fill="#0F172A">4xx communication</text>
 <rect x="150" y="182" width="34.3" height="18" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
 <text x="167.1" y="195" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
@@ -59,7 +59,7 @@
 <rect x="227.1" y="254" width="17.1" height="18" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
 <text x="235.6" y="267" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
 <rect x="16" y="280" width="12" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
-<text x="32" y="289" font-size="10" fill="#475569">in the code 59</text>
+<text x="32" y="289" font-size="10" fill="#475569">in the code 60</text>
 <rect x="112.9" y="280" width="12" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
 <text x="128.9" y="289" font-size="10" fill="#475569">partly 31</text>
 <rect x="184.2" y="280" width="12" height="10" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>

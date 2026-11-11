@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Status | Draft plan, step 1 (inventory) done. AI-drafted (Claude), not reviewed |
-| Version | 0.2 (2026-11-11): the lead's answers recorded (§7); the pilot pack chosen, IEC 61508. 0.1 (2026-11-11): first plan |
+| Version | 0.3 (2026-11-11): the pilot product chosen (DQ-438 A, §7); the kit repository created, plugin step under way. 0.2 (2026-11-11): the lead's answers recorded (§7); the pilot pack chosen, IEC 61508. 0.1 (2026-11-11): first plan |
 | Lead decisions | DQ-434 A: a private repository. DQ-435 B: a pilot in another industry, its standard chosen by research (§7). DQ-436: private, all rights reserved |
 
 **Goal.** A new project starts with the same layout, records, tools, checks, skills, pages and habits that LionDriver
@@ -74,10 +74,10 @@ project, of which 1,057 are generated outputs that a new project regenerates. Tw
 | Step | What | State |
 |---|---|---|
 | 1 | Inventory: sort every file, list the hard-coded values ([inventory.md](inventory.md), [`tools/kit/inventory.py`](../../tools/kit/inventory.py)) | Done (0.1) |
-| 2 | Plugin: the generic skills and the coordinator, with the LionDriver facts moved to settings, in a new private repository (DQ-434 A) | Next |
+| 2 | Plugin: the generic skills and the coordinator, with the LionDriver facts moved to settings, in the private repository [jherrodthomas/assurance-kit](https://github.com/jherrodthomas/assurance-kit) (DQ-434 A) | Under way (assurance-kit#1) |
 | 3 | Tools package and `assurance.toml`; LionDriver becomes the first user, so nothing is lost and the two cannot drift | After 2 |
 | 4 | Copier template and reusable CI workflows | After 3 |
-| 5 | Pilot on a real second project, with the IEC 61508 pack (§7) | Waits on the pilot product (§7) |
+| 5 | Pilot on a real second project, with the IEC 61508 pack: an emergency-stop and guard-door controller (§7) | After step 4 |
 
 ## 6. Risks
 
@@ -112,5 +112,8 @@ authority), while IEC 61508 SIL 4 adds hardware redundancy that ASIL D does not 
 - **DO-178C is the stress test after it**: a different lifecycle (plans such as the PSAC, and certification liaison) and the
   hardest coverage rule. A third pack would follow the pilot, not precede it.
 
-**Still to choose: the pilot product** (money and hardware, so the lead's). It goes in the next batch of questions.
+**The pilot product (DQ-438 A, the lead, 2026-11-11):** a small safety controller built on a microcontroller board, an
+emergency-stop and guard-door monitor aiming at SIL 2, with about $50 to $150 of boards, relays and switches. It exercises
+the whole kit: hazards and SIL targets, the hardware FMEDA and safe failure fraction, the software, and tests on the bench.
+Its first batch of questions holds the purchase and the 3D model step (§3).
 

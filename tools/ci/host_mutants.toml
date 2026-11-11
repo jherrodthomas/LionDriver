@@ -745,6 +745,16 @@ tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
 fmea = ["SWF-043.C1"]
 why = "a stale longitudinalPlan does not end longitudinal control"
 
+# controlsd ends the engagement, and so cancels PCM cruise, when selfdriveState is not alive (SWSR-303i, DQ-439 A; controlsd.py)
+[[mutants]]
+id = "CA-1"
+file = "openpilot/selfdrive/controls/controlsd.py"
+find = "    CC.enabled = bool(self.sm['selfdriveState'].enabled and self.sm.alive['selfdriveState'])"
+replace = "    CC.enabled = bool(self.sm['selfdriveState'].enabled)"
+tests = ["openpilot/selfdrive/controls/tests/test_controlsd_call_sites.py"]
+fmea = ["SWF-040.C1", "SWF-048.C1"]
+why = "controlsd keeps carControl enabled from selfdrived's last message, so no cruise cancel is sent when selfdrived stops (the upstream behaviour)"
+
 # minimum-risk forced stop rate (TSR-633, DQ-424 A; longitudinal_planner.py)
 [[mutants]]
 id = "MS-1"

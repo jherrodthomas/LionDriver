@@ -467,6 +467,22 @@
   status: proposed
   source: WP-W-02
 
+- id: SWSR-303i
+  kind: swsr
+  text: "While `selfdriveState` is not alive (the messaging alive criterion, 10 nominal periods, 0.1 s, as SWSR-602), `controlsd` shall publish `carControl` with `enabled` false, whatever `selfdrived`'s last message says, so that on a PCM-cruise car whose PCM cruise is active it requests the cruise cancel, from the first such frame, as on any other disengagement; once `selfdriveState` is alive again, `enabled` shall follow it. Source: the lead's decision DQ-439 A (2026-11-11)."
+  asil: "QM (B-sup)"
+  parents: [TSR-303]
+  parent_text: "TSR-303"
+  other_parents: false
+  allocated_to: "`host.controlsd`"
+  verification: "UT"
+  acceptance: "Reference CarParams, engaged with PCM cruise active: `selfdriveState` not alive → `enabled` false and `cruiseControl.cancel` true in that frame and every later one, and CANCEL_REQ = 1 in the next `0x343` frame through the Toyota CarInterface; while alive, or alive again with `enabled` true, no cancel"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented, unit-tested; not verified on the vehicle: `controls/controlsd.py:112-115` (LionDriver change, change-2026-11-11-selfdrived-loss-cruise-cancel (assurance/07-supporting/impact/change-2026-11-11-selfdrived-loss-cruise-cancel.md)); `selfdrive/controls/tests/test_controlsd_call_sites.py` `TestSelfdrivedLossCancelsCruise`, mutant CA-1. The cancel is what lets SWSR-516b stay silent after the SWSR-307 revocation of a `selfdrived` stall; whether it drops PCM cruise within 0.5 s is OI-18. A `selfdrived` stall is a fault-induced disengagement of TSR-303 that SWSR-303h did not cover, because `controlsd` took the engagement from the last message"
+  status: proposed
+  source: WP-W-02
+
 - id: SWSR-304
   kind: swsr
   text: "The lateral check shall reject `0x2E4` frames that increase torque opposing a driver torque beyond the driver allowance, using the last 6 STEER_TORQUE_DRIVER samples of `0x260`."
