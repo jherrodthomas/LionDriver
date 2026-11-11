@@ -42,8 +42,10 @@ entry's `sources` lists them all.
 
 ## The inbox page
 
-Published at <https://claude.ai/artifact/3m2JQKLyS9f62fydjXa4gE> (private to the lead; republish to the same
+Published at <https://claude.ai/artifact/4pJHygV3rQz2zB1NmJqDsv> (private to the lead; republish to the same
 link after every change to this file).
+It moved to this link on 2026-11-11 (DQ-437): the first page, `3m2JQKLyS9f62fydjXa4gE`, could no longer be
+opened from the sessions, and answers saved there after its last read could not be copied.
 
 The page shows open questions first (hard, then revisit, then easy), then answers waiting to be
 applied, then what is done, with a link to each commit or PR.

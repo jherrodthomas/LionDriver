@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-10 ML engineering: model requirements, data management, training route, testing, deployment |
 | Standard reference | ASPICE 4.0 MLE.1 (ML requirements analysis), MLE.2 (ML architecture), MLE.3 (ML training), MLE.4 (ML model testing), SUP.11 (ML data management); ISO/PAS 8800:2024 (data, AI V&V, deployment, operation); ISO 21448:2022 §7, §10 |
-| Version | 0.4 (OI-5 decided: hash check against the signed release manifest before loading, the lead's decision DQ-162 A; 2026-11-02). 0.3 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: RR-2026-009 F-31: owner and needed-by columns; F-28: author; 2026-10-13). 0.2 (§3.1 and §3.5 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.1 |
+| Version | 0.5 (OI-6 narrowed: the VS-ML-01 tolerances come from an FP16 error budget derived analytically, then confirmed on DS-REF, DQ-179 A (lead, 2026-11-11); 2026-11-11). 0.4 (OI-5 decided: hash check against the signed release manifest before loading, the lead's decision DQ-162 A; 2026-11-02). 0.3 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: RR-2026-009 F-31: owner and needed-by columns; F-28: author; 2026-10-13). 0.2 (§3.1 and §3.5 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (AI-1, AI-2, AI-3; DM chain QM per the [WP-C-04 §7](../02-concept/WP-C-04-functional-safety-concept.md) proposal) |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -285,4 +285,4 @@ Owners and gates are proposals added in [RR-2026-009](reviews/RR-2026-009.md) F-
 | OI-3 | Build fork-owned model replay (route set, LionDriver storage, CI that fails on unexplained differences) | Maintainer | G4 |
 | OI-4 | Write the label specification and consent forms for DS-EVAL-DM | Safety engineer | G4 |
 | OI-5 | Decided 2026-11-02 (DQ-162 A, the lead in chat): each model and warp artefact is checked against its SHA-256 in the signed release manifest before it is loaded, and engagement is refused on a mismatch (AIR-19); `pickle` stays, but only behind that check (AIR-20). Left: the signed release manifest (RM-1, WP-P-10 OI-4), the check in `modeld` and `dmonitoringmodeld` with the tampered-file test VS-ML-11, and closing GAP-22's load-integrity part | Maintainer | G3 |
-| OI-6 | Define the FP16 error budget for VS-ML-01 tolerances | ML owner | G4 |
+| OI-6 | Define the FP16 error budget for VS-ML-01 tolerances. Decided 2026-11-11 (DQ-179 A (lead, 2026-11-11)): the budget is derived analytically from FP16 rounding through the network, per output field, then confirmed by runs on DS-REF; tolerances are not fitted to observed differences. Open: the analysis and the DS-REF runs (MLR-14) | ML owner | G4 |

@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 2 performed: CR-01, CR-03@G0 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 91 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 90 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -33,7 +33,7 @@
 | [WP-M-01](../../../01-management/WP-M-01-assurance-strategy.md) Assurance strategy and lifecycle tailoring | GOV-02 | Draft | 0 | |
 | [WP-M-02](../../../01-management/WP-M-02-safety-plan.md) Functional safety plan | GOV-03 | Draft | 6 | |
 | [WP-M-04](../../../01-management/WP-M-04-organization-competence-safety-culture.md) Organization-specific rules, safety culture, competence management | GOV-04 | Draft | 5 | |
-| [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | GOV-05 | Draft | 3 | |
+| [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | GOV-05 | Draft | 2 | |
 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) Confirmation measures plan (reviews, audit, assessment, independence) | GOV-06 | Draft | 5 | |
 | [WP-M-08](../../../01-management/WP-M-08-sotif-plan.md) SOTIF plan | GOV-07 | Draft | 5 | |
 | [WP-M-09](../../../01-management/WP-M-09-cybersecurity-plan.md) Cybersecurity plan | GOV-08 | Draft | 8 | |
