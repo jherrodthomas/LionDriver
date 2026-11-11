@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-10 Release management and baseline procedure |
 | Standard reference | ISO 26262-2:2018 §6 (release for production); ISO 26262-8:2018 §7; ISO 21448:2022 §12; ISO/SAE 21434:2021 §6 (release for post-development); ASPICE 4.0 SUP.8 |
-| Version | 0.6 (§3 vehicle-test baseline criteria decided, DQ-047 A, OI-5 closed; OI-4 notes the signed-release decision, DQ-075 A; 2026-10-23). 0.5 (OI-2 decided: release evidence kept as signed GitHub release assets plus an offline copy, DQ-093 B, 2026-10-19). 0.4 (release key custody decided, DQ-086: hardware token with escrowed backup; §6 key row and OI-3; 2026-10-17). 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
+| Version | 0.7 (§4 step 4, §5, OI-2: a copy of every pinned AGNOS image and toolchain wheel goes, by hash, into the signed release assets (DQ-171 A); release-relevant verification results go into the signed release assets and everyday runs stay as CI artefacts (DQ-173 A); §7: release-record signatures are a signed git tag plus a signed commit of the filled record by each signer (DQ-180 A); the lead's answers of 2026-11-11; the steps are required, not yet done). 0.6 (§3 vehicle-test baseline criteria decided, DQ-047 A, OI-5 closed; OI-4 notes the signed-release decision, DQ-075 A; 2026-10-23). 0.5 (OI-2 decided: release evidence kept as signed GitHub release assets plus an offline copy, DQ-093 B, 2026-10-19). 0.4 (release key custody decided, DQ-086: hardware token with escrowed backup; §6 key row and OI-3; 2026-10-17). 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -50,7 +50,7 @@ LionDriver keeps the useful mechanics (stripped release tree, no submodules in t
 | 1 | Create `release/ld-vX.Y` from `liondriver-dev`; announce freeze. From now only fixes enter, via PR to the release branch with CCB approval ([WP-P-02 §7.3](WP-P-02-change-management.md#73-change-control-board-ccb)) | Release branch | Release manager |
 | 2 | Freeze: all submodule pins on LionDriver fork protected branches; models pinned (LFS oids); lockfiles unchanged since freeze unless CCB-approved | Frozen baseline | Configuration manager |
 | 3 | Tag `ld-vX.Y.Z-rc1` (signed) | RC tag | Release manager |
-| 4 | Build in a clean, recorded environment: host build, stripped release tree, panda RELEASE firmware (§6) | Artifacts + hashes | Release manager |
+| 4 | Build in a clean, recorded environment: host build, stripped release tree, panda RELEASE firmware (§6). Copy the pinned AGNOS images and toolchain wheels, by hash, into the evidence package (§5) | Artifacts + hashes | Release manager |
 | 5 | Run the full verification set on the tag and archive results (§5) | Evidence package | Verification lead |
 | 6 | Physical configuration audit ([WP-P-01 §11](WP-P-01-configuration-management-plan.md#11-configuration-audits)) | Audit record | Configuration manager (not the release manager where possible) |
 | 7 | Vehicle validation per [WP-V-01](../06-validation/WP-V-01-safety-validation.md) on the RC (G5 only) | Validation report | Validation lead |
@@ -76,7 +76,8 @@ Closes the retention part of the verification evidence problem: today CI results
 | Source archive | `git archive` of the tag, plus each submodule at its pin |
 | Built artifacts and SHA-256 | Release tree, panda firmware binary(ies), model files |
 | SBOM | [WP-P-08 §6](WP-P-08-software-component-qualification.md#6-sbom) |
-| CI results | Logs and JUnit-style results of all required jobs at the tag, with tool versions |
+| CI results | Logs and JUnit-style results of all required jobs at the tag, with tool versions. Only these release-relevant results are kept; everyday CI runs stay as CI artefacts and expire (DQ-173 A (lead, 2026-11-11)) |
+| Pinned upstream binaries | A copy of every AGNOS image (`agnos.json`) and toolchain wheel (`uv.lock`) the release pins, stored by hash, so the release can be rebuilt and reinstalled if comma's copies go (DQ-171 A (lead, 2026-11-11); [WP-M-11](../01-management/WP-M-11-upstream-and-supplier-management.md) OI-7, R-12) |
 | Safety unit verification | `test.sh` output incl. coverage report (gcovr HTML/JSON), MISRA reports (opendbc and panda) incl. `checkers.txt`, mutation report incl. survivors list |
 | Integration / HIL / fault injection | Reports from [WP-W-07](../05-software/WP-W-07-software-integration-verification.md), [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md), [WP-V-05](../06-validation/WP-V-05-fault-injection.md) |
 | Process replay | Diff report against fork-owned references, with the reference commit |
@@ -85,7 +86,7 @@ Closes the retention part of the verification evidence problem: today CI results
 | Work products | PDF/Markdown export of `assurance/` at the tag |
 | Assessment reports and release record | WP-K-04, WP-K-05, WP-K-06 |
 
-Layout: `evidence/ld-vX.Y.Z/{manifest,artifacts,ci,unit,integration,validation,trace,records,wp}/` plus `SHA256SUMS`, signed with the release key. Stored outside GitHub Actions (LionDriver-controlled storage, plus offline copy). Location: OI-2.
+Layout: `evidence/ld-vX.Y.Z/{manifest,artifacts,ci,unit,integration,validation,trace,records,wp}/` plus `SHA256SUMS`, signed with the release key. Stored outside GitHub Actions as signed GitHub release assets, plus an offline copy (OI-2, DQ-093 B); raw verification results take the same route (DQ-173 A (lead, 2026-11-11)).
 
 ## 6. panda firmware release build (GAP-25, GAP-24)
 
@@ -100,7 +101,7 @@ Layout: `evidence/ld-vX.Y.Z/{manifest,artifacts,ci,unit,integration,validation,t
 
 ## 7. Release record ([WP-K-06](../10-safety-case/WP-K-06-release-record.md))
 
-Minimum content: release ID and tag commit; reference configuration (vehicle, device revision, AGNOS version, panda firmware version and hash); evidence package location and checksum; list of open problems and accepted residual risks; assessment references; known limitations and user information version; sign-offs (safety manager, CS manager, maintainer) with dates.
+Minimum content: release ID and tag commit; reference configuration (vehicle, device revision, AGNOS version, panda firmware version and hash); evidence package location and checksum; list of open problems and accepted residual risks; assessment references; known limitations and user information version; sign-offs (safety manager, CS manager, maintainer) with dates. Each signature is recorded in git: a signed tag of the release plus a signed commit of the filled record by each signer, so it can be checked offline with git alone (DQ-180 A (lead, 2026-11-11); [WP-K-06 §8](../10-safety-case/WP-K-06-release-record.md#8-signatures--template)). Each signer needs a signing key.
 
 ## 8. Rollback and withdrawal
 
@@ -119,7 +120,7 @@ Note: upstream updates are git fetches from a configurable branch with no signat
 | ID | Item |
 |---|---|
 | OI-1 | Write a LionDriver release script replacing `build_release.sh` (key path, identity, no force-push of shared branches, evidence capture) |
-| OI-2 | Choose evidence storage outside GitHub Actions and its backup. Decided by the lead on 2026-10-19 (decision register DQ-093, B): release evidence is kept as signed GitHub release assets, with an offline copy held by the maintainer. No new service; the archive depends on GitHub staying available and on its file-size limits. Open: write the offline-copy step into the release checklist |
+| OI-2 | Choose evidence storage outside GitHub Actions and its backup. Decided by the lead on 2026-10-19 (decision register DQ-093, B): release evidence is kept as signed GitHub release assets, with an offline copy held by the maintainer. No new service; the archive depends on GitHub staying available and on its file-size limits. Raw verification results (DQ-173 A (lead, 2026-11-11)): release-relevant results go into the same signed release assets; everyday CI runs stay as CI artefacts. Pinned AGNOS images and toolchain wheels (DQ-171 A (lead, 2026-11-11)): a copy, by hash, goes into the same assets (§4 step 4, §5). Open: write the offline-copy, results-collection and upstream-copy steps into the release script (OI-1); results between releases still expire |
 | OI-3 | Generate the LionDriver panda release key and put it on the token. Custody is decided (DQ-086: hardware token held by the lead, escrowed backup); still to do: choose a token that supports the bootstub's signature scheme, name the escrow holder, generate and import the key |
 | OI-4 | Define the update channel for the reference device (which branch `updated` follows). The lead decided on 2026-10-14 (decision register DQ-075, A) that updates come as releases signed with an offline LionDriver key and checked by the device, replacing the git-branch updater (GAP-26); until then updates are off and installs are manual. Open: the channel and the signing pipeline, before G3 |
 | OI-5 | Closed 2026-10-23: the reduced criteria for vehicle-test baselines are the §3 row: CI green, safety tests, a closed-course checkout and reviewed safety changes (decision register DQ-047, A, the lead 2026-10-14). The review item needs the reviewer of [WP-M-02](../01-management/WP-M-02-safety-plan.md) OI-1 |
