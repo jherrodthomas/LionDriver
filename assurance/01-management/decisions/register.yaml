@@ -6628,3 +6628,82 @@
   answer: {choice: A, via: chat, at: 2026-11-03, note: "go with A on the pre-enable fault question"}
   applied: {ref: "80882f4", record: "openpilot selfdrived/state.py (transition P2); WP-W-02 v0.52 SWSR-302i, OI-12 item (1) closed; sm-selfdrived.yaml P2; WP-W-05 v0.9.7 §5.3; impact record change-2026-11-03-pre-enable-soft-disable", at: 2026-11-03}
   note: "Implemented and unit-tested (test_driver_transitions.py, mutants MP-1, MP-2); not verified on the vehicle (impact OI-1)."
+- id: DQ-434
+  question: "Where should the assurance kit (the reusable tools, skills, templates and CI from LionDriver) live: a private repository, or a public one?"
+  context: >-
+    The kit is what every new project starts from: the plugin of skills, the Python tools, the Copier template and the
+    reusable CI workflows. The inventory (docs/kit/inventory.md) finds about 440 reusable method files and about 570
+    automotive pack files in LionDriver. **Where the kit lives decides who can use it and what must be scrubbed first**:
+    a public repository needs every LionDriver fact, page link and licensed asset removed before the first push.
+  reversibility: easy
+  blocks: "docs/kit plan step 2 (the plugin) and every later step"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 21
+  options:
+    - key: A
+      recommended: true
+      title: "Private repository under your account, opened later if you want"
+      detail: "Start now with nothing to scrub; going public later is one review pass. Cost: only people you invite can use it."
+    - key: B
+      title: "Public repository from the start"
+      detail: "Others can find and use it, and it shows the method. Cost: a scrub of names, links and assets before each push, and support questions."
+    - key: C
+      title: "Inside LionDriver, as a folder"
+      detail: "No new repository. Cost: a new project has to copy from LionDriver, and openpilot comes along with it."
+  sources: ["docs/kit/README.md", "docs/kit/inventory.md"]
+  status: open
+- id: DQ-435
+  question: "Which project should be the kit's first pilot, the test that it really works outside LionDriver?"
+  context: >-
+    A kit is only proven when a second project starts from it. **The pilot decides which domain pack is built next.**
+    Another automotive project reuses the ISO 26262, SOTIF and 21434 pack that LionDriver already has; a project in another
+    industry (medical, industrial, robotics) needs a new pack (its standards, rating tables, gates and work product list)
+    and so proves that the packs work.
+  reversibility: easy
+  blocks: "docs/kit plan step 5 (the pilot); which domain pack is written next"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 21
+  after: [DQ-434]
+  options:
+    - key: A
+      recommended: true
+      title: "A second automotive project"
+      detail: "Fastest proof: the pack exists, so the pilot tests the method and the template. Cost: does not prove a non-automotive pack."
+    - key: B
+      title: "A project in another industry (name it in the note)"
+      detail: "Proves the packs are real. Cost: a new pack to write first (standards map, rating tables, gates), several weeks more."
+    - key: C
+      title: "A small plain-software project with a light risk register"
+      detail: "Cheapest; tests the template and CI without heavy standards. Cost: exercises little of the safety tooling."
+  sources: ["docs/kit/README.md"]
+  status: open
+- id: DQ-436
+  question: "Under which licence should the assurance kit be released?"
+  context: >-
+    The licence decides whether others (people or companies) may use, change and sell work built with the kit. LionDriver
+    itself is MIT like openpilot. **Licensed assets (the purchased Corolla mesh, the CC-BY scenery kits) are never part of
+    the kit, whatever is chosen**: each project secures its own (docs/kit/inventory.md §7).
+  reversibility: hard
+  blocks: "Making the kit public (DQ-434 B); accepting outside contributions"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 21
+  after: [DQ-434]
+  options:
+    - key: A
+      recommended: true
+      title: "MIT, the same as LionDriver and openpilot"
+      detail: "Anyone may use it, also commercially; simplest to combine with openpilot. Cost: no control over how others use it."
+    - key: B
+      title: "Apache 2.0"
+      detail: "As open as MIT, plus an explicit patent grant. Cost: slightly more notice text to carry."
+    - key: C
+      title: "Proprietary (all rights reserved) for now"
+      detail: "Keeps every option open, including selling it. Cost: nobody else can use it without a separate licence; can be opened later, which is easy, but not taken back once open."
+  sources: ["docs/kit/README.md", "LICENSE"]
+  status: open
