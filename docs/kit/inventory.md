@@ -12,10 +12,10 @@ to this product, or an output that a new project regenerates rather than copies.
 | Layer | Files | Lines (not counting generated outputs) |
 |---|---|---|
 | method | 442 | 89,088 |
-| pack | 574 | 189,545 |
-| project | 1310 | 50,921 |
+| pack | 576 | 189,869 |
+| project | 1312 | 51,348 |
 
-2,326 LionDriver files in all, of which 1,057 are generated outputs.
+2,330 LionDriver files in all, of which 1,057 are generated outputs.
 
 ## 2. By area
 
@@ -34,14 +34,14 @@ to this product, or an output that a new project regenerates rather than copies.
 | traceability | 61 | 15 | 12 | 29 | 20 |
 | 00 assessment | 53 | 12 | 13 | 27 | 13 |
 | Claude skills | 52 | 0 | 31 | 13 | 8 |
-| docs and field monitoring | 49 | 26 | 3 | 15 | 31 |
+| docs and field monitoring | 51 | 26 | 3 | 17 | 31 |
 | LionDriver changes in openpilot | 48 | 0 | 0 | 0 | 48 |
 | 10 safety case | 47 | 29 | 2 | 16 | 29 |
 | wiki builder and animations | 32 | 0 | 11 | 13 | 8 |
 | living safety case | 31 | 1 | 16 | 12 | 3 |
 | wiki pages | 30 | 0 | 2 | 28 | 0 |
+| other | 29 | 0 | 10 | 6 | 13 |
 | figure kit (figkit, scenekit) | 28 | 14 | 13 | 1 | 14 |
-| other | 27 | 0 | 10 | 6 | 11 |
 | process model and gates | 26 | 0 | 6 | 19 | 1 |
 | management work products | 23 | 2 | 0 | 20 | 3 |
 | FMEA and review tooling | 23 | 1 | 10 | 11 | 2 |
@@ -214,6 +214,7 @@ files. The 40 largest:
 | `assurance/sim/assets/tools/vehicle_figures.py` | 418 | 23 | 9 |
 | `assurance/sim/plant/report.py` | 412 | 32 | 7 |
 | `assurance/sim/vhil/vhil.py` | 388 | 37 | 1 |
+| `tools/kit/inventory.py` | 356 | 31 | 28 |
 | `assurance/02-concept/figures/fig_c10_goals.py` | 351 | 21 | 7 |
 | `assurance/sim/plant/override.py` | 333 | 47 | 2 |
 | `tools/wiki/dec_animations.py` | 325 | 23 | 86 |
@@ -229,6 +230,5 @@ files. The 40 largest:
 | `tools/vehicles/vehicle_register.py` | 195 | 13 | 1 |
 | `assurance/sim/plant/engaged_mismatch.py` | 156 | 33 | 3 |
 | `assurance/sim/plant/sim_panda.c` | 134 | 14 | 1 |
-| `.claude/skills/assurance-chart/SKILL.md` | 112 | 7 | 10 |
 
-The full per-file list is [`inventory.csv`](inventory.csv).
+The full per-file list: `python3 tools/kit/inventory.py --csv <file>` (about 350 KB, not committed).

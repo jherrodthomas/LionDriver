@@ -11,7 +11,8 @@ published page links and the repository name.
 The sorting is a heuristic on what a file is and which terms it uses, not a review: the report says which files to check by
 hand. It is a planning snapshot, so it has no --check; run it again to refresh.
 
-  python3 tools/kit/inventory.py                 write docs/kit/inventory.md and docs/kit/inventory.csv
+  python3 tools/kit/inventory.py                 write docs/kit/inventory.md
+  python3 tools/kit/inventory.py --csv FILE      also write the per-file list (about 350 KB, so it is not committed)
   python3 tools/kit/inventory.py --print         print the summary only
 """
 from __future__ import annotations
@@ -319,7 +320,7 @@ def report(items: list[Item]) -> str:
          "files. The 40 largest:", "",
          table([[f"`{it.path}`", it.lines, it.project_hits, it.pack_hits]
                 for it in sorted(review, key=lambda i: -i.lines)[:40]], ["File", "Lines", "Project terms", "Pack terms"]), "",
-         "The full per-file list is [`inventory.csv`](inventory.csv).", ""]
+         "The full per-file list: `python3 tools/kit/inventory.py --csv <file>` (about 350 KB, not committed).", ""]
   return "\n".join(md)
 
 
@@ -336,6 +337,7 @@ def write_csv(items: list[Item]) -> str:
 def main() -> None:
   ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
   ap.add_argument("--print", action="store_true", help="print the summary instead of writing the files")
+  ap.add_argument("--csv", type=Path, help="also write the per-file list here")
   args = ap.parse_args()
   items = scan()
   md = report(items)
@@ -344,8 +346,9 @@ def main() -> None:
     return
   OUT_DIR.mkdir(parents=True, exist_ok=True)
   (OUT_DIR / "inventory.md").write_text(md, encoding="utf-8")
-  (OUT_DIR / "inventory.csv").write_text(write_csv(items), encoding="utf-8")
-  print(f"inventory: {len(items)} files -> {OUT_DIR.relative_to(REPO)}/inventory.md, inventory.csv")
+  if args.csv:
+    args.csv.write_text(write_csv(items), encoding="utf-8")
+  print(f"inventory: {len(items)} files -> {OUT_DIR.relative_to(REPO)}/inventory.md" + (f", {args.csv}" if args.csv else ""))
 
 
 if __name__ == "__main__":
