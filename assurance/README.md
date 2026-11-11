@@ -159,6 +159,10 @@ Every work product starts with this block:
 | Approved | Verification review passed and approved by the approver named in the safety plan |
 | Baselined | Approved and frozen in a tagged configuration baseline |
 
+From Phase B of [WP-M-14](01-management/WP-M-14-iso26262-6-implementation-specification.md#22-status-vocabulary),
+three statuses are added for every work product: Planned, Verified and Superseded (DQ-172 A (lead, 2026-11-11)). Until
+then only the five statuses above are used, and the status checks accept only these.
+
 ### Changing a work product
 
 Work products change through pull requests in the same way code does (see

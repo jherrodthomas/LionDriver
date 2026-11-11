@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 4 performed: CR-12, FSA-F, SR-03, SR-04@G5 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 58 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 57 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -42,7 +42,7 @@
 | [WP-T-01](../../../trace/README.md) Requirements and traceability data (machine-readable), consistency evidence (update) | REL-10 | Draft | 2 | |
 | [WP-K-04](../../../10-safety-case/WP-K-04-functional-safety-assessment.md) Functional safety assessment report (performed independently, I3) | REL-11 | Skeleton | 3 | |
 | [WP-K-05](../../../10-safety-case/WP-K-05-cybersecurity-assessment.md) Cybersecurity assessment report (performed independently) | REL-12 | Skeleton | 4 | |
-| [WP-K-06](../../../10-safety-case/WP-K-06-release-record.md) Release for production / release record | REL-13 | Skeleton | 3 | |
+| [WP-K-06](../../../10-safety-case/WP-K-06-release-record.md) Release for production / release record | REL-13 | Skeleton | 2 | |
 
 ### Confirmation measures
 

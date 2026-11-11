@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work) |
 | Standard reference | ISO 26262-6:2018 Clauses 5–11 and Annex C; interfaces to ISO 26262-2, -3, -4, -8, -9. Informative links to ISO 21448:2022, ISO/SAE 21434:2021, ISO/PAS 8800:2024, UL 4600 |
-| Version | 0.5 (Phase A authorized by D-14 with documented exceptions (DQ-074, B): Activation, §3.3, §15, §16, OI-1; 2026-10-18). 0.4 (SWSR verification count pointed to RR-2026-009 §1 instead of §17; change-record count 16 in §3.2; §8.2 check list; §13 palette aligned with the shared figure palette; open items with due gate; 2026-10-14). 0.3 (merge of PR #47 with the base: activation decision renumbered D-09 → D-14, since the base uses D-08…D-13; review record renumbered RR-2026-008 → RR-2026-009; CFG-001 named by generation (E210); 2026-10-13). 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-009 (OI-6); 2026-10-12). 0.1 |
+| Version | 0.6 (the lead's answers of 2026-11-11: §2.2 and OI-3, the status extension is used project-wide from Phase B, DQ-172 A; §8.3, §10 and OI-4, release-relevant raw results go into the signed release assets and everyday runs stay as CI artifacts, DQ-173 A; §11, the Part 6 register is `trace/items/register-part6.yaml`, DQ-174 A; nothing is applied before Phase B; 2026-11-11). 0.5 (Phase A authorized by D-14 with documented exceptions (DQ-074, B): Activation, §3.3, §15, §16, OI-1; 2026-10-18). 0.4 (SWSR verification count pointed to RR-2026-009 §1 instead of §17; change-record count 16 in §3.2; §8.2 check list; §13 palette aligned with the shared figure palette; open items with due gate; 2026-10-14). 0.3 (merge of PR #47 with the base: activation decision renumbered D-09 → D-14, since the base uses D-08…D-13; review record renumbered RR-2026-008 → RR-2026-009; CFG-001 named by generation (E210); 2026-10-13). 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-009 (OI-6); 2026-10-12). 0.1 |
 | Status | Draft. Phase A (readiness and gap assessment) may start; Phases B–F are deferred. This document evidences no Part 6 activity |
 | Activation | **Phase A authorized** by D-14 on 2026-10-14 with documented exceptions (§3.3; decision register DQ-074, B). Phases B–F still need an approved entry baseline (§3.1) |
 | ASIL / scope | Software of the item. Highest proposed ASIL is C (SG-01, [WP-C-03](../02-concept/WP-C-03-hara.md)); ratings are unconfirmed until CR-02 |
@@ -48,17 +48,17 @@ The licensed text of ISO 26262 is authoritative. No standard text is reproduced 
 
 ### 2.2 Status vocabulary
 
-The specification calls for more statuses than the current work product convention ([`assurance/README.md`](../README.md): Skeleton, Draft, In review, Approved, Baselined). The proposed mapping below is adopted in Phase B (§15). It is not applied to existing documents yet.
+The specification calls for more statuses than the current work product convention ([`assurance/README.md`](../README.md): Skeleton, Draft, In review, Approved, Baselined). The mapping below is adopted in Phase B (§15) for all work products, not only the Part 6 records (DQ-172 A (lead, 2026-11-11)). It is not applied to existing documents yet. In Phase B the convention in the README, the status checks and the status lines of the existing documents are updated once.
 
 | Specification status | Current convention | Requirement `status` ([WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md)) | Case record ([schema](../case-records/schema/case-schema.json)) | Meaning |
 |---|---|---|---|---|
-| Planned | (none; propose adding) | — | — | Identified in the register; no content |
+| Planned | (none; added project-wide in Phase B) | — | — | Identified in the register; no content |
 | Draft | Skeleton / Draft | `proposed` | `draft` | Content exists; not reviewed |
 | In development | Draft | `agreed` → `implemented` | `in-progress` | Being worked against an approved input |
 | In review | In review | — | `review-required` / `in-review` | Verification review open |
 | Approved | Approved | `agreed` | `accepted` | Review passed at the independence level required by [WP-M-06](WP-M-06-confirmation-measures-plan.md) |
-| Verified | (none; propose adding) | `verified` | evidence `available` + review `accepted` | Approved, and its verification records are accepted for a named baseline and configuration |
-| Superseded | (none; propose adding) | `withdrawn` (requirements) | baseline `superseded` | Replaced; kept for history |
+| Verified | (none; added project-wide in Phase B) | `verified` | evidence `available` + review `accepted` | Approved, and its verification records are accepted for a named baseline and configuration |
+| Superseded | (none; added project-wide in Phase B) | `withdrawn` (requirements) | baseline `superseded` | Replaced; kept for history |
 | Not applicable | N/A (tailored) | `withdrawn` | `withdrawn` | Tailored out, with rationale ([WP-M-01 §5](WP-M-01-assurance-strategy.md#5-tailoring)) |
 
 Allowed transitions are checked by tooling (§12). Leaving out a state is not allowed. For example, a record cannot go from `Draft` to `Verified`.
@@ -430,7 +430,7 @@ Trace links are explicit fields in reviewed records. An AI or tool may propose a
 
 ### 8.3 Evidence binding
 
-A verification result record carries at least: result ID, verification case ID, requirement IDs, build manifest ID (all submodule commits, toolchain and flags), configuration ID, test environment ID, tool versions, execution date, outcome, raw artifact location, anomaly references, reviewer and review state. Coverage figures carry the tool, the metric (statement, branch, MC/DC) and the exact scope measured.
+A verification result record carries at least: result ID, verification case ID, requirement IDs, build manifest ID (all submodule commits, toolchain and flags), configuration ID, test environment ID, tool versions, execution date, outcome, raw artifact location, anomaly references, reviewer and review state. For release-relevant results the raw artifact location is the signed release assets with their offline copy ([WP-P-10 §5](../07-supporting/WP-P-10-release-management.md#5-evidence-package), DQ-093 B); everyday runs stay as CI artifacts and expire (DQ-173 A (lead, 2026-11-11)). Coverage figures carry the tool, the metric (statement, branch, MC/DC) and the exact scope measured.
 
 ## 9. Living Safety Case integration
 
@@ -460,7 +460,7 @@ The structure proposed in the source specification is mapped onto the existing t
 | `analyses/software-fmea/`, `software-fta/` | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md); system level in [`08-analyses/`](../08-analyses/) | Reuse; structured worksheets may be added under `05-software/analyses/` in Phase C if the Markdown tables become unmanageable |
 | `analyses/dependent-failures/`, `freedom-from-interference/` | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md), WP-W-04 §4, WP-W-03 §6 | Reuse |
 | `traceability/` | [`trace/`](../trace/README.md) | Reuse; add item kinds |
-| `evidence/` | [`case/evidence/`](../case-records/evidence/) for evidence records; raw results as CI artifacts or a results folder decided in Phase B | Reuse + decide |
+| `evidence/` | [`case/evidence/`](../case-records/evidence/) for evidence records; release-relevant raw results in the signed release assets, everyday runs as CI artifacts (DQ-173 A (lead, 2026-11-11)) | Reuse |
 | `reviews/` | [`case/reviews/`](../case-records/reviews/) | Reuse |
 | `baselines/` | [`case/baselines/`](../case-records/baselines/) + git tags ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) | Reuse |
 | `reports/` | Generated outputs only (dashboard SVGs under `docs/assets/liondriver/assurance/`) | Reuse; generated files are never authoritative |
@@ -470,7 +470,7 @@ Sensitive vulnerability information is not published automatically; it follows [
 
 ## 11. Work product register extension
 
-[WP-M-00](WP-M-00-work-product-register.md) remains the master register. Phase B adds a machine-readable Part 6 register (proposed `assurance/trace/items/register-part6.yaml`, or a `case-records/` kind, decided in Phase B) generated into WP-M-00 §3.5 so the two cannot drift.
+[WP-M-00](WP-M-00-work-product-register.md) remains the master register. Phase B adds a machine-readable Part 6 register (`assurance/trace/items/register-part6.yaml`, in the trace data, so it reuses the trace schema, ID and link checks; DQ-174 A (lead, 2026-11-11). Evidence and review status are linked from it, not checked by the trace tooling) generated into WP-M-00 §3.5 so the two cannot drift.
 
 Fields per record: work product ID, name, ISO 26262 clause, governing process, owner, ASIL applicability, component, configuration, source requirements, required inputs, expected outputs, verification obligations, review authority, status (§2.2), version, baseline, evidence references, open findings, approval record, and **classification**:
 
@@ -558,7 +558,7 @@ D-14 authorizes Phase A only (§3.3). Until the entry baseline for Phase B is ap
 |---|---|---|---|
 | OI-1 | Closed 2026-10-18: D-14 recorded (decision register DQ-074, B, the lead 2026-10-14); Phase A starts with the exceptions of §3.3 | Project maintainer | G2 |
 | OI-2 | Check every clause reference and the principal work product lists in §4 against the licensed ISO 26262-6:2018 | Reviewer | G2 |
-| OI-3 | Decide whether to adopt the §2.2 status extension (Planned, Verified, Superseded) project-wide or for Part 6 records only | Project maintainer | G3 |
-| OI-4 | Decide the store for raw verification results (CI artifacts with retention vs a committed results folder) | Project maintainer | G3 |
+| OI-3 | Closed 2026-11-11 (DQ-172 A (lead, 2026-11-11)): the §2.2 status extension (Planned, Verified, Superseded) is used project-wide from Phase B. The README convention, the status checks and the existing status lines are updated in Phase B (§15) | Project maintainer | G3 |
+| OI-4 | Closed 2026-11-11 (DQ-173 A (lead, 2026-11-11)): release-relevant raw verification results go into the signed release assets (§8.3, WP-P-10 §5); everyday runs stay as CI artifacts. The collecting step is part of the release script ([WP-P-10](../07-supporting/WP-P-10-release-management.md) OI-1, OI-2) | Project maintainer | G3 |
 | OI-5 | Independent (I1) review of this specification | External reviewer | G2 |
 | OI-6 | Close the judgement findings F-01…F-32 of the software alignment audit [RR-2026-009](../05-software/reviews/RR-2026-009.md), in particular F-11, F-14, F-16, F-19, F-20 (documents still describing `8b8c6ae`) | Safety engineer, SW lead | G2 |
