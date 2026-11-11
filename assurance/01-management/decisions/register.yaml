@@ -4125,7 +4125,8 @@
       title: "Rely on the hashes only"
       detail: "Nothing to store. Cost: if comma's copies disappear, old releases cannot be rebuilt or reinstalled."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-7, SV-3, U-11", "assurance/01-management/WP-M-07-risk-management.md R-12", "DQ-093"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-172
   question: "Should the three new document statuses (Planned, Verified, Superseded) be used across the whole project, or only for the ISO 26262 Part 6 software records?"
@@ -4149,7 +4150,8 @@
       title: "Part 6 records only"
       detail: "Only the software records change. Cost: two vocabularies, and a reader has to know which one a document uses."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §2.2, OI-3", "assurance/README.md (status convention)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-173
   question: "Where should raw verification results (test logs, reports) be kept so they outlive CI: in the signed release assets, or committed to the repository?"
@@ -4177,7 +4179,8 @@
       title: "CI artefacts with the longest retention only"
       detail: "No extra step. Cost: GitHub's maximum retention is still shorter than the product's life, so R-25 stays open."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md OI-4, §8.3", "assurance/01-management/WP-M-07-risk-management.md R-25", "assurance/07-supporting/WP-P-10-release-management.md OI-2 (DQ-093 B)", "WP-M-05 OI-4"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-174
   question: "Should the machine-readable register of Part 6 work products be a file in the trace data or a new kind of safety-case record?"
@@ -4202,7 +4205,8 @@
       title: "A case-records kind"
       detail: "Reuses the case schema with evidence and review states. Cost: a new record kind and its schema, and the work-product IDs leave the trace data."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §9 (WP-M-00 remains the master register)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-175
   question: "What range of mounting position and camera angles should the installer accept: the range the driving model was validated for, or the much wider range openpilot's calibration accepts?"
@@ -4227,7 +4231,8 @@
       title: "openpilot's calibration limits"
       detail: "Available now, nothing to derive. Cost: accepts mounts outside anything validated, which TSR-807 does not allow."
   sources: ["assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md OI-2, INS-25, SPC-03", "assurance/03-system/WP-S-06-requirements-production-operation.md TSR-807", "openpilot/selfdrive/locationd/calibrationd.py"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-176
   question: "How should field logs flag a possible crash for review: derive a validated rule from the accelerometer and car signals, or keep today's placeholder of braking harder than 6 m/s²?"
@@ -4251,7 +4256,8 @@
       title: "Keep the placeholder"
       detail: "No work. Cost: the flag is unvalidated, so missed and false crash candidates are unknown."
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-8, MON-14, K-01"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-177
   question: "When and how to add a configuration-independent claim layer for reusing platform evidence across configurations?"
@@ -4293,7 +4299,8 @@
       title: "Debug build with a written representativeness argument"
       detail: "Available now. Cost: weaker evidence; the argument must show the hooks change nothing else."
   sources: ["assurance/05-software/WP-W-08-embedded-software-testing.md OI-2", "assurance/05-software/hil-bench/README.md P-10"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-179
   question: "How should the tolerances of the model compile-equivalence test be set: from an analysed half-precision error budget, or from differences observed in runs?"
@@ -4317,7 +4324,8 @@
       title: "Set tolerances from observed differences"
       detail: "Faster. Cost: risk of accepting a defect as normal rounding."
   sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-6, MLR-14"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-180
   question: "How should the five signatures on a release record be recorded: a signed git tag plus a signed commit of the filled record, or approving reviews on GitHub?"
@@ -4342,7 +4350,8 @@
       title: "Approving reviews on the release pull request"
       detail: "Easiest for signers. Cost: the binding to the release lives in GitHub, and is lost if the repository moves."
   sources: ["assurance/10-safety-case/WP-K-06-release-record.md OI-2, §8", "assurance/07-supporting/WP-P-10-release-management.md OI-3, OI-4 (DQ-075, DQ-086)"]
-  status: open
+  status: answered
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-181
   question: "What is the field-report path for users once a release exists?"
@@ -6595,8 +6604,11 @@
     - key: C
       title: "Treat AGNOS as comma's responsibility and follow comma's notices only"
       detail: "Least work. Cost: relies on comma reporting what affects LionDriver's pinned version."
+  decider: lead
+  asked: 2026-11-11
+  batch: 22
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md §5.1", "assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md MS-04", "DQ-169"]
-  status: queued
+  status: open
 
 - id: DQ-433
   question: "If a fault appears while you hold the brake at a standstill to engage, should LionDriver end the engagement at once, or carry on as openpilot does today?"
@@ -6653,7 +6665,9 @@
       title: "Inside LionDriver, as a folder"
       detail: "No new repository. Cost: a new project has to copy from LionDriver, and openpilot comes along with it."
   sources: ["docs/kit/README.md", "docs/kit/inventory.md"]
-  status: open
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "docs/kit/README.md §7 (v0.2)", at: 2026-11-11}
 - id: DQ-435
   question: "Which project should be the kit's first pilot, the test that it really works outside LionDriver?"
   context: >-
@@ -6680,7 +6694,10 @@
       title: "A small plain-software project with a light risk register"
       detail: "Cheapest; tests the template and CI without heavy standards. Cost: exercises little of the safety tooling."
   sources: ["docs/kit/README.md"]
-  status: open
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g, note: "research the most used fusa standards to decide ot the most difficult"}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "docs/kit/README.md §7 (v0.2)", at: 2026-11-11}
+  note: "The lead asked Claude to research the most used functional safety standards, or the most demanding, and pick the pilot's industry from that; the pick and its reasons are in docs/kit/README.md §7."
 - id: DQ-436
   question: "Under which licence should the assurance kit be released?"
   context: >-
@@ -6706,7 +6723,10 @@
       title: "Proprietary (all rights reserved) for now"
       detail: "Keeps every option open, including selling it. Cost: nobody else can use it without a separate licence; can be opened later, which is easy, but not taken back once open."
   sources: ["docs/kit/README.md", "LICENSE"]
-  status: open
+  status: applied
+  answer: {choice: other, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g, note: "private"}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "docs/kit/README.md §7 (v0.2)", at: 2026-11-11}
+  note: "Read as option C: proprietary, all rights reserved; the kit stays private (DQ-434 A). Can be opened later."
 - id: DQ-437
   question: "The decision inbox page can no longer be opened from the sessions. Should it be published at a new link?"
   context: >-
@@ -6731,3 +6751,53 @@
   answer: {choice: A, via: chat, at: 2026-11-11, note: "publish the inbox at a new link"}
   applied: {ref: "jherrodthomas/LionDriver#594", record: "assurance/01-management/decisions/README.md (inbox page link); .claude/skills/decision-inbox/SKILL.md", at: 2026-11-11}
   note: "New page https://claude.ai/artifact/4pJHygV3rQz2zB1NmJqDsv (db and user, as before); its store was read empty after publishing."
+- id: DQ-438
+  question: "Which product should the IEC 61508 pilot of the assurance kit be built around?"
+  context: >-
+    You chose a pilot outside automotive and asked Claude to pick the standard (DQ-435); the pick is IEC 61508, the base
+    standard most other sectors derive from (docs/kit/README.md §7). The pilot needs a real item to analyse, from its
+    hazards to its tests. **The product decides the cost and how much of the kit gets exercised**: hardware brings the
+    FMEDA and safe failure fraction into play, software alone does not.
+  reversibility: easy
+  blocks: "docs/kit plan step 5 (the pilot); the IEC 61508 pack's first use"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 22
+  options:
+    - key: A
+      recommended: true
+      title: "A small safety controller you can build: an emergency-stop and guard-door monitor on a microcontroller board, aiming at SIL 2"
+      detail: "Exercises the whole kit: hazards, SIL targets, hardware FMEDA and safe failure fraction, software, tests on the bench. Cost: about $50 to $150 of boards, relays and switches."
+    - key: B
+      title: "Software only: a safety monitor function for an existing machine, with the hardware taken as given"
+      detail: "No purchase, quickest start. Cost: the hardware half of IEC 61508 (FMEDA, safe failure fraction) goes untested."
+    - key: C
+      title: "A product you already have in mind (name it in the note)"
+      detail: "A pilot you care about. Cost: Claude sizes it first, and it may need more hardware or access."
+  sources: ["docs/kit/README.md §5, §7", "DQ-435"]
+  status: open
+- id: DQ-439
+  question: "When selfdrived stops responding while engaged, should LionDriver also cancel the car's cruise control, instead of leaving it on for you to cancel?"
+  context: >-
+    If selfdrived stops, steering and openpilot's acceleration stop at once (the freshness check in controlsd), the panda
+    withdraws authority within 0.3 s, sounds the siren at 0.5 s if the car's cruise is still on (TSR-307, TSR-516), and the
+    screen shows "System Unresponsive" after 5 s. **But nothing cancels the car's cruise**: controlsd takes "engaged" from
+    selfdrived's last message, so it never sends the cancel that every other disengagement sends, and cruise stays on until
+    you cancel it.
+  reversibility: easy
+  blocks: "controlsd (CC.enabled and the cruise cancel); the siren case of TSR-516(c); SW FMEA SWF-047 and the selfdrived stall rows"
+  gate: G3
+  decider: lead
+  asked: 2026-11-11
+  batch: 22
+  options:
+    - key: A
+      recommended: true
+      title: "Cancel cruise when selfdrived's messages stop, as for any other disengagement"
+      detail: "The car's cruise drops with its own chime and the siren is left for a cancel that fails. Cost: a change in controlsd from upstream, with a test and a mutant; a stall of selfdrived longer than 0.1 s ends the engagement (it ends at 0.3 s today anyway)."
+    - key: B
+      title: "Keep today's behaviour: the panda withdraws authority and sounds the siren, you cancel cruise"
+      detail: "No change. Cost: cruise stays on after the system has stopped controlling, with only the siren and, after 5 s, the screen to tell you."
+  sources: ["openpilot/selfdrive/controls/controlsd.py (CC.enabled, cruiseControl.cancel)", "panda/board/drivers/engaged_mismatch.h (TSR-307(a), TSR-516(b)/(c))", "openpilot/selfdrive/ui/onroad/alert_renderer.py (System Unresponsive)", "assurance/sim/results/engaged-mismatch.md"]
+  status: open

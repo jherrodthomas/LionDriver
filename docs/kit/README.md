@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Status | Draft plan, step 1 (inventory) done. AI-drafted (Claude), not reviewed |
-| Version | 0.1 (2026-11-11) |
-| Lead decisions | DQ-434 where the kit lives, DQ-435 the pilot project, DQ-436 the licence (register batch 21) |
+| Version | 0.2 (2026-11-11): the lead's answers recorded (§7); the pilot pack chosen, IEC 61508. 0.1 (2026-11-11): first plan |
+| Lead decisions | DQ-434 A: a private repository. DQ-435 B: a pilot in another industry, its standard chosen by research (§7). DQ-436: private, all rights reserved |
 
 **Goal.** A new project starts with the same layout, records, tools, checks, skills, pages and habits that LionDriver
 built up, and gets later improvements without copying by hand.
@@ -74,10 +74,10 @@ project, of which 1,057 are generated outputs that a new project regenerates. Tw
 | Step | What | State |
 |---|---|---|
 | 1 | Inventory: sort every file, list the hard-coded values ([inventory.md](inventory.md), [`tools/kit/inventory.py`](../../tools/kit/inventory.py)) | Done (0.1) |
-| 2 | Plugin: the generic skills and the coordinator, with the LionDriver facts moved to settings | Waits on DQ-434 |
+| 2 | Plugin: the generic skills and the coordinator, with the LionDriver facts moved to settings, in a new private repository (DQ-434 A) | Next |
 | 3 | Tools package and `assurance.toml`; LionDriver becomes the first user, so nothing is lost and the two cannot drift | After 2 |
 | 4 | Copier template and reusable CI workflows | After 3 |
-| 5 | Pilot on a real second project | Waits on DQ-435 |
+| 5 | Pilot on a real second project, with the IEC 61508 pack (§7) | Waits on the pilot product (§7) |
 
 ## 6. Risks
 
@@ -86,3 +86,31 @@ project, of which 1,057 are generated outputs that a new project regenerates. Tw
   whatever the licence).
 - **Page links.** Each project's pages are its own and their links are settings: the old page links became unreachable
   once, and the decision inbox moved to a new link for the same reason on 2026-11-11 (DQ-437).
+
+## 7. The lead's answers (2026-11-11)
+
+| Question | Answer | What follows |
+|---|---|---|
+| Where the kit lives (DQ-434) | A: a private repository | Created when step 2 starts; LionDriver facts never enter it |
+| The licence (DQ-436) | "Private": read as proprietary, all rights reserved | No licence file grants rights; it can be opened later, which is the easy direction |
+| The pilot (DQ-435) | B: another industry; "research the most used functional safety standards, or the most difficult, to decide" | The research and the pick below |
+
+**The research.** The functional safety standards in use, by industry: IEC 61508, the cross-industry base; ISO 26262 (road
+vehicles), the railway standard EN 50128 (now EN 50716:2023), IEC 61511 (process plants) and IEC 62061 (machinery), all
+derived from IEC 61508; IEC 62304 (medical device software, with ISO 14971 for risk); DO-178C (airborne software). No source
+gives usage counts, but IEC 61508 sits under the most sectors. For difficulty, no source ranks them outright; DO-178C Level A
+has the heaviest fixed obligations (MC/DC structural coverage with independence, approval by the certification
+authority), while IEC 61508 SIL 4 adds hardware redundancy that ASIL D does not require.
+
+**The pick: IEC 61508 for the first new pack.**
+
+- **Most used.** It is the parent of the process, machinery and railway standards, so its pack is the base the next packs
+  inherit from, the way ISO 26262 was derived from it.
+- **A real test of the pack mechanism.** It keeps the lifecycle shape LionDriver already has, but changes what a pack must
+  carry: SIL instead of ASIL; risk graphs or LOPA instead of severity, exposure and controllability; hardware fault
+  tolerance and safe failure fraction instead of SPFM and LFM.
+- **DO-178C is the stress test after it**: a different lifecycle (plans such as the PSAC, and certification liaison) and the
+  hardest coverage rule. A third pack would follow the pilot, not precede it.
+
+**Still to choose: the pilot product** (money and hardware, so the lead's). It goes in the next batch of questions.
+
