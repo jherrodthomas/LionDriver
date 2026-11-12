@@ -98,6 +98,23 @@ class ExportTest(unittest.TestCase):
     self.assertEqual(c["version"], "0.68.0")
     self.assertIn("from the header", dict(export_wp.block_rows(c))["Version"])
 
+  def test_x_above_zero_from_the_header_is_not_called_approved(self):
+    c = export_wp.control("WP-C-01", "main", self.rows(), None)
+    c = dict(c, version="1.21.0")
+    self.assertIn("no gate approval recorded", export_wp.x_meaning(c))
+    self.repo.merge_pr(2, "G1 approved", {ledger.APPROVALS:
+                       "- gate: G1\n  date: 2026-12-01\n  record: gates/G1.md\n  documents: [WP-C-01]\n"})
+    ledger.update(self.path, "main", cwd=self.repo.root)
+    c = export_wp.control("WP-C-01", "main", self.rows(), None)
+    self.assertEqual((c["version"], export_wp.x_meaning(c)), ("1.0.0", "approved at gate G1"))
+
+  def test_document_index(self):
+    entries, source = export_wp.document_index("main", self.rows())
+    self.assertEqual([(e["doc"], e["version"], e["status"]) for e in entries], [("WP-C-01", "0.68.0", "Draft")])
+    self.assertIn("the change ledger, row", source)
+    self.assertNotEqual(entries[0]["changed"], "")
+    self.assertIn("no rows yet", export_wp.document_index("main", None)[1])
+
   def test_html_export_inlines_images_and_keeps_every_word(self):
     out = Path(self.tmp.name) / "out"
     [p] = export_wp.export(["WP-C-01"], "html", out, rows=self.rows(), commit="main")

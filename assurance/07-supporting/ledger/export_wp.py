@@ -141,6 +141,22 @@ def git(*args: str) -> str:
   return subprocess.run(["git", *args], cwd=REPO, check=True, capture_output=True, text=True).stdout
 
 
+def rows_in_history(rows: list[dict], commit: str) -> list[dict]:
+  """The ledger rows whose commit is in the first-parent history of `commit`, oldest first.
+
+  Usually the ledger's last row is an ancestor of the commit (an export of liondriver-dev or of a branch off it):
+  then every row is in its history, and only that one ancestry test is needed, which works in a shallow clone.
+  Otherwise (an older commit) the rows are filtered against the full history."""
+  if not rows:
+    return []
+  last = rows[-1]["commit"]
+  if subprocess.run(["git", "merge-base", "--is-ancestor", last, commit], cwd=REPO,
+                    capture_output=True).returncode == 0:
+    return rows
+  history = set(ledger.first_parent_commits(commit, REPO))
+  return [r for r in rows if r["commit"] in history]
+
+
 def find_doc(doc: str, commit: str) -> str:
   docs = ledger.documents_at(commit, REPO)
   if doc not in docs:
@@ -157,8 +173,7 @@ def control(doc: str, commit: str, rows: list[dict] | None, copy: str | None) ->
   if rows is not None:
     # only the rows this commit's history contains: an older commit gets the version it had, and changes the
     # ledger has not recorded yet (a branch, or a merge whose ledger run is pending) are counted, not hidden
-    history = set(ledger.first_parent_commits(commit, REPO))
-    rows = [r for r in rows if r["commit"] in history]
+    rows = rows_in_history(rows, commit)
     if rows:
       pending = int(git("rev-list", "--count", "--first-parent", f"{rows[-1]['commit']}..{commit}", "--", path).strip())
   v = doc_versions(rows, doc, fields.get("Version", ""))
@@ -186,10 +201,20 @@ def footer_line(c: dict) -> str:
   return f"{c['doc']} · v{c['version']} · {c['status']} · {c['commit'][:8]} | {copy}"
 
 
+def x_meaning(c: dict) -> str:
+  """What X says (DQ-442): only a recorded gate approval raises it; an X above 0 from before the ledger is said so."""
+  if c["version"].startswith("0."):
+    return "X = 0: not yet approved at a gate"
+  if any(r.get("approvals") for r in c["history"]):
+    gates = ", ".join(a["gate"] for r in c["history"] for a in r.get("approvals") or [])
+    return f"approved at gate {gates}"
+  return "X taken from the header when the ledger started; no gate approval recorded"
+
+
 def block_rows(c: dict) -> list[tuple[str, str]]:
   f = c["fields"]
   rows = [("Document", f"{c['doc']} {c['title']}"),
-          ("Version", f"{c['version']} ({'X = 0: not yet approved at a gate' if c['version'].startswith('0.') else 'approved at a gate'})"
+          ("Version", f"{c['version']} ({x_meaning(c)})"
                       + ("" if c["version_source"] == "ledger" else f"; from the {c['version_source']}")
                       + (f"; +{c['pending']}: changes the ledger has not recorded yet, draft only" if c["pending"] else "")),
           ("Status", c["status"]), ("Effective", c["effective"])]
@@ -300,8 +325,7 @@ def versions_at(commit: str, rows: list[dict] | None) -> tuple[dict[str, str], s
   docs = ledger.documents_at(commit, REPO)
   if rows is None:
     return {d: ledger.header_version(commit, p, REPO) for d, p in docs.items()}, "the headers: the change ledger has no rows yet"
-  history = set(ledger.first_parent_commits(commit, REPO))
-  rows = [r for r in rows if r["commit"] in history]
+  rows = rows_in_history(rows, commit)
   current = ledger.current_versions(rows)
   out = {}
   for d, p in docs.items():
@@ -311,6 +335,34 @@ def versions_at(commit: str, rows: list[dict] | None) -> tuple[dict[str, str], s
     n = int(git("rev-list", "--count", "--first-parent", f"{rows[-1]['commit']}..{commit}", "--", p).strip())
     out[d] = current[d] + (f"+{n}" if n else "")
   return out, "the change ledger; +N counts changes it has not recorded yet"
+
+
+def document_index(commit: str, rows: list[dict] | None) -> tuple[list[dict], str]:
+  """Every work product at a commit with its stamped version, status, title, path and the ledger row that last set
+  its version; and a one-line statement of where the versions come from (for pages such as the wiki)."""
+  commit = git("rev-parse", commit).strip()
+  versions, source = versions_at(commit, rows)
+  hist = rows_in_history(rows or [], commit)
+  last: dict[str, dict] = {}
+  for r in hist:
+    for d, v in (r.get("documents") or {}).items():
+      if v:
+        last[d] = r
+  out = []
+  for doc, path in sorted(ledger.documents_at(commit, REPO).items()):
+    title, fields, _ = split_source(git("show", f"{commit}:{path}"))
+    out.append({"doc": doc, "title": re.sub(rf"^{re.escape(doc)}\s*", "", title), "path": path,
+                "version": versions[doc], "status": re.sub(r"[*`]", "", fields.get("Status", "")).split("(")[0].strip(),
+                "changed": (last[doc]["date"][:10] if doc in last and last[doc]["kind"] != "seed"
+                            else git("log", "-1", "--format=%cs", last[doc]["commit"] if doc in last else commit,
+                                     "--", path).strip()),
+                "row": last.get(doc)})
+  if hist:
+    tip = hist[-1]
+    source = f"the change ledger, row {tip['seq']} ({tip['commit'][:8]}, {tip['date'][:10]})"
+    if any("+" in e["version"] for e in out):
+      source += "; +N counts changes it has not recorded yet"
+  return out, source
 
 
 def distribution_module():

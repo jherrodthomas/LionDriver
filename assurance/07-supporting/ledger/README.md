@@ -93,6 +93,5 @@ python3 assurance/case-records/tools/distribution.py outdated   # who holds a ve
 | Item | Status |
 |---|---|
 | Protect the `ledger` branch against force-push and deletion | Repository setting, for the lead |
-| Version on the wiki pages | Next step (WP-P-04 OI-7) |
 | Remove the hand-typed `Version` from work-product headers, keeping their text as revision history | Next step (WP-P-04 OI-7) |
 | Ledger tabs in the workbook viewer page | Next step |

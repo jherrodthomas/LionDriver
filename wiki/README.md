@@ -26,7 +26,10 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - Link to another page as `[Glossary](Glossary.md)`: the build strips `.md` so the link works on the wiki, and the
   folder stays readable on GitHub.
 - Link to a repository file or folder as `[`assurance/`](../assurance/README.md)`: the build turns it into an
-  absolute link on the synced branch and fails if the target does not exist.
+  absolute link on the synced branch and fails if the target does not exist. The first link on a page to a work
+  product's file also gets the version the change ledger gives it (`<sub>v0.68.0</sub>`); do not type versions.
+  `{{WP_VERSIONS}}` becomes the table of every work product's version ([Work product versions](Work-product-versions.md))
+  and `{{LEDGER_SOURCE}}` says where the versions come from.
 - Every page must be linked from [`_Sidebar.md`](_Sidebar.md). [`_Footer.md`](_Footer.md) carries the sync stamp;
   `{{REPO}}`, `{{BRANCH}}`, `{{SYNC_COMMIT}}` and `{{SYNC_DATE}}` are filled in at build time, and
   `{{MERGE_LOG}}` becomes the list of merged pull requests read from the checkout's merge commits.
