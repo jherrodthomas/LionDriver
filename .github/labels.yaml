@@ -1,0 +1,24 @@
+# Repository labels, kept in sync by .github/workflows/labels.yaml (tools/ci/sync_labels.py).
+#
+# The workflow creates a label listed here that does not exist, and updates the colour and description of one
+# that differs. It never deletes or renames a label, so labels not listed here (the labeler's area labels, for
+# example) are left alone.
+#
+# Format: one entry per label, the three keys in this order. Colour is six hex digits without '#'.
+# A description is at most 100 characters (GitHub's limit).
+#
+# The four change-class labels are those of WP-P-02 §4; their meaning is the class definitions at the top of
+# assurance/07-supporting/safety-relevant-paths.txt.
+
+- name: sr-a
+  color: B60205
+  description: "Safety-relevant, ASIL path: code or data in the panda safety envelope (WP-P-02)"
+- name: sr-q
+  color: D93F0B
+  description: "Safety-relevant, QM/SOTIF/CS: feeds hazards, configures the envelope or affects FFI (WP-P-02)"
+- name: sr-t
+  color: FBCA04
+  description: "Safety-relevant, tooling: build, test, CI or dependency config that changes evidence (WP-P-02)"
+- name: nsr
+  color: C5DEF5
+  description: "Not safety-relevant: standard change route (WP-P-02)"
