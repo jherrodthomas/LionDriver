@@ -64,6 +64,8 @@ FIGURES = [
   A / "01-management/figures/vcycle/fig-m00-vcycle-legend.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-time.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-crosswalk.svg",
+  A / "01-management/figures/vcycle/fig-m00-vcycle-gates.svg",
+  *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-impact-*.svg")),  # recent changes
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-std-*.svg")),  # one per standard
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-x-*.svg")),  # exploded views, one per box
   A / "05-software/coverage/card-overview.svg",
@@ -161,6 +163,7 @@ TERMS = {
   "FFI": "freedom from interference",
   "STRIDE": "spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege",
   "ISO": "International Organization for Standardization",
+  "IFR": "interface record (trace/items/ifr.yaml): a cross-domain interface, agreed only by a recorded review",
   "WBS": "work breakdown structure (WP-M-03 §3)",
   "ASPICE": "Automotive SPICE, the process capability model",
   "GSN": "Goal Structuring Notation, the diagram language of the safety case",
@@ -437,6 +440,7 @@ TERMS = {
   "CA-": "cybersecurity assumption on an entity outside the item (WP-C-10 §2)",
   "IX-": "safety-security interaction (HATARA)",
   "DQ-": "decision of the project lead (decision register)",
+  "IFR-": "interface record IFR-nn: one cross-domain interface with its owners, open item and agreement state (trace/items/ifr.yaml)",
   "SR-": "independent SOTIF or AI evaluation review, SR-nn (WP-M-06 §7)",
   "AUD-": "functional safety audit, AUD-n (WP-M-06 §5)",
   "FSA-F": "final functional safety assessment at G5 (WP-M-06 §6)",

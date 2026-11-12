@@ -1,0 +1,271 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="996" viewBox="0 0 1640 996" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Change impact: WP-W-11</title>
+<desc>Change impact of WP-W-11 Cybersecurity implementation and verification, dated 2026-11-11: 5 work products depend on it in the process model; 2 have no version dated after it, 2 have been updated since, 1 have no dated version.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1640" height="996" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">Change impact on the V-cycle</text>
+<text x="40" y="68" font-size="13" fill="#475569">Every work product that depends on the change in the process model (WP-P-11), coloured by whether it has a version dated after the change.</text>
+<text x="40" y="104" font-size="12" fill="#475569" font-weight="700">Recent changes:</text>
+<g transform="translate(150,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">WP-P-07 · 12 Nov</text></g>
+<g transform="translate(261.5,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">WP-P-02 · 12 Nov</text></g>
+<g transform="translate(373,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#0F172A" stroke="#0F172A" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">WP-W-11 · 11 Nov</text></g>
+<g transform="translate(484.5,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">WP-W-10 · 11 Nov</text></g>
+<g transform="translate(596,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">WP-W-08 · 11 Nov</text></g>
+<g transform="translate(707.4,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">WP-W-02 · 11 Nov</text></g>
+<g transform="translate(818.9,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">WP-P-10 · 11 Nov</text></g>
+<g transform="translate(930.4,91)"><rect x="0" y="0" width="103.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51.7" y="14.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">WP-O-05 · 11 Nov</text></g>
+<rect x="40" y="150" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="54" y="172" font-size="13" fill="#94A3B8" font-weight="700">Concept and hazards</text>
+<text x="398" y="172" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="54" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="83" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-01</text>
+<rect x="118" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="147" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-02</text>
+<rect x="182" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="211" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-03</text>
+<rect x="246" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="275" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-04</text>
+<rect x="310" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="339" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-05</text>
+<rect x="54" y="206" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="83" y="219" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-06</text>
+<rect x="118" y="206" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="147" y="219" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-07</text>
+<rect x="182" y="206" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="211" y="219" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-08</text>
+<rect x="246" y="206" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="275" y="219" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-09</text>
+<rect x="310" y="206" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="339" y="219" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-10</text>
+<rect x="54" y="228" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="83" y="241" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-11</text>
+<rect x="118" y="228" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="147" y="241" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-C-12</text>
+<rect x="728" y="150" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="742" y="172" font-size="13" fill="#0F172A" font-weight="700">Vehicle validation</text>
+<text x="1086" y="172" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">1 of 7 downstream</text>
+<rect x="742" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="771" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-V-01</text>
+<rect x="806" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="835" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-V-02</text>
+<rect x="870" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="899" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-V-03</text>
+<rect x="934" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="963" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-V-04</text>
+<rect x="998" y="184" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="1027" y="197" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-V-05</text>
+<rect x="742" y="206" width="58" height="18" rx="9.0" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3"/>
+<text x="771" y="219" font-size="9.5" fill="#C2410C" font-weight="700" text-anchor="middle">WP-V-06</text>
+<text x="803" y="211" font-size="8" fill="#475569" font-weight="700" text-anchor="middle">1</text>
+<rect x="806" y="206" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="835" y="219" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-V-07</text>
+<rect x="70" y="258" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="84" y="280" font-size="13" fill="#94A3B8" font-weight="700">System requirements</text>
+<text x="428" y="280" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="84" y="292" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="113" y="305" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-01</text>
+<rect x="148" y="292" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="177" y="305" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-02</text>
+<rect x="212" y="292" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="241" y="305" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-06</text>
+<rect x="276" y="292" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="305" y="305" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-07</text>
+<rect x="698" y="258" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="712" y="280" font-size="13" fill="#94A3B8" font-weight="700">System verification</text>
+<text x="1056" y="280" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="712" y="292" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="741" y="305" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-09</text>
+<rect x="100" y="366" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="114" y="388" font-size="13" fill="#94A3B8" font-weight="700">System architecture</text>
+<text x="458" y="388" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="114" y="400" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="143" y="413" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-03</text>
+<rect x="178" y="400" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="207" y="413" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-04</text>
+<rect x="242" y="400" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="271" y="413" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-05</text>
+<rect x="306" y="400" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="335" y="413" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-A-01</text>
+<rect x="370" y="400" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="399" y="413" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-A-02</text>
+<rect x="114" y="422" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="143" y="435" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-A-03</text>
+<rect x="178" y="422" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="207" y="435" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-A-04</text>
+<rect x="242" y="422" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="271" y="435" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-A-05</text>
+<rect x="668" y="366" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="682" y="388" font-size="13" fill="#94A3B8" font-weight="700">System integration</text>
+<text x="1026" y="388" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="682" y="400" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="711" y="413" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-S-08</text>
+<rect x="130" y="474" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="144" y="496" font-size="13" fill="#94A3B8" font-weight="700">Hardware and software …</text>
+<text x="488" y="496" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="144" y="508" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="173" y="521" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-H-01</text>
+<rect x="208" y="508" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="237" y="521" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-02</text>
+<rect x="638" y="474" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="652" y="496" font-size="13" fill="#94A3B8" font-weight="700">Hardware and software integration</text>
+<text x="996" y="496" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="652" y="508" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="681" y="521" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-07</text>
+<rect x="716" y="508" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="745" y="521" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-08</text>
+<rect x="780" y="508" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="809" y="521" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-H-06</text>
+<rect x="844" y="508" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="873" y="521" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-H-07</text>
+<rect x="160" y="582" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="174" y="604" font-size="13" fill="#94A3B8" font-weight="700">Detailed design</text>
+<text x="518" y="604" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="174" y="616" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="203" y="629" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-03</text>
+<rect x="238" y="616" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="267" y="629" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-04</text>
+<rect x="302" y="616" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="331" y="629" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-H-02</text>
+<rect x="366" y="616" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="395" y="629" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-H-03</text>
+<rect x="430" y="616" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="459" y="629" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-H-04</text>
+<rect x="174" y="638" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="203" y="651" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-H-05</text>
+<rect x="608" y="582" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="622" y="604" font-size="13" fill="#94A3B8" font-weight="700">Unit verification</text>
+<text x="966" y="604" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">not downstream</text>
+<rect x="622" y="616" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="651" y="629" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-06</text>
+<rect x="360" y="690" width="460" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="2.6"/>
+<text x="374" y="712" font-size="13" fill="#0F172A" font-weight="700">Implementation</text>
+<text x="806" y="712" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">changed here</text>
+<rect x="374" y="724" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="403" y="737" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-01</text>
+<rect x="438" y="724" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="467" y="737" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-05</text>
+<rect x="502" y="724" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="531" y="737" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-09</text>
+<rect x="566" y="724" width="58" height="18" rx="9.0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.3"/>
+<text x="595" y="737" font-size="9.5" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-W-10</text>
+<rect x="630" y="724" width="58" height="18" rx="9.0" fill="#0F172A" stroke="#0F172A" stroke-width="1.3"/>
+<text x="659" y="737" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">WP-W-11</text>
+<text x="40" y="808" font-size="12" fill="#475569" font-weight="700">Runs across every phase</text>
+<rect x="40" y="818" width="204" height="106" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="50" y="836" font-size="11.5" fill="#94A3B8" font-weight="700">Management plans</text>
+<text x="234" y="836" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">0/15</text>
+<rect x="48" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="69.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-00</text>
+<rect x="94" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="115.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-01</text>
+<rect x="140" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="161.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-02</text>
+<rect x="186" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="207.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-03</text>
+<rect x="48" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="69.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-04</text>
+<rect x="94" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="115.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-05</text>
+<rect x="140" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="161.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-06</text>
+<rect x="186" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="207.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-07</text>
+<rect x="48" y="874" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="69.5" y="882.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-08</text>
+<rect x="94" y="874" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="115.5" y="882.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-09</text>
+<rect x="140" y="874" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="161.5" y="882.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-10</text>
+<rect x="186" y="874" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="207.5" y="882.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-11</text>
+<rect x="48" y="888" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="69.5" y="896.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-12</text>
+<rect x="94" y="888" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="115.5" y="896.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-13</text>
+<rect x="140" y="888" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="161.5" y="896.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-M-14</text>
+<rect x="254" y="818" width="204" height="106" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="264" y="836" font-size="11.5" fill="#94A3B8" font-weight="700">Supporting processes</text>
+<text x="448" y="836" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">0/11</text>
+<rect x="262" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="283.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-01</text>
+<rect x="308" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="329.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-02</text>
+<rect x="354" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="375.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-03</text>
+<rect x="400" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="421.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-04</text>
+<rect x="262" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="283.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-05</text>
+<rect x="308" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="329.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-06</text>
+<rect x="354" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="375.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-07</text>
+<rect x="400" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="421.5" y="868.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-08</text>
+<rect x="262" y="874" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="283.5" y="882.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-09</text>
+<rect x="308" y="874" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="329.5" y="882.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-10</text>
+<rect x="354" y="874" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="375.5" y="882.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-P-11</text>
+<rect x="468" y="818" width="204" height="106" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="478" y="836" font-size="11.5" fill="#94A3B8" font-weight="700">Traceability</text>
+<text x="662" y="836" font-size="10.5" fill="#94A3B8" font-weight="700" text-anchor="end">0/1</text>
+<rect x="476" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="497.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-T-01</text>
+<rect x="682" y="818" width="204" height="106" rx="10" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="692" y="836" font-size="11.5" fill="#0F172A" font-weight="700">Safety case</text>
+<text x="876" y="836" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="end">3/6</text>
+<rect x="690" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="711.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-K-01</text>
+<rect x="736" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="757.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-K-02</text>
+<rect x="782" y="846" width="43" height="11" rx="5" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.1"/>
+<text x="803.5" y="854.5" font-size="6.6" fill="#C2410C" font-weight="700" text-anchor="middle">WP-K-03</text>
+<rect x="828" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="849.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-K-04</text>
+<rect x="690" y="860" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.1" stroke-dasharray="3 2"/>
+<text x="711.5" y="868.5" font-size="6.6" fill="#475569" font-weight="700" text-anchor="middle">WP-K-05</text>
+<rect x="736" y="860" width="43" height="11" rx="5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="757.5" y="868.5" font-size="6.6" fill="#2E9E6A" font-weight="700" text-anchor="middle">WP-K-06</text>
+<rect x="896" y="818" width="204" height="106" rx="10" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="906" y="836" font-size="11.5" fill="#0F172A" font-weight="700">Operation and field</text>
+<text x="1090" y="836" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="end">1/5</text>
+<rect x="904" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="925.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-O-01</text>
+<rect x="950" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="971.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-O-02</text>
+<rect x="996" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="1017.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-O-03</text>
+<rect x="1042" y="846" width="43" height="11" rx="5" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.1"/>
+<text x="1063.5" y="854.5" font-size="6.6" fill="#94A3B8" font-weight="700" text-anchor="middle">WP-O-04</text>
+<rect x="904" y="860" width="43" height="11" rx="5" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="925.5" y="868.5" font-size="6.6" fill="#2E9E6A" font-weight="700" text-anchor="middle">WP-O-05</text>
+<rect x="1140" y="150" width="460" height="388" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1160" y="180" font-size="12" fill="#475569" font-weight="700">The change</text>
+<text x="1160" y="206" font-size="15" fill="#0F172A" font-weight="700">WP-W-11 Cybersecurity implementation and verification</text>
+<text x="1160" y="228" font-size="12" fill="#475569">version 0.8 · dated 2026-11-11</text>
+<text x="1160" y="248" font-size="11" fill="#475569" font-style="italic">What changed is quoted on this page, below the picture.</text>
+<text x="1160" y="286" font-size="12" fill="#475569" font-weight="700">Downstream in the process model</text>
+<text x="1160" y="316" font-size="12.5" fill="#0F172A" font-weight="700">Directly</text>
+<text x="1580" y="316" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="end">3</text>
+<rect x="1160" y="324" width="278" height="12" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
+<rect x="1440" y="324" width="138" height="12" rx="3" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="1160" y="360" font-size="12.5" fill="#0F172A" font-weight="700">Two steps away</text>
+<text x="1580" y="360" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="end">2</text>
+<rect x="1160" y="368" width="208" height="12" rx="3" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<rect x="1370" y="368" width="208" height="12" rx="3" fill="#CBD5E1" stroke="none" stroke-width="0"/>
+<rect x="1160" y="399" width="30" height="14" rx="7" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3"/>
+<text x="1198" y="410" font-size="12" fill="#0F172A">2 no version dated after the change: worth a look</text>
+<rect x="1160" y="425" width="30" height="14" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.3"/>
+<text x="1198" y="436" font-size="12" fill="#0F172A">2 updated since</text>
+<rect x="1160" y="451" width="30" height="14" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" stroke-dasharray="3 2"/>
+<text x="1198" y="462" font-size="12" fill="#0F172A">1 no dated version yet</text>
+<text x="1160" y="500" font-size="11" fill="#475569" font-style="italic">Small number on a chip: steps from the change.</text>
+<text x="1160" y="518" font-size="11" fill="#475569" font-style="italic">Dashed box: nothing in it depends on the change.</text>
+<text x="40" y="948" font-size="11.5" fill="#475569" font-style="italic">Depending on a change is a prompt to look, not proof of an impact: the impact analysis (WP-M-12) and its records decide what a change actually affects. Status is not acceptance.</text>
+<g class="terms">
+<text x="40" y="972" font-size="10.5" fill="#475569">Terms: WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

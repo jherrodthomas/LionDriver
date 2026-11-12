@@ -46,6 +46,8 @@ import vcycle_explode  # noqa: E402
 import vcycle_time  # noqa: E402
 import vcycle_standards  # noqa: E402
 import vcycle_crosswalk  # noqa: E402
+import vcycle_impact  # noqa: E402
+import vcycle_gates  # noqa: E402
 
 REGISTER = A / "01-management" / "WP-M-00-work-product-register.md"
 PLAN = A / "01-management" / "WP-M-03-project-plan.md"
@@ -457,6 +459,8 @@ def render(m: dict) -> dict[Path, str]:
   files.update(vcycle_time.render(m))
   files.update(vcycle_standards.render(m))
   files.update(vcycle_crosswalk.render(m))
+  files.update(vcycle_impact.render(m))
+  files.update(vcycle_gates.render(m))
   files.update(readmes(m, t))
   return files
 
@@ -487,7 +491,9 @@ def block_assurance(m: dict, t) -> str:
     BEGIN, "", vcycle_standards.toggle_md("all", ""), "", '<p align="center">', "<br>\n".join(rows), "</p>", "",
     "Click a box to open its exploded view: its work products, what each needs first, and the reviews that cover them. "
     "See also [the V-cycle over time](01-management/vcycle/over-time.md): what the records show happened, day by day, "
-    "against when the plan has each row due. Folders: " + " · ".join(f"[{f}/]({f}/README.md)" for f in folders) + ".", "",
+    "against when the plan has each row due; and [change impact](01-management/vcycle/impact.md): what depends on each "
+    "recent change and whether it has moved since; and [gate readiness](01-management/vcycle/gates.md): what each "
+    "gate still needs before it can be reviewed. Folders: " + " · ".join(f"[{f}/]({f}/README.md)" for f in folders) + ".", "",
     f"*The V-cycle.* Drawn from the [work-product register](01-management/WP-M-00-work-product-register.md) "
     f"§2–§3, the [schedule](01-management/WP-M-03-project-plan.md#5-schedule) and the "
     f"[gate records](10-safety-case/gates/README.md) by "

@@ -180,6 +180,56 @@ class VCycle(unittest.TestCase):
     self.assertEqual(vs.summary("iso26262", ["9 §7, 2 §6", "2 §5"]), "26262-2 §5, §6 · 26262-9 §7")
     self.assertEqual(vs.summary("aspice", ["MAN.3", "SWE.10, SWE.2", "SYS.2"]), "SYS.2, SWE.2, SWE.10, MAN.3")
 
+  def test_impact_downstream_follows_the_process_model(self):
+    import vcycle_impact as vi
+    down = {"A": {"B"}, "B": {"C", "D"}, "D": {"A"}}
+    self.assertEqual(vi.steps_from("A", down), {"A": 0, "B": 1, "C": 2, "D": 2})
+    self.assertEqual(vi.state("C", "A", "2026-11-07", {"A": 0, "C": 2}, {"C": "2026-11-07"}), "ok")
+    self.assertEqual(vi.state("C", "A", "2026-11-07", {"A": 0, "C": 2}, {"C": "2026-11-06"}), "look")
+    self.assertEqual(vi.state("C", "A", "2026-11-07", {"A": 0, "C": 2}, {}), "undated")
+    self.assertEqual(vi.state("E", "A", "2026-11-07", {"A": 0}, {"E": "2026-11-01"}), "none")
+
+  def test_impact_pages_for_the_recent_changes_and_counts_agree(self):
+    import vcycle_impact as vi
+    m = v.build_model()
+    d = vi.model(m)
+    self.assertEqual(len(d["recent"]), min(vi.RECENT, len(d["changes"])))
+    dates = [c["when"] for c in d["changes"]]
+    self.assertEqual(dates, sorted(dates, reverse=True))
+    for c in d["recent"]:
+      page = (vi.vx.PAGES / vi.page_name(c["wp"])).read_text(encoding="utf-8")
+      rows = [ln for ln in page.splitlines() if ln.startswith("| [WP-")]
+      self.assertEqual(len(rows), len(c["hop"]) - 1, c["wp"])
+      self.assertEqual(sum(c["counts"].values()), len(c["hop"]) - 1)
+      self.assertEqual(page.count("worth a look |"), c["counts"]["look"])
+    index = (vi.vx.PAGES / vi.INDEX).read_text(encoding="utf-8")
+    self.assertEqual(len([ln for ln in index.splitlines() if ln.startswith("| [WP-")]), len(d["changes"]))
+
+  def test_gate_board_reads_every_skeleton(self):
+    import vcycle_gates as vg
+    m = v.build_model()
+    d = vg.model(m)
+    self.assertEqual([g["gate"] for g in d["gates"]], [f"G{n}" for n in range(7)])
+    self.assertIs(d["next"], next(g for g in d["gates"] if not g["passed"]))
+    reg = m["wps"]
+    for g in d["gates"]:
+      for p in g["wps"]:
+        if p["id"] in reg:
+          self.assertEqual(p["status"], vg.vx.pm.STATUS_NAMES[reg[p["id"]]["status"]], p["id"])
+    page = (vg.vx.PAGES / vg.PAGE).read_text(encoding="utf-8")
+    self.assertEqual(len([ln for ln in page.splitlines() if re.match(r"^\| \[G\d ", ln)]), 7)
+
+  def test_gate_board_rejects_an_unexpected_agreed_cell(self):
+    import vcycle_gates as vg
+    real = Path.read_text
+    g0 = vg.SKELETONS / "G0-skeleton.md"
+
+    def fake(self, *a, **k):
+      t = real(self, *a, **k)
+      return re.sub(r"(\| IFR-31 \|.*\| )none \|  \|", r"\1none | maybe |", t) if self == g0 else t
+    with mock.patch.object(Path, "read_text", fake), self.assertRaises(FigureError):
+      vg.read_gate(0)
+
 
 if __name__ == "__main__":
   unittest.main()
