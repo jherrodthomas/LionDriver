@@ -1,0 +1,321 @@
+{
+ "tool": "assurance/trace/tools/check_trace.py",
+ "items": 743,
+ "links": 107,
+ "kinds": 19,
+ "faults": [
+  {
+   "id": "PF-01",
+   "class": "EC-1 broken link",
+   "what": "A TSR names a parent FSR that does not exist",
+   "expect": "K3",
+   "caught": true,
+   "report": "[K3] TSR-101: parents reference FSR-01.99 does not resolve",
+   "errors": 1
+  },
+  {
+   "id": "PF-02",
+   "class": "EC-1 broken link",
+   "what": "An SWSR names a hazard as its parent (wrong kind of parent)",
+   "expect": "K3",
+   "caught": true,
+   "report": "[K3] SWSR-101: parent H-01 is a hazard, not one of ['tsr']",
+   "errors": 1
+  },
+  {
+   "id": "PF-03",
+   "class": "EC-2 orphan",
+   "what": "A TSR loses every parent",
+   "expect": "K3",
+   "caught": true,
+   "report": "[K3] TSR-101: no parent",
+   "errors": 1
+  },
+  {
+   "id": "PF-04",
+   "class": "EC-2 orphan",
+   "what": "An FSR loses its safety goal",
+   "expect": "K3",
+   "caught": true,
+   "report": "[K3] FSR-01.01: no parent safety goal",
+   "errors": 1
+  },
+  {
+   "id": "PF-05",
+   "class": "EC-3 missing refinement",
+   "what": "A safety goal is refined by no FSR",
+   "expect": "K4",
+   "caught": true,
+   "report": "[K4] SG-01: no FSR",
+   "errors": 8
+  },
+  {
+   "id": "PF-06",
+   "class": "EC-3 missing refinement",
+   "what": "A TSR allocated to software is refined by no SWSR",
+   "expect": "K4",
+   "caught": true,
+   "report": "[K4] TSR-101: allocated to 'P-SW' but has no SWSR and is not listed as not refined",
+   "errors": 1
+  },
+  {
+   "id": "PF-07",
+   "class": "EC-4 ASIL not inherited",
+   "what": "A TSR is rated lower than the FSR it refines",
+   "expect": "K5",
+   "caught": true,
+   "report": "[K5] TSR-101: asil 'A' is below its parent FSR-01.01 ('C') (raise it, decompose it in WP-A-01, or name its backstop as QM (X-sup))",
+   "errors": 3
+  },
+  {
+   "id": "PF-08",
+   "class": "EC-5 wrong ASIL",
+   "what": "A hazardous event's ASIL does not follow from its S, E and C",
+   "expect": "R1",
+   "caught": true,
+   "report": "[R1] HE-01.1: asil B but S3 E2 C2 gives A",
+   "errors": 2
+  },
+  {
+   "id": "PF-09",
+   "class": "EC-5 wrong ASIL",
+   "what": "A safety goal is rated below its worst hazardous event",
+   "expect": "R2",
+   "caught": true,
+   "report": "[R2] SG-01: asil B but highest source HE ASIL is C",
+   "errors": 2
+  },
+  {
+   "id": "PF-10",
+   "class": "EC-5 wrong ASIL",
+   "what": "The ASIL if an assumption fails is lower than the ASIL itself",
+   "expect": "R3",
+   "caught": true,
+   "report": "[R3] SG-01: asil_if_aou_fails A lower than asil C",
+   "errors": 2
+  },
+  {
+   "id": "PF-11",
+   "class": "EC-2 orphan",
+   "what": "A hazard has no hazardous event",
+   "expect": "R4",
+   "caught": true,
+   "report": "[R4] H-99: no hazardous event",
+   "errors": 1
+  },
+  {
+   "id": "PF-12",
+   "class": "EC-3 missing refinement",
+   "what": "A hazardous event is covered by no safety goal and has no exemption",
+   "expect": "K12",
+   "caught": true,
+   "report": "[K12] HE-01.1: not linked to a safety goal and no sg_exempt_reason",
+   "errors": 2
+  },
+  {
+   "id": "PF-13",
+   "class": "EC-6 identity",
+   "what": "Two items carry the same ID",
+   "expect": "K2",
+   "caught": true,
+   "report": "[K2] duplicate ID TSR-101",
+   "errors": 1
+  },
+  {
+   "id": "PF-14",
+   "class": "EC-6 identity",
+   "what": "An ID does not follow the ID scheme",
+   "expect": "K2",
+   "caught": true,
+   "report": "[K2] bad ID 'AOU-1'",
+   "errors": 1
+  },
+  {
+   "id": "PF-15",
+   "class": "EC-7 missing attribute",
+   "what": "A safety goal loses its safe state",
+   "expect": "K1",
+   "caught": true,
+   "report": "[K1] SG-01: missing key 'safe_state'",
+   "errors": 2
+  },
+  {
+   "id": "PF-16",
+   "class": "EC-7 missing attribute",
+   "what": "An item carries a status outside the lifecycle",
+   "expect": "K1",
+   "caught": true,
+   "report": "[K1] TSR-101: status 'approved' not in ['agreed', 'implemented', 'proposed', 'verified', 'withdrawn']",
+   "errors": 1
+  },
+  {
+   "id": "PF-17",
+   "class": "EC-8 test link",
+   "what": "A test is linked to a requirement that was withdrawn",
+   "expect": "K6",
+   "caught": true,
+   "report": "[K6] opendbc_repo/opendbc/safety/tests/test_toyota.py::TestToyotaSafetyTorque::test_torque_absolute_limits: links FSR-01.01, which is withdrawn",
+   "errors": 1
+  },
+  {
+   "id": "PF-18",
+   "class": "EC-8 test link",
+   "what": "A test is linked to a requirement that does not exist",
+   "expect": "K6",
+   "caught": true,
+   "report": "[K6] opendbc_repo/opendbc/safety/tests/test_toyota.py::TestToyotaSafetyTorque::test_torque_absolute_limits: links FSR-01.98, which does not exist",
+   "errors": 1
+  },
+  {
+   "id": "PF-19",
+   "class": "EC-9 copy differs from the record",
+   "what": "A hazardous event's situation in the trace data differs from the HARA table",
+   "expect": "X1",
+   "caught": true,
+   "report": "[X1] HE-01.2.situation: yaml 'Planted change' != WP-C-03 'OS-01/OS-02 highway, adjacent traffic or barrier, 90–110 km/h'",
+   "errors": 1
+  },
+  {
+   "id": "PF-20",
+   "class": "EC-9 copy differs from the record",
+   "what": "An assumption of use differs from the item definition",
+   "expect": "X2",
+   "caught": true,
+   "report": "[X2] AOU-01.text: yaml 'Planted change' != WP-C-01 'The Toyota EPS limits the torque applied for LKA requests to a level a normal driver can overpower. It rejects or fades out implausible requests, and it ends LKA torque within a bounded time if LKA messages stop (a code comment suggests ≈1.5–2 s, `carstate.py:15-16`)'",
+   "errors": 1
+  },
+  {
+   "id": "PF-21",
+   "class": "EC-9 copy differs from the record",
+   "what": "A generated requirement file is edited by hand",
+   "expect": "X3",
+   "caught": true,
+   "report": "[X3] tsr.yaml differs from the work products; run tools/sync_requirements.py",
+   "errors": 1
+  },
+  {
+   "id": "PF-22",
+   "class": "EC-3 missing refinement",
+   "what": "A SOTIF hazard has no functional insufficiency",
+   "expect": "S1",
+   "caught": true,
+   "report": "[S1] SH-01: no functional insufficiency",
+   "errors": 14
+  },
+  {
+   "id": "PF-23",
+   "class": "EC-3 missing refinement",
+   "what": "A cybersecurity goal has no cybersecurity requirement",
+   "expect": "C1",
+   "caught": true,
+   "report": "[C1] CSG-01: no cybersecurity requirement",
+   "errors": 7
+  },
+  {
+   "id": "PF-24",
+   "class": "EC-2 orphan",
+   "what": "An AI safety requirement rests on nothing",
+   "expect": "A1",
+   "caught": true,
+   "report": "[A1] AIR-01: no parent and names nothing it rests on",
+   "errors": 1
+  },
+  {
+   "id": "PF-25",
+   "class": "EC-7 missing attribute",
+   "what": "A system requirement loses its allocation",
+   "expect": "Q1",
+   "caught": true,
+   "report": "[Q1] SYS-101: no allocation (WP-S-01 §10.1)",
+   "errors": 1
+  },
+  {
+   "id": "PF-26",
+   "class": "EC-10 status without evidence",
+   "what": "An interface is marked agreed without a recorded review",
+   "expect": "I1",
+   "caught": true,
+   "report": "[I1] IFR-01: agreed without a review_ref; an interface is agreed only through a recorded review",
+   "errors": 1
+  }
+ ],
+ "mutants": [
+  {
+   "id": "TM-01",
+   "what": "R1 findings are dropped (a wrong hazardous-event ASIL goes unreported)",
+   "killed": true,
+   "baseline_errors": 0,
+   "missed": [
+    "PF-08"
+   ]
+  },
+  {
+   "id": "TM-02",
+   "what": "the ASIL inheritance check K5 does nothing",
+   "killed": true,
+   "baseline_errors": 0,
+   "missed": [
+    "PF-07"
+   ]
+  },
+  {
+   "id": "TM-03",
+   "what": "the refinement check (goal to FSR to TSR) does nothing",
+   "killed": true,
+   "baseline_errors": 0,
+   "missed": [
+    "PF-03",
+    "PF-04",
+    "PF-05"
+   ]
+  },
+  {
+   "id": "TM-04",
+   "what": "every ASIL ranks the same",
+   "killed": true,
+   "baseline_errors": 53,
+   "missed": [
+    "PF-07",
+    "PF-09",
+    "PF-10"
+   ]
+  },
+  {
+   "id": "TM-05",
+   "what": "test links are not checked",
+   "killed": true,
+   "baseline_errors": 0,
+   "missed": [
+    "PF-17",
+    "PF-18"
+   ]
+  },
+  {
+   "id": "TM-06",
+   "what": "generated files are not compared with the work products",
+   "killed": true,
+   "baseline_errors": 0,
+   "missed": [
+    "PF-21"
+   ]
+  },
+  {
+   "id": "TM-07",
+   "what": "any ID is accepted",
+   "killed": true,
+   "baseline_errors": 0,
+   "missed": [
+    "PF-14"
+   ]
+  },
+  {
+   "id": "TM-08",
+   "what": "a missing mandatory key is not reported",
+   "killed": true,
+   "baseline_errors": 0,
+   "missed": [
+    "PF-15"
+   ]
+  }
+ ]
+}

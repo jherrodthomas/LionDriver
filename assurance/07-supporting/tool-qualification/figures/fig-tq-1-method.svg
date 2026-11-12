@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="902" viewBox="0 0 640 902" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 1. One method for any tool, decided by its guards</title>
+<desc>Five steps: 1 Use case; 2 Tool impact (TI); 3 Guards and TD; 4 TCL; 5 Method and report. Guards: TG-01 Planted-fault suite; TG-02 Diverse redundancy; TG-03 Recompute and diff; TG-04 Pinned artefact; TG-05 Independent review; TG-06 Round-trip extraction.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="640" height="902" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 1 · One method for any tool, decided by its guards</text>
+<text x="16" y="48" font-size="11" fill="#475569">method.md §1 and the guard catalogue (guards.yaml)</text>
+<rect x="16" y="68" width="608" height="44" rx="9" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="87" font-size="15" fill="#475569" font-weight="700">1</text>
+<text x="48" y="87" font-size="12.5" fill="#0F172A" font-weight="700">Use case</text>
+<text x="612" y="87" font-size="10" fill="#475569" text-anchor="end">A use case and its error classes</text>
+<text x="48" y="103" font-size="10.5" fill="#0F172A">What does the tool do here, on which element, and what would an error look like?</text>
+<path d="M320.0 113 L320.0 123" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M316.0 119 L320.0 124 L324.0 119" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="16" y="126" width="608" height="44" rx="9" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="145" font-size="15" fill="#475569" font-weight="700">2</text>
+<text x="48" y="145" font-size="12.5" fill="#0F172A" font-weight="700">Tool impact (TI)</text>
+<text x="612" y="145" font-size="10" fill="#475569" text-anchor="end">TI1 or TI2</text>
+<text x="48" y="161" font-size="10.5" fill="#0F172A">Can an error put a fault into a safety-related element, or fail to detect one?</text>
+<path d="M320.0 171 L320.0 181" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M316.0 177 L320.0 182 L324.0 177" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="16" y="184" width="608" height="44" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+<text x="28" y="203" font-size="15" fill="#C2410C" font-weight="700">3</text>
+<text x="48" y="203" font-size="12.5" fill="#0F172A" font-weight="700">Guards and TD</text>
+<text x="612" y="203" font-size="10" fill="#C2410C" font-weight="700" text-anchor="end">TD1, TD2 or TD3</text>
+<text x="48" y="219" font-size="10.5" fill="#0F172A">Which guards of the catalogue catch each error class, and is each shown working?</text>
+<path d="M320.0 229 L320.0 239" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M316.0 235 L320.0 240 L324.0 235" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="16" y="242" width="608" height="44" rx="9" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="261" font-size="15" fill="#475569" font-weight="700">4</text>
+<text x="48" y="261" font-size="12.5" fill="#0F172A" font-weight="700">TCL</text>
+<text x="612" y="261" font-size="10" fill="#475569" text-anchor="end">TCL1 needs nothing more</text>
+<text x="48" y="277" font-size="10.5" fill="#0F172A">TI1, or TI2 with TD1, gives TCL1. TI2 with TD2 gives TCL2, and TI2 with TD3 gives TCL3</text>
+<path d="M320.0 287 L320.0 297" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M316.0 293 L320.0 298 L324.0 293" stroke="#94A3B8" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<rect x="16" y="300" width="608" height="72" rx="9" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="319" font-size="15" fill="#475569" font-weight="700">5</text>
+<text x="48" y="319" font-size="12.5" fill="#0F172A" font-weight="700">Method and report</text>
+<text x="612" y="319" font-size="10" fill="#475569" text-anchor="end">A tool qualification report</text>
+<text x="48" y="335" font-size="10.5" fill="#0F172A">For TCL2 and TCL3: which method the standard names (1a increased confidence from use, 1b</text>
+<text x="48" y="349" font-size="10.5" fill="#0F172A">evaluation of the tool development process, 1c validation of the software tool, 1d development to a</text>
+<text x="48" y="363" font-size="10.5" fill="#0F172A">safety standard), and the evidence it produces</text>
+<text x="16" y="392" font-size="11" fill="#C2410C" font-weight="700">Step 3 decides the TCL: the guards below, not the tool's name.</text>
+<text x="16" y="412" font-size="13" fill="#0F172A" font-weight="700">The guard catalogue</text>
+<rect x="16" y="422" width="299" height="118" rx="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="26" y="431" width="40" height="16" rx="8" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="46" y="443" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TG-01</text>
+<text x="74" y="443" font-size="11.5" fill="#0F172A" font-weight="700">Planted-fault suite</text>
+<text x="28" y="462" font-size="10" fill="#0F172A">A false OK: the tool passes an input that has a known</text>
+<text x="28" y="475" font-size="10" fill="#0F172A">error</text>
+<text x="28" y="490" font-size="9.5" fill="#0F766E">Shown by: Known-bad inputs, at least one per error class of</text>
+<text x="28" y="502" font-size="9.5" fill="#0F766E">the use case, must each be reported on every CI run</text>
+<text x="28" y="514" font-size="9.5" fill="#0F766E">(TQR-32 plants them in a copy of the real records and adds</text>
+<text x="28" y="526" font-size="9.5" fill="#0F766E">tool mutants that must be caught)</text>
+<rect x="325" y="422" width="299" height="118" rx="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="335" y="431" width="40" height="16" rx="8" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="355" y="443" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TG-02</text>
+<text x="383" y="443" font-size="11.5" fill="#0F172A" font-weight="700">Diverse redundancy</text>
+<text x="337" y="462" font-size="10" fill="#0F172A">A wrong result from one tool, when a second, independent</text>
+<text x="337" y="475" font-size="10" fill="#0F172A">tool computes the same thing</text>
+<text x="337" y="490" font-size="9.5" fill="#0F766E">Shown by: Both run on every change and must agree; a</text>
+<text x="337" y="502" font-size="9.5" fill="#0F766E">seeded difference must show up as a disagreement</text>
+<rect x="16" y="550" width="299" height="94" rx="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="26" y="559" width="40" height="16" rx="8" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="46" y="571" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TG-03</text>
+<text x="74" y="571" font-size="11.5" fill="#0F172A" font-weight="700">Recompute and diff</text>
+<text x="28" y="590" font-size="10" fill="#0F172A">A generated output that no longer matches its source, or</text>
+<text x="28" y="603" font-size="10" fill="#0F172A">was edited by hand</text>
+<text x="28" y="618" font-size="9.5" fill="#0F766E">Shown by: CI regenerates the output from the source</text>
+<text x="28" y="630" font-size="9.5" fill="#0F766E">(--check) and fails on any difference</text>
+<rect x="325" y="550" width="299" height="94" rx="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="335" y="559" width="40" height="16" rx="8" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="355" y="571" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TG-04</text>
+<text x="383" y="571" font-size="11.5" fill="#0F172A" font-weight="700">Pinned artefact</text>
+<text x="337" y="590" font-size="10" fill="#0F172A">A different tool version than the one qualified, or a</text>
+<text x="337" y="603" font-size="10" fill="#0F172A">tampered download</text>
+<text x="337" y="618" font-size="9.5" fill="#0F766E">Shown by: The tool is installed from a lockfile or by</text>
+<text x="337" y="630" font-size="9.5" fill="#0F766E">SHA-256; a different artefact is refused and the run fails</text>
+<rect x="16" y="654" width="299" height="94" rx="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="26" y="663" width="40" height="16" rx="8" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="46" y="675" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TG-05</text>
+<text x="74" y="675" font-size="11.5" fill="#0F172A" font-weight="700">Independent review</text>
+<text x="28" y="694" font-size="10" fill="#0F172A">Any error a person reading the output against its source</text>
+<text x="28" y="707" font-size="10" fill="#0F172A">can see</text>
+<text x="28" y="722" font-size="9.5" fill="#0F766E">Shown by: A review record by a named reviewer, independent</text>
+<text x="28" y="734" font-size="9.5" fill="#0F766E">of the author (WP-P-05)</text>
+<rect x="325" y="654" width="299" height="94" rx="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<rect x="335" y="663" width="40" height="16" rx="8" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="355" y="675" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">TG-06</text>
+<text x="383" y="675" font-size="11.5" fill="#0F172A" font-weight="700">Round-trip extraction</text>
+<text x="337" y="694" font-size="10" fill="#0F172A">A record lost, duplicated or changed between the work</text>
+<text x="337" y="707" font-size="10" fill="#0F172A">product and the tool's copy</text>
+<text x="337" y="722" font-size="9.5" fill="#0F766E">Shown by: The tool's copy is rebuilt from the work product</text>
+<text x="337" y="734" font-size="9.5" fill="#0F766E">and compared, item by item</text>
+<g class="terms">
+<text x="16" y="772" font-size="10" fill="#475569">Terms: CI continuous integration: the checks that run on every pull request · SHA-256 a cryptographic hash used to</text>
+<text x="16" y="786" font-size="10" fill="#475569">identify a file exactly · TCL tool confidence level, TCL1 (no qualification needed) to TCL3 (ISO 26262-8 §11) · TD</text>
+<text x="16" y="800" font-size="10" fill="#475569">tool error detection: confidence that a tool error is prevented or detected, TD1 (high) to TD3 (low) · TG-nn guard</text>
+<text x="16" y="814" font-size="10" fill="#475569">of the tool qualification guard catalogue (07-supporting/tool-qualification/guards.yaml) · TI tool impact: TI2 if</text>
+<text x="16" y="828" font-size="10" fill="#475569">a tool error can introduce or miss an error in a safety-related element (ISO 26262-8 §11) · TQR-nn tool</text>
+<text x="16" y="842" font-size="10" fill="#475569">qualification report (WP-P-07 §5; 07-supporting/tool-qualification) · WP-nn work product, e.g. WP-C-04; the letter</text>
+<text x="16" y="856" font-size="10" fill="#475569">is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O</text>
+<text x="16" y="870" font-size="10" fill="#475569">operation, K safety case)</text>
+</g>
+<text x="624" y="890" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_tq.py from method.md and guards.yaml</text>
+</svg>

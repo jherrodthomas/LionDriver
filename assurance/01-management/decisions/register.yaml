@@ -6818,3 +6818,29 @@
   answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
   applied: {ref: "6dd722e", record: "openpilot controlsd.py (CC.enabled); WP-W-02 v0.55 SWSR-303i; SW FMEA rev 1.23; impact record change-2026-11-11-selfdrived-loss-cruise-cancel", at: 2026-11-11}
   note: "Implemented and unit-tested (TestSelfdrivedLossCancelsCruise, mutant CA-1); not verified on the vehicle. Open (impact record): whether PCM cruise drops within 0.5 s of the cancel (WP-W-02 OI-18), and the plant model of the engaged mismatch, which still models no cancel (impact OI-3)."
+- id: DQ-440
+  question: "Do you accept the planted-fault validation of the trace checker as its tool qualification for use on ASIL requirements?"
+  context: >-
+    The trace checker (check_trace.py) checks every link, ASIL and refinement of the safety requirements, which a
+    commercial tool such as DOORS or Jama would do elsewhere. It is TCL2, so ISO 26262-8 needs it qualified before its
+    "OK" is relied on. The new report TQR-32 qualifies it by validation: **26 typical errors are planted in a copy of
+    the real trace data and all are caught, and 8 deliberately broken versions of the checker are all caught too,
+    on every CI run.** The checker stays TCL2; TCL1 would need a named reviewer as a guard in use.
+  reversibility: easy
+  blocks: "WP-P-07 TL-32 qualification status and OI-13; the method of tool-qualification/ for the next reports (MISRA TL-04, coverage TL-42/43, mutation TL-06)"
+  gate: G3
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Accept TQR-32 as the qualification of the trace checker, pending the independent review of the checker"
+      detail: "Its OK can be relied on for the ASIL path while CI keeps the validation passing; the same method then qualifies the next tools. Cost: none now; the independent review (WP-P-07 OI-13) and the assessor's sampling still follow."
+    - key: B
+      title: "Accept only after the independent review of the checker and the fault catalogue"
+      detail: "Acceptance rests on a second person's reading as well. Cost: waits until a reviewer is named; the checker's OK is not relied on until then."
+    - key: C
+      title: "Do not qualify the in-house checker; rely on review of the trace alone"
+      detail: "No tool credit is claimed. Cost: every trace link and ASIL must be checked by hand at each review, which is the work the checker was built to remove."
+  sources: ["assurance/07-supporting/tool-qualification/TQR-32-check-trace.md", "assurance/07-supporting/tool-qualification/method.md", "assurance/07-supporting/WP-P-07-tool-classification-qualification.md TL-32, §5, OI-13"]
+  status: queued
