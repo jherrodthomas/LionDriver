@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="280" height="74" viewBox="0 0 280 74" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>LionDriver V-cycle: band-1</title>
-<desc>Management plans (G0–G4): WP-M-00…14; 15 draft · none approved. Opens 01-management/.</desc>
+<desc>Management plans (G0–G4): WP-M-00…14; 15 draft. Opens 01-management/.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="280" height="74" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>

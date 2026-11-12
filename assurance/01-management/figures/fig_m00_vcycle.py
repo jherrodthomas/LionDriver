@@ -217,9 +217,7 @@ def gate_label(gates: list[int]) -> str:
 
 
 def counts(status: list[str]) -> str:
-  c = [f"{status.count(s)} {STATUS[s][0].lower()}" for s in ORDER if s in status]
-  done = sum(status.count(s) for s in ("A", "B"))
-  return " · ".join(c) + ("" if done else " · none approved")
+  return " · ".join(f"{status.count(s)} {STATUS[s][0].lower()}" for s in ORDER if s in status)
 
 
 def bar(x, y, width, status, h=9) -> list[str]:
