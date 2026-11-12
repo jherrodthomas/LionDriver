@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-04 Documentation management |
 | Standard reference | ISO 26262-8:2018 §10; ISO/SAE 21434:2021 §5 (documentation management); ASPICE 4.0 SUP.7 (informative), SUP.8 |
-| Version | 0.4 (§10 retention period confirmed by the lead 2026-10-14 (DQ-113, A); OI-6 closed; 2026-10-18). 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
+| Version | 0.7 (§9.2 controlled and uncontrolled copies of selected work products with a change record since the recipient's last copy; `distribution.py outdated`; OI-3 partly done; 2026-11-12). 0.6 (OI-7 first part done: exports and the snapshot stamp the ledger version, `wp-export` workflow, TL-65; 2026-11-12). 0.5 (§5 Version rule and §6: versions are X.Y.Z, computed by the change ledger and stamped at output; X only at gate approval (DQ-441 A, DQ-442 A, lead 2026-11-12); `editorial` label; OI-7; 2026-11-12). 0.4 (§10 retention period confirmed by the lead 2026-10-14 (DQ-113, A); OI-6 closed; 2026-10-18). 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -53,7 +53,7 @@ Every work product starts with the header block defined in [`assurance/README.md
 
 | Field | Rule |
 |---|---|
-| Version | `0.x` while Draft; `1.0` at first approval; MINOR increment for each approved change; MAJOR when the scope or the safety concept changes |
+| Version | `X.Y.Z`, computed by the [change ledger](ledger/README.md), never typed (DQ-441). **X** +1 when a gate approval lists the work product in [`ledger/gate-approvals.yaml`](ledger/gate-approvals.yaml) (DQ-442), 0 until then; resets Y and Z. **Y** +1 for each merged change to the work product; resets Z. **Z** +1 for each merged change labelled `editorial` (wording, links, layout; never with `sr-a` or `sr-q`, CI fails the PR). The version is stamped on the document when it is output (export, snapshot, wiki). Until OI-7 removes them, the `Version` lines in headers are history text: the ledger took its starting versions from them on adoption (0.68 became 0.68.0) and ignores them afterwards |
 | Status | Updated in the same PR that changes the state. "In review" is set when the PR is opened; "Approved" only in the merge of an approved PR; "Baselined" only when included in a gate or release tag |
 | Baseline | The commit or tag the content was checked against. Updated when the content is re-checked |
 | Reviewer(s) | Name and independence level (I0–I3) as recorded in the PR approval |
@@ -67,7 +67,7 @@ The register [WP-M-00](../01-management/WP-M-00-work-product-register.md) status
 
 ## 6. Change history
 
-Git history is the change log. Each approved version additionally gets one line in a "Revision history" table at the end of the document (version, date, PR number, summary) so that an exported copy carries its history.
+Git history is the change log, and the [change ledger](ledger/README.md) is its record: one append-only, hash-chained row per merged change, with the pull request, change class, approver, check results and the version each touched work product has after it. An exported copy carries the revision history of each document it contains, generated from the ledger (version, date, PR, summary, approver) (OI-7).
 
 ## 7. Review and approval
 
@@ -111,6 +111,17 @@ ISO 9001:2015 §7.5.3.2 and IATF 16949 §7.5.3.2.1 ask for control of the distri
 
 A controlled copy is not updated when the safety case changes. It is withdrawn by setting its entry to `withdrawn` with the date and reason; entries are never deleted. The current version is always the repository and the newest release.
 
+### 9.2 Distribution of selected work products
+
+Single work products go out through the `wp-export` workflow ([`ledger/export_wp.py`](ledger/export_wp.py), [ledger README](ledger/README.md#exporting-a-work-product)), as PDF, Markdown or HTML.
+
+| Copy | How it is made | Record | Marking |
+|---|---|---|---|
+| Uncontrolled | `wp-export` without a recipient, or `export_wp.py` locally | None | Document-control block on page 1 and a footer on every page: ID, ledger version, status, commit, "Uncontrolled copy: check the current version before use", page n of N |
+| Controlled | `wp-export` on `liondriver-dev` with recipient and purpose, run by someone with write access | An entry `CC-YYYY-NNN` in [`distribution.yaml`](../case-records/distribution.yaml), as in §9.1, that also lists every document with the version it holds (`documents: ["WP-S-02 0.68.0", ...]`), written and pushed before the copy is printed; the files are hashed (SHA256SUMS, `manifest.json`) and attested | As above, with "Controlled copy CC-YYYY-NNN" |
+
+Every copy with a starting point (`since`) carries a **change record**: for each document, the version then and now and every recorded change in between (version, date, PR, change class, approver), from the change ledger. A controlled copy starts by default at the recipient's last copy. A copy cannot hold a version the ledger has not recorded yet. `python3 assurance/case-records/tools/distribution.py outdated` lists the issued copies whose documents have changed since, with recipient and versions, so the holders of an outdated copy are known (ISO 9001:2015 §7.5.3.2 c and d).
+
 ## 10. Retention
 
 This section sets the retention period that [WP-M-04](../01-management/WP-M-04-organization-competence-safety-culture.md) (OR-7) and [WP-P-01 §10](WP-P-01-configuration-management-plan.md#10-backup-retention-and-access) refer to.
@@ -138,7 +149,8 @@ Git history is never rewritten on protected branches. Superseded documents remai
 |---|---|
 | OI-1 | CI check that each WP header `Status`/`Version` matches the register |
 | OI-2 | Markdown link checker in CI for `assurance/**`. A prototype (relative links, anchors ignored) was run in the consistency pass: the only broken targets were software WPs still being drafted |
-| OI-3 | Script for the assessor export (§8), including GitHub PR/issue export |
-| OI-4 | Add the "Revision history" table to every WP at first approval |
+| OI-3 | Script for the assessor export (§8), including GitHub PR/issue export. **Partly done 2026-11-12:** work products per §9.2 with the change record; the change ledger holds the PR data (labels, approvals, checks) per merge. Left: the gate archive of §8 (a) to (d) as one run, and issue export |
+| OI-4 | Superseded 2026-11-12 by OI-7: the revision history of an exported document is generated from the change ledger, not kept as a table in the file |
 | OI-5 | Decide where non-redistributable reference documents are stored |
 | OI-6 | Closed 2026-10-18: the §10 period was confirmed by the lead (decision register DQ-113, A) without legal advice; the lead accepted the long storage commitment |
+| OI-7 | Stamp the ledger version at output, then remove the hand-typed `Version` lines from the headers, keeping their text as revision history (DQ-441). **Done 2026-11-12:** work-product exports ([`ledger/export_wp.py`](ledger/export_wp.py), workflow `wp-export`) carry the document-control block on page 1, a running footer (ID, version, status, commit, copy, page n of N) and the revision history; the snapshot's controlled-documents table takes its versions from the ledger. **Left:** the wiki pages, and removing the typed `Version` lines |

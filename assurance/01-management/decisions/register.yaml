@@ -6844,3 +6844,51 @@
       detail: "No tool credit is claimed. Cost: every trace link and ASIL must be checked by hand at each review, which is the work the checker was built to remove."
   sources: ["assurance/07-supporting/tool-qualification/TQR-32-check-trace.md", "assurance/07-supporting/tool-qualification/method.md", "assurance/07-supporting/WP-P-07-tool-classification-qualification.md TL-32, §5, OI-13"]
   status: queued
+
+- id: DQ-441
+  question: "Where should a work product's version number live: computed and stamped on the document when it is output, or written into the file by a bot during the pull request?"
+  context: >-
+    Versions are typed by hand in each header today (WP-S-02 "0.68") and drift: a version can be skipped, repeated or
+    left stale. **The change ledger can compute every version from the merged changes instead.** The question is
+    whether the number is also stored in the Markdown file, or only appears on outputs (export, snapshot, wiki).
+  reversibility: easy
+  blocks: "WP-P-04 §5 Version rule; the change ledger; the version stamp in exports (WP-P-04 OI-7)"
+  gate: G0
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Computed by the ledger and stamped at output; the file holds no version"
+      detail: "Never stale; two pull requests open at once cannot both claim the same number; no bot commits. Cost: the raw file on GitHub shows no version; the ledger and every output do."
+    - key: B
+      title: "Written into the header by a bot during the pull request"
+      detail: "The reviewer sees the new number in the diff. Cost: the bot must recompute whenever another pull request to the same document merges first."
+  sources: ["assurance/07-supporting/WP-P-04-documentation-management.md §5, §6", "assurance/07-supporting/ledger/README.md"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: computed at output."}
+  applied: {ref: e5683c8, record: "WP-P-04 v0.5 §5 Version rule and §6; assurance/07-supporting/ledger/README.md", at: 2026-11-12}
+  note: "Stamping at output and removing the typed header versions is WP-P-04 OI-7."
+
+- id: DQ-442
+  question: "What raises the X (approved issue) of a work product's X.Y.Z version: only approval at a gate, or also your approval of a single document between gates?"
+  context: >-
+    Y counts content changes and Z editorial ones; both are automatic. X says "this issue was approved". **Allowing
+    approval between gates gives more 1.x documents sooner but makes "approved" mean less than "passed a gate".**
+  reversibility: easy
+  blocks: "WP-P-04 §5 Version rule; assurance/07-supporting/ledger/gate-approvals.yaml"
+  gate: G0
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Only a gate approval raises X"
+      detail: "1.0.0 always means the document passed a gate, recorded in gate-approvals.yaml with its gate record. Cost: every work product stays 0.y.z until its gate."
+    - key: B
+      title: "A gate approval or the lead's approval of a single document"
+      detail: "Documents can reach 1.0.0 between gates. Cost: X no longer tells a reader whether the gate was passed."
+  sources: ["assurance/07-supporting/WP-P-04-documentation-management.md §5", "assurance/07-supporting/ledger/gate-approvals.yaml"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: X only at gates."}
+  applied: {ref: e5683c8, record: "WP-P-04 v0.5 §5 Version rule; assurance/07-supporting/ledger/gate-approvals.yaml", at: 2026-11-12}

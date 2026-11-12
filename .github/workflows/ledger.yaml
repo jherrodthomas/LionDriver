@@ -1,0 +1,94 @@
+# The change ledger (assurance/07-supporting/ledger/README.md; WP-P-04 §5-§6; DQ-441, DQ-442).
+# On a pull request: the label rule (`editorial` never with sr-a or sr-q), the ledger and export tests, and an export
+# of every work product through the completeness guard. Read-only.
+# On a push to liondriver-dev, or by hand there: append a row for every new commit to ledger.jsonl on the `ledger`
+# branch, verify the hash chain against the history, rebuild ledger.xlsx and push. The first run writes the backfill
+# (git data only) and the seed row. Runs one at a time so rows are never written twice.
+name: ledger
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  push:
+    branches: [liondriver-dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: ledger rules and tests
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: false
+      - name: editorial is never a safety-class change
+        run: python3 assurance/07-supporting/ledger/ledger.py check-labels --event "$GITHUB_EVENT_PATH"
+      - run: python3 -m pip install --quiet openpyxl pyyaml "markdown==3.7"
+      - run: python3 assurance/07-supporting/ledger/test_ledger.py
+      - run: python3 assurance/07-supporting/ledger/test_export_wp.py
+      - name: every work product exports without losing text (completeness guard, TL-65)
+        run: |
+          DOCS=$(python3 -c "import sys; sys.path.insert(0, 'assurance/07-supporting/ledger'); import ledger; print(' '.join(sorted(ledger.documents_at('HEAD'))))")
+          python3 assurance/07-supporting/ledger/export_wp.py $DOCS --format html --out "$RUNNER_TEMP/export" > /dev/null
+          python3 assurance/07-supporting/ledger/export_wp.py $DOCS --format md --out "$RUNNER_TEMP/export" > /dev/null
+
+  write:
+    name: append to the ledger
+    if: >-
+      github.event_name != 'pull_request' && github.repository == 'jherrodthomas/LionDriver'
+      && github.ref == 'refs/heads/liondriver-dev'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    concurrency:
+      group: ledger-write
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      pull-requests: read
+      checks: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: false
+          fetch-depth: 0
+      - run: python3 -m pip install --quiet openpyxl pyyaml
+      - name: Check out the ledger branch
+        run: |
+          git config --global user.name "liondriver-ledger"
+          git config --global user.email "liondriver-ledger@users.noreply.github.com"
+          LB="$RUNNER_TEMP/ledger"
+          if git ls-remote --exit-code --heads origin ledger >/dev/null; then
+            git fetch --quiet origin ledger:refs/remotes/origin/ledger
+            git worktree add --quiet "$LB" origin/ledger
+            git -C "$LB" checkout --quiet -B ledger
+          else
+            git worktree add --quiet --orphan -b ledger "$LB"
+          fi
+          echo "LB=$LB" >> "$GITHUB_ENV"
+      - name: Verify, append, verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          L=assurance/07-supporting/ledger/ledger.py
+          if [ -f "$LB/ledger.jsonl" ]; then python3 $L verify --ledger "$LB/ledger.jsonl" --ref HEAD; fi
+          python3 $L update --ledger "$LB/ledger.jsonl" --ref HEAD --repo "$GITHUB_REPOSITORY"
+          python3 $L verify --ledger "$LB/ledger.jsonl" --ref HEAD
+          python3 $L xlsx --ledger "$LB/ledger.jsonl" --out "$LB/ledger.xlsx"
+      - name: Push the ledger branch
+        run: |
+          cd "$LB"
+          git add ledger.jsonl ledger.xlsx
+          if git diff --cached --quiet; then echo "no new rows"; exit 0; fi
+          git commit --quiet -m "Ledger: rows up to ${GITHUB_SHA::8}"
+          git push --quiet origin ledger
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ledger
+          path: |
+            ${{ env.LB }}/ledger.jsonl
+            ${{ env.LB }}/ledger.xlsx
