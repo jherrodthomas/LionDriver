@@ -99,6 +99,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | HSI | hardware-software interface |
 | HUD | head-up display (here the cluster's lane-assist display) |
 | HW | hardware |
+| HWE | hardware engineering process group of ASPICE (HWE.1 … HWE.4) |
 | ID | identifier |
 | IGN | ignition line |
 | IMU | inertial measurement unit: accelerometers and gyroscopes |
@@ -119,12 +120,14 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | LKAS | lane keeping assist system |
 | LOG | verification by analysis of drive logs |
 | LTA | lane tracing assist: Toyota's stock lane-centring function |
+| MAN | management process group of ASPICE (MAN.3 project, MAN.5 risk, MAN.6 measurement) |
 | MB | megabyte |
 | MC/DC | modified condition/decision coverage: each condition shown to affect its decision independently |
 | MCU | microcontroller: the panda safety processor (STM32H7) |
 | MDN | mixture density network (how the model reports a spread of possible values) |
 | MISRA | MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) |
 | ML | machine learning |
+| MLE | machine learning engineering process group of ASPICE (MLE.1 … MLE.4) |
 | MPU | memory protection unit |
 | MQB | Volkswagen's transverse modular platform (Modularer Querbaukasten) |
 | NA | not applicable |
@@ -184,6 +187,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SBOM | software bill of materials: the list of every component and version |
 | SBU | sideband-use pins of a USB-C connector (in the harness, the intercept drive, orientation and ignition lines) |
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
+| SEC | cybersecurity engineering process group of ASPICE (SEC.1 … SEC.4) |
 | SecOC | secure onboard communication: AUTOSAR's message authentication for in-vehicle buses |
 | SHA-1 | secure hash algorithm 1, an outdated hash |
 | SHA-256 | a cryptographic hash used to identify a file exactly |
@@ -201,10 +205,11 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | ST | STMicroelectronics, the maker of the safety MCU |
 | STPA | system-theoretic process analysis |
 | STRIDE | spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege |
+| SUP | supporting process group of ASPICE (SUP.1 quality assurance … SUP.11 machine learning data management) |
 | SVG | scalable vector graphics (the figure format) |
 | SW | software |
 | SWE | software engineering process group of ASPICE (SWE.1 requirements … SWE.6 qualification test) |
-| SYS | system requirement SYS-nnn of WP-S-01 |
+| SYS | system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5) |
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | T-HIL | verification by bench test with the real panda (hardware in the loop) |
 | T-SIL | verification by software test or process replay (WP-S-01 §1.1) |
@@ -229,6 +234,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | USB | universal serial bus (on the panda, a second host link the reference device does not use) |
 | USB-C | USB Type-C connector |
 | USR | owner, installer or maintainer acting under a procedure (allocation class) |
+| VAL | validation process of ASPICE (VAL.1) |
 | VIN | vehicle identification number; in the harness box and its simulations, the box supply voltage |
 | VL | logic supply pin of the DG419LE switch (in the harness box, tied to VIN) |
 | VRU | vulnerable road user: pedestrian or cyclist |

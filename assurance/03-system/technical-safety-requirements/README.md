@@ -46,7 +46,7 @@ to, the kind of safety mechanism, its timing and how it is verified, and says wh
 | SPI | serial peripheral interface (the link between SoC and MCU) |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
 | SWSR-nn | software safety requirement (WP-W-02) |
-| SYS | system requirement SYS-nnn of WP-S-01 |
+| SYS | system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5) |
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | TSC | technical safety concept |
 | TSR-nn | technical safety requirement (WP-S-02) |

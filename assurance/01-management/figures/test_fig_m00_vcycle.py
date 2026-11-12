@@ -126,6 +126,40 @@ class VCycle(unittest.TestCase):
     self.assertEqual([r["box"]["title"] for r in rows][-1], m["boxes"]["verify"][0]["title"])
     self.assertEqual(len(rows), 2 * len(v.BOXES["define"]) + 1)
 
+  def test_each_standard_overlay_counts_the_register_column(self):
+    import vcycle_standards as vs
+    m = v.build_model()
+    _, _, _, ctx = vs.vx.process_facts()
+    for key, label, col, needle in vs.STANDARDS:
+      with self.subTest(standard=label):
+        ov = vs.overlay(m, key, col, needle, ctx.register)
+        want = sum(1 for r in ctx.register.values()
+                   if r.clauses.get(col, "").strip() not in ("", "—", "-") and (not needle or needle in r.clauses[col]))
+        self.assertEqual(ov["total"], want)
+        page = (vs.vx.PAGES / vs.page_name(key)).read_text(encoding="utf-8")
+        self.assertEqual(len(re.findall(r"^\| \[[^]]+\]\([^)]+\.md\) \| \[WP-", page, re.M)), want)
+        self.assertIn(f"**{label}**", page)
+
+  def test_toggle_row_links_every_overlay_from_the_readme(self):
+    import vcycle_standards as vs
+    block = v.README_A.read_text(encoding="utf-8")
+    for key, _, _, _ in vs.STANDARDS:
+      self.assertIn(f"01-management/vcycle/{vs.page_name(key)}", block)
+    self.assertIn("View by standard: **All**", block)
+
+  def test_clause_summaries(self):
+    import vcycle_standards as vs
+    self.assertEqual(vs.summary("iso26262", ["9 §5, 4 §6", "6 §5–11, Annex C; 8 §6–12", "3 §6 (controllability)"]),
+                     "26262-9 §5 · 26262-4 §6 · 26262-6 §5–11, Annex C · 26262-8 §6–12 · 26262-3 §6")
+    self.assertEqual(vs.summary("aspice", ["MLE.1–4, SUP.11", "SEC.*", "MAN.3"]), "MLE.1–4, SUP.11, SEC.*, MAN.3")
+
+  def test_a_standard_no_work_product_cites_fails(self):
+    import vcycle_standards as vs
+    m = v.build_model()
+    _, _, _, ctx = vs.vx.process_facts()
+    with self.assertRaises(FigureError):
+      vs.overlay(m, "x", "other", "no such standard", ctx.register)
+
 
 if __name__ == "__main__":
   unittest.main()

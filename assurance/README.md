@@ -77,6 +77,8 @@ Every work product on the V-model: the definition side on the left, the verifica
 
 <!-- BEGIN GENERATED: vcycle (assurance/01-management/figures/fig_m00_vcycle.py) -->
 
+View by standard: **All** · [ISO 26262](01-management/vcycle/standard-iso26262.md) · [ISO 21448](01-management/vcycle/standard-iso21448.md) · [ISO/SAE 21434](01-management/vcycle/standard-iso21434.md) · [ISO/PAS 8800](01-management/vcycle/standard-pas8800.md) · [ASPICE](01-management/vcycle/standard-aspice.md)
+
 <p align="center">
 <img src="01-management/figures/vcycle/fig-m00-vcycle-header.svg" width="98%" alt="Time axis: Governance phase, G0 Mar 2027–May 2027; Concept phase, G1 Nov 2027–May 2028; System design phase, G2 Jul 2028–May 2029; HW/SW development phase, G3 Nov 2029–May 2031; Integration and verification phase, G4 Sep 2030–Sep 2032; Validation and release phase, G5 Jul 2031–Mar 2034; Operation phase, G6 continuous. Now in the Governance phase."><br>
 <a href="01-management/vcycle/concept-and-hazards.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-define-1.svg" width="49%" alt="Concept and hazards (G1): WP-C-01…12; 12 draft. Opens its exploded view."></a><a href="01-management/vcycle/vehicle-validation.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-verify-1.svg" width="49%" alt="Vehicle validation (G1–G5): WP-V-01…07; 7 draft. Opens its exploded view."></a><br>
