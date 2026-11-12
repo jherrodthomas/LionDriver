@@ -62,6 +62,9 @@ PAGES = [
 FIGURES = [
   A / "01-management/figures/vcycle/fig-m00-vcycle.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-legend.svg",
+  A / "01-management/figures/vcycle/fig-m00-vcycle-time.svg",
+  A / "01-management/figures/vcycle/fig-m00-vcycle-crosswalk.svg",
+  *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-std-*.svg")),  # one per standard
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-x-*.svg")),  # exploded views, one per box
   A / "05-software/coverage/card-overview.svg",
   A / "05-software/coverage/card-status.svg",
@@ -257,6 +260,12 @@ TERMS = {
   "PDR": "power-down reset (MCU supply monitor, the lowest threshold)",
   "UML": "Unified Modeling Language (OMG): state machine, sequence and component diagrams",
   "SWE": "software engineering process group of ASPICE (SWE.1 requirements … SWE.6 qualification test)",
+  "HWE": "hardware engineering process group of ASPICE (HWE.1 … HWE.4)",
+  "MLE": "machine learning engineering process group of ASPICE (MLE.1 … MLE.4)",
+  "SEC": "cybersecurity engineering process group of ASPICE (SEC.1 … SEC.4)",
+  "VAL": "validation process of ASPICE (VAL.1)",
+  "SUP": "supporting process group of ASPICE (SUP.1 quality assurance … SUP.11 machine learning data management)",
+  "MAN": "management process group of ASPICE (MAN.3 project, MAN.5 risk, MAN.6 measurement)",
   "MISRA": "MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5)",
   "MC/DC": "modified condition/decision coverage: each condition shown to affect its decision independently",
   "ATC-": "architecture target-state change of WP-W-03 §10",
@@ -307,7 +316,7 @@ TERMS = {
   "PC": "personal computer",
   "NaN": "not a number: an invalid floating-point value",
   "IMU": "inertial measurement unit: accelerometers and gyroscopes",
-  "SYS": "system requirement SYS-nnn of WP-S-01",
+  "SYS": "system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5)",
   "T-SIL": "verification by software test or process replay (WP-S-01 §1.1)",
   "R-DEV": "installation record block: device and harness (WP-O-01 §5)",
   "R-VEH": "installation record block: vehicle (WP-O-01 §5)",

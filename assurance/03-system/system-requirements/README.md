@@ -23,7 +23,7 @@ same quantity the safety requirement wins.
 | OI-nn | open item of the document it appears in |
 | SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
-| SYS | system requirement SYS-nnn of WP-S-01 |
+| SYS | system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5) |
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | TBD | to be determined: a value not yet set |
 | TSR-nn | technical safety requirement (WP-S-02) |

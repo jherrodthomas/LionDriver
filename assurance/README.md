@@ -77,6 +77,8 @@ Every work product on the V-model: the definition side on the left, the verifica
 
 <!-- BEGIN GENERATED: vcycle (assurance/01-management/figures/fig_m00_vcycle.py) -->
 
+View by standard: **All** · [Crosswalk](01-management/vcycle/crosswalk.md) · [ISO 26262](01-management/vcycle/standard-iso26262.md) · [ISO 21448](01-management/vcycle/standard-iso21448.md) · [ISO/SAE 21434](01-management/vcycle/standard-iso21434.md) · [ISO/PAS 8800](01-management/vcycle/standard-pas8800.md) · [ASPICE](01-management/vcycle/standard-aspice.md)
+
 <p align="center">
 <img src="01-management/figures/vcycle/fig-m00-vcycle-header.svg" width="98%" alt="Time axis: Governance phase, G0 Mar 2027–May 2027; Concept phase, G1 Nov 2027–May 2028; System design phase, G2 Jul 2028–May 2029; HW/SW development phase, G3 Nov 2029–May 2031; Integration and verification phase, G4 Sep 2030–Sep 2032; Validation and release phase, G5 Jul 2031–Mar 2034; Operation phase, G6 continuous. Now in the Governance phase."><br>
 <a href="01-management/vcycle/concept-and-hazards.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-define-1.svg" width="49%" alt="Concept and hazards (G1): WP-C-01…12; 12 draft. Opens its exploded view."></a><a href="01-management/vcycle/vehicle-validation.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-verify-1.svg" width="49%" alt="Vehicle validation (G1–G5): WP-V-01…07; 7 draft. Opens its exploded view."></a><br>
@@ -89,7 +91,7 @@ Every work product on the V-model: the definition side on the left, the verifica
 <img src="01-management/figures/vcycle/fig-m00-vcycle-legend.svg" width="98%" alt="Legend: status colours, the next-gate outline and the verifies line.">
 </p>
 
-Click a box to open its exploded view: its work products, what each needs first, and the reviews that cover them. Folders: [01-management/](01-management/README.md) · [02-concept/](02-concept/README.md) · [03-system/](03-system/README.md) · [04-hardware/](04-hardware/README.md) · [05-software/](05-software/README.md) · [06-validation/](06-validation/README.md) · [07-supporting/](07-supporting/README.md) · [08-analyses/](08-analyses/README.md) · [09-production-operation/](09-production-operation/README.md) · [10-safety-case/](10-safety-case/README.md) · [trace/](trace/README.md).
+Click a box to open its exploded view: its work products, what each needs first, and the reviews that cover them. See also [the V-cycle over time](01-management/vcycle/over-time.md): what the records show happened, day by day, against when the plan has each row due. Folders: [01-management/](01-management/README.md) · [02-concept/](02-concept/README.md) · [03-system/](03-system/README.md) · [04-hardware/](04-hardware/README.md) · [05-software/](05-software/README.md) · [06-validation/](06-validation/README.md) · [07-supporting/](07-supporting/README.md) · [08-analyses/](08-analyses/README.md) · [09-production-operation/](09-production-operation/README.md) · [10-safety-case/](10-safety-case/README.md) · [trace/](trace/README.md).
 
 *The V-cycle.* Drawn from the [work-product register](01-management/WP-M-00-work-product-register.md) §2–§3, the [schedule](01-management/WP-M-03-project-plan.md#5-schedule) and the [gate records](10-safety-case/gates/README.md) by [`fig_m00_vcycle.py`](01-management/figures/fig_m00_vcycle.py); CI fails if it is stale.
 

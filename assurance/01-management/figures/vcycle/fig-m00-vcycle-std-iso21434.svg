@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="951" viewBox="0 0 1400 951" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle by standard: ISO/SAE 21434</title>
+<desc>The V-cycle by standard, ISO/SAE 21434: 33 of 89 work products cite it. Concept and hazards 3 of 12; System requirements 2 of 4; System architecture 0 of 8; Hardware and software requirements 0 of 2; Detailed design 0 of 6; Vehicle validation 1 of 7; System verification 0 of 1; System integration 0 of 1; Hardware and software integration 0 of 4; Unit verification 1 of 1; Implementation 3 of 5; Management plans 7 of 15; Supporting processes 8 of 11; Traceability 1 of 1; Safety case 3 of 6; Operation and field 4 of 5.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1400" height="951" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">LionDriver V-cycle · ISO/SAE 21434</text>
+<text x="40" y="68" font-size="13" fill="#475569">33 of 89 work products cite ISO/SAE 21434 in the register (WP-M-00 §3). Each box: how many of its work products do, and which clauses; one block per work product.</text>
+<text x="40" y="104" font-size="12" fill="#475569" font-weight="700">View by standard:</text>
+<g transform="translate(160,91)"><rect x="0" y="0" width="26.7" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="13.3" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">All</text></g>
+<g transform="translate(194.6916,91)"><rect x="0" y="0" width="67.9" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="33.9" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">Crosswalk</text></g>
+<g transform="translate(270.543,91)"><rect x="0" y="0" width="73.3" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="36.7" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO 26262</text></g>
+<g transform="translate(351.8746,91)"><rect x="0" y="0" width="73.3" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="36.7" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO 21448</text></g>
+<g transform="translate(433.20619999999997,91)"><rect x="0" y="0" width="102" height="22" rx="11.0" fill="#7C3AED" stroke="#7C3AED" stroke-width="1"/><text x="51" y="15" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">ISO/SAE 21434</text></g>
+<g transform="translate(543.2214,91)"><rect x="0" y="0" width="95.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="47.7" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO/PAS 8800</text></g>
+<g transform="translate(646.707,91)"><rect x="0" y="0" width="61" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="30.5" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ASPICE</text></g>
+<path d="M72 150 h400 l-24 88 h-400 z" stroke="#7C3AED" stroke-width="1.6" fill="#F5F3FF" stroke-linejoin="round"/>
+<text x="84" y="174" font-size="14" fill="#0F172A" font-weight="700">Concept and hazards</text>
+<text x="442" y="174" font-size="13" fill="#7C3AED" font-weight="700" text-anchor="end">3 of 12</text>
+<text x="84" y="194" font-size="11.5" fill="#0F172A">§9.3, §9.4, §9.5, §15</text>
+<text x="84" y="211" font-size="10.5" fill="#475569">WP-C-01, -09, -10</text>
+<rect x="85" y="219" width="26.3" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="113.3" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="141.7" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="170" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="198.3" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="226.7" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="255" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="283.3" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="311.7" y="219" width="26.3" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="340" y="219" width="26.3" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="368.3" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="396.7" y="219" width="26.3" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<path d="M928 150 h400 l24 88 h-400 z" stroke="#7C3AED" stroke-width="1.6" fill="#F5F3FF" stroke-linejoin="round"/>
+<text x="964" y="174" font-size="14" fill="#0F172A" font-weight="700">Vehicle validation</text>
+<text x="1322" y="174" font-size="13" fill="#7C3AED" font-weight="700" text-anchor="end">1 of 7</text>
+<text x="964" y="194" font-size="11.5" fill="#0F172A">§11</text>
+<text x="964" y="211" font-size="10.5" fill="#475569">WP-V-06</text>
+<rect x="965" y="219" width="46.6" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1013.6" y="219" width="46.6" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1062.1" y="219" width="46.6" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1110.7" y="219" width="46.6" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1159.3" y="219" width="46.6" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1207.9" y="219" width="46.6" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="1256.4" y="219" width="46.6" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<line x1="466" y1="194" x2="934" y2="194" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M108 254 h400 l-24 88 h-400 z" stroke="#7C3AED" stroke-width="1.6" fill="#F5F3FF" stroke-linejoin="round"/>
+<text x="120" y="278" font-size="14" fill="#0F172A" font-weight="700">System requirements</text>
+<text x="478" y="278" font-size="13" fill="#7C3AED" font-weight="700" text-anchor="end">2 of 4</text>
+<text x="120" y="298" font-size="11.5" fill="#0F172A">§10</text>
+<text x="120" y="315" font-size="10.5" fill="#475569">WP-S-06, -07</text>
+<rect x="121" y="323" width="83" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="206" y="323" width="83" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="291" y="323" width="83" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="376" y="323" width="83" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<path d="M892 254 h400 l24 88 h-400 z" stroke="#94A3B8" stroke-width="1" fill="#FFFFFF" stroke-dasharray="4 3" stroke-linejoin="round"/>
+<text x="928" y="278" font-size="14" fill="#94A3B8" font-weight="700">System verification</text>
+<text x="1286" y="278" font-size="13" fill="#94A3B8" font-weight="700" text-anchor="end">0 of 1</text>
+<text x="928" y="298" font-size="11.5" fill="#94A3B8" font-style="italic">no work product in this box answers it</text>
+<text x="928" y="315" font-size="10.5" fill="#94A3B8">WP-S-09</text>
+<rect x="929" y="323" width="338" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<line x1="502" y1="298" x2="898" y2="298" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M144 358 h400 l-24 88 h-400 z" stroke="#94A3B8" stroke-width="1" fill="#FFFFFF" stroke-dasharray="4 3" stroke-linejoin="round"/>
+<text x="156" y="382" font-size="14" fill="#94A3B8" font-weight="700">System architecture</text>
+<text x="514" y="382" font-size="13" fill="#94A3B8" font-weight="700" text-anchor="end">0 of 8</text>
+<text x="156" y="402" font-size="11.5" fill="#94A3B8" font-style="italic">no work product in this box answers it</text>
+<text x="156" y="419" font-size="10.5" fill="#94A3B8">WP-S-03…05, WP-A-01…05</text>
+<rect x="157" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="199.5" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="242" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="284.5" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="327" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="369.5" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="412" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="454.5" y="427" width="40.5" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<path d="M856 358 h400 l24 88 h-400 z" stroke="#94A3B8" stroke-width="1" fill="#FFFFFF" stroke-dasharray="4 3" stroke-linejoin="round"/>
+<text x="892" y="382" font-size="14" fill="#94A3B8" font-weight="700">System integration</text>
+<text x="1250" y="382" font-size="13" fill="#94A3B8" font-weight="700" text-anchor="end">0 of 1</text>
+<text x="892" y="402" font-size="11.5" fill="#94A3B8" font-style="italic">no work product in this box answers it</text>
+<text x="892" y="419" font-size="10.5" fill="#94A3B8">WP-S-08</text>
+<rect x="893" y="427" width="338" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<line x1="538" y1="402" x2="862" y2="402" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M180 462 h400 l-24 88 h-400 z" stroke="#94A3B8" stroke-width="1" fill="#FFFFFF" stroke-dasharray="4 3" stroke-linejoin="round"/>
+<text x="192" y="486" font-size="14" fill="#94A3B8" font-weight="700">Hardware and software requirements</text>
+<text x="550" y="486" font-size="13" fill="#94A3B8" font-weight="700" text-anchor="end">0 of 2</text>
+<text x="192" y="506" font-size="11.5" fill="#94A3B8" font-style="italic">no work product in this box answers it</text>
+<text x="192" y="523" font-size="10.5" fill="#94A3B8">WP-H-01, WP-W-02</text>
+<rect x="193" y="531" width="168" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="363" y="531" width="168" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<path d="M820 462 h400 l24 88 h-400 z" stroke="#94A3B8" stroke-width="1" fill="#FFFFFF" stroke-dasharray="4 3" stroke-linejoin="round"/>
+<text x="856" y="486" font-size="14" fill="#94A3B8" font-weight="700">Hardware and software integration</text>
+<text x="1214" y="486" font-size="13" fill="#94A3B8" font-weight="700" text-anchor="end">0 of 4</text>
+<text x="856" y="506" font-size="11.5" fill="#94A3B8" font-style="italic">no work product in this box answers it</text>
+<text x="856" y="523" font-size="10.5" fill="#94A3B8">WP-W-07, -08, WP-H-06, -07</text>
+<rect x="857" y="531" width="83" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="942" y="531" width="83" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1027" y="531" width="83" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1112" y="531" width="83" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<line x1="574" y1="506" x2="826" y2="506" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M216 566 h400 l-24 88 h-400 z" stroke="#94A3B8" stroke-width="1" fill="#FFFFFF" stroke-dasharray="4 3" stroke-linejoin="round"/>
+<text x="228" y="590" font-size="14" fill="#94A3B8" font-weight="700">Detailed design</text>
+<text x="586" y="590" font-size="13" fill="#94A3B8" font-weight="700" text-anchor="end">0 of 6</text>
+<text x="228" y="610" font-size="11.5" fill="#94A3B8" font-style="italic">no work product in this box answers it</text>
+<text x="228" y="627" font-size="10.5" fill="#94A3B8">WP-W-03, -04, WP-H-02…05</text>
+<rect x="229" y="635" width="54.7" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="285.7" y="635" width="54.7" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="342.3" y="635" width="54.7" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="399" y="635" width="54.7" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="455.7" y="635" width="54.7" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="512.3" y="635" width="54.7" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<path d="M784 566 h400 l24 88 h-400 z" stroke="#7C3AED" stroke-width="1.6" fill="#F5F3FF" stroke-linejoin="round"/>
+<text x="820" y="590" font-size="14" fill="#0F172A" font-weight="700">Unit verification</text>
+<text x="1178" y="590" font-size="13" fill="#7C3AED" font-weight="700" text-anchor="end">1 of 1</text>
+<text x="820" y="610" font-size="11.5" fill="#0F172A">§10</text>
+<text x="820" y="627" font-size="10.5" fill="#475569">WP-W-06</text>
+<rect x="821" y="635" width="338" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<line x1="610" y1="610" x2="790" y2="610" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="5 5"/>
+<path d="M380 670 h640 l0 88 h-640 z" stroke="#7C3AED" stroke-width="1.6" fill="#F5F3FF" stroke-linejoin="round"/>
+<text x="404" y="694" font-size="14" fill="#0F172A" font-weight="700">Implementation</text>
+<text x="1002" y="694" font-size="13" fill="#7C3AED" font-weight="700" text-anchor="end">3 of 5</text>
+<text x="404" y="714" font-size="11.5" fill="#0F172A">§10</text>
+<text x="404" y="731" font-size="10.5" fill="#475569">WP-W-01, -05, -11</text>
+<rect x="405" y="739" width="114" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="521" y="739" width="114" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="637" y="739" width="114" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="753" y="739" width="114" height="8" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="869" y="739" width="114" height="8" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="60" y="782" font-size="12" fill="#475569" font-weight="700">Runs across every phase</text>
+<rect x="60" y="792" width="246.4" height="62" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="72" y="812" font-size="12.5" fill="#0F172A" font-weight="700">Management plans</text>
+<text x="294.4" y="812" font-size="12" fill="#7C3AED" font-weight="700" text-anchor="end">7 of 15</text>
+<text x="72" y="829" font-size="10.5" fill="#0F172A">§5, §6, §7</text>
+<rect x="73" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="87.8" y="838" width="12.8" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="102.7" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="117.5" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="132.3" y="838" width="12.8" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="147.1" y="838" width="12.8" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="162" y="838" width="12.8" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="176.8" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="191.6" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="206.4" y="838" width="12.8" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="221.3" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="236.1" y="838" width="12.8" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="250.9" y="838" width="12.8" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="265.7" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="280.6" y="838" width="12.8" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="318.4" y="792" width="246.4" height="62" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="330.4" y="812" font-size="12.5" fill="#0F172A" font-weight="700">Supporting processes</text>
+<text x="552.8" y="812" font-size="12" fill="#7C3AED" font-weight="700" text-anchor="end">8 of 11</text>
+<text x="330.4" y="829" font-size="10.5" fill="#0F172A">§5, §6, §8, §10</text>
+<rect x="331.4" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="351.6" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="371.8" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="392.1" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="412.3" y="838" width="18.2" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="432.5" y="838" width="18.2" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="452.7" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="472.9" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="493.1" y="838" width="18.2" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="513.4" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="533.6" y="838" width="18.2" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="576.8" y="792" width="246.4" height="62" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="588.8" y="812" font-size="12.5" fill="#0F172A" font-weight="700">Traceability</text>
+<text x="811.2" y="812" font-size="12" fill="#7C3AED" font-weight="700" text-anchor="end">1 of 1</text>
+<text x="588.8" y="829" font-size="10.5" fill="#0F172A">§10</text>
+<rect x="589.8" y="838" width="220.4" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="835.2" y="792" width="246.4" height="62" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="847.2" y="812" font-size="12.5" fill="#0F172A" font-weight="700">Safety case</text>
+<text x="1069.6" y="812" font-size="12" fill="#7C3AED" font-weight="700" text-anchor="end">3 of 6</text>
+<text x="847.2" y="829" font-size="10.5" fill="#0F172A">§6</text>
+<rect x="848.2" y="838" width="35.1" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="885.3" y="838" width="35.1" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="922.3" y="838" width="35.1" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="959.4" y="838" width="35.1" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="996.5" y="838" width="35.1" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="1033.5" y="838" width="35.1" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="1093.6" y="792" width="246.4" height="62" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="1105.6" y="812" font-size="12.5" fill="#0F172A" font-weight="700">Operation and field</text>
+<text x="1328" y="812" font-size="12" fill="#7C3AED" font-weight="700" text-anchor="end">4 of 5</text>
+<text x="1105.6" y="829" font-size="10.5" fill="#0F172A">§8, §12, §13, §14</text>
+<rect x="1106.6" y="838" width="42.5" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="1151.1" y="838" width="42.5" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="1195.6" y="838" width="42.5" height="7" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1240" y="838" width="42.5" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<rect x="1284.5" y="838" width="42.5" height="7" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="40" y="888" font-size="11.5" fill="#475569" font-style="italic">A work product counts when its register row cites the standard. Citing a clause is not meeting it: status is shown on the V, and nothing here is assessed or accepted.</text>
+<g class="terms">
+<text x="40" y="912" font-size="10.5" fill="#475569">Terms: ASPICE Automotive SPICE, the process capability model · ISO International Organization for Standardization · PAS publicly available specification (ISO/PAS 8800 is the AI safety one) · SAE SAE International (formerly the Society of</text>
+<text x="40" y="926.5" font-size="10.5" fill="#475569">Automotive Engineers) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

@@ -98,6 +98,88 @@ class VCycle(unittest.TestCase):
     import vcycle_explode as x
     self.assertEqual(x.dedupe([("CR-03", "a", False), ("CR-03", "b", True)]), [("CR-03", "a", True)])
 
+  def test_time_view_freshness_matches_its_page_and_the_records(self):
+    import vcycle_time as tv
+    m = v.build_model()
+    d = tv.model(m)
+    page = (tv.vx.PAGES / tv.PAGE).read_text(encoding="utf-8")
+    rows = re.findall(r"^\| (WP-[A-Z]-\d\d) \| (\S+) \| (WP-[A-Z]-\d\d) \| (\S+) \|$", page, re.M)
+    self.assertEqual(len(rows), len(d["newer"]))
+    for w, own, i, later in rows:
+      self.assertGreater(later, own, w)
+      self.assertEqual(own, d["last"][w])
+    self.assertFalse(set(d["undated"]) & set(d["last"]))
+    self.assertEqual(set(d["undated"]) | set(d["last"]), set(m["wps"]))
+    self.assertEqual(d["asof"], max(d["last"].values()))
+
+  def test_time_view_unreadable_gate_date_fails(self):
+    import vcycle_time as tv
+    with self.assertRaises(FigureError):
+      tv.month("Spring 2027")
+    self.assertEqual(tv.month("Mar 2027").month, 3)
+
+  def test_time_view_has_one_row_per_box_in_v_order(self):
+    import vcycle_time as tv
+    m = v.build_model()
+    rows = tv.rows(m)
+    self.assertEqual([r["box"]["title"] for r in rows][0], m["boxes"]["define"][0]["title"])
+    self.assertEqual([r["box"]["title"] for r in rows][-1], m["boxes"]["verify"][0]["title"])
+    self.assertEqual(len(rows), 2 * len(v.BOXES["define"]) + 1)
+
+  def test_each_standard_overlay_counts_the_register_column(self):
+    import vcycle_standards as vs
+    m = v.build_model()
+    _, _, _, ctx = vs.vx.process_facts()
+    for key, label, col, needle in vs.STANDARDS:
+      with self.subTest(standard=label):
+        ov = vs.overlay(m, key, col, needle, ctx.register)
+        want = sum(1 for r in ctx.register.values()
+                   if r.clauses.get(col, "").strip() not in ("", "—", "-") and (not needle or needle in r.clauses[col]))
+        self.assertEqual(ov["total"], want)
+        page = (vs.vx.PAGES / vs.page_name(key)).read_text(encoding="utf-8")
+        self.assertEqual(len(re.findall(r"^\| \[[^]]+\]\([^)]+\.md\) \| \[WP-", page, re.M)), want)
+        self.assertIn(f"**{label}**", page)
+
+  def test_toggle_row_links_every_overlay_from_the_readme(self):
+    import vcycle_standards as vs
+    block = v.README_A.read_text(encoding="utf-8")
+    for key, _, _, _ in vs.STANDARDS:
+      self.assertIn(f"01-management/vcycle/{vs.page_name(key)}", block)
+    self.assertIn("View by standard: **All**", block)
+
+  def test_clause_summaries(self):
+    import vcycle_standards as vs
+    self.assertEqual(vs.summary("iso26262", ["9 §5, 4 §6", "6 §5–11, Annex C; 8 §6–12", "3 §6 (controllability)"]),
+                     "26262-3 §6 · 26262-4 §6 · 26262-6 §5–11, Annex C · 26262-8 §6–12 · 26262-9 §5")
+    self.assertEqual(vs.summary("aspice", ["MLE.1–4, SUP.11", "SEC.*", "MAN.3"]), "MLE.1–4, SEC.*, SUP.11, MAN.3")
+
+  def test_a_standard_no_work_product_cites_fails(self):
+    import vcycle_standards as vs
+    m = v.build_model()
+    _, _, _, ctx = vs.vx.process_facts()
+    with self.assertRaises(FigureError):
+      vs.overlay(m, "x", "other", "no such standard", ctx.register)
+
+  def test_crosswalk_has_every_box_once_and_matches_the_overlays(self):
+    import vcycle_crosswalk as xw
+    import vcycle_standards as vs
+    m = v.build_model()
+    gs, c = xw.groups(m), xw.cells(m)
+    titles = [b["title"] for _, _, boxes in gs for b in boxes]
+    self.assertEqual(sorted(titles), sorted(b["title"] for _, _, b in vs.vx.all_boxes(m)))
+    page = (vs.vx.PAGES / xw.PAGE).read_text(encoding="utf-8")
+    rows = [ln for ln in page.splitlines() if ln.startswith("| ") and "](" in ln.split("|")[2]]
+    self.assertEqual(len(rows), len(titles))
+    for key, _, _, _ in vs.STANDARDS:
+      self.assertEqual(sum(len(cl["hit"]) for cl in c["cells"][key].values()), c["totals"][key])
+    self.assertIn("**Crosswalk**", page)
+
+  def test_clauses_are_sorted_numerically(self):
+    import vcycle_standards as vs
+    self.assertEqual(vs.summary("iso21434", ["§15, §9.4", "§9.5"]), "§9.4, §9.5, §15")
+    self.assertEqual(vs.summary("iso26262", ["9 §7, 2 §6", "2 §5"]), "26262-2 §5, §6 · 26262-9 §7")
+    self.assertEqual(vs.summary("aspice", ["MAN.3", "SWE.10, SWE.2", "SYS.2"]), "SYS.2, SWE.2, SWE.10, MAN.3")
+
 
 if __name__ == "__main__":
   unittest.main()
