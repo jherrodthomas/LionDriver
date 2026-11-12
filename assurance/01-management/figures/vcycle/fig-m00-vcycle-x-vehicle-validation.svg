@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1173" viewBox="0 0 1400 1173" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Vehicle validation: exploded view</title>
+<desc>Vehicle validation exploded: 7 work products in 4 discipline lanes, 7 draft; feeds 5 other boxes; 0 of 3 covering reviews recorded.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1400" height="1173" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="40" font-size="13" fill="#1D4ED8" font-weight="700">V-cycle  ›  Vehicle validation</text>
+<text x="40" y="74" font-size="26" fill="#0F172A" font-weight="700">Vehicle validation · exploded view</text>
+<text x="40" y="100" font-size="13.5" fill="#475569">The 7 work products of this box: what each needs first (from the process model, WP-P-11), its status, and the reviews that cover the box.</text>
+<rect x="1160" y="30" width="44" height="9" rx="2" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="0.8"/>
+<rect x="1310" y="30" width="44" height="9" rx="2" fill="#15803D" stroke="#15803D" stroke-width="0.8"/>
+<rect x="1168" y="42" width="44" height="9" rx="2" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="0.8"/>
+<rect x="1302" y="42" width="44" height="9" rx="2" fill="#F0FDF4" stroke="#15803D" stroke-width="0.8"/>
+<rect x="1176" y="54" width="44" height="9" rx="2" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="0.8"/>
+<rect x="1294" y="54" width="44" height="9" rx="2" fill="#F0FDF4" stroke="#15803D" stroke-width="0.8"/>
+<rect x="1184" y="66" width="44" height="9" rx="2" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="0.8"/>
+<rect x="1286" y="66" width="44" height="9" rx="2" fill="#F0FDF4" stroke="#15803D" stroke-width="0.8"/>
+<rect x="1192" y="78" width="44" height="9" rx="2" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="0.8"/>
+<rect x="1278" y="78" width="44" height="9" rx="2" fill="#F0FDF4" stroke="#15803D" stroke-width="0.8"/>
+<rect x="1230" y="90" width="60" height="9" rx="2" fill="#F1F5F9" stroke="#0F172A" stroke-width="0.8"/>
+<rect x="1160" y="106" width="35" height="7" rx="2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+<rect x="1199" y="106" width="35" height="7" rx="2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+<rect x="1238" y="106" width="35" height="7" rx="2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+<rect x="1277" y="106" width="35" height="7" rx="2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+<rect x="1316" y="106" width="35" height="7" rx="2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8"/>
+<rect x="1306" y="26" width="52" height="17" rx="4" fill="none" stroke="#C2410C" stroke-width="2"/>
+<text x="1257" y="132" font-size="10.5" fill="#475569" text-anchor="middle">Click the picture to go back to the V</text>
+<rect x="40" y="170" width="1320" height="300" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="52" y="190" font-size="12" fill="#475569" font-weight="700">Joint</text>
+<rect x="40" y="482" width="1320" height="130" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<text x="52" y="502" font-size="12" fill="#475569" font-weight="700">Functional safety</text>
+<rect x="40" y="624" width="1320" height="130" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="52" y="644" font-size="12" fill="#475569" font-weight="700">SOTIF</text>
+<rect x="40" y="766" width="1320" height="130" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<text x="52" y="786" font-size="12" fill="#475569" font-weight="700">Cybersecurity</text>
+<text x="232" y="190" font-size="11" fill="#94A3B8" text-anchor="end" font-style="italic">Needs from other boxes</text>
+<rect x="52" y="202" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="62" y="216" font-size="10.5" fill="#0F172A" font-weight="700">Concept and hazards</text>
+<text x="62" y="230" font-size="10" fill="#475569">WP-C-02…11</text>
+<rect x="52" y="244" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="62" y="258" font-size="10.5" fill="#0F172A" font-weight="700">System verification</text>
+<text x="62" y="272" font-size="10" fill="#475569">WP-S-09</text>
+<rect x="52" y="286" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="62" y="300" font-size="10.5" fill="#0F172A" font-weight="700">Implementation</text>
+<text x="62" y="314" font-size="10" fill="#475569">WP-W-10, -11</text>
+<rect x="52" y="328" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="62" y="342" font-size="10.5" fill="#0F172A" font-weight="700">System requirements</text>
+<text x="62" y="356" font-size="10" fill="#475569">WP-S-02, -07</text>
+<rect x="52" y="370" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="62" y="384" font-size="10.5" fill="#0F172A" font-weight="700">System architecture</text>
+<text x="62" y="398" font-size="10" fill="#475569">WP-S-04, WP-A-02…04</text>
+<rect x="52" y="412" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="62" y="426" font-size="10.5" fill="#0F172A" font-weight="700">Hardware and software …</text>
+<text x="62" y="440" font-size="10" fill="#475569">WP-H-06</text>
+<path d="M400 241 C411 241 411 553 416 553" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M422 553 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
+<path d="M400 553 C411 553 411 553 416 553" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M422 553 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
+<path d="M400 695 C411 695 411 695 416 695" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M422 695 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
+<path d="M400 241 C411 241 411 695 416 695" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M422 695 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
+<path d="M572 695 C583 695 583 695 588 695" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M594 695 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
+<path d="M400 241 C411 241 411 837 416 837" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M422 837 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
+<rect x="422" y="512" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="432" y="530" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-V-01</text>
+<g transform="translate(528.5,518)"><rect x="0" y="0" width="35.5" height="16" rx="8.0" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/><text x="17.7" y="11.4" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">Draft</text></g>
+<text x="432" y="549" font-size="12" fill="#0F172A" font-weight="600">Safety validation</text>
+<text x="432" y="564" font-size="12" fill="#0F172A" font-weight="600">plan, specification …</text>
+<text x="432" y="584" font-size="9.5" fill="#475569">26262-4 §8</text>
+<rect x="250" y="654" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="260" y="672" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-V-02</text>
+<g transform="translate(356.5,660)"><rect x="0" y="0" width="35.5" height="16" rx="8.0" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/><text x="17.7" y="11.4" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">Draft</text></g>
+<text x="260" y="691" font-size="12" fill="#0F172A" font-weight="600">SOTIF verification</text>
+<text x="260" y="706" font-size="12" fill="#0F172A" font-weight="600">and validation …</text>
+<text x="260" y="726" font-size="9.5" fill="#475569">21448 §9 · PAS 8800</text>
+<rect x="422" y="654" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="432" y="672" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-V-03</text>
+<g transform="translate(528.5,660)"><rect x="0" y="0" width="35.5" height="16" rx="8.0" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/><text x="17.7" y="11.4" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">Draft</text></g>
+<text x="432" y="691" font-size="12" fill="#0F172A" font-weight="600">Evaluation of known</text>
+<text x="432" y="706" font-size="12" fill="#0F172A" font-weight="600">hazardous scenarios</text>
+<text x="432" y="726" font-size="9.5" fill="#475569">21448 §10</text>
+<rect x="594" y="654" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="604" y="672" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-V-04</text>
+<g transform="translate(700.5,660)"><rect x="0" y="0" width="35.5" height="16" rx="8.0" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/><text x="17.7" y="11.4" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">Draft</text></g>
+<text x="604" y="691" font-size="12" fill="#0F172A" font-weight="600">Evaluation of</text>
+<text x="604" y="706" font-size="12" fill="#0F172A" font-weight="600">unknown hazardous …</text>
+<text x="604" y="726" font-size="9.5" fill="#475569">21448 §11</text>
+<rect x="250" y="512" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="260" y="530" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-V-05</text>
+<g transform="translate(356.5,518)"><rect x="0" y="0" width="35.5" height="16" rx="8.0" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/><text x="17.7" y="11.4" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">Draft</text></g>
+<text x="260" y="549" font-size="12" fill="#0F172A" font-weight="600">Fault injection test</text>
+<text x="260" y="564" font-size="12" fill="#0F172A" font-weight="600">specification and …</text>
+<text x="260" y="584" font-size="9.5" fill="#475569">26262-4 §7</text>
+<rect x="422" y="796" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="432" y="814" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-V-06</text>
+<g transform="translate(528.5,802)"><rect x="0" y="0" width="35.5" height="16" rx="8.0" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/><text x="17.7" y="11.4" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">Draft</text></g>
+<text x="432" y="833" font-size="12" fill="#0F172A" font-weight="600">Cybersecurity</text>
+<text x="432" y="848" font-size="12" fill="#0F172A" font-weight="600">validation and …</text>
+<text x="432" y="868" font-size="9.5" fill="#475569">21434 §11</text>
+<rect x="250" y="200" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="260" y="218" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-V-07</text>
+<g transform="translate(356.5,206)"><rect x="0" y="0" width="35.5" height="16" rx="8.0" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/><text x="17.7" y="11.4" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="middle">Draft</text></g>
+<text x="260" y="237" font-size="12" fill="#0F172A" font-weight="600">Vehicle test</text>
+<text x="260" y="252" font-size="12" fill="#0F172A" font-weight="600">operations and …</text>
+<text x="260" y="272" font-size="9.5" fill="#475569">26262-4 §8 · 21448 …</text>
+<rect x="40" y="916" width="650" height="156" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="938" font-size="12" fill="#475569" font-weight="700">Feeds into</text>
+<text x="56" y="962" font-size="12" fill="#1D4ED8" font-weight="700">→ Safety case</text>
+<text x="153.1" y="962" font-size="11" fill="#475569">WP-K-02…05</text>
+<text x="56" y="984" font-size="12" fill="#1D4ED8" font-weight="700">→ Operation and field</text>
+<text x="193.9" y="984" font-size="11" fill="#475569">WP-O-01, -04, -05</text>
+<text x="56" y="1006" font-size="12" fill="#1D4ED8" font-weight="700">→ System integration</text>
+<text x="192.3" y="1006" font-size="11" fill="#475569">WP-S-08</text>
+<text x="56" y="1028" font-size="12" fill="#1D4ED8" font-weight="700">→ System verification</text>
+<text x="195.8" y="1028" font-size="11" fill="#475569">WP-S-09</text>
+<text x="56" y="1050" font-size="12" fill="#1D4ED8" font-weight="700">→ Implementation</text>
+<text x="173.4" y="1050" font-size="11" fill="#475569">WP-W-10</text>
+<rect x="710" y="916" width="650" height="156" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="726" y="938" font-size="12" fill="#C2410C" font-weight="700">Reviews that cover this box (WP-M-06) · 0 of 3 recorded</text>
+<circle cx="731" cy="958" r="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.5"/>
+<text x="742" y="962" font-size="11.5" fill="#0F172A" font-weight="700">FSA-F</text>
+<text x="796" y="962" font-size="11" fill="#475569">Final functional safety assessment (report …</text>
+<circle cx="1056" cy="958" r="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.5"/>
+<text x="1067" y="962" font-size="11.5" fill="#0F172A" font-weight="700">SR-02</text>
+<text x="1121" y="962" font-size="11" fill="#475569">Review of V&amp;V strategy and validation …</text>
+<circle cx="731" cy="982" r="5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.5"/>
+<text x="742" y="986" font-size="11.5" fill="#0F172A" font-weight="700">SR-03</text>
+<text x="796" y="986" font-size="11" fill="#475569">Review of the SOTIF release argument …</text>
+<text x="40" y="1098" font-size="11.5" fill="#475569">Arrows: needs this first (direct steps only), from the process model. Filled circle: a review record exists. Status is not acceptance.</text>
+<g class="terms">
+<text x="40" y="1120" font-size="10.5" fill="#475569">Terms: FSA-F final functional safety assessment at G5 (WP-M-06 §6) · PAS publicly available specification (ISO/PAS 8800 is the AI safety one) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SR-nn</text>
+<text x="40" y="1134.5" font-size="10.5" fill="#475569">independent SOTIF or AI evaluation review, SR-nn (WP-M-06 §7) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K</text>
+<text x="40" y="1149" font-size="10.5" fill="#475569">safety case)</text>
+</g>
+</svg>

@@ -72,6 +72,32 @@ class VCycle(unittest.TestCase):
     first = next(p for p in m["phases"] if not p["passed"])
     self.assertIs(m["now"], first)
 
+  def test_every_box_has_an_exploded_page_listing_each_work_product_once(self):
+    import vcycle_explode as x
+    m = v.build_model()
+    boxes = x.all_boxes(m)
+    self.assertEqual(len(boxes), 2 * len(v.BOXES["define"]) + 1 + len(v.BAND))
+    seen = []
+    for _, _, b in boxes:
+      page = (x.PAGES / f"{x.slug(b['title'])}.md").read_text(encoding="utf-8")
+      rows = re.findall(r"^\| \[(WP-[A-Z]-\d\d) ", page, re.M)
+      self.assertEqual(sorted(rows), sorted(b["ids"]), b["title"])
+      seen += rows
+    self.assertEqual(sorted(seen), sorted(m["wps"]))
+
+  def test_work_product_without_producing_activity_fails(self):
+    import vcycle_explode as x
+    m = v.build_model()
+    producer, lanes, reviews, ctx = x.process_facts()
+    del producer["WP-C-03"]
+    where = {w: b["title"] for _, _, b in x.all_boxes(m) for w in b["ids"]}
+    with self.assertRaises(FigureError):
+      x.explode(m, m["boxes"]["define"][0], where, (producer, lanes, reviews, ctx))
+
+  def test_measure_planned_at_two_gates_is_listed_once(self):
+    import vcycle_explode as x
+    self.assertEqual(x.dedupe([("CR-03", "a", False), ("CR-03", "b", True)]), [("CR-03", "a", True)])
+
 
 if __name__ == "__main__":
   unittest.main()

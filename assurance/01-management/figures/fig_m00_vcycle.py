@@ -42,6 +42,7 @@ sys.path.insert(0, str(A / "trace" / "tools"))
 import figkit as fk  # noqa: E402
 from figkit import FigureError, el, fmt, rect, text, line, path  # noqa: E402
 import terms  # noqa: E402
+import vcycle_explode  # noqa: E402
 
 REGISTER = A / "01-management" / "WP-M-00-work-product-register.md"
 PLAN = A / "01-management" / "WP-M-03-project-plan.md"
@@ -385,7 +386,7 @@ def tile_legend(m: dict, all_bodies: list[str]) -> tuple[list[str], float]:
   out.append(text(88, y, f"Outline: due at the next gate, {m['now']['gate']}", 12, fk.MUTED))
   out.append(line(380, y - 5, 420, y - 5, stroke=fk.FAINT, sw=1.4, dash="5 5"))
   out.append(text(428, y, "Dashed line: the right-hand box verifies the left-hand box", 12, fk.MUTED))
-  out.append(text(W - 60, y, "Each box opens its folder", 12, fk.MUTED, anchor="end"))
+  out.append(text(W - 60, y, "Each box opens its exploded view", 12, fk.MUTED, anchor="end"))
   y += 22
   out.append(text(60, y, "Work products are grouped by hand; their status, gates and dates are read from the "
                   "records on every build, so the V moves as they change. Status is not acceptance.", 11.5, fk.FAINT,
@@ -420,7 +421,7 @@ def tiles(m: dict) -> dict[str, tuple[int, int, list[str], str]]:
 
 def describe(b: dict) -> str:
   return (f"{b['title']} ({gate_label(b['gates'])}): {compress(b['ids'])}; {counts(b['status'])}. "
-          f"Opens {b['folder']}/.")
+          "Opens its exploded view.")
 
 
 def layout(t) -> list[tuple[str, int, int]]:
@@ -449,6 +450,7 @@ def render(m: dict) -> dict[Path, str]:
     comp.append(f'<g transform="translate({x},{y})">' + "\n".join(t[name][2]) + "</g>")
   desc = " ".join(t[name][3] for name, _, _ in pos)
   files[OUT / "fig-m00-vcycle.svg"] = fk.svg(W, height, "LionDriver V-cycle", desc, comp)
+  files.update(vcycle_explode.render(m))
   files.update(readmes(m, t))
   return files
 
@@ -462,21 +464,22 @@ END = "<!-- END GENERATED: vcycle -->"
 def block_assurance(m: dict, t) -> str:
   img = "01-management/figures/vcycle/fig-m00-vcycle-{}.svg"
 
-  def a(name, folder, width):
+  def a(name, box, width):
     alt = t[name][3].replace('"', "'")
-    return f'<a href="{folder}/README.md"><img src="{img.format(name)}" width="{width}" alt="{alt}"></a>'
+    page = f"01-management/vcycle/{vcycle_explode.slug(box['title'])}.md"
+    return f'<a href="{page}"><img src="{img.format(name)}" width="{width}" alt="{alt}"></a>'
 
   rows = [f'<img src="{img.format("header")}" width="98%" alt="{t["header"][3]}">']
   for i in range(len(BOXES["define"])):
-    rows.append(a(f"define-{i + 1}", m["boxes"]["define"][i]["folder"], "49%") +
-                a(f"verify-{i + 1}", m["boxes"]["verify"][i]["folder"], "49%"))
-  rows.append(a("build", m["boxes"]["build"][0]["folder"], "98%"))
-  rows.append("".join(a(f"band-{i + 1}", b["folder"], "19.6%") for i, b in enumerate(m["band"])))
+    rows.append(a(f"define-{i + 1}", m["boxes"]["define"][i], "49%") +
+                a(f"verify-{i + 1}", m["boxes"]["verify"][i], "49%"))
+  rows.append(a("build", m["boxes"]["build"][0], "98%"))
+  rows.append("".join(a(f"band-{i + 1}", b, "19.6%") for i, b in enumerate(m["band"])))
   rows.append(f'<img src="{img.format("legend")}" width="98%" alt="{t["legend"][3]}">')
   folders = sorted({b["folder"] for side in m["boxes"].values() for b in side} | {b["folder"] for b in m["band"]})
   return "\n".join([
     BEGIN, "", '<p align="center">', "<br>\n".join(rows), "</p>", "",
-    "Click a box to open its folder. Folders: " + " · ".join(f"[{f}/]({f}/README.md)" for f in folders) + ".", "",
+    "Click a box to open its exploded view: its work products, what each needs first, and the reviews that cover them. Folders: " + " · ".join(f"[{f}/]({f}/README.md)" for f in folders) + ".", "",
     f"*The V-cycle.* Drawn from the [work-product register](01-management/WP-M-00-work-product-register.md) "
     f"§2–§3, the [schedule](01-management/WP-M-03-project-plan.md#5-schedule) and the "
     f"[gate records](10-safety-case/gates/README.md) by "
@@ -517,7 +520,8 @@ def main(argv: list[str]) -> int:
     print(f"fig_m00_vcycle: {e}", file=sys.stderr)
     return 1
   stale = [p for p, s in files.items() if not p.exists() or p.read_text(encoding="utf-8") != s]
-  extra = sorted(set(OUT.glob("*.svg")) - set(files)) if OUT.exists() else []
+  have = [*OUT.glob("*.svg"), *vcycle_explode.PAGES.glob("*.md")]
+  extra = sorted(set(have) - set(files))
   if check:
     for p in stale + extra:
       print(f"fig_m00_vcycle: stale or unexpected: {p.relative_to(REPO)}", file=sys.stderr)
@@ -527,6 +531,7 @@ def main(argv: list[str]) -> int:
     print(f"fig_m00_vcycle: {len(files)} files current")
     return 0
   OUT.mkdir(exist_ok=True)
+  vcycle_explode.PAGES.mkdir(exist_ok=True)
   for p in extra:
     p.unlink()
   for p in stale:
