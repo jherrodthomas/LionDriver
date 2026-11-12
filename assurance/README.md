@@ -71,6 +71,30 @@ How the records, the validator and the generators fit together:
 
 Details: [Living Safety Case records](case-records/README.md).
 
+## The V-cycle
+
+Every work product on the V-model: the definition side on the left, the verification side on the right, implementation at the bottom, and the work that runs across every phase underneath. Each box shows the gate that needs its work products and how far they have matured, and opens its folder. The picture is rebuilt from the records on every change.
+
+<!-- BEGIN GENERATED: vcycle (assurance/01-management/figures/fig_m00_vcycle.py) -->
+
+<p align="center">
+<img src="01-management/figures/vcycle/fig-m00-vcycle-header.svg" width="98%" alt="Time axis: Governance phase, G0 Mar 2027–May 2027; Concept phase, G1 Nov 2027–May 2028; System design phase, G2 Jul 2028–May 2029; HW/SW development phase, G3 Nov 2029–May 2031; Integration and verification phase, G4 Sep 2030–Sep 2032; Validation and release phase, G5 Jul 2031–Mar 2034; Operation phase, G6 continuous. Now in the Governance phase."><br>
+<a href="02-concept/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-define-1.svg" width="49%" alt="Concept and hazards (G1): WP-C-01…12; 12 draft · none approved. Opens 02-concept/."></a><a href="06-validation/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-verify-1.svg" width="49%" alt="Vehicle validation (G1–G5): WP-V-01…07; 7 draft · none approved. Opens 06-validation/."></a><br>
+<a href="03-system/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-define-2.svg" width="49%" alt="System requirements (G2): WP-S-01, -02, -06, -07; 4 draft · none approved. Opens 03-system/."></a><a href="03-system/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-verify-2.svg" width="49%" alt="System verification (G4): WP-S-09; 1 draft · none approved. Opens 03-system/."></a><br>
+<a href="08-analyses/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-define-3.svg" width="49%" alt="System architecture (G2): WP-S-03…05, WP-A-01…05; 8 draft · none approved. Opens 08-analyses/."></a><a href="03-system/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-verify-3.svg" width="49%" alt="System integration (G4): WP-S-08; 1 draft · none approved. Opens 03-system/."></a><br>
+<a href="04-hardware/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-define-4.svg" width="49%" alt="Hardware and software requirements (G3): WP-H-01, WP-W-02; 2 draft · none approved. Opens 04-hardware/."></a><a href="05-software/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-verify-4.svg" width="49%" alt="Hardware and software integration (G3–G4): WP-W-07, -08, WP-H-06, -07; 4 draft · none approved. Opens 05-software/."></a><br>
+<a href="05-software/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-define-5.svg" width="49%" alt="Detailed design (G3): WP-W-03, -04, WP-H-02…05; 6 draft · none approved. Opens 05-software/."></a><a href="05-software/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-verify-5.svg" width="49%" alt="Unit verification (G3): WP-W-06; 1 draft · none approved. Opens 05-software/."></a><br>
+<a href="05-software/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-build.svg" width="98%" alt="Implementation (G3): WP-W-01, -05, -09, -10, -11; 5 draft · none approved. Opens 05-software/."></a><br>
+<a href="01-management/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-band-1.svg" width="19.6%" alt="Management plans (G0–G4): WP-M-00…14; 15 draft · none approved. Opens 01-management/."></a><a href="07-supporting/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-band-2.svg" width="19.6%" alt="Supporting processes (G0–G5): WP-P-01…11; 11 draft · none approved. Opens 07-supporting/."></a><a href="trace/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-band-3.svg" width="19.6%" alt="Traceability (G1–G5): WP-T-01; 1 draft · none approved. Opens trace/."></a><a href="10-safety-case/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-band-4.svg" width="19.6%" alt="Safety case (G1–G5): WP-K-01…06; 4 skeleton · 2 draft · none approved. Opens 10-safety-case/."></a><a href="09-production-operation/README.md"><img src="01-management/figures/vcycle/fig-m00-vcycle-band-5.svg" width="19.6%" alt="Operation and field (G1–G6): WP-O-01…05; 5 draft · none approved. Opens 09-production-operation/."></a><br>
+<img src="01-management/figures/vcycle/fig-m00-vcycle-legend.svg" width="98%" alt="Legend: status colours, the next-gate outline and the verifies line.">
+</p>
+
+Click a box to open its folder. Folders: [01-management/](01-management/README.md) · [02-concept/](02-concept/README.md) · [03-system/](03-system/README.md) · [04-hardware/](04-hardware/README.md) · [05-software/](05-software/README.md) · [06-validation/](06-validation/README.md) · [07-supporting/](07-supporting/README.md) · [08-analyses/](08-analyses/README.md) · [09-production-operation/](09-production-operation/README.md) · [10-safety-case/](10-safety-case/README.md) · [trace/](trace/README.md).
+
+*The V-cycle.* Drawn from the [work-product register](01-management/WP-M-00-work-product-register.md) §2–§3, the [schedule](01-management/WP-M-03-project-plan.md#5-schedule) and the [gate records](10-safety-case/gates/README.md) by [`fig_m00_vcycle.py`](01-management/figures/fig_m00_vcycle.py); CI fails if it is stale.
+
+<!-- END GENERATED: vcycle -->
+
 ## Start here
 
 | Document | Why read it |

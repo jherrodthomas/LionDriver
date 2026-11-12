@@ -57,6 +57,8 @@ PAGES = [
   A / "05-software/design/README.md",
 ]
 FIGURES = [
+  A / "01-management/figures/vcycle/fig-m00-vcycle.svg",
+  A / "01-management/figures/vcycle/fig-m00-vcycle-legend.svg",
   A / "05-software/coverage/card-overview.svg",
   A / "05-software/coverage/card-status.svg",
   A / "05-software/design-notes/card-overview.svg",

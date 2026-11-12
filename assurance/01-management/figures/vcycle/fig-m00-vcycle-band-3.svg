@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="74" viewBox="0 0 280 74" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle: band-3</title>
+<desc>Traceability (G1–G5): WP-T-01; 1 draft · none approved. Opens trace/.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="280" height="74" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<rect x="10" y="6" width="260" height="62" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="26" y="28" font-size="13" fill="#0F172A" font-weight="700">Traceability</text>
+<text x="256" y="28" font-size="11" fill="#475569" font-weight="700" text-anchor="end">G1–G5</text>
+<text x="26" y="45" font-size="11" fill="#475569">WP-T-01 · 1 work products</text>
+<rect x="27" y="53" width="226" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+</svg>

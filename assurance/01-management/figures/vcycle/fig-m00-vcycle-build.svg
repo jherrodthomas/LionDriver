@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="150" viewBox="0 0 1400 150" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle: build</title>
+<desc>Implementation (G3): WP-W-01, -05, -09, -10, -11; 5 draft · none approved. Opens 05-software/.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1400" height="150" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<rect x="380" y="6" width="640" height="100" rx="10" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.6"/>
+<text x="700" y="32" font-size="15" fill="#0F172A" font-weight="700" text-anchor="middle">Implementation</text>
+<g transform="translate(973.3,16)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#0F172A" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">G3</text></g>
+<text x="700" y="52" font-size="12.5" fill="#0F172A" text-anchor="middle">panda safety firmware, openpilot and opendbc code, calibration data, ML model</text>
+<text x="700" y="70" font-size="11.5" fill="#475569" text-anchor="middle">WP-W-01, -05, -09, -10, -11 · 05-software/</text>
+<rect x="551" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="583" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="615" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="647" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="679" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="720" y="89" font-size="11" fill="#475569">5 draft · none approved</text>
+<path d="M440 0 L445.7 6" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M445.7 6 L435.6 1.6 L441.8 -4.3 z" fill="#1D4ED8"/>
+<path d="M954.3 6 L960 0" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<text x="60" y="138" font-size="12" fill="#475569" font-weight="700">Runs across every phase</text>
+<line x1="250" y1="134" x2="1340" y2="134" stroke="#E2E8F0" stroke-width="1"/>
+</svg>

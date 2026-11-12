@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="74" viewBox="0 0 280 74" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle: band-1</title>
+<desc>Management plans (G0–G4): WP-M-00…14; 15 draft · none approved. Opens 01-management/.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="280" height="74" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<rect class="pulse" x="7" y="3" width="266" height="68" rx="14" fill="none" stroke="#C2410C" stroke-width="3"/>
+<rect x="10" y="6" width="260" height="62" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="26" y="28" font-size="13" fill="#0F172A" font-weight="700">Management plans</text>
+<text x="256" y="28" font-size="11" fill="#475569" font-weight="700" text-anchor="end">G0–G4</text>
+<text x="26" y="45" font-size="11" fill="#475569">WP-M-00…14 · 15 work products</text>
+<rect x="27" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="42.2" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="57.4" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="72.6" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="87.8" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="103" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="118.2" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="133.4" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="148.6" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="163.8" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="179" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="194.2" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="209.4" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="224.6" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="239.8" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+</svg>
