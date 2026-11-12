@@ -35,17 +35,17 @@
 <rect x="52" y="244" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="62" y="258" font-size="10.5" fill="#0F172A" font-weight="700">System requirements</text>
 <text x="62" y="272" font-size="10" fill="#475569">WP-S-02</text>
-<path d="M400 385 C411 385 411 385 416 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 385 L406 385 L406 385 L415 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 385 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 479 C411 479 411 385 416 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 479 L409 479 L409 385 L415 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 385 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M744 385 C755 385 755 385 760 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M744 385 L747 385 L747 385 L759 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M766 385 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 385 C411 385 411 479 416 479" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 385 L406 385 L406 479 L415 479" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 479 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M572 479 C583 479 583 385 588 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M572 479 L578 479 L578 385 L587 385" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 385 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M744 385 C755 385 755 479 760 479" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M744 385 L747 385 L747 479 L759 479" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M766 479 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
 <rect x="250" y="344" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
 <text x="260" y="362" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-S-03</text>

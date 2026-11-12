@@ -45,23 +45,23 @@
 <rect x="52" y="412" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="62" y="426" font-size="10.5" fill="#0F172A" font-weight="700">System requirements</text>
 <text x="62" y="440" font-size="10" fill="#475569">WP-S-07</text>
-<path d="M400 241 C497 241 497 241 588 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 241 L403 241 L403 288 L590 288 L590 241 L587 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 335 C497 335 497 241 588 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 335 L406 335 L406 288 L590 288 L590 241 L587 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M572 241 C583 241 583 241 588 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M572 241 L575 241 L575 241 L587 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 241 C497 241 497 335 588 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 241 L403 241 L403 288 L587 288 L587 335 L587 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 335 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M572 241 C583 241 583 335 588 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M572 241 L575 241 L575 335 L587 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 335 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 429 C411 429 411 241 416 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 429 L409 429 L409 241 L415 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 241 C411 241 411 335 416 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 241 L403 241 L403 335 L415 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 335 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 523 C411 523 411 429 416 429" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 523 L403 523 L403 429 L415 429" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 429 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 241 C411 241 411 523 416 523" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 241 L403 241 L403 523 L415 523" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 523 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
 <rect x="250" y="200" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
 <text x="260" y="218" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-P-01</text>

@@ -51,15 +51,15 @@
 <rect x="52" y="412" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="62" y="426" font-size="10.5" fill="#0F172A" font-weight="700">Supporting processes</text>
 <text x="62" y="440" font-size="10" fill="#475569">WP-P-10</text>
-<path d="M400 241 C411 241 411 837 416 837" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 241 L403 241 L403 837 L415 837" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 837 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 695 C411 695 411 931 416 931" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 695 L409 695 L409 931 L415 931" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 931 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 553 C497 553 497 241 588 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 553 L406 553 L406 288 L590 288 L590 241 L587 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M572 837 C583 837 583 241 588 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M572 837 L575 837 L575 241 L587 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M572 931 C583 931 583 241 588 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M572 931 L578 931 L578 241 L587 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
 <rect x="250" y="200" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
 <text x="260" y="218" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-K-01</text>

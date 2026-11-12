@@ -41,35 +41,35 @@
 <rect x="52" y="244" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="62" y="258" font-size="10.5" fill="#0F172A" font-weight="700">System requirements</text>
 <text x="62" y="272" font-size="10" fill="#475569">WP-S-02</text>
-<path d="M1260 477 C1271 477 1271 241 1276 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M1260 477 L1266 477 L1266 241 L1275 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M1282 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M400 241 C411 241 411 241 416 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 241 L403 241 L403 241 L415 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M572 241 C583 241 583 477 588 477" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M572 241 L575 241 L575 477 L587 477" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M594 477 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M744 477 C755 477 755 241 760 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M744 477 L747 477 L747 241 L759 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M766 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M744 477 C755 477 755 335 760 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M744 477 L747 477 L747 335 L759 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M766 335 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M916 335 C927 335 927 241 932 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M916 335 L922 335 L922 241 L931 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M938 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M1088 241 C1099 241 1099 477 1104 477" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M1088 241 L1091 241 L1091 477 L1103 477" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M1110 477 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M916 241 C927 241 927 335 932 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M916 241 L919 241 L919 335 L931 335" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M938 335 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M1260 477 C1271 477 1271 619 1276 619" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M1260 477 L1266 477 L1266 619 L1275 619" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M1282 619 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M916 335 C927 335 927 903 932 903" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M916 335 L922 335 L922 903 L931 903" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M938 903 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M1432 619 C1443 619 1443 761 1448 761" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M1432 619 L1438 619 L1438 761 L1447 761" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M1454 761 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M1088 903 C1271 903 1271 761 1448 761" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M1088 903 L1097 903 L1097 808 L1450 808 L1450 761 L1447 761" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M1454 761 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M1604 761 C1615 761 1615 241 1620 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M1604 761 L1607 761 L1607 241 L1619 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M1626 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M1088 241 C1099 241 1099 241 1104 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M1088 241 L1091 241 L1091 241 L1103 241" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M1110 241 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
-<path d="M744 477 C755 477 755 477 760 477" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M744 477 L747 477 L747 477 L759 477" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M766 477 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
 <rect x="1282" y="200" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
 <text x="1292" y="218" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-M-00</text>

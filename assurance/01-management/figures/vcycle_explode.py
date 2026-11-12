@@ -179,6 +179,62 @@ def card(x, y, w, e) -> list[str]:
   return out
 
 
+GUTTER = CP - NW  # free vertical strip between two card columns
+
+
+def edges(e: dict, pos: dict[str, tuple[float, float]], lane_top: dict[str, tuple[float, float]]) -> list[str]:
+  """Arrows routed around the cards, never behind them.
+
+  Every vertical run sits in a gutter between card columns, where no card is. A horizontal run that has to cross
+  card columns uses a channel no card in those columns touches: the band under a lane's label, the gap between two
+  lanes, or the gap between two stacked cards. An arrow leaves its source on the right; it enters its target on
+  the left, or on the right when both are in the same column. Sources take the left half of a gutter and targets
+  the right half, each at its own offset, so parallel runs stay apart.
+  """
+  col = {w: e["depth"][w] for w in pos}
+  by_col: dict[int, list[str]] = {}
+  for w in sorted(pos, key=lambda w: (pos[w][1], w)):
+    by_col.setdefault(col[w], []).append(w)
+  channels = sorted({y + 15 for y, _ in lane_top.values()} | {y + h + 6 for y, h in lane_top.values()} |
+                    {pos[w][1] + NH + 6 for w in pos})
+
+  def free(y: float, c0: int, c1: int) -> bool:
+    return all(not (pos[w][1] - 3 <= y <= pos[w][1] + NH + 3) for c in range(c0, c1 + 1) for w in by_col.get(c, []))
+
+  def exit_x(s):
+    return pos[s][0] + NW + 3 + (by_col[col[s]].index(s) % 3) * 3
+
+  def entry_x(t):
+    return pos[t][0] - 4 - (by_col[col[t]].index(t) % 3) * 3
+
+  out = []
+  for t, srcs in e["direct"].items():
+    for s in srcs:
+      (sx, sy), (tx, ty) = pos[s], pos[t]
+      y1, y2, gx = sy + NH / 2, ty + NH / 2, exit_x(s)
+      if col[t] == col[s]:  # same column: down the right-hand gutter, in from the right
+        pts, head = [(sx + NW, y1), (gx + 6, y1), (gx + 6, y2), (tx + NW + 7, y2)], (tx + NW, y2, 1)
+      elif col[t] == col[s] + 1:  # next column: one shared gutter
+        pts, head = [(sx + NW, y1), (gx, y1), (gx, y2), (tx - 7, y2)], (tx, y2, -1)
+      else:
+        cy = min((y for y in channels if free(y, col[s] + 1, col[t] - 1)),
+                 key=lambda y: (abs(y - y1) + abs(y - y2), y), default=None)
+        if cy is None:
+          raise FigureError(f"{e['box']['title']}: no free channel for the arrow {s} → {t}")
+        ex = entry_x(t)
+        pts = [(sx + NW, y1), (gx, y1), (gx, cy), (ex, cy), (ex, y2), (tx - 7, y2)]
+        head = (tx, y2, -1)
+      for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+        for w, (rx, ry) in pos.items():
+          if rx < max(ax, bx) and min(ax, bx) < rx + NW and ry < max(ay, by) and min(ay, by) < ry + NH:
+            raise FigureError(f"{e['box']['title']}: the arrow {s} → {t} would pass behind {w}")
+      d = "M" + " L".join(f"{fmt(x)} {fmt(y)}" for x, y in pts)
+      out.append(path(d, stroke=fk.FAINT, sw=1.3))
+      hx, hy, sign = head  # arrowhead pointing into the card edge
+      out.append(path(f"M{fmt(hx)} {fmt(hy)} l{fmt(7 * sign)} -4 v8 z", stroke="none", fill=fk.FAINT))
+  return out
+
+
 def draw(e: dict, side: str, idx: int, m: dict) -> tuple[int, int, list[str]]:
   box = e["box"]
   cols = max(e["depth"].values()) + 1
@@ -222,20 +278,7 @@ def draw(e: dict, side: str, idx: int, m: dict) -> tuple[int, int, list[str]]:
       body.append(text(62, ny + 28, fk.fit(pm_compress(wps), LEFT - 90, 10), 10, fk.MUTED))
       ny += 42
   # edges, then cards
-  for w, srcs in e["direct"].items():
-    tx, ty = pos[w]
-    for s in srcs:
-      sx, sy = pos[s]
-      x1, y1, x2, y2 = sx + NW, sy + NH / 2, tx, ty + NH / 2
-      if x2 <= x1:  # same column: drop down the right-hand side
-        x1, y1, x2, y2 = sx + NW / 2, sy + NH, tx + NW / 2, ty
-        body.append(path(f"M{fmt(x1)} {fmt(y1)} L{fmt(x2)} {fmt(y2 - 6)}", stroke=fk.FAINT, sw=1.3))
-        body.append(path(f"M{fmt(x2)} {fmt(y2)} l-4 -7 h8 z", stroke="none", fill=fk.FAINT))
-        continue
-      mx = (x1 + x2) / 2
-      body.append(path(f"M{fmt(x1)} {fmt(y1)} C{fmt(mx)} {fmt(y1)} {fmt(mx)} {fmt(y2)} {fmt(x2 - 6)} {fmt(y2)}",
-                       stroke=fk.FAINT, sw=1.3))
-      body.append(path(f"M{fmt(x2)} {fmt(y2)} l-7 -4 v8 z", stroke="none", fill=fk.FAINT))
+  body += edges(e, pos, lane_top)
   for w in e["ids"]:
     body += card(*pos[w], w, e)
   # feeds and reviews

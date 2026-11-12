@@ -41,7 +41,7 @@
 <rect x="52" y="328" width="180" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="62" y="342" font-size="10.5" fill="#0F172A" font-weight="700">Detailed design</text>
 <text x="62" y="356" font-size="10" fill="#475569">WP-H-02</text>
-<path d="M400 241 C411 241 411 469 416 469" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+<path d="M400 241 L403 241 L403 469 L415 469" stroke="#94A3B8" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
 <path d="M422 469 l-7 -4 v8 z" stroke="none" stroke-width="1.4" fill="#94A3B8" stroke-linejoin="round"/>
 <rect x="250" y="200" width="150" height="82" rx="8" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
 <text x="260" y="218" font-size="11.5" fill="#1D4ED8" font-weight="700">WP-H-01</text>
