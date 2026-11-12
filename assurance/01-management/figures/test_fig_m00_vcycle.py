@@ -205,6 +205,31 @@ class VCycle(unittest.TestCase):
     index = (vi.vx.PAGES / vi.INDEX).read_text(encoding="utf-8")
     self.assertEqual(len([ln for ln in index.splitlines() if ln.startswith("| [WP-")]), len(d["changes"]))
 
+  def test_gate_board_reads_every_skeleton(self):
+    import vcycle_gates as vg
+    m = v.build_model()
+    d = vg.model(m)
+    self.assertEqual([g["gate"] for g in d["gates"]], [f"G{n}" for n in range(7)])
+    self.assertIs(d["next"], next(g for g in d["gates"] if not g["passed"]))
+    reg = m["wps"]
+    for g in d["gates"]:
+      for p in g["wps"]:
+        if p["id"] in reg:
+          self.assertEqual(p["status"], vg.vx.pm.STATUS_NAMES[reg[p["id"]]["status"]], p["id"])
+    page = (vg.vx.PAGES / vg.PAGE).read_text(encoding="utf-8")
+    self.assertEqual(len([ln for ln in page.splitlines() if re.match(r"^\| \[G\d ", ln)]), 7)
+
+  def test_gate_board_rejects_an_unexpected_agreed_cell(self):
+    import vcycle_gates as vg
+    real = Path.read_text
+    g0 = vg.SKELETONS / "G0-skeleton.md"
+
+    def fake(self, *a, **k):
+      t = real(self, *a, **k)
+      return re.sub(r"(\| IFR-31 \|.*\| )none \|  \|", r"\1none | maybe |", t) if self == g0 else t
+    with mock.patch.object(Path, "read_text", fake), self.assertRaises(FigureError):
+      vg.read_gate(0)
+
 
 if __name__ == "__main__":
   unittest.main()

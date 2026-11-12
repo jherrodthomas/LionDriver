@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="917" viewBox="0 0 1640 917" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Gate readiness</title>
+<desc>Gate readiness for G0 to G6. Next gate G0 Governance: 0 of 21 work products approved, 0 of 2 confirmation measures performed, 0 of 3 interfaces agreed, 2 roles unassigned.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1640" height="917" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">Gate readiness</text>
+<text x="40" y="68" font-size="13" fill="#475569">What each gate still needs before it can be reviewed, read from the generated gate skeletons (10-safety-case/gates/skeletons), which the process model writes from WP-M-00, WP-M-02, WP-M-06 and the IFR items.</text>
+<rect x="294" y="96" width="179.1" height="58" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="383.6" y="116" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">G0</text>
+<text x="383.6" y="132" font-size="11" fill="#0F172A" text-anchor="middle">Governance</text>
+<text x="383.6" y="147" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">next gate</text>
+<rect x="481.1" y="96" width="179.1" height="58" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="570.7" y="116" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">G1</text>
+<text x="570.7" y="132" font-size="11" fill="#0F172A" text-anchor="middle">Concept</text>
+<text x="570.7" y="147" font-size="10" fill="#475569" text-anchor="middle">Nov 2027–May 2028</text>
+<rect x="668.3" y="96" width="179.1" height="58" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="757.9" y="116" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">G2</text>
+<text x="757.9" y="132" font-size="11" fill="#0F172A" text-anchor="middle">System design</text>
+<text x="757.9" y="147" font-size="10" fill="#475569" text-anchor="middle">Jul 2028–May 2029</text>
+<rect x="855.4" y="96" width="179.1" height="58" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="945" y="116" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">G3</text>
+<text x="945" y="132" font-size="11" fill="#0F172A" text-anchor="middle">HW/SW development</text>
+<text x="945" y="147" font-size="10" fill="#475569" text-anchor="middle">Nov 2029–May 2031</text>
+<rect x="1042.6" y="96" width="179.1" height="58" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1132.1" y="116" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">G4</text>
+<text x="1132.1" y="132" font-size="11" fill="#0F172A" text-anchor="middle">Integration and verification</text>
+<text x="1132.1" y="147" font-size="10" fill="#475569" text-anchor="middle">Sep 2030–Sep 2032</text>
+<rect x="1229.7" y="96" width="179.1" height="58" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1319.3" y="116" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">G5</text>
+<text x="1319.3" y="132" font-size="11" fill="#0F172A" text-anchor="middle">Validation and release</text>
+<text x="1319.3" y="147" font-size="10" fill="#475569" text-anchor="middle">Jul 2031–Mar 2034</text>
+<rect x="1416.9" y="96" width="179.1" height="58" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1506.4" y="116" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">G6</text>
+<text x="1506.4" y="132" font-size="11" fill="#0F172A" text-anchor="middle">Operation</text>
+<text x="1506.4" y="147" font-size="10" fill="#475569" text-anchor="middle">continuous</text>
+<rect x="40" y="168" width="1560" height="68" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="54" y="196" font-size="13" fill="#0F172A" font-weight="700">Work products approved</text>
+<text x="54" y="214" font-size="10.5" fill="#475569" font-style="italic">status in WP-M-00</text>
+<text x="300" y="192" font-size="15" fill="#D2553F" font-weight="700">0 of 21</text>
+<rect x="300" y="202" width="165.6" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="300" y="226" font-size="10" fill="#475569">21 draft</text>
+<text x="487.1" y="192" font-size="15" fill="#D2553F" font-weight="700">0 of 16</text>
+<rect x="487.1" y="202" width="165.6" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="487.1" y="226" font-size="10" fill="#475569">16 draft</text>
+<text x="674.3" y="192" font-size="15" fill="#D2553F" font-weight="700">0 of 14</text>
+<rect x="674.3" y="202" width="165.6" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="674.3" y="226" font-size="10" fill="#475569">14 draft</text>
+<text x="861.4" y="192" font-size="15" fill="#D2553F" font-weight="700">0 of 18</text>
+<rect x="861.4" y="202" width="165.6" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="861.4" y="226" font-size="10" fill="#475569">18 draft</text>
+<text x="1048.6" y="192" font-size="15" fill="#D2553F" font-weight="700">0 of 7</text>
+<rect x="1048.6" y="202" width="165.6" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="1048.6" y="226" font-size="10" fill="#475569">7 draft</text>
+<text x="1235.7" y="192" font-size="15" fill="#D2553F" font-weight="700">0 of 14</text>
+<rect x="1235.7" y="202" width="117.9" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1355.1" y="202" width="46.3" height="9" rx="2" fill="#CBD5E1" stroke="none" stroke-width="0"/>
+<text x="1235.7" y="226" font-size="10" fill="#475569">10 draft, 4 skeleton</text>
+<text x="1422.9" y="192" font-size="15" fill="#D2553F" font-weight="700">0 of 2</text>
+<rect x="1422.9" y="202" width="165.6" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="1422.9" y="226" font-size="10" fill="#475569">2 draft</text>
+<rect x="40" y="242" width="1560" height="68" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<text x="54" y="270" font-size="13" fill="#0F172A" font-weight="700">Open items in them</text>
+<text x="54" y="288" font-size="10.5" fill="#475569" font-style="italic">rows not marked closed</text>
+<text x="300" y="270" font-size="17" fill="#0F172A" font-weight="700">90</text>
+<text x="300" y="290" font-size="10" fill="#475569">across 21 work products</text>
+<text x="487.1" y="270" font-size="17" fill="#0F172A" font-weight="700">89</text>
+<text x="487.1" y="290" font-size="10" fill="#475569">across 16 work products</text>
+<text x="674.3" y="270" font-size="17" fill="#0F172A" font-weight="700">84</text>
+<text x="674.3" y="290" font-size="10" fill="#475569">across 14 work products</text>
+<text x="861.4" y="270" font-size="17" fill="#0F172A" font-weight="700">137</text>
+<text x="861.4" y="290" font-size="10" fill="#475569">across 18 work products</text>
+<text x="1048.6" y="270" font-size="17" fill="#0F172A" font-weight="700">34</text>
+<text x="1048.6" y="290" font-size="10" fill="#475569">across 7 work products</text>
+<text x="1235.7" y="270" font-size="17" fill="#0F172A" font-weight="700">57</text>
+<text x="1235.7" y="290" font-size="10" fill="#475569">across 14 work products</text>
+<text x="1422.9" y="270" font-size="17" fill="#0F172A" font-weight="700">12</text>
+<text x="1422.9" y="290" font-size="10" fill="#475569">across 2 work products</text>
+<rect x="40" y="316" width="1560" height="68" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="54" y="344" font-size="13" fill="#0F172A" font-weight="700">Confirmation measures performed</text>
+<text x="54" y="362" font-size="10.5" fill="#475569" font-style="italic">WP-M-06, record in confirmation/</text>
+<text x="300" y="340" font-size="15" fill="#D2553F" font-weight="700">0 of 2</text>
+<rect x="300" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="319.7" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-01</text>
+<rect x="343.5" y="350" width="56.7" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="371.8" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-03@G0</text>
+<text x="487.1" y="340" font-size="15" fill="#D2553F" font-weight="700">0 of 6</text>
+<rect x="487.1" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="506.9" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-02</text>
+<rect x="530.6" y="350" width="56.7" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="559" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-03@G1</text>
+<rect x="591.4" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="611.1" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-04</text>
+<rect x="487.1" y="367" width="47.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="510.9" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">FSA-I1</text>
+<rect x="538.6" y="367" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="558.4" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SR-01</text>
+<rect x="582.1" y="367" width="40.8" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="602.5" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CS-I1</text>
+<text x="674.3" y="340" font-size="15" fill="#D2553F" font-weight="700">0 of 5</text>
+<rect x="674.3" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="694" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-05</text>
+<rect x="717.8" y="350" width="56.7" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="746.1" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-06@G2</text>
+<rect x="778.5" y="350" width="47.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="802.2" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">FSA-I2</text>
+<rect x="674.3" y="367" width="40.8" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="694.7" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">AUD-1</text>
+<rect x="719.1" y="367" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="738.8" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SR-02</text>
+<text x="861.4" y="340" font-size="15" fill="#D2553F" font-weight="700">0 of 6</text>
+<rect x="861.4" y="350" width="56.7" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="889.8" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-06@G3</text>
+<rect x="922.2" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="941.9" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-07</text>
+<rect x="965.6" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="985.4" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-08</text>
+<rect x="861.4" y="367" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="881.2" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-09</text>
+<rect x="904.9" y="367" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="924.6" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-10</text>
+<rect x="948.4" y="367" width="56.7" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="976.8" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SR-04@G3</text>
+<text x="1048.6" y="340" font-size="15" fill="#D2553F" font-weight="700">0 of 1</text>
+<rect x="1048.6" y="350" width="40.8" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="1069" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">AUD-2</text>
+<text x="1235.7" y="340" font-size="15" fill="#D2553F" font-weight="700">0 of 4</text>
+<rect x="1235.7" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="1255.5" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CR-12</text>
+<rect x="1279.2" y="350" width="42.1" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="1300.3" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">FSA-F</text>
+<rect x="1325.3" y="350" width="39.5" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="1345.1" y="360.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SR-03</text>
+<rect x="1235.7" y="367" width="56.7" height="14" rx="7" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/>
+<text x="1264.1" y="377.5" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SR-04@G5</text>
+<text x="1422.9" y="344" font-size="12" fill="#94A3B8" font-style="italic">none assigned</text>
+<rect x="40" y="390" width="1560" height="68" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<text x="54" y="418" font-size="13" fill="#0F172A" font-weight="700">Interfaces agreed (due by the gate)</text>
+<text x="54" y="436" font-size="10.5" fill="#475569" font-style="italic">IFR items, agreed by recorded review</text>
+<text x="300" y="414" font-size="15" fill="#D2553F" font-weight="700">0 of 3</text>
+<rect x="300" y="424" width="167.1" height="9" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<text x="300" y="448" font-size="10" fill="#475569">cumulative to this gate</text>
+<text x="487.1" y="414" font-size="15" fill="#D2553F" font-weight="700">0 of 9</text>
+<rect x="487.1" y="424" width="167.1" height="9" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<text x="487.1" y="448" font-size="10" fill="#475569">cumulative to this gate</text>
+<text x="674.3" y="414" font-size="15" fill="#D2553F" font-weight="700">0 of 17</text>
+<rect x="674.3" y="424" width="167.1" height="9" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<text x="674.3" y="448" font-size="10" fill="#475569">cumulative to this gate</text>
+<text x="861.4" y="414" font-size="15" fill="#D2553F" font-weight="700">0 of 22</text>
+<rect x="861.4" y="424" width="167.1" height="9" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<text x="861.4" y="448" font-size="10" fill="#475569">cumulative to this gate</text>
+<text x="1048.6" y="414" font-size="15" fill="#D2553F" font-weight="700">0 of 26</text>
+<rect x="1048.6" y="424" width="167.1" height="9" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<text x="1048.6" y="448" font-size="10" fill="#475569">cumulative to this gate</text>
+<text x="1235.7" y="414" font-size="15" fill="#D2553F" font-weight="700">0 of 29</text>
+<rect x="1235.7" y="424" width="167.1" height="9" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<text x="1235.7" y="448" font-size="10" fill="#475569">cumulative to this gate</text>
+<text x="1422.9" y="414" font-size="15" fill="#D2553F" font-weight="700">0 of 33</text>
+<rect x="1422.9" y="424" width="167.1" height="9" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<text x="1422.9" y="448" font-size="10" fill="#475569">cumulative to this gate</text>
+<rect x="40" y="464" width="1560" height="68" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="54" y="492" font-size="13" fill="#0F172A" font-weight="700">Roles the gate needs, unassigned</text>
+<text x="54" y="510" font-size="10.5" fill="#475569" font-style="italic">WP-M-02 §3.1</text>
+<text x="300" y="488" font-size="14" fill="#D2553F" font-weight="700">2 unassigned</text>
+<text x="300" y="506" font-size="9.5" fill="#475569">Verification reviewer(s), Quality …</text>
+<text x="487.1" y="488" font-size="14" fill="#D2553F" font-weight="700">4 unassigned</text>
+<text x="487.1" y="506" font-size="9.5" fill="#475569">Verification reviewer(s), Quality …</text>
+<text x="674.3" y="488" font-size="14" fill="#D2553F" font-weight="700">5 unassigned</text>
+<text x="674.3" y="506" font-size="9.5" fill="#475569">Hardware safety engineer …</text>
+<text x="861.4" y="488" font-size="14" fill="#D2553F" font-weight="700">6 unassigned</text>
+<text x="861.4" y="506" font-size="9.5" fill="#475569">Hardware safety engineer …</text>
+<text x="1048.6" y="488" font-size="14" fill="#D2553F" font-weight="700">6 unassigned</text>
+<text x="1048.6" y="506" font-size="9.5" fill="#475569">Hardware safety engineer …</text>
+<text x="1235.7" y="488" font-size="14" fill="#D2553F" font-weight="700">7 unassigned</text>
+<text x="1235.7" y="506" font-size="9.5" fill="#475569">Hardware safety engineer …</text>
+<text x="1422.9" y="488" font-size="14" fill="#D2553F" font-weight="700">7 unassigned</text>
+<text x="1422.9" y="506" font-size="9.5" fill="#475569">Hardware safety engineer …</text>
+<rect x="40" y="538" width="1560" height="68" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<text x="54" y="566" font-size="13" fill="#0F172A" font-weight="700">Exit criteria</text>
+<text x="54" y="584" font-size="10.5" fill="#475569" font-style="italic">WP-M-00 §2, judged at the review</text>
+<text x="300" y="562" font-size="14" fill="#0F172A" font-weight="700">4 criteria</text>
+<text x="300" y="580" font-size="10" fill="#475569" font-style="italic">not yet reviewed</text>
+<text x="487.1" y="562" font-size="14" fill="#0F172A" font-weight="700">3 criteria</text>
+<text x="487.1" y="580" font-size="10" fill="#475569" font-style="italic">not yet reviewed</text>
+<text x="674.3" y="562" font-size="14" fill="#0F172A" font-weight="700">2 criteria</text>
+<text x="674.3" y="580" font-size="10" fill="#475569" font-style="italic">not yet reviewed</text>
+<text x="861.4" y="562" font-size="14" fill="#0F172A" font-weight="700">2 criteria</text>
+<text x="861.4" y="580" font-size="10" fill="#475569" font-style="italic">not yet reviewed</text>
+<text x="1048.6" y="562" font-size="14" fill="#0F172A" font-weight="700">3 criteria</text>
+<text x="1048.6" y="580" font-size="10" fill="#475569" font-style="italic">not yet reviewed</text>
+<text x="1235.7" y="562" font-size="14" fill="#0F172A" font-weight="700">3 criteria</text>
+<text x="1235.7" y="580" font-size="10" fill="#475569" font-style="italic">not yet reviewed</text>
+<text x="1422.9" y="562" font-size="14" fill="#0F172A" font-weight="700">1 criterion</text>
+<text x="1422.9" y="580" font-size="10" fill="#475569" font-style="italic">not yet reviewed</text>
+<rect x="40" y="628" width="1560" height="214" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="58" y="656" font-size="15" fill="#C2410C" font-weight="700">What stands between now and G0 Governance</text>
+<text x="58" y="684" font-size="12" fill="#0F172A" font-weight="700">Work products to review and approve (21)</text>
+<rect x="58" y="696" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="87" y="707.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-12</text>
+<rect x="120" y="696" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="149" y="707.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-01</text>
+<rect x="182" y="696" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="211" y="707.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-02</text>
+<rect x="244" y="696" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="273" y="707.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-04</text>
+<rect x="306" y="696" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="335" y="707.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-05</text>
+<rect x="58" y="716" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="87" y="727.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-06</text>
+<rect x="120" y="716" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="149" y="727.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-08</text>
+<rect x="182" y="716" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="211" y="727.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-09</text>
+<rect x="244" y="716" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="273" y="727.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-10</text>
+<rect x="306" y="716" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="335" y="727.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-11</text>
+<rect x="58" y="736" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="87" y="747.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-03</text>
+<rect x="120" y="736" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="149" y="747.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-07</text>
+<rect x="182" y="736" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="211" y="747.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-P-06</text>
+<rect x="244" y="736" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="273" y="747.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-P-05</text>
+<rect x="306" y="736" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="335" y="747.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-P-01</text>
+<rect x="58" y="756" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="87" y="767.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-P-04</text>
+<rect x="120" y="756" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="149" y="767.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-P-03</text>
+<rect x="182" y="756" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="211" y="767.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-P-02</text>
+<rect x="244" y="756" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="273" y="767.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-13</text>
+<rect x="306" y="756" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="335" y="767.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-M-00</text>
+<rect x="58" y="776" width="58" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/>
+<text x="87" y="787.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">WP-P-11</text>
+<text x="439" y="684" font-size="12" fill="#0F172A" font-weight="700">Confirmation measures to perform (2)</text>
+<text x="439" y="706" font-size="11.5" fill="#0F172A">• CR-01</text>
+<text x="439" y="724" font-size="11.5" fill="#0F172A">• CR-03@G0</text>
+<text x="820" y="684" font-size="12" fill="#0F172A" font-weight="700">Interfaces to agree (3)</text>
+<text x="820" y="706" font-size="11.5" fill="#0F172A">• IFR-31</text>
+<text x="820" y="724" font-size="11.5" fill="#0F172A">• IFR-32</text>
+<text x="820" y="742" font-size="11.5" fill="#0F172A">• IFR-33</text>
+<text x="1201" y="684" font-size="12" fill="#0F172A" font-weight="700">Roles to assign (2)</text>
+<text x="1201" y="706" font-size="11.5" fill="#0F172A">• Verification reviewer(s)</text>
+<text x="1201" y="724" font-size="11.5" fill="#0F172A">• Quality assurance</text>
+<text x="58" y="830" font-size="11" fill="#475569" font-style="italic">Plus 90 open items in those work products. A gate passes only through a recorded review in 10-safety-case/gates/; this board is the skeletons' view, not that review.</text>
+<g class="terms">
+<text x="40" y="864" font-size="10.5" fill="#475569">Terms: AUD-nn functional safety audit, AUD-n (WP-M-06 §5) · CR-nn confirmation review of the confirmation measures plan (WP-M-06) · FSA-F final functional safety assessment at G5 (WP-M-06 §6) · G0–G6 gate G0…G6 of the project lifecycle · HW hardware · IFR interface record</text>
+<text x="40" y="878.5" font-size="10.5" fill="#475569">(trace/items/ifr.yaml): a cross-domain interface, agreed only by a recorded review · IFR-nn interface record IFR-nn: one cross-domain interface with its owners, open item and agreement state (trace/items/ifr.yaml) · SR-nn independent SOTIF or AI evaluation review, SR-nn (WP-M-06</text>
+<text x="40" y="893" font-size="10.5" fill="#475569">§7) · SW software · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

@@ -101,6 +101,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | HW | hardware |
 | HWE | hardware engineering process group of ASPICE (HWE.1 … HWE.4) |
 | ID | identifier |
+| IFR | interface record (trace/items/ifr.yaml): a cross-domain interface, agreed only by a recorded review |
 | IGN | ignition line |
 | IMU | inertial measurement unit: accelerometers and gyroscopes |
 | IPC | inter-process communication |
@@ -296,6 +297,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | I-nn | integration step I-1…I-4 (WP-S-08 §3.1) |
 | IC-nn | independence claim (WP-A-03 §2): two elements the safety concept relies on not failing together |
 | IF-nn | interface of the item (WP-C-01 §3.4) |
+| IFR-nn | interface record IFR-nn: one cross-domain interface with its owners, open item and agreement state (trace/items/ifr.yaml) |
 | IND-nn | independence claim (WP-S-03 §7) |
 | INS-nn | installation check (WP-O-01) |
 | ITS-nn | item service step: replacing a faulty device or harness (WP-O-02 §5) |
