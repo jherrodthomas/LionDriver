@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-04 Documentation management |
 | Standard reference | ISO 26262-8:2018 §10; ISO/SAE 21434:2021 §5 (documentation management); ASPICE 4.0 SUP.7 (informative), SUP.8 |
-| Version | 0.4 (§10 retention period confirmed by the lead 2026-10-14 (DQ-113, A); OI-6 closed; 2026-10-18). 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
+| Version | 0.5 (§5 Version rule and §6: versions are X.Y.Z, computed by the change ledger and stamped at output; X only at gate approval (DQ-441 A, DQ-442 A, lead 2026-11-12); `editorial` label; OI-7; 2026-11-12). 0.4 (§10 retention period confirmed by the lead 2026-10-14 (DQ-113, A); OI-6 closed; 2026-10-18). 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -53,7 +53,7 @@ Every work product starts with the header block defined in [`assurance/README.md
 
 | Field | Rule |
 |---|---|
-| Version | `0.x` while Draft; `1.0` at first approval; MINOR increment for each approved change; MAJOR when the scope or the safety concept changes |
+| Version | `X.Y.Z`, computed by the [change ledger](ledger/README.md), never typed (DQ-441). **X** +1 when a gate approval lists the work product in [`ledger/gate-approvals.yaml`](ledger/gate-approvals.yaml) (DQ-442), 0 until then; resets Y and Z. **Y** +1 for each merged change to the work product; resets Z. **Z** +1 for each merged change labelled `editorial` (wording, links, layout; never with `sr-a` or `sr-q`, CI fails the PR). The version is stamped on the document when it is output (export, snapshot, wiki). Until OI-7 removes them, the `Version` lines in headers are history text: the ledger took its starting versions from them on adoption (0.68 became 0.68.0) and ignores them afterwards |
 | Status | Updated in the same PR that changes the state. "In review" is set when the PR is opened; "Approved" only in the merge of an approved PR; "Baselined" only when included in a gate or release tag |
 | Baseline | The commit or tag the content was checked against. Updated when the content is re-checked |
 | Reviewer(s) | Name and independence level (I0–I3) as recorded in the PR approval |
@@ -67,7 +67,7 @@ The register [WP-M-00](../01-management/WP-M-00-work-product-register.md) status
 
 ## 6. Change history
 
-Git history is the change log. Each approved version additionally gets one line in a "Revision history" table at the end of the document (version, date, PR number, summary) so that an exported copy carries its history.
+Git history is the change log, and the [change ledger](ledger/README.md) is its record: one append-only, hash-chained row per merged change, with the pull request, change class, approver, check results and the version each touched work product has after it. An exported copy carries the revision history of each document it contains, generated from the ledger (version, date, PR, summary, approver) (OI-7).
 
 ## 7. Review and approval
 
@@ -139,6 +139,7 @@ Git history is never rewritten on protected branches. Superseded documents remai
 | OI-1 | CI check that each WP header `Status`/`Version` matches the register |
 | OI-2 | Markdown link checker in CI for `assurance/**`. A prototype (relative links, anchors ignored) was run in the consistency pass: the only broken targets were software WPs still being drafted |
 | OI-3 | Script for the assessor export (§8), including GitHub PR/issue export |
-| OI-4 | Add the "Revision history" table to every WP at first approval |
+| OI-4 | Superseded 2026-11-12 by OI-7: the revision history of an exported document is generated from the change ledger, not kept as a table in the file |
 | OI-5 | Decide where non-redistributable reference documents are stored |
 | OI-6 | Closed 2026-10-18: the §10 period was confirmed by the lead (decision register DQ-113, A) without legal advice; the lead accepted the long storage commitment |
+| OI-7 | Stamp the ledger version at output (document-control block on page 1 and a running footer with ID, version, status, commit, copy and page n of N in the snapshot and exports), then remove the hand-typed `Version` lines from the headers, keeping their text as revision history (DQ-441) |

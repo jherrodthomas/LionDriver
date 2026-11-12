@@ -22,3 +22,9 @@
 - name: nsr
   color: C5DEF5
   description: "Not safety-relevant: standard change route (WP-P-02)"
+
+# Version modifier (WP-P-04 §5, DQ-441): the work products this change touches get a Z bump instead of a Y bump.
+# Never together with sr-a or sr-q; the ledger workflow fails the pull request if it is.
+- name: editorial
+  color: E2E8F0
+  description: "Wording, links or layout only: raises Z of the touched work products (WP-P-04 §5)"

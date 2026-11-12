@@ -1,0 +1,11 @@
+# Gate approvals: the only thing that raises the X of a work product's version (DQ-442, WP-P-04 §5).
+#
+# Append one entry when a gate record approves work products; never edit or delete an entry. In the merge that adds
+# the entry, the ledger (ledger.py) sets every listed work product to X+1.0.0. The record is the gate record that
+# carries the decision and its evidence (WP-M-02 §10).
+#
+# - gate: G0
+#   date: 2026-12-01
+#   record: assurance/10-safety-case/gates/G0.md
+#   documents: [WP-M-01, WP-M-02, WP-P-01]
+[]
