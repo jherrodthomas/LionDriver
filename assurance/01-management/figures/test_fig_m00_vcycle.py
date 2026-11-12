@@ -98,6 +98,34 @@ class VCycle(unittest.TestCase):
     import vcycle_explode as x
     self.assertEqual(x.dedupe([("CR-03", "a", False), ("CR-03", "b", True)]), [("CR-03", "a", True)])
 
+  def test_time_view_freshness_matches_its_page_and_the_records(self):
+    import vcycle_time as tv
+    m = v.build_model()
+    d = tv.model(m)
+    page = (tv.vx.PAGES / tv.PAGE).read_text(encoding="utf-8")
+    rows = re.findall(r"^\| (WP-[A-Z]-\d\d) \| (\S+) \| (WP-[A-Z]-\d\d) \| (\S+) \|$", page, re.M)
+    self.assertEqual(len(rows), len(d["newer"]))
+    for w, own, i, later in rows:
+      self.assertGreater(later, own, w)
+      self.assertEqual(own, d["last"][w])
+    self.assertFalse(set(d["undated"]) & set(d["last"]))
+    self.assertEqual(set(d["undated"]) | set(d["last"]), set(m["wps"]))
+    self.assertEqual(d["asof"], max(d["last"].values()))
+
+  def test_time_view_unreadable_gate_date_fails(self):
+    import vcycle_time as tv
+    with self.assertRaises(FigureError):
+      tv.month("Spring 2027")
+    self.assertEqual(tv.month("Mar 2027").month, 3)
+
+  def test_time_view_has_one_row_per_box_in_v_order(self):
+    import vcycle_time as tv
+    m = v.build_model()
+    rows = tv.rows(m)
+    self.assertEqual([r["box"]["title"] for r in rows][0], m["boxes"]["define"][0]["title"])
+    self.assertEqual([r["box"]["title"] for r in rows][-1], m["boxes"]["verify"][0]["title"])
+    self.assertEqual(len(rows), 2 * len(v.BOXES["define"]) + 1)
+
 
 if __name__ == "__main__":
   unittest.main()
