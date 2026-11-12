@@ -60,8 +60,27 @@ def cell(row, col: str, needle: str | None) -> str:
   return v
 
 
+ASPICE_ORDER = ["SYS", "SWE", "HWE", "MLE", "SEC", "VAL", "SUP", "MAN", "ACQ", "SPL", "PIM", "REU"]
+
+
+def clause_key(tok: str) -> tuple:
+  """Sort key for a clause token: §9.4 before §10, numbered clauses before Annex and other words."""
+  m = re.match(r"§\s*(\d+(?:\.\d+)*)", tok)
+  if m:
+    return (0, tuple(int(n) for n in m.group(1).split(".")), tok)
+  return (1, (), tok)
+
+
+def aspice_key(tok: str) -> tuple:
+  m = re.match(r"([A-Z]+)\.(\d+|\*)", tok)
+  if not m:
+    return (len(ASPICE_ORDER) + 1, 0, tok)
+  grp = ASPICE_ORDER.index(m.group(1)) if m.group(1) in ASPICE_ORDER else len(ASPICE_ORDER)
+  return (grp, 0 if m.group(2) == "*" else int(m.group(2)), tok)
+
+
 def summary(key: str, cells: list[str]) -> str:
-  """The clauses a box's work products cite, deduplicated, in first-seen order."""
+  """The clauses a box's work products cite, deduplicated and sorted (by part for ISO 26262, by group for ASPICE)."""
   if key == "iso26262":
     parts: dict[str, list[str]] = {}
     for c in cells:
@@ -72,20 +91,20 @@ def summary(key: str, cells: list[str]) -> str:
           part, tok = m.group(1), m.group(2).strip()
         if part and tok and tok not in parts.setdefault(part, []):
           parts[part].append(tok)
-    return " · ".join(f"26262-{p} {', '.join(cls)}" for p, cls in parts.items())
+    return " · ".join(f"26262-{p} {', '.join(sorted(parts[p], key=clause_key))}" for p in sorted(parts, key=int))
   if key == "aspice":
     out: list[str] = []
     for c in cells:
       for tok in re.findall(r"[A-Z]{2,4}\.(?:\d+(?:–\d+)?|\*)|All in scope", c):
         if tok not in out:
           out.append(tok)
-    return ", ".join(out)
+    return ", ".join(sorted(out, key=aspice_key))
   out = []
   for c in cells:
     for tok in (s.strip() for s in re.split(r"[;,]", re.sub(r"\s*\([^)]*\)", "", c))):
       if tok and tok not in out:
         out.append(tok)
-  return ", ".join(out)
+  return ", ".join(sorted(out, key=clause_key) if key != "pas8800" else out)
 
 
 def overlay(m: dict, key: str, col: str, needle: str | None, register) -> dict:
@@ -104,7 +123,7 @@ def overlay(m: dict, key: str, col: str, needle: str | None, register) -> dict:
 
 def toggle_row(key: str) -> list[str]:
   out, x = [text(40, 104, "View by standard:", 12, fk.MUTED, 700)], 160
-  for k, label, _, _ in [("all", "All", None, None), *STANDARDS]:
+  for k, label, _, _ in [("all", "All", None, None), ("crosswalk", "Crosswalk", None, None), *STANDARDS]:
     on = k == key
     p, w = fk.pill(0, 0, label, fk.OVERLAY if on else "#FFFFFF", "#FFFFFF" if on else fk.MUTED, h=22, size=11,
                    stroke=fk.OVERLAY if on else fk.LINE)
@@ -184,7 +203,8 @@ def chip(x: float, y: float, w: float, p: dict, key: str) -> list[str]:
 def toggle_md(current: str, up: str) -> str:
   """The link row. `up` is the path from the page to assurance/ (``""`` from the assurance README)."""
   here = "" if up else "01-management/vcycle/"
-  items = ["**All**" if current == "all" else f"[All]({up}README.md#the-v-cycle)"]
+  items = ["**All**" if current == "all" else f"[All]({up}README.md#the-v-cycle)",
+           "**Crosswalk**" if current == "crosswalk" else f"[Crosswalk]({here}crosswalk.md)"]
   for k, label, _, _ in STANDARDS:
     items.append(f"**{label}**" if k == current else f"[{label}]({here}{page_name(k)})")
   return "View by standard: " + " · ".join(items)

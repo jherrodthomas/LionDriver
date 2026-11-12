@@ -150,8 +150,8 @@ class VCycle(unittest.TestCase):
   def test_clause_summaries(self):
     import vcycle_standards as vs
     self.assertEqual(vs.summary("iso26262", ["9 §5, 4 §6", "6 §5–11, Annex C; 8 §6–12", "3 §6 (controllability)"]),
-                     "26262-9 §5 · 26262-4 §6 · 26262-6 §5–11, Annex C · 26262-8 §6–12 · 26262-3 §6")
-    self.assertEqual(vs.summary("aspice", ["MLE.1–4, SUP.11", "SEC.*", "MAN.3"]), "MLE.1–4, SUP.11, SEC.*, MAN.3")
+                     "26262-3 §6 · 26262-4 §6 · 26262-6 §5–11, Annex C · 26262-8 §6–12 · 26262-9 §5")
+    self.assertEqual(vs.summary("aspice", ["MLE.1–4, SUP.11", "SEC.*", "MAN.3"]), "MLE.1–4, SEC.*, SUP.11, MAN.3")
 
   def test_a_standard_no_work_product_cites_fails(self):
     import vcycle_standards as vs
@@ -159,6 +159,26 @@ class VCycle(unittest.TestCase):
     _, _, _, ctx = vs.vx.process_facts()
     with self.assertRaises(FigureError):
       vs.overlay(m, "x", "other", "no such standard", ctx.register)
+
+  def test_crosswalk_has_every_box_once_and_matches_the_overlays(self):
+    import vcycle_crosswalk as xw
+    import vcycle_standards as vs
+    m = v.build_model()
+    gs, c = xw.groups(m), xw.cells(m)
+    titles = [b["title"] for _, _, boxes in gs for b in boxes]
+    self.assertEqual(sorted(titles), sorted(b["title"] for _, _, b in vs.vx.all_boxes(m)))
+    page = (vs.vx.PAGES / xw.PAGE).read_text(encoding="utf-8")
+    rows = [ln for ln in page.splitlines() if ln.startswith("| ") and "](" in ln.split("|")[2]]
+    self.assertEqual(len(rows), len(titles))
+    for key, _, _, _ in vs.STANDARDS:
+      self.assertEqual(sum(len(cl["hit"]) for cl in c["cells"][key].values()), c["totals"][key])
+    self.assertIn("**Crosswalk**", page)
+
+  def test_clauses_are_sorted_numerically(self):
+    import vcycle_standards as vs
+    self.assertEqual(vs.summary("iso21434", ["§15, §9.4", "§9.5"]), "§9.4, §9.5, §15")
+    self.assertEqual(vs.summary("iso26262", ["9 §7, 2 §6", "2 §5"]), "26262-2 §5, §6 · 26262-9 §7")
+    self.assertEqual(vs.summary("aspice", ["MAN.3", "SWE.10, SWE.2", "SYS.2"]), "SYS.2, SWE.2, SWE.10, MAN.3")
 
 
 if __name__ == "__main__":

@@ -45,6 +45,7 @@ import terms  # noqa: E402
 import vcycle_explode  # noqa: E402
 import vcycle_time  # noqa: E402
 import vcycle_standards  # noqa: E402
+import vcycle_crosswalk  # noqa: E402
 
 REGISTER = A / "01-management" / "WP-M-00-work-product-register.md"
 PLAN = A / "01-management" / "WP-M-03-project-plan.md"
@@ -455,6 +456,7 @@ def render(m: dict) -> dict[Path, str]:
   files.update(vcycle_explode.render(m))
   files.update(vcycle_time.render(m))
   files.update(vcycle_standards.render(m))
+  files.update(vcycle_crosswalk.render(m))
   files.update(readmes(m, t))
   return files
 

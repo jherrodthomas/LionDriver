@@ -1,0 +1,375 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1760" height="1358" viewBox="0 0 1760 1358" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle crosswalk</title>
+<desc>The V-cycle crosswalk: each box of the V against five standards, with how many of its work products cite each and which clauses. Work products citing each standard, of 89: ISO 26262 65, ISO 21448 29, ISO/SAE 21434 33, ISO/PAS 8800 11, ASPICE 63.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1760" height="1358" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">V-cycle crosswalk: which clauses each box answers</text>
+<text x="40" y="68" font-size="13" fill="#475569">Rows: the boxes of the V, grouped by level and side. Columns: the standards. Each cell: how many of the box's work products cite the standard, and the clauses they cite (WP-M-00 §3).</text>
+<text x="40" y="104" font-size="12" fill="#475569" font-weight="700">View by standard:</text>
+<g transform="translate(160,91)"><rect x="0" y="0" width="26.7" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="13.3" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">All</text></g>
+<g transform="translate(194.6916,91)"><rect x="0" y="0" width="67.9" height="22" rx="11.0" fill="#7C3AED" stroke="#7C3AED" stroke-width="1"/><text x="33.9" y="15" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">Crosswalk</text></g>
+<g transform="translate(270.543,91)"><rect x="0" y="0" width="73.3" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="36.7" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO 26262</text></g>
+<g transform="translate(351.8746,91)"><rect x="0" y="0" width="73.3" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="36.7" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO 21448</text></g>
+<g transform="translate(433.20619999999997,91)"><rect x="0" y="0" width="102" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="51" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO/SAE 21434</text></g>
+<g transform="translate(543.2214,91)"><rect x="0" y="0" width="95.5" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="47.7" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ISO/PAS 8800</text></g>
+<g transform="translate(646.707,91)"><rect x="0" y="0" width="61" height="22" rx="11.0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/><text x="30.5" y="15" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">ASPICE</text></g>
+<rect x="40" y="128" width="1680" height="40" rx="8" fill="#0F172A" stroke="none" stroke-width="0"/>
+<text x="54" y="153" font-size="12.5" fill="#FFFFFF" font-weight="700">Level</text>
+<text x="174" y="153" font-size="12.5" fill="#FFFFFF" font-weight="700">Box on the V</text>
+<text x="424" y="153" font-size="12.5" fill="#FFFFFF" font-weight="700">ISO 26262</text>
+<text x="660" y="153" font-size="11" fill="#CBD5E1" text-anchor="end">65 cite it</text>
+<text x="686" y="153" font-size="12.5" fill="#FFFFFF" font-weight="700">ISO 21448</text>
+<text x="922" y="153" font-size="11" fill="#CBD5E1" text-anchor="end">29 cite it</text>
+<text x="948" y="153" font-size="12.5" fill="#FFFFFF" font-weight="700">ISO/SAE 21434</text>
+<text x="1184" y="153" font-size="11" fill="#CBD5E1" text-anchor="end">33 cite it</text>
+<text x="1210" y="153" font-size="12.5" fill="#FFFFFF" font-weight="700">ISO/PAS 8800</text>
+<text x="1446" y="153" font-size="11" fill="#CBD5E1" text-anchor="end">11 cite it</text>
+<text x="1472" y="153" font-size="12.5" fill="#FFFFFF" font-weight="700">ASPICE</text>
+<text x="1708" y="153" font-size="11" fill="#CBD5E1" text-anchor="end">63 cite it</text>
+<rect x="40" y="176" width="1680" height="58" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,188)"><rect x="0" y="0" width="38.2" height="20" rx="10.0" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/><text x="19.1" y="13.8" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">Need</text></g>
+<text x="54" y="224" font-size="10.5" fill="#94A3B8" font-style="italic">define</text>
+<text x="174" y="198" font-size="12.5" fill="#0F172A" font-weight="700">Concept and hazards</text>
+<text x="174" y="216" font-size="10.5" fill="#475569">12 work products</text>
+<rect x="420" y="185" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="185" width="119" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="202" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">6/12</text>
+<text x="424" y="202" font-size="11" fill="#0F172A">26262-3 §5, §6, §7</text>
+<rect x="682" y="185" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="185" width="158.7" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="202" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">8/12</text>
+<text x="686" y="202" font-size="11" fill="#0F172A">§5, §6, §7, §8, Annex B</text>
+<rect x="944" y="185" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="185" width="59.5" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="202" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/12</text>
+<text x="948" y="202" font-size="11" fill="#0F172A">§9.3, §9.4, §9.5, §15</text>
+<rect x="1206" y="185" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="185" width="59.5" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="202" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/12</text>
+<text x="1210" y="202" font-size="11" fill="#0F172A">input space definition, AI error</text>
+<text x="1210" y="217" font-size="11" fill="#0F172A">causes, AI safety requirements</text>
+<rect x="1468" y="185" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="185" width="158.7" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="202" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">8/12</text>
+<text x="1472" y="202" font-size="11" fill="#0F172A">SYS.1, SYS.2, MLE.1, SEC.1</text>
+<rect x="40" y="244" width="1680" height="58" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,256)"><rect x="0" y="0" width="50" height="20" rx="10.0" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/><text x="25" y="13.8" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">System</text></g>
+<text x="54" y="292" font-size="10.5" fill="#94A3B8" font-style="italic">define</text>
+<text x="174" y="266" font-size="12.5" fill="#0F172A" font-weight="700">System requirements</text>
+<text x="174" y="284" font-size="10.5" fill="#475569">4 work products</text>
+<rect x="420" y="253" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="253" width="119" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="270" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/4</text>
+<text x="424" y="270" font-size="11" fill="#0F172A">26262-4 §6</text>
+<rect x="682" y="253" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="253" width="119" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="270" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/4</text>
+<text x="686" y="270" font-size="11" fill="#0F172A">§5, §13</text>
+<rect x="944" y="253" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="253" width="119" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="270" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/4</text>
+<text x="948" y="270" font-size="11" fill="#0F172A">§10</text>
+<text x="1210" y="268" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="253" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="253" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="270" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">4/4</text>
+<text x="1472" y="270" font-size="11" fill="#0F172A">SYS.2, SYS.3, SEC.1</text>
+<rect x="40" y="312" width="1680" height="120" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,324)"><rect x="0" y="0" width="68.3" height="20" rx="10.0" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/><text x="34.2" y="13.8" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">Subsystem</text></g>
+<text x="54" y="360" font-size="10.5" fill="#94A3B8" font-style="italic">define</text>
+<text x="174" y="334" font-size="12.5" fill="#0F172A" font-weight="700">System architecture</text>
+<text x="174" y="352" font-size="10.5" fill="#475569">8 work products</text>
+<rect x="420" y="321" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="321" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="338" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">8/8</text>
+<text x="424" y="338" font-size="11" fill="#0F172A">26262-4 §6 · 26262-9 §5, §6, §7, §8</text>
+<rect x="682" y="321" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="321" width="89.2" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="338" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/8</text>
+<text x="686" y="338" font-size="11" fill="#0F172A">§6–§7, §7, §8</text>
+<text x="948" y="336" font-size="13" fill="#94A3B8">—</text>
+<rect x="1206" y="321" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="321" width="29.8" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="338" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/8</text>
+<text x="1210" y="338" font-size="11" fill="#0F172A">PAS 8800</text>
+<rect x="1468" y="321" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="321" width="89.2" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="338" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/8</text>
+<text x="1472" y="338" font-size="11" fill="#0F172A">SYS.3</text>
+<line x1="160" y1="372" x2="1720" y2="372" stroke="#E2E8F0" stroke-width="1"/>
+<text x="174" y="396" font-size="12.5" fill="#0F172A" font-weight="700">Hardware and software requirements</text>
+<text x="174" y="414" font-size="10.5" fill="#475569">2 work products</text>
+<rect x="420" y="383" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="383" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="400" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/2</text>
+<text x="424" y="400" font-size="11" fill="#0F172A">26262-5 §6 · 26262-6 §6</text>
+<text x="686" y="398" font-size="13" fill="#94A3B8">—</text>
+<text x="948" y="398" font-size="13" fill="#94A3B8">—</text>
+<text x="1210" y="398" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="383" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="383" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="400" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/2</text>
+<text x="1472" y="400" font-size="11" fill="#0F172A">SWE.1, HWE.1</text>
+<rect x="40" y="442" width="1680" height="58" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,454)"><rect x="0" y="0" width="68.3" height="20" rx="10.0" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/><text x="34.2" y="13.8" font-size="10.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">Component</text></g>
+<text x="54" y="490" font-size="10.5" fill="#94A3B8" font-style="italic">define</text>
+<text x="174" y="464" font-size="12.5" fill="#0F172A" font-weight="700">Detailed design</text>
+<text x="174" y="482" font-size="10.5" fill="#475569">6 work products</text>
+<rect x="420" y="451" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="451" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="468" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">6/6</text>
+<text x="424" y="468" font-size="11" fill="#0F172A">26262-5 §7, §8, §9 · 26262-6 §7 ·</text>
+<text x="424" y="483" font-size="11" fill="#0F172A">26262-9 §7–8</text>
+<text x="686" y="466" font-size="13" fill="#94A3B8">—</text>
+<text x="948" y="466" font-size="13" fill="#94A3B8">—</text>
+<text x="1210" y="466" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="451" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="451" width="158.7" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="468" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">4/6</text>
+<text x="1472" y="468" font-size="11" fill="#0F172A">SWE.2, HWE.2</text>
+<rect x="40" y="510" width="1680" height="58" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,522)"><rect x="0" y="0" width="68.3" height="20" rx="10.0" fill="#F1F5F9" stroke="#0F172A" stroke-width="1"/><text x="34.2" y="13.8" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">Component</text></g>
+<text x="54" y="558" font-size="10.5" fill="#94A3B8" font-style="italic">build</text>
+<text x="174" y="532" font-size="12.5" fill="#0F172A" font-weight="700">Implementation</text>
+<text x="174" y="550" font-size="10.5" fill="#475569">5 work products</text>
+<rect x="420" y="519" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="519" width="142.8" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="536" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/5</text>
+<text x="424" y="536" font-size="11" fill="#0F172A">26262-6 §5, §8, Annex C</text>
+<rect x="682" y="519" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="519" width="47.6" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="536" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/5</text>
+<text x="686" y="536" font-size="11" fill="#0F172A">§7, §10</text>
+<rect x="944" y="519" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="519" width="142.8" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="536" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/5</text>
+<text x="948" y="536" font-size="11" fill="#0F172A">§10</text>
+<rect x="1206" y="519" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="519" width="47.6" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="536" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/5</text>
+<text x="1210" y="536" font-size="11" fill="#0F172A">data, V&amp;V, AI architecture</text>
+<rect x="1468" y="519" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="519" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="536" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">5/5</text>
+<text x="1472" y="536" font-size="11" fill="#0F172A">SWE.3, MLE.1–4, SEC.2, SEC.3,</text>
+<text x="1472" y="551" font-size="11" fill="#0F172A">SUP.11</text>
+<rect x="40" y="578" width="1680" height="58" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,590)"><rect x="0" y="0" width="68.3" height="20" rx="10.0" fill="#F0FDF4" stroke="#15803D" stroke-width="1"/><text x="34.2" y="13.8" font-size="10.5" fill="#15803D" font-weight="700" text-anchor="middle">Component</text></g>
+<text x="54" y="626" font-size="10.5" fill="#94A3B8" font-style="italic">verify</text>
+<text x="174" y="600" font-size="12.5" fill="#0F172A" font-weight="700">Unit verification</text>
+<text x="174" y="618" font-size="10.5" fill="#475569">1 work product</text>
+<rect x="420" y="587" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="587" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="604" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="424" y="604" font-size="11" fill="#0F172A">26262-6 §9</text>
+<text x="686" y="602" font-size="13" fill="#94A3B8">—</text>
+<rect x="944" y="587" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="587" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="604" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="948" y="604" font-size="11" fill="#0F172A">§10</text>
+<text x="1210" y="602" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="587" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="587" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="604" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="1472" y="604" font-size="11" fill="#0F172A">SWE.4</text>
+<rect x="40" y="646" width="1680" height="58" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,658)"><rect x="0" y="0" width="68.3" height="20" rx="10.0" fill="#F0FDF4" stroke="#15803D" stroke-width="1"/><text x="34.2" y="13.8" font-size="10.5" fill="#15803D" font-weight="700" text-anchor="middle">Subsystem</text></g>
+<text x="54" y="694" font-size="10.5" fill="#94A3B8" font-style="italic">verify</text>
+<text x="174" y="668" font-size="12.5" fill="#0F172A" font-weight="700">Hardware and software integration</text>
+<text x="174" y="686" font-size="10.5" fill="#475569">4 work products</text>
+<rect x="420" y="655" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="655" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="672" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">4/4</text>
+<text x="424" y="672" font-size="11" fill="#0F172A">26262-5 §10 · 26262-6 §10, §11 ·</text>
+<text x="424" y="687" font-size="11" fill="#0F172A">26262-8 §13</text>
+<text x="686" y="670" font-size="13" fill="#94A3B8">—</text>
+<text x="948" y="670" font-size="13" fill="#94A3B8">—</text>
+<text x="1210" y="670" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="655" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="655" width="178.5" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="672" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/4</text>
+<text x="1472" y="672" font-size="11" fill="#0F172A">SWE.5, SWE.6, HWE.3, HWE.4</text>
+<rect x="40" y="714" width="1680" height="120" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,726)"><rect x="0" y="0" width="50" height="20" rx="10.0" fill="#F0FDF4" stroke="#15803D" stroke-width="1"/><text x="25" y="13.8" font-size="10.5" fill="#15803D" font-weight="700" text-anchor="middle">System</text></g>
+<text x="54" y="762" font-size="10.5" fill="#94A3B8" font-style="italic">verify</text>
+<text x="174" y="736" font-size="12.5" fill="#0F172A" font-weight="700">System integration</text>
+<text x="174" y="754" font-size="10.5" fill="#475569">1 work product</text>
+<rect x="420" y="723" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="723" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="740" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="424" y="740" font-size="11" fill="#0F172A">26262-4 §7</text>
+<text x="686" y="738" font-size="13" fill="#94A3B8">—</text>
+<text x="948" y="738" font-size="13" fill="#94A3B8">—</text>
+<text x="1210" y="738" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="723" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="723" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="740" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="1472" y="740" font-size="11" fill="#0F172A">SYS.4</text>
+<line x1="160" y1="774" x2="1720" y2="774" stroke="#E2E8F0" stroke-width="1"/>
+<text x="174" y="798" font-size="12.5" fill="#0F172A" font-weight="700">System verification</text>
+<text x="174" y="816" font-size="10.5" fill="#475569">1 work product</text>
+<rect x="420" y="785" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="785" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="802" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="424" y="802" font-size="11" fill="#0F172A">26262-4 §7</text>
+<rect x="682" y="785" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="785" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="802" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="686" y="802" font-size="11" fill="#0F172A">§10</text>
+<text x="948" y="800" font-size="13" fill="#94A3B8">—</text>
+<text x="1210" y="800" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="785" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="785" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="802" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="1472" y="802" font-size="11" fill="#0F172A">SYS.5</text>
+<rect x="40" y="844" width="1680" height="58" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,856)"><rect x="0" y="0" width="38.2" height="20" rx="10.0" fill="#F0FDF4" stroke="#15803D" stroke-width="1"/><text x="19.1" y="13.8" font-size="10.5" fill="#15803D" font-weight="700" text-anchor="middle">Need</text></g>
+<text x="54" y="892" font-size="10.5" fill="#94A3B8" font-style="italic">verify</text>
+<text x="174" y="866" font-size="12.5" fill="#0F172A" font-weight="700">Vehicle validation</text>
+<text x="174" y="884" font-size="10.5" fill="#475569">7 work products</text>
+<rect x="420" y="853" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="853" width="102" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="870" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/7</text>
+<text x="424" y="870" font-size="11" fill="#0F172A">26262-4 §7, §8 · 26262-5 §10 ·</text>
+<text x="424" y="885" font-size="11" fill="#0F172A">26262-6 §10–11</text>
+<rect x="682" y="853" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="853" width="136" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="870" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">4/7</text>
+<text x="686" y="870" font-size="11" fill="#0F172A">§9, §10, §10–11, §11</text>
+<rect x="944" y="853" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="853" width="34" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="870" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/7</text>
+<text x="948" y="870" font-size="11" fill="#0F172A">§11</text>
+<rect x="1206" y="853" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="853" width="34" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="870" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/7</text>
+<text x="1210" y="870" font-size="11" fill="#0F172A">AI V&amp;V</text>
+<rect x="1468" y="853" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="853" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="870" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">7/7</text>
+<text x="1472" y="870" font-size="11" fill="#0F172A">SYS.4, SYS.5, SWE.6, SEC.4, VAL.1</text>
+<rect x="40" y="912" width="1680" height="306" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<g transform="translate(52,924)"><rect x="0" y="0" width="89" height="20" rx="10.0" fill="#F8FAFC" stroke="#475569" stroke-width="1"/><text x="44.5" y="13.8" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">Across phases</text></g>
+<text x="54" y="960" font-size="10.5" fill="#94A3B8" font-style="italic">all phases</text>
+<text x="174" y="934" font-size="12.5" fill="#0F172A" font-weight="700">Management plans</text>
+<text x="174" y="952" font-size="10.5" fill="#475569">15 work products</text>
+<rect x="420" y="921" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="921" width="142.8" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="938" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">9/15</text>
+<text x="424" y="938" font-size="11" fill="#0F172A">26262-2 §5, §6, §6 Table 1 · 26262-6</text>
+<text x="424" y="953" font-size="11" fill="#0F172A">§5–11, Annex C · 26262-8 §5 …</text>
+<rect x="682" y="921" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="921" width="47.6" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="938" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/15</text>
+<text x="686" y="938" font-size="11" fill="#0F172A">§4, Clause 5–13 activities</text>
+<rect x="944" y="921" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="921" width="111.1" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="938" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">7/15</text>
+<text x="948" y="938" font-size="11" fill="#0F172A">§5, §6, §7</text>
+<rect x="1206" y="921" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="921" width="31.7" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="938" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/15</text>
+<text x="1210" y="938" font-size="11" fill="#0F172A">AI safety management, assurance</text>
+<text x="1210" y="953" font-size="11" fill="#0F172A">argument</text>
+<rect x="1468" y="921" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="921" width="206.3" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="938" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">13/15</text>
+<text x="1472" y="938" font-size="11" fill="#0F172A">SWE.1–6, MLE.1–4, SUP.1, SUP.10,</text>
+<text x="1472" y="953" font-size="11" fill="#0F172A">SUP.11, MAN.3, MAN.5, MAN.7 …</text>
+<line x1="160" y1="972" x2="1720" y2="972" stroke="#E2E8F0" stroke-width="1"/>
+<text x="174" y="996" font-size="12.5" fill="#0F172A" font-weight="700">Supporting processes</text>
+<text x="174" y="1014" font-size="10.5" fill="#475569">11 work products</text>
+<rect x="420" y="983" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="983" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="1000" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">11/11</text>
+<text x="424" y="1000" font-size="11" fill="#0F172A">26262-2 §5, §6 · 26262-8 §6, §7, §8,</text>
+<text x="424" y="1015" font-size="11" fill="#0F172A">§9, §10, §11, §12, §14</text>
+<rect x="682" y="983" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="983" width="43.3" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="1000" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/11</text>
+<text x="686" y="1000" font-size="11" fill="#0F172A">§4, §13</text>
+<rect x="944" y="983" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="983" width="173.1" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="1000" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">8/11</text>
+<text x="948" y="1000" font-size="11" fill="#0F172A">§5, §6, §8, §10</text>
+<rect x="1206" y="983" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="983" width="21.6" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="1000" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/11</text>
+<text x="1210" y="1000" font-size="11" fill="#0F172A">AI safety lifecycle</text>
+<rect x="1468" y="983" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="983" width="173.1" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="1000" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">8/11</text>
+<text x="1472" y="1000" font-size="11" fill="#0F172A">SYS.2, SWE.1, SUP.2, SUP.7,</text>
+<text x="1472" y="1015" font-size="11" fill="#0F172A">SUP.8, SUP.9, SUP.10, MAN.3</text>
+<line x1="160" y1="1034" x2="1720" y2="1034" stroke="#E2E8F0" stroke-width="1"/>
+<text x="174" y="1058" font-size="12.5" fill="#0F172A" font-weight="700">Traceability</text>
+<text x="174" y="1076" font-size="10.5" fill="#475569">1 work product</text>
+<rect x="420" y="1045" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="1045" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="1062" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="424" y="1062" font-size="11" fill="#0F172A">26262-8 §6</text>
+<text x="686" y="1060" font-size="13" fill="#94A3B8">—</text>
+<rect x="944" y="1045" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="1045" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="1062" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="948" y="1062" font-size="11" fill="#0F172A">§10</text>
+<text x="1210" y="1060" font-size="13" fill="#94A3B8">—</text>
+<rect x="1468" y="1045" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="1045" width="238" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="1062" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/1</text>
+<text x="1472" y="1062" font-size="11" fill="#0F172A">SYS.2–5, SWE.1–6</text>
+<line x1="160" y1="1096" x2="1720" y2="1096" stroke="#E2E8F0" stroke-width="1"/>
+<text x="174" y="1120" font-size="12.5" fill="#0F172A" font-weight="700">Safety case</text>
+<text x="174" y="1138" font-size="10.5" fill="#475569">6 work products</text>
+<rect x="420" y="1107" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="1107" width="119" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="1124" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/6</text>
+<text x="424" y="1124" font-size="11" fill="#0F172A">26262-2 §6 · 26262-4 §9</text>
+<rect x="682" y="1107" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="1107" width="119" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="1124" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/6</text>
+<text x="686" y="1124" font-size="11" fill="#0F172A">§12</text>
+<rect x="944" y="1107" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="1107" width="119" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="1124" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">3/6</text>
+<text x="948" y="1124" font-size="11" fill="#0F172A">§6</text>
+<rect x="1206" y="1107" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="1107" width="39.7" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="1124" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/6</text>
+<text x="1210" y="1124" font-size="11" fill="#0F172A">assurance argument</text>
+<rect x="1468" y="1107" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="1107" width="39.7" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="1124" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/6</text>
+<text x="1472" y="1124" font-size="11" fill="#0F172A">SUP.8</text>
+<line x1="160" y1="1158" x2="1720" y2="1158" stroke="#E2E8F0" stroke-width="1"/>
+<text x="174" y="1182" font-size="12.5" fill="#0F172A" font-weight="700">Operation and field</text>
+<text x="174" y="1200" font-size="10.5" fill="#475569">5 work products</text>
+<rect x="420" y="1169" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="420" y="1169" width="190.4" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="658" y="1186" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">4/5</text>
+<text x="424" y="1186" font-size="11" fill="#0F172A">26262-2 §7 · 26262-7 §5, §6</text>
+<rect x="682" y="1169" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="682" y="1169" width="95.2" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="920" y="1186" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">2/5</text>
+<text x="686" y="1186" font-size="11" fill="#0F172A">§6, §13</text>
+<rect x="944" y="1169" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="944" y="1169" width="190.4" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1182" y="1186" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">4/5</text>
+<text x="948" y="1186" font-size="11" fill="#0F172A">§8, §12, §13, §14</text>
+<rect x="1206" y="1169" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1206" y="1169" width="47.6" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1444" y="1186" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/5</text>
+<text x="1210" y="1186" font-size="11" fill="#0F172A">operation phase</text>
+<rect x="1468" y="1169" width="238" height="4" rx="2" fill="#E2E8F0" stroke="none" stroke-width="0"/>
+<rect x="1468" y="1169" width="47.6" height="4" rx="2" fill="#7C3AED" stroke="none" stroke-width="0"/>
+<text x="1706" y="1186" font-size="10.5" fill="#7C3AED" font-weight="700" text-anchor="end">1/5</text>
+<text x="1472" y="1186" font-size="11" fill="#0F172A">SEC.*</text>
+<text x="40" y="1246" font-size="11.5" fill="#475569">Read across a row to see how one box serves several standards; down a column to see where a standard's work sits on the V. The bar is the share of the box's work products that cite the standard.</text>
+<text x="40" y="1266" font-size="11" fill="#475569" font-style="italic">Built from the register's clause columns. A work product citing a clause is not evidence the clause is met. Long cells are cut at two lines; the page lists every clause.</text>
+<g class="terms">
+<text x="40" y="1290" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · ASPICE Automotive SPICE, the process capability model · HWE hardware engineering process group of ASPICE (HWE.1 … HWE.4) · ISO International Organization for Standardization · MAN management process group of ASPICE (MAN.3 project, MAN.5 risk, MAN.6 measurement) ·</text>
+<text x="40" y="1304.5" font-size="10.5" fill="#475569">MLE machine learning engineering process group of ASPICE (MLE.1 … MLE.4) · PAS publicly available specification (ISO/PAS 8800 is the AI safety one) · SAE SAE International (formerly the Society of Automotive Engineers) · SEC cybersecurity engineering process group of ASPICE (SEC.1 … SEC.4) · SUP</text>
+<text x="40" y="1319" font-size="10.5" fill="#475569">supporting process group of ASPICE (SUP.1 quality assurance … SUP.11 machine learning data management) · SWE software engineering process group of ASPICE (SWE.1 requirements … SWE.6 qualification test) · SYS system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE</text>
+<text x="40" y="1333.5" font-size="10.5" fill="#475569">(SYS.1 … SYS.5) · VAL validation process of ASPICE (VAL.1) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
