@@ -12,7 +12,7 @@
 
 | Gate | Work products approved | Open items | Measures performed | Interfaces agreed | Roles unassigned | Exit criteria |
 |---|---|---|---|---|---|---|
-| [G0 Governance](../../10-safety-case/gates/skeletons/G0-skeleton.md) | 0 of 21 | 90 | 0 of 2 | 0 of 3 | 2 | 4 |
+| [G0 Governance](../../10-safety-case/gates/skeletons/G0-skeleton.md) | 0 of 21 | 91 | 0 of 2 | 0 of 3 | 2 | 4 |
 | [G1 Concept](../../10-safety-case/gates/skeletons/G1-skeleton.md) | 0 of 16 | 89 | 0 of 6 | 0 of 9 | 4 | 3 |
 | [G2 System design](../../10-safety-case/gates/skeletons/G2-skeleton.md) | 0 of 14 | 84 | 0 of 5 | 0 of 17 | 5 | 2 |
 | [G3 HW/SW development](../../10-safety-case/gates/skeletons/G3-skeleton.md) | 0 of 18 | 137 | 0 of 6 | 0 of 22 | 6 | 2 |
@@ -41,7 +41,7 @@ Work products to review and approve:
 - [WP-P-06 Requirements management and traceability procedure](../../07-supporting/WP-P-06-requirements-management-traceability.md): Draft, 5 open items
 - [WP-P-05 Verification and review procedure](../../07-supporting/WP-P-05-verification-review-procedure.md): Draft, 4 open items
 - [WP-P-01 Configuration management plan (incl. safety-relevant file list, baselines, submodules)](../../07-supporting/WP-P-01-configuration-management-plan.md): Draft, 6 open items
-- [WP-P-04 Documentation management](../../07-supporting/WP-P-04-documentation-management.md): Draft, 5 open items
+- [WP-P-04 Documentation management](../../07-supporting/WP-P-04-documentation-management.md): Draft, 6 open items
 - [WP-P-03 Problem resolution management](../../07-supporting/WP-P-03-problem-resolution.md): Draft, 5 open items
 - [WP-P-02 Change management plan](../../07-supporting/WP-P-02-change-management.md): Draft, 5 open items
 - [WP-M-13 ASPICE capability baseline (self-assessment)](../WP-M-13-aspice-capability-baseline.md): Draft, 4 open items

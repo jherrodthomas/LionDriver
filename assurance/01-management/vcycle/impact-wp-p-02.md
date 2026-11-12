@@ -2,7 +2,7 @@
 
 # Change impact: WP-P-02 Change management plan
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-P-07 · 12 Nov](impact-wp-p-07.md) · **WP-P-02 · 12 Nov** · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [WP-W-10 · 11 Nov](impact-wp-w-10.md) · [WP-W-08 · 11 Nov](impact-wp-w-08.md) · [WP-W-02 · 11 Nov](impact-wp-w-02.md) · [WP-P-10 · 11 Nov](impact-wp-p-10.md) · [WP-O-05 · 11 Nov](impact-wp-o-05.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-P-07 · 12 Nov](impact-wp-p-07.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · **WP-P-02 · 12 Nov** · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [WP-W-10 · 11 Nov](impact-wp-w-10.md) · [WP-W-08 · 11 Nov](impact-wp-w-08.md) · [WP-W-02 · 11 Nov](impact-wp-w-02.md) · [WP-P-10 · 11 Nov](impact-wp-p-10.md) · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-p-02.svg" width="100%" alt="Change impact of WP-P-02 Change management plan, dated 2026-11-12: 2 work products depend on it in the process model; 2 have no version dated after it, 0 have been updated since, 0 have no dated version."></a>

@@ -61,7 +61,7 @@
 <rect x="40" y="242" width="1560" height="68" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
 <text x="54" y="270" font-size="13" fill="#0F172A" font-weight="700">Open items in them</text>
 <text x="54" y="288" font-size="10.5" fill="#475569" font-style="italic">rows not marked closed</text>
-<text x="300" y="270" font-size="17" fill="#0F172A" font-weight="700">90</text>
+<text x="300" y="270" font-size="17" fill="#0F172A" font-weight="700">91</text>
 <text x="300" y="290" font-size="10" fill="#475569">across 21 work products</text>
 <text x="487.1" y="270" font-size="17" fill="#0F172A" font-weight="700">89</text>
 <text x="487.1" y="290" font-size="10" fill="#475569">across 16 work products</text>
@@ -246,7 +246,7 @@
 <text x="1201" y="684" font-size="12" fill="#0F172A" font-weight="700">Roles to assign (2)</text>
 <text x="1201" y="706" font-size="11.5" fill="#0F172A">• Verification reviewer(s)</text>
 <text x="1201" y="724" font-size="11.5" fill="#0F172A">• Quality assurance</text>
-<text x="58" y="830" font-size="11" fill="#475569" font-style="italic">Plus 90 open items in those work products. A gate passes only through a recorded review in 10-safety-case/gates/; this board is the skeletons' view, not that review.</text>
+<text x="58" y="830" font-size="11" fill="#475569" font-style="italic">Plus 91 open items in those work products. A gate passes only through a recorded review in 10-safety-case/gates/; this board is the skeletons' view, not that review.</text>
 <g class="terms">
 <text x="40" y="864" font-size="10.5" fill="#475569">Terms: AUD-nn functional safety audit, AUD-n (WP-M-06 §5) · CR-nn confirmation review of the confirmation measures plan (WP-M-06) · FSA-F final functional safety assessment at G5 (WP-M-06 §6) · G0–G6 gate G0…G6 of the project lifecycle · HW hardware · IFR interface record</text>
 <text x="40" y="878.5" font-size="10.5" fill="#475569">(trace/items/ifr.yaml): a cross-domain interface, agreed only by a recorded review · IFR-nn interface record IFR-nn: one cross-domain interface with its owners, open item and agreement state (trace/items/ifr.yaml) · SR-nn independent SOTIF or AI evaluation review, SR-nn (WP-M-06</text>
