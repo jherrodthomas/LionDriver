@@ -195,6 +195,15 @@ def row_hash(prev: str, row: dict) -> str:
   return hashlib.sha256((prev + json.dumps(body, sort_keys=True, separators=(",", ":"))).encode()).hexdigest()
 
 
+def load_ref(ref: str = "origin/ledger", cwd: Path | None = None) -> list[dict] | None:
+  """The ledger as committed on its branch, or None when the branch is not there (before the first run)."""
+  try:
+    text = git("show", f"{ref}:ledger.jsonl", cwd=cwd)
+  except subprocess.CalledProcessError:
+    return None
+  return [json.loads(line) for line in text.splitlines() if line.strip()]
+
+
 def load(path: Path) -> list[dict]:
   if not path.exists():
     return []

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-04 Documentation management |
 | Standard reference | ISO 26262-8:2018 §10; ISO/SAE 21434:2021 §5 (documentation management); ASPICE 4.0 SUP.7 (informative), SUP.8 |
-| Version | 0.5 (§5 Version rule and §6: versions are X.Y.Z, computed by the change ledger and stamped at output; X only at gate approval (DQ-441 A, DQ-442 A, lead 2026-11-12); `editorial` label; OI-7; 2026-11-12). 0.4 (§10 retention period confirmed by the lead 2026-10-14 (DQ-113, A); OI-6 closed; 2026-10-18). 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
+| Version | 0.6 (OI-7 first part done: exports and the snapshot stamp the ledger version, `wp-export` workflow, TL-65; 2026-11-12). 0.5 (§5 Version rule and §6: versions are X.Y.Z, computed by the change ledger and stamped at output; X only at gate approval (DQ-441 A, DQ-442 A, lead 2026-11-12); `editorial` label; OI-7; 2026-11-12). 0.4 (§10 retention period confirmed by the lead 2026-10-14 (DQ-113, A); OI-6 closed; 2026-10-18). 0.3 (§5 Figure 5-1, work-product lifecycle generated from the status, §5 and §7 tables; 2026-10-14). 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -142,4 +142,4 @@ Git history is never rewritten on protected branches. Superseded documents remai
 | OI-4 | Superseded 2026-11-12 by OI-7: the revision history of an exported document is generated from the change ledger, not kept as a table in the file |
 | OI-5 | Decide where non-redistributable reference documents are stored |
 | OI-6 | Closed 2026-10-18: the §10 period was confirmed by the lead (decision register DQ-113, A) without legal advice; the lead accepted the long storage commitment |
-| OI-7 | Stamp the ledger version at output (document-control block on page 1 and a running footer with ID, version, status, commit, copy and page n of N in the snapshot and exports), then remove the hand-typed `Version` lines from the headers, keeping their text as revision history (DQ-441) |
+| OI-7 | Stamp the ledger version at output, then remove the hand-typed `Version` lines from the headers, keeping their text as revision history (DQ-441). **Done 2026-11-12:** work-product exports ([`ledger/export_wp.py`](ledger/export_wp.py), workflow `wp-export`) carry the document-control block on page 1, a running footer (ID, version, status, commit, copy, page n of N) and the revision history; the snapshot's controlled-documents table takes its versions from the ledger. **Left:** the wiki pages, and removing the typed `Version` lines |

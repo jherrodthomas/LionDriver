@@ -10,6 +10,7 @@ baselined or passed; a complete specified link is blue, partial amber, missing r
 """
 from __future__ import annotations
 
+import functools
 import os
 import re
 import subprocess
@@ -98,11 +99,22 @@ def wp_header(path: Path) -> dict[str, str]:
   return out
 
 
+@functools.lru_cache(maxsize=1)
+def ledger_versions() -> tuple[dict[str, str], str]:
+  """Work-product versions from the change ledger at HEAD (WP-P-04 §5, DQ-441); header versions before its first run."""
+  sys.path.insert(0, str(REPO_ROOT / "assurance" / "07-supporting" / "ledger"))
+  import export_wp as wp_export
+  import ledger as wp_ledger
+  return wp_export.versions_at("HEAD", wp_ledger.load_ref("origin/ledger", REPO_ROOT))
+
+
 def register_rows() -> list[dict]:
   register, _ = pm.load_register(pm.REGISTER_MD.read_text(encoding="utf-8"))
+  versions, _ = ledger_versions()
   rows = []
   for wp, row in register.items():
     h = wp_header(row.path)
+    h["Version"] = versions.get(wp, h["Version"])
     name = pm.STATUS_NAMES.get(row.status, row.status)
     rows.append({"wp": wp, "name": re.sub(r"[*`]", "", row.name), "gate": row.gate, "status": row.status,
                  "status_name": name, "version": h["Version"], "header_status": h["Status"], "exists": row.path.exists(),
@@ -113,6 +125,7 @@ def register_rows() -> list[dict]:
 
 def controlled_documents() -> str:
   rows = register_rows()
+  source = ledger_versions()[1]
   out, disagree = [], 0
   for r in rows:
     if not r["exists"]:
@@ -130,8 +143,9 @@ def controlled_documents() -> str:
     counts[r["status_name"]] = counts.get(r["status_name"], 0) + 1
   summary = " · ".join(f"{n} {e(k.lower())}" for k, n in sorted(counts.items(), key=lambda kv: -kv[1]))
   return f"""<section id="documents"><h1>Controlled documents</h1>
-<p class="lead">The work products under document control (WP-M-00 §3, {len(rows)} rows: {summary}), with the version and status in each
-document's own control header (WP-P-04 §5). The last column compares the two; WP-P-04 OI-1 asks for this check.</p>
+<p class="lead">The work products under document control (WP-M-00 §3, {len(rows)} rows: {summary}), with the version from
+{e(source)} (WP-P-04 §5, DQ-441) and the status in each document's own control header (WP-P-04 §5).
+The last column compares the status with the register; WP-P-04 OI-1 asks for this check.</p>
 {table(["ID", "Work product", "Gate", "Register", "Version", "Header"], out, "tbl compact")}
 <p class="small">{disagree} of {len(rows)} rows disagree with their document header or have no file.</p></section>"""
 

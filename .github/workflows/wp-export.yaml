@@ -1,0 +1,58 @@
+# Export work products with their document control stamped from the change ledger (WP-P-04 §5, OI-7; DQ-441):
+# a document-control block on page 1, a running footer on every page and the revision history.
+# Run by hand: Actions -> wp-export -> Run workflow. The files are attached to the run as an artifact.
+# A controlled copy needs its entry in assurance/case-records/distribution.yaml first.
+name: wp-export
+
+on:
+  workflow_dispatch:
+    inputs:
+      documents:
+        description: "Work products, separated by spaces (e.g. WP-S-02 WP-W-02)"
+        required: true
+      format:
+        description: "Format"
+        type: choice
+        options: [pdf, md, html]
+        default: pdf
+      copy:
+        description: "Controlled copy ID (CC-YYYY-NNN), or empty for an uncontrolled copy"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+env:
+  PLAYWRIGHT_VERSION: 1.48.2
+  MARKDOWN_VERSION: 3.7
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: false
+          fetch-depth: 0       # the ledger branch and the history the versions are computed from
+          persist-credentials: false
+      - run: python3 -m pip install --quiet "markdown==$MARKDOWN_VERSION"
+      - name: Install Chromium for printing
+        if: inputs.format == 'pdf'
+        run: |
+          npm install --no-save --no-audit --no-fund "playwright@$PLAYWRIGHT_VERSION"
+          npx playwright install --with-deps chromium
+      - name: Export
+        env:
+          DOCS: ${{ inputs.documents }}
+          FORMAT: ${{ inputs.format }}
+          COPY: ${{ inputs.copy }}
+        run: |
+          for d in $DOCS; do [[ "$d" =~ ^WP-[A-Z]{1,2}-[0-9]{2,3}[a-z]?$ ]] || { echo "not a work-product ID: $d"; exit 1; }; done
+          [[ -z "$COPY" || "$COPY" =~ ^CC-[0-9]{4}-[0-9]{3}$ ]] || { echo "not a copy ID: $COPY"; exit 1; }
+          python3 assurance/07-supporting/ledger/export_wp.py $DOCS --format "$FORMAT" --out export ${COPY:+--copy "$COPY"}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: work-products
+          path: export/*.${{ inputs.format }}

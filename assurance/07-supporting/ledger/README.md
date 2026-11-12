@@ -11,6 +11,8 @@ DQ-442).
 | [`ledger.py`](ledger.py) | Builds, verifies and reads the ledger; writes the spreadsheet view |
 | [`gate-approvals.yaml`](gate-approvals.yaml) | Gate approvals, the only thing that raises X |
 | [`test_ledger.py`](test_ledger.py) | Tests on a throwaway repository |
+| [`export_wp.py`](export_wp.py), [`render_export.cjs`](render_export.cjs) | Export work products (md, html, pdf) with the version stamped from the ledger |
+| [`test_export_wp.py`](test_export_wp.py) | Tests of the export |
 | `ledger.jsonl`, `ledger.xlsx` on branch `ledger` | The ledger itself and its spreadsheet, written by [`ledger.yaml`](../../../.github/workflows/ledger.yaml) |
 
 ## How it is written
@@ -53,12 +55,32 @@ python3 assurance/07-supporting/ledger/ledger.py versions --ledger /tmp/ledger.j
 **Exceptions** (pushes without a pull request, safety-class changes without an approving review, merges with a
 failed check, a missing change-class label, `editorial` on a safety-class change).
 
+## Exporting a work product
+
+The export replaces the typed control table at the top of the file with a document-control block generated from the
+ledger, puts a running footer on every page (ID, version, status, commit, copy, page n of N) and ends with the
+revision history: every ledger row that set a version, then the history the header carried before the ledger.
+
+```sh
+python3 assurance/07-supporting/ledger/export_wp.py WP-S-02 WP-W-02 --format pdf --out build/export
+```
+
+Or by hand in GitHub: Actions, **wp-export**, Run workflow. A copy is uncontrolled unless `--copy CC-YYYY-NNN` names
+an issued entry of [`distribution.yaml`](../../case-records/distribution.yaml).
+
+- A commit with changes the ledger has not recorded yet (a branch, or a merge whose ledger run is pending) is stamped
+  `0.68.0+1` and cannot be issued as a controlled copy.
+- An older commit gets the version it had then.
+- Before the ledger's first run, the version comes from the header and the block says so.
+- Every export must contain every word of its source body, as often as the source does; otherwise nothing is
+  written. CI exports every work product through this check on every pull request.
+
 ## Still to do
 
 | Item | Status |
 |---|---|
 | Protect the `ledger` branch against force-push and deletion | Repository setting, for the lead |
-| Stamp versions at output: header block and running footer in the snapshot and exports | Next step (WP-P-04 OI-7) |
+| Version on the wiki pages | Next step (WP-P-04 OI-7) |
 | Remove the hand-typed `Version` from work-product headers, keeping their text as revision history | Next step (WP-P-04 OI-7) |
 | Change record for selected documents in the export | Next step (WP-P-04 OI-3) |
 | Ledger tabs in the workbook viewer page | Next step |
