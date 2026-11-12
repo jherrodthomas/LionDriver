@@ -44,6 +44,7 @@ from figkit import FigureError, el, fmt, rect, text, line, path  # noqa: E402
 import terms  # noqa: E402
 import vcycle_explode  # noqa: E402
 import vcycle_time  # noqa: E402
+import vcycle_standards  # noqa: E402
 
 REGISTER = A / "01-management" / "WP-M-00-work-product-register.md"
 PLAN = A / "01-management" / "WP-M-03-project-plan.md"
@@ -453,6 +454,7 @@ def render(m: dict) -> dict[Path, str]:
   files[OUT / "fig-m00-vcycle.svg"] = fk.svg(W, height, "LionDriver V-cycle", desc, comp)
   files.update(vcycle_explode.render(m))
   files.update(vcycle_time.render(m))
+  files.update(vcycle_standards.render(m))
   files.update(readmes(m, t))
   return files
 
@@ -480,7 +482,7 @@ def block_assurance(m: dict, t) -> str:
   rows.append(f'<img src="{img.format("legend")}" width="98%" alt="{t["legend"][3]}">')
   folders = sorted({b["folder"] for side in m["boxes"].values() for b in side} | {b["folder"] for b in m["band"]})
   return "\n".join([
-    BEGIN, "", '<p align="center">', "<br>\n".join(rows), "</p>", "",
+    BEGIN, "", vcycle_standards.toggle_md("all", ""), "", '<p align="center">', "<br>\n".join(rows), "</p>", "",
     "Click a box to open its exploded view: its work products, what each needs first, and the reviews that cover them. "
     "See also [the V-cycle over time](01-management/vcycle/over-time.md): what the records show happened, day by day, "
     "against when the plan has each row due. Folders: " + " · ".join(f"[{f}/]({f}/README.md)" for f in folders) + ".", "",

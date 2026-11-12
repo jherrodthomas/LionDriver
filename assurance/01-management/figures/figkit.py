@@ -24,6 +24,7 @@ AMBER, AMBER_BG = "#D97706", "#FFFBEB"
 RED, RED_BG = "#D2553F", "#FEF2F2"
 GREY_BG = "#F1F5F9"
 GREEN_DARK = "#166534"
+OVERLAY, OVERLAY_BG = "#7C3AED", "#F5F3FF"  # a standard's coverage on the V-cycle overlays
 DEFINE, DEFINE_BG = "#1D4ED8", "#EFF6FF"
 VERIFY, VERIFY_BG = "#15803D", "#F0FDF4"
 

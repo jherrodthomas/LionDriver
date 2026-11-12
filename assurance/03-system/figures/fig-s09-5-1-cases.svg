@@ -320,8 +320,8 @@
 <text x="40" y="902" font-size="10.5" fill="#475569">Terms: ACC adaptive cruise control · AoU assumption of use: what the analysis assumes about the car, the driver or the environment · DQ-nn decision of the project lead (decision register) · ECU electronic control</text>
 <text x="40" y="916.5" font-size="10.5" fill="#475569">unit · EPS electric power steering · G0–G6 gate G0…G6 of the project lifecycle · HARA hazard analysis and risk assessment (ISO 26262-3) · LKA lane keeping assist · MCU microcontroller: the panda safety processor</text>
 <text x="40" y="931" font-size="10.5" fill="#475569">(STM32H7) · OI-nn open item of the document it appears in · PCM powertrain control module (engine and drive) · PCS pre-collision system: Toyota's stock collision warning and braking · SoC system on chip: the comma</text>
-<text x="40" y="945.5" font-size="10.5" fill="#475569">device's main processor, running openpilot (QM) · SYS system requirement SYS-nnn of WP-S-01 · TSR-nn technical safety requirement (WP-S-02) · VS-nn verification case: VS-SI system integration, VS-HW hardware, VS-SWQ</text>
-<text x="40" y="960" font-size="10.5" fill="#475569">software, VS-FI fault injection, VS-SQ system qualification · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A</text>
-<text x="40" y="974.5" font-size="10.5" fill="#475569">analyses, O operation, K safety case)</text>
+<text x="40" y="945.5" font-size="10.5" fill="#475569">device's main processor, running openpilot (QM) · SYS system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5) · TSR-nn technical safety requirement (WP-S-02) ·</text>
+<text x="40" y="960" font-size="10.5" fill="#475569">VS-nn verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C</text>
+<text x="40" y="974.5" font-size="10.5" fill="#475569">concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
 </svg>
