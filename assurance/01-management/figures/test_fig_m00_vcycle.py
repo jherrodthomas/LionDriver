@@ -180,6 +180,31 @@ class VCycle(unittest.TestCase):
     self.assertEqual(vs.summary("iso26262", ["9 §7, 2 §6", "2 §5"]), "26262-2 §5, §6 · 26262-9 §7")
     self.assertEqual(vs.summary("aspice", ["MAN.3", "SWE.10, SWE.2", "SYS.2"]), "SYS.2, SWE.2, SWE.10, MAN.3")
 
+  def test_impact_downstream_follows_the_process_model(self):
+    import vcycle_impact as vi
+    down = {"A": {"B"}, "B": {"C", "D"}, "D": {"A"}}
+    self.assertEqual(vi.steps_from("A", down), {"A": 0, "B": 1, "C": 2, "D": 2})
+    self.assertEqual(vi.state("C", "A", "2026-11-07", {"A": 0, "C": 2}, {"C": "2026-11-07"}), "ok")
+    self.assertEqual(vi.state("C", "A", "2026-11-07", {"A": 0, "C": 2}, {"C": "2026-11-06"}), "look")
+    self.assertEqual(vi.state("C", "A", "2026-11-07", {"A": 0, "C": 2}, {}), "undated")
+    self.assertEqual(vi.state("E", "A", "2026-11-07", {"A": 0}, {"E": "2026-11-01"}), "none")
+
+  def test_impact_pages_for_the_recent_changes_and_counts_agree(self):
+    import vcycle_impact as vi
+    m = v.build_model()
+    d = vi.model(m)
+    self.assertEqual(len(d["recent"]), min(vi.RECENT, len(d["changes"])))
+    dates = [c["when"] for c in d["changes"]]
+    self.assertEqual(dates, sorted(dates, reverse=True))
+    for c in d["recent"]:
+      page = (vi.vx.PAGES / vi.page_name(c["wp"])).read_text(encoding="utf-8")
+      rows = [ln for ln in page.splitlines() if ln.startswith("| [WP-")]
+      self.assertEqual(len(rows), len(c["hop"]) - 1, c["wp"])
+      self.assertEqual(sum(c["counts"].values()), len(c["hop"]) - 1)
+      self.assertEqual(page.count("worth a look |"), c["counts"]["look"])
+    index = (vi.vx.PAGES / vi.INDEX).read_text(encoding="utf-8")
+    self.assertEqual(len([ln for ln in index.splitlines() if ln.startswith("| [WP-")]), len(d["changes"]))
+
 
 if __name__ == "__main__":
   unittest.main()
