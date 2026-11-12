@@ -113,5 +113,62 @@ class ExportTest(unittest.TestCase):
     self.assertEqual(export_wp.check_complete("x <= 3 and y > 2 holds", "x <= 3 and y > 2 holds"), [])
 
 
+class ChangeRecordTest(ExportTest):
+  """Selected documents with a change record since the recipient's last copy."""
+
+  def setUp(self):
+    super().setUp()
+    self.dist = export_wp.distribution_module()
+    self.copies = []
+    self.saved = self.dist.load
+    self.dist.load = lambda path=None: self.copies
+
+  def tearDown(self):
+    self.dist.load = self.saved
+    super().tearDown()
+
+  def issue(self, cid, recipient, based_on, docs):
+    self.copies.append({"id": cid, "issued_at": "2026-11-12T10:00Z", "issued_by": "lead", "recipient": recipient,
+                        "purpose": "review", "based_on": based_on, "run": "", "status": "issued",
+                        "documents": docs})
+
+  def test_since_last_copy_lists_only_the_changes_after_it(self):
+    self.issue("CC-2026-001", "Assessor A", self.seed, ["WP-C-01 0.68.0"])
+    self.repo.merge_pr(2, "TSR wording", {WP_A: SOURCE + "\nMore.\n"})
+    self.repo.merge_pr(3, "New figure", {WP_A: SOURCE + "\nMore.\nEven more.\n"})
+    ledger.update(self.path, "main", cwd=self.repo.root)
+    self.issue("CC-2026-002", "Assessor A", self.repo.git("rev-parse", "HEAD"), ["WP-C-01 0.70.0"])
+    out = Path(self.tmp.name) / "out"
+    files = export_wp.export(["WP-C-01"], "md", out, copy="CC-2026-002", rows=self.rows(), commit="main",
+                             since="last-copy", recipient="  assessor a ")
+    self.assertEqual([f.name for f in files], ["change-record.md", "WP-C-01-v0.70.0.md"])
+    cr = files[0].read_text()
+    self.assertIn("since copy CC-2026-001 to Assessor A", cr)
+    self.assertIn("| WP-C-01 Item definition | 0.68.0 | 0.70.0 | 2 |", cr)
+    self.assertIn("| 0.69.0 | ", cr)
+    self.assertIn("TSR wording", cr)
+    self.assertIn("Controlled copy CC-2026-002", cr)
+    import json
+    m = json.loads((out / "manifest.json").read_text())
+    self.assertEqual(m["documents"]["WP-C-01"]["version"], "0.70.0")
+    self.assertEqual(m["since"]["copy"], "CC-2026-001")
+    self.assertEqual(len(m["change_record"]["sha256"]), 64)
+
+  def test_first_copy_to_a_recipient_lists_every_recorded_change(self):
+    since = export_wp.resolve_since("last-copy", "Nobody yet", None, self.seed)
+    self.assertIsNone(since["commit"])
+    self.assertIn("first copy", since["label"])
+
+  def test_outdated_copies(self):
+    self.issue("CC-2026-001", "Assessor A", self.seed, ["WP-C-01 0.68.0"])
+    self.assertEqual(self.dist.outdated(self.copies, {"WP-C-01": "0.68.0"}), [])
+    self.assertEqual(self.dist.outdated(self.copies, {"WP-C-01": "0.69.0"}),
+                     [("CC-2026-001", "Assessor A", "WP-C-01", "0.68.0", "0.69.0")])
+
+  def test_documents_field_is_checked(self):
+    self.issue("CC-2026-001", "A", "a" * 40, ["WP-C-01 0.68"])
+    self.assertTrue(any("documents must be" in e for e in self.dist.check(self.copies)))
+
+
 if __name__ == "__main__":
   unittest.main()

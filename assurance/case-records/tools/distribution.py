@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Distribution record of controlled copies of the safety case (WP-K-01): assurance/case-records/distribution.yaml.
+"""Distribution record of controlled copies: assurance/case-records/distribution.yaml.
+
+It records controlled copies of the safety case (WP-K-01) and of selected work products (WP-P-04 §9.1, made by the
+wp-export workflow). A work-product copy also lists the documents it holds with their ledger versions
+(`documents: ["WP-S-02 0.68.0", ...]`), so `outdated` can list the recipients who hold a version that has since
+changed.
 
 ISO 9001:2015 §7.5.3.2 and IATF 16949 §7.5.3.2.1 ask that distribution of documented information is
 controlled. A public snapshot download stays anonymous and uncontrolled. A controlled copy is made
@@ -9,8 +14,10 @@ builds the copy with `build_snapshot.py --copy CC-YYYY-NNN`. The record is publi
 Usage:
   python3 assurance/case-records/tools/distribution.py --check
   python3 assurance/case-records/tools/distribution.py issue --recipient TEXT --purpose TEXT --issuer LOGIN \
-      --based-on SHA [--run URL] [--at YYYY-MM-DDTHH:MMZ]
+      --based-on SHA [--run URL] [--at YYYY-MM-DDTHH:MMZ] [--documents "WP-S-02 0.68.0,WP-W-02 0.55.0"]
       appends the next CC-YYYY-NNN entry and prints its ID
+  python3 assurance/case-records/tools/distribution.py outdated
+      lists issued work-product copies holding a version the change ledger has since replaced
 """
 from __future__ import annotations
 
@@ -27,8 +34,10 @@ PATH = CASE_DIR / "distribution.yaml"
 FIELDS = ("id", "issued_at", "issued_by", "recipient", "purpose", "based_on", "run", "status")
 STATUS = ("issued", "withdrawn")
 MAX_TEXT = 80
-HEADER = """# Controlled copies of the safety case (WP-K-01). Public record; see assurance/case-records/tools/distribution.py.
-# Appended only by the safety-case-controlled-copy workflow. A copy is withdrawn by setting status: withdrawn
+DOC_ENTRY = re.compile(r"WP-[A-Z]{1,2}-\d{2,3}[a-z]? \d+\.\d+\.\d+")
+HEADER = """# Controlled copies of the safety case (WP-K-01) and of selected work products (WP-P-04 §9.1, §9.2). Public record;
+# see assurance/case-records/tools/distribution.py. Appended only by the safety-case-controlled-copy and wp-export
+# workflows; a work-product copy lists its documents and versions. A copy is withdrawn by setting status: withdrawn
 # and adding withdrawn_at and reason; entries are never deleted (WP-P-04 §10).
 """
 
@@ -67,7 +76,39 @@ def check(copies: list[dict]) -> list[str]:
     for f in ("recipient", "purpose"):
       if len(str(c.get(f, ""))) > MAX_TEXT:
         errs.append(f"{cid}: {f} longer than {MAX_TEXT} characters")
+    if "documents" in c:
+      docs = c["documents"]
+      if not isinstance(docs, list) or not docs or not all(
+          isinstance(d, str) and DOC_ENTRY.fullmatch(d) for d in docs):
+        errs.append(f'{cid}: documents must be a list like ["WP-S-02 0.68.0"]')
   return errs
+
+
+def held(copy: dict) -> dict[str, str]:
+  """Work product -> version held by a work-product copy (empty for a safety-case copy)."""
+  return dict(d.split(" ", 1) for d in copy.get("documents") or [])
+
+
+def last_copy_to(recipient: str, copies: list[dict] | None = None, exclude: str | None = None) -> dict | None:
+  """The latest issued copy to the same recipient (case and spacing ignored), or None."""
+  copies = load() if copies is None else copies
+  key = " ".join(recipient.lower().split())
+  hits = [c for c in copies if c.get("status") == "issued" and c.get("id") != exclude
+          and " ".join(str(c.get("recipient", "")).lower().split()) == key]
+  return hits[-1] if hits else None
+
+
+def outdated(copies: list[dict], current: dict[str, str]) -> list[tuple[str, str, str, str, str]]:
+  """(copy, recipient, document, held version, current version) for every issued copy holding an older version."""
+  out = []
+  for c in copies:
+    if c.get("status") != "issued":
+      continue
+    for doc, ver in held(c).items():
+      now = current.get(doc)
+      if now and now.split("+")[0] != ver:
+        out.append((c["id"], c["recipient"], doc, ver, now))
+  return out
 
 
 def find(copy_id: str, copies: list[dict] | None = None) -> dict:
@@ -95,11 +136,13 @@ def next_id(copies: list[dict], year: int) -> str:
 
 
 def issue(recipient: str, purpose: str, issuer: str, based_on: str, run: str = "", at: str | None = None,
-          path: Path = PATH) -> str:
+          path: Path = PATH, documents: list[str] | None = None) -> str:
   copies = load(path)
   at = at or dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
   entry = {"id": next_id(copies, int(at[:4])), "issued_at": at, "issued_by": clean(issuer), "recipient": clean(recipient),
            "purpose": clean(purpose), "based_on": based_on, "run": run, "status": "issued"}
+  if documents:
+    entry["documents"] = documents
   errs = check([*copies, entry])
   if errs:
     raise SystemExit("\n".join(errs))
@@ -121,10 +164,22 @@ def main(argv: list[str]) -> int:
   if argv[:1] == ["issue"]:
     args = dict(zip(argv[1::2], argv[2::2], strict=False))
     need = {"--recipient", "--purpose", "--issuer", "--based-on"}
-    if not need <= set(args) or set(args) - need - {"--run", "--at"}:
+    if not need <= set(args) or set(args) - need - {"--run", "--at", "--documents"}:
       print(__doc__)
       return 2
-    print(issue(args["--recipient"], args["--purpose"], args["--issuer"], args["--based-on"], args.get("--run", ""), args.get("--at")))
+    docs = [d.strip() for d in args["--documents"].split(",")] if args.get("--documents") else None
+    print(issue(args["--recipient"], args["--purpose"], args["--issuer"], args["--based-on"], args.get("--run", ""),
+                args.get("--at"), documents=docs))
+    return 0
+  if argv == ["outdated"]:
+    sys.path.insert(0, str(CASE_DIR.parent / "07-supporting" / "ledger"))
+    import export_wp
+    import ledger
+    current, source = export_wp.versions_at("HEAD", ledger.load_ref("origin/ledger", export_wp.REPO))
+    rows = outdated(load(), current)
+    for cid, recipient, doc, was, now in rows:
+      print(f"{cid}\t{recipient}\t{doc}\theld {was}\tnow {now}")
+    print(f"{len(rows)} outdated document(s) in issued copies (versions from {source})")
     return 0
   print(__doc__)
   return 2

@@ -1,7 +1,13 @@
-# Export work products with their document control stamped from the change ledger (WP-P-04 §5, OI-7; DQ-441):
-# a document-control block on page 1, a running footer on every page and the revision history.
-# Run by hand: Actions -> wp-export -> Run workflow. The files are attached to the run as an artifact.
-# A controlled copy needs its entry in assurance/case-records/distribution.yaml first.
+# Export selected work products with their document control stamped from the change ledger (WP-P-04 §5, §6, §9.1;
+# OI-7; DQ-441): a document-control block on page 1, a running footer on every page and the revision history, plus a
+# change record since a given point and a manifest with the SHA-256 of every file.
+#
+# Run by hand: Actions -> wp-export -> Run workflow. Without a recipient the copy is uncontrolled. With a recipient
+# (only on liondriver-dev, by someone with write access) the run first appends the next CC-YYYY-NNN entry to
+# assurance/case-records/distribution.yaml, with the documents and their versions, and pushes it; then prints the
+# copy stamped with that number, hashes and attests it. No controlled copy is printed without its record, and none
+# holds a version the ledger has not recorded yet. The change record of a controlled copy starts, by default, at the
+# recipient's last copy.
 name: wp-export
 
 on:
@@ -15,29 +21,83 @@ on:
         type: choice
         options: [pdf, md, html]
         default: pdf
-      copy:
-        description: "Controlled copy ID (CC-YYYY-NNN), or empty for an uncontrolled copy"
+      recipient:
+        description: "Recipient for a controlled copy (name and organization; up to 80 characters). Empty: uncontrolled"
+        required: false
+        default: ""
+      purpose:
+        description: "Purpose of a controlled copy (e.g. G1 confirmation review; up to 80 characters)"
+        required: false
+        default: ""
+      since:
+        description: "Change record since: last-copy, CC-YYYY-NNN, YYYY-MM-DD or a commit or tag. Empty: last-copy for a controlled copy, none otherwise"
         required: false
         default: ""
 
 permissions:
   contents: read
 
+concurrency:
+  group: controlled-copy-numbers   # shared with safety-case-controlled-copy: one copy number at a time
+  cancel-in-progress: false
+
 env:
   PLAYWRIGHT_VERSION: 1.48.2
   MARKDOWN_VERSION: 3.7
+  OUT: export
 
 jobs:
   export:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
+    permissions:
+      contents: write        # push the distribution record of a controlled copy
+      id-token: write        # sign the build attestation (Sigstore, GitHub OIDC)
+      attestations: write
     steps:
       - uses: actions/checkout@v7
         with:
           submodules: false
           fetch-depth: 0       # the ledger branch and the history the versions are computed from
-          persist-credentials: false
       - run: python3 -m pip install --quiet "markdown==$MARKDOWN_VERSION"
+      - name: Check the inputs
+        env:
+          DOCS: ${{ inputs.documents }}
+          RECIPIENT: ${{ inputs.recipient }}
+          PURPOSE: ${{ inputs.purpose }}
+          SINCE: ${{ inputs.since }}
+        run: |
+          for d in $DOCS; do [[ "$d" =~ ^WP-[A-Z]{1,2}-[0-9]{2,3}[a-z]?$ ]] || { echo "not a work-product ID: $d"; exit 1; }; done
+          [[ -z "$SINCE" || "$SINCE" =~ ^(last-copy|CC-[0-9]{4}-[0-9]{3}|[0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9A-Za-z._/-]{1,80})$ ]] || { echo "since: not understood"; exit 1; }
+          if [ -n "$RECIPIENT" ]; then
+            [ -n "$PURPOSE" ] || { echo "a controlled copy needs a purpose"; exit 1; }
+            [ "$GITHUB_REF" = refs/heads/liondriver-dev ] || { echo "controlled copies are issued from liondriver-dev only"; exit 1; }
+          elif [ "$SINCE" = last-copy ]; then
+            echo "since last-copy needs a recipient"; exit 1
+          fi
+          python3 assurance/case-records/tools/distribution.py --check
+      - name: Record the controlled copy in the distribution record
+        id: record
+        if: inputs.recipient != ''
+        env:
+          DOCS: ${{ inputs.documents }}
+          RECIPIENT: ${{ inputs.recipient }}
+          PURPOSE: ${{ inputs.purpose }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          based_on=$(git rev-parse HEAD)
+          versions=$(python3 assurance/07-supporting/ledger/export_wp.py $DOCS --out "$OUT" --versions)
+          echo "versions: $versions"
+          if [[ "$versions" == *+* ]]; then echo "a document has changes the ledger has not recorded yet; rerun once the ledger job has run"; exit 1; fi
+          id=$(cd assurance/case-records/tools && python3 distribution.py issue --recipient "$RECIPIENT" --purpose "$PURPOSE" \
+            --issuer "$GITHUB_ACTOR" --based-on "$based_on" --run "$RUN_URL" --documents "$versions")
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+          echo "based_on=$based_on" >> "$GITHUB_OUTPUT"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assurance/case-records/distribution.yaml
+          git commit -m "Distribution record: controlled copy $id of $DOCS issued by @$GITHUB_ACTOR"
+          git push origin HEAD:liondriver-dev
       - name: Install Chromium for printing
         if: inputs.format == 'pdf'
         run: |
@@ -47,12 +107,28 @@ jobs:
         env:
           DOCS: ${{ inputs.documents }}
           FORMAT: ${{ inputs.format }}
-          COPY: ${{ inputs.copy }}
+          RECIPIENT: ${{ inputs.recipient }}
+          SINCE: ${{ inputs.since }}
+          COPY: ${{ steps.record.outputs.id }}
+          BASED_ON: ${{ steps.record.outputs.based_on }}
         run: |
-          for d in $DOCS; do [[ "$d" =~ ^WP-[A-Z]{1,2}-[0-9]{2,3}[a-z]?$ ]] || { echo "not a work-product ID: $d"; exit 1; }; done
-          [[ -z "$COPY" || "$COPY" =~ ^CC-[0-9]{4}-[0-9]{3}$ ]] || { echo "not a copy ID: $COPY"; exit 1; }
-          python3 assurance/07-supporting/ledger/export_wp.py $DOCS --format "$FORMAT" --out export ${COPY:+--copy "$COPY"}
+          args=()
+          if [ -n "$COPY" ]; then args+=(--copy "$COPY" --commit "$BASED_ON" --recipient "$RECIPIENT" --since "${SINCE:-last-copy}");
+          elif [ -n "$SINCE" ]; then args+=(--since "$SINCE"); fi
+          python3 assurance/07-supporting/ledger/export_wp.py $DOCS --format "$FORMAT" --out "$OUT" "${args[@]}"
+          cd "$OUT" && sha256sum *.${FORMAT} manifest.json > SHA256SUMS && cat SHA256SUMS
+      - name: Attest the build
+        if: inputs.recipient != ''
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            ${{ env.OUT }}/*.${{ inputs.format }}
+            ${{ env.OUT }}/manifest.json
       - uses: actions/upload-artifact@v7
         with:
-          name: work-products
-          path: export/*.${{ inputs.format }}
+          name: ${{ steps.record.outputs.id || 'work-products' }}
+          path: |
+            ${{ env.OUT }}/*.${{ inputs.format }}
+            ${{ env.OUT }}/manifest.json
+            ${{ env.OUT }}/SHA256SUMS
+          retention-days: 90

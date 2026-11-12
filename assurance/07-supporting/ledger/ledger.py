@@ -41,6 +41,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 APPROVALS = "assurance/07-supporting/ledger/gate-approvals.yaml"
+DISTRIBUTION = "assurance/case-records/distribution.yaml"
 GENESIS = "0" * 64
 WP_FILE = re.compile(r"(?:^|/)(WP-[A-Z]{1,2}-\d{2,3}[a-z]?)-[^/]*\.md$")
 HEADER_VERSION = re.compile(r"^\|\s*Version\s*\|\s*v?(\d+)\.(\d+)(?:\.(\d+))?", re.M)
@@ -261,6 +262,8 @@ def change_row(sha: str, versions: dict[str, str] | None, repo: str | None, toke
     m2 = re.search(r"\(#(\d+)\)\s*$", info["subject"])  # a squash merge names its PR at the end
     pr = int(m2.group(1)) if m2 else None
   kind = "change" if (len(info["parents"]) > 1 or pr) else "direct"
+  if kind == "direct" and files == [DISTRIBUTION]:
+    kind = "distribution"  # a controlled-copy workflow recording a copy it is about to print (WP-P-04 §9.1)
   row = {"kind": kind, "commit": info["commit"], "parent": parent, "date": info["date"], "pr": pr,
          "title": title_of(info), "files": len(files),
          "decisions": sorted(set(DECISION.findall(info["subject"] + "\n" + info["body"])))}

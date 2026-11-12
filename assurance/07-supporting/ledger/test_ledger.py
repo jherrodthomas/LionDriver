@@ -122,6 +122,14 @@ class LedgerTest(unittest.TestCase):
     self.assertEqual(row["kind"], "direct")
     self.assertIn("pushed without a pull request", row["exceptions"])
 
+  def test_distribution_record_push_is_not_an_exception(self):
+    self.update()
+    self.repo.write(ledger.DISTRIBUTION, "- id: CC-2026-001\n")
+    self.repo.commit("Distribution record: controlled copy CC-2026-001")
+    self.update()
+    row = ledger.load(self.path)[-1]
+    self.assertEqual((row["kind"], row["exceptions"]), ("distribution", []))
+
   def test_edited_row_breaks_the_chain(self):
     self.update()
     lines = self.path.read_text().splitlines()

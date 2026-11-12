@@ -26,7 +26,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: safety-case-controlled-copy   # one copy number at a time
+  group: controlled-copy-numbers   # shared with wp-export: one copy number at a time
   cancel-in-progress: false
 
 env:

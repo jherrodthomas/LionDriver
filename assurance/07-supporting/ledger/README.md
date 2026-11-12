@@ -66,7 +66,20 @@ python3 assurance/07-supporting/ledger/export_wp.py WP-S-02 WP-W-02 --format pdf
 ```
 
 Or by hand in GitHub: Actions, **wp-export**, Run workflow. A copy is uncontrolled unless `--copy CC-YYYY-NNN` names
-an issued entry of [`distribution.yaml`](../../case-records/distribution.yaml).
+an issued entry of [`distribution.yaml`](../../case-records/distribution.yaml). In the workflow, giving a recipient and
+a purpose issues a controlled copy: the entry is recorded and pushed first, with every document and its version,
+then the copy is printed, hashed and attested (WP-P-04 §9.2).
+
+**Change record.** With `--since` the export adds `change-record.<format>`: for each selected document the version
+then and now, and every recorded change in between with its PR, change class and approver. `--since` takes
+`last-copy` (with `--recipient`: the latest issued copy to that recipient; the default for a controlled copy), a
+copy ID, a date or a commit or tag. Every export writes `manifest.json` with the commit, copy, versions and the
+SHA-256 of each file.
+
+```sh
+python3 assurance/07-supporting/ledger/export_wp.py WP-S-02 WP-W-02 --format pdf --out build/export --since 2026-11-01
+python3 assurance/case-records/tools/distribution.py outdated   # who holds a version that has since changed
+```
 
 - A commit with changes the ledger has not recorded yet (a branch, or a merge whose ledger run is pending) is stamped
   `0.68.0+1` and cannot be issued as a controlled copy.
@@ -82,5 +95,4 @@ an issued entry of [`distribution.yaml`](../../case-records/distribution.yaml).
 | Protect the `ledger` branch against force-push and deletion | Repository setting, for the lead |
 | Version on the wiki pages | Next step (WP-P-04 OI-7) |
 | Remove the hand-typed `Version` from work-product headers, keeping their text as revision history | Next step (WP-P-04 OI-7) |
-| Change record for selected documents in the export | Next step (WP-P-04 OI-3) |
 | Ledger tabs in the workbook viewer page | Next step |

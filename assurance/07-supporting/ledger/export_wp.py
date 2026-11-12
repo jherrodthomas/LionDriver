@@ -15,9 +15,15 @@ A rendering error must not drop content from a controlled copy, so every export 
 source body has to appear in the rendered text as often as in the source (check_complete). A failed check writes
 nothing.
 
+With --since, the export also writes a change record (change-record.<format>): for each selected document the
+version then and now, and every recorded change in between with its PR, class and approver. --since takes
+`last-copy` (the latest issued copy to --recipient in distribution.yaml), a copy ID, a date or a commit or tag.
+Every export writes manifest.json: the commit, copy, versions and the SHA-256 of every file.
+
 Usage:
   export_wp.py WP-S-02 [WP-W-02 ...] --format md|html|pdf --out DIR [--copy CC-YYYY-NNN] [--ledger FILE]
-            [--commit REF]
+            [--commit REF] [--since SPEC [--recipient TEXT]]
+  export_wp.py WP-S-02 [...] --versions     prints "WP-S-02 0.68.0,..." for the distribution record
 Without --ledger the ledger is read from the `ledger` branch (origin/ledger). Before its first run there is none:
 the version is then the one in the header, and the copy says so.
 """
@@ -25,7 +31,9 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import html as htmllib
+import json
 import re
 import subprocess
 import sys
@@ -248,7 +256,7 @@ table{border-collapse:collapse;width:100%;margin:8px 0;font-size:9pt}th,td{borde
 text-align:left;vertical-align:top}th{background:#F8FAFC}img{max-width:100%}code{font-size:9pt;background:#F1F5F9;
 padding:0 3px;border-radius:3px}a{color:#1D4ED8;text-decoration:none}
 table.dc td:first-child{background:#F8FAFC;color:#475569;width:150px;font-weight:600}
-.note{color:#475569;font-size:9pt}.foot{border-top:1px solid #CBD5E1;margin-top:24px;padding-top:6px;color:#475569;
+.note{color:#475569;font-size:9pt}table.cr td:nth-child(2){white-space:nowrap}.foot{border-top:1px solid #CBD5E1;margin-top:24px;padding-top:6px;color:#475569;
 font-size:8.5pt}@media print{.foot{display:none}}
 """
 
@@ -305,30 +313,155 @@ def versions_at(commit: str, rows: list[dict] | None) -> tuple[dict[str, str], s
   return out, "the change ledger; +N counts changes it has not recorded yet"
 
 
+def distribution_module():
+  sys.path.insert(0, str(HERE.parents[1] / "case-records" / "tools"))
+  import distribution
+  return distribution
+
+
+# ---------------------------------------------------------------------------------------------------- change record
+
+def resolve_since(spec: str | None, recipient: str | None, copy: str | None, commit: str) -> dict | None:
+  """Where the change record starts: the recipient's last copy, a copy ID, a date, or a commit or tag."""
+  if not spec:
+    return None
+  if spec == "last-copy":
+    if not recipient:
+      raise SystemExit("--since last-copy needs --recipient")
+    prev = distribution_module().last_copy_to(recipient, exclude=copy)
+    if prev is None:
+      return {"spec": spec, "commit": None, "label": f"first copy to {recipient}: every recorded change is listed"}
+    return {"spec": spec, "commit": prev["based_on"], "copy": prev["id"],
+            "label": f"since copy {prev['id']} to {prev['recipient']} ({prev['issued_at'][:10]}, commit {prev['based_on'][:8]})"}
+  if re.fullmatch(r"CC-\d{4}-\d{3}", spec):
+    prev = next((c for c in distribution_module().load() if c.get("id") == spec), None)
+    if prev is None:
+      raise SystemExit(f"{spec} is not in the distribution record")
+    return {"spec": spec, "commit": prev["based_on"], "copy": spec,
+            "label": f"since copy {spec} ({prev['issued_at'][:10]}, commit {prev['based_on'][:8]})"}
+  if re.fullmatch(r"\d{4}-\d{2}-\d{2}", spec):
+    sha = git("rev-list", "-1", "--first-parent", f"--before={spec}T23:59:59Z", commit).strip()
+    if not sha:
+      return {"spec": spec, "commit": None, "label": f"since {spec}: no commit before that date, every recorded change is listed"}
+    return {"spec": spec, "commit": sha, "label": f"since {spec} (commit {sha[:8]})"}
+  sha = git("rev-parse", f"{spec}^{{commit}}").strip()
+  return {"spec": spec, "commit": sha, "label": f"since {spec} (commit {sha[:8]})"}
+
+
+def change_record(controls: list[dict], rows: list[dict] | None, since: dict, commit: str) -> dict:
+  """Per document: version then and now, and every ledger row in between that touched it."""
+  base = set(ledger.first_parent_commits(since["commit"], REPO)) if since["commit"] else set()
+  history = set(ledger.first_parent_commits(commit, REPO))
+  was = versions_at(since["commit"], rows)[0] if since["commit"] else {}
+  docs = []
+  for c in controls:
+    changes = []
+    for r in rows or []:
+      if r["commit"] in history and r["commit"] not in base and c["doc"] in (r.get("documents") or {}) \
+         and r["kind"] != "seed":
+        gh = r.get("github")
+        changes.append({"version": r["documents"][c["doc"]] or "before the ledger", "date": r["date"][:10],
+                        "pr": r.get("pr"), "title": r["title"],
+                        "class": ", ".join(l for l in gh["labels"] if l in ledger.CLASSES) if gh else "not recorded",
+                        "approved_by": ", ".join(gh["approved_by"]) if gh and gh["approved_by"] else
+                                       ("—" if gh else "not recorded")})
+    safety = sum(1 for ch in changes if any(k in ch["class"] for k in ledger.SAFETY_CLASSES))
+    unknown = sum(1 for ch in changes if ch["class"] == "not recorded")
+    docs.append({"doc": c["doc"], "title": c["title"], "was": was.get(c["doc"], "—" if since["commit"] else "—"),
+                 "now": c["version"], "changes": changes, "safety": safety, "unknown_class": unknown})
+  return {"since": since, "commit": commit, "documents": docs}
+
+
+def change_record_rows(cr: dict) -> tuple[list[list[str]], list[tuple[str, list[list[str]]]]]:
+  def safety(d):
+    if d["changes"] and d["unknown_class"] == len(d["changes"]):
+      return "not recorded"
+    return str(d["safety"]) + (f" (+{d['unknown_class']} not recorded)" if d["unknown_class"] else "")
+  summary = [[d["doc"] + " " + d["title"], d["was"], d["now"], str(len(d["changes"])), safety(d)]
+             for d in cr["documents"]]
+  details = [(d["doc"], [[ch["version"], ch["date"], f"#{ch['pr']}" if ch["pr"] else "—", ch["title"], ch["class"],
+                          ch["approved_by"]] for ch in d["changes"]]) for d in cr["documents"]]
+  return summary, details
+
+
+def change_record_md(cr: dict, copy: str | None) -> str:
+  summary, details = change_record_rows(cr)
+  out = ["# Change record", "", f"{len(summary)} work product(s), {cr['since']['label']}, up to commit {cr['commit'][:12]}. "
+         f"{'Controlled copy ' + copy if copy else UNCONTROLLED}.", "",
+         "| Work product | Was | Now | Changes | Safety-class changes |", "|---|---|---|---|---|"]
+  out += ["| " + " | ".join(esc_cell(x) for x in r) + " |" for r in summary]
+  for doc, rows in details:
+    out += ["", f"## {doc}", ""]
+    if rows:
+      out += ["| Version | Date | PR | Change | Class | Approved by |", "|---|---|---|---|---|---|"]
+      out += ["| " + " | ".join(esc_cell(x) for x in r) + " |" for r in rows]
+    else:
+      out += ["No change recorded in this period."]
+  out += ["", "*Generated from the change ledger at export (WP-P-04 §6). \"Not recorded\": the change predates the "
+          "ledger's GitHub data.*", "", "---", "", f"Change record · {cr['commit'][:8]} | "
+          + (f"Controlled copy {copy}" if copy else UNCONTROLLED), ""]
+  return "\n".join(out)
+
+
+def change_record_html(cr: dict, copy: str | None) -> str:
+  summary, details = change_record_rows(cr)
+  e = htmllib.escape
+  def tbl(head, rows):
+    return ("<table class='cr'><tr>" + "".join(f"<th>{e(h)}</th>" for h in head) + "</tr>"
+            + "".join("<tr>" + "".join(f"<td>{e(x)}</td>" for x in r) + "</tr>" for r in rows) + "</table>")
+  parts = [f"<h1>Change record</h1><p class='note'>{len(summary)} work product(s), {e(cr['since']['label'])}, up to "
+           f"commit {e(cr['commit'][:12])}. {e('Controlled copy ' + copy if copy else UNCONTROLLED)}.</p>",
+           tbl(["Work product", "Was", "Now", "Changes", "Safety-class changes"], summary)]
+  for doc, rows in details:
+    parts.append(f"<h2>{e(doc)}</h2>" + (tbl(["Version", "Date", "PR", "Change", "Class", "Approved by"], rows)
+                                          if rows else "<p class='note'>No change recorded in this period.</p>"))
+  parts.append("<p class='note'>Generated from the change ledger at export (WP-P-04 §6). \u201cNot recorded\u201d: "
+               "the change predates the ledger's GitHub data.</p>")
+  return (f"<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,"
+          f"initial-scale=1'><title>Change record</title><style>{CSS}</style></head><body>{''.join(parts)}"
+          f"<div class='foot'>{e('Change record · ' + cr['commit'][:8])}</div></body></html>\n")
+
+
+# ---------------------------------------------------------------------------------------------------- export
+
 def export(docs: list[str], fmt: str, out_dir: Path, copy: str | None = None, rows: list[dict] | None = None,
-           commit: str = "HEAD") -> list[Path]:
+           commit: str = "HEAD", since: str | None = None, recipient: str | None = None) -> list[Path]:
   commit = git("rev-parse", commit).strip()
   if copy:  # no controlled copy without its distribution record (WP-P-04 §9.1)
-    sys.path.insert(0, str(REPO / "assurance" / "case-records" / "tools"))
-    import distribution
-    distribution.find(copy)
+    distribution_module().find(copy)
+  since_info = resolve_since(since, recipient, copy, commit)
   out_dir.mkdir(parents=True, exist_ok=True)
-  written = []
+  written, controls, footers = [], [], {}
   for doc in docs:
     c = control(doc, commit, rows, copy)
     text = to_markdown(c) if fmt == "md" else to_html(c)
     missing = check_complete(c["body"], rendered_text(fmt, text))
     if missing:
       raise SystemExit(f"{doc}: the rendered copy lost text, nothing written: {', '.join(missing[:12])}")
-    ext = "md" if fmt == "md" else "html"
-    path = out_dir / f"{doc}-v{c['version']}.{ext}"
+    path = out_dir / f"{doc}-v{c['version']}.{'md' if fmt == 'md' else 'html'}"
     path.write_text(text, encoding="utf-8")
-    if fmt == "pdf":
-      (out_dir / f"{doc}-v{c['version']}.footer.txt").write_text(footer_line(c), encoding="utf-8")
+    footers[path] = footer_line(c)
     written.append(path)
+    controls.append(c)
+  if since_info is not None:
+    cr = change_record(controls, rows, since_info, commit)
+    path = out_dir / f"change-record.{'md' if fmt == 'md' else 'html'}"
+    path.write_text(change_record_md(cr, copy) if fmt == "md" else change_record_html(cr, copy), encoding="utf-8")
+    footers[path] = f"Change record · {commit[:8]} | " + (f"Controlled copy {copy}" if copy else UNCONTROLLED)
+    written.insert(0, path)
   if fmt == "pdf":
+    for path in written:
+      path.with_suffix(".footer.txt").write_text(footers[path], encoding="utf-8")
     subprocess.run(["node", str(HERE / "render_export.cjs"), *map(str, written)], check=True)
     written = [p.with_suffix(".pdf") for p in written]
+  manifest = {"commit": commit, "copy": copy, "format": fmt,
+              "since": since_info and {k: since_info.get(k) for k in ("spec", "commit", "copy", "label")},
+              "documents": {c["doc"]: {"version": c["version"], "file": p.name,
+                                       "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
+                            for c, p in zip(controls, written[-len(controls):])}}
+  if since_info is not None:
+    manifest["change_record"] = {"file": written[0].name, "sha256": hashlib.sha256(written[0].read_bytes()).hexdigest()}
+  (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
   return written
 
 
@@ -340,9 +473,15 @@ def main(argv: list[str]) -> int:
   ap.add_argument("--copy")
   ap.add_argument("--ledger", type=Path)
   ap.add_argument("--commit", default="HEAD")
+  ap.add_argument("--since", help="last-copy (with --recipient), CC-YYYY-NNN, YYYY-MM-DD, or a commit or tag")
+  ap.add_argument("--recipient")
+  ap.add_argument("--versions", action="store_true", help="print 'WP-x-nn X.Y.Z' for the documents and exit")
   a = ap.parse_args(argv)
   rows = ledger.load(a.ledger) if a.ledger else ledger.load_ref("origin/ledger", REPO)
-  for p in export(a.docs, a.format, a.out, a.copy, rows, a.commit):
+  if a.versions:
+    print(",".join(f"{d} {control(d, git('rev-parse', a.commit).strip(), rows, None)['version']}" for d in a.docs))
+    return 0
+  for p in export(a.docs, a.format, a.out, a.copy, rows, a.commit, a.since, a.recipient):
     print(f"wrote {p}")
   return 0
 
