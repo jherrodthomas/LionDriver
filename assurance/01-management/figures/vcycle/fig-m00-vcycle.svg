@@ -1,0 +1,278 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1370" viewBox="0 0 1400 1370" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle</title>
+<desc>Time axis: Governance phase, G0 Mar 2027–May 2027; Concept phase, G1 Nov 2027–May 2028; System design phase, G2 Jul 2028–May 2029; HW/SW development phase, G3 Nov 2029–May 2031; Integration and verification phase, G4 Sep 2030–Sep 2032; Validation and release phase, G5 Jul 2031–Mar 2034; Operation phase, G6 continuous. Now in the Governance phase. Concept and hazards (G1): WP-C-01…12; 12 draft. Opens its exploded view. Vehicle validation (G1–G5): WP-V-01…07; 7 draft. Opens its exploded view. System requirements (G2): WP-S-01, -02, -06, -07; 4 draft. Opens its exploded view. System verification (G4): WP-S-09; 1 draft. Opens its exploded view. System architecture (G2): WP-S-03…05, WP-A-01…05; 8 draft. Opens its exploded view. System integration (G4): WP-S-08; 1 draft. Opens its exploded view. Hardware and software requirements (G3): WP-H-01, WP-W-02; 2 draft. Opens its exploded view. Hardware and software integration (G3–G4): WP-W-07, -08, WP-H-06, -07; 4 draft. Opens its exploded view. Detailed design (G3): WP-W-03, -04, WP-H-02…05; 6 draft. Opens its exploded view. Unit verification (G3): WP-W-06; 1 draft. Opens its exploded view. Implementation (G3): WP-W-01, -05, -09, -10, -11; 5 draft. Opens its exploded view. Management plans (G0–G4): WP-M-00…14; 15 draft. Opens its exploded view. Supporting processes (G0–G5): WP-P-01…11; 11 draft. Opens its exploded view. Traceability (G1–G5): WP-T-01; 1 draft. Opens its exploded view. Safety case (G1–G5): WP-K-01…06; 4 skeleton · 2 draft. Opens its exploded view. Operation and field (G1–G6): WP-O-01…05; 5 draft. Opens its exploded view. Legend: status colours, the next-gate outline and the verifies line.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1400" height="1370" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<g transform="translate(0,0)"><text x="40" y="44" font-size="28" fill="#0F172A" font-weight="700">LionDriver V-cycle</text>
+<text x="40" y="70" font-size="13.5" fill="#475569">Where each work product sits on the V, which gate needs it, and how far it has matured. Generated from the work-product register (WP-M-00) and the schedule (WP-M-03).</text>
+<rect x="60" y="92" width="1280" height="84" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="62" y="94" width="178.9" height="80" rx="6" fill="#FFF7ED" stroke="none" stroke-width="0"/>
+<text x="151.4" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Governance</text>
+<line x1="242.9" y1="96" x2="242.9" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="334.3" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Concept</text>
+<line x1="425.7" y1="96" x2="425.7" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="517.1" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">System design</text>
+<line x1="608.6" y1="96" x2="608.6" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="700" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">HW/SW development</text>
+<line x1="791.4" y1="96" x2="791.4" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="882.9" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Integration and verification</text>
+<line x1="974.3" y1="96" x2="974.3" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1065.7" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Validation and release</text>
+<line x1="1157.1" y1="96" x2="1157.1" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1248.6" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Operation</text>
+<line x1="68" y1="150" x2="1332" y2="150" stroke="#CBD5E1" stroke-width="2"/>
+<path d="M232.9 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="242.9" y="172" font-size="11" fill="#475569" text-anchor="end">G0 · Mar 2027–May 2027</text>
+<path d="M415.7 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="425.7" y="172" font-size="11" fill="#475569" text-anchor="end">G1 · Nov 2027–May 2028</text>
+<path d="M598.6 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="608.6" y="172" font-size="11" fill="#475569" text-anchor="end">G2 · Jul 2028–May 2029</text>
+<path d="M781.4 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="791.4" y="172" font-size="11" fill="#475569" text-anchor="end">G3 · Nov 2029–May 2031</text>
+<path d="M964.3 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="974.3" y="172" font-size="11" fill="#475569" text-anchor="end">G4 · Sep 2030–Sep 2032</text>
+<path d="M1147.1 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="1157.1" y="172" font-size="11" fill="#475569" text-anchor="end">G5 · Jul 2031–Mar 2034</text>
+<path d="M1248.6 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="1248.6" y="172" font-size="11" fill="#475569" text-anchor="middle">G6 · continuous</text>
+<circle class="pulse" cx="151.4" cy="150" r="7" fill="#C2410C"/>
+<line x1="151.4" y1="178" x2="151.4" y2="192" stroke="#C2410C" stroke-width="2"/>
+<rect x="68.5" y="192" width="166" height="24" rx="12" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="151.4" y="208" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">Now: Governance phase</text>
+<text x="1340" y="208" font-size="11" fill="#94A3B8" text-anchor="end" font-style="italic">Filled diamond = gate passed in a recorded review · no gate passed yet</text></g>
+<g transform="translate(0,236)"><path d="M74 12 h400 l-28 96 h-400 z" stroke="#1D4ED8" stroke-width="1.6" fill="#EFF6FF" stroke-linejoin="round"/>
+<text x="88" y="37" font-size="15" fill="#1D4ED8" font-weight="700">Concept and hazards</text>
+<g transform="translate(403.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#1D4ED8" font-weight="700" text-anchor="middle">G1</text></g>
+<text x="88" y="57" font-size="12.5" fill="#0F172A">Item definition, HARA, FSC, SOTIF, TARA, AI safety</text>
+<text x="88" y="75" font-size="11.5" fill="#475569">WP-C-01…12 · 02-concept/</text>
+<rect x="89" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="104" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="119" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="134" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="149" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="164" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="179" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="194" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="209" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="224" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="239" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="254" y="85" width="13" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="278" y="94" font-size="11" fill="#475569">12 draft</text>
+<line x1="464" y1="60" x2="700" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M260 112 L296 150" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M296 150 L285.9 145.6 L292.1 139.7 z" fill="#1D4ED8"/></g>
+<g transform="translate(700,236)"><path d="M226 12 h400 l28 96 h-400 z" stroke="#15803D" stroke-width="1.6" fill="#F0FDF4" stroke-linejoin="round"/>
+<text x="268" y="37" font-size="15" fill="#15803D" font-weight="700">Vehicle validation</text>
+<g transform="translate(560.5,22)"><rect x="0" y="0" width="49.5" height="20" rx="10.0" fill="#FFFFFF" stroke="#15803D" stroke-width="1"/><text x="24.8" y="14" font-size="11" fill="#15803D" font-weight="700" text-anchor="middle">G1–G5</text></g>
+<text x="268" y="57" font-size="12.5" fill="#0F172A">Safety, SOTIF and cyber validation, fault injection</text>
+<text x="268" y="75" font-size="11.5" fill="#475569">WP-V-01…07 · 06-validation/</text>
+<rect x="269" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="294.7" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="320.4" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="346.1" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="371.9" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="397.6" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="423.3" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="458" y="94" font-size="11" fill="#475569">7 draft</text>
+<line x1="0" y1="60" x2="236" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M404 150 L440 112" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M440 112 L436.1 122.3 L429.9 116.4 z" fill="#15803D"/></g>
+<g transform="translate(0,386)"><path d="M110 12 h400 l-28 96 h-400 z" stroke="#1D4ED8" stroke-width="1.6" fill="#EFF6FF" stroke-linejoin="round"/>
+<text x="124" y="37" font-size="15" fill="#1D4ED8" font-weight="700">System requirements</text>
+<g transform="translate(439.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#1D4ED8" font-weight="700" text-anchor="middle">G2</text></g>
+<text x="124" y="57" font-size="12.5" fill="#0F172A">Functional, safety, cyber and production requirements</text>
+<text x="124" y="75" font-size="11.5" fill="#475569">WP-S-01, -02, -06, -07 · 03-system/</text>
+<rect x="125" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="170" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="215" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="260" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="314" y="94" font-size="11" fill="#475569">4 draft</text>
+<line x1="500" y1="60" x2="700" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M296 112 L332 150" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M332 150 L321.9 145.6 L328.1 139.7 z" fill="#1D4ED8"/></g>
+<g transform="translate(700,386)"><path d="M190 12 h400 l28 96 h-400 z" stroke="#15803D" stroke-width="1.6" fill="#F0FDF4" stroke-linejoin="round"/>
+<text x="232" y="37" font-size="15" fill="#15803D" font-weight="700">System verification</text>
+<g transform="translate(547.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#15803D" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#15803D" font-weight="700" text-anchor="middle">G4</text></g>
+<text x="232" y="57" font-size="12.5" fill="#0F172A">System qualification against its requirements</text>
+<text x="232" y="75" font-size="11.5" fill="#475569">WP-S-09 · 03-system/</text>
+<rect x="233" y="85" width="178" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="422" y="94" font-size="11" fill="#475569">1 draft</text>
+<line x1="0" y1="60" x2="200" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M368 150 L404 112" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M404 112 L400.1 122.3 L393.9 116.4 z" fill="#15803D"/></g>
+<g transform="translate(0,536)"><path d="M146 12 h400 l-28 96 h-400 z" stroke="#1D4ED8" stroke-width="1.6" fill="#EFF6FF" stroke-linejoin="round"/>
+<text x="160" y="37" font-size="15" fill="#1D4ED8" font-weight="700">System architecture</text>
+<g transform="translate(475.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#1D4ED8" font-weight="700" text-anchor="middle">G2</text></g>
+<text x="160" y="57" font-size="12.5" fill="#0F172A">TSC, timing, HSI and the system safety analyses</text>
+<text x="160" y="75" font-size="11.5" fill="#475569">WP-S-03…05, WP-A-01…05 · 08-analyses/</text>
+<rect x="161" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="183.5" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="206" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="228.5" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="251" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="273.5" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="296" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="318.5" y="85" width="20.5" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="350" y="94" font-size="11" fill="#475569">8 draft</text>
+<line x1="536" y1="60" x2="700" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M332 112 L368 150" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M368 150 L357.9 145.6 L364.1 139.7 z" fill="#1D4ED8"/></g>
+<g transform="translate(700,536)"><path d="M154 12 h400 l28 96 h-400 z" stroke="#15803D" stroke-width="1.6" fill="#F0FDF4" stroke-linejoin="round"/>
+<text x="196" y="37" font-size="15" fill="#15803D" font-weight="700">System integration</text>
+<g transform="translate(511.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#15803D" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#15803D" font-weight="700" text-anchor="middle">G4</text></g>
+<text x="196" y="57" font-size="12.5" fill="#0F172A">Integration and test of the item</text>
+<text x="196" y="75" font-size="11.5" fill="#475569">WP-S-08 · 03-system/</text>
+<rect x="197" y="85" width="178" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="386" y="94" font-size="11" fill="#475569">1 draft</text>
+<line x1="0" y1="60" x2="164" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M332 150 L368 112" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M368 112 L364.1 122.3 L357.9 116.4 z" fill="#15803D"/></g>
+<g transform="translate(0,686)"><path d="M182 12 h400 l-28 96 h-400 z" stroke="#1D4ED8" stroke-width="1.6" fill="#EFF6FF" stroke-linejoin="round"/>
+<text x="196" y="37" font-size="15" fill="#1D4ED8" font-weight="700">Hardware and software requirements</text>
+<g transform="translate(511.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#1D4ED8" font-weight="700" text-anchor="middle">G3</text></g>
+<text x="196" y="57" font-size="12.5" fill="#0F172A">Hardware and software safety requirements</text>
+<text x="196" y="75" font-size="11.5" fill="#475569">WP-H-01, WP-W-02 · 04-hardware/</text>
+<rect x="197" y="85" width="88" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="287" y="85" width="88" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="386" y="94" font-size="11" fill="#475569">2 draft</text>
+<line x1="572" y1="60" x2="700" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M368 112 L404 150" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M404 150 L393.9 145.6 L400.1 139.7 z" fill="#1D4ED8"/></g>
+<g transform="translate(700,686)"><path d="M118 12 h400 l28 96 h-400 z" stroke="#15803D" stroke-width="1.6" fill="#F0FDF4" stroke-linejoin="round"/>
+<text x="160" y="37" font-size="15" fill="#15803D" font-weight="700">Hardware and software integration</text>
+<g transform="translate(452.5,22)"><rect x="0" y="0" width="49.5" height="20" rx="10.0" fill="#FFFFFF" stroke="#15803D" stroke-width="1"/><text x="24.8" y="14" font-size="11" fill="#15803D" font-weight="700" text-anchor="middle">G3–G4</text></g>
+<text x="160" y="57" font-size="12.5" fill="#0F172A">SW integration, embedded SW on HIL, HW verification</text>
+<text x="160" y="75" font-size="11.5" fill="#475569">WP-W-07, -08, WP-H-06, -07 · 05-software/</text>
+<rect x="161" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="206" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="251" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="296" y="85" width="43" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="350" y="94" font-size="11" fill="#475569">4 draft</text>
+<line x1="0" y1="60" x2="128" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M296 150 L332 112" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M332 112 L328.1 122.3 L321.9 116.4 z" fill="#15803D"/></g>
+<g transform="translate(0,836)"><path d="M218 12 h400 l-28 96 h-400 z" stroke="#1D4ED8" stroke-width="1.6" fill="#EFF6FF" stroke-linejoin="round"/>
+<text x="232" y="37" font-size="15" fill="#1D4ED8" font-weight="700">Detailed design</text>
+<g transform="translate(547.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#1D4ED8" font-weight="700" text-anchor="middle">G3</text></g>
+<text x="232" y="57" font-size="12.5" fill="#0F172A">SW architecture, HW design and their safety analyses</text>
+<text x="232" y="75" font-size="11.5" fill="#475569">WP-W-03, -04, WP-H-02…05 · 05-software/</text>
+<rect x="233" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="263" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="293" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="323" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="353" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="383" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="422" y="94" font-size="11" fill="#475569">6 draft</text>
+<line x1="608" y1="60" x2="700" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M404 112 L440 150" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/></g>
+<g transform="translate(700,836)"><path d="M82 12 h400 l28 96 h-400 z" stroke="#15803D" stroke-width="1.6" fill="#F0FDF4" stroke-linejoin="round"/>
+<text x="124" y="37" font-size="15" fill="#15803D" font-weight="700">Unit verification</text>
+<g transform="translate(439.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#15803D" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#15803D" font-weight="700" text-anchor="middle">G3</text></g>
+<text x="124" y="57" font-size="12.5" fill="#0F172A">Static analysis, unit tests, MISRA, coverage</text>
+<text x="124" y="75" font-size="11.5" fill="#475569">WP-W-06 · 05-software/</text>
+<rect x="125" y="85" width="178" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="314" y="94" font-size="11" fill="#475569">1 draft</text>
+<line x1="0" y1="60" x2="92" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M260 150 L296 112" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M296 112 L292.1 122.3 L285.9 116.4 z" fill="#15803D"/></g>
+<g transform="translate(0,986)"><rect x="380" y="6" width="640" height="100" rx="10" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.6"/>
+<text x="700" y="32" font-size="15" fill="#0F172A" font-weight="700" text-anchor="middle">Implementation</text>
+<g transform="translate(973.3,16)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#0F172A" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">G3</text></g>
+<text x="700" y="52" font-size="12.5" fill="#0F172A" text-anchor="middle">panda safety firmware, openpilot and opendbc code, calibration data, ML model</text>
+<text x="700" y="70" font-size="11.5" fill="#475569" text-anchor="middle">WP-W-01, -05, -09, -10, -11 · 05-software/</text>
+<rect x="551" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="583" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="615" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="647" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="679" y="80" width="30" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="720" y="89" font-size="11" fill="#475569">5 draft</text>
+<path d="M440 0 L445.7 6" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M445.7 6 L435.6 1.6 L441.8 -4.3 z" fill="#1D4ED8"/>
+<path d="M954.3 6 L960 0" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<text x="60" y="138" font-size="12" fill="#475569" font-weight="700">Runs across every phase</text>
+<line x1="250" y1="134" x2="1340" y2="134" stroke="#E2E8F0" stroke-width="1"/></g>
+<g transform="translate(0,1136)"><rect class="pulse" x="7" y="3" width="266" height="68" rx="14" fill="none" stroke="#C2410C" stroke-width="3"/>
+<rect x="10" y="6" width="260" height="62" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="26" y="28" font-size="13" fill="#0F172A" font-weight="700">Management plans</text>
+<text x="256" y="28" font-size="11" fill="#475569" font-weight="700" text-anchor="end">G0–G4</text>
+<text x="26" y="45" font-size="11" fill="#475569">WP-M-00…14 · 15 work products</text>
+<rect x="27" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="42.2" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="57.4" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="72.6" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="87.8" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="103" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="118.2" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="133.4" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="148.6" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="163.8" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="179" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="194.2" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="209.4" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="224.6" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="239.8" y="53" width="13.2" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/></g>
+<g transform="translate(280,1136)"><rect class="pulse" x="7" y="3" width="266" height="68" rx="14" fill="none" stroke="#C2410C" stroke-width="3"/>
+<rect x="10" y="6" width="260" height="62" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="26" y="28" font-size="13" fill="#0F172A" font-weight="700">Supporting processes</text>
+<text x="256" y="28" font-size="11" fill="#475569" font-weight="700" text-anchor="end">G0–G5</text>
+<text x="26" y="45" font-size="11" fill="#475569">WP-P-01…11 · 11 work products</text>
+<rect x="27" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="47.7" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="68.5" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="89.2" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="109.9" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="130.6" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="151.4" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="172.1" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="192.8" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="213.5" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="234.3" y="53" width="18.7" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/></g>
+<g transform="translate(560,1136)"><rect x="10" y="6" width="260" height="62" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="26" y="28" font-size="13" fill="#0F172A" font-weight="700">Traceability</text>
+<text x="256" y="28" font-size="11" fill="#475569" font-weight="700" text-anchor="end">G1–G5</text>
+<text x="26" y="45" font-size="11" fill="#475569">WP-T-01 · 1 work products</text>
+<rect x="27" y="53" width="226" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/></g>
+<g transform="translate(840,1136)"><rect x="10" y="6" width="260" height="62" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="26" y="28" font-size="13" fill="#0F172A" font-weight="700">Safety case</text>
+<text x="256" y="28" font-size="11" fill="#475569" font-weight="700" text-anchor="end">G1–G5</text>
+<text x="26" y="45" font-size="11" fill="#475569">WP-K-01…06 · 6 work products</text>
+<rect x="27" y="53" width="36" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="65" y="53" width="36" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="103" y="53" width="36" height="7" rx="2" fill="#CBD5E1" stroke="none" stroke-width="0"/>
+<rect x="141" y="53" width="36" height="7" rx="2" fill="#CBD5E1" stroke="none" stroke-width="0"/>
+<rect x="179" y="53" width="36" height="7" rx="2" fill="#CBD5E1" stroke="none" stroke-width="0"/>
+<rect x="217" y="53" width="36" height="7" rx="2" fill="#CBD5E1" stroke="none" stroke-width="0"/></g>
+<g transform="translate(1120,1136)"><rect x="10" y="6" width="260" height="62" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="26" y="28" font-size="13" fill="#0F172A" font-weight="700">Operation and field</text>
+<text x="256" y="28" font-size="11" fill="#475569" font-weight="700" text-anchor="end">G1–G6</text>
+<text x="26" y="45" font-size="11" fill="#475569">WP-O-01…05 · 5 work products</text>
+<rect x="27" y="53" width="43.6" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="72.6" y="53" width="43.6" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="118.2" y="53" width="43.6" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="163.8" y="53" width="43.6" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="209.4" y="53" width="43.6" height="7" rx="2" fill="#D97706" stroke="none" stroke-width="0"/></g>
+<g transform="translate(0,1210)"><text x="60" y="26" font-size="12" fill="#0F172A" font-weight="700">Status of each work product (one block each):</text>
+<rect x="340" y="16" width="22" height="10" rx="2" fill="#CBD5E1" stroke="none" stroke-width="0"/>
+<text x="368" y="26" font-size="12" fill="#475569">Skeleton</text>
+<rect x="435.1" y="16" width="22" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="463.1" y="26" font-size="12" fill="#475569">Draft</text>
+<rect x="509" y="16" width="22" height="10" rx="2" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="537" y="26" font-size="12" fill="#475569">In review</text>
+<rect x="610.2" y="16" width="22" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="638.2" y="26" font-size="12" fill="#475569">Approved</text>
+<rect x="708.6" y="16" width="22" height="10" rx="2" fill="#166534" stroke="none" stroke-width="0"/>
+<text x="736.6" y="26" font-size="12" fill="#475569">Baselined</text>
+<rect x="60" y="39" width="22" height="12" rx="3" fill="none" stroke="#C2410C" stroke-width="3"/>
+<text x="88" y="50" font-size="12" fill="#475569">Outline: due at the next gate, G0</text>
+<line x1="380" y1="45" x2="420" y2="45" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<text x="428" y="50" font-size="12" fill="#475569">Dashed line: the right-hand box verifies the left-hand box</text>
+<text x="1340" y="50" font-size="12" fill="#475569" text-anchor="end">Each box opens its exploded view</text>
+<text x="60" y="72" font-size="11.5" fill="#94A3B8" font-style="italic">Work products are grouped by hand; their status, gates and dates are read from the records on every build, so the V moves as they change. Status is not acceptance.</text>
+<g class="terms">
+<text x="60" y="94" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · FSC functional safety concept · G0–G6 gate G0…G6 of the project lifecycle · HARA hazard analysis and risk assessment (ISO 26262-3) · HIL hardware in the loop: the bench with the real panda and</text>
+<text x="60" y="108.5" font-size="10.5" fill="#475569">simulated car buses · HSI hardware-software interface · HW hardware · MISRA MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) · ML machine learning · SOTIF safety of the intended functionality (ISO 21448):</text>
+<text x="60" y="123" font-size="10.5" fill="#475569">hazards with nothing failing · SW software · TARA threat analysis and risk assessment (ISO/SAE 21434) · TSC technical safety concept · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
+<text x="60" y="137.5" font-size="10.5" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g></g>
+</svg>

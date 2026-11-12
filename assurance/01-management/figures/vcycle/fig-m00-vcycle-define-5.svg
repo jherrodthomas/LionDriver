@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="150" viewBox="0 0 700 150" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle: define-5</title>
+<desc>Detailed design (G3): WP-W-03, -04, WP-H-02…05; 6 draft. Opens its exploded view.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="700" height="150" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<path d="M218 12 h400 l-28 96 h-400 z" stroke="#1D4ED8" stroke-width="1.6" fill="#EFF6FF" stroke-linejoin="round"/>
+<text x="232" y="37" font-size="15" fill="#1D4ED8" font-weight="700">Detailed design</text>
+<g transform="translate(547.3,22)"><rect x="0" y="0" width="26.7" height="20" rx="10.0" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1"/><text x="13.3" y="14" font-size="11" fill="#1D4ED8" font-weight="700" text-anchor="middle">G3</text></g>
+<text x="232" y="57" font-size="12.5" fill="#0F172A">SW architecture, HW design and their safety analyses</text>
+<text x="232" y="75" font-size="11.5" fill="#475569">WP-W-03, -04, WP-H-02…05 · 05-software/</text>
+<rect x="233" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="263" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="293" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="323" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="353" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="383" y="85" width="28" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="422" y="94" font-size="11" fill="#475569">6 draft</text>
+<line x1="608" y1="60" x2="700" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M404 112 L440 150" stroke="#1D4ED8" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+</svg>

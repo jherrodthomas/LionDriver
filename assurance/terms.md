@@ -28,6 +28,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
 | ARXML | AUTOSAR XML: the file format AUTOSAR tools exchange |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
+| ASPICE | Automotive SPICE, the process capability model |
 | AUTOSAR | AUTomotive Open System ARchitecture: the automotive software standard; Classic Platform for ECUs |
 | BOM | bill of materials |
 | BOR | brown-out reset (MCU supply monitor) |
@@ -75,9 +76,11 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FRET | NASA's Formal Requirements Elicitation Tool |
 | FRETish | FRET's structured natural language for requirements |
 | FRTI | fault reaction time interval |
+| FSA-F | final functional safety assessment at G5 (WP-M-06 §6) |
 | FSC | functional safety concept |
 | FTA | fault tree analysis |
 | FTTI | fault-tolerant time interval: fault to hazard, the time a safety mechanism has |
+| FuSa | functional safety (ISO 26262) |
 | FW | firmware |
 | GiB | gibibyte (2³⁰ bytes) |
 | GND | ground |
@@ -85,6 +88,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | GPIO | general-purpose input/output pin |
 | GPS | global positioning system |
 | GPU | graphics processor (runs the models) |
+| GSN | Goal Structuring Notation, the diagram language of the safety case |
 | HAR | allocation to the harness and relay (E-05; WP-S-02 §2.2) |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | HATARA | the joint HARA and TARA view: where hazards and threats meet |
@@ -230,6 +234,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | VRU | vulnerable road user: pedestrian or cyclist |
 | VSC | vehicle stability control (Toyota's stability system) |
 | VTH | threshold voltage of an input (in the harness box, the DG419LE input threshold) |
+| WBS | work breakdown structure (WP-M-03 §3) |
 | WCET | worst-case execution time |
 | WRP | write protection of the MCU's flash (option bytes) |
 | XML | extensible markup language |
@@ -249,6 +254,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | AP-nn | attack path (TARA §5); in WP-S-03 and on the TSC page, an architectural principle (WP-S-03 §2) |
 | AS-nn | asset (TARA §2) |
 | ATC-nn | architecture target-state change of WP-W-03 §10 |
+| AUD-nn | functional safety audit, AUD-n (WP-M-06 §5) |
 | BE-nn | basic event of a WP-A-04 fault tree |
 | CA-nn | cybersecurity assumption on an entity outside the item (WP-C-10 §2) |
 | CFG-nn | vehicle configuration in the vehicle register (CFG-001 is the reference Corolla) |
@@ -307,6 +313,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | SM-nn | safety mechanism (TSC §6) |
 | SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
 | SPC-nn | special characteristic of the installation (WP-O-01 §4) |
+| SR-nn | independent SOTIF or AI evaluation review, SR-nn (WP-M-06 §7) |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
 | ST-nn | step of the start-up and engagement sequence (WP-S-03 Table 4-1), ST-01…ST-21 |
 | SVC-nn | vehicle service action that needs a re-check of the item (WP-O-02 §4) |

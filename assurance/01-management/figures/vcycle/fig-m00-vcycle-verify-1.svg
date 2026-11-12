@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="150" viewBox="0 0 700 150" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle: verify-1</title>
+<desc>Vehicle validation (G1–G5): WP-V-01…07; 7 draft. Opens its exploded view.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="700" height="150" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<path d="M226 12 h400 l28 96 h-400 z" stroke="#15803D" stroke-width="1.6" fill="#F0FDF4" stroke-linejoin="round"/>
+<text x="268" y="37" font-size="15" fill="#15803D" font-weight="700">Vehicle validation</text>
+<g transform="translate(560.5,22)"><rect x="0" y="0" width="49.5" height="20" rx="10.0" fill="#FFFFFF" stroke="#15803D" stroke-width="1"/><text x="24.8" y="14" font-size="11" fill="#15803D" font-weight="700" text-anchor="middle">G1–G5</text></g>
+<text x="268" y="57" font-size="12.5" fill="#0F172A">Safety, SOTIF and cyber validation, fault injection</text>
+<text x="268" y="75" font-size="11.5" fill="#475569">WP-V-01…07 · 06-validation/</text>
+<rect x="269" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="294.7" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="320.4" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="346.1" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="371.9" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="397.6" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="423.3" y="85" width="23.7" height="9" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="458" y="94" font-size="11" fill="#475569">7 draft</text>
+<line x1="0" y1="60" x2="236" y2="60" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<path d="M404 150 L440 112" stroke="#15803D" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+<path d="M440 112 L436.1 122.3 L429.9 116.4 z" fill="#15803D"/>
+</svg>

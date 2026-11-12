@@ -60,6 +60,9 @@ PAGES = [
   A / "07-supporting/tool-qualification/TQR-32-check-trace.md",
 ]
 FIGURES = [
+  A / "01-management/figures/vcycle/fig-m00-vcycle.svg",
+  A / "01-management/figures/vcycle/fig-m00-vcycle-legend.svg",
+  *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-x-*.svg")),  # exploded views, one per box
   A / "05-software/coverage/card-overview.svg",
   A / "05-software/coverage/card-status.svg",
   A / "05-software/design-notes/card-overview.svg",
@@ -155,6 +158,10 @@ TERMS = {
   "FFI": "freedom from interference",
   "STRIDE": "spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege",
   "ISO": "International Organization for Standardization",
+  "WBS": "work breakdown structure (WP-M-03 §3)",
+  "ASPICE": "Automotive SPICE, the process capability model",
+  "GSN": "Goal Structuring Notation, the diagram language of the safety case",
+  "FuSa": "functional safety (ISO 26262)",
   "SAE": "SAE International (formerly the Society of Automotive Engineers)",
   "FRET": "NASA's Formal Requirements Elicitation Tool",
   "FRETish": "FRET's structured natural language for requirements",
@@ -421,6 +428,9 @@ TERMS = {
   "CA-": "cybersecurity assumption on an entity outside the item (WP-C-10 §2)",
   "IX-": "safety-security interaction (HATARA)",
   "DQ-": "decision of the project lead (decision register)",
+  "SR-": "independent SOTIF or AI evaluation review, SR-nn (WP-M-06 §7)",
+  "AUD-": "functional safety audit, AUD-n (WP-M-06 §5)",
+  "FSA-F": "final functional safety assessment at G5 (WP-M-06 §6)",
   "DN-": "software design note (05-software/design-notes)",
   "CT-": "change type of WP-P-02 (CT-3 is an upstream sync)",
   "TE-": "tool evaluation record (07-supporting/tool-evaluations)",

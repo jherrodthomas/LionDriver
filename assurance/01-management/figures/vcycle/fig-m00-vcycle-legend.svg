@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="160" viewBox="0 0 1400 160" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle: legend</title>
+<desc>Legend: status colours, the next-gate outline and the verifies line.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1400" height="160" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<text x="60" y="26" font-size="12" fill="#0F172A" font-weight="700">Status of each work product (one block each):</text>
+<rect x="340" y="16" width="22" height="10" rx="2" fill="#CBD5E1" stroke="none" stroke-width="0"/>
+<text x="368" y="26" font-size="12" fill="#475569">Skeleton</text>
+<rect x="435.1" y="16" width="22" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="463.1" y="26" font-size="12" fill="#475569">Draft</text>
+<rect x="509" y="16" width="22" height="10" rx="2" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="537" y="26" font-size="12" fill="#475569">In review</text>
+<rect x="610.2" y="16" width="22" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="638.2" y="26" font-size="12" fill="#475569">Approved</text>
+<rect x="708.6" y="16" width="22" height="10" rx="2" fill="#166534" stroke="none" stroke-width="0"/>
+<text x="736.6" y="26" font-size="12" fill="#475569">Baselined</text>
+<rect x="60" y="39" width="22" height="12" rx="3" fill="none" stroke="#C2410C" stroke-width="3"/>
+<text x="88" y="50" font-size="12" fill="#475569">Outline: due at the next gate, G0</text>
+<line x1="380" y1="45" x2="420" y2="45" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<text x="428" y="50" font-size="12" fill="#475569">Dashed line: the right-hand box verifies the left-hand box</text>
+<text x="1340" y="50" font-size="12" fill="#475569" text-anchor="end">Each box opens its exploded view</text>
+<text x="60" y="72" font-size="11.5" fill="#94A3B8" font-style="italic">Work products are grouped by hand; their status, gates and dates are read from the records on every build, so the V moves as they change. Status is not acceptance.</text>
+<g class="terms">
+<text x="60" y="94" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · FSC functional safety concept · G0–G6 gate G0…G6 of the project lifecycle · HARA hazard analysis and risk assessment (ISO 26262-3) · HIL hardware in the loop: the bench with the real panda and</text>
+<text x="60" y="108.5" font-size="10.5" fill="#475569">simulated car buses · HSI hardware-software interface · HW hardware · MISRA MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) · ML machine learning · SOTIF safety of the intended functionality (ISO 21448):</text>
+<text x="60" y="123" font-size="10.5" fill="#475569">hazards with nothing failing · SW software · TARA threat analysis and risk assessment (ISO/SAE 21434) · TSC technical safety concept · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
+<text x="60" y="137.5" font-size="10.5" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
