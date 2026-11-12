@@ -5,7 +5,7 @@
 [← Back to the V-cycle](../../README.md#the-v-cycle) · [exploded views](README.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-time.svg" width="100%" alt="The V-cycle over time as of 2026-11-12: 11 rows from concept down to implementation and back up to vehicle validation. 86 work products have dated versions between 2026-10-12 and 2026-11-12 (3 undated); 49 have an input dated after their own last version. The plan runs each row from the previous gate to its own gate."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-time.svg" width="100%" alt="The V-cycle over time as of 2026-11-12: 11 rows from concept down to implementation and back up to vehicle validation. 86 work products have dated versions between 2026-10-12 and 2026-11-12 (3 undated); 50 have an input dated after their own last version. The plan runs each row from the previous gate to its own gate."></a>
 </p>
 
 *Each row is a box of the V, tagged with its level: need, system, subsystem or component. Left: the days on which its work products got a dated version entry. Right: the plan, from the previous gate to the row's own gate. Drawn by [`fig_m00_vcycle.py`](../figures/fig_m00_vcycle.py); CI fails if it is stale.*
@@ -38,9 +38,10 @@ A prompt to look, not proof the work product is wrong: the input may have change
 | WP-M-04 | 2026-10-19 | WP-M-02 | 2026-10-23 |
 | WP-M-06 | 2026-10-23 | WP-M-05 | 2026-11-11 |
 | WP-M-10 | 2026-11-02 | WP-M-09 | 2026-11-11 |
-| WP-M-13 | 2026-10-23 | WP-M-05 | 2026-11-11 |
+| WP-M-13 | 2026-10-23 | WP-P-02 | 2026-11-12 |
 | WP-O-02 | 2026-10-25 | WP-O-01 | 2026-11-11 |
 | WP-O-03 | 2026-10-23 | WP-S-06 | 2026-11-02 |
+| WP-O-05 | 2026-11-11 | WP-P-02 | 2026-11-12 |
 | WP-P-01 | 2026-10-22 | WP-M-05 | 2026-11-11 |
 | WP-P-03 | 2026-10-14 | WP-M-05 | 2026-11-11 |
 | WP-P-04 | 2026-10-18 | WP-P-01 | 2026-10-22 |
