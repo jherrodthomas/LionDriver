@@ -32,5 +32,6 @@ Standard clauses: 26262-8, SUP.1/8/9/10.
 |---|---|
 | [`impact/`](impact/README.md) | Upstream sync impact analyses |
 | [`tool-evaluations/`](tool-evaluations/) | — |
+| [`tool-qualification/`](tool-qualification/README.md) | Tool qualification: any tool, the right guards |
 
 GitHub lists this folder's files above this page; each work product's document embeds its own figures.

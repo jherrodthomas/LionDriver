@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="752" viewBox="0 0 640 752" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 2. TQR-32: the trace checker, validated</title>
+<desc>26 of 26 planted faults caught: PF-01 EC-1 broken link by K3; PF-02 EC-1 broken link by K3; PF-03 EC-2 orphan by K3; PF-04 EC-2 orphan by K3; PF-05 EC-3 missing refinement by K4; PF-06 EC-3 missing refinement by K4; PF-07 EC-4 ASIL not inherited by K5; PF-08 EC-5 wrong ASIL by R1; PF-09 EC-5 wrong ASIL by R2; PF-10 EC-5 wrong ASIL by R3; PF-11 EC-2 orphan by R4; PF-12 EC-3 missing refinement by K12; PF-13 EC-6 identity by K2; PF-14 EC-6 identity by K2; PF-15 EC-7 missing attribute by K1; PF-16 EC-7 missing attribute by K1; PF-17 EC-8 test link by K6; PF-18 EC-8 test link by K6; PF-19 EC-9 copy differs from the record by X1; PF-20 EC-9 copy differs from the record by X2; PF-21 EC-9 copy differs from the record by X3; PF-22 EC-3 missing refinement by S1; PF-23 EC-3 missing refinement by C1; PF-24 EC-2 orphan by A1; PF-25 EC-7 missing attribute by Q1; PF-26 EC-10 status without evidence by I1. 8 of 8 tool mutants killed.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="640" height="752" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 2 · TQR-32: the trace checker, validated</text>
+<text x="16" y="48" font-size="11" fill="#475569">Faults planted in the real trace data (743 items, 107 test links)</text>
+<text x="16" y="74" font-size="13" fill="#2E9E6A" font-weight="700">Planted faults: 26 of 26 caught</text>
+<text x="16" y="102" font-size="10.5" fill="#0F172A" font-weight="700">EC-1 broken link</text>
+<rect x="200" y="90" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="102.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-01</text>
+<rect x="248" y="90" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="102.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-02</text>
+<text x="16" y="130" font-size="10.5" fill="#0F172A" font-weight="700">EC-2 orphan</text>
+<rect x="200" y="118" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="130.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-03</text>
+<rect x="248" y="118" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="130.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-04</text>
+<rect x="296" y="118" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="317.5" y="130.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-11</text>
+<rect x="344" y="118" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="365.5" y="130.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-24</text>
+<text x="16" y="158" font-size="10.5" fill="#0F172A" font-weight="700">EC-3 missing refinement</text>
+<rect x="200" y="146" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="158.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-05</text>
+<rect x="248" y="146" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="158.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-06</text>
+<rect x="296" y="146" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="317.5" y="158.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-12</text>
+<rect x="344" y="146" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="365.5" y="158.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-22</text>
+<rect x="392" y="146" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="413.5" y="158.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-23</text>
+<text x="16" y="186" font-size="10.5" fill="#0F172A" font-weight="700">EC-4 ASIL not inherited</text>
+<rect x="200" y="174" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="186.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-07</text>
+<text x="16" y="214" font-size="10.5" fill="#0F172A" font-weight="700">EC-5 wrong ASIL</text>
+<rect x="200" y="202" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="214.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-08</text>
+<rect x="248" y="202" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="214.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-09</text>
+<rect x="296" y="202" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="317.5" y="214.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-10</text>
+<text x="16" y="242" font-size="10.5" fill="#0F172A" font-weight="700">EC-6 identity</text>
+<rect x="200" y="230" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="242.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-13</text>
+<rect x="248" y="230" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="242.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-14</text>
+<text x="16" y="270" font-size="10.5" fill="#0F172A" font-weight="700">EC-7 missing attribute</text>
+<rect x="200" y="258" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="270.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-15</text>
+<rect x="248" y="258" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="270.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-16</text>
+<rect x="296" y="258" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="317.5" y="270.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-25</text>
+<text x="16" y="298" font-size="10.5" fill="#0F172A" font-weight="700">EC-8 test link</text>
+<rect x="200" y="286" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="298.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-17</text>
+<rect x="248" y="286" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="298.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-18</text>
+<text x="16" y="326" font-size="10.5" fill="#0F172A" font-weight="700">EC-9 copy differs from the record</text>
+<rect x="200" y="314" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="326.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-19</text>
+<rect x="248" y="314" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="269.5" y="326.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-20</text>
+<rect x="296" y="314" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="317.5" y="326.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-21</text>
+<text x="16" y="354" font-size="10.5" fill="#0F172A" font-weight="700">EC-10 status without evidence</text>
+<rect x="200" y="342" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="221.5" y="354.5" font-size="9.5" fill="#2E9E6A" font-weight="700" text-anchor="middle">PF-26</text>
+<text x="16" y="380" font-size="13" fill="#2E9E6A" font-weight="700">Tool mutants: 8 of 8 killed</text>
+<text x="16" y="402" font-size="10" fill="#475569">check_trace.py broken in memory so that …</text>
+<text x="624" y="402" font-size="10" fill="#475569" text-anchor="end">killed by</text>
+<text x="16" y="423" font-size="10.5" fill="#0F172A" font-weight="700">TM-01</text>
+<text x="60" y="423" font-size="10.5" fill="#0F172A">R1 findings are dropped (a wrong hazardous-event ASIL goes unreported)</text>
+<text x="624" y="423" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-08</text>
+<path d="M16 431 L624 431" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="444" font-size="10.5" fill="#0F172A" font-weight="700">TM-02</text>
+<text x="60" y="444" font-size="10.5" fill="#0F172A">the ASIL inheritance check K5 does nothing</text>
+<text x="624" y="444" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-07</text>
+<path d="M16 452 L624 452" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="465" font-size="10.5" fill="#0F172A" font-weight="700">TM-03</text>
+<text x="60" y="465" font-size="10.5" fill="#0F172A">the refinement check (goal to FSR to TSR) does nothing</text>
+<text x="624" y="465" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-03, PF-04, PF-05</text>
+<path d="M16 473 L624 473" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="486" font-size="10.5" fill="#0F172A" font-weight="700">TM-04</text>
+<text x="60" y="486" font-size="10.5" fill="#0F172A">every ASIL ranks the same</text>
+<text x="624" y="486" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-07, PF-09, PF-10</text>
+<path d="M16 494 L624 494" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="507" font-size="10.5" fill="#0F172A" font-weight="700">TM-05</text>
+<text x="60" y="507" font-size="10.5" fill="#0F172A">test links are not checked</text>
+<text x="624" y="507" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-17, PF-18</text>
+<path d="M16 515 L624 515" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="528" font-size="10.5" fill="#0F172A" font-weight="700">TM-06</text>
+<text x="60" y="528" font-size="10.5" fill="#0F172A">generated files are not compared with the work products</text>
+<text x="624" y="528" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-21</text>
+<path d="M16 536 L624 536" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="549" font-size="10.5" fill="#0F172A" font-weight="700">TM-07</text>
+<text x="60" y="549" font-size="10.5" fill="#0F172A">any ID is accepted</text>
+<text x="624" y="549" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-14</text>
+<path d="M16 557 L624 557" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="570" font-size="10.5" fill="#0F172A" font-weight="700">TM-08</text>
+<text x="60" y="570" font-size="10.5" fill="#0F172A">a missing mandatory key is not reported</text>
+<text x="624" y="570" font-size="10.5" fill="#2E9E6A" font-weight="700" text-anchor="end">PF-15</text>
+<path d="M16 578 L624 578" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="598" font-size="10.5" fill="#475569">Green: caught. Each fault is planted alone in a fresh copy and must be reported by the check it belongs to, naming the</text>
+<text x="16" y="612" font-size="10.5" fill="#475569">planted item (TQR-32/results.md lists each report). CI reruns this on every change. Not yet accepted by the lead or</text>
+<text x="16" y="626" font-size="10.5" fill="#475569">reviewed.</text>
+<g class="terms">
+<text x="16" y="650" font-size="10" fill="#475569">Terms: ASIL Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 · CI continuous</text>
+<text x="16" y="664" font-size="10" fill="#475569">integration: the checks that run on every pull request · EC-nn error class of a tool use case</text>
+<text x="16" y="678" font-size="10" fill="#475569">(tool-qualification/method.md §4) · FSR-nn functional safety requirement (FSC) · ID identifier · PF-nn planted</text>
+<text x="16" y="692" font-size="10" fill="#475569">fault of a tool qualification fault catalogue · TM-nn tool mutant: a deliberately broken copy of a tool that a</text>
+<text x="16" y="706" font-size="10" fill="#475569">qualification run must catch · TQR-nn tool qualification report (WP-P-07 §5; 07-supporting/tool-qualification) ·</text>
+<text x="16" y="720" font-size="10" fill="#475569">TSR-nn technical safety requirement (WP-S-02)</text>
+</g>
+<text x="624" y="740" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_tq.py from TQR-32/results.json</text>
+</svg>

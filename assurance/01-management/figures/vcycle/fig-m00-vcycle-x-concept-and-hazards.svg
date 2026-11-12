@@ -181,7 +181,7 @@
 <text x="1335.5" y="982" font-size="11" fill="#475569">Review of the AI assurance argument (PAS 8800)</text>
 <text x="40" y="1202" font-size="11.5" fill="#475569">Arrows: needs this first (direct steps only), from the process model. Filled circle: a review record exists. Status is not acceptance.</text>
 <g class="terms">
-<text x="40" y="1224" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · CR-nn confirmation review of a work product, CR-nn (WP-M-06 §4) · FSR-nn functional safety requirement (FSC) · HARA hazard analysis and risk assessment (ISO 26262-3) · HMI human-machine interface: display, sounds, cluster · ODD operational design</text>
+<text x="40" y="1224" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · CR-nn confirmation review of the confirmation measures plan (WP-M-06) · FSR-nn functional safety requirement (FSC) · HARA hazard analysis and risk assessment (ISO 26262-3) · HMI human-machine interface: display, sounds, cluster · ODD operational design</text>
 <text x="40" y="1238.5" font-size="10.5" fill="#475569">domain: where the system is meant to work · PAS publicly available specification (ISO/PAS 8800 is the AI safety one) · SOTIF safety of the intended functionality (ISO 21448): hazards with nothing failing · SR-nn independent SOTIF or AI evaluation review, SR-nn (WP-M-06 §7) · TARA threat</text>
 <text x="40" y="1253" font-size="10.5" fill="#475569">analysis and risk assessment (ISO/SAE 21434) · UN-nn software unit (WP-W-05 §2) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>

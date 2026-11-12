@@ -55,6 +55,9 @@ PAGES = [
   A / "models/autosar/README.md",
   A / "04-hardware/design/README.md",
   A / "05-software/design/README.md",
+  A / "07-supporting/tool-qualification/README.md",
+  A / "07-supporting/tool-qualification/method.md",
+  A / "07-supporting/tool-qualification/TQR-32-check-trace.md",
 ]
 FIGURES = [
   A / "01-management/figures/vcycle/fig-m00-vcycle.svg",
@@ -107,6 +110,8 @@ FIGURES = [
   A / "05-software/figures/fig-w00-3-one-requirement.svg",
   A / "05-software/figures/fig-w00-4-safety-task-anim.svg",
   A / "03-system/figures/fig-s07-3-2a-boundaries-anim.svg",
+  A / "07-supporting/tool-qualification/figures/fig-tq-1-method.svg",
+  A / "07-supporting/tool-qualification/figures/fig-tq-2-tqr32.svg",
   A / "03-system/figures/fig-s07-4-1-csr-status.svg",
   A / "03-system/figures/fig-s08-6-1-cases.svg",
   A / "03-system/figures/fig-s09-5-1-cases.svg",
@@ -423,7 +428,6 @@ TERMS = {
   "CA-": "cybersecurity assumption on an entity outside the item (WP-C-10 §2)",
   "IX-": "safety-security interaction (HATARA)",
   "DQ-": "decision of the project lead (decision register)",
-  "CR-": "confirmation review of a work product, CR-nn (WP-M-06 §4)",
   "SR-": "independent SOTIF or AI evaluation review, SR-nn (WP-M-06 §7)",
   "AUD-": "functional safety audit, AUD-n (WP-M-06 §5)",
   "FSA-F": "final functional safety assessment at G5 (WP-M-06 §6)",
@@ -443,6 +447,16 @@ TERMS = {
   "RR-": "review record",
   "NF-": "finding of the onboard code review",
   "TL-": "tool entry in the tool register (WP-P-07)",
+  "TQR-": "tool qualification report (WP-P-07 §5; 07-supporting/tool-qualification)",
+  "TCL": "tool confidence level, TCL1 (no qualification needed) to TCL3 (ISO 26262-8 §11)",
+  "TI": "tool impact: TI2 if a tool error can introduce or miss an error in a safety-related element (ISO 26262-8 §11)",
+  "TD": "tool error detection: confidence that a tool error is prevented or detected, TD1 (high) to TD3 (low)",
+  "DOORS": "IBM Engineering Requirements Management DOORS: a commercial requirements management tool",
+  "CR-": "confirmation review of the confirmation measures plan (WP-M-06)",
+  "TG-": "guard of the tool qualification guard catalogue (07-supporting/tool-qualification/guards.yaml)",
+  "TM-": "tool mutant: a deliberately broken copy of a tool that a qualification run must catch",
+  "PF-": "planted fault of a tool qualification fault catalogue",
+  "EC-": "error class of a tool use case (tool-qualification/method.md §4)",
   # classes written as a letter and digits
   "S#": "severity class S0 (no injuries) to S3 (life-threatening)",
   "E#": "exposure class E0 (incredible) to E4 (high probability)",
@@ -465,7 +479,7 @@ NOT_TERMS = {
   "SAFE", "SITUATION", "SITUATIONS", "SPEED", "STATES", "SURFACE", "TO", "TRIGGER", "TRIGGERING", "VALIDATION",
   "WEATHER", "WHAT", "SAFETY", "GOAL", "SOTIF HAZARD", "ELEMENT", "STATE", "THE", "OF", "VIEW", "IN", "ON", "AT",
   "WAY", "OUT", "DOES", "NOTICE", "TODAY", "CLOSES", "BRAKE",
-  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IV", "YAML", "OpenpilotState", "ENABLE", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator",
+  "LionDriver", "GitHub", "LibreOffice", "README", "II", "IV", "YAML", "OpenpilotState", "ENABLE", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator", "OK", "PyYAML",
 }
 
 WORD_RE = re.compile(r"(?<![\w-])([A-Za-z]*[A-Z][A-Za-z]*[A-Z][A-Za-z]*(?:-[A-Z]+)?)(?![\w])")

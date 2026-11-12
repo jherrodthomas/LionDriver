@@ -54,7 +54,7 @@ jobs:
   checks:
     name: trace and link checks
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
     - uses: actions/checkout@v7
       with:
@@ -66,6 +66,11 @@ jobs:
       run: python3 tools/ci/check_pin_records.py
     - name: Trace consistency
       run: python3 assurance/trace/tools/check_trace.py
+    - name: Trace checker qualification TQR-32 (planted faults and tool mutants on the real trace data; WP-P-07 TL-32)
+      run: |
+        python3 assurance/07-supporting/tool-qualification/tools/qualify.py --check
+        python3 assurance/07-supporting/tool-qualification/figures/fig_tq.py --check
+        python3 assurance/07-supporting/tool-qualification/tools/test_qualify.py
     - name: Trace items against their JSON schema (WP-P-06 §5.1, DQ-123 A)
       run: python3 assurance/trace/tools/check_schema.py
     - name: Checkout the opendbc and panda submodules (test sources the verification links name)

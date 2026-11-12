@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [technical-safety-requirements](03-system/technical-safety-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md), [autosar](models/autosar/README.md), [design](04-hardware/design/README.md), [design](05-software/design/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [technical-safety-requirements](03-system/technical-safety-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md), [autosar](models/autosar/README.md), [design](04-hardware/design/README.md), [design](05-software/design/README.md), [tool-qualification](07-supporting/tool-qualification/README.md), [tool-qualification](07-supporting/tool-qualification/method.md), [tool-qualification](07-supporting/tool-qualification/TQR-32-check-trace.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -48,6 +48,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | DFMEA | design FMEA: failure modes and effects analysis of a design (here the harness box and device) |
 | DM | driver monitoring |
 | DMA | direct memory access: hardware that copies data without the processor |
+| DOORS | IBM Engineering Requirements Management DOORS: a commercial requirements management tool |
 | DRCC | dynamic radar cruise control: Toyota's stock adaptive cruise |
 | DRV | the driver |
 | DSU | driving support unit (Toyota's radar cruise module) |
@@ -211,6 +212,9 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TBC | to be confirmed |
 | TBD | to be determined: a value not yet set |
+| TCL | tool confidence level, TCL1 (no qualification needed) to TCL3 (ISO 26262-8 §11) |
+| TD | tool error detection: confidence that a tool error is prevented or detected, TD1 (high) to TD3 (low) |
+| TI | tool impact: TI2 if a tool error can introduce or miss an error in a safety-related element (ISO 26262-8 §11) |
 | TLS | transport layer security: encrypted network connections |
 | TOYOTA | the panda's Toyota car mode (parameter 73 in the reference build) |
 | TSC | technical safety concept |
@@ -254,7 +258,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | BE-nn | basic event of a WP-A-04 fault tree |
 | CA-nn | cybersecurity assumption on an entity outside the item (WP-C-10 §2) |
 | CFG-nn | vehicle configuration in the vehicle register (CFG-001 is the reference Corolla) |
-| CR-nn | confirmation review of a work product, CR-nn (WP-M-06 §4) |
+| CR-nn | confirmation review of the confirmation measures plan (WP-M-06) |
 | CS-nn | cybersecurity architecture decision CS-AD-nn (WP-S-07 §3.4) |
 | CSC-nn | cybersecurity claim: a risk retained, shared or avoided, with its condition (WP-C-10 §5) |
 | CSG-nn | cybersecurity goal (WP-C-10) |
@@ -270,6 +274,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | DS-nn | damage scenario (TARA §3) |
 | DSR-nn | dataset requirement (WP-C-11 §7) |
 | E-nn | element of the item (WP-C-01 §3.1), E-01…E-06 |
+| EC-nn | error class of a tool use case (tool-qualification/method.md §4) |
 | EXT-nn | external element credited only through an assumption of use (EXT-EPS, EXT-PCM, EXT-CLU) |
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
 | FI-nn | functional insufficiency (WP-C-06) |
@@ -295,6 +300,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | OI-nn | open item of the document it appears in |
 | OPS-nn | operation step: the driver's pre-drive and field checks (WP-O-02 §3) |
 | OS-nn | operational situation (HARA §3) |
+| PF-nn | planted fault of a tool qualification fault catalogue |
 | PL-nn | platform (PL-001 is LionDriver's) |
 | PM-nn | periodic maintenance check of the item (WP-O-02 §4) |
 | R-nn | shared resource in the DFA map (08-analyses/dfa/shared-resources.yaml): something two elements both depend on |
@@ -316,7 +322,10 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | TB-nn | trust boundary (WP-S-07 §3.2) |
 | TC-nn | triggering condition (WP-C-06) |
 | TE-nn | tool evaluation record (07-supporting/tool-evaluations) |
+| TG-nn | guard of the tool qualification guard catalogue (07-supporting/tool-qualification/guards.yaml) |
 | TL-nn | tool entry in the tool register (WP-P-07) |
+| TM-nn | tool mutant: a deliberately broken copy of a tool that a qualification run must catch |
+| TQR-nn | tool qualification report (WP-P-07 §5; 07-supporting/tool-qualification) |
 | TS-nn | threat scenario (TARA §4) |
 | TSR-nn | technical safety requirement (WP-S-02) |
 | U-nn | software component of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1) |
