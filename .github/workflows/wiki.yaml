@@ -40,6 +40,8 @@ jobs:
         fetch-depth: 300   # merge history for the Session log page
     - name: Install PyYAML (the safety-case figures read assurance/case-records)
       run: python3 -m pip install --quiet --user --break-system-packages pyyaml
+    - name: Fetch the change ledger (work-product versions on the pages; none yet before its first run)
+      run: git fetch --quiet --depth=1 origin ledger:refs/remotes/origin/ledger || echo "no ledger branch yet"
     - name: Build tool unit tests (and a check of wiki/)
       run: python3 -m unittest discover -s tools/wiki -p 'test_*.py' -v
     - name: Build the pages (page links, repository links, sync stamp)
@@ -57,7 +59,7 @@ jobs:
     needs: check
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     permissions:
       contents: write   # the wiki repository is written with the same token as the main one
     steps:
@@ -67,6 +69,18 @@ jobs:
         fetch-depth: 300   # merge history for the Session log page
     - name: Install PyYAML (the safety-case figures read assurance/case-records)
       run: python3 -m pip install --quiet --user --break-system-packages pyyaml
+    - name: Wait for the change ledger to record this commit (up to 5 minutes), then fetch it
+      # The ledger workflow appends this merge to the ledger branch at the same time as this job runs. Waiting lets
+      # the pages carry its version; if the ledger is still behind, the pages show "+N" until the next sync.
+      run: |
+        for i in $(seq 1 20); do
+          if git fetch --quiet --depth=1 origin ledger:refs/remotes/origin/ledger 2>/dev/null \
+             && git show origin/ledger:ledger.jsonl | grep -q "\"commit\":\"${GITHUB_SHA}\""; then
+            echo "ledger has ${GITHUB_SHA::8}"; exit 0
+          fi
+          sleep 15
+        done
+        echo "ledger does not have ${GITHUB_SHA::8} yet; building with what it has"
     - name: Build the pages
       run: >
         python3 tools/wiki/build_wiki.py --out build/wiki

@@ -8,7 +8,7 @@
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-p-04.svg" width="100%" alt="Change impact of WP-P-04 Documentation management, dated 2026-11-12: 1 work products depend on it in the process model; 1 have no version dated after it, 0 have been updated since, 0 have no dated version."></a>
 </p>
 
-*The change: WP-P-04 version 0.7, dated 2026-11-12: §9.2 controlled and uncontrolled copies of selected work products with a change record since the recipient's last copy; distribution.py outdated; OI-3 partly done*
+*The change: WP-P-04 version 0.8, dated 2026-11-12: OI-7: the wiki pages carry the ledger version next to the first link to each work product, a generated Work product versions page and the ledger source in the footer; an X above 0 from before the ledger is not presented as a gate approval*
 
 Depending on a change is a prompt to look, not proof of an impact: the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) and its records decide what a change actually affects.
 

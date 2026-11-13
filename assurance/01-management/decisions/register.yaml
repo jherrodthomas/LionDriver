@@ -6892,3 +6892,26 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: X only at gates."}
   applied: {ref: e5683c8, record: "WP-P-04 v0.5 §5 Version rule; assurance/07-supporting/ledger/gate-approvals.yaml", at: 2026-11-12}
+
+- id: DQ-443
+  question: "The ledger's first run also backfilled openpilot's history since 2016 (18,284 rows, most of them comma's commits). Reset it and rebuild from LionDriver's first commit, or keep it and mark the upstream rows?"
+  context: >-
+    About 17,700 of the rows were comma's upstream commits, with comma's pull-request numbers and 4,205 false
+    "pushed without a pull request" exceptions; LionDriver's own history starts at 8b8c6ae (590 rows). **The ledger
+    branch was minutes old and nothing used it yet.** Resetting it means deleting a record meant to be append-only.
+  reversibility: hard
+  blocks: "The ledger's Exceptions view and change records; protecting the ledger branch"
+  gate: G0
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Reset and rebuild from 8b8c6ae"
+      detail: "The backfill starts at the fork base; the ledger branch is deleted and the next run rebuilds it (~590 rows). The reset is written into the ledger README. Cost: one deletion of a record meant to be append-only, before it was protected or used."
+    - key: B
+      title: "Keep it and mark the upstream rows"
+      detail: "No deletion: a correction row marks rows 1-17,693 as upstream and the views hide them. Cost: 18k rows (~8 MB) with comma's PR numbers in the record for good."
+  sources: ["assurance/07-supporting/ledger/README.md (Reset of 2026-11-12)", "assurance/07-supporting/ledger/ledger.py FORK_BASE", "assurance/01-management/WP-M-05-quality-assurance-plan.md QG-6 (baseline 655bfde)"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: 1, reset and rebuild."}

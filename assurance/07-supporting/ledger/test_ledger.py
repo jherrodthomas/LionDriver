@@ -53,6 +53,7 @@ class Repo:
 
 class LedgerTest(unittest.TestCase):
   def setUp(self):
+    self.saved_base, ledger.FORK_BASE = ledger.FORK_BASE, None  # throwaway repositories have no LionDriver fork base
     self.tmp = tempfile.TemporaryDirectory()
     (Path(self.tmp.name) / "r").mkdir()
     self.repo = Repo(Path(self.tmp.name) / "r")
@@ -63,10 +64,32 @@ class LedgerTest(unittest.TestCase):
     self.repo.merge_pr(1, "First change to WP-C-01 (DQ-007)", {WP_A: header("0.68") + "more\n"})
 
   def tearDown(self):
+    ledger.FORK_BASE = self.saved_base
     self.tmp.cleanup()
 
   def update(self):
     return ledger.update(self.path, "main", cwd=self.repo.root)
+
+  def test_backfill_starts_at_the_fork_base(self):
+    base = self.repo.git("rev-list", "--first-parent", "main").split()[0]  # the merge of PR 1
+    saved, ledger.FORK_BASE = ledger.FORK_BASE, base
+    try:
+      self.assertEqual(self.update(), 2)  # merge 1 and the seed; "start" (upstream) is left out
+      rows = ledger.load(self.path)
+      self.assertEqual([r["kind"] for r in rows], ["change", "seed"])
+      self.assertEqual(rows[0]["commit"], base)
+      self.assertEqual(ledger.verify(rows, "main", self.repo.root), [])
+    finally:
+      ledger.FORK_BASE = saved
+
+  def test_backfill_refuses_a_history_without_the_fork_base(self):
+    saved, ledger.FORK_BASE = ledger.FORK_BASE, "f" * 40
+    try:
+      with self.assertRaises(SystemExit):
+        self.update()
+      self.assertFalse(self.path.exists() and self.path.read_text())
+    finally:
+      ledger.FORK_BASE = saved
 
   def test_first_run_backfills_then_seeds_from_headers(self):
     self.assertEqual(self.update(), 3)  # start, merge 1, seed

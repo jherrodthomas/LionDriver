@@ -9,7 +9,7 @@ Each work product's latest dated change, and what depends on it in the process m
 | Change | Version | Dated | Downstream | Worth a look | Updated since | Undated |
 |---|---|---|---|---|---|---|
 | [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-12 | 17 | 16 | 0 | 1 |
-| [WP-P-04](impact-wp-p-04.md) Documentation management | 0.7 | 2026-11-12 | 1 | 1 | 0 | 0 |
+| [WP-P-04](impact-wp-p-04.md) Documentation management | 0.8 | 2026-11-12 | 1 | 1 | 0 | 0 |
 | [WP-P-02](impact-wp-p-02.md) Change management plan | 0.5 | 2026-11-12 | 2 | 2 | 0 | 0 |
 | [WP-W-11](impact-wp-w-11.md) Cybersecurity implementation and verification | 0.8 | 2026-11-11 | 5 | 2 | 2 | 1 |
 | [WP-W-10](impact-wp-w-10.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |

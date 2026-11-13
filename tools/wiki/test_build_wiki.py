@@ -72,6 +72,53 @@ class RewriteTests(unittest.TestCase):
       self.assertEqual(problems, [])
 
 
+class VersionStampTests(unittest.TestCase):
+  """The ledger version next to the first link to a work product (WP-P-04 §5, OI-7; DQ-441)."""
+
+  def setUp(self):
+    self.tmp = tempfile.TemporaryDirectory()
+    self.root, self.src = make_wiki(Path(self.tmp.name), {"Home.md": "", "_Sidebar.md": ""})
+    (self.root / "assurance" / "WP-S-02-tsr.md").write_text("# WP-S-02\n", encoding="utf-8")
+    self.values = dict(VALUES, WP_STAMP={"WP-S-02": "0.68.0"})
+
+  def tearDown(self):
+    self.tmp.cleanup()
+
+  def test_first_link_to_a_work_product_gets_its_version(self):
+    out = build_wiki.rewrite("[WP-S-02](../assurance/WP-S-02-tsr.md) and [again](../assurance/WP-S-02-tsr.md#x)",
+                             self.src / "Home.md", self.src, self.root, self.values, [])
+    self.assertEqual(out, "[WP-S-02](https://github.com/o/r/blob/b/assurance/WP-S-02-tsr.md) <sub>v0.68.0</sub> and "
+                          "[again](https://github.com/o/r/blob/b/assurance/WP-S-02-tsr.md#x)")
+
+  def test_sidebar_footer_and_other_files_are_not_stamped(self):
+    text = "[WP-S-02](../assurance/WP-S-02-tsr.md) [r](../assurance/README.md)"
+    out = build_wiki.rewrite(text, self.src / "_Sidebar.md", self.src, self.root, self.values, [])
+    self.assertNotIn("<sub>", out)
+    out = build_wiki.rewrite("[r](../assurance/README.md)", self.src / "Home.md", self.src, self.root, self.values, [])
+    self.assertNotIn("<sub>", out)
+
+  def test_versions_table(self):
+    table = build_wiki.render_wp_versions([{"doc": "WP-S-02", "title": "TSR | spec", "path": "assurance/WP-S-02-tsr.md",
+                                            "version": "0.68.0+1", "status": "Draft", "changed": "2026-11-07"}], "o/r", "b")
+    self.assertIn("| [WP-S-02](https://github.com/o/r/blob/b/assurance/WP-S-02-tsr.md) TSR / spec | 0.68.0+1 | Draft | "
+                  "2026-11-07 |", table)
+    self.assertEqual(build_wiki.render_wp_versions([], "o/r", "b"), build_wiki.NO_VERSIONS)
+
+  def test_a_checkout_without_the_ledger_tools_builds_without_versions(self):
+    files = {"Home.md": "{{WP_VERSIONS}} / {{LEDGER_SOURCE}}", "_Sidebar.md": "[Home](Home.md)"}
+    with tempfile.TemporaryDirectory() as d:
+      root, src = make_wiki(Path(d), files)
+      out = Path(d) / "out"
+      self.assertEqual(build_wiki.build(src, out, root), [])
+      self.assertEqual((out / "Home.md").read_text(), build_wiki.NO_VERSIONS + " / not available in this checkout")
+
+  def test_the_real_checkout_stamps_versions(self):
+    entries, source = build_wiki.wp_versions(build_wiki.ROOT, "HEAD")
+    self.assertGreater(len(entries), 50)
+    self.assertTrue(source)
+    self.assertTrue(all(e["version"][0].isdigit() for e in entries))
+
+
 class BuildTests(unittest.TestCase):
   def test_build_writes_pages_and_skips_readme(self):
     with tempfile.TemporaryDirectory() as d:
