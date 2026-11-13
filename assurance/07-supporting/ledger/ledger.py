@@ -43,6 +43,11 @@ HERE = Path(__file__).resolve().parent
 APPROVALS = "assurance/07-supporting/ledger/gate-approvals.yaml"
 DISTRIBUTION = "assurance/case-records/distribution.yaml"
 GENESIS = "0" * 64
+# LionDriver's first commit, on top of the upstream openpilot baseline 655bfde (WP-M-05 QG-6). The ledger records
+# LionDriver's own changes: the upstream history before it is a supplier's (WP-M-11) and is not backfilled. The first
+# run of 2026-11-12 did backfill it (18,284 rows, comma's PR numbers and 4,205 false exceptions); that ledger was
+# deleted and rebuilt from here on the lead's decision of 2026-11-12 (README, "Reset of 2026-11-12").
+FORK_BASE: str | None = "8b8c6aefc34ea1e3ca3cf0938927c08b6a35e85c"
 WP_FILE = re.compile(r"(?:^|/)(WP-[A-Z]{1,2}-\d{2,3}[a-z]?)-[^/]*\.md$")
 HEADER_VERSION = re.compile(r"^\|\s*Version\s*\|\s*v?(\d+)\.(\d+)(?:\.(\d+))?", re.M)
 PR_SUBJECT = re.compile(r"^Merge (?:pull request )?#(\d+)\b")
@@ -313,7 +318,12 @@ def update(path: Path, ref: str = "HEAD", repo: str | None = None, token: str | 
   commits = first_parent_commits(ref, cwd)
   new: list[dict] = []
   if not rows:
-    # first run: the history before the ledger (git data only), then the seed row at the tip
+    # first run: LionDriver's history before the ledger (git data only, from FORK_BASE on), then the seed row
+    if FORK_BASE:
+      if FORK_BASE not in commits:
+        raise SystemExit(f"fork base {FORK_BASE[:8]} is not in the first-parent history of {ref} "
+                         "(a shallow checkout?); the backfill needs it")
+      commits = commits[commits.index(FORK_BASE):]
     for sha in commits:
       new.append(change_row(sha, None, None, None, cwd))
     new.append(seed_row(commits[-1], cwd))

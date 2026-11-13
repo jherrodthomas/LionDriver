@@ -28,7 +28,18 @@ breaks every later hash, and `verify` also fails when a recorded commit has left
 The workflow verifies before and after every append and stops rather than append to a broken chain.
 
 The first run writes the history before the ledger existed from git alone (no labels, reviews or checks: GitHub's
-rate limit does not allow fetching them for some 600 past pull requests), then a seed row.
+rate limit does not allow fetching them for some 600 past pull requests), then a seed row. That history starts at
+LionDriver's first commit, `8b8c6ae` (`FORK_BASE` in `ledger.py`), on top of the upstream openpilot baseline `655bfde`;
+the upstream history before it is a supplier's (WP-M-11) and is not in the ledger.
+
+### Reset of 2026-11-12
+
+The first run (merge of #602, 2026-11-12) backfilled the whole inherited openpilot history from 2016: 18,284 rows, of
+which some 17,700 were comma's commits, carrying comma's pull-request numbers (which link to nothing in this
+repository) and 4,205 "pushed without a pull request" exceptions that are not LionDriver's. The lead decided to reset
+it (DQ-443, A): the `ledger` branch was deleted the same day, about an hour after it was written and before anything
+used it or the branch was protected, and the next run rebuilt it from `8b8c6ae`. This is the only time the ledger was
+reset; from then on it is append-only, and the branch is to be protected against force-push and deletion.
 
 ## Versions: X.Y.Z, computed
 

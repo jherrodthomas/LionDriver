@@ -34,6 +34,7 @@ graph LR
 
 class ExportTest(unittest.TestCase):
   def setUp(self):
+    self.saved_base, ledger.FORK_BASE = ledger.FORK_BASE, None  # throwaway repositories have no LionDriver fork base
     self.tmp = tempfile.TemporaryDirectory()
     root = Path(self.tmp.name) / "r"
     root.mkdir()
@@ -47,6 +48,7 @@ class ExportTest(unittest.TestCase):
     self.old_repo, export_wp.REPO = export_wp.REPO, root
 
   def tearDown(self):
+    ledger.FORK_BASE = self.saved_base
     export_wp.REPO = self.old_repo
     self.tmp.cleanup()
 
