@@ -61,6 +61,21 @@ class TestHarnessBoxFmeda(unittest.TestCase):
     lam_total, split_total = rows[1][5], sum(x for x in rows[1][7:] if x)
     self.assertAlmostEqual(lam_total, split_total, places=6)
 
+  def test_every_part_has_a_block_and_every_block_parts(self):
+    blocks = {b["id"] for b in self.data["blocks"]}
+    self.assertEqual({p["block"] for p in self.r["parts"]}, blocks)
+    data = copy.deepcopy(self.data)
+    next(p for p in data["parts"] if p["ref"] == "Q6")["block"] = "B9"
+    with self.assertRaises(hb.BoxError):
+      hb.check_blocks(data, data["parts"])
+
+  def test_block_shares_add_up(self):
+    rated = sum(p["rate_fit"] for p in self.r["parts"] if p["rate_fit"] is not None)
+    self.assertAlmostEqual(sum(hb.block_summary(b, self.r["parts"])["fit"] for b in self.data["blocks"]), rated, places=9)
+    svg = hb.fig_blocks(self.r)
+    for b in self.data["blocks"]:
+      self.assertIn(b["name"], svg)
+
   def test_committed_outputs_current(self):
     self.assertEqual(hb.main(["--check"]), 0)
 

@@ -16,10 +16,69 @@
 # that goal), open (effect not yet analysed; an open item). `rows` names the goal FMEDA mode the part's mode rolls up
 # into, per file; harness_box_fmeda.py checks that the parts' rates add up to each goal row.
 #
-# Status: draft, AI-assisted (Claude, I0), not reviewed. Version 0.1, 2026-11-13.
+# Status: draft, AI-assisted (Claude, I0), not reviewed. Version 0.2, 2026-11-13 (revisions below).
+
+# Functional blocks of the box (WP-H-02 §3.6, Figure 3-9): what each block shall do, the drawing rows it comes from,
+# and its external lines (from the Toyota A harness on the left, to the comma device on the right). Every part names
+# its block; harness_box_fmeda.py fails on a part without a block or a block without parts.
+blocks:
+- id: B1
+  name: Box supply and protection
+  shall: Supply both switches from the ignition line through D1 (or from comma power on J2), and clamp supply transients above the 16 V stand-off of D4
+  source: [HB-03, HB-04]
+  from_harness: IGN_12
+  to_device: VIN (OBD-C VBUS)
+- id: B2
+  name: Switch drive
+  shall: Hold both switch inputs low through 240 Ω, so that the stock path is selected whenever the device does not drive SBU1
+  source: [HB-02]
+  from_harness: null
+  to_device: SBU1 (driven by the device)
+  device_drives: true
+- id: B3
+  name: Intercept switch
+  shall: Join the camera bus to the car bus while undriven (pass-through), and separate them while SBU1 is driven high (intercept), on CAN_H (U1) and CAN_L (U2)
+  source: [HB-01, HB-02]
+  from_harness: CAN0, CAN2
+  to_device: CAN0, CAN2
+- id: B4
+  name: Termination in intercept
+  shall: Terminate the separated camera bus with 60 Ω while intercepting (R7, and R8 through the harness loop of pins 13 and 15); R6 serves cars whose plug loops pins 3 and 5, and is unused with Toyota A
+  source: [HB-05]
+  from_harness: pin loop
+  to_device: null
+- id: B5
+  name: Bus clamps
+  shall: Clamp the CAN0 and CAN2 lines to box VIN and ground
+  source: [HB-04]
+  from_harness: CAN0, CAN2
+  to_device: null
+- id: B6
+  name: Ignition sense
+  shall: Pull SBU2 low through 1 kΩ while the ignition line is on, so that the device reads the ignition
+  source: [HB-06]
+  from_harness: IGN_12
+  to_device: SBU2 (read by the device)
+- id: B7
+  name: Connectors
+  shall: Carry the car and camera buses, ignition and ground from the harness plug (J1) and the buses, SBU lines and supply to the device cable (J3)
+  source: [HB-07, HB-08]
+  from_harness: J1 (18-pin)
+  to_device: J3 (OBD-C)
+
+# Internal lines between blocks (arrows of Figure 3-9).
+links:
+- {from: B1, to: B3, label: V+ and VL}
+- {from: B2, to: B3, label: IN}
+- {from: B3, to: B4, label: NO side}
+
+revisions:
+- {version: '0.1', date: '2026-11-13', change: Component FMEDA, one entry per designator, rolled up into the goal FMEDAs}
+- {version: '0.2', date: '2026-11-13', change: Functional blocks and the block diagram (WP-H-02 Figure 3-9)}
 
 parts:
 - ref: U1
+  block: B3
   part: Vishay DG419LEDY-T1-GE4, SPDT CMOS analog switch on CAN_H (COM camera CAN2_H, NC car CAN0_H, NO terminated)
   drawing: HB-01
   sn29500_class: SN 29500-2, CMOS/BiCMOS analog and mixed-signal ICs
@@ -45,6 +104,7 @@ parts:
     rows: {fmeda-sg009: FMD-022, fmeda-sg001: FMD-022}
 
 - ref: U2
+  block: B3
   part: Vishay DG419LEDY-T1-GE4, SPDT CMOS analog switch on CAN_L (COM car CAN0_L, NC camera CAN2_L, NO terminated)
   drawing: HB-01
   sn29500_class: SN 29500-2, CMOS/BiCMOS analog and mixed-signal ICs
@@ -55,6 +115,7 @@ parts:
   modes: *dg419_modes
 
 - ref: R2
+  block: B2
   part: 120 Ω thick-film chip resistor, SBU1 pull-down (with R3, 240 Ω to GND)
   drawing: HB-02
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -75,6 +136,7 @@ parts:
     rows: {fmeda-sg009: FMD-029, fmeda-sg001: FMD-023}
 
 - ref: R3
+  block: B2
   part: 120 Ω thick-film chip resistor, SBU1 pull-down (with R2)
   drawing: HB-02
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -85,6 +147,7 @@ parts:
   modes: *pulldown_modes
 
 - ref: R7
+  block: B4
   part: 120 Ω thick-film chip resistor, camera-side termination in intercept (U1 NO to CAN2_L)
   drawing: HB-05
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -105,6 +168,7 @@ parts:
     rows: {fmeda-sg009: FMD-036}
 
 - ref: R8
+  block: B4
   part: 120 Ω thick-film chip resistor, camera-side termination in intercept (through the harness P13–P15 loopback)
   drawing: HB-05
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -115,6 +179,7 @@ parts:
   modes: *cam_term_modes
 
 - ref: R6
+  block: B4
   part: 120 Ω thick-film chip resistor, car-side termination in intercept (U2 NO to J1 P5)
   drawing: HB-05
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -133,6 +198,7 @@ parts:
     goals: {SG-07: none, SG-01: none}
 
 - ref: D1
+  block: B1
   part: STMicroelectronics STPS2H100ZFY, power Schottky from IGN_12 to box VIN
   drawing: HB-03
   sn29500_class: SN 29500-5 (discrete semiconductors), Schottky rectifiers
@@ -153,6 +219,7 @@ parts:
     rows: {fmeda-sg009: FMD-032}
 
 - ref: D4
+  block: B1
   part: SMF16A, 16 V stand-off TVS diode from box VIN to GND
   drawing: HB-04
   sn29500_class: SN 29500-5 (discrete semiconductors), suppressor diodes
@@ -173,6 +240,7 @@ parts:
     rows: {fmeda-sg009: FMD-032}
 
 - ref: D2
+  block: B5
   part: Nexperia BAS40SDW, dual Schottky clamp on CAN0_H/L to VIN and GND
   drawing: HB-04
   sn29500_class: SN 29500-5 (discrete semiconductors), small-signal Schottky diodes
@@ -193,6 +261,7 @@ parts:
     rows: {fmeda-sg009: FMD-034}
 
 - ref: D3
+  block: B5
   part: Nexperia BAS40SDW, dual Schottky clamp on CAN2_H/L to VIN and GND
   drawing: HB-04
   sn29500_class: SN 29500-5 (discrete semiconductors), small-signal Schottky diodes
@@ -203,6 +272,7 @@ parts:
   modes: *clamp_modes
 
 - ref: Q6
+  block: B6
   part: Diodes Inc. DMN3200U-7, N-channel MOSFET pulling SBU2 low when the ignition is on
   drawing: HB-06
   sn29500_class: SN 29500-5 (discrete semiconductors), small-signal MOSFETs
@@ -221,6 +291,7 @@ parts:
     goals: {SG-07: none, SG-01: open}
 
 - ref: R1
+  block: B6
   part: 1 kΩ resistor in series between Q6 and SBU2
   drawing: HB-06
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -239,6 +310,7 @@ parts:
     goals: {SG-07: open, SG-01: open}
 
 - ref: R4
+  block: B6
   part: Resistor, upper leg of the IGN_12 divider to the Q6 gate
   drawing: HB-06
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -257,6 +329,7 @@ parts:
     goals: {SG-07: none, SG-01: open}
 
 - ref: R5
+  block: B6
   part: Resistor, lower leg of the IGN_12 divider (Q6 gate to GND)
   drawing: HB-06
   sn29500_class: SN 29500-3 (passive components), thick-film resistors
@@ -275,6 +348,7 @@ parts:
     goals: {SG-07: none, SG-01: open}
 
 - ref: J1
+  block: B7
   part: Molex 501876-1840, 18-pin box header to the Toyota A plug X3 (stock-path pins 4, 6, 16, 18)
   drawing: HB-08
   sn29500_class: SN 29500-5 (connections), board connectors
@@ -295,6 +369,7 @@ parts:
     rows: {fmeda-sg009: FMD-024}
 
 - ref: J3
+  block: B7
   part: Hirose DX07S024XJ1R1100, OBD-C (USB-C) receptacle to the device cable
   drawing: HB-07
   sn29500_class: SN 29500-5 (connections), board connectors
@@ -314,6 +389,7 @@ parts:
     rows: {fmeda-sg009: FMD-024}
 
 - ref: J2
+  block: B1
   part: Molex 212528-0400, 4-pin comma power input (optional accessory)
   drawing: HB-03
   sn29500_class: SN 29500-5 (connections), board connectors

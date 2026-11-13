@@ -50,6 +50,7 @@ GOAL_FILE = {"SG-07": "fmeda-sg009", "SG-01": "fmeda-sg001"}
 CLASSES = ("SPF", "RF", "MPF-L", "safe", "none", "open")
 OUT_MD, OUT_FLOW, OUT_PARTS = "README.md", "fig-h03-6-0-fmeda-flow.svg", "fig-h03-6-5-box-parts.svg"
 OUT_XLSX = "harness-box-fmeda.xlsx"
+OUT_BLOCKS = "fig-h02-3-9-box-blocks.svg"
 STAMP = datetime.datetime(2026, 11, 13)   # the part list's version date; keeps the workbook's bytes stable
 EFFECT = {"safe": "S", "SPF": "D", "RF": "D", "MPF-L": "L", "none": "#", "open": "?"}
 GOAL_TITLE = {"SG-07": "keep the stock pre-collision braking", "SG-01": "lateral control within the envelope"}
@@ -219,9 +220,40 @@ def what_if(parts: list[dict], goals: dict) -> list[dict]:
   return rows
 
 
+def check_blocks(data: dict, parts: list[dict]) -> list[dict]:
+  blocks = data["blocks"]
+  ids = [b["id"] for b in blocks]
+  rows = set(re.findall(r"^\| (HB-\d\d) \|", RR.read_text(encoding="utf-8"), re.M))
+  for p in parts:
+    if p.get("block") not in ids:
+      raise BoxError(f"{p['ref']}: block {p.get('block')!r} is not one of {', '.join(ids)}")
+  for b in blocks:
+    if not any(p["block"] == b["id"] for p in parts):
+      raise BoxError(f"{b['id']} {b['name']}: no part")
+    for src in b["source"]:
+      if src not in rows:
+        raise BoxError(f"{b['id']}: {src} is not a row of RR-2026-010")
+  for ln in data["links"]:
+    if ln["from"] not in ids or ln["to"] not in ids:
+      raise BoxError(f"link {ln}: unknown block")
+  return blocks
+
+
+def block_summary(b: dict, parts: list[dict]) -> dict:
+  own = [p for p in parts if p["block"] == b["id"]]
+  rated = [p for p in own if p["rate_fit"] is not None]
+  out = {"refs": [p["ref"] for p in own], "fit": sum(p["rate_fit"] for p in rated), "unrated": [p["ref"] for p in own
+                                                                                                 if p["rate_fit"] is None]}
+  for g in GOAL_FILE:
+    for c in CLASSES:
+      out[(g, c)] = sum(p["rate_fit"] * m["distribution"] for p in rated for m in p["modes"] if m["goals"][g] == c)
+  return out
+
+
 def build() -> dict:
   data, flow, goals = load()
   parts = check_parts(data)
+  check_blocks(data, parts)
   diffs = roll_up(parts, goals, data.get("known_differences", []))
   for io in flow["inputs"]:
     for r in io["records"]:
@@ -524,9 +556,93 @@ def cell_values(wb) -> dict:
   return {ws.title: [[c.value for c in row] for row in ws.iter_rows()] for ws in wb.worksheets}
 
 
+def fig_blocks(r: dict) -> str:
+  data, parts = r["data"], r["parts"]
+  blocks = {b["id"]: b for b in data["blocks"]}
+  order = ["B1", "B2", "B3", "B4", "B5", "B6"]
+  out = [text(16, 30, "Figure 3-9 · Harness box v3: functional blocks", size=15, weight=700),
+         text(16, 48, "Block diagram, what each block shall do, and its FMEDA share", size=11, fill=MUTED)]
+  top, bh, gap = 92, 46, 16
+  lx, lw, mx, mw, rx = 16, 94, 176, 280, 530
+  y_of = {bid: top + i * (bh + gap) for i, bid in enumerate(order)}
+  bottom = y_of[order[-1]] + bh
+  out.append(text(lx, top - 12, "Toyota A harness", size=9.5, weight=700, fill=MUTED))
+  out.append(text(rx, top - 12, "comma device", size=9.5, weight=700, fill=MUTED))
+  for x, lab in ((lx, "J1 · harness plug"), (rx, "J3 · OBD-C")):
+    out.append(rect(x, top, lw, bottom - top, fill="#F8FAFC", stroke=LINE, sw=1.2, rx=10))
+    for k, word in enumerate(lab.split(" · ")):
+      out.append(text(x + lw / 2, (top + bottom) / 2 - 4 + 15 * k, word, size=11 if k == 0 else 10, weight=700 if k == 0
+                      else "", fill=INK if k == 0 else MUTED, anchor="middle"))
+  for bid in order:
+    b, y = blocks[bid], y_of[bid]
+    summ = block_summary(b, parts)
+    out.append(rect(mx, y, mw, bh, fill="#FFFFFF", stroke=INK, sw=1.4, rx=8))
+    out.append(text(mx + 10, y + 18, f"{bid} {b['name']}", size=11.5, weight=700))
+    out.append(text(mx + 10, y + 35, ", ".join(summ["refs"]), size=10, fill=MUTED))
+    fit_lab = f"{fit(summ['fit'])} FIT" + (" + J2" if summ["unrated"] else "")
+    out.append(text(mx + mw - 10, y + 18, fit_lab, size=10, fill=MUTED, anchor="end"))
+    yy = y + bh / 2
+    if b["from_harness"]:
+      out.append(path(f"M{lx + lw} {yy} L{mx - 4} {yy}", stroke=SW, sw=1.4))
+      out.append(path(f"M{mx - 9} {yy - 4} L{mx - 3} {yy} L{mx - 9} {yy + 4}", stroke=SW, sw=1.4))
+      out.append(text(lx + lw + 4, yy - 5, b["from_harness"], size=8.5, fill=SW))
+    if b["to_device"]:
+      out.append(path(f"M{mx + mw + 4} {yy} L{rx} {yy}", stroke=SW, sw=1.4))
+      if b.get("device_drives"):
+        out.append(path(f"M{mx + mw + 9} {yy - 4} L{mx + mw + 3} {yy} L{mx + mw + 9} {yy + 4}", stroke=SW, sw=1.4))
+      else:
+        out.append(path(f"M{rx - 9} {yy - 4} L{rx - 3} {yy} L{rx - 9} {yy + 4}", stroke=SW, sw=1.4))
+      out.append(text(rx - 4, yy - 5, b["to_device"].split(" (")[0], size=8.5, fill=SW, anchor="end"))
+  for ln in data["links"]:
+    a, c = y_of[ln["from"]], y_of[ln["to"]]
+    if c - a == bh + gap:
+      x = mx + 40
+      out.append(path(f"M{x} {a + bh} L{x} {c - 3}", stroke=INK, sw=1.4))
+      out.append(path(f"M{x - 4} {c - 8} L{x} {c - 2} L{x + 4} {c - 8}", stroke=INK, sw=1.4))
+      out.append(text(x + 6, a + bh + 11, ln["label"], size=8.5, fill=MUTED))
+    else:
+      x = mx + mw + 14
+      ya, yc = a + bh - 10, c + 12
+      out.append(path(f"M{mx + mw} {ya} L{x} {ya} L{x} {yc} L{mx + mw + 3} {yc}", stroke=INK, sw=1.4, dash="4 3"))
+      out.append(path(f"M{mx + mw + 8} {yc - 4} L{mx + mw + 2} {yc} L{mx + mw + 8} {yc + 4}", stroke=INK, sw=1.4))
+      out.append(text(x + 4, (ya + yc) / 2 + 22, ln["label"], size=8.5, fill=MUTED))
+  y = bottom + 30
+  out.append(text(16, y, "Block descriptions", size=13, weight=700))
+  y += 8
+  for bid in order + ["B7"]:
+    b = blocks[bid]
+    summ = block_summary(b, parts)
+    shall = wrap(b["shall"], W - 64, 10.5)
+    share = (f"SG-07: {fit(summ[('SG-07', 'SPF')])} FIT single-point, {fit(summ[('SG-07', 'MPF-L')])} latent · "
+             f"SG-01: {fit(summ[('SG-01', 'RF')])} FIT covered, {fit(summ[('SG-01', 'MPF-L')])} latent")
+    if summ["fit"] == 0:
+      share = "Carried inside the goal FMEDA's wiring row (no own rate)"
+    h = 40 + 14 * len(shall)
+    out.append(rect(16, y + 8, W - 32, h, fill="#FFFFFF", stroke=LINE, sw=1.1, rx=8))
+    out.append(text(28, y + 25, f"{bid} {b['name']}", size=11.5, weight=700))
+    out.append(text(W - 28, y + 25, " · ".join(b["source"]), size=9.5, fill=FAINT, anchor="end"))
+    for j, ln in enumerate(shall):
+      out.append(text(28, y + 41 + 14 * j, ln, size=10.5, fill=INK))
+    out.append(text(28, y + 41 + 14 * len(shall), share, size=9.5, fill=MUTED))
+    y += h + 8
+  y += 22
+  out.append(text(16, y, "Revisions", size=12, weight=700))
+  y += 8
+  for k, rv in enumerate([{"version": "Ver.", "date": "Date", "change": "Change"}] + data["revisions"]):
+    out.append(rect(16, y, W - 32, 20, fill="#FEF3C7" if k == 0 else "#FFFFFF", stroke=LINE, sw=1, rx=0))
+    out.append(text(24, y + 14, str(rv["version"]), size=10, weight=700 if k == 0 else ""))
+    out.append(text(70, y + 14, str(rv["date"]), size=10, weight=700 if k == 0 else ""))
+    out.append(text(160, y + 14, rv["change"], size=10, weight=700 if k == 0 else ""))
+    y += 20
+  y = footer(out, y + 22, "harness_box_fmeda.py from harness-box-parts.yaml")
+  desc = "Blocks: " + "; ".join(f"{b['id']} {b['name']}: {b['shall']}" for b in data["blocks"])
+  return svg(W, int(y), "Figure 3-9. Harness box v3: functional blocks", desc, out)
+
+
 def outputs() -> dict[str, str]:
   r = build()
-  return {OUT_MD: page(r), OUT_FLOW: fig_flow(r), OUT_PARTS: fig_parts(r), OUT_XLSX: workbook(r)}
+  return {OUT_MD: page(r), OUT_FLOW: fig_flow(r), OUT_PARTS: fig_parts(r), OUT_BLOCKS: fig_blocks(r),
+          OUT_XLSX: workbook(r)}
 
 
 def main(argv: list[str]) -> int:

@@ -298,6 +298,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | GC-nn | global pass criterion of every integration test (WP-S-08 §5) |
 | GD-nn | private record of an unfixed weakness's code locations and mechanism, held until its control is verified (WP-O-05 §4.4) |
 | H-nn | hazard (HARA) |
+| HB-nn | row of the harness box v3 drawing review (RR-2026-010 §2, HB-01…HB-10) |
 | HE-nn | hazardous event (HARA) |
 | HWSR-nn | hardware safety requirement (WP-H-01) |
 | I-nn | integration step I-1…I-4 (WP-S-08 §3.1) |
