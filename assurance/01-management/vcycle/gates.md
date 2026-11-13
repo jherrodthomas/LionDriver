@@ -15,7 +15,7 @@
 | [G0 Governance](../../10-safety-case/gates/skeletons/G0-skeleton.md) | 0 of 21 | 91 | 0 of 2 | 0 of 3 | 2 | 4 |
 | [G1 Concept](../../10-safety-case/gates/skeletons/G1-skeleton.md) | 0 of 16 | 89 | 0 of 6 | 0 of 9 | 4 | 3 |
 | [G2 System design](../../10-safety-case/gates/skeletons/G2-skeleton.md) | 0 of 14 | 84 | 0 of 5 | 0 of 17 | 5 | 2 |
-| [G3 HW/SW development](../../10-safety-case/gates/skeletons/G3-skeleton.md) | 0 of 18 | 137 | 0 of 6 | 0 of 22 | 6 | 2 |
+| [G3 HW/SW development](../../10-safety-case/gates/skeletons/G3-skeleton.md) | 0 of 18 | 139 | 0 of 6 | 0 of 22 | 6 | 2 |
 | [G4 Integration and verification](../../10-safety-case/gates/skeletons/G4-skeleton.md) | 0 of 7 | 34 | 0 of 1 | 0 of 26 | 6 | 3 |
 | [G5 Validation and release](../../10-safety-case/gates/skeletons/G5-skeleton.md) | 0 of 14 | 57 | 0 of 4 | 0 of 29 | 7 | 3 |
 | [G6 Operation](../../10-safety-case/gates/skeletons/G6-skeleton.md) | 0 of 2 | 12 | 0 of 0 | 0 of 33 | 7 | 1 |

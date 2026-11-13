@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="755" viewBox="0 0 640 755" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 6-0. The component FMEDA: inputs and outputs</title>
+<desc>Inputs: Field failure data (not-needed); Failure modes and safe state (done); Architecture with failure modes per block (done); Schematic, BOM, component data (partial); List of automatic diagnostics (done); Prevention measures and periodic tests (partial). Outputs: Failure rate per failure mode and category (partial); Useful life (partial); Diagnostic coverage per failure mode (done); Coverage of each periodic test (missing).</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="640" height="755" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 6-0 · The component FMEDA: inputs and outputs</text>
+<text x="16" y="48" font-size="11" fill="#475569">What a detailed component FMEDA needs and gives, and where LionDriver stands</text>
+<text x="16" y="70" font-size="12" fill="#0F172A" font-weight="700">Inputs</text>
+<rect x="16" y="78" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="94" font-size="11.5" fill="#0F172A" font-weight="700">Field failure data</text>
+<text x="28" y="108" font-size="10" fill="#475569">Optional. LionDriver has none; proven in use is not claimed (T-06)</text>
+<rect x="551.2" y="84" width="60.8" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="581.6" y="95" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">not-needed</text>
+<rect x="16" y="119" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="135" font-size="11.5" fill="#0F172A" font-weight="700">Failure modes and safe state</text>
+<text x="28" y="149" font-size="10" fill="#475569">DFMEA modes per element; safe state per safety goal</text>
+<rect x="579" y="125" width="33" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="595.5" y="136" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">done</text>
+<rect x="16" y="160" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="176" font-size="11.5" fill="#0F172A" font-weight="700">Architecture with failure modes per block</text>
+<text x="28" y="190" font-size="10" fill="#475569">Block diagram (WP-H-02 §3) and block FMEA (WP-H-03 §4)</text>
+<rect x="579" y="166" width="33" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="595.5" y="177" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">done</text>
+<rect x="16" y="201" width="608" height="48" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="217" font-size="11.5" fill="#0F172A" font-weight="700">Schematic, BOM, component data</text>
+<text x="28" y="231" font-size="10" fill="#475569">The harness box only (v3 drawing, netlist). The comma device has none (UK-01, UK-02;</text>
+<text x="28" y="244" font-size="10" fill="#475569">DQ-065)</text>
+<rect x="572" y="207" width="40" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="592" y="218" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">partial</text>
+<rect x="16" y="255" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="271" font-size="11.5" fill="#0F172A" font-weight="700">List of automatic diagnostics</text>
+<text x="28" y="285" font-size="10" fill="#475569">Safety mechanisms SM-01…45 with DC basis</text>
+<rect x="579" y="261" width="33" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="595.5" y="272" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">done</text>
+<rect x="16" y="296" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="312" font-size="11.5" fill="#0F172A" font-weight="700">Prevention measures and periodic tests</text>
+<text x="28" y="326" font-size="10" fill="#475569">DFMEA actions planned; no periodic test of the box in service</text>
+<rect x="572" y="302" width="40" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="592" y="313" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">partial</text>
+<path d="M320.0 341 L320.0 353" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<rect x="16" y="357" width="608" height="52" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="1.6"/>
+<text x="320" y="378" font-size="13" fill="#0F172A" font-weight="700" text-anchor="middle">Detailed component FMEDA</text>
+<text x="320" y="396" font-size="10.5" fill="#0F172A" text-anchor="middle">Harness box: 18 parts, 37 modes, part by part · comma device: block level only</text>
+<path d="M320.0 413 L320.0 425" stroke="#94A3B8" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+<text x="16" y="439" font-size="12" fill="#0F172A" font-weight="700">Outputs</text>
+<rect x="16" y="447" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="463" font-size="11.5" fill="#0F172A" font-weight="700">Failure rate per failure mode and category</text>
+<text x="28" y="477" font-size="10" fill="#475569">Per part and mode, generic rates (no SN 29500 held)</text>
+<rect x="572" y="453" width="40" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="592" y="464" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">partial</text>
+<rect x="16" y="488" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="504" font-size="11.5" fill="#0F172A" font-weight="700">Useful life</text>
+<text x="28" y="518" font-size="10" fill="#475569">No wear-out part except connector mating cycles, to confirm</text>
+<rect x="572" y="494" width="40" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="592" y="505" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">partial</text>
+<rect x="16" y="529" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="545" font-size="11.5" fill="#0F172A" font-weight="700">Diagnostic coverage per failure mode</text>
+<text x="28" y="559" font-size="10" fill="#475569">From the mechanisms the goal FMEDAs credit</text>
+<rect x="579" y="535" width="33" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="595.5" y="546" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">done</text>
+<rect x="16" y="570" width="608" height="35" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="28" y="586" font-size="11.5" fill="#0F172A" font-weight="700">Coverage of each periodic test</text>
+<text x="28" y="600" font-size="10" fill="#475569">No periodic test of the box exists; coverage 0 in service</text>
+<rect x="567" y="576" width="45" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="589.5" y="587" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">missing</text>
+<g class="terms">
+<text x="16" y="625" font-size="10" fill="#475569">Terms: BOM bill of materials · DC diagnostic coverage: the share of faults a safety mechanism detects · DFMEA</text>
+<text x="16" y="639" font-size="10" fill="#475569">design FMEA: failure modes and effects analysis of a design (here the harness box and device) · DQ-nn decision of</text>
+<text x="16" y="653" font-size="10" fill="#475569">the project lead (decision register) · FMEA failure mode and effects analysis · FMEDA failure modes, effects and</text>
+<text x="16" y="667" font-size="10" fill="#475569">diagnostic analysis (hardware metrics) · SM-nn safety mechanism (TSC §6) · SN SN 29500, the Siemens standard of</text>
+<text x="16" y="681" font-size="10" fill="#475569">reference failure rates for electronic components · T-nn code-derived detection or reaction time (WP-S-04 §4); in</text>
+<text x="16" y="695" font-size="10" fill="#475569">WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) · UK-nn unknown that WP-H-02 must obtain</text>
+<text x="16" y="709" font-size="10" fill="#475569">(UK-01…UK-09, WP-H-02 §5) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S</text>
+<text x="16" y="723" font-size="10" fill="#475569">system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+<text x="624" y="743" font-size="10" fill="#94A3B8" text-anchor="end">Generated by harness_box_fmeda.py from fmeda-flow.yaml</text>
+</svg>

@@ -27,9 +27,10 @@ import openpyxl
 
 ROOT = Path(__file__).resolve().parents[1]
 FINGERPRINT = Path(__file__).with_name("xlsx_viewer.sha256")
-VIEWER_URL = "https://claude.ai/artifact/QB1X8yPHBFitzEtAkB3PjT"
+VIEWER_URL = "https://claude.ai/artifact/EjLHKw63F4PwSKdAViymoD"
 # A readable name where the file name alone is not one; the others are named from their file.
 TITLES = {
+  "assurance/04-hardware/fmeda/harness-box-fmeda.xlsx": "Harness box v3 component FMEDA (WP-H-03 §6.5)",
   "assurance/02-concept/hara/WP-C-03-hara-cartesian.xlsx": "WP-C-03 HARA (reference scope, Chill mode)",
   "assurance/02-concept/hara/WP-C-03-hara-cartesian_experimental.xlsx": "WP-C-03 HARA (Experimental Mode variant)",
   "assurance/00-assessment/iso26262-2018/LionDriver_ISO26262_Audit.xlsx": "ISO 26262:2018 audit workbook",

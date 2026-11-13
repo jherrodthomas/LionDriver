@@ -72,6 +72,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FDTI | fault detection time interval |
 | FFI | freedom from interference |
 | FHTI | fault handling time interval: FDTI + FRTI |
+| FIT | failures in time: failures per 10⁹ hours |
 | FMEA | failure mode and effects analysis |
 | FMEDA | failure modes, effects and diagnostic analysis (hardware metrics) |
 | FRET | NASA's Formal Requirements Elicitation Tool |
@@ -130,6 +131,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | MISRA | MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) |
 | ML | machine learning |
 | MLE | machine learning engineering process group of ASPICE (MLE.1 … MLE.4) |
+| MPF-L | latent multiple-point fault: violates a safety goal only together with another fault, and nothing detects it |
 | MPU | memory protection unit |
 | MQB | Volkswagen's transverse modular platform (Modularer Querbaukasten) |
 | NA | not applicable |
@@ -178,6 +180,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | R-VEH | installation record block: vehicle (WP-O-01 §5) |
 | RAM | random-access memory |
 | RDP | read-out protection of the MCU's flash (option bytes) |
+| RF | residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5) |
 | ROM | read-only memory |
 | RPC | remote procedure call |
 | RSA-1024 | RSA signature with a 1024-bit key, too short today |
@@ -199,8 +202,10 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SM-SELFDRIVED | the state machine of the host's engagement state in selfdrived (WP-W-05 §5.3) |
 | SM-TOY | SM-TOY-AUTH, the state machine of the Toyota authority controls_allowed (WP-W-05 §5.2) |
 | SMPS | switched-mode power supply (the STM32H7's internal step-down regulator) |
+| SN | SN 29500, the Siemens standard of reference failure rates for electronic components |
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
+| SPF | single-point fault: a fault no safety mechanism covers that violates a safety goal on its own (ISO 26262-5) |
 | SPI | serial peripheral interface (the link between SoC and MCU) |
 | SRAM | static RAM: the MCU's working memory |
 | SSH | secure shell (remote login) |

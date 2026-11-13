@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.11 (§4: IWDG credit aligned with the FMEDA, 90 % provisional by DQ-114 A; §6.3: SM-20 readback credited at 90 % against a high target, TX read-back is SM-38 and not the TX XOR; AI-drafted; 2026-11-01). 0.10 (§6.2/§6.3: SG-07 figures from FMEDA SG-009 rev 0.9, camera-side termination R7/R8 added; λ 288 FIT, LFM 97.6 %, λSPF + λRF 63.1 FIT; planned-measure chain 83.6 → 87.3 → 94.5 %; AI-drafted; 2026-10-27). 0.9 (§6.4: SG-05 estimate from the FMEDA rev 0.7 per-goal classification, SPFM 90.38 %; 2026-10-20). 0.8 (FM-HAR-02: a flipped reading also swaps logical CAN buses 0 and 2; effect traced to the relay-malfunction check; 2026-10-20). 0.7 (§2.3 handbook set approved, DQ-068 option A, OI-2 closed; no ST licence, own self-tests with low CPU coverage, DQ-069 option B: §2.3 STM32H7 row, OI-3 and §6.4 updated, the ASIL C SPFM target likely missed and carried to G2; 2026-10-19). 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
+| Version | 0.12 (§6.5: component-level FMEDA of the harness box v3, part by part, with its roll-up check against the goal FMEDAs and the four FMEDA outputs; findings: the two goal FMEDAs split the DG419LE differently (OI-11), and Q6, R1, R4, R5 are in no goal FMEDA (OI-12); AI-drafted; 2026-11-13). 0.11 (§4: IWDG credit aligned with the FMEDA, 90 % provisional by DQ-114 A; §6.3: SM-20 readback credited at 90 % against a high target, TX read-back is SM-38 and not the TX XOR; AI-drafted; 2026-11-01). 0.10 (§6.2/§6.3: SG-07 figures from FMEDA SG-009 rev 0.9, camera-side termination R7/R8 added; λ 288 FIT, LFM 97.6 %, λSPF + λRF 63.1 FIT; planned-measure chain 83.6 → 87.3 → 94.5 %; AI-drafted; 2026-10-27). 0.9 (§6.4: SG-05 estimate from the FMEDA rev 0.7 per-goal classification, SPFM 90.38 %; 2026-10-20). 0.8 (FM-HAR-02: a flipped reading also swaps logical CAN buses 0 and 2; effect traced to the relay-malfunction check; 2026-10-20). 0.7 (§2.3 handbook set approved, DQ-068 option A, OI-2 closed; no ST licence, own self-tests with low CPU coverage, DQ-069 option B: §2.3 STM32H7 row, OI-3 and §6.4 updated, the ASIL C SPFM target likely missed and carried to G2; 2026-10-19). 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -328,6 +328,43 @@ The lead decided to reuse the rows of the two FMEDA files for the other goals ra
 
 **Not covered.** Reusing SG-01 classifications means the faults that are safe for SG-01 and dangerous for SG-02/SG-06 (loss of actuation) are not scored as such. A goal-specific classification was the option the lead did not choose (DQ-362 option B). The FTA events that rest on these rows (BE-2.06, BE-2.07, BE-3.04, BE-5.02, BE-6.02) now have their FMEDA rows named here.
 
+### 6.5 Component-level FMEDA of the harness box (BL-002)
+
+The harness box v3 is the one part of the item whose parts are known: comma's published drawing (as reviewed in RR-2026-010 HB-01…HB-06)
+and the WireViz BOM name all 18 of them. So it is the one place where the detailed component
+FMEDA of step 4 (§2.1) can be done now. It lives in [`fmeda/`](fmeda/README.md):
+
+- **One row per designator** (U1, U2, R1…R8, D1…D4, Q6, J1…J3), each with its failure modes, their share and their class
+  for SG-07 and SG-01, in [`harness-box-parts.yaml`](fmeda/harness-box-parts.yaml). The rates are the ones the goal FMEDAs
+  carry, split per part, so still generic (OI-10).
+- **A roll-up check.** `harness_box_fmeda.py` checks the parts against the drawing and BOM, and checks that, row by row and
+  mode by mode, the parts add up to the box rows of the goal FMEDAs and carry the same class. CI runs it on every change.
+- **The four FMEDA outputs:** the failure rate per mode and per category, the useful life, the diagnostic coverage per
+  mode, and the coverage of each periodic test. They are written on the folder page and as a workbook in the usual FMEDA
+  spreadsheet layout ([`harness-box-fmeda.xlsx`](fmeda/harness-box-fmeda.xlsx), one sheet per goal, the reviewer cells
+  empty).
+
+![Figure 6-0: the inputs a detailed component FMEDA needs and the outputs it gives, with LionDriver's state for each](fmeda/fig-h03-6-0-fmeda-flow.svg)
+
+*Figure 6-0.* The component FMEDA's inputs and outputs, with the records that hold each here and how far each has got.
+The schematic and BOM input is met for the harness box only; the comma device stays at block level (OI-1).
+
+What the part-level view found that the block rows hid:
+
+- **The same switch is split two ways.** The SG-009 file gives the DG419LE 30 % stuck in intercept, 30 % stuck in
+  pass-through and 40 % channel open; the SG-001 file 35 %, 35 % and 30 %. A part has one failure-mode distribution
+  (OI-11). Aligned on the SG-009 split, SG-01's SPFM and LFM move by less than 0.2 points
+  ([`fmeda/README.md`](fmeda/README.md) has the figures).
+- **Four parts are in no goal FMEDA:** the ignition sense Q6, R1, R4 and R5 (and R6, which has no function with the
+  Toyota A harness). A Q6 drain-source short makes the ignition read on with the ignition off, which DFM-014.C2 rates for
+  the heartbeat timeout: a latent fault for SG-01. The modes where the ignition reads off while driving have no DFMEA row
+  (OI-12).
+- **No periodic test of the box exists.** The installation check runs once and the bench tests run on a sample, so every
+  latent mode of the box stays latent for its 15-year life.
+
+The goal FMEDA files are not changed by this section: aligning them (OI-11) and adding the new rows (OI-12) change the
+metrics and are the next revision of those files.
+
 ## 7. Open items
 
 | ID | Item | Needed by |
@@ -342,3 +379,5 @@ The lead decided to reuse the rows of the two FMEDA files for the other goals ra
 | OI-8 | Re-run the FMEA after each WP-H-02 §6 change is implemented | G3 |
 | OI-9 | ~~SG-07: decide the safe state when relay readback finds the relay welded in the intercept position~~ **Decided** ([DQ-064](../01-management/decisions/register.yaml), option A, 2026-10-14): warn the driver that stock AEB is unavailable and refuse to engage; accepted as the degraded state. It applies only once readback exists (DC-03, HWSR-506a, DQ-209); with the v3 box the same case is a switch stuck in intercept (FM-REL-02/04). The HMI warning requirement belongs to the FSC and TSR owners | G2 |
 | OI-10 | Replace the generic rates of §6.3 with part-specific values (BOM, ST data, SER) and add the dual-point PMHF term. 2026-10-16: U1/U2 at the SN 29500-2 reference value (secondary source); the other harness box parts are classed but still generic | G3 |
+| OI-11 | Align the DG419LE failure-mode distribution of the two goal FMEDAs (SG-001 file 35/35/30 %, SG-009 file and the part list 30/30/40 %); the roll-up check of §6.5 lists the difference until it is gone | G2 |
+| OI-12 | Carry the harness box ignition-sense parts (Q6, R1, R4, R5) in the SG-001 FMEDA, and add a DFMEA row for the ignition sense reading off while driving; analyse the eight modes §6.5 marks as not yet analysed | G2 |
