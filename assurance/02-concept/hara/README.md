@@ -24,7 +24,7 @@ controllability, and turns the worst cases into safety goals with an ASIL. Those
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
 | FSC | functional safety concept |
 | FSR-nn | functional safety requirement (FSC) |
-| G0–G6 | gate G0…G6 of the project lifecycle |
+| G0–G6 | gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) |
 | H-nn | hazard (HARA) |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | HATARA | the joint HARA and TARA view: where hazards and threats meet |

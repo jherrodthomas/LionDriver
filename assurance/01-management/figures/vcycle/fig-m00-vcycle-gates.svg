@@ -248,8 +248,8 @@
 <text x="1201" y="724" font-size="11.5" fill="#0F172A">• Quality assurance</text>
 <text x="58" y="830" font-size="11" fill="#475569" font-style="italic">Plus 91 open items in those work products. A gate passes only through a recorded review in 10-safety-case/gates/; this board is the skeletons' view, not that review.</text>
 <g class="terms">
-<text x="40" y="864" font-size="10.5" fill="#475569">Terms: AUD-nn functional safety audit, AUD-n (WP-M-06 §5) · CR-nn confirmation review of the confirmation measures plan (WP-M-06) · FSA-F final functional safety assessment at G5 (WP-M-06 §6) · G0–G6 gate G0…G6 of the project lifecycle · HW hardware · IFR interface record</text>
-<text x="40" y="878.5" font-size="10.5" fill="#475569">(trace/items/ifr.yaml): a cross-domain interface, agreed only by a recorded review · IFR-nn interface record IFR-nn: one cross-domain interface with its owners, open item and agreement state (trace/items/ifr.yaml) · SR-nn independent SOTIF or AI evaluation review, SR-nn (WP-M-06</text>
-<text x="40" y="893" font-size="10.5" fill="#475569">§7) · SW software · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="40" y="864" font-size="10.5" fill="#475569">Terms: AUD-nn functional safety audit, AUD-n (WP-M-06 §5) · CR-nn confirmation review of the confirmation measures plan (WP-M-06) · FSA-F final functional safety assessment at G5 (WP-M-06 §6) · G0–G6 gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1…</text>
+<text x="40" y="878.5" font-size="10.5" fill="#475569">(WP-K-01) · HW hardware · IFR interface record (trace/items/ifr.yaml): a cross-domain interface, agreed only by a recorded review · IFR-nn interface record IFR-nn: one cross-domain interface with its owners, open item and agreement state (trace/items/ifr.yaml) · SR-nn independent</text>
+<text x="40" y="893" font-size="10.5" fill="#475569">SOTIF or AI evaluation review, SR-nn (WP-M-06 §7) · SW software · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
 </svg>
