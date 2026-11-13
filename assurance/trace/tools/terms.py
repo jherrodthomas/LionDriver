@@ -67,6 +67,7 @@ FIGURES = [
   A / "01-management/figures/vcycle/fig-m00-vcycle-gates.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-evidence.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-conflicts.svg",
+  A / "01-management/figures/vcycle/fig-m00-vcycle-case.svg",
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-impact-*.svg")),  # recent changes
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-std-*.svg")),  # one per standard
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-x-*.svg")),  # exploded views, one per box
@@ -186,6 +187,7 @@ TERMS = {
   "NA": "not applicable",
   "HSI": "hardware-software interface",
   "CI": "continuous integration: the checks that run on every pull request",
+  "CM": "configuration management: identifying, baselining and controlling changes to work products (WP-P-01)",
   "ID": "identifier",
   # vehicle and item
   "LD-SDA": "LionDriver Supervised Driving Assistance, the item",
@@ -480,7 +482,7 @@ TERMS = {
   "W#": "weather and surface condition W01…W06 (HARA §3.1)",
   "L#": "degradation level L0 (full function) to L5 (lockout), FSC §12.1",
   "P#": "priority of a functional modification: P1 before on-road use, P2 before release, P3 decide at G2",
-  "G#": "gate G0…G6 of the project lifecycle",
+  "G#": "gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01)",
   "I#": "independence level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation)",
 }
 

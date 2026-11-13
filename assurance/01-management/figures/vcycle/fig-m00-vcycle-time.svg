@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="1094" viewBox="0 0 1640 1094" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="1109" viewBox="0 0 1640 1109" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>LionDriver V-cycle over time</title>
 <desc>The V-cycle over time as of 2026-11-12: 11 rows from concept down to implementation and back up to vehicle validation. 86 work products have dated versions between 2026-10-12 and 2026-11-12 (3 undated); 49 have an input dated after their own last version. The plan runs each row from the previous gate to its own gate.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="1640" height="1094" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1640" height="1109" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="28" fill="#0F172A" font-weight="700">LionDriver V-cycle over time</text>
 <text x="40" y="70" font-size="13.5" fill="#475569">Each row is a box of the V, tagged with its level (need, system, subsystem, component). Left: what the records show happened, day by day. Right: when the plan has each row due. Bottom: what can be measured from that.</text>
 <text x="330" y="124" font-size="11.5" fill="#475569" font-weight="700">Recorded history · 12 Oct 2026 – 12 Nov 2026 (dated entries in each work product's Version row)</text>
@@ -326,6 +326,7 @@
 <text x="40" y="1026" font-size="11.5" fill="#0F172A">As of 12 Nov 2026: the 86 dated work products were all drafted within 32 days, while the plan has the rows due one after another. The left side spreads out into that order as reviews, gates and evidence are recorded.</text>
 <text x="40" y="1046" font-size="11" fill="#475569" font-style="italic">Dates come from each work product's Version row; inputs from the process model (WP-P-11). An input dated later is a prompt to look, not proof the work product is wrong. Status is not acceptance.</text>
 <g class="terms">
-<text x="40" y="1070" font-size="10.5" fill="#475569">Terms: G0–G6 gate G0…G6 of the project lifecycle · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="40" y="1070" font-size="10.5" fill="#475569">Terms: G0–G6 gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K</text>
+<text x="40" y="1084.5" font-size="10.5" fill="#475569">safety case)</text>
 </g>
 </svg>

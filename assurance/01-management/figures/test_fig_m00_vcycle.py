@@ -277,6 +277,28 @@ class VCycle(unittest.TestCase):
       self.assertIn(f"[{wp}]", page)
     for g in d["lag"].values():
       self.assertGreater(g["days"], vc.GRACE_DAYS)
+  def test_case_shape_follows_the_sides_of_the_v(self):
+    import vcycle_case as vc
+    self.assertEqual(vc.shape({"define", "verify"}, False), "both sides of the V")
+    self.assertEqual(vc.shape({"define", "band", "off"}, False), "definition only")
+    self.assertEqual(vc.shape({"define", "build"}, False), "across the V")
+    self.assertEqual(vc.shape({"verify", "build", "band"}, False), "verification only")
+    self.assertEqual(vc.shape({"band", "off"}, False), "across the V")
+    self.assertEqual(vc.shape(set(), True), "through its sub-claims")
+    self.assertEqual(vc.shape(set(), False), "no evidence")
+
+  def test_every_claim_and_its_evidence_is_on_the_case_view(self):
+    import vcycle_case as vc
+    m = v.build_model()
+    d = vc.model(m)
+    claims = vc.caselib.load_case().of_kind("claim")
+    self.assertEqual(sorted(r["id"] for r in d["rows"]), sorted(c["id"] for c in claims))
+    refs = {c["id"]: sorted(c.get("evidence_refs") or []) for c in claims}
+    for r in d["rows"]:
+      self.assertEqual(sorted(e["id"] for es in r["cells"].values() for e in es), refs[r["id"]], r["id"])
+    self.assertEqual(sum(vc.counts(d).values()), len(d["rows"]))
+    page = (vc.vx.PAGES / vc.PAGE).read_text(encoding="utf-8")
+    self.assertEqual(len([ln for ln in page.splitlines() if re.match(r"^\| (&nbsp;)*\[G[\d.]+\]", ln)]), len(claims))
 
 
 if __name__ == "__main__":

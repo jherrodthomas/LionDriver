@@ -37,6 +37,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | CCN | cyclomatic complexity number: the count of independent paths through a function (McCabe) |
 | CI | continuous integration: the checks that run on every pull request |
 | CLU | instrument cluster |
+| CM | configuration management: identifying, baselining and controlling changes to work products (WP-P-01) |
 | COM | common terminal of a changeover switch |
 | CRC | cyclic redundancy check |
 | CSAR | configuration, software and architecture repository: the project lead's Tier-1 toolchain term, not an AUTOSAR one |
@@ -359,5 +360,5 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | W01–W06 | weather and surface condition W01…W06 (HARA §3.1) |
 | L0–L5 | degradation level L0 (full function) to L5 (lockout), FSC §12.1 |
 | P1–P3 | priority of a functional modification: P1 before on-road use, P2 before release, P3 decide at G2 |
-| G0–G6 | gate G0…G6 of the project lifecycle |
+| G0–G6 | gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) |
 | I0–I3 | independence level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation) |

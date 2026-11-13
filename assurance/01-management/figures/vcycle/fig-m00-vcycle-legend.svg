@@ -22,9 +22,9 @@
 <text x="1340" y="50" font-size="12" fill="#475569" text-anchor="end">Each box opens its exploded view</text>
 <text x="60" y="72" font-size="11.5" fill="#94A3B8" font-style="italic">Work products are grouped by hand; their status, gates and dates are read from the records on every build, so the V moves as they change. Status is not acceptance.</text>
 <g class="terms">
-<text x="60" y="94" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · FSC functional safety concept · G0–G6 gate G0…G6 of the project lifecycle · HARA hazard analysis and risk assessment (ISO 26262-3) · HIL hardware in the loop: the bench with the real panda and</text>
-<text x="60" y="108.5" font-size="10.5" fill="#475569">simulated car buses · HSI hardware-software interface · HW hardware · MISRA MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) · ML machine learning · SOTIF safety of the intended functionality (ISO 21448):</text>
-<text x="60" y="123" font-size="10.5" fill="#475569">hazards with nothing failing · SW software · TARA threat analysis and risk assessment (ISO/SAE 21434) · TSC technical safety concept · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
-<text x="60" y="137.5" font-size="10.5" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+<text x="60" y="94" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · FSC functional safety concept · G0–G6 gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) · HARA hazard analysis and risk assessment (ISO 26262-3) · HIL</text>
+<text x="60" y="108.5" font-size="10.5" fill="#475569">hardware in the loop: the bench with the real panda and simulated car buses · HSI hardware-software interface · HW hardware · MISRA MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) · ML machine learning · SOTIF</text>
+<text x="60" y="123" font-size="10.5" fill="#475569">safety of the intended functionality (ISO 21448): hazards with nothing failing · SW software · TARA threat analysis and risk assessment (ISO/SAE 21434) · TSC technical safety concept · WP-nn work product, e.g. WP-C-04; the letter</text>
+<text x="60" y="137.5" font-size="10.5" fill="#475569">is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
 </g>
 </svg>
