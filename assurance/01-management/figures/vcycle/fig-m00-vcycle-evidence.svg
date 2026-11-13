@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="910" viewBox="0 0 1640 910" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Evidence maturity on the V-cycle</title>
+<desc>Evidence maturity on the V-cycle: 50 evidence items, 15 not performed, 35 drafted, 0 performed, 0 reviewed, not accepted, 0 accepted; 42 open defeaters against 36 claims.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1640" height="910" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">Evidence maturity on the V-cycle</text>
+<text x="40" y="68" font-size="13" fill="#475569">Each safety-case evidence item (case-records) on the box of the work product it lives in, and how far it has matured: not performed, drafted, performed, reviewed, accepted.</text>
+<rect x="40" y="104" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="54" y="126" font-size="13" fill="#0F172A" font-weight="700">Concept and hazards</text>
+<text x="398" y="126" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">9 evidence items</text>
+<rect x="54" y="138" width="342" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="54" y="166" font-size="11" fill="#475569">9 drafted</text>
+<text x="54" y="184" font-size="11" fill="#C2410C" font-weight="700">supports 13 claims · 20 open defeaters against them</text>
+<rect x="728" y="104" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="742" y="126" font-size="13" fill="#0F172A" font-weight="700">Vehicle validation</text>
+<text x="1086" y="126" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">9 evidence items</text>
+<rect x="742" y="138" width="265.6" height="12" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="1009.6" y="138" width="74.4" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="742" y="166" font-size="11" fill="#475569">7 not performed, 2 drafted</text>
+<text x="742" y="184" font-size="11" fill="#C2410C" font-weight="700">supports 14 claims · 29 open defeaters against them</text>
+<rect x="70" y="212" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="84" y="234" font-size="13" fill="#0F172A" font-weight="700">System requirements</text>
+<text x="428" y="234" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">1 evidence item</text>
+<rect x="84" y="246" width="342" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="84" y="274" font-size="11" fill="#475569">1 drafted</text>
+<text x="84" y="292" font-size="11" fill="#C2410C" font-weight="700">supports 6 claims · 18 open defeaters against them</text>
+<rect x="698" y="212" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="712" y="234" font-size="13" fill="#475569" font-weight="700">System verification</text>
+<text x="1056" y="234" font-size="11" fill="#D2553F" font-weight="700" text-anchor="end">no evidence recorded</text>
+<text x="712" y="264" font-size="11" fill="#475569" font-style="italic">Nothing in the safety case cites a work product of this box yet.</text>
+<rect x="100" y="320" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="114" y="342" font-size="13" fill="#0F172A" font-weight="700">System architecture</text>
+<text x="458" y="342" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">3 evidence items</text>
+<rect x="114" y="354" width="342" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="114" y="382" font-size="11" fill="#475569">3 drafted</text>
+<text x="114" y="400" font-size="11" fill="#C2410C" font-weight="700">supports 2 claims · 17 open defeaters against them</text>
+<rect x="668" y="320" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="682" y="342" font-size="13" fill="#475569" font-weight="700">System integration</text>
+<text x="1026" y="342" font-size="11" fill="#D2553F" font-weight="700" text-anchor="end">no evidence recorded</text>
+<text x="682" y="372" font-size="11" fill="#475569" font-style="italic">Nothing in the safety case cites a work product of this box yet.</text>
+<rect x="130" y="428" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="144" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software …</text>
+<text x="488" y="450" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">1 evidence item</text>
+<rect x="144" y="462" width="342" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="144" y="490" font-size="11" fill="#475569">1 drafted</text>
+<text x="144" y="508" font-size="11" fill="#C2410C" font-weight="700">supports 1 claim · 4 open defeaters against them</text>
+<rect x="638" y="428" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="652" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software integration</text>
+<text x="996" y="450" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">3 evidence items</text>
+<rect x="652" y="462" width="227.3" height="12" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="881.3" y="462" width="112.7" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="652" y="490" font-size="11" fill="#475569">2 not performed, 1 drafted</text>
+<text x="652" y="508" font-size="11" fill="#C2410C" font-weight="700">supports 6 claims · 15 open defeaters against them</text>
+<rect x="160" y="536" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="174" y="558" font-size="13" fill="#0F172A" font-weight="700">Detailed design</text>
+<text x="518" y="558" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">3 evidence items</text>
+<rect x="174" y="570" width="342" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="174" y="598" font-size="11" fill="#475569">3 drafted</text>
+<text x="174" y="616" font-size="11" fill="#C2410C" font-weight="700">supports 1 claim · 5 open defeaters against them</text>
+<rect x="608" y="536" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="622" y="558" font-size="13" fill="#0F172A" font-weight="700">Unit verification</text>
+<text x="966" y="558" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">1 evidence item</text>
+<rect x="622" y="570" width="342" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="622" y="598" font-size="11" fill="#475569">1 drafted</text>
+<text x="622" y="616" font-size="11" fill="#C2410C" font-weight="700">supports 4 claims · 9 open defeaters against them</text>
+<rect x="360" y="644" width="460" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="374" y="666" font-size="13" fill="#0F172A" font-weight="700">Implementation</text>
+<text x="806" y="666" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">2 evidence items</text>
+<rect x="374" y="678" width="214" height="12" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="590" y="678" width="214" height="12" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="374" y="706" font-size="11" fill="#475569">1 not performed, 1 drafted</text>
+<text x="374" y="724" font-size="11" fill="#C2410C" font-weight="700">supports 2 claims · 3 open defeaters against them</text>
+<text x="40" y="762" font-size="12" fill="#475569" font-weight="700">Runs across every phase</text>
+<rect x="40" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="50" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Management plans</text>
+<text x="234" y="790" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">2</text>
+<rect x="50" y="800" width="90" height="10" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="142" y="800" width="90" height="10" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="50" y="826" font-size="10.5" fill="#C2410C">1 open defeater</text>
+<rect x="254" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="264" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Supporting processes</text>
+<text x="448" y="790" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">6</text>
+<rect x="264" y="800" width="59.3" height="10" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="325.3" y="800" width="120.7" height="10" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="264" y="826" font-size="10.5" fill="#C2410C">5 open defeaters</text>
+<rect x="468" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="478" y="790" font-size="11.5" fill="#475569" font-weight="700">Traceability</text>
+<text x="662" y="790" font-size="11" fill="#94A3B8" font-weight="700" text-anchor="end">0</text>
+<text x="478" y="814" font-size="10.5" fill="#94A3B8" font-style="italic">none</text>
+<rect x="682" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="692" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Safety case</text>
+<text x="876" y="790" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">2</text>
+<rect x="692" y="800" width="90" height="10" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="784" y="800" width="90" height="10" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="692" y="826" font-size="10.5" fill="#C2410C">6 open defeaters</text>
+<rect x="896" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="906" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Operation and field</text>
+<text x="1090" y="790" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">6</text>
+<rect x="906" y="800" width="28.7" height="10" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="936.7" y="800" width="151.3" height="10" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="906" y="826" font-size="10.5" fill="#C2410C">18 open defeaters</text>
+<rect x="1140" y="104" width="460" height="576" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1160" y="134" font-size="12" fill="#475569" font-weight="700">All evidence items</text>
+<text x="1580" y="134" font-size="14" fill="#0F172A" font-weight="700" text-anchor="end">50</text>
+<rect x="1160" y="154" width="420" height="58" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.4"/>
+<text x="1176" y="178" font-size="14" fill="#D2553F" font-weight="700">Not performed</text>
+<text x="1564" y="180" font-size="20" fill="#D2553F" font-weight="700" text-anchor="end">15</text>
+<text x="1176" y="198" font-size="11" fill="#475569">recorded in WP-K-01 §6, not yet done</text>
+<text x="1370" y="228" font-size="14" fill="#94A3B8" text-anchor="middle">↓</text>
+<rect x="1160" y="238" width="420" height="58" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="1176" y="262" font-size="14" fill="#D97706" font-weight="700">Drafted</text>
+<text x="1564" y="264" font-size="20" fill="#D97706" font-weight="700" text-anchor="end">35</text>
+<text x="1176" y="282" font-size="11" fill="#475569">drafted analysis or specification</text>
+<text x="1370" y="312" font-size="14" fill="#94A3B8" text-anchor="middle">↓</text>
+<rect x="1160" y="322" width="420" height="58" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1176" y="346" font-size="14" fill="#4F46E5" font-weight="700">Performed</text>
+<text x="1564" y="348" font-size="20" fill="#94A3B8" font-weight="700" text-anchor="end">0</text>
+<text x="1176" y="366" font-size="11" fill="#475569">performed and approved at a named baseline</text>
+<text x="1370" y="396" font-size="14" fill="#94A3B8" text-anchor="middle">↓</text>
+<rect x="1160" y="406" width="420" height="58" rx="10" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1176" y="430" font-size="14" fill="#2E9E6A" font-weight="700">Reviewed, not accepted</text>
+<text x="1564" y="432" font-size="20" fill="#94A3B8" font-weight="700" text-anchor="end">0</text>
+<text x="1176" y="450" font-size="11" fill="#475569">a recorded review has looked at it</text>
+<text x="1370" y="480" font-size="14" fill="#94A3B8" text-anchor="middle">↓</text>
+<rect x="1160" y="490" width="420" height="58" rx="10" fill="#ECFDF5" stroke="#166534" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1176" y="514" font-size="14" fill="#166534" font-weight="700">Accepted</text>
+<text x="1564" y="516" font-size="20" fill="#94A3B8" font-weight="700" text-anchor="end">0</text>
+<text x="1176" y="534" font-size="11" fill="#475569">accepted by a recorded review</text>
+<text x="1160" y="578" font-size="11.5" fill="#0F172A">Only work or a recorded review moves an item up a step;</text>
+<text x="1160" y="596" font-size="11.5" fill="#0F172A">a passing test or a document existing never does.</text>
+<text x="1160" y="624" font-size="12" fill="#C2410C" font-weight="700">42 open defeaters · 36 claims · 0 accepted</text>
+<text x="1160" y="644" font-size="11" fill="#475569" font-style="italic">A defeater counts in every box whose claims it stands against.</text>
+<text x="1160" y="664" font-size="11" fill="#475569" font-style="italic">Not on the V (location names no work product): Sn-15, Sn-60</text>
+<text x="40" y="862" font-size="11.5" fill="#475569" font-style="italic">Status and review state come from the safety-case records; nothing here is assessed or accepted by being drawn. Status is not acceptance.</text>
+<g class="terms">
+<text x="40" y="886" font-size="10.5" fill="#475569">Terms: WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
