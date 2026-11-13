@@ -1,0 +1,368 @@
+# Component-level FMEDA of the harness box v3 (E-05), one entry per designator (WP-H-03 §6.5).
+#
+# The parts come from comma's published v3 drawing as transcribed in RR-2026-010 HB-01…HB-06, the WireViz BOM
+# (../wiring/e05-harness-box.bom.tsv); harness_box_fmeda.py fails when a designator there is missing here, or the
+# reverse. The ngspice netlist (../spice/box-v3-nominal.cir) shows R6 unused with the Toyota A harness. Shipped parts are unconfirmed (VS-HW-02).
+#
+# Rates are the ones the goal FMEDAs carry, split per part; they are generic estimates except the DG419LE (SN 29500-2
+# reference value, quoted second-hand). No stress conversion to the mission profile is applied (WP-H-03 §2.3, OI-10).
+# Mode distributions are engineering estimates, not taken from a handbook (no IEC 61709 or failure-mode handbook is
+# held); each part says so. They are the analysis's assumptions, to be replaced when a source is held.
+#
+# Per mode, `goals` gives the classification for the assurance safety goals this box serves:
+#   SG-07 keep the stock pre-collision braking (FMEDA file fmeda-sg009.yaml, LD-HARA-001 SG-009)
+#   SG-01 lateral control within the envelope (FMEDA file fmeda-sg001.yaml, LD-HARA-001 SG-001)
+# Classes: SPF single-point, RF covered by a mechanism (residual), MPF-L latent multiple-point, safe, none (no effect on
+# that goal), open (effect not yet analysed; an open item). `rows` names the goal FMEDA mode the part's mode rolls up
+# into, per file; harness_box_fmeda.py checks that the parts' rates add up to each goal row.
+#
+# Status: draft, AI-assisted (Claude, I0), not reviewed. Version 0.1, 2026-11-13.
+
+parts:
+- ref: U1
+  part: Vishay DG419LEDY-T1-GE4, SPDT CMOS analog switch on CAN_H (COM camera CAN2_H, NC car CAN0_H, NO terminated)
+  drawing: HB-01
+  sn29500_class: SN 29500-2, CMOS/BiCMOS analog and mixed-signal ICs
+  rate_fit: 25
+  rate_kind: handbook
+  rate_basis: SN 29500-2 reference value 25 FIT at 55 °C, quoted from TI functional-safety FIT reports (standard not read); as FMD-C-007
+  distribution_basis: Engineering estimate (no failure-mode handbook held); the SG-009 file's split
+  modes: &dg419_modes
+  - mode: Stuck in intercept, or IN input damaged high
+    distribution: 0.3
+    effect: The camera bus stays separated from the car bus; stock PCS frames reach the car only if the device forwards them
+    goals: {SG-07: SPF, SG-01: safe}
+    rows: {fmeda-sg009: FMD-019, fmeda-sg001: FMD-021}
+  - mode: Stuck in pass-through
+    distribution: 0.3
+    effect: The stock camera stays on the car bus; while the device intercepts, stock LKA and the item's commands both reach the EPS
+    goals: {SG-07: safe, SG-01: RF}
+    rows: {fmeda-sg009: FMD-021, fmeda-sg001: FMD-020}
+  - mode: Channel open, increased on-resistance, leakage or latch-up
+    distribution: 0.4
+    effect: The stock path through the switch is broken or loaded
+    goals: {SG-07: SPF, SG-01: MPF-L}
+    rows: {fmeda-sg009: FMD-022, fmeda-sg001: FMD-022}
+
+- ref: U2
+  part: Vishay DG419LEDY-T1-GE4, SPDT CMOS analog switch on CAN_L (COM car CAN0_L, NC camera CAN2_L, NO terminated)
+  drawing: HB-01
+  sn29500_class: SN 29500-2, CMOS/BiCMOS analog and mixed-signal ICs
+  rate_fit: 25
+  rate_kind: handbook
+  rate_basis: As U1
+  distribution_basis: As U1
+  modes: *dg419_modes
+
+- ref: R2
+  part: 120 Ω thick-film chip resistor, SBU1 pull-down (with R3, 240 Ω to GND)
+  drawing: HB-02
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: Generic estimate, as FMD-C-011 (2 × about 0.2 FIT)
+  distribution_basis: Engineering estimate
+  modes: &pulldown_modes
+  - mode: Open (IN floats when SBU1 is undriven)
+    distribution: 0.6
+    effect: The switch may stay in intercept when the device stops driving SBU1 (reset, hang, unplugged cable)
+    goals: {SG-07: MPF-L, SG-01: safe}
+    rows: {fmeda-sg009: FMD-028, fmeda-sg001: FMD-024}
+  - mode: Short (SBU1 held low)
+    distribution: 0.4
+    effect: The switch cannot reach intercept; the device's drive is shorted to ground
+    goals: {SG-07: safe, SG-01: RF}
+    rows: {fmeda-sg009: FMD-029, fmeda-sg001: FMD-023}
+
+- ref: R3
+  part: 120 Ω thick-film chip resistor, SBU1 pull-down (with R2)
+  drawing: HB-02
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: As R2
+  distribution_basis: As R2
+  modes: *pulldown_modes
+
+- ref: R7
+  part: 120 Ω thick-film chip resistor, camera-side termination in intercept (U1 NO to CAN2_L)
+  drawing: HB-05
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: Generic estimate, as FMD-C-014 (2 × about 0.2 FIT)
+  distribution_basis: Engineering estimate
+  modes: &cam_term_modes
+  - mode: Open (camera side left with one 120 Ω in intercept)
+    distribution: 0.6
+    effect: Latent; with the second termination also open, the camera bus is unterminated in intercept and frames are lost
+    goals: {SG-07: MPF-L, SG-01: none}
+    rows: {fmeda-sg009: FMD-035}
+  - mode: Short (camera CAN2_H to CAN2_L in intercept)
+    distribution: 0.4
+    effect: Camera bus held recessive in intercept; no stock PCS frames reach the device to be forwarded
+    goals: {SG-07: SPF, SG-01: none}
+    rows: {fmeda-sg009: FMD-036}
+
+- ref: R8
+  part: 120 Ω thick-film chip resistor, camera-side termination in intercept (through the harness P13–P15 loopback)
+  drawing: HB-05
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: As R7
+  distribution_basis: As R7
+  modes: *cam_term_modes
+
+- ref: R6
+  part: 120 Ω thick-film chip resistor, car-side termination in intercept (U2 NO to J1 P5)
+  drawing: HB-05
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: Generic estimate (thick-film chip resistor)
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: Open
+    distribution: 0.6
+    effect: None in the reference configuration. R6 terminates the car side only when the plug loops P3 to P5; the Toyota A harness loops P13 to P15 instead, so R6 has one end open (netlist RHPP, wiring README §3)
+    goals: {SG-07: none, SG-01: none}
+  - mode: Short
+    distribution: 0.4
+    effect: None in the reference configuration, as for open
+    goals: {SG-07: none, SG-01: none}
+
+- ref: D1
+  part: STMicroelectronics STPS2H100ZFY, power Schottky from IGN_12 to box VIN
+  drawing: HB-03
+  sn29500_class: SN 29500-5 (discrete semiconductors), Schottky rectifiers
+  rate_fit: 2
+  rate_kind: generic
+  rate_basis: Generic estimate, as FMD-C-012 (about 2 FIT)
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: Open (box unpowered without comma power)
+    distribution: 0.6
+    effect: The switches lose their supply and pass-through is not guaranteed (RR-2026-010 F-02); the device loses power with the box
+    goals: {SG-07: SPF, SG-01: safe}
+    rows: {fmeda-sg009: FMD-030}
+  - mode: Short (reverse protection lost)
+    distribution: 0.4
+    effect: Latent loss of reverse-polarity protection
+    goals: {SG-07: MPF-L, SG-01: none}
+    rows: {fmeda-sg009: FMD-032}
+
+- ref: D4
+  part: SMF16A, 16 V stand-off TVS diode from box VIN to GND
+  drawing: HB-04
+  sn29500_class: SN 29500-5 (discrete semiconductors), suppressor diodes
+  rate_fit: 1
+  rate_kind: generic
+  rate_basis: Generic estimate, as FMD-C-012 (about 1 FIT)
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: Short (box VIN to ground)
+    distribution: 0.6
+    effect: As D1 open
+    goals: {SG-07: SPF, SG-01: safe}
+    rows: {fmeda-sg009: FMD-031}
+  - mode: Open (transient protection lost)
+    distribution: 0.4
+    effect: Latent loss of transient protection for U1/U2 (DFM-010.C4)
+    goals: {SG-07: MPF-L, SG-01: none}
+    rows: {fmeda-sg009: FMD-032}
+
+- ref: D2
+  part: Nexperia BAS40SDW, dual Schottky clamp on CAN0_H/L to VIN and GND
+  drawing: HB-04
+  sn29500_class: SN 29500-5 (discrete semiconductors), small-signal Schottky diodes
+  rate_fit: 1
+  rate_kind: generic
+  rate_basis: Generic estimate, as FMD-C-013 (about 1 FIT per array)
+  distribution_basis: Engineering estimate
+  modes: &clamp_modes
+  - mode: Short or leakage on a CAN line
+    distribution: 0.3
+    effect: The bus is loaded in either switch state (RR-2026-010 F-07)
+    goals: {SG-07: SPF, SG-01: none}
+    rows: {fmeda-sg009: FMD-033}
+  - mode: Open (clamp lost)
+    distribution: 0.7
+    effect: Latent loss of bus protection
+    goals: {SG-07: MPF-L, SG-01: none}
+    rows: {fmeda-sg009: FMD-034}
+
+- ref: D3
+  part: Nexperia BAS40SDW, dual Schottky clamp on CAN2_H/L to VIN and GND
+  drawing: HB-04
+  sn29500_class: SN 29500-5 (discrete semiconductors), small-signal Schottky diodes
+  rate_fit: 1
+  rate_kind: generic
+  rate_basis: As D2
+  distribution_basis: As D2
+  modes: *clamp_modes
+
+- ref: Q6
+  part: Diodes Inc. DMN3200U-7, N-channel MOSFET pulling SBU2 low when the ignition is on
+  drawing: HB-06
+  sn29500_class: SN 29500-5 (discrete semiconductors), small-signal MOSFETs
+  rate_fit: 1
+  rate_kind: generic
+  rate_basis: Generic estimate (small-signal MOSFET, about 1 FIT); not in the goal FMEDAs
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: Drain-source short (SBU2 held low)
+    distribution: 0.5
+    effect: Ignition sense reads on with the ignition off (DFM-014.C2). The heartbeat timeout then uses its ignition-on value, a longer actuation window after a host loss
+    goals: {SG-07: none, SG-01: MPF-L}
+  - mode: Open (SBU2 never pulled low)
+    distribution: 0.5
+    effect: Ignition sense reads off while driving; the DFMEA has no row for this case
+    goals: {SG-07: none, SG-01: open}
+
+- ref: R1
+  part: 1 kΩ resistor in series between Q6 and SBU2
+  drawing: HB-06
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: Generic estimate; not in the goal FMEDAs
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: Open
+    distribution: 0.6
+    effect: Ignition sense reads off while driving, as Q6 open; SBU2 also shows open to the orientation measurement (HB-07)
+    goals: {SG-07: open, SG-01: open}
+  - mode: Short
+    distribution: 0.4
+    effect: SBU2 is pulled low without its series resistance; the orientation measurement (HB-07) reads a lower value
+    goals: {SG-07: open, SG-01: open}
+
+- ref: R4
+  part: Resistor, upper leg of the IGN_12 divider to the Q6 gate
+  drawing: HB-06
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: Generic estimate; value not given in the drawing transcription; not in the goal FMEDAs
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: Open
+    distribution: 0.6
+    effect: Q6 stays off; ignition sense reads off while driving
+    goals: {SG-07: none, SG-01: open}
+  - mode: Short
+    distribution: 0.4
+    effect: The Q6 gate sees the full ignition voltage; whether that exceeds its gate rating is not checked
+    goals: {SG-07: none, SG-01: open}
+
+- ref: R5
+  part: Resistor, lower leg of the IGN_12 divider (Q6 gate to GND)
+  drawing: HB-06
+  sn29500_class: SN 29500-3 (passive components), thick-film resistors
+  rate_fit: 0.2
+  rate_kind: generic
+  rate_basis: Generic estimate; value not given in the drawing transcription; not in the goal FMEDAs
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: Open
+    distribution: 0.6
+    effect: The Q6 gate sees the full ignition voltage when on, as R4 short
+    goals: {SG-07: none, SG-01: open}
+  - mode: Short
+    distribution: 0.4
+    effect: Q6 stays off; ignition sense reads off while driving
+    goals: {SG-07: none, SG-01: open}
+
+- ref: J1
+  part: Molex 501876-1840, 18-pin box header to the Toyota A plug X3 (stock-path pins 4, 6, 16, 18)
+  drawing: HB-08
+  sn29500_class: SN 29500-5 (connections), board connectors
+  rate_fit: null
+  included_in: {fmeda-sg009: FMD-C-008, fmeda-sg001: null}
+  rate_basis: Carried inside the generic 10 FIT of FMD-C-008 (harness connector and box wiring); no separate value
+  distribution_basis: Engineering estimate, as FMD-C-008
+  modes:
+  - mode: Contact open in the stock path
+    distribution: 0.3
+    effect: The stock camera path is broken
+    goals: {SG-07: SPF, SG-01: none}
+    rows: {fmeda-sg009: FMD-023}
+  - mode: Plug loose (whole box off the harness)
+    distribution: 0.7
+    effect: As FMD-024 of SG-009
+    goals: {SG-07: safe, SG-01: safe}
+    rows: {fmeda-sg009: FMD-024}
+
+- ref: J3
+  part: Hirose DX07S024XJ1R1100, OBD-C (USB-C) receptacle to the device cable
+  drawing: HB-07
+  sn29500_class: SN 29500-5 (connections), board connectors
+  rate_fit: null
+  included_in: {fmeda-sg009: FMD-C-008, fmeda-sg001: null}
+  rate_basis: Carried inside FMD-C-008, as J1
+  distribution_basis: Engineering estimate
+  modes:
+  - mode: SBU1 contact open
+    distribution: 0.3
+    effect: The device cannot drive the switch; R2/R3 hold pass-through, so the stock path stays
+    goals: {SG-07: safe, SG-01: RF}
+  - mode: Cable loose (device off the box)
+    distribution: 0.7
+    effect: As FMD-024 of SG-009
+    goals: {SG-07: safe, SG-01: safe}
+    rows: {fmeda-sg009: FMD-024}
+
+- ref: J2
+  part: Molex 212528-0400, 4-pin comma power input (optional accessory)
+  drawing: HB-03
+  sn29500_class: SN 29500-5 (connections), board connectors
+  rate_fit: null
+  included_in: {fmeda-sg009: null, fmeda-sg001: null}
+  rate_basis: No rate; whether the reference configuration uses comma power is not recorded (wiring OI-W-5)
+  distribution_basis: —
+  modes:
+  - mode: Contact open or short
+    distribution: 1.0
+    effect: Not analysed until OI-W-5 says whether J2 is used
+    goals: {SG-07: open, SG-01: open}
+
+# Goal FMEDA rows whose part split this file does not reproduce. The check fails when a listed difference disappears
+# (fix the list) or a new one appears (fix the data), so the list only shrinks.
+known_differences:
+- file: fmeda-sg001
+  row: FMD-C-007
+  reason: >-
+    The SG-001 file splits the DG419LE as 0.35 stuck in pass-through, 0.35 stuck in intercept and 0.30 channel open; the
+    SG-009 file, and this part list, as 0.30, 0.30 and 0.40. One part can have only one failure-mode distribution: the two
+    goal FMEDAs should be aligned (WP-H-03 OI-11).
+
+# Useful life (the slide's second FMEDA output): the rates above assume a constant failure rate over the mission profile
+# (15 years, about 7,500 operating hours; WP-H-05 §3). That holds only while no part reaches wear-out.
+useful_life:
+  mission: 15 years, about 7,500 operating hours, one power cycle per drive (DQ-067)
+  parts:
+  - refs: [U1, U2, Q6, D1, D2, D3, D4]
+    wear_out: None expected (semiconductors; no electromigration or oxide limit is given in the transcribed data)
+    limit: Not limiting
+  - refs: [R1, R2, R3, R4, R5, R6, R7, R8]
+    wear_out: None expected (thick-film resistors at low power)
+    limit: Not limiting
+  - refs: [J1, J2, J3]
+    wear_out: Contact wear by mating cycles and fretting under vibration
+    limit: To confirm against the connector datasheets; the box is mated once at installation and again only at service or decommissioning (WP-O-02)
+  absent: No electrolytic capacitor, relay, battery or fan is on the v3 box, the usual wear-out parts
+
+# Periodic tests (the slide's "proof test"; in ISO 26262 the tests that find latent faults). Coverage is what each finds
+# of the latent modes above.
+periodic_tests:
+- name: Installation check of the stock path (DFM-ACT-008)
+  when: Once, at installation (WP-O-01)
+  finds: [U1 channel open, U2 channel open, J1 contact open]
+  coverage_in_service: 0
+  note: Runs once, so it is not a periodic test for the latent faults of the 15-year life
+- name: Harness box bench tests VS-HW-22…24
+  when: On a sample box, at verification (WP-H-06)
+  finds: [R2/R3 open, R7/R8 open, clamp short split, box VIN lost]
+  coverage_in_service: 0
+  note: Type tests on a sample; they find design errors, not latent faults in a fielded box

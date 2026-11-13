@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1640" height="906" viewBox="0 0 1640 906" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Conflicts on the V-cycle</title>
-<desc>Conflicts on the V-cycle: 49 work products older than an input they read, 1 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input.</desc>
+<desc>Conflicts on the V-cycle: 49 work products older than an input they read, 2 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1640" height="906" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">Conflicts on the V-cycle</text>
@@ -70,7 +70,9 @@
 <text x="966" y="558" font-size="11" fill="#475569" text-anchor="end">1 work product</text>
 <rect x="622" y="570" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
 <text x="630" y="584" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
-<g transform="translate(622.0,610.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-W-06 last 2 Nov, reads WP-P-07 changed 12 Nov</text></g>
+<rect x="735.6" y="570" width="119.8" height="20" rx="10" fill="#FEF2F2" stroke="#C2410C" stroke-width="1"/>
+<text x="743.6" y="584" font-size="10.5" fill="#C2410C" font-weight="700">older than definition</text>
+<g transform="translate(622.0,610.0)"><text x="0" y="0" font-size="10.5" fill="#C2410C">WP-W-06 2 Nov; WP-H-03 changed 13 Nov, 11 days later</text></g>
 <rect x="360" y="644" width="460" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
 <text x="374" y="666" font-size="13" fill="#0F172A" font-weight="700">Implementation</text>
 <text x="806" y="666" font-size="11" fill="#475569" text-anchor="end">5 work products</text>
@@ -107,7 +109,7 @@
 <text x="1176" y="220" font-size="11" fill="#475569">to a work product it reads (WP-M-03 inputs)</text>
 <rect x="1160" y="258" width="420" height="92" rx="10" fill="#FEF2F2" stroke="#C2410C" stroke-width="1.4"/>
 <text x="1176" y="284" font-size="14" fill="#C2410C" font-weight="700">Verification older than what it checks</text>
-<text x="1564" y="286" font-size="20" fill="#C2410C" font-weight="700" text-anchor="end">1</text>
+<text x="1564" y="286" font-size="20" fill="#C2410C" font-weight="700" text-anchor="end">2</text>
 <text x="1176" y="308" font-size="11" fill="#475569">the newest change on a verification box is more</text>
 <text x="1176" y="324" font-size="11" fill="#475569">than 7 days older than on the box it checks</text>
 <rect x="1160" y="362" width="420" height="92" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.4"/>
@@ -124,7 +126,7 @@
 <text x="1160" y="598" font-size="11.5" fill="#0F172A">product may still be right after its input</text>
 <text x="1160" y="616" font-size="11.5" fill="#0F172A">changed. A new Version entry or a recorded</text>
 <text x="1160" y="634" font-size="11.5" fill="#0F172A">review clears a flag; the view never does.</text>
-<text x="1160" y="662" font-size="10.5" fill="#475569" font-style="italic">Dates: Version row of each work product, newest 2026-11-12.</text>
+<text x="1160" y="662" font-size="10.5" fill="#475569" font-style="italic">Dates: Version row of each work product, newest 2026-11-13.</text>
 <text x="40" y="858" font-size="11.5" fill="#475569" font-style="italic">Worked out from the WP-M-00 register, the WP-M-03 process model and each work product's Version row; nothing is judged wrong by being flagged.</text>
 <g class="terms">
 <text x="40" y="882" font-size="10.5" fill="#475569">Terms: WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>

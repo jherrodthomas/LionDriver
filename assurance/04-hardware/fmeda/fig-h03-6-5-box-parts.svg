@@ -1,0 +1,268 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1054" viewBox="0 0 640 1054" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 6-5. Harness box parts, mode by mode</title>
+<desc>U1 Stuck in intercept, or IN input damaged high: SG-07 SPF, SG-01 safe, Stuck in pass-through: SG-07 safe, SG-01 RF, Channel open, increased on-resistance, leakage or latch-up: SG-07 SPF, SG-01 MPF-L; U2 Stuck in intercept, or IN input damaged high: SG-07 SPF, SG-01 safe, Stuck in pass-through: SG-07 safe, SG-01 RF, Channel open, increased on-resistance, leakage or latch-up: SG-07 SPF, SG-01 MPF-L; R2 Open (IN floats when SBU1 is undriven): SG-07 MPF-L, SG-01 safe, Short (SBU1 held low): SG-07 safe, SG-01 RF; R3 Open (IN floats when SBU1 is undriven): SG-07 MPF-L, SG-01 safe, Short (SBU1 held low): SG-07 safe, SG-01 RF; R7 Open (camera side left with one 120 Ω in intercept): SG-07 MPF-L, SG-01 none, Short (camera CAN2_H to CAN2_L in intercept): SG-07 SPF, SG-01 none; R8 Open (camera side left with one 120 Ω in intercept): SG-07 MPF-L, SG-01 none, Short (camera CAN2_H to CAN2_L in intercept): SG-07 SPF, SG-01 none; R6 Open: SG-07 none, SG-01 none, Short: SG-07 none, SG-01 none; D1 Open (box unpowered without comma power): SG-07 SPF, SG-01 safe, Short (reverse protection lost): SG-07 MPF-L, SG-01 none; D4 Short (box VIN to ground): SG-07 SPF, SG-01 safe, Open (transient protection lost): SG-07 MPF-L, SG-01 none; D2 Short or leakage on a CAN line: SG-07 SPF, SG-01 none, Open (clamp lost): SG-07 MPF-L, SG-01 none; D3 Short or leakage on a CAN line: SG-07 SPF, SG-01 none, Open (clamp lost): SG-07 MPF-L, SG-01 none; Q6 Drain-source short (SBU2 held low): SG-07 none, SG-01 MPF-L, Open (SBU2 never pulled low): SG-07 none, SG-01 open; R1 Open: SG-07 open, SG-01 open, Short: SG-07 open, SG-01 open; R4 Open: SG-07 none, SG-01 open, Short: SG-07 none, SG-01 open; R5 Open: SG-07 none, SG-01 open, Short: SG-07 none, SG-01 open; J1 Contact open in the stock path: SG-07 SPF, SG-01 none, Plug loose (whole box off the harness): SG-07 safe, SG-01 safe; J3 SBU1 contact open: SG-07 safe, SG-01 RF, Cable loose (device off the box): SG-07 safe, SG-01 safe; J2 Contact open or short: SG-07 open, SG-01 open</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="640" height="1054" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 6-5 · Harness box parts, mode by mode</text>
+<text x="16" y="48" font-size="11" fill="#475569">Each part's rate and, per failure mode, its class for SG-07 and SG-01</text>
+<rect x="16" y="64" width="32" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="32" y="75" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF</text>
+<rect x="54" y="64" width="25.4" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="66.7" y="75" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">RF</text>
+<rect x="85.4" y="64" width="42.1" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="106.5" y="75" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L</text>
+<rect x="133.5" y="64" width="31.2" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="149.1" y="75" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe</text>
+<rect x="170.7" y="64" width="33" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="187.2" y="75" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none</text>
+<rect x="209.7" y="64" width="33" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="226.2" y="75" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open</text>
+<text x="16" y="106" font-size="12" fill="#0F172A" font-weight="700">U1</text>
+<text x="52" y="106" font-size="10" fill="#475569">25 FIT</text>
+<text x="140" y="106" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="95" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="205.7" y="106" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 30%</text>
+<rect x="235.4" y="95" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="260.7" y="106" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 30%</text>
+<rect x="289.9" y="95" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="315.6" y="106" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 40%</text>
+<text x="140" y="126" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="115" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="126" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 30%</text>
+<rect x="234.5" y="115" width="44.7" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="256.9" y="126" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">RF 30%</text>
+<rect x="283.3" y="115" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="314" y="126" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 40%</text>
+<path d="M16 136 L624 136" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="152" font-size="12" fill="#0F172A" font-weight="700">U2</text>
+<text x="52" y="152" font-size="10" fill="#475569">25 FIT</text>
+<text x="140" y="152" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="141" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="205.7" y="152" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 30%</text>
+<rect x="235.4" y="141" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="260.7" y="152" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 30%</text>
+<rect x="289.9" y="141" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="315.6" y="152" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 40%</text>
+<text x="140" y="172" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="161" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="172" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 30%</text>
+<rect x="234.5" y="161" width="44.7" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="256.9" y="172" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">RF 30%</text>
+<rect x="283.3" y="161" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="314" y="172" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 40%</text>
+<path d="M16 182 L624 182" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="198" font-size="12" fill="#0F172A" font-weight="700">R2</text>
+<text x="52" y="198" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="198" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="187" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="210.8" y="198" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 60%</text>
+<rect x="245.5" y="187" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="270.8" y="198" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 40%</text>
+<text x="140" y="218" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="207" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="218" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 60%</text>
+<rect x="234.5" y="207" width="44.7" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="256.9" y="218" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">RF 40%</text>
+<path d="M16 228 L624 228" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="244" font-size="12" fill="#0F172A" font-weight="700">R3</text>
+<text x="52" y="244" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="244" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="233" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="210.8" y="244" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 60%</text>
+<rect x="245.5" y="233" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="270.8" y="244" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 40%</text>
+<text x="140" y="264" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="253" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="264" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 60%</text>
+<rect x="234.5" y="253" width="44.7" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="256.9" y="264" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">RF 40%</text>
+<path d="M16 274 L624 274" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="290" font-size="12" fill="#0F172A" font-weight="700">R7</text>
+<text x="52" y="290" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="290" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="279" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="210.8" y="290" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 60%</text>
+<rect x="245.5" y="279" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="271.2" y="290" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 40%</text>
+<text x="140" y="310" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="299" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="310" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 60%</text>
+<rect x="236.4" y="299" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="310" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<path d="M16 320 L624 320" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="336" font-size="12" fill="#0F172A" font-weight="700">R8</text>
+<text x="52" y="336" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="336" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="325" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="210.8" y="336" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 60%</text>
+<rect x="245.5" y="325" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="271.2" y="336" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 40%</text>
+<text x="140" y="356" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="345" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="356" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 60%</text>
+<rect x="236.4" y="345" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="356" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<path d="M16 366 L624 366" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="382" font-size="12" fill="#0F172A" font-weight="700">R6</text>
+<text x="52" y="382" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="382" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="371" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="382" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 60%</text>
+<rect x="236.4" y="371" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="382" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<text x="140" y="402" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="391" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="402" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 60%</text>
+<rect x="236.4" y="391" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="402" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<path d="M16 412 L624 412" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="428" font-size="12" fill="#0F172A" font-weight="700">D1</text>
+<text x="52" y="428" font-size="10" fill="#475569">2 FIT</text>
+<text x="140" y="428" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="417" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="205.7" y="428" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 60%</text>
+<rect x="235.4" y="417" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="266.2" y="428" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 40%</text>
+<text x="140" y="448" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="437" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="448" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 60%</text>
+<rect x="234.5" y="437" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="260.7" y="448" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<path d="M16 458 L624 458" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="474" font-size="12" fill="#0F172A" font-weight="700">D4</text>
+<text x="52" y="474" font-size="10" fill="#475569">1 FIT</text>
+<text x="140" y="474" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="463" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="205.7" y="474" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 60%</text>
+<rect x="235.4" y="463" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="266.2" y="474" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 40%</text>
+<text x="140" y="494" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="483" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="494" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 60%</text>
+<rect x="234.5" y="483" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="260.7" y="494" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<path d="M16 504 L624 504" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="520" font-size="12" fill="#0F172A" font-weight="700">D2</text>
+<text x="52" y="520" font-size="10" fill="#475569">1 FIT</text>
+<text x="140" y="520" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="509" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="205.7" y="520" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 30%</text>
+<rect x="235.4" y="509" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="266.2" y="520" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 70%</text>
+<text x="140" y="540" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="529" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="540" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 30%</text>
+<rect x="236.4" y="529" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="540" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 70%</text>
+<path d="M16 550 L624 550" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="566" font-size="12" fill="#0F172A" font-weight="700">D3</text>
+<text x="52" y="566" font-size="10" fill="#475569">1 FIT</text>
+<text x="140" y="566" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="555" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="205.7" y="566" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 30%</text>
+<rect x="235.4" y="555" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="266.2" y="566" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 70%</text>
+<text x="140" y="586" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="575" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="586" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 30%</text>
+<rect x="236.4" y="575" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="586" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 70%</text>
+<path d="M16 596 L624 596" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="612" font-size="12" fill="#0F172A" font-weight="700">Q6</text>
+<text x="52" y="612" font-size="10" fill="#475569">1 FIT</text>
+<text x="140" y="612" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="601" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="612" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 50%</text>
+<rect x="236.4" y="601" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="612" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 50%</text>
+<text x="140" y="632" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="621" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="210.8" y="632" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 50%</text>
+<rect x="245.5" y="621" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="271.7" y="632" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 50%</text>
+<path d="M16 642 L624 642" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="658" font-size="12" fill="#0F172A" font-weight="700">R1</text>
+<text x="52" y="658" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="658" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="647" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="206.2" y="658" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
+<rect x="236.4" y="647" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="262.5" y="658" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<text x="140" y="678" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="667" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="206.2" y="678" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
+<rect x="236.4" y="667" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="262.5" y="678" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<path d="M16 688 L624 688" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="704" font-size="12" fill="#0F172A" font-weight="700">R4</text>
+<text x="52" y="704" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="704" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="693" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="704" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 60%</text>
+<rect x="236.4" y="693" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="704" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<text x="140" y="724" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="713" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="206.2" y="724" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
+<rect x="236.4" y="713" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="262.5" y="724" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<path d="M16 734 L624 734" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="750" font-size="12" fill="#0F172A" font-weight="700">R5</text>
+<text x="52" y="750" font-size="10" fill="#475569">0.2 FIT</text>
+<text x="140" y="750" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="739" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="750" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 60%</text>
+<rect x="236.4" y="739" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="262.5" y="750" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
+<text x="140" y="770" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="759" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="206.2" y="770" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
+<rect x="236.4" y="759" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="262.5" y="770" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<path d="M16 780 L624 780" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="796" font-size="12" fill="#0F172A" font-weight="700">J1</text>
+<text x="52" y="796" font-size="10" fill="#475569">in wiring row</text>
+<text x="140" y="796" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="785" width="51.4" height="15" rx="7" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.1"/>
+<text x="205.7" y="796" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">SPF 30%</text>
+<rect x="235.4" y="785" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="260.7" y="796" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 70%</text>
+<text x="140" y="816" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="805" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="816" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 30%</text>
+<rect x="236.4" y="805" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="261.6" y="816" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 70%</text>
+<path d="M16 826 L624 826" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="842" font-size="12" fill="#0F172A" font-weight="700">J3</text>
+<text x="52" y="842" font-size="10" fill="#475569">in wiring row</text>
+<text x="140" y="842" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="831" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="842" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 30%</text>
+<rect x="234.5" y="831" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="259.8" y="842" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 70%</text>
+<text x="140" y="862" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="851" width="44.7" height="15" rx="7" fill="#FFFBEB" stroke="#D97706" stroke-width="1.1"/>
+<text x="202.4" y="862" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">RF 30%</text>
+<rect x="228.7" y="851" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="254" y="862" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 70%</text>
+<path d="M16 872 L624 872" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="888" font-size="12" fill="#0F172A" font-weight="700">J2</text>
+<text x="52" y="888" font-size="10" fill="#475569">no rate</text>
+<text x="140" y="888" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
+<rect x="180" y="877" width="57.7" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="208.8" y="888" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 100%</text>
+<text x="140" y="908" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
+<rect x="180" y="897" width="57.7" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
+<text x="208.8" y="908" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 100%</text>
+<path d="M16 918 L624 918" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="16" y="930" font-size="10" fill="#475569">Percentages are the share of the part's rate in that mode. Connectors J1 and J3 are carried inside the goal FMEDA's wiring row;</text>
+<text x="16" y="943" font-size="10" fill="#475569">J2 has no rate until its use is known.</text>
+<g class="terms">
+<text x="16" y="966" font-size="10" fill="#475569">Terms: FIT failures in time: failures per 10⁹ hours · FMEDA failure modes, effects and diagnostic analysis</text>
+<text x="16" y="980" font-size="10" fill="#475569">(hardware metrics) · MPF-L latent multiple-point fault: violates a safety goal only together with another fault,</text>
+<text x="16" y="994" font-size="10" fill="#475569">and nothing detects it · RF residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5) ·</text>
+<text x="16" y="1008" font-size="10" fill="#475569">SG-nn safety goal (HARA §6) · SPF single-point fault: a fault no safety mechanism covers that violates a safety</text>
+<text x="16" y="1022" font-size="10" fill="#475569">goal on its own (ISO 26262-5)</text>
+</g>
+<text x="624" y="1042" font-size="10" fill="#94A3B8" text-anchor="end">Generated by harness_box_fmeda.py from harness-box-parts.yaml</text>
+</svg>

@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1640" height="1109" viewBox="0 0 1640 1109" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>LionDriver V-cycle over time</title>
-<desc>The V-cycle over time as of 2026-11-12: 11 rows from concept down to implementation and back up to vehicle validation. 86 work products have dated versions between 2026-10-12 and 2026-11-12 (3 undated); 49 have an input dated after their own last version. The plan runs each row from the previous gate to its own gate.</desc>
+<desc>The V-cycle over time as of 2026-11-13: 11 rows from concept down to implementation and back up to vehicle validation. 86 work products have dated versions between 2026-10-12 and 2026-11-13 (3 undated); 49 have an input dated after their own last version. The plan runs each row from the previous gate to its own gate.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1640" height="1109" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="28" fill="#0F172A" font-weight="700">LionDriver V-cycle over time</text>
 <text x="40" y="70" font-size="13.5" fill="#475569">Each row is a box of the V, tagged with its level (need, system, subsystem, component). Left: what the records show happened, day by day. Right: when the plan has each row due. Bottom: what can be measured from that.</text>
-<text x="330" y="124" font-size="11.5" fill="#475569" font-weight="700">Recorded history · 12 Oct 2026 – 12 Nov 2026 (dated entries in each work product's Version row)</text>
+<text x="330" y="124" font-size="11.5" fill="#475569" font-weight="700">Recorded history · 12 Oct 2026 – 13 Nov 2026 (dated entries in each work product's Version row)</text>
 <text x="1070" y="124" font-size="11.5" fill="#475569" font-weight="700">Plan · each row from the previous gate to its own gate (WP-M-03 §5)</text>
 <line x1="330" y1="164" x2="330" y2="786" stroke="#E2E8F0" stroke-width="1"/>
 <text x="330" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">12 Oct</text>
-<line x1="481.3" y1="164" x2="481.3" y2="786" stroke="#E2E8F0" stroke-width="1"/>
-<text x="481.3" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">19 Oct</text>
-<line x1="632.6" y1="164" x2="632.6" y2="786" stroke="#E2E8F0" stroke-width="1"/>
-<text x="632.6" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">26 Oct</text>
-<line x1="783.9" y1="164" x2="783.9" y2="786" stroke="#E2E8F0" stroke-width="1"/>
-<text x="783.9" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">02 Nov</text>
-<line x1="935.2" y1="164" x2="935.2" y2="786" stroke="#E2E8F0" stroke-width="1"/>
-<text x="935.2" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">09 Nov</text>
+<line x1="476.6" y1="164" x2="476.6" y2="786" stroke="#E2E8F0" stroke-width="1"/>
+<text x="476.6" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">19 Oct</text>
+<line x1="623.1" y1="164" x2="623.1" y2="786" stroke="#E2E8F0" stroke-width="1"/>
+<text x="623.1" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">26 Oct</text>
+<line x1="769.7" y1="164" x2="769.7" y2="786" stroke="#E2E8F0" stroke-width="1"/>
+<text x="769.7" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">02 Nov</text>
+<line x1="916.2" y1="164" x2="916.2" y2="786" stroke="#E2E8F0" stroke-width="1"/>
+<text x="916.2" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">09 Nov</text>
 <line x1="1080.2" y1="164" x2="1080.2" y2="786" stroke="#E2E8F0" stroke-width="1"/>
 <text x="1080.2" y="802" font-size="10.5" fill="#94A3B8" text-anchor="middle">2027</text>
 <line x1="1141.4" y1="164" x2="1141.4" y2="786" stroke="#E2E8F0" stroke-width="1"/>
@@ -55,23 +55,23 @@
 <text x="94.9" y="192" font-size="10.5" fill="#475569">12 work products · 12 draft · gate G1</text>
 <line x1="330" y1="198" x2="1000" y2="198" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="198" r="11.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="351.6" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="373.2" cy="198" r="9" fill="#1D4ED8" opacity=".55"/>
-<circle cx="416.5" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="438.1" cy="198" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="459.7" cy="198" r="11.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="481.3" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="502.9" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="524.5" cy="198" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="546.1" cy="198" r="11.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="567.7" cy="198" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="589.4" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="611" cy="198" r="11.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="632.6" cy="198" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="654.2" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="719" cy="198" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="762.3" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="783.9" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="350.9" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="371.9" cy="198" r="9" fill="#1D4ED8" opacity=".55"/>
+<circle cx="413.8" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="434.7" cy="198" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="455.6" cy="198" r="11.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="476.6" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="497.5" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="518.4" cy="198" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="539.4" cy="198" r="11.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="560.3" cy="198" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="581.2" cy="198" r="12.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="602.2" cy="198" r="11.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="623.1" cy="198" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="644.1" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="706.9" cy="198" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="748.8" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="769.7" cy="198" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="1014" cy="198" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="202" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">5</text>
 <rect x="1090.1" y="190" width="41" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
@@ -82,22 +82,22 @@
 <text x="106.1" y="248" font-size="10.5" fill="#475569">4 work products · 4 draft · gate G2</text>
 <line x1="330" y1="254" x2="1000" y2="254" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="254" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="351.6" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="373.2" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="416.5" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="438.1" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="459.7" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="481.3" cy="254" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="502.9" cy="254" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="524.5" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="546.1" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="611" cy="254" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="632.6" cy="254" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="654.2" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="762.3" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="783.9" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="805.5" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="891.9" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="350.9" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="371.9" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="413.8" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="434.7" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="455.6" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="476.6" cy="254" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="497.5" cy="254" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="518.4" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="539.4" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="602.2" cy="254" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="623.1" cy="254" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="644.1" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="748.8" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="769.7" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="790.6" cy="254" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="874.4" cy="254" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="1014" cy="254" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="258" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">2</text>
 <rect x="1131.1" y="246" width="40.7" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
@@ -108,24 +108,24 @@
 <text x="123.6" y="304" font-size="10.5" fill="#475569">8 work products · 8 draft · gate G2</text>
 <line x1="330" y1="310" x2="1000" y2="310" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="310" r="11.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="351.6" cy="310" r="12.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="373.2" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="416.5" cy="310" r="12.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="438.1" cy="310" r="9" fill="#1D4ED8" opacity=".55"/>
-<circle cx="459.7" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="481.3" cy="310" r="11.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="502.9" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="524.5" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="546.1" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="567.7" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="589.4" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="611" cy="310" r="9" fill="#1D4ED8" opacity=".55"/>
-<circle cx="632.6" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="654.2" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="697.4" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="762.3" cy="310" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="783.9" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="805.5" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="350.9" cy="310" r="12.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="371.9" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="413.8" cy="310" r="12.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="434.7" cy="310" r="9" fill="#1D4ED8" opacity=".55"/>
+<circle cx="455.6" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="476.6" cy="310" r="11.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="497.5" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="518.4" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="539.4" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="560.3" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="581.2" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="602.2" cy="310" r="9" fill="#1D4ED8" opacity=".55"/>
+<circle cx="623.1" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="644.1" cy="310" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="685.9" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="748.8" cy="310" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="769.7" cy="310" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="790.6" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="1014" cy="310" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="314" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">7</text>
 <rect x="1131.1" y="302" width="40.7" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
@@ -136,21 +136,21 @@
 <text x="123.6" y="360" font-size="10.5" fill="#475569">2 work products · 2 draft · gate G3</text>
 <line x1="330" y1="366" x2="1000" y2="366" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="351.6" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="373.2" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="394.8" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="416.5" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="438.1" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="481.3" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="502.9" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="524.5" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="546.1" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="567.7" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="611" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="632.6" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="783.9" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="805.5" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="978.4" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="350.9" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="371.9" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="392.8" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="413.8" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="434.7" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="476.6" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="497.5" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="518.4" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="539.4" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="560.3" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="602.2" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="623.1" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="769.7" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="790.6" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="958.1" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="1014" cy="366" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="370" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">1</text>
 <rect x="1171.8" y="358" width="81.7" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
@@ -161,24 +161,25 @@
 <text x="123.6" y="416" font-size="10.5" fill="#475569">6 work products · 6 draft · gate G3</text>
 <line x1="330" y1="422" x2="1000" y2="422" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="422" r="10.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="351.6" cy="422" r="9" fill="#1D4ED8" opacity=".55"/>
-<circle cx="373.2" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="394.8" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="416.5" cy="422" r="10.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="438.1" cy="422" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="459.7" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="481.3" cy="422" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="502.9" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="524.5" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="546.1" cy="422" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="567.7" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="589.4" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="611" cy="422" r="5.4" fill="#1D4ED8" opacity=".55"/>
-<circle cx="632.6" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
-<circle cx="654.2" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="762.3" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
-<circle cx="783.9" cy="422" r="7.8" fill="#1D4ED8" opacity=".55"/>
-<circle cx="805.5" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="350.9" cy="422" r="9" fill="#1D4ED8" opacity=".55"/>
+<circle cx="371.9" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="392.8" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="413.8" cy="422" r="10.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="434.7" cy="422" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="455.6" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="476.6" cy="422" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="497.5" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="518.4" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="539.4" cy="422" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="560.3" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="581.2" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="602.2" cy="422" r="5.4" fill="#1D4ED8" opacity=".55"/>
+<circle cx="623.1" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="644.1" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="748.8" cy="422" r="6.6" fill="#1D4ED8" opacity=".55"/>
+<circle cx="769.7" cy="422" r="7.8" fill="#1D4ED8" opacity=".55"/>
+<circle cx="790.6" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="1000" cy="422" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="1014" cy="422" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="426" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">4</text>
 <rect x="1171.8" y="414" width="81.7" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
@@ -189,16 +190,16 @@
 <text x="123.6" y="472" font-size="10.5" fill="#475569">5 work products · 5 draft · gate G3</text>
 <line x1="330" y1="478" x2="1000" y2="478" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="478" r="7.8" fill="#0F172A" opacity=".55"/>
-<circle cx="351.6" cy="478" r="9" fill="#0F172A" opacity=".55"/>
-<circle cx="416.5" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
-<circle cx="438.1" cy="478" r="5.4" fill="#0F172A" opacity=".55"/>
-<circle cx="481.3" cy="478" r="5.4" fill="#0F172A" opacity=".55"/>
-<circle cx="546.1" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
-<circle cx="567.7" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
-<circle cx="654.2" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
-<circle cx="783.9" cy="478" r="7.8" fill="#0F172A" opacity=".55"/>
-<circle cx="805.5" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
-<circle cx="978.4" cy="478" r="5.4" fill="#0F172A" opacity=".55"/>
+<circle cx="350.9" cy="478" r="9" fill="#0F172A" opacity=".55"/>
+<circle cx="413.8" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
+<circle cx="434.7" cy="478" r="5.4" fill="#0F172A" opacity=".55"/>
+<circle cx="476.6" cy="478" r="5.4" fill="#0F172A" opacity=".55"/>
+<circle cx="539.4" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
+<circle cx="560.3" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
+<circle cx="644.1" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
+<circle cx="769.7" cy="478" r="7.8" fill="#0F172A" opacity=".55"/>
+<circle cx="790.6" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
+<circle cx="958.1" cy="478" r="5.4" fill="#0F172A" opacity=".55"/>
 <circle cx="1014" cy="478" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="482" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">4</text>
 <rect x="1171.8" y="470" width="81.7" height="16" rx="4" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.2"/>
@@ -209,13 +210,13 @@
 <text x="123.6" y="528" font-size="10.5" fill="#475569">1 work product · 1 draft · gate G3</text>
 <line x1="330" y1="534" x2="1000" y2="534" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="351.6" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="373.2" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="416.5" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="438.1" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="481.3" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="524.5" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="783.9" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="350.9" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="371.9" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="413.8" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="434.7" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="476.6" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="518.4" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="769.7" cy="534" r="4.2" fill="#15803D" opacity=".55"/>
 <circle cx="1014" cy="534" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="538" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">1</text>
 <rect x="1171.8" y="526" width="81.7" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1.2"/>
@@ -226,16 +227,16 @@
 <text x="123.6" y="584" font-size="10.5" fill="#475569">4 work products · 4 draft · gate G3–G4</text>
 <line x1="330" y1="590" x2="1000" y2="590" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="590" r="6.6" fill="#15803D" opacity=".55"/>
-<circle cx="351.6" cy="590" r="6.6" fill="#15803D" opacity=".55"/>
-<circle cx="394.8" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="416.5" cy="590" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="438.1" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="481.3" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="502.9" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="611" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="654.2" cy="590" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="762.3" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="978.4" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="350.9" cy="590" r="6.6" fill="#15803D" opacity=".55"/>
+<circle cx="392.8" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="413.8" cy="590" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="434.7" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="476.6" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="497.5" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="602.2" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="644.1" cy="590" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="748.8" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="958.1" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
 <circle cx="1014" cy="590" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="594" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">3</text>
 <rect x="1253.6" y="582" width="50.9" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1.2"/>
@@ -246,12 +247,12 @@
 <text x="106.1" y="640" font-size="10.5" fill="#475569">1 work product · 1 draft · gate G4</text>
 <line x1="330" y1="646" x2="1000" y2="646" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="351.6" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="502.9" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="611" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="632.6" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="654.2" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="783.9" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="350.9" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="497.5" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="602.2" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="623.1" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="644.1" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="769.7" cy="646" r="4.2" fill="#15803D" opacity=".55"/>
 <circle cx="1014" cy="646" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="650" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">1</text>
 <rect x="1253.6" y="638" width="50.9" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1.2"/>
@@ -262,10 +263,10 @@
 <text x="106.1" y="696" font-size="10.5" fill="#475569">1 work product · 1 draft · gate G4</text>
 <line x1="330" y1="702" x2="1000" y2="702" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="373.2" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="481.3" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="611" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="632.6" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="371.9" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="476.6" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="602.2" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="623.1" cy="702" r="4.2" fill="#15803D" opacity=".55"/>
 <circle cx="1014" cy="702" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="706" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">1</text>
 <rect x="1253.6" y="694" width="50.9" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1.2"/>
@@ -276,26 +277,26 @@
 <text x="94.9" y="752" font-size="10.5" fill="#475569">7 work products · 7 draft · gate G1–G5</text>
 <line x1="330" y1="758" x2="1000" y2="758" stroke="#E2E8F0" stroke-width="2"/>
 <circle cx="330" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
-<circle cx="351.6" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
-<circle cx="416.5" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
-<circle cx="438.1" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="459.7" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="481.3" cy="758" r="9" fill="#15803D" opacity=".55"/>
-<circle cx="502.9" cy="758" r="4.2" fill="#15803D" opacity=".55"/>
-<circle cx="524.5" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="546.1" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
-<circle cx="567.7" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
-<circle cx="611" cy="758" r="9" fill="#15803D" opacity=".55"/>
-<circle cx="654.2" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="719" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="762.3" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
-<circle cx="783.9" cy="758" r="7.8" fill="#15803D" opacity=".55"/>
+<circle cx="350.9" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
+<circle cx="413.8" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
+<circle cx="434.7" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="455.6" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="476.6" cy="758" r="9" fill="#15803D" opacity=".55"/>
+<circle cx="497.5" cy="758" r="4.2" fill="#15803D" opacity=".55"/>
+<circle cx="518.4" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="539.4" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
+<circle cx="560.3" cy="758" r="6.6" fill="#15803D" opacity=".55"/>
+<circle cx="602.2" cy="758" r="9" fill="#15803D" opacity=".55"/>
+<circle cx="644.1" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="706.9" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="748.8" cy="758" r="5.4" fill="#15803D" opacity=".55"/>
+<circle cx="769.7" cy="758" r="7.8" fill="#15803D" opacity=".55"/>
 <circle cx="1014" cy="758" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="762" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">4</text>
 <rect x="1304.5" y="750" width="50.8" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1.2"/>
 <rect x="1355.3" y="750" width="163.2" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1" stroke-dasharray="3 2" opacity=".6"/>
-<line x1="1071.8" y1="164" x2="1071.8" y2="786" stroke="#C2410C" stroke-width="2"/>
-<text x="1075.8" y="782" font-size="10" fill="#C2410C" font-weight="700">as of</text>
+<line x1="1072" y1="164" x2="1072" y2="786" stroke="#C2410C" stroke-width="2"/>
+<text x="1076" y="782" font-size="10" fill="#C2410C" font-weight="700">as of</text>
 <circle cx="336" cy="838" r="7" fill="#1D4ED8" opacity=".55"/>
 <text x="350" y="842" font-size="11" fill="#475569">version entries that day (bigger = more work products changed)</text>
 <circle cx="336" cy="858" r="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
@@ -308,7 +309,7 @@
 <text x="56" y="906" font-size="12" fill="#475569" font-weight="700">Trace freshness</text>
 <text x="56" y="936" font-size="22" fill="#C2410C" font-weight="700">49 of 86</text>
 <text x="56" y="958" font-size="10.5" fill="#475569">work products have an input dated after their own last version, e.g.</text>
-<text x="56" y="972" font-size="10.5" fill="#475569">WP-W-11 (11 Nov) needs WP-P-07 (dated 12 Nov)</text>
+<text x="56" y="972" font-size="10.5" fill="#475569">WP-H-07 (01 Nov) needs WP-H-03 (dated 13 Nov)</text>
 <rect x="433" y="882" width="381" height="118" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
 <text x="449" y="906" font-size="12" fill="#475569" font-weight="700">Reviews recorded</text>
 <text x="449" y="936" font-size="22" fill="#0F172A" font-weight="700">0 of 21</text>
@@ -323,7 +324,7 @@
 <text x="1235" y="906" font-size="12" fill="#475569" font-weight="700">Evidence latency</text>
 <text x="1235" y="936" font-size="17" fill="#0F172A" font-weight="700">not yet measurable</text>
 <text x="1235" y="958" font-size="10.5" fill="#475569">no work product is approved, so there is no baseline to measure from</text>
-<text x="40" y="1026" font-size="11.5" fill="#0F172A">As of 12 Nov 2026: the 86 dated work products were all drafted within 32 days, while the plan has the rows due one after another. The left side spreads out into that order as reviews, gates and evidence are recorded.</text>
+<text x="40" y="1026" font-size="11.5" fill="#0F172A">As of 13 Nov 2026: the 86 dated work products were all drafted within 33 days, while the plan has the rows due one after another. The left side spreads out into that order as reviews, gates and evidence are recorded.</text>
 <text x="40" y="1046" font-size="11" fill="#475569" font-style="italic">Dates come from each work product's Version row; inputs from the process model (WP-P-11). An input dated later is a prompt to look, not proof the work product is wrong. Status is not acceptance.</text>
 <g class="terms">
 <text x="40" y="1070" font-size="10.5" fill="#475569">Terms: G0–G6 gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K</text>
