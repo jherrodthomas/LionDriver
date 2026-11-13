@@ -230,6 +230,28 @@ class VCycle(unittest.TestCase):
     with mock.patch.object(Path, "read_text", fake), self.assertRaises(FigureError):
       vg.read_gate(0)
 
+  def test_evidence_ladder_follows_the_records(self):
+    import vcycle_evidence as ve
+    self.assertEqual(ve.level({"id": "x", "evidence_status": "missing", "review_state": "not-reviewed"}), 0)
+    self.assertEqual(ve.level({"id": "x", "evidence_status": "partial"}), 1)
+    self.assertEqual(ve.level({"id": "x", "evidence_status": "available", "review_state": "not-reviewed"}), 2)
+    self.assertEqual(ve.level({"id": "x", "evidence_status": "available", "review_state": "rejected"}), 3)
+    self.assertEqual(ve.level({"id": "x", "evidence_status": "available", "review_state": "accepted"}), 4)
+    for bad in ({"id": "x", "evidence_status": "done"}, {"id": "x", "evidence_status": "partial", "review_state": "ok"}):
+      with self.assertRaises(FigureError):
+        ve.level(bad)
+
+  def test_every_evidence_item_is_placed_once_or_listed(self):
+    import vcycle_evidence as ve
+    m = v.build_model()
+    d = ve.model(m)
+    placed = [e["id"] for es in d["per"].values() for e in es]
+    self.assertEqual(sorted(placed + [e["id"] for e in d["unplaced"]]), sorted(e["id"] for e in d["evidence"]))
+    self.assertEqual(len(placed), len(set(placed)))
+    page = (ve.vx.PAGES / ve.PAGE).read_text(encoding="utf-8")
+    self.assertEqual(len([ln for ln in page.splitlines() if re.match(r"^\| \[[^]]+\]\([^)]+\.md\) \| ", ln)]),
+                     len(placed))
+
 
 if __name__ == "__main__":
   unittest.main()

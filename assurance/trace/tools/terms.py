@@ -65,6 +65,7 @@ FIGURES = [
   A / "01-management/figures/vcycle/fig-m00-vcycle-time.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-crosswalk.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-gates.svg",
+  A / "01-management/figures/vcycle/fig-m00-vcycle-evidence.svg",
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-impact-*.svg")),  # recent changes
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-std-*.svg")),  # one per standard
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-x-*.svg")),  # exploded views, one per box
