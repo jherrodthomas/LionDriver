@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="906" viewBox="0 0 1640 906" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Conflicts on the V-cycle</title>
+<desc>Conflicts on the V-cycle: 49 work products older than an input they read, 1 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1640" height="906" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">Conflicts on the V-cycle</text>
+<text x="40" y="68" font-size="13" fill="#475569">Only what is out of step: work older than what it reads, verification older than what it checks, standards that appear without coming from upstream, and gate order.</text>
+<rect x="40" y="104" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="54" y="126" font-size="13" fill="#0F172A" font-weight="700">Concept and hazards</text>
+<text x="398" y="126" font-size="11" fill="#475569" text-anchor="end">12 work products</text>
+<rect x="54" y="138" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="62" y="152" font-size="10.5" fill="#D97706" font-weight="700">5 older than input</text>
+<rect x="167.6" y="138" width="143.3" height="20" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="175.6" y="152" font-size="10.5" fill="#4F46E5" font-weight="700">1 standard from nowhere</text>
+<g transform="translate(54.0,178.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-C-07 last 30 Oct, reads WP-C-04 changed 1 Nov (+4 more)</text></g>
+<rect x="728" y="104" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="742" y="126" font-size="13" fill="#0F172A" font-weight="700">Vehicle validation</text>
+<text x="1086" y="126" font-size="11" fill="#475569" text-anchor="end">7 work products</text>
+<rect x="742" y="138" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="750" y="152" font-size="10.5" fill="#D97706" font-weight="700">4 older than input</text>
+<g transform="translate(742.0,178.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-V-03 last 2 Nov, reads WP-W-10 changed 11 Nov (+3 more)</text></g>
+<rect x="70" y="212" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="84" y="234" font-size="13" fill="#0F172A" font-weight="700">System requirements</text>
+<text x="428" y="234" font-size="11" fill="#475569" text-anchor="end">4 work products</text>
+<rect x="84" y="246" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="92" y="260" font-size="10.5" fill="#D97706" font-weight="700">2 older than input</text>
+<g transform="translate(84.0,286.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-S-06 last 2 Nov, reads WP-S-02 changed 7 Nov (+1 more)</text></g>
+<rect x="698" y="212" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="712" y="234" font-size="13" fill="#0F172A" font-weight="700">System verification</text>
+<text x="1056" y="234" font-size="11" fill="#475569" text-anchor="end">1 work product</text>
+<rect x="712" y="246" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="720" y="260" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
+<rect x="825.6" y="246" width="119.8" height="20" rx="10" fill="#FEF2F2" stroke="#C2410C" stroke-width="1"/>
+<text x="833.6" y="260" font-size="10.5" fill="#C2410C" font-weight="700">older than definition</text>
+<g transform="translate(712.0,286.0)"><text x="0" y="0" font-size="10.5" fill="#C2410C">WP-S-09 26 Oct; WP-S-02 changed 7 Nov, 12 days later</text></g>
+<rect x="100" y="320" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="114" y="342" font-size="13" fill="#0F172A" font-weight="700">System architecture</text>
+<text x="458" y="342" font-size="11" fill="#475569" text-anchor="end">8 work products</text>
+<rect x="114" y="354" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="122" y="368" font-size="10.5" fill="#D97706" font-weight="700">7 older than input</text>
+<rect x="227.6" y="354" width="143.3" height="20" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="235.6" y="368" font-size="10.5" fill="#4F46E5" font-weight="700">1 standard from nowhere</text>
+<g transform="translate(114.0,394.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-S-03 last 1 Nov, reads WP-S-02 changed 7 Nov (+6 more)</text></g>
+<rect x="668" y="320" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="682" y="342" font-size="13" fill="#0F172A" font-weight="700">System integration</text>
+<text x="1026" y="342" font-size="11" fill="#475569" text-anchor="end">1 work product</text>
+<rect x="682" y="354" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="690" y="368" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
+<g transform="translate(682.0,394.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-S-08 last 2 Nov, reads WP-W-08 changed 11 Nov</text></g>
+<rect x="130" y="428" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="144" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software requirements</text>
+<text x="488" y="450" font-size="11" fill="#475569" text-anchor="end">2 work products</text>
+<rect x="144" y="462" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="152" y="476" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
+<g transform="translate(144.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-H-01 last 2 Nov, reads WP-S-02 changed 7 Nov</text></g>
+<rect x="638" y="428" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="652" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software integration</text>
+<text x="996" y="450" font-size="11" fill="#475569" text-anchor="end">4 work products</text>
+<rect x="652" y="462" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="660" y="476" font-size="10.5" fill="#D97706" font-weight="700">3 older than input</text>
+<g transform="translate(652.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-W-07 last 13 Oct, reads WP-W-02 changed 11 Nov (+2 more)</text></g>
+<rect x="160" y="536" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="174" y="558" font-size="13" fill="#0F172A" font-weight="700">Detailed design</text>
+<text x="518" y="558" font-size="11" fill="#475569" text-anchor="end">6 work products</text>
+<rect x="174" y="570" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="182" y="584" font-size="10.5" fill="#D97706" font-weight="700">4 older than input</text>
+<g transform="translate(174.0,610.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-W-03 last 2 Nov, reads WP-W-02 changed 11 Nov (+3 more)</text></g>
+<rect x="608" y="536" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="622" y="558" font-size="13" fill="#0F172A" font-weight="700">Unit verification</text>
+<text x="966" y="558" font-size="11" fill="#475569" text-anchor="end">1 work product</text>
+<rect x="622" y="570" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="630" y="584" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
+<g transform="translate(622.0,610.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-W-06 last 2 Nov, reads WP-P-07 changed 12 Nov</text></g>
+<rect x="360" y="644" width="460" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
+<text x="374" y="666" font-size="13" fill="#0F172A" font-weight="700">Implementation</text>
+<text x="806" y="666" font-size="11" fill="#475569" text-anchor="end">5 work products</text>
+<rect x="374" y="678" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="382" y="692" font-size="10.5" fill="#D97706" font-weight="700">4 older than input</text>
+<g transform="translate(374.0,718.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-W-05 last 3 Nov, reads WP-W-02 changed 11 Nov (+3 more)</text></g>
+<text x="40" y="762" font-size="12" fill="#475569" font-weight="700">Runs across every phase</text>
+<rect x="40" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="50" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Management plans</text>
+<text x="50" y="810" font-size="10.5" fill="#D97706" font-weight="700">4 older than input</text>
+<text x="50" y="826" font-size="10.5" fill="#4F46E5" font-weight="700">2 standard from nowhere</text>
+<rect x="254" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="264" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Supporting processes</text>
+<text x="264" y="810" font-size="10.5" fill="#D97706" font-weight="700">4 older than input</text>
+<text x="264" y="826" font-size="10.5" fill="#4F46E5" font-weight="700">3 standard from nowhere</text>
+<rect x="468" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="478" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Traceability</text>
+<text x="478" y="810" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
+<text x="478" y="826" font-size="10.5" fill="#94A3B8">0 standard from nowhere</text>
+<rect x="682" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="692" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Safety case</text>
+<text x="692" y="810" font-size="10.5" fill="#D97706" font-weight="700">4 older than input</text>
+<text x="692" y="826" font-size="10.5" fill="#94A3B8">0 standard from nowhere</text>
+<rect x="896" y="772" width="204" height="64" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+<text x="906" y="790" font-size="11.5" fill="#0F172A" font-weight="700">Operation and field</text>
+<text x="906" y="810" font-size="10.5" fill="#D97706" font-weight="700">3 older than input</text>
+<text x="906" y="826" font-size="10.5" fill="#4F46E5" font-weight="700">1 standard from nowhere</text>
+<rect x="1140" y="104" width="460" height="576" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1160" y="134" font-size="12" fill="#475569" font-weight="700">Out of step, by kind</text>
+<rect x="1160" y="154" width="420" height="92" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="1176" y="180" font-size="14" fill="#D97706" font-weight="700">Older than an input it reads</text>
+<text x="1564" y="182" font-size="20" fill="#D97706" font-weight="700" text-anchor="end">49</text>
+<text x="1176" y="204" font-size="11" fill="#475569">a work product dated before the newest change</text>
+<text x="1176" y="220" font-size="11" fill="#475569">to a work product it reads (WP-M-03 inputs)</text>
+<rect x="1160" y="258" width="420" height="92" rx="10" fill="#FEF2F2" stroke="#C2410C" stroke-width="1.4"/>
+<text x="1176" y="284" font-size="14" fill="#C2410C" font-weight="700">Verification older than what it checks</text>
+<text x="1564" y="286" font-size="20" fill="#C2410C" font-weight="700" text-anchor="end">1</text>
+<text x="1176" y="308" font-size="11" fill="#475569">the newest change on a verification box is more</text>
+<text x="1176" y="324" font-size="11" fill="#475569">than 7 days older than on the box it checks</text>
+<rect x="1160" y="362" width="420" height="92" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.4"/>
+<text x="1176" y="388" font-size="14" fill="#4F46E5" font-weight="700">Cites a standard no input cites</text>
+<text x="1564" y="390" font-size="20" fill="#4F46E5" font-weight="700" text-anchor="end">8</text>
+<text x="1176" y="412" font-size="11" fill="#475569">cites a standard in WP-M-00 that none of</text>
+<text x="1176" y="428" font-size="11" fill="#475569">its inputs cite: check where it comes from</text>
+<rect x="1160" y="466" width="420" height="92" rx="10" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1176" y="492" font-size="14" fill="#166534" font-weight="700">Due before an input it reads</text>
+<text x="1564" y="494" font-size="20" fill="#166534" font-weight="700" text-anchor="end">0</text>
+<text x="1176" y="516" font-size="11" fill="#475569">due at an earlier gate than a work product</text>
+<text x="1176" y="532" font-size="11" fill="#475569">it reads (WP-M-00 gate column)</text>
+<text x="1160" y="580" font-size="11.5" fill="#0F172A">A flag means look, not wrong: an older work</text>
+<text x="1160" y="598" font-size="11.5" fill="#0F172A">product may still be right after its input</text>
+<text x="1160" y="616" font-size="11.5" fill="#0F172A">changed. A new Version entry or a recorded</text>
+<text x="1160" y="634" font-size="11.5" fill="#0F172A">review clears a flag; the view never does.</text>
+<text x="1160" y="662" font-size="10.5" fill="#475569" font-style="italic">Dates: Version row of each work product, newest 2026-11-12.</text>
+<text x="40" y="858" font-size="11.5" fill="#475569" font-style="italic">Worked out from the WP-M-00 register, the WP-M-03 process model and each work product's Version row; nothing is judged wrong by being flagged.</text>
+<g class="terms">
+<text x="40" y="882" font-size="10.5" fill="#475569">Terms: WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

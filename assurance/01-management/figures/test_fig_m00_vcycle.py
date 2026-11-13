@@ -252,6 +252,32 @@ class VCycle(unittest.TestCase):
     self.assertEqual(len([ln for ln in page.splitlines() if re.match(r"^\| \[[^]]+\]\([^)]+\.md\) \| ", ln)]),
                      len(placed))
 
+  def test_conflict_lag_has_a_grace_period(self):
+    import vcycle_conflicts as vc
+    d = {"title": "Def", "ids": ["A"]}
+    vb = {"title": "Ver", "ids": ["B"]}
+    edge = (vc.date("2026-11-01") + vc.dt.timedelta(days=vc.GRACE_DAYS)).isoformat()
+    self.assertIsNone(vc.lag(d, vb, {"A": edge, "B": "2026-11-01"}))
+    hit = vc.lag(d, vb, {"A": "2026-12-20", "B": "2026-11-01"})
+    self.assertEqual((hit["box"], hit["checks"], hit["days"]), ("Ver", "Def", 49))
+    self.assertIsNone(vc.lag(d, vb, {"A": "2026-11-01", "B": "2026-11-20"}))
+    self.assertIsNone(vc.lag(d, vb, {"B": "2026-11-20"}))
+
+  def test_every_conflict_is_on_one_box_and_on_the_page(self):
+    import vcycle_conflicts as vc
+    m = v.build_model()
+    d = vc.model(m)
+    for key in ("stale", "orphan", "gate"):
+      on_boxes = [w for _, _, b in vc.vx.all_boxes(m) for w in vc.per_box(d, b)[key]]
+      self.assertEqual(sorted(on_boxes), sorted(d[key]), key)
+    for wp, newer in d["stale"].items():
+      self.assertTrue(all(when > d["last"][wp] for when, _ in newer), wp)
+    page = (vc.vx.PAGES / vc.PAGE).read_text(encoding="utf-8")
+    for wp in [*d["stale"], *d["orphan"], *d["gate"]]:
+      self.assertIn(f"[{wp}]", page)
+    for g in d["lag"].values():
+      self.assertGreater(g["days"], vc.GRACE_DAYS)
+
 
 if __name__ == "__main__":
   unittest.main()
