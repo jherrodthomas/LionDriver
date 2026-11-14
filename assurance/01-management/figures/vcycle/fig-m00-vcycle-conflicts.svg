@@ -52,7 +52,7 @@
 <text x="488" y="450" font-size="11" fill="#475569" text-anchor="end">2 work products</text>
 <rect x="144" y="462" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
 <text x="152" y="476" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
-<g transform="translate(144.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-H-01 last 2 Nov, reads WP-S-02 changed 7 Nov</text></g>
+<g transform="translate(144.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-H-01 last 2 Nov, reads WP-H-02 changed 13 Nov</text></g>
 <rect x="638" y="428" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
 <text x="652" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software integration</text>
 <text x="996" y="450" font-size="11" fill="#475569" text-anchor="end">4 work products</text>
