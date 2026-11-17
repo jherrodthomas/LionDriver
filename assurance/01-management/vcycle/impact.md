@@ -2,20 +2,22 @@
 
 # Change impact
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-07 · 12 Nov](impact-wp-p-07.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [WP-W-10 · 11 Nov](impact-wp-w-10.md) · [WP-W-08 · 11 Nov](impact-wp-w-08.md) · **All changes**
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-07 · 12 Nov](impact-wp-p-07.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · **All changes**
 
 Each work product's latest dated change, and what depends on it in the process model (WP-P-11): how many of those have a version dated after the change, how many have not, and how many have no dated version. The 8 most recent changes have a page with the V. A dependence is a prompt to look, not proof of an impact; the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) decides.
 
 | Change | Version | Dated | Downstream | Worth a look | Updated since | Undated |
 |---|---|---|---|---|---|---|
+| [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.25 | 2026-11-17 | 23 | 22 | 0 | 1 |
+| [WP-S-02](impact-wp-s-02.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 40 | 1 | 2 |
 | [WP-H-03](impact-wp-h-03.md) Hardware safety analysis (FMEA/FMEDA) | 0.12 | 2026-11-13 | 11 | 11 | 0 | 0 |
 | [WP-H-02](impact-wp-h-02.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | 0.15 | 2026-11-13 | 22 | 20 | 1 | 1 |
 | [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-12 | 17 | 16 | 0 | 1 |
 | [WP-P-04](impact-wp-p-04.md) Documentation management | 0.8 | 2026-11-12 | 1 | 1 | 0 | 0 |
 | [WP-P-02](impact-wp-p-02.md) Change management plan | 0.5 | 2026-11-12 | 2 | 2 | 0 | 0 |
 | [WP-W-11](impact-wp-w-11.md) Cybersecurity implementation and verification | 0.8 | 2026-11-11 | 5 | 2 | 2 | 1 |
-| [WP-W-10](impact-wp-w-10.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
-| [WP-W-08](impact-wp-w-08.md) Testing of the embedded software (SW qualification, HIL) | 0.4 | 2026-11-11 | 5 | 4 | 1 | 0 |
+| [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
+| [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) Testing of the embedded software (SW qualification, HIL) | 0.4 | 2026-11-11 | 5 | 4 | 1 | 0 |
 | [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | 0.55 | 2026-11-11 | 14 | 11 | 2 | 1 |
 | [WP-P-10](../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | 0.7 | 2026-11-11 | 2 | 0 | 2 | 0 |
 | [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) Cybersecurity incident response, vulnerability management and software updates | 0.7 | 2026-11-11 | 0 | 0 | 0 | 0 |
@@ -27,10 +29,8 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-M-07](../WP-M-07-risk-management.md) Project risk management plan and register | 0.11 | 2026-11-11 | 0 | 0 | 0 | 0 |
 | [WP-M-05](../WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | 0.4 | 2026-11-11 | 42 | 28 | 11 | 3 |
 | [WP-K-06](../../10-safety-case/WP-K-06-release-record.md) Release for production / release record | 0.4 | 2026-11-11 | 0 | 0 | 0 | 0 |
-| [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) Technical safety requirements specification | 0.68 | 2026-11-07 | 43 | 31 | 10 | 2 |
 | [WP-W-05](../../05-software/WP-W-05-software-unit-design.md) Software unit design and implementation | 0.9 | 2026-11-03 | 8 | 6 | 2 | 0 |
 | [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) Cybersecurity requirements and architectural design | 0.12 | 2026-11-03 | 12 | 6 | 5 | 1 |
-| [WP-S-05](../../03-system/WP-S-05-hsi-specification.md) Hardware-software interface specification | 0.24 | 2026-11-03 | 23 | 16 | 6 | 1 |
 | [WP-W-06](../../05-software/WP-W-06-software-unit-verification.md) Software unit verification specification and report (static analysis, MISRA, coverage, mutation) | 0.6 | 2026-11-02 | 7 | 3 | 4 | 0 |
 | [WP-W-04](../../05-software/WP-W-04-software-safety-analysis.md) Software safety analysis and software-level DFA | 1.8 | 2026-11-02 | 0 | 0 | 0 | 0 |
 | [WP-W-03](../../05-software/WP-W-03-software-architecture.md) Software architectural design | 0.22 | 2026-11-02 | 12 | 4 | 7 | 1 |
