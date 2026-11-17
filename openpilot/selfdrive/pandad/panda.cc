@@ -208,6 +208,8 @@ void Panda::pack_can_buffer(const capnp::List<cereal::CanData>::Reader &can_data
 }
 
 void Panda::can_send(const capnp::List<cereal::CanData>::Reader &can_data_list) {
+  // LionDriver TSR-411: every transfer of one sendcan message carries the same control-frame index
+  handle->can_frame_index.fetch_add(1);
   pack_can_buffer(can_data_list, [=](uint8_t* data, size_t size) {
     handle->bulk_write(3, data, size, 5);
   });
