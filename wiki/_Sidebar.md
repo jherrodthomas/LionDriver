@@ -21,6 +21,7 @@
 - [ASPICE: is the process capable?](ASPICE-process-capability.md)
 - [Integrated standards: one system, not five](Integrated-standards.md)
 - [For the assessor](For-the-assessor.md)
+- [Work product versions](Work-product-versions.md)
 - [Reference vehicle](Reference-vehicle.md)
 - [CAN, CAN FD and end-to-end protection](CAN-CAN-FD-and-end-to-end-protection.md)
 - [Contributor guide](Contributor-guide.md)

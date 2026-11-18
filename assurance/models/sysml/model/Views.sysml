@@ -208,4 +208,12 @@ package LionDriverViews {
         expose LionDriverRequirements::*;
         render Views::asElementTable;
     }
+
+    view <'V-28'> csrGroups : RequirementView {
+        doc /* One requirement diagram per sheet of CSR-C groups of WP-S-07 §4: each cybersecurity requirement with its status, the concept requirement it refines, its satisfying elements, the safety requirements it shares a mechanism with and its verification cases. */
+        expose LionDriverRequirements::*;
+        expose LionDriverSatisfaction::*;
+        expose LionDriverVerification::*;
+        render Views::asTreeDiagram;
+    }
 }

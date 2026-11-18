@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="446" viewBox="0 0 600 446" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>FRET structured requirements: at a glance</title>
+<desc>18 FRETish requirements (14 plus 4 assumptions) for 7 TSRs; 8 of 8 findings fixed; 3 of 3 components realizable; 3 of 3 injected defects caught by the monitors; no evidence credit. The pilot's steps: 7 TSRs restated in FRETish, formalised, checked for realizability (3 of 3), and turned into monitors that caught 3 of 3 injected defects.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="446" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="22" font-size="10" fill="#94A3B8" font-weight="700">At a glance</text>
+<rect x="40" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">18</text>
+<text x="50" y="74" font-size="9.5" fill="#475569">FRETish for 7 TSRs</text>
+<rect x="172" y="30" width="124" height="54" rx="7" fill="#ECFDF5" stroke="none" stroke-width="1.2"/>
+<text x="182" y="56" font-size="19" fill="#2E9E6A" font-weight="700">8/8</text>
+<text x="182" y="74" font-size="9.5" fill="#475569">findings fixed</text>
+<rect x="304" y="30" width="124" height="54" rx="7" fill="#ECFDF5" stroke="none" stroke-width="1.2"/>
+<text x="314" y="56" font-size="19" fill="#2E9E6A" font-weight="700">3/3</text>
+<text x="314" y="74" font-size="9.5" fill="#475569">components realizable</text>
+<rect x="436" y="30" width="124" height="54" rx="7" fill="#ECFDF5" stroke="none" stroke-width="1.2"/>
+<text x="446" y="56" font-size="19" fill="#2E9E6A" font-weight="700">3/3</text>
+<text x="446" y="74" font-size="9.5" fill="#475569">mutants caught</text>
+<rect x="40" y="92" width="65" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="72.5" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">pilot TE-03</text>
+<rect x="111" y="92" width="98.6" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="160.3" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no evidence credit</text>
+<rect x="215.6" y="92" width="132.4" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="281.8" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">WP-S-02 stays the record</text>
+<text x="40" y="132" font-size="10" fill="#94A3B8" font-weight="700">Where it stands</text>
+<rect x="40" y="142" width="26" height="22" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="53" y="157" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text x="76" y="157" font-size="11" fill="#0F172A" font-weight="700">TSRs restated</text>
+<text x="560" y="157" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">7 TSRs</text>
+<line x1="76" y1="166" x2="560" y2="166" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="172" width="26" height="22" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="53" y="187" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text x="76" y="187" font-size="11" fill="#0F172A" font-weight="700">FRETish</text>
+<text x="560" y="187" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">14 + 4 assumptions</text>
+<line x1="76" y1="196" x2="560" y2="196" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="53" y1="164" x2="53" y2="172" stroke="#0F766E" stroke-width="1.6"/>
+<rect x="40" y="202" width="26" height="22" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="53" y="217" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text x="76" y="217" font-size="11" fill="#0F172A" font-weight="700">Formalised by FRET</text>
+<text x="560" y="217" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">18 formulas</text>
+<line x1="76" y1="226" x2="560" y2="226" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="53" y1="194" x2="53" y2="202" stroke="#0F766E" stroke-width="1.6"/>
+<rect x="40" y="232" width="26" height="22" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="53" y="247" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text x="76" y="247" font-size="11" fill="#0F172A" font-weight="700">Kind 2 realizability</text>
+<text x="560" y="247" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">3 of 3 realizable</text>
+<line x1="76" y1="256" x2="560" y2="256" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="53" y1="224" x2="53" y2="232" stroke="#0F766E" stroke-width="1.6"/>
+<rect x="40" y="262" width="26" height="22" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="53" y="277" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text x="76" y="277" font-size="11" fill="#0F172A" font-weight="700">Copilot monitors</text>
+<text x="560" y="277" font-size="11" fill="#0F766E" font-weight="700" text-anchor="end">3 of 3 mutants caught</text>
+<line x1="76" y1="286" x2="560" y2="286" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="53" y1="254" x2="53" y2="262" stroke="#0F766E" stroke-width="1.6"/>
+<text x="40" y="310" font-size="10.5" fill="#0F172A">The pilot's steps: 7 TSRs restated in FRETish, formalised, checked for realizability (3 of 3), and turned</text>
+<text x="40" y="325" font-size="10.5" fill="#0F172A">into monitors that caught 3 of 3 injected defects.</text>
+<text x="40" y="346" font-size="9.5" fill="#94A3B8">Generated by folder_cards.py from this folder's own records; the page's text follows below.</text>
+<g class="terms">
+<text x="40" y="366" font-size="10.5" fill="#475569">Terms: FRET NASA's Formal Requirements Elicitation Tool · FRETish FRET's structured natural</text>
+<text x="40" y="380.5" font-size="10.5" fill="#475569">language for requirements · TE-nn tool evaluation record (07-supporting/tool-evaluations) ·</text>
+<text x="40" y="395" font-size="10.5" fill="#475569">TSR-nn technical safety requirement (WP-S-02) · WP-nn work product, e.g. WP-C-04; the letter</text>
+<text x="40" y="409.5" font-size="10.5" fill="#475569">is its area (M management, C concept, S system, H hardware, W software, V validation, P</text>
+<text x="40" y="424" font-size="10.5" fill="#475569">processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

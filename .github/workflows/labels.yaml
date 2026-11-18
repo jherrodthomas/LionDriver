@@ -1,0 +1,53 @@
+# Repository labels from .github/labels.yaml (WP-P-02 §4 change classes and any others listed there).
+# On a pull request that touches the labels file or the script: validate only, no write access.
+# On a push to liondriver-dev, or by hand: create missing labels and update colour and description. Never deletes.
+name: labels
+
+on:
+  pull_request:
+    paths:
+      - '.github/labels.yaml'
+      - '.github/workflows/labels.yaml'
+      - 'tools/ci/sync_labels.py'
+      - 'tools/ci/test_sync_labels.py'
+  push:
+    branches: [liondriver-dev]
+    paths:
+      - '.github/labels.yaml'
+      - '.github/workflows/labels.yaml'
+      - 'tools/ci/sync_labels.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: labels file is valid
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: false
+      - run: python3 tools/ci/sync_labels.py --check
+      - run: python3 tools/ci/test_sync_labels.py
+
+  sync:
+    name: sync repository labels
+    if: github.event_name != 'pull_request' && github.repository == 'jherrodthomas/LionDriver'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: false
+      - run: python3 tools/ci/test_sync_labels.py
+      - name: Create or update the labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 tools/ci/sync_labels.py --apply

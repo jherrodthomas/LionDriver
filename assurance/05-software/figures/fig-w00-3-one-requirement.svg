@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="1196" viewBox="0 0 500 1196" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure W-0-3. Follow one requirement</title>
+<desc>FSR-01.07 → TSR-407 → SWSR-407 → U-PND-MAIN UN-42, UN-N1 → panda drivers/heartbeat_monitor.h (c2e5d93) → SM-TOY-AUTH T10a → VS-UV-14, VS-SWI-05, VS-SWQ-10; in the code</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="500" height="1196" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="16" y="30" font-size="18" fill="#0F172A" font-weight="700">Follow one requirement</text>
+<text x="16" y="50" font-size="11.5" fill="#475569">SWSR-407, heartbeat loss, from the safety requirement it</text>
+<text x="16" y="66" font-size="11.5" fill="#475569">serves to the code and the tests that verify it.</text>
+<rect x="16" y="86" width="468" height="80" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="16" y="94" width="4" height="64" rx="2" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="30" y="104" font-size="9.5" fill="#475569" font-weight="700">Functional safety requirement</text>
+<rect x="407.9" y="93" width="62.1" height="16" rx="8.0" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
+<text x="438.9" y="104.4" font-size="9.5" fill="#C2410C" font-weight="700" text-anchor="middle">FSR-01.07</text>
+<text x="30" y="122" font-size="11.5" fill="#0F172A" font-weight="700">The envelope shall detect missing or stale control commands from the SoC and</text>
+<text x="30" y="137" font-size="11.5" fill="#0F172A">remove actuation within the FTTI allocation of §8.</text>
+<text x="30" y="152" font-size="10" fill="#475569">ASIL C · WP-C-04</text>
+<line x1="46" y1="166" x2="46" y2="190" stroke="#475569" stroke-width="1.6"/>
+<path d="M42 187 L46 194 L50 187 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<text x="58" y="185" font-size="10" fill="#475569">refines</text>
+<rect x="16" y="196" width="468" height="95" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="16" y="204" width="4" height="79" rx="2" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="30" y="214" font-size="9.5" fill="#475569" font-weight="700">Technical safety requirement</text>
+<rect x="416.3" y="203" width="53.7" height="16" rx="8.0" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
+<text x="443.2" y="214.4" font-size="9.5" fill="#C2410C" font-weight="700" text-anchor="middle">TSR-407</text>
+<text x="30" y="232" font-size="11.5" fill="#0F172A" font-weight="700">In a car safety mode, the envelope shall detect absence of the SoC heartbeat</text>
+<text x="30" y="247" font-size="11.5" fill="#0F172A">(0xf3) for &gt; 0.3 s and then revoke all actuation authority at once (SS-L, SS-G).</text>
+<text x="30" y="262" font-size="11.5" fill="#0F172A">It shall enter SS-S (SILENT, relay released) after the longer timeout of …</text>
+<text x="30" y="277" font-size="10" fill="#475569">ASIL C · detect ≤ 0.3 s / react ≤ 0.1 s</text>
+<line x1="46" y1="291" x2="46" y2="315" stroke="#475569" stroke-width="1.6"/>
+<path d="M42 312 L46 319 L50 312 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<text x="58" y="310" font-size="10" fill="#475569">refines</text>
+<rect x="16" y="321" width="468" height="80" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="16" y="329" width="4" height="64" rx="2" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="30" y="339" font-size="9.5" fill="#475569" font-weight="700">Software safety requirement</text>
+<rect x="409.3" y="328" width="60.7" height="16" rx="8.0" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="439.6" y="339.4" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">SWSR-407</text>
+<text x="30" y="357" font-size="11.5" fill="#0F172A" font-weight="700">In a car safety mode the envelope shall clear all authority when no heartbeat</text>
+<text x="30" y="372" font-size="11.5" fill="#0F172A">(0xf3) has been received for &gt; 0.3 s.</text>
+<text x="30" y="387" font-size="10" fill="#475569">ASIL B‡ · accept: Clear ≤ 0.3 s + one task period</text>
+<line x1="46" y1="401" x2="46" y2="425" stroke="#475569" stroke-width="1.6"/>
+<path d="M42 422 L46 429 L50 422 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<text x="58" y="420" font-size="10" fill="#475569">allocated to</text>
+<rect x="16" y="431" width="468" height="80" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="16" y="439" width="4" height="64" rx="2" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="30" y="449" font-size="9.5" fill="#475569" font-weight="700">Component and units</text>
+<rect x="394.4" y="438" width="75.6" height="16" rx="8.0" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="432.2" y="449.4" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">U-PND-MAIN</text>
+<text x="30" y="467" font-size="11.5" fill="#0F172A" font-weight="700">UN-42 heartbeat_monitor_reset, heartbeat_monitor_tick</text>
+<text x="30" y="482" font-size="11.5" fill="#0F172A">UN-N1 safety_task_handler, safety_task_timer_init</text>
+<text x="30" y="497" font-size="10" fill="#475569">UN-42: SPI/USB ISR (reset), safety task ISR (tick) · UN-N1: TIM4 ISR, 100 Hz</text>
+<line x1="46" y1="511" x2="46" y2="535" stroke="#475569" stroke-width="1.6"/>
+<path d="M42 532 L46 539 L50 532 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<text x="58" y="530" font-size="10" fill="#475569">implemented in</text>
+<rect x="16" y="541" width="468" height="65" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="16" y="549" width="4" height="49" rx="2" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="30" y="559" font-size="9.5" fill="#475569" font-weight="700">Code</text>
+<rect x="418.8" y="548" width="51.2" height="16" rx="8.0" fill="#F1F5F9" stroke="#0F172A" stroke-width="1"/>
+<text x="444.4" y="559.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">c2e5d93</text>
+<text x="30" y="577" font-size="11.5" fill="#0F172A" font-weight="700">panda drivers/heartbeat_monitor.h</text>
+<text x="30" y="592" font-size="10" fill="#475569">panda commit c2e5d93</text>
+<line x1="46" y1="606" x2="46" y2="630" stroke="#475569" stroke-width="1.6"/>
+<path d="M42 627 L46 634 L50 627 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<text x="58" y="625" font-size="10" fill="#475569">realises</text>
+<rect x="16" y="636" width="468" height="80" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="16" y="644" width="4" height="64" rx="2" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="30" y="654" font-size="9.5" fill="#475569" font-weight="700">State-machine transition</text>
+<rect x="359.8" y="643" width="110.2" height="16" rx="8.0" fill="#F0FDFA" stroke="#0F766E" stroke-width="1"/>
+<text x="414.9" y="654.4" font-size="9.5" fill="#0F766E" font-weight="700" text-anchor="middle">SM-TOY-AUTH T10a</text>
+<text x="30" y="672" font-size="11.5" fill="#0F172A" font-weight="700">ALLOWED → NOT_ALLOWED on safety task: heartbeat check: clear; siren 3 s</text>
+<text x="30" y="687" font-size="11.5" fill="#0F172A">when authority was granted (panda c33343b)</text>
+<text x="30" y="702" font-size="10" fill="#475569">build all</text>
+<line x1="46" y1="716" x2="46" y2="740" stroke="#475569" stroke-width="1.6"/>
+<path d="M42 737 L46 744 L50 737 Z" stroke="none" stroke-width="1.4" fill="#475569" stroke-linejoin="round"/>
+<text x="58" y="735" font-size="10" fill="#475569">verified by</text>
+<rect x="16" y="746" width="468" height="84" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="16" y="754" width="4" height="68" rx="2" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="30" y="764" font-size="9.5" fill="#475569" font-weight="700">Test cases</text>
+<rect x="30" y="770" width="56.3" height="15" rx="7.5" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="58.1" y="780.7" font-size="9" fill="#4F46E5" font-weight="700" text-anchor="middle">VS-UV-14</text>
+<text x="92.3" y="782" font-size="10.5" fill="#0F172A">unit: Heartbeat supervision: mismatch and loss timing, SILENT + relay …</text>
+<rect x="30" y="788" width="62.9" height="15" rx="7.5" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="61.5" y="798.7" font-size="9" fill="#4F46E5" font-weight="700" text-anchor="middle">VS-SWI-05</text>
+<text x="98.9" y="800" font-size="10.5" fill="#0F172A">integration: Heartbeat path 0xf3 → tick/safety task</text>
+<rect x="30" y="806" width="62.9" height="15" rx="7.5" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="61.5" y="816.7" font-size="9" fill="#4F46E5" font-weight="700" text-anchor="middle">VS-SWQ-10</text>
+<text x="98.9" y="818" font-size="10.5" fill="#0F172A">HIL: Heartbeat loss, SILENT, siren</text>
+<rect x="16" y="844" width="468" height="44" rx="10" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="30" y="862" font-size="9.5" fill="#2E9E6A" font-weight="700">Status</text>
+<text x="30" y="879" font-size="11.5" fill="#2E9E6A" font-weight="700">In the code; not yet verified on hardware</text>
+<text x="16" y="906" font-size="10" fill="#475569">Every link read from the records: swsr.yaml, tsr.yaml, fsr.yaml,</text>
+<text x="16" y="920" font-size="10" fill="#475569">WP-W-05 §2, the state-machine record and WP-W-06/07/08.</text>
+<g class="terms">
+<text x="16" y="940" font-size="10" fill="#475569">Terms: ALLOWED the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED:</text>
+<text x="16" y="954" font-size="10" fill="#475569">0), WP-W-05 §5.2 · ASIL Automotive Safety Integrity Level, A (lowest) to D (highest),</text>
+<text x="16" y="968" font-size="10" fill="#475569">from ISO 26262 · FSR-nn functional safety requirement (FSC) · FTTI fault-tolerant time</text>
+<text x="16" y="982" font-size="10" fill="#475569">interval: fault to hazard, the time a safety mechanism has · HIL hardware in the loop:</text>
+<text x="16" y="996" font-size="10" fill="#475569">the bench with the real panda and simulated car buses · ISR interrupt service routine ·</text>
+<text x="16" y="1010" font-size="10" fill="#475569">SILENT the panda's safety mode that sends nothing · SM-TOY SM-TOY-AUTH, the state</text>
+<text x="16" y="1024" font-size="10" fill="#475569">machine of the Toyota authority controls_allowed (WP-W-05 §5.2) · SoC system on chip:</text>
+<text x="16" y="1038" font-size="10" fill="#475569">the comma device's main processor, running openpilot (QM) · SPI serial peripheral</text>
+<text x="16" y="1052" font-size="10" fill="#475569">interface (the link between SoC and MCU) · SS-nn safe state (FSC §6): SS-L lateral, SS-G</text>
+<text x="16" y="1066" font-size="10" fill="#475569">longitudinal, SS-S envelope silent · SWSR-nn software safety requirement (WP-W-02) ·</text>
+<text x="16" y="1080" font-size="10" fill="#475569">TSR-nn technical safety requirement (WP-S-02) · U-nn software component of the panda</text>
+<text x="16" y="1094" font-size="10" fill="#475569">firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1) · UN-nn software unit</text>
+<text x="16" y="1108" font-size="10" fill="#475569">(WP-W-05 §2) · USB universal serial bus (on the panda, a second host link the reference</text>
+<text x="16" y="1122" font-size="10" fill="#475569">device does not use) · VS-nn verification case: VS-SI system integration, VS-HW</text>
+<text x="16" y="1136" font-size="10" fill="#475569">hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification · WP-nn</text>
+<text x="16" y="1150" font-size="10" fill="#475569">work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
+<text x="16" y="1164" font-size="10" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+<text x="484" y="1184" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_w00_stories.py</text>
+</svg>

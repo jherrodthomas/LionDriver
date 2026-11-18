@@ -1,0 +1,43 @@
+# The FMEDA flow of WP-H-03 §6.5: the inputs a detailed component FMEDA needs and the outputs it gives, each with the
+# records that hold it here and its state. harness_box_fmeda.py draws it and fails when a record path is missing.
+# States: done, partial, missing, not-needed.
+
+inputs:
+- name: Field failure data
+  records: [assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md]
+  state: not-needed
+  note: Optional. LionDriver has none; proven in use is not claimed (T-06)
+- name: Failure modes and safe state
+  records: [assurance/08-analyses/fmea/analyses/dfmea.yaml, assurance/02-concept/WP-C-04-functional-safety-concept.md]
+  state: done
+  note: DFMEA modes per element; safe state per safety goal
+- name: Architecture with failure modes per block
+  records: [assurance/04-hardware/WP-H-02-hardware-design.md, assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md]
+  state: done
+  note: Block diagram (WP-H-02 §3) and block FMEA (WP-H-03 §4)
+- name: Schematic, BOM, component data
+  records: [assurance/04-hardware/wiring/e05-harness-box.bom.tsv, assurance/04-hardware/spice/box-v3-nominal.cir]
+  state: partial
+  note: The harness box only (v3 drawing, netlist). The comma device has none (UK-01, UK-02; DQ-065)
+- name: List of automatic diagnostics
+  records: [assurance/03-system/WP-S-03-technical-safety-concept-architecture.md]
+  state: done
+  note: Safety mechanisms SM-01…45 with DC basis
+- name: Prevention measures and periodic tests
+  records: [assurance/08-analyses/fmea/analyses/dfmea.yaml]
+  state: partial
+  note: DFMEA actions planned; no periodic test of the box in service
+
+outputs:
+- name: Failure rate per failure mode and category
+  state: partial
+  note: Per part and mode, generic rates (no SN 29500 held)
+- name: Useful life
+  state: partial
+  note: No wear-out part except connector mating cycles, to confirm
+- name: Diagnostic coverage per failure mode
+  state: done
+  note: From the mechanisms the goal FMEDAs credit
+- name: Coverage of each periodic test
+  state: missing
+  note: No periodic test of the box exists; coverage 0 in service

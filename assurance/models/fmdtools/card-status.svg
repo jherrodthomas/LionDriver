@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="385" viewBox="0 0 600 385" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>fmdtools fault-propagation models: at a glance</title>
+<desc>4 goals modelled; 88 of 100 single faults agree with the tree, 12 differ; 11 joint-fault sets the tree does not predict; synthetic, no evidence credit. Each goal's model against its fault tree: 88 of 100 single faults give the tree's answer; joint faults found 11 sets the tree does not predict.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="385" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="22" font-size="10" fill="#94A3B8" font-weight="700">At a glance</text>
+<rect x="40" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">4</text>
+<text x="50" y="74" font-size="9.5" fill="#475569">goals modelled</text>
+<rect x="172" y="30" width="124" height="54" rx="7" fill="#FFFBEB" stroke="none" stroke-width="1.2"/>
+<text x="182" y="56" font-size="19" fill="#D97706" font-weight="700">88/100</text>
+<text x="182" y="74" font-size="9.5" fill="#475569">single faults agree</text>
+<rect x="304" y="30" width="124" height="54" rx="7" fill="#FFFBEB" stroke="none" stroke-width="1.2"/>
+<text x="314" y="56" font-size="19" fill="#D97706" font-weight="700">12</text>
+<text x="314" y="74" font-size="9.5" fill="#475569">differ: for review</text>
+<rect x="436" y="30" width="124" height="54" rx="7" fill="#FEF2F2" stroke="none" stroke-width="1.2"/>
+<text x="446" y="56" font-size="19" fill="#D2553F" font-weight="700">11</text>
+<text x="446" y="74" font-size="9.5" fill="#475569">possible tree gaps</text>
+<rect x="40" y="92" width="65" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="72.5" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">pilot TE-02</text>
+<rect x="111" y="92" width="148.3" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="185.1" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">synthetic, no evidence credit</text>
+<rect x="265.3" y="92" width="155.1" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="342.9" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">trees change only after review</text>
+<text x="40" y="132" font-size="10" fill="#94A3B8" font-weight="700">Where it stands</text>
+<text x="40" y="157" font-size="10.5" fill="#0F172A" font-weight="700">SG-01</text>
+<rect x="170" y="144" width="265.4" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="302.7" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">23</text>
+<rect x="435.4" y="144" width="34.6" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="452.7" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text x="560" y="153" font-size="9" fill="#475569" text-anchor="end">steps 1 2 3 5</text>
+<text x="560" y="164" font-size="9" fill="#D2553F" font-weight="700" text-anchor="end">2 tree gaps</text>
+<text x="40" y="185" font-size="10.5" fill="#0F172A" font-weight="700">SG-02</text>
+<rect x="170" y="172" width="264" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="302" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">22</text>
+<rect x="434" y="172" width="36" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="452" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text x="560" y="181" font-size="9" fill="#475569" text-anchor="end">steps 1 2 3 4 5</text>
+<text x="560" y="192" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="end">0 tree gaps</text>
+<text x="40" y="213" font-size="10.5" fill="#0F172A" font-weight="700">SG-03</text>
+<rect x="170" y="200" width="265.4" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="302.7" y="214" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">23</text>
+<rect x="435.4" y="200" width="34.6" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="452.7" y="214" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text x="560" y="209" font-size="9" fill="#475569" text-anchor="end">steps 1 2 3 5</text>
+<text x="560" y="220" font-size="9" fill="#D2553F" font-weight="700" text-anchor="end">9 tree gaps</text>
+<text x="40" y="241" font-size="10.5" fill="#0F172A" font-weight="700">SG-06</text>
+<rect x="170" y="228" width="260.9" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="300.4" y="242" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">20</text>
+<rect x="430.9" y="228" width="39.1" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="450.4" y="242" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text x="560" y="237" font-size="9" fill="#475569" text-anchor="end">steps 1 2 3 4 5</text>
+<text x="560" y="248" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="end">0 tree gaps</text>
+<rect x="170" y="258" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
+<text x="184" y="267" font-size="9.5" fill="#475569">single faults agree</text>
+<rect x="278.6" y="258" width="10" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="292.6" y="267" font-size="9.5" fill="#475569">differ</text>
+<text x="40" y="292" font-size="10.5" fill="#0F172A">Each goal's model against its fault tree: 88 of 100 single faults give the tree's answer; joint faults found</text>
+<text x="40" y="307" font-size="10.5" fill="#0F172A">11 sets the tree does not predict.</text>
+<text x="40" y="328" font-size="9.5" fill="#94A3B8">Generated by folder_cards.py from this folder's own records; the page's text follows below.</text>
+<g class="terms">
+<text x="40" y="348" font-size="10.5" fill="#475569">Terms: SG-nn safety goal (HARA §6) · TE-nn tool evaluation record</text>
+<text x="40" y="362.5" font-size="10.5" fill="#475569">(07-supporting/tool-evaluations)</text>
+</g>
+</svg>

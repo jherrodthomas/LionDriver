@@ -304,19 +304,19 @@ package LionDriverStateRecords {
         }
         transition x2_preenabled_disabled first preEnabled then disabled {
             doc /* X2: update (100 Hz) */
-            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ""; gap = "no host SWSR for driver-initiated disengagement (cruise off, brake, cancel button); the envelope side is SWSR-301/302"; code = "openpilot selfdrived/state.py:31-33"; }
+            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ("SWSR-302h"); gap = ""; code = "openpilot selfdrived/state.py:31-33"; }
         }
         transition x2_enabled_disabled first enabled then disabled {
             doc /* X2: update (100 Hz) */
-            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ""; gap = "no host SWSR for driver-initiated disengagement (cruise off, brake, cancel button); the envelope side is SWSR-301/302"; code = "openpilot selfdrived/state.py:31-33"; }
+            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ("SWSR-302h"); gap = ""; code = "openpilot selfdrived/state.py:31-33"; }
         }
         transition x2_softdisabling_disabled first softDisabling then disabled {
             doc /* X2: update (100 Hz) */
-            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ""; gap = "no host SWSR for driver-initiated disengagement (cruise off, brake, cancel button); the envelope side is SWSR-301/302"; code = "openpilot selfdrived/state.py:31-33"; }
+            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ("SWSR-302h"); gap = ""; code = "openpilot selfdrived/state.py:31-33"; }
         }
         transition x2_overriding_disabled first overriding then disabled {
             doc /* X2: update (100 Hz) */
-            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ""; gap = "no host SWSR for driver-initiated disengagement (cruise off, brake, cancel button); the envelope side is SWSR-301/302"; code = "openpilot selfdrived/state.py:31-33"; }
+            @RecordTransition { id = "X2"; trigger = "update (100 Hz)"; condition = "USER_DISABLE present, no IMMEDIATE_DISABLE"; effect = "USER_DISABLE alert"; build = "all"; swsr = ("SWSR-302h"); gap = ""; code = "openpilot selfdrived/state.py:31-33"; }
         }
         transition e1 first enabled then softDisabling {
             doc /* E1: update (100 Hz) */
@@ -324,7 +324,7 @@ package LionDriverStateRecords {
         }
         transition e2 first enabled then overriding {
             doc /* E2: update (100 Hz) */
-            @RecordTransition { id = "E2"; trigger = "update (100 Hz)"; condition = "OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL present, no disable event"; effect = "override alerts"; build = "all"; swsr = ""; gap = "no host SWSR for driver override while engaged; the envelope side is SWSR-305 (gas blocks longitudinal)"; code = "openpilot selfdrived/state.py:43-45"; }
+            @RecordTransition { id = "E2"; trigger = "update (100 Hz)"; condition = "OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL present, no disable event"; effect = "override alerts"; build = "all"; swsr = ("SWSR-305h"); gap = ""; code = "openpilot selfdrived/state.py:43-45"; }
         }
         transition sd1 first softDisabling then enabled {
             doc /* SD1: update (100 Hz) */
@@ -336,31 +336,35 @@ package LionDriverStateRecords {
         }
         transition p1 first preEnabled then enabled {
             doc /* P1: update (100 Hz) */
-            @RecordTransition { id = "P1"; trigger = "update (100 Hz)"; condition = "PRE_ENABLE no longer present, no disable event"; effect = "none"; build = "all"; swsr = ""; gap = "no SWSR for the pre-enable phase (engagement requested while e.g. the brake is held); SOFT_DISABLE is not acted on in preEnabled"; code = "openpilot selfdrived/state.py:60-64"; }
+            @RecordTransition { id = "P1"; trigger = "update (100 Hz)"; condition = "PRE_ENABLE no longer present, no disable event, no SOFT_DISABLE"; effect = "none"; build = "all"; swsr = ("SWSR-302i"); gap = ""; code = "openpilot selfdrived/state.py:60, 66-69"; }
+        }
+        transition p2 first preEnabled then disabled {
+            doc /* P2: update (100 Hz) */
+            @RecordTransition { id = "P2"; trigger = "update (100 Hz)"; condition = "SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE (DQ-433 A)"; effect = "SOFT_DISABLE alert; engagement attempt ended"; build = "all"; swsr = ("SWSR-302i"); gap = ""; code = "openpilot selfdrived/state.py:60-65"; }
         }
         transition o1 first overriding then softDisabling {
             doc /* O1: update (100 Hz) */
-            @RecordTransition { id = "O1"; trigger = "update (100 Hz)"; condition = "SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE"; effect = "soft-disable timer = 3 s; SOFT_DISABLE alert"; build = "all"; swsr = ("SWSR-601", "SWSR-624"); gap = ""; code = "openpilot selfdrived/state.py:67-71"; }
+            @RecordTransition { id = "O1"; trigger = "update (100 Hz)"; condition = "SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE"; effect = "soft-disable timer = 3 s; SOFT_DISABLE alert"; build = "all"; swsr = ("SWSR-601", "SWSR-624"); gap = ""; code = "openpilot selfdrived/state.py:72-76"; }
         }
         transition o2 first overriding then enabled {
             doc /* O2: update (100 Hz) */
-            @RecordTransition { id = "O2"; trigger = "update (100 Hz)"; condition = "no override event and no SOFT_DISABLE, no disable event"; effect = "none"; build = "all"; swsr = ""; gap = "no host SWSR for driver override while engaged (see E2)"; code = "openpilot selfdrived/state.py:72-73"; }
+            @RecordTransition { id = "O2"; trigger = "update (100 Hz)"; condition = "no override event and no SOFT_DISABLE, no disable event"; effect = "none"; build = "all"; swsr = ("SWSR-305i"); gap = ""; code = "openpilot selfdrived/state.py:77-78"; }
         }
         transition n1 first disabled then disabled {
             doc /* N1: update (100 Hz) */
-            @RecordTransition { id = "N1"; trigger = "update (100 Hz)"; condition = "ENABLE and NO_ENTRY present"; effect = "NO_ENTRY alert, engagement refused"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:79-81"; }
+            @RecordTransition { id = "N1"; trigger = "update (100 Hz)"; condition = "ENABLE and NO_ENTRY present"; effect = "NO_ENTRY alert, engagement refused"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:84-86"; }
         }
         transition d1 first disabled then preEnabled {
             doc /* D1: update (100 Hz) */
-            @RecordTransition { id = "D1"; trigger = "update (100 Hz)"; condition = "ENABLE and PRE_ENABLE present, no NO_ENTRY"; effect = "ENABLE alert"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:84-85, 90"; }
+            @RecordTransition { id = "D1"; trigger = "update (100 Hz)"; condition = "ENABLE and PRE_ENABLE present, no NO_ENTRY"; effect = "ENABLE alert"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:89-90, 95"; }
         }
         transition d2 first disabled then overriding {
             doc /* D2: update (100 Hz) */
-            @RecordTransition { id = "D2"; trigger = "update (100 Hz)"; condition = "ENABLE and an override event present, no NO_ENTRY or PRE_ENABLE"; effect = "ENABLE alert"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:86-87, 90"; }
+            @RecordTransition { id = "D2"; trigger = "update (100 Hz)"; condition = "ENABLE and an override event present, no NO_ENTRY or PRE_ENABLE"; effect = "ENABLE alert"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:91-92, 95"; }
         }
         transition d3 first disabled then enabled {
             doc /* D3: update (100 Hz) */
-            @RecordTransition { id = "D3"; trigger = "update (100 Hz)"; condition = "ENABLE present, no NO_ENTRY, PRE_ENABLE or override event"; effect = "ENABLE alert"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:88-90"; }
+            @RecordTransition { id = "D3"; trigger = "update (100 Hz)"; condition = "ENABLE present, no NO_ENTRY, PRE_ENABLE or override event"; effect = "ENABLE alert"; build = "all"; swsr = ("SWSR-514h", "SWSR-610", "SWSR-619", "SWSR-620", "SWSR-623"); gap = ""; code = "openpilot selfdrived/state.py:93-95"; }
         }
     }
 

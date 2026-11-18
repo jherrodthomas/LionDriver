@@ -11,7 +11,7 @@ Every abbreviation and record code used on the assurance pages and figures is de
 3. **On every figure.** Each generated figure ends with a "Terms:" line for what it draws, so a figure read on its own still explains itself.
 4. **Checked.** CI fails if a block is stale, a figure lacks its line, or a page or figure uses a term that is not in the list. To add one, add it to `TERMS` and run `python3 assurance/trace/tools/terms.py`.
 
-Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [technical-safety-requirements](03-system/technical-safety-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md), [autosar](models/autosar/README.md). Other pages and older figures join the list as they are reworked.
+Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md), [hsi](03-system/hsi/README.md), [timing](03-system/timing/README.md), [cybersecurity](03-system/cybersecurity/README.md), [integration](03-system/integration/README.md), [verification](03-system/verification/README.md), [system-requirements](03-system/system-requirements/README.md), [production](03-system/production/README.md), [technical-safety-requirements](03-system/technical-safety-requirements/README.md), [odd](02-concept/odd/README.md), [cybersecurity](02-concept/cybersecurity/README.md), [hara](02-concept/hara/README.md), [fsc](02-concept/fsc/README.md), [sotif](02-concept/sotif/README.md), [tara](02-concept/tara/README.md), [tsc](03-system/tsc/README.md), [dfa](08-analyses/dfa/README.md), [autosar](models/autosar/README.md), [design](04-hardware/design/README.md), [design](05-software/design/README.md), [tool-qualification](07-supporting/tool-qualification/README.md), [tool-qualification](07-supporting/tool-qualification/method.md), [tool-qualification](07-supporting/tool-qualification/TQR-32-check-trace.md). Other pages and older figures join the list as they are reworked.
 
 ## Abbreviations
 
@@ -28,12 +28,17 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
 | ARXML | AUTOSAR XML: the file format AUTOSAR tools exchange |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
+| ASPICE | Automotive SPICE, the process capability model |
 | AUTOSAR | AUTomotive Open System ARchitecture: the automotive software standard; Classic Platform for ECUs |
+| BOM | bill of materials |
 | BOR | brown-out reset (MCU supply monitor) |
 | CAL | cybersecurity assurance level, 1 to 4 (ISO/SAE 21434) |
 | CAN | controller area network: the vehicle's data bus |
+| CCN | cyclomatic complexity number: the count of independent paths through a function (McCabe) |
 | CI | continuous integration: the checks that run on every pull request |
 | CLU | instrument cluster |
+| CM | configuration management: identifying, baselining and controlling changes to work products (WP-P-01) |
+| COM | common terminal of a changeover switch |
 | CRC | cyclic redundancy check |
 | CSAR | configuration, software and architecture repository: the project lead's Tier-1 toolchain term, not an AUTOSAR one |
 | CSS | clock security system (MCU clock monitor) |
@@ -41,8 +46,10 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | DBC | CAN database file: the frames, signals, scaling and bit layout of a car's CAN messages (opendbc) |
 | DC | diagnostic coverage: the share of faults a safety mechanism detects |
 | DFA | dependent failure analysis |
+| DFMEA | design FMEA: failure modes and effects analysis of a design (here the harness box and device) |
 | DM | driver monitoring |
 | DMA | direct memory access: hardware that copies data without the processor |
+| DOORS | IBM Engineering Requirements Management DOORS: a commercial requirements management tool |
 | DRCC | dynamic radar cruise control: Toyota's stock adaptive cruise |
 | DRV | the driver |
 | DSU | driving support unit (Toyota's radar cruise module) |
@@ -65,19 +72,25 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FDTI | fault detection time interval |
 | FFI | freedom from interference |
 | FHTI | fault handling time interval: FDTI + FRTI |
+| FIT | failures in time: failures per 10⁹ hours |
 | FMEA | failure mode and effects analysis |
 | FMEDA | failure modes, effects and diagnostic analysis (hardware metrics) |
 | FRET | NASA's Formal Requirements Elicitation Tool |
+| FRETish | FRET's structured natural language for requirements |
 | FRTI | fault reaction time interval |
+| FSA-F | final functional safety assessment at G5 (WP-M-06 §6) |
 | FSC | functional safety concept |
 | FTA | fault tree analysis |
 | FTTI | fault-tolerant time interval: fault to hazard, the time a safety mechanism has |
+| FuSa | functional safety (ISO 26262) |
 | FW | firmware |
 | GiB | gibibyte (2³⁰ bytes) |
+| GND | ground |
 | GNSS | global navigation satellite system (GPS) |
 | GPIO | general-purpose input/output pin |
 | GPS | global positioning system |
 | GPU | graphics processor (runs the models) |
+| GSN | Goal Structuring Notation, the diagram language of the safety case |
 | HAR | allocation to the harness and relay (E-05; WP-S-02 §2.2) |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | HATARA | the joint HARA and TARA view: where hazards and threats meet |
@@ -88,7 +101,10 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | HSI | hardware-software interface |
 | HUD | head-up display (here the cluster's lane-assist display) |
 | HW | hardware |
+| HWE | hardware engineering process group of ASPICE (HWE.1 … HWE.4) |
 | ID | identifier |
+| IFR | interface record (trace/items/ifr.yaml): a cross-domain interface, agreed only by a recorded review |
+| IGN | ignition line |
 | IMU | inertial measurement unit: accelerometers and gyroscopes |
 | IPC | inter-process communication |
 | IR | infrared |
@@ -100,21 +116,31 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | JWT | JSON web token (the device's login token to the back end) |
 | LD-SDA | LionDriver Supervised Driving Assistance, the item |
 | LDA | lane departure alert: Toyota's stock lane warning |
+| LDO | low-dropout linear regulator |
 | LDW | lane departure warning |
 | LFS | Git Large File Storage (where the model files live) |
 | LKA | lane keeping assist |
 | LKAS | lane keeping assist system |
 | LOG | verification by analysis of drive logs |
 | LTA | lane tracing assist: Toyota's stock lane-centring function |
+| MAN | management process group of ASPICE (MAN.3 project, MAN.5 risk, MAN.6 measurement) |
 | MB | megabyte |
+| MC/DC | modified condition/decision coverage: each condition shown to affect its decision independently |
 | MCU | microcontroller: the panda safety processor (STM32H7) |
 | MDN | mixture density network (how the model reports a spread of possible values) |
+| MISRA | MISRA C, the coding guideline for the C of the envelope (WP-W-01 §5) |
 | ML | machine learning |
+| MLE | machine learning engineering process group of ASPICE (MLE.1 … MLE.4) |
+| MPF-L | latent multiple-point fault: violates a safety goal only together with another fault, and nothing detects it |
 | MPU | memory protection unit |
 | MQB | Volkswagen's transverse modular platform (Modularer Querbaukasten) |
 | NA | not applicable |
 | NACK | not acknowledge |
 | NaN | not a number: an invalid floating-point value |
+| NC | normally closed terminal of a changeover switch (connected to COM when not driven) |
+| NLOC | non-comment lines of code: the lines of a function that are neither blank nor only comment (lizard's count) |
+| NMI | non-maskable interrupt |
+| NO | normally open terminal of a changeover switch (connected to COM when driven) |
 | NOOUTPUT | the panda's safety mode that receives but sends nothing |
 | NRST | the MCU's reset line (BOOT0 is its boot-mode line) |
 | NSC | not safety-critical |
@@ -136,7 +162,11 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | PCB | printed circuit board |
 | PCM | powertrain control module (engine and drive) |
 | PCS | pre-collision system: Toyota's stock collision warning and braking |
+| PDR | power-down reset (MCU supply monitor, the lowest threshold) |
 | PDU | protocol data unit: the payload of a frame (AUTOSAR I-PDU) |
+| PFMEA | process FMEA: failure modes of making, installing or updating the item |
+| PMHF | probabilistic metric for random hardware failures (ISO 26262-5) |
+| PMIC | power-management IC of the SoC |
 | PR | pull request |
 | PVD | programmable voltage detector (MCU supply monitor) |
 | QM | quality managed: no ASIL; ordinary quality processes suffice |
@@ -150,6 +180,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | R-VEH | installation record block: vehicle (WP-O-01 §5) |
 | RAM | random-access memory |
 | RDP | read-out protection of the MCU's flash (option bytes) |
+| RF | residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5) |
 | ROM | read-only memory |
 | RPC | remote procedure call |
 | RSA-1024 | RSA signature with a 1024-bit key, too short today |
@@ -159,22 +190,33 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | RX | receive |
 | SAE | SAE International (formerly the Society of Automotive Engineers) |
 | SBOM | software bill of materials: the list of every component and version |
+| SBU | sideband-use pins of a USB-C connector (in the harness, the intercept drive, orientation and ignition lines) |
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
+| SEC | cybersecurity engineering process group of ASPICE (SEC.1 … SEC.4) |
 | SecOC | secure onboard communication: AUTOSAR's message authentication for in-vehicle buses |
 | SHA-1 | secure hash algorithm 1, an outdated hash |
 | SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |
 | SIM | verification by scenario simulation |
+| SM-SAFETY | SM-SAFETY-MODE, the state machine of the panda's safety mode (WP-W-05 §5.1) |
+| SM-SELFDRIVED | the state machine of the host's engagement state in selfdrived (WP-W-05 §5.3) |
+| SM-TOY | SM-TOY-AUTH, the state machine of the Toyota authority controls_allowed (WP-W-05 §5.2) |
+| SMPS | switched-mode power supply (the STM32H7's internal step-down regulator) |
+| SN | SN 29500, the Siemens standard of reference failure rates for electronic components |
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
+| SPF | single-point fault: a fault no safety mechanism covers that violates a safety goal on its own (ISO 26262-5) |
 | SPI | serial peripheral interface (the link between SoC and MCU) |
+| SRAM | static RAM: the MCU's working memory |
 | SSH | secure shell (remote login) |
 | ST | STMicroelectronics, the maker of the safety MCU |
 | STPA | system-theoretic process analysis |
 | STRIDE | spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege |
+| SUP | supporting process group of ASPICE (SUP.1 quality assurance … SUP.11 machine learning data management) |
 | SVG | scalable vector graphics (the figure format) |
 | SW | software |
-| SYS | system requirement SYS-nnn of WP-S-01 |
+| SWE | software engineering process group of ASPICE (SWE.1 requirements … SWE.6 qualification test) |
+| SYS | system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5) |
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | T-HIL | verification by bench test with the real panda (hardware in the loop) |
 | T-SIL | verification by software test or process replay (WP-S-01 §1.1) |
@@ -182,6 +224,9 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TBC | to be confirmed |
 | TBD | to be determined: a value not yet set |
+| TCL | tool confidence level, TCL1 (no qualification needed) to TCL3 (ISO 26262-8 §11) |
+| TD | tool error detection: confidence that a tool error is prevented or detected, TD1 (high) to TD3 (low) |
+| TI | tool impact: TI2 if a tool error can introduce or miss an error in a safety-related element (ISO 26262-8 §11) |
 | TLS | transport layer security: encrypted network connections |
 | TOYOTA | the panda's Toyota car mode (parameter 73 in the reference build) |
 | TSC | technical safety concept |
@@ -190,12 +235,19 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | UDS | unified diagnostic services (ISO 14229): the diagnostic protocol used to read ECU versions and fault codes |
 | UI | user interface: the device's screen |
 | UID | unique identifier of the chip |
+| UML | Unified Modeling Language (OMG): state machine, sequence and component diagrams |
 | URL | web address |
-| US | United States |
+| US | United States; in an ISO 16750-2 starting profile, the supply voltage the car settles at after cranking |
+| USB | universal serial bus (on the panda, a second host link the reference device does not use) |
+| USB-C | USB Type-C connector |
 | USR | owner, installer or maintainer acting under a procedure (allocation class) |
-| VIN | vehicle identification number |
+| VAL | validation process of ASPICE (VAL.1) |
+| VIN | vehicle identification number; in the harness box and its simulations, the box supply voltage |
+| VL | logic supply pin of the DG419LE switch (in the harness box, tied to VIN) |
 | VRU | vulnerable road user: pedestrian or cyclist |
 | VSC | vehicle stability control (Toyota's stability system) |
+| VTH | threshold voltage of an input (in the harness box, the DG419LE input threshold) |
+| WBS | work breakdown structure (WP-M-03 §3) |
 | WCET | worst-case execution time |
 | WRP | write protection of the MCU's flash (option bytes) |
 | XML | extensible markup language |
@@ -214,21 +266,28 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | AOU-nn | assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined version |
 | AP-nn | attack path (TARA §5); in WP-S-03 and on the TSC page, an architectural principle (WP-S-03 §2) |
 | AS-nn | asset (TARA §2) |
+| ATC-nn | architecture target-state change of WP-W-03 §10 |
+| AUD-nn | functional safety audit, AUD-n (WP-M-06 §5) |
 | BE-nn | basic event of a WP-A-04 fault tree |
 | CA-nn | cybersecurity assumption on an entity outside the item (WP-C-10 §2) |
 | CFG-nn | vehicle configuration in the vehicle register (CFG-001 is the reference Corolla) |
+| CR-nn | confirmation review of the confirmation measures plan (WP-M-06) |
 | CS-nn | cybersecurity architecture decision CS-AD-nn (WP-S-07 §3.4) |
 | CSC-nn | cybersecurity claim: a risk retained, shared or avoided, with its condition (WP-C-10 §5) |
 | CSG-nn | cybersecurity goal (WP-C-10) |
 | CSR-nn | cybersecurity requirement: CSR-C-nn at concept level (WP-C-10 §7), CSR-nnn refined (WP-S-07) |
+| CT-nn | change type of WP-P-02 (CT-3 is an upstream sync) |
 | D-nn | design decision of the earlier decision list (D-01…D-12; D-08 is the Experimental Mode decision) |
 | DEC-nn | decommissioning step (WP-O-02 §7) |
 | DFI-nn | dependent failure initiator (WP-A-03 §4): one cause that could defeat two elements at once |
+| DFM-nn | DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea) |
 | DMP-nn | driver monitoring performance requirement (WP-C-08 §5) |
+| DN-nn | software design note (05-software/design-notes) |
 | DQ-nn | decision of the project lead (decision register) |
 | DS-nn | damage scenario (TARA §3) |
 | DSR-nn | dataset requirement (WP-C-11 §7) |
 | E-nn | element of the item (WP-C-01 §3.1), E-01…E-06 |
+| EC-nn | error class of a tool use case (tool-qualification/method.md §4) |
 | EXT-nn | external element credited only through an assumption of use (EXT-EPS, EXT-PCM, EXT-CLU) |
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
 | FI-nn | functional insufficiency (WP-C-06) |
@@ -239,11 +298,13 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | GC-nn | global pass criterion of every integration test (WP-S-08 §5) |
 | GD-nn | private record of an unfixed weakness's code locations and mechanism, held until its control is verified (WP-O-05 §4.4) |
 | H-nn | hazard (HARA) |
+| HB-nn | row of the harness box v3 drawing review (RR-2026-010 §2, HB-01…HB-10) |
 | HE-nn | hazardous event (HARA) |
 | HWSR-nn | hardware safety requirement (WP-H-01) |
 | I-nn | integration step I-1…I-4 (WP-S-08 §3.1) |
 | IC-nn | independence claim (WP-A-03 §2): two elements the safety concept relies on not failing together |
 | IF-nn | interface of the item (WP-C-01 §3.4) |
+| IFR-nn | interface record IFR-nn: one cross-domain interface with its owners, open item and agreement state (trace/items/ifr.yaml) |
 | IND-nn | independence claim (WP-S-03 §7) |
 | INS-nn | installation check (WP-O-01) |
 | ITS-nn | item service step: replacing a faulty device or harness (WP-O-02 §5) |
@@ -254,6 +315,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | OI-nn | open item of the document it appears in |
 | OPS-nn | operation step: the driver's pre-drive and field checks (WP-O-02 §3) |
 | OS-nn | operational situation (HARA §3) |
+| PF-nn | planted fault of a tool qualification fault catalogue |
 | PL-nn | platform (PL-001 is LionDriver's) |
 | PM-nn | periodic maintenance check of the item (WP-O-02 §4) |
 | R-nn | shared resource in the DFA map (08-analyses/dfa/shared-resources.yaml): something two elements both depend on |
@@ -262,9 +324,11 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | S-nn | safety-relevant signal across the hardware-software interface or the item boundary (WP-S-05 §11), S-01…S-29 |
 | SG-nn | safety goal (HARA §6) |
 | SH-nn | SOTIF hazard (WP-C-05) |
+| SI-nn | software interface between components (WP-W-03 §3.3) |
 | SM-nn | safety mechanism (TSC §6) |
 | SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
 | SPC-nn | special characteristic of the installation (WP-O-01 §4) |
+| SR-nn | independent SOTIF or AI evaluation review, SR-nn (WP-M-06 §7) |
 | SS-nn | safe state (FSC §6): SS-L lateral, SS-G longitudinal, SS-S envelope silent |
 | ST-nn | step of the start-up and engagement sequence (WP-S-03 Table 4-1), ST-01…ST-21 |
 | SVC-nn | vehicle service action that needs a re-check of the item (WP-O-02 §4) |
@@ -272,13 +336,20 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | T-nn | code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01…T-08 (WP-M-01 §5) |
 | TB-nn | trust boundary (WP-S-07 §3.2) |
 | TC-nn | triggering condition (WP-C-06) |
+| TE-nn | tool evaluation record (07-supporting/tool-evaluations) |
+| TG-nn | guard of the tool qualification guard catalogue (07-supporting/tool-qualification/guards.yaml) |
 | TL-nn | tool entry in the tool register (WP-P-07) |
+| TM-nn | tool mutant: a deliberately broken copy of a tool that a qualification run must catch |
+| TQR-nn | tool qualification report (WP-P-07 §5; 07-supporting/tool-qualification) |
 | TS-nn | threat scenario (TARA §4) |
 | TSR-nn | technical safety requirement (WP-S-02) |
+| U-nn | software component of the panda firmware, U-SAF-… safety layer and U-PND-… platform (WP-W-03 §3.1) |
 | UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
 | UE-nn | undeveloped event of a WP-A-04 fault tree |
+| UK-nn | unknown that WP-H-02 must obtain (UK-01…UK-09, WP-H-02 §5) |
+| UN-nn | software unit (WP-W-05 §2) |
 | UPD-nn | update procedure step (WP-O-02) |
-| V-nn | view of the SysML model (V-01…V-27) |
+| V-nn | view of the SysML model (V-01…V-28) |
 | VF-nn | vehicle family in the vehicle register |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | VT-nn | validation target (WP-V-02) |
@@ -295,5 +366,5 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | W01–W06 | weather and surface condition W01…W06 (HARA §3.1) |
 | L0–L5 | degradation level L0 (full function) to L5 (lockout), FSC §12.1 |
 | P1–P3 | priority of a functional modification: P1 before on-road use, P2 before release, P3 decide at G2 |
-| G0–G6 | gate G0…G6 of the project lifecycle |
+| G0–G6 | gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) |
 | I0–I3 | independence level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation) |

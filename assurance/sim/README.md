@@ -289,7 +289,8 @@ Six longitudinal and hand-over families run on the same plant with search-only a
 so `report.py --check` is unchanged): an ACC that follows the lead within the envelope bounds (a model, not
 openpilot's MPC), a lead that brakes or stands still, the follower's gap and its driver's reaction and braking, and the
 fault soft disable and driver-monitoring stop as openpilot runs them (alert, then the cruise target zero at
-A_CRUISE_MIN = −1.2 m/s², SOFT_DISABLE_TIME and the 5 s countdown read from the code). They search loss of
+A_CRUISE_MIN = −1.2 m/s² for the soft disable, the minimum-risk stop at A_MINIMUM_RISK_STOP = −2.0 m/s² ramped at
+4 m/s³ for the DM stop (TSR-633, DQ-424 A), SOFT_DISABLE_TIME and the 5 s countdown read from the code). They search loss of
 deceleration with a braking or stopped lead (HE-06.x), acceleration toward a slower lead (HE-03.x), a deceleration step
 with a close follower (HE-04.1), and the order of alert and slow-down (as built, and options B and C of register
 DQ-407, TSR-624's proposed 1 s) against a close follower (HE-04.3, HE-04.1) and a slower lead (HE-07.3). Three rows end

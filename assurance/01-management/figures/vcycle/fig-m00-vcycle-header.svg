@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="236" viewBox="0 0 1400 236" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>LionDriver V-cycle: header</title>
+<desc>Time axis: Governance phase, G0 Mar 2027–May 2027; Concept phase, G1 Nov 2027–May 2028; System design phase, G2 Jul 2028–May 2029; HW/SW development phase, G3 Nov 2029–May 2031; Integration and verification phase, G4 Sep 2030–Sep 2032; Validation and release phase, G5 Jul 2031–Mar 2034; Operation phase, G6 continuous. Now in the Governance phase.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1400" height="236" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.25}}@media (prefers-reduced-motion: reduce){.pulse{animation:none}}</style>
+<text x="40" y="44" font-size="28" fill="#0F172A" font-weight="700">LionDriver V-cycle</text>
+<text x="40" y="70" font-size="13.5" fill="#475569">Where each work product sits on the V, which gate needs it, and how far it has matured. Generated from the work-product register (WP-M-00) and the schedule (WP-M-03).</text>
+<rect x="60" y="92" width="1280" height="84" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<rect x="62" y="94" width="178.9" height="80" rx="6" fill="#FFF7ED" stroke="none" stroke-width="0"/>
+<text x="151.4" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Governance</text>
+<line x1="242.9" y1="96" x2="242.9" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="334.3" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Concept</text>
+<line x1="425.7" y1="96" x2="425.7" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="517.1" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">System design</text>
+<line x1="608.6" y1="96" x2="608.6" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="700" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">HW/SW development</text>
+<line x1="791.4" y1="96" x2="791.4" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="882.9" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Integration and verification</text>
+<line x1="974.3" y1="96" x2="974.3" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1065.7" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Validation and release</text>
+<line x1="1157.1" y1="96" x2="1157.1" y2="172" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1248.6" y="114" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">Operation</text>
+<line x1="68" y1="150" x2="1332" y2="150" stroke="#CBD5E1" stroke-width="2"/>
+<path d="M232.9 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="242.9" y="172" font-size="11" fill="#475569" text-anchor="end">G0 · Mar 2027–May 2027</text>
+<path d="M415.7 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="425.7" y="172" font-size="11" fill="#475569" text-anchor="end">G1 · Nov 2027–May 2028</text>
+<path d="M598.6 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="608.6" y="172" font-size="11" fill="#475569" text-anchor="end">G2 · Jul 2028–May 2029</text>
+<path d="M781.4 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="791.4" y="172" font-size="11" fill="#475569" text-anchor="end">G3 · Nov 2029–May 2031</text>
+<path d="M964.3 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="974.3" y="172" font-size="11" fill="#475569" text-anchor="end">G4 · Sep 2030–Sep 2032</text>
+<path d="M1147.1 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="1157.1" y="172" font-size="11" fill="#475569" text-anchor="end">G5 · Jul 2031–Mar 2034</text>
+<path d="M1248.6 140 l10 10 l-10 10 l-10 -10z" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="2"/>
+<text x="1248.6" y="172" font-size="11" fill="#475569" text-anchor="middle">G6 · continuous</text>
+<circle class="pulse" cx="151.4" cy="150" r="7" fill="#C2410C"/>
+<line x1="151.4" y1="178" x2="151.4" y2="192" stroke="#C2410C" stroke-width="2"/>
+<rect x="68.5" y="192" width="166" height="24" rx="12" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="151.4" y="208" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">Now: Governance phase</text>
+<text x="1340" y="208" font-size="11" fill="#94A3B8" text-anchor="end" font-style="italic">Filled diamond = gate passed in a recorded review · no gate passed yet</text>
+</svg>

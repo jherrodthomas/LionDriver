@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="399" viewBox="0 0 600 399" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Harness box circuit simulation: at a glance</title>
+<desc>42 simulated harness-box faults: 18 with a visible effect, 24 with levels fine; pass criteria for VS-HW-23, VS-HW-24; predictions, not measurements, no FMEDA credit. 42 simulated faults on the harness box by kind: 18 would show on the bus, 24 leave the levels fine; they set pass criteria for VS-HW-23, VS-HW-24.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="399" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="22" font-size="10" fill="#94A3B8" font-weight="700">At a glance</text>
+<rect x="40" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">42</text>
+<text x="50" y="74" font-size="9.5" fill="#475569">fault cases</text>
+<rect x="172" y="30" width="124" height="54" rx="7" fill="#ECFDF5" stroke="none" stroke-width="1.2"/>
+<text x="182" y="56" font-size="19" fill="#2E9E6A" font-weight="700">24</text>
+<text x="182" y="74" font-size="9.5" fill="#475569">levels still fine</text>
+<rect x="304" y="30" width="124" height="54" rx="7" fill="#FFFBEB" stroke="none" stroke-width="1.2"/>
+<text x="314" y="56" font-size="19" fill="#D97706" font-weight="700">18</text>
+<text x="314" y="74" font-size="9.5" fill="#475569">visible on the bus</text>
+<rect x="436" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="446" y="56" font-size="19" fill="#0F172A" font-weight="700">2</text>
+<text x="446" y="74" font-size="9.5" fill="#475569">bench tests sharpened</text>
+<rect x="40" y="92" width="72" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="76" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">ngspice pilot</text>
+<rect x="118" y="92" width="154.1" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="195.1" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">predictions, not measurements</text>
+<rect x="278.1" y="92" width="92.3" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="324.2" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no FMEDA credit</text>
+<text x="40" y="132" font-size="10" fill="#94A3B8" font-weight="700">Where it stands</text>
+<text x="40" y="157" font-size="10.5" fill="#0F172A" font-weight="700">clamp</text>
+<rect x="170" y="144" width="195" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="267.5" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
+<rect x="365" y="144" width="195" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="462.5" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
+<text x="40" y="185" font-size="10.5" fill="#0F172A" font-weight="700">release</text>
+<rect x="170" y="172" width="130" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="235" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<rect x="300" y="172" width="260" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="430" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text x="40" y="213" font-size="10.5" fill="#0F172A" font-weight="700">signal</text>
+<rect x="170" y="200" width="334.3" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="337.1" y="214" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<rect x="504.3" y="200" width="55.7" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="532.1" y="214" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text x="40" y="241" font-size="10.5" fill="#0F172A" font-weight="700">termination</text>
+<rect x="170" y="228" width="312" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="326" y="242" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="482" y="228" width="78" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="521" y="242" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<rect x="170" y="258" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
+<text x="184" y="267" font-size="9.5" fill="#475569">levels fine</text>
+<rect x="242.2" y="258" width="10" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="256.2" y="267" font-size="9.5" fill="#475569">effect</text>
+<text x="40" y="292" font-size="10.5" fill="#0F172A">42 simulated faults on the harness box by kind: 18 would show on the bus, 24 leave the levels fine; they</text>
+<text x="40" y="307" font-size="10.5" fill="#0F172A">set pass criteria for VS-HW-23, VS-HW-24.</text>
+<text x="40" y="328" font-size="9.5" fill="#94A3B8">Generated by folder_cards.py from this folder's own records; the page's text follows below.</text>
+<g class="terms">
+<text x="40" y="348" font-size="10.5" fill="#475569">Terms: FMEDA failure modes, effects and diagnostic analysis (hardware metrics) · VS-nn</text>
+<text x="40" y="362.5" font-size="10.5" fill="#475569">verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault</text>
+<text x="40" y="377" font-size="10.5" fill="#475569">injection, VS-SQ system qualification</text>
+</g>
+</svg>

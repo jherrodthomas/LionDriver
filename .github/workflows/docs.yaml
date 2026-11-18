@@ -36,9 +36,9 @@ jobs:
     steps:
     - uses: commaai/timeout@v1
       with:
-        # LionDriver: setup alone takes 60-70 s on a slow runner (the build itself about 1 s), so the 60 s default
-        # failed jobs whose docs had built
-        timeout: 120
+        # LionDriver: checkout plus setup take 60-170 s on a slow runner (the build itself about 1 s); the 60 s
+        # default, then 120 s, failed jobs whose docs had built
+        timeout: 300
     - uses: actions/checkout@v7
     - run: ./tools/op.sh setup
 

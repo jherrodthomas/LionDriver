@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="343" viewBox="0 0 600 343" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Clause-check register: at a glance</title>
+<desc>48 clause obligations in 2 registers: 40 pass, 1 open or gap, the rest manual; 0 of 48 verified against the licensed standard. 48 obligations across 2 standards, as the checks find them today: 40 pass, 1 open; none is yet verified against the licensed text.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="343" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="22" font-size="10" fill="#94A3B8" font-weight="700">At a glance</text>
+<rect x="40" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">48</text>
+<text x="50" y="74" font-size="9.5" fill="#475569">obligations</text>
+<rect x="172" y="30" width="124" height="54" rx="7" fill="#ECFDF5" stroke="none" stroke-width="1.2"/>
+<text x="182" y="56" font-size="19" fill="#2E9E6A" font-weight="700">40</text>
+<text x="182" y="74" font-size="9.5" fill="#475569">pass their checks</text>
+<rect x="304" y="30" width="124" height="54" rx="7" fill="#FEF2F2" stroke="none" stroke-width="1.2"/>
+<text x="314" y="56" font-size="19" fill="#D2553F" font-weight="700">1</text>
+<text x="314" y="74" font-size="9.5" fill="#475569">open or gap</text>
+<rect x="436" y="30" width="124" height="54" rx="7" fill="#FEF2F2" stroke="none" stroke-width="1.2"/>
+<text x="446" y="56" font-size="19" fill="#D2553F" font-weight="700">0/48</text>
+<text x="446" y="74" font-size="9.5" fill="#475569">verified on the standard</text>
+<rect x="40" y="92" width="32.3" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="56.2" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">pilot</text>
+<rect x="78.3" y="92" width="133.6" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="145.2" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">every row a proposal (I0)</text>
+<rect x="218" y="92" width="112.6" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="274.3" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">checked on every PR</text>
+<text x="40" y="132" font-size="10" fill="#94A3B8" font-weight="700">Where it stands</text>
+<text x="40" y="157" font-size="10.5" fill="#0F172A" font-weight="700">ISO 21448:2022</text>
+<rect x="170" y="144" width="332.2" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="336.1" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">23</text>
+<rect x="502.2" y="144" width="57.8" height="20" rx="0" fill="#94A3B8" stroke="#FFFFFF" stroke-width="1"/>
+<text x="531.1" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text x="40" y="185" font-size="10.5" fill="#0F172A" font-weight="700">ISO 26262-3:2018</text>
+<rect x="170" y="172" width="315.7" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="327.9" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">17</text>
+<rect x="485.7" y="172" width="55.7" height="20" rx="0" fill="#94A3B8" stroke="#FFFFFF" stroke-width="1"/>
+<text x="513.6" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<rect x="541.4" y="172" width="18.6" height="20" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="170" y="202" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
+<text x="184" y="211" font-size="9.5" fill="#475569">pass</text>
+<rect x="216.9" y="202" width="10" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="230.9" y="211" font-size="9.5" fill="#475569">partial</text>
+<rect x="270.7" y="202" width="10" height="10" rx="2" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
+<text x="284.7" y="211" font-size="9.5" fill="#475569">manual</text>
+<rect x="326.9" y="202" width="10" height="10" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="340.9" y="211" font-size="9.5" fill="#475569">gap</text>
+<rect x="368.6" y="202" width="10" height="10" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="382.6" y="211" font-size="9.5" fill="#475569">open</text>
+<text x="40" y="236" font-size="10.5" fill="#0F172A">48 obligations across 2 standards, as the checks find them today: 40 pass, 1 open; none is yet verified</text>
+<text x="40" y="251" font-size="10.5" fill="#0F172A">against the licensed text.</text>
+<text x="40" y="272" font-size="9.5" fill="#94A3B8">Generated by folder_cards.py from this folder's own records; the page's text follows below.</text>
+<g class="terms">
+<text x="40" y="292" font-size="10.5" fill="#475569">Terms: I0–I3 independence level of a review, I0 (none, e.g. the author or an AI) to I3</text>
+<text x="40" y="306.5" font-size="10.5" fill="#475569">(independent organisation) · ISO International Organization for Standardization · PR pull</text>
+<text x="40" y="321" font-size="10.5" fill="#475569">request</text>
+</g>
+</svg>

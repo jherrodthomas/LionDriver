@@ -23,7 +23,7 @@ is scoped to this domain, and the HARA's situations are drawn from it.
 | PCS | pre-collision system: Toyota's stock collision warning and braking |
 | SG-nn | safety goal (HARA §6) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
-| US | United States |
+| US | United States; in an ISO 16750-2 starting profile, the supply voltage the car settles at after cranking |
 | VRU | vulnerable road user: pedestrian or cyclist |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 

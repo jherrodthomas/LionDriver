@@ -1,0 +1,48 @@
+# Guard catalogue: the measures that detect a tool's errors (method.md §3). A tool's TD, and so its TCL, follows
+# from the guards in place for its use case and from whether each is shown working, not from the tool's name.
+# Every TQR names the guards it relies on by ID; fig_tq.py draws this list.
+#
+# Fields: id, name, catches (the tool errors it detects), shown_by (how the project shows the guard works, which
+# is what lets it count), limits (what it does not catch), used_by (WP-P-07 tools that rely on it today).
+
+- id: TG-01
+  name: Planted-fault suite
+  catches: "A false OK: the tool passes an input that has a known error"
+  shown_by: "Known-bad inputs, at least one per error class of the use case, must each be reported on every CI run (TQR-32 plants them in a copy of the real records and adds tool mutants that must be caught)"
+  limits: "Shows the tool catches the planted patterns, in the version it ran on; an error on a pattern nobody planted is not covered. Evidence for method 1c more than for TD"
+  used_by: [TL-04, TL-28, TL-32, TL-35, TL-36, TL-37, TL-59]
+
+- id: TG-02
+  name: Diverse redundancy
+  catches: "A wrong result from one tool, when a second, independent tool computes the same thing"
+  shown_by: "Both run on every change and must agree; a seeded difference must show up as a disagreement"
+  limits: "A shared error in both tools (same input misread, same algorithm) goes through"
+  used_by: [TL-02, TL-36, TL-42, TL-43, TL-53, TL-60]
+
+- id: TG-03
+  name: Recompute and diff
+  catches: "A generated output that no longer matches its source, or was edited by hand"
+  shown_by: "CI regenerates the output from the source (--check) and fails on any difference"
+  limits: "Catches drift, not a generator that is wrong in the same way each time"
+  used_by: [TL-31, TL-33, TL-41, TL-59, TL-61]
+
+- id: TG-04
+  name: Pinned artefact
+  catches: "A different tool version than the one qualified, or a tampered download"
+  shown_by: "The tool is installed from a lockfile or by SHA-256; a different artefact is refused and the run fails"
+  limits: "Says the tool is the one qualified, not that it is right"
+  used_by: [TL-16, TL-26, TL-44, TL-52, TL-53, TL-55, TL-63]
+
+- id: TG-05
+  name: Independent review
+  catches: "Any error a person reading the output against its source can see"
+  shown_by: "A review record by a named reviewer, independent of the author (WP-P-05)"
+  limits: "Only as good as the reviewer's attention; counts only once a reviewer is named"
+  used_by: [TL-56]
+
+- id: TG-06
+  name: Round-trip extraction
+  catches: "A record lost, duplicated or changed between the work product and the tool's copy"
+  shown_by: "The tool's copy is rebuilt from the work product and compared, item by item"
+  limits: "Catches a broken copy, not an error already in the work product"
+  used_by: [TL-32, TL-33]

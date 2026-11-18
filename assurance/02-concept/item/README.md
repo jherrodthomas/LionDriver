@@ -21,7 +21,7 @@ The HARA, the safety concepts, SOTIF and the TARA all start from it, and each re
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
 | FSC | functional safety concept |
 | FSR-nn | functional safety requirement (FSC) |
-| G0–G6 | gate G0…G6 of the project lifecycle |
+| G0–G6 | gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) |
 | GAP-nn | gap found by the gap assessment |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | IF-nn | interface of the item (WP-C-01 §3.4) |
@@ -37,8 +37,8 @@ The HARA, the safety concepts, SOTIF and the TARA all start from it, and each re
 | SVG | scalable vector graphics (the figure format) |
 | TARA | threat analysis and risk assessment (ISO/SAE 21434) |
 | TSS | Toyota Safety Sense (TSS 2.0: the car's stock lane assist, radar cruise and pre-collision package) |
-| US | United States |
-| VIN | vehicle identification number |
+| US | United States; in an ISO 16750-2 starting profile, the supply voltage the car settles at after cranking |
+| VIN | vehicle identification number; in the harness box and its simulations, the box supply voltage |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
 All terms: [abbreviations and record codes](../../terms.md).

@@ -1356,8 +1356,9 @@
       title: "Add an AI architecture view at G2"
       detail: "The models, their inputs, outputs and monitors drawn in WP-S-03 or WP-C-11. Cost: one more G2 work product to write and keep with model updates."
   sources: ["assurance/process/README.md (finding 2, no AI-lane work product gated at G2)", "assurance/01-management/WP-M-10-ai-safety-plan.md", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-23, by: u_X1u501HWo3YGVNlzcvkvmg}
+  applied: {ref: "32b5c8b", record: "WP-M-10 v0.4 §5 (tailoring: no separate AI architecture view at G2, IX-13 and IX-14); process README v0.6 §6.2 finding 2", at: 2026-11-02}
 
 - id: DQ-059
   question: "On the tightest curve allowed, the car would drift 0.6 m in 0.7 s if steering silently failed. Tighten the curve limit, or re-rate?"
@@ -3626,7 +3627,7 @@
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-02 v0.50 OI-12. Left: the four host SWSRs (X2, E2, O2, P1, including soft disable in preEnabled) and their QM tests (jherrodthomas/LionDriver#562)"
+  note: "Applied in part 2026-11-02 in WP-W-02 v0.51: SWSR-302h (X2), SWSR-302i (P1), SWSR-305h (E2), SWSR-305i (O2), QM (B-sup); 18 unit tests in openpilot selfdrive/selfdrived/tests/test_driver_transitions.py; WP-W-05 §5.3 has no S7 gap left; impact record change-2026-11-02-selfdrived-driver-transitions. The pre-enable soft disable was decided by the lead (DQ-433 A) and applied in 80882f4 (SWSR-302i, P2). Left: TSR-304(b) as parent of 305h/305i after WP-S-02 OI-2; I1 review."
 
 - id: DQ-152
   question: "How should the panda report why it took steering authority away: as a new field in the message the main computer logs, or squeezed into the existing health flags?"
@@ -3808,7 +3809,7 @@
   sources: ["assurance/05-software/WP-W-05-software-unit-design.md OI-2", "assurance/05-software/WP-W-01-software-development-environment-guidelines.md ENV-R-07"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Recorded in WP-W-01 v0.7 ENV-R-07 and OI-5, WP-W-05 v0.9.4 OI-2. Left: the lizard CI step, its WP-P-07 classification and the justified-exception list (jherrodthomas/LionDriver#562)"
+  note: "Applied in part 2026-11-02: lizard 1.24.1 (pinned by hash) runs in the safety workflow's panda MISRA job via tools/ci/check_complexity.py; 14 of 376 envelope functions exceed NLOC 60 or CCN 15 and are listed in tools/ci/complexity_exceptions.toml, all 'to justify'; WP-P-07 v0.9.34 TL-63 (TCL2 proposed, not qualified), WP-W-01 v0.8 ENV-R-07 and OI-5, WP-W-05 v0.9.6 OI-2, impact record change-2026-11-02-lizard-complexity-ci. Left: justify or split the 14 (who approves an ENV-R-07 justification is not yet defined in WP-W-01); TQR-63; WP-W-05 §7 measured figures."
 
 - id: DQ-159
   question: "Which MC/DC coverage measurement approach should the envelope tests use, plus a branch-coverage gate?"
@@ -4079,7 +4080,7 @@
   sources: ["assurance/01-management/WP-M-09-cybersecurity-plan.md OI-4", "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md SCAN-03, SCAN-04, OI-1", "DQ-192 (merged here)"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Option B, not the recommendation. Recorded in WP-M-09 v0.8 OI-4, WP-W-11 v0.6 §5.1 and OI-1, WP-O-05 v0.6. Left: turn on the alerts in the repository settings (admin) and classify the tooling in WP-P-07; the components GitHub does not cover (AGNOS image, vendored code, LFS artefacts, toolchain) are asked as DQ-432 (jherrodthomas/LionDriver#562)"
+  note: "Classified 2026-11-02 in WP-P-07 v0.9.34 as TL-64 (TCL1), with coverage and gaps (including the submodule manifests); WP-W-11 v0.7 OI-1, WP-M-09 v0.9 OI-4. Left: a repository admin turns on Dependabot alerts (Settings, Code security) and confirms what the dependency graph reads (WP-P-07 OI-15); components it does not cover stay manual (DQ-432)."
 
 - id: DQ-170
   question: "Should pickle-based model loading be replaced, or protected by a verified-hash check before loading (RM-1)?"
@@ -4124,8 +4125,10 @@
       title: "Rely on the hashes only"
       detail: "Nothing to store. Cost: if comma's copies disappear, old releases cannot be rebuilt or reinstalled."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-7, SV-3, U-11", "assurance/01-management/WP-M-07-risk-management.md R-12", "DQ-093"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-11 v0.3.10 U-9, U-11, SV-3, OI-7; WP-M-07 v0.11 R-12; WP-P-10 v0.7 §4 step 4, §5", at: 2026-11-11}
+  note: "Applied in the plans; the copy step runs and the first copy is made at the first release (WP-M-11 OI-7)."
 - id: DQ-172
   question: "Should the three new document statuses (Planned, Verified, Superseded) be used across the whole project, or only for the ISO 26262 Part 6 software records?"
   context: >-
@@ -4148,8 +4151,10 @@
       title: "Part 6 records only"
       detail: "Only the software records change. Cost: two vocabularies, and a reader has to know which one a document uses."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §2.2, OI-3", "assurance/README.md (status convention)"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-14 v0.6 §2.2, OI-3 closed; assurance/README.md status meanings", at: 2026-11-11}
+  note: "The allowed status values in vmodel.py, process_model.py and fig_m_management.py, and the documents' status lines, change in Phase B."
 - id: DQ-173
   question: "Where should raw verification results (test logs, reports) be kept so they outlive CI: in the signed release assets, or committed to the repository?"
   context: >-
@@ -4176,8 +4181,10 @@
       title: "CI artefacts with the longest retention only"
       detail: "No extra step. Cost: GitHub's maximum retention is still shorter than the product's life, so R-25 stays open."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md OI-4, §8.3", "assurance/01-management/WP-M-07-risk-management.md R-25", "assurance/07-supporting/WP-P-10-release-management.md OI-2 (DQ-093 B)", "WP-M-05 OI-4"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-14 v0.6 §8.3, §10, OI-4 closed; WP-M-07 v0.11 R-25; WP-P-10 v0.7 §5, OI-2; WP-M-05 v0.4 §9, OI-4 closed", at: 2026-11-11}
+  note: "The collecting step in the release script stays open (WP-P-10 OI-1)."
 - id: DQ-174
   question: "Should the machine-readable register of Part 6 work products be a file in the trace data or a new kind of safety-case record?"
   context: >-
@@ -4201,8 +4208,10 @@
       title: "A case-records kind"
       detail: "Reuses the case schema with evidence and review states. Cost: a new record kind and its schema, and the work-product IDs leave the trace data."
   sources: ["assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md §9 (WP-M-00 remains the master register)"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-M-14 v0.6 §11", at: 2026-11-11}
+  note: "The file trace/items/register-part6.yaml is created in Phase B, with its schema."
 - id: DQ-175
   question: "What range of mounting position and camera angles should the installer accept: the range the driving model was validated for, or the much wider range openpilot's calibration accepts?"
   context: >-
@@ -4226,8 +4235,10 @@
       title: "openpilot's calibration limits"
       detail: "Available now, nothing to derive. Cost: accepts mounts outside anything validated, which TSR-807 does not allow."
   sources: ["assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md OI-2, INS-25, SPC-03", "assurance/03-system/WP-S-06-requirements-production-operation.md TSR-807", "openpilot/selfdrive/locationd/calibrationd.py"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-O-01 v0.6 OI-2 (narrowed)", at: 2026-11-11}
+  note: "Open: find or measure the validated angle range (WP-W-10), then set INS-09, INS-25, INS-26 and SPC-03. TSR-807 already reads 'derived from the model validation range'."
 - id: DQ-176
   question: "How should field logs flag a possible crash for review: derive a validated rule from the accelerometer and car signals, or keep today's placeholder of braking harder than 6 m/s²?"
   context: >-
@@ -4250,8 +4261,10 @@
       title: "Keep the placeholder"
       detail: "No work. Cost: the flag is unvalidated, so missed and false crash candidates are unknown."
   sources: ["assurance/09-production-operation/WP-O-04-field-monitoring.md OI-8, MON-14, K-01"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-O-04 v0.5 OI-8 (narrowed)", at: 2026-11-11}
+  note: "The -6 m/s² placeholder stays until the threshold is derived from hard-stop logs and published crash pulses."
 - id: DQ-177
   question: "When and how to add a configuration-independent claim layer for reusing platform evidence across configurations?"
   context: "Only needed once a second configuration is evaluated."
@@ -4292,8 +4305,10 @@
       title: "Debug build with a written representativeness argument"
       detail: "Available now. Cost: weaker evidence; the argument must show the hooks change nothing else."
   sources: ["assurance/05-software/WP-W-08-embedded-software-testing.md OI-2", "assurance/05-software/hil-bench/README.md P-10"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-W-08 v0.4.3 OI-2 (narrowed); hil-bench README v0.11 R-5", at: 2026-11-11}
+  note: "Open: the SWD probe and pad adapter (P-10), pad access on the red panda, and the list of cases the probe cannot reach."
 - id: DQ-179
   question: "How should the tolerances of the model compile-equivalence test be set: from an analysed half-precision error budget, or from differences observed in runs?"
   context: >-
@@ -4316,8 +4331,10 @@
       title: "Set tolerances from observed differences"
       detail: "Faster. Cost: risk of accepting a defect as normal rounding."
   sources: ["assurance/05-software/WP-W-10-ml-engineering.md OI-6, MLR-14"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-W-10 v0.5 OI-6 (narrowed)", at: 2026-11-11}
+  note: "Open: the FP16 error-budget analysis and the runs on DS-REF."
 - id: DQ-180
   question: "How should the five signatures on a release record be recorded: a signed git tag plus a signed commit of the filled record, or approving reviews on GitHub?"
   context: >-
@@ -4341,8 +4358,10 @@
       title: "Approving reviews on the release pull request"
       detail: "Easiest for signers. Cost: the binding to the release lives in GitHub, and is lost if the repository moves."
   sources: ["assurance/10-safety-case/WP-K-06-release-record.md OI-2, §8", "assurance/07-supporting/WP-P-10-release-management.md OI-3, OI-4 (DQ-075, DQ-086)"]
-  status: open
-
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "WP-K-06 v0.4 §8, OI-2 closed; WP-P-10 v0.7 §7", at: 2026-11-11}
+  note: "Each signer needs a signing key before the first release."
 - id: DQ-181
   question: "What is the field-report path for users once a release exists?"
   context: "Users need a way to report incidents and problems after release; the path depends on the field monitoring process in WP-O-04. A field_report.yml issue template already exists."
@@ -4431,6 +4450,7 @@
   sources: ["assurance/models/sysml/README.md SY-01"]
   status: answered
   answer: {choice: B, via: chat, at: 2026-10-24, note: "Lead in chat: SysML MBSE for everything, in the readable in-house style. Adopt SY-01 to SY-03 as proposed; SY-04 revised: the model becomes the record (DQ-186), not a checked copy."}
+  note: "Applied in part (jherrodthomas/LionDriver#457): sysml README §2 SY-01…SY-04, SY-04 revised to \"the model becomes the record\". Left: revise WP-P-07 TL-26 and TL-27 for that (the model as record; full generator list), a WP-P-07 version row; confirming them at TCL1 stays with WP-P-07 OI-12 / model README OI-8."
 
 - id: DQ-186
   question: "Generate the architecture tables (WP-S-03 §3.1/3.3/§6, WP-W-03 §3.1) from the SysML model (SY-05)?"
@@ -4451,6 +4471,7 @@
   sources: ["assurance/models/sysml/README.md OI-5"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: the model is the record too. The model is AI-drafted (I0, WP-M-02 §3.3): its human review comes before the generated tables replace the hand-written ones."}
+  note: "Applied in part (jherrodthomas/LionDriver#462): gen_tables.py, the T1 cell-by-cell check and record.toml (model README §2 SY-05; WP-S-03 v0.16, WP-W-03 v0.19). Left: the model review (I1, model README OI-8) by a human reviewer, then record.toml set to \"model\" and gen_tables.py --write (OI-5). No model review record exists yet."
 
 - id: DQ-187
   question: "Replace hand-drawn architecture figures with generated views (SY-06)?"
@@ -4471,6 +4492,7 @@
   sources: ["assurance/models/sysml/README.md OI-6"]
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-24, note: "Lead in chat: generated views replace the hand-drawn architecture figures, in the V-01/V-03 style."}
+  note: "Applied in part (jherrodthomas/LionDriver#487): WP-S-03 v0.19 Figure 4-1 is view V-17. Left (model README §2.1, OI-6): WP-S-03 Figures 3-1 and 3-2, WP-C-01 Figures 3-1 and 4-1, WP-W-03 Figure 3-1 and WP-H-02 Figure 3-2, each waiting on content the views lack (TSR tags, data flow, functions, units, hardware parts)."
 
 - id: DQ-188
   question: "What replaces Python pickle for loading model artefacts?"
@@ -5744,8 +5766,9 @@
       title: "Placeholders until measured"
       detail: "Positions only, no colours or parts, until the spare harness is measured on the bench. Cost: drawings and FMEDA references stay unusable until the bench run."
   sources: ["assurance/04-hardware/wiring/README.md OI-W-1", "assurance/04-hardware/reviews/RR-2026-010.md §2", "DQ-209", "DQ-211"]
-  status: assumed
+  status: applied
   answer: {choice: A, via: assumed, at: 2026-10-20, note: "Agreed with the coordinator; no lead question needed, since measuring is already in VS-HW-02 (DQ-209 A)"}
+  applied: {ref: "jherrodthomas/LionDriver#344, #350", record: "WP-H-02 v0.10 §3.6 Figures 3-4 to 3-6 (transcribed, not measured); wiring/README.md OI-W-1; wiring/wire-ends.tsv; FMEDA SG-001/SG-009 rev 0.6 ref_des", at: 2026-11-02}
 
 - id: DQ-406
   question: "Should the HARA add a hazardous event for an assisted lane change that does not stop in the target lane?"
@@ -6272,8 +6295,9 @@
       title: "A vendor simulator (LTspice)"
       detail: "Free and widely known. Cost: closed source, Windows-first, hard to pin and run in CI."
   sources: ["assurance/sim/physics-plan.md §4 study 8", "assurance/sim/supply/README.md", "WP-P-07 TL-58"]
-  status: assumed
+  status: applied
   answer: {choice: A, via: assumed, at: 2026-10-25, note: "Decided by Claude when phase C started, as the physics plan said; the lead can change it"}
+  applied: {ref: "jherrodthomas/LionDriver#468", record: "WP-P-07 v0.9.22 TL-58; assurance/sim/supply/supply-linux-64.lock (ngspice 41, conda-forge)", at: 2026-11-02}
 
 - id: DQ-423
   question: "Should the details of unfixed security weaknesses also be taken out of the public safety requirements and records now, or only when each is next edited?"
@@ -6338,7 +6362,7 @@
   sources: ["assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-086.C2", "DQ-365", "openpilot/selfdrive/controls/lib/longitudinal_planner.py (A_CRUISE_MIN)", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-30, by: u_X1u501HWo3YGVNlzcvkvmg}
-  note: "Set in WP-S-02 v0.65 TSR-633 (2 m/s², ramped in, about 15 s and 230 m from 110 km/h), WP-S-04 v0.30 §3.8 and SW FMEA SWF-086.C2. Left: the planner change for the forced stop and its tests (openpilot longitudinal_planner) (jherrodthomas/LionDriver#562)"
+  note: "Implemented 2026-11-02: openpilot longitudinal_planner.py A_MINIMUM_RISK_STOP -2.0 m/s², ramped in at J_MINIMUM_RISK_STOP 4 m/s³, only while selfdrived's minimum-risk latch and forceDecel are both set (fault soft disable keeps -1.2 m/s²); test_minimum_risk_stop.py: 15.55 s and 239.5 m from 110 km/h; mutants MS-1..MS-7; impact record change-2026-11-02-minimum-risk-stop-rate; WP-S-02 v0.66 TSR-633 status; SW FMEA rev 1.19 SWF-086.C2 (O5 D4), SWF-ACT-082 completed. Left: vehicle verification T-33 (stop, deceleration and jerk on 0x343, hold at standstill, AOU-16); SWF-ACT-073 end-to-end test; an SWSR for TSR-633 in WP-W-02; the layer-1 plant (assurance/sim/plant/simulate.py) still models the stop at -1.2 m/s² (impact OI-5). Option B's '25 s and 390 m' was really about 27 s and 413 m with the planner's taper; no decision rests on it."
 
 - id: DQ-425
   question: "Should the reference build on the device ignore the test-only switches (REPLAY, SIMULATION, FINGERPRINT, BLOCK, STARTED and the others)?"
@@ -6589,5 +6613,305 @@
     - key: C
       title: "Treat AGNOS as comma's responsibility and follow comma's notices only"
       detail: "Least work. Cost: relies on comma reporting what affects LionDriver's pinned version."
+  decider: lead
+  asked: 2026-11-11
+  batch: 22
   sources: ["assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md §5.1", "assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md MS-04", "DQ-169"]
+  status: applied
+  answer: {choice: C, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#595", record: "WP-M-09 v0.10 OI-4; WP-W-11 v0.8 §5.1; WP-O-05 v0.7 MS-04", at: 2026-11-11}
+  note: "Option C covers AGNOS only; vendored code, LFS artefacts and the panda toolchain keep the monthly manual search (the status quo for them). Accepted: LionDriver relies on comma to report what affects the pinned AGNOS version."
+- id: DQ-433
+  question: "If a fault appears while you hold the brake at a standstill to engage, should LionDriver end the engagement at once, or carry on as openpilot does today?"
+  context: >-
+    When you engage while holding the brake at a standstill, LionDriver waits in a pre-enable state until you release
+    the brake. If a fault that calls for a soft disable appears during that wait, today's code (same as upstream
+    openpilot) ignores it: on brake release the car engages for one cycle, then winds down over 3 s with the alert.
+    **So steering assist can run for up to 3 s with the fault already present.** Found while writing the host
+    requirement SWSR-302i (DQ-151 A), which now describes today's behaviour and leaves this open (WP-W-02 OI-12).
+  reversibility: easy
+  blocks: "WP-W-02 OI-12; SWSR-302i, its test and selfdrived state.py"
+  gate: G3
+  decider: lead
+  asked: 2026-11-02
+  batch: 20
+  options:
+    - key: A
+      recommended: true
+      title: "End the engagement at once, with the soft-disable alert"
+      detail: "No steering or speed control ever starts with the fault present. Cost: a small change in selfdrived state.py and its test, carried as a difference from upstream at every sync."
+    - key: B
+      title: "Keep today's behaviour (upstream openpilot)"
+      detail: "No change. Cost: up to 3 s of assist after brake release with the fault present, before the wind-down ends it."
+    - key: C
+      title: "Start the 3 s wind-down already while waiting"
+      detail: "The alert sounds at once and the timer runs during the wait. Cost: a new state path to design and test; assist may still start if the brake is released early in the 3 s."
+  sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-302i, OI-12", "assurance/05-software/WP-W-05-software-unit-design.md §5.3 (P1)", "openpilot/selfdrive/selfdrived/state.py", "assurance/07-supporting/impact/change-2026-11-02-selfdrived-driver-transitions.md"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-03, note: "go with A on the pre-enable fault question"}
+  applied: {ref: "80882f4", record: "openpilot selfdrived/state.py (transition P2); WP-W-02 v0.52 SWSR-302i, OI-12 item (1) closed; sm-selfdrived.yaml P2; WP-W-05 v0.9.7 §5.3; impact record change-2026-11-03-pre-enable-soft-disable", at: 2026-11-03}
+  note: "Implemented and unit-tested (test_driver_transitions.py, mutants MP-1, MP-2); not verified on the vehicle (impact OI-1)."
+- id: DQ-434
+  question: "Where should the assurance kit (the reusable tools, skills, templates and CI from LionDriver) live: a private repository, or a public one?"
+  context: >-
+    The kit is what every new project starts from: the plugin of skills, the Python tools, the Copier template and the
+    reusable CI workflows. The inventory (docs/kit/inventory.md) finds about 440 reusable method files and about 570
+    automotive pack files in LionDriver. **Where the kit lives decides who can use it and what must be scrubbed first**:
+    a public repository needs every LionDriver fact, page link and licensed asset removed before the first push.
+  reversibility: easy
+  blocks: "docs/kit plan step 2 (the plugin) and every later step"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 21
+  options:
+    - key: A
+      recommended: true
+      title: "Private repository under your account, opened later if you want"
+      detail: "Start now with nothing to scrub; going public later is one review pass. Cost: only people you invite can use it."
+    - key: B
+      title: "Public repository from the start"
+      detail: "Others can find and use it, and it shows the method. Cost: a scrub of names, links and assets before each push, and support questions."
+    - key: C
+      title: "Inside LionDriver, as a folder"
+      detail: "No new repository. Cost: a new project has to copy from LionDriver, and openpilot comes along with it."
+  sources: ["docs/kit/README.md", "docs/kit/inventory.md"]
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "docs/kit/README.md §7 (v0.2)", at: 2026-11-11}
+- id: DQ-435
+  question: "Which project should be the kit's first pilot, the test that it really works outside LionDriver?"
+  context: >-
+    A kit is only proven when a second project starts from it. **The pilot decides which domain pack is built next.**
+    Another automotive project reuses the ISO 26262, SOTIF and 21434 pack that LionDriver already has; a project in another
+    industry (medical, industrial, robotics) needs a new pack (its standards, rating tables, gates and work product list)
+    and so proves that the packs work.
+  reversibility: easy
+  blocks: "docs/kit plan step 5 (the pilot); which domain pack is written next"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 21
+  after: [DQ-434]
+  options:
+    - key: A
+      recommended: true
+      title: "A second automotive project"
+      detail: "Fastest proof: the pack exists, so the pilot tests the method and the template. Cost: does not prove a non-automotive pack."
+    - key: B
+      title: "A project in another industry (name it in the note)"
+      detail: "Proves the packs are real. Cost: a new pack to write first (standards map, rating tables, gates), several weeks more."
+    - key: C
+      title: "A small plain-software project with a light risk register"
+      detail: "Cheapest; tests the template and CI without heavy standards. Cost: exercises little of the safety tooling."
+  sources: ["docs/kit/README.md"]
+  status: applied
+  answer: {choice: B, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g, note: "research the most used fusa standards to decide ot the most difficult"}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "docs/kit/README.md §7 (v0.2)", at: 2026-11-11}
+  note: "The lead asked Claude to research the most used functional safety standards, or the most demanding, and pick the pilot's industry from that; the pick and its reasons are in docs/kit/README.md §7."
+- id: DQ-436
+  question: "Under which licence should the assurance kit be released?"
+  context: >-
+    The licence decides whether others (people or companies) may use, change and sell work built with the kit. LionDriver
+    itself is MIT like openpilot. **Licensed assets (the purchased Corolla mesh, the CC-BY scenery kits) are never part of
+    the kit, whatever is chosen**: each project secures its own (docs/kit/inventory.md §7).
+  reversibility: hard
+  blocks: "Making the kit public (DQ-434 B); accepting outside contributions"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 21
+  after: [DQ-434]
+  options:
+    - key: A
+      recommended: true
+      title: "MIT, the same as LionDriver and openpilot"
+      detail: "Anyone may use it, also commercially; simplest to combine with openpilot. Cost: no control over how others use it."
+    - key: B
+      title: "Apache 2.0"
+      detail: "As open as MIT, plus an explicit patent grant. Cost: slightly more notice text to carry."
+    - key: C
+      title: "Proprietary (all rights reserved) for now"
+      detail: "Keeps every option open, including selling it. Cost: nobody else can use it without a separate licence; can be opened later, which is easy, but not taken back once open."
+  sources: ["docs/kit/README.md", "LICENSE"]
+  status: applied
+  answer: {choice: other, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g, note: "private"}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "docs/kit/README.md §7 (v0.2)", at: 2026-11-11}
+  note: "Read as option C: proprietary, all rights reserved; the kit stays private (DQ-434 A). Can be opened later."
+- id: DQ-437
+  question: "The decision inbox page can no longer be opened from the sessions. Should it be published at a new link?"
+  context: >-
+    Since 2026-11-11 the sessions get "no such artifact" for the inbox page (3m2JQKLyS9f62fydjXa4gE), as happened to the
+    SysML explorer and the workbook viewer before #580. **Without the page, no answer can be read and no new question
+    shown.** A new page starts with an empty store, so any answer saved on the old page after its last read is lost.
+  reversibility: easy
+  blocks: "Reading answers at the start of each session (CLAUDE.md step 4); showing batch 21"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  options:
+    - key: A
+      recommended: true
+      title: "Publish the inbox at a new link"
+      detail: "The same choice as for the explorer and the workbook viewer. Cost: answers saved on the old page since its last read are re-entered."
+    - key: B
+      title: "Check whether you can still open the old link"
+      detail: "If you can, re-share it or give the answers in chat. Cost: the sessions still cannot read or republish it."
+  sources: ["assurance/01-management/decisions/README.md", ".claude/skills/decision-inbox/SKILL.md"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-11, note: "publish the inbox at a new link"}
+  applied: {ref: "jherrodthomas/LionDriver#594", record: "assurance/01-management/decisions/README.md (inbox page link); .claude/skills/decision-inbox/SKILL.md", at: 2026-11-11}
+  note: "New page https://claude.ai/artifact/4pJHygV3rQz2zB1NmJqDsv (db and user, as before); its store was read empty after publishing."
+- id: DQ-438
+  question: "Which product should the IEC 61508 pilot of the assurance kit be built around?"
+  context: >-
+    You chose a pilot outside automotive and asked Claude to pick the standard (DQ-435); the pick is IEC 61508, the base
+    standard most other sectors derive from (docs/kit/README.md §7). The pilot needs a real item to analyse, from its
+    hazards to its tests. **The product decides the cost and how much of the kit gets exercised**: hardware brings the
+    FMEDA and safe failure fraction into play, software alone does not.
+  reversibility: easy
+  blocks: "docs/kit plan step 5 (the pilot); the IEC 61508 pack's first use"
+  gate: G0
+  decider: lead
+  asked: 2026-11-11
+  batch: 22
+  options:
+    - key: A
+      recommended: true
+      title: "A small safety controller you can build: an emergency-stop and guard-door monitor on a microcontroller board, aiming at SIL 2"
+      detail: "Exercises the whole kit: hazards, SIL targets, hardware FMEDA and safe failure fraction, software, tests on the bench. Cost: about $50 to $150 of boards, relays and switches."
+    - key: B
+      title: "Software only: a safety monitor function for an existing machine, with the hardware taken as given"
+      detail: "No purchase, quickest start. Cost: the hardware half of IEC 61508 (FMEDA, safe failure fraction) goes untested."
+    - key: C
+      title: "A product you already have in mind (name it in the note)"
+      detail: "A pilot you care about. Cost: Claude sizes it first, and it may need more hardware or access."
+  sources: ["docs/kit/README.md §5, §7", "DQ-435"]
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "jherrodthomas/LionDriver#595", record: "docs/kit/README.md v0.3 §7", at: 2026-11-11}
+  note: "The purchase and the 3D model step go in the pilot project's first batch of questions."
+- id: DQ-439
+  question: "When selfdrived stops responding while engaged, should LionDriver also cancel the car's cruise control, instead of leaving it on for you to cancel?"
+  context: >-
+    If selfdrived stops, steering and openpilot's acceleration stop at once (the freshness check in controlsd), the panda
+    withdraws authority within 0.3 s, sounds the siren at 0.5 s if the car's cruise is still on (TSR-307, TSR-516), and the
+    screen shows "System Unresponsive" after 5 s. **But nothing cancels the car's cruise**: controlsd takes "engaged" from
+    selfdrived's last message, so it never sends the cancel that every other disengagement sends, and cruise stays on until
+    you cancel it.
+  reversibility: easy
+  blocks: "controlsd (CC.enabled and the cruise cancel); the siren case of TSR-516(c); SW FMEA SWF-047 and the selfdrived stall rows"
+  gate: G3
+  decider: lead
+  asked: 2026-11-11
+  batch: 22
+  options:
+    - key: A
+      recommended: true
+      title: "Cancel cruise when selfdrived's messages stop, as for any other disengagement"
+      detail: "The car's cruise drops with its own chime and the siren is left for a cancel that fails. Cost: a change in controlsd from upstream, with a test and a mutant; a stall of selfdrived longer than 0.1 s ends the engagement (it ends at 0.3 s today anyway)."
+    - key: B
+      title: "Keep today's behaviour: the panda withdraws authority and sounds the siren, you cancel cruise"
+      detail: "No change. Cost: cruise stays on after the system has stopped controlling, with only the siren and, after 5 s, the screen to tell you."
+  sources: ["openpilot/selfdrive/controls/controlsd.py (CC.enabled, cruiseControl.cancel)", "panda/board/drivers/engaged_mismatch.h (TSR-307(a), TSR-516(b)/(c))", "openpilot/selfdrive/ui/onroad/alert_renderer.py (System Unresponsive)", "assurance/sim/results/engaged-mismatch.md"]
+  status: applied
+  answer: {choice: A, via: inbox, at: 2026-11-11, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: "6dd722e", record: "openpilot controlsd.py (CC.enabled); WP-W-02 v0.55 SWSR-303i; SW FMEA rev 1.23; impact record change-2026-11-11-selfdrived-loss-cruise-cancel", at: 2026-11-11}
+  note: "Implemented and unit-tested (TestSelfdrivedLossCancelsCruise, mutant CA-1); not verified on the vehicle. Open (impact record): whether PCM cruise drops within 0.5 s of the cancel (WP-W-02 OI-18), and the plant model of the engaged mismatch, which still models no cancel (impact OI-3)."
+- id: DQ-440
+  question: "Do you accept the planted-fault validation of the trace checker as its tool qualification for use on ASIL requirements?"
+  context: >-
+    The trace checker (check_trace.py) checks every link, ASIL and refinement of the safety requirements, which a
+    commercial tool such as DOORS or Jama would do elsewhere. It is TCL2, so ISO 26262-8 needs it qualified before its
+    "OK" is relied on. The new report TQR-32 qualifies it by validation: **26 typical errors are planted in a copy of
+    the real trace data and all are caught, and 8 deliberately broken versions of the checker are all caught too,
+    on every CI run.** The checker stays TCL2; TCL1 would need a named reviewer as a guard in use.
+  reversibility: easy
+  blocks: "WP-P-07 TL-32 qualification status and OI-13; the method of tool-qualification/ for the next reports (MISRA TL-04, coverage TL-42/43, mutation TL-06)"
+  gate: G3
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Accept TQR-32 as the qualification of the trace checker, pending the independent review of the checker"
+      detail: "Its OK can be relied on for the ASIL path while CI keeps the validation passing; the same method then qualifies the next tools. Cost: none now; the independent review (WP-P-07 OI-13) and the assessor's sampling still follow."
+    - key: B
+      title: "Accept only after the independent review of the checker and the fault catalogue"
+      detail: "Acceptance rests on a second person's reading as well. Cost: waits until a reviewer is named; the checker's OK is not relied on until then."
+    - key: C
+      title: "Do not qualify the in-house checker; rely on review of the trace alone"
+      detail: "No tool credit is claimed. Cost: every trace link and ASIL must be checked by hand at each review, which is the work the checker was built to remove."
+  sources: ["assurance/07-supporting/tool-qualification/TQR-32-check-trace.md", "assurance/07-supporting/tool-qualification/method.md", "assurance/07-supporting/WP-P-07-tool-classification-qualification.md TL-32, §5, OI-13"]
   status: queued
+
+- id: DQ-441
+  question: "Where should a work product's version number live: computed and stamped on the document when it is output, or written into the file by a bot during the pull request?"
+  context: >-
+    Versions are typed by hand in each header today (WP-S-02 "0.68") and drift: a version can be skipped, repeated or
+    left stale. **The change ledger can compute every version from the merged changes instead.** The question is
+    whether the number is also stored in the Markdown file, or only appears on outputs (export, snapshot, wiki).
+  reversibility: easy
+  blocks: "WP-P-04 §5 Version rule; the change ledger; the version stamp in exports (WP-P-04 OI-7)"
+  gate: G0
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Computed by the ledger and stamped at output; the file holds no version"
+      detail: "Never stale; two pull requests open at once cannot both claim the same number; no bot commits. Cost: the raw file on GitHub shows no version; the ledger and every output do."
+    - key: B
+      title: "Written into the header by a bot during the pull request"
+      detail: "The reviewer sees the new number in the diff. Cost: the bot must recompute whenever another pull request to the same document merges first."
+  sources: ["assurance/07-supporting/WP-P-04-documentation-management.md §5, §6", "assurance/07-supporting/ledger/README.md"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: computed at output."}
+  applied: {ref: e5683c8, record: "WP-P-04 v0.5 §5 Version rule and §6; assurance/07-supporting/ledger/README.md", at: 2026-11-12}
+  note: "Stamping at output and removing the typed header versions is WP-P-04 OI-7."
+
+- id: DQ-442
+  question: "What raises the X (approved issue) of a work product's X.Y.Z version: only approval at a gate, or also your approval of a single document between gates?"
+  context: >-
+    Y counts content changes and Z editorial ones; both are automatic. X says "this issue was approved". **Allowing
+    approval between gates gives more 1.x documents sooner but makes "approved" mean less than "passed a gate".**
+  reversibility: easy
+  blocks: "WP-P-04 §5 Version rule; assurance/07-supporting/ledger/gate-approvals.yaml"
+  gate: G0
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Only a gate approval raises X"
+      detail: "1.0.0 always means the document passed a gate, recorded in gate-approvals.yaml with its gate record. Cost: every work product stays 0.y.z until its gate."
+    - key: B
+      title: "A gate approval or the lead's approval of a single document"
+      detail: "Documents can reach 1.0.0 between gates. Cost: X no longer tells a reader whether the gate was passed."
+  sources: ["assurance/07-supporting/WP-P-04-documentation-management.md §5", "assurance/07-supporting/ledger/gate-approvals.yaml"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: X only at gates."}
+  applied: {ref: e5683c8, record: "WP-P-04 v0.5 §5 Version rule; assurance/07-supporting/ledger/gate-approvals.yaml", at: 2026-11-12}
+
+- id: DQ-443
+  question: "The ledger's first run also backfilled openpilot's history since 2016 (18,284 rows, most of them comma's commits). Reset it and rebuild from LionDriver's first commit, or keep it and mark the upstream rows?"
+  context: >-
+    About 17,700 of the rows were comma's upstream commits, with comma's pull-request numbers and 4,205 false
+    "pushed without a pull request" exceptions; LionDriver's own history starts at 8b8c6ae (590 rows). **The ledger
+    branch was minutes old and nothing used it yet.** Resetting it means deleting a record meant to be append-only.
+  reversibility: hard
+  blocks: "The ledger's Exceptions view and change records; protecting the ledger branch"
+  gate: G0
+  decider: lead
+  asked: 2026-11-12
+  options:
+    - key: A
+      recommended: true
+      title: "Reset and rebuild from 8b8c6ae"
+      detail: "The backfill starts at the fork base; the ledger branch is deleted and the next run rebuilds it (~590 rows). The reset is written into the ledger README. Cost: one deletion of a record meant to be append-only, before it was protected or used."
+    - key: B
+      title: "Keep it and mark the upstream rows"
+      detail: "No deletion: a correction row marks rows 1-17,693 as upstream and the views hide them. Cost: 18k rows (~8 MB) with comma's PR numbers in the record for good."
+  sources: ["assurance/07-supporting/ledger/README.md (Reset of 2026-11-12)", "assurance/07-supporting/ledger/ledger.py FORK_BASE", "assurance/01-management/WP-M-05-quality-assurance-plan.md QG-6 (baseline 655bfde)"]
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: 1, reset and rebuild."}

@@ -8,7 +8,9 @@ jobs:
   comment:
     name: comment
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # the wait below lasts until "process replay" finishes; that job can start late when runners are busy (#554, #583, #585
+    # were cancelled at 10 minutes and passed on a re-run)
+    timeout-minutes: 30
     permissions:
       contents: read
       pull-requests: write

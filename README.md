@@ -40,6 +40,16 @@ LionDriver publishes its safety argument as it is built: the claims, the evidenc
 
 **[Open the full Living Safety Case →](assurance/README.md#living-safety-case)** lifecycle status, values as text, what the dashboard guarantees, and how the records fit together · [safety case (WP-K-01)](assurance/10-safety-case/WP-K-01-safety-case.md) · [known gaps](assurance/00-assessment/gap-assessment.md)
 
+<!-- BEGIN GENERATED: vcycle (assurance/01-management/figures/fig_m00_vcycle.py) -->
+
+<p align="center">
+  <a href="assurance/README.md#the-v-cycle"><img src="assurance/01-management/figures/vcycle/fig-m00-vcycle.svg" width="100%" alt="The LionDriver V-cycle: 89 work products placed on the V from concept down to implementation and back up to vehicle validation, each with its gate; 4 skeleton, 85 draft. Now in the Governance phase."></a>
+</p>
+
+**[Open the clickable V-cycle →](assurance/README.md#the-v-cycle)** each box opens its part of the assurance record.
+
+<!-- END GENERATED: vcycle -->
+
 ## Platform Architecture
 
 <p align="center">

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-05 Quality management and quality assurance plan |
 | Standard reference | ASPICE 4.0 SUP.1 (quality assurance); ISO 26262-2:2018 §5 (quality management as a prerequisite for functional safety); ISO/SAE 21434:2021 §5 (quality management for cybersecurity); IATF 16949 (informative only) |
-| Version | 0.3 (QO-5 covers the group C processes at CL1, decided by the lead 2026-10-18 (DQ-019, A); 2026-10-19). 0.2 (status update: §1 current state, §5.3 CI gate status for the fork CI of D-01/D-03 (`safety.yaml`, `check-submodules.sh` against the forks, link check), OI-2, OI-3 and OI-6 closed; 2026-10-14). 0.1 |
+| Version | 0.4 (OI-4 closed and §9: release-relevant CI results go into the signed release assets, everyday runs stay as CI artifacts, DQ-173 A (lead, 2026-11-11); 2026-11-11). 0.3 (QO-5 covers the group C processes at CL1, decided by the lead 2026-10-18 (DQ-019, A); 2026-10-19). 0.2 (status update: §1 current state, §5.3 CI gate status for the fork CI of D-01/D-03 (`safety.yaml`, `check-submodules.sh` against the forks, link check), OI-2, OI-3 and OI-6 closed; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (process) |
 | Author | Assurance team (initial draft) |
@@ -149,7 +149,7 @@ Escalations and decisions are recorded on the finding's issue.
 |---|---|
 | QA audit reports (work product and process) | `assurance/10-safety-case/qa/` (folder to be created), one file per audit: `QA-<gate>-<nn>.md` |
 | QA findings | GitHub issues labelled `qa-finding` |
-| CI gate results | GitHub Actions run logs, referenced by commit; release-relevant runs archived with the release record ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) because hosted logs expire |
+| CI gate results | GitHub Actions run logs, referenced by commit; release-relevant runs archived in the signed release assets ([WP-P-10 §5](../07-supporting/WP-P-10-release-management.md#5-evidence-package), DQ-173 A (lead, 2026-11-11)) because hosted logs expire; everyday runs stay as CI artifacts |
 | Self-checks (interim, Q-D) | Same folder, file name prefixed `SELF-`, marked I0 |
 | QA summary per gate | Input to the gate record (WP-M-02 §10) |
 
@@ -160,6 +160,6 @@ Escalations and decisions are recorded on the finding's issue.
 | OI-1 | Name a QA person independent of the author (Q-A) | PM | G0 |
 | OI-2 | Closed 2026-10-14: QG-1, QG-2, QG-4 and QG-5 run in LionDriver CI (`.github/workflows/safety.yaml`, D-01 and D-03 done 2026-10-10). Making them required checks is part of the G0 process audit (§5.3) | PM | G0 |
 | OI-3 | Closed 2026-10-14: with the absolute fork URLs of D-01, `check-submodules.sh` checks each pin against the LionDriver fork's `master`; it runs in `tests.yaml` for this repository | PM | G0 |
-| OI-4 | Define the CI log archiving method for release evidence | PM | G3 |
+| OI-4 | Closed 2026-11-11 (DQ-173 A (lead, 2026-11-11)): the logs and results of the release-relevant CI runs go into the signed release assets with the offline copy (DQ-093 B, [WP-P-10 §5](../07-supporting/WP-P-10-release-management.md#5-evidence-package)); everyday runs stay as CI artifacts and expire. The collecting step is in the release script ([WP-P-10](../07-supporting/WP-P-10-release-management.md) OI-1) | PM | G3 |
 | OI-5 | Write formal MISRA deviation records for existing suppressions and justifications for surviving mutants | ENG | G3 |
 | OI-6 | Closed 2026-10-14: QG-10 runs as `assurance/trace/tools/check_links.py` in `.github/workflows/assurance.yaml` | QA | G1 |

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="399" viewBox="0 0 600 399" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Structural coverage: at a glance</title>
+<desc>4 safety-layer units; branch coverage 75 % (510 of 684), MC/DC 70 % (93 of 133); 34 justified gaps; opendbc e233362. Branches covered per safety-layer unit at opendbc e233362: 510 of 684 overall; every gap needs a justification row, and 34 exist.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="399" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="22" font-size="10" fill="#94A3B8" font-weight="700">At a glance</text>
+<rect x="40" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">4</text>
+<text x="50" y="74" font-size="9.5" fill="#475569">safety-layer units</text>
+<rect x="172" y="30" width="124" height="54" rx="7" fill="#FFFBEB" stroke="none" stroke-width="1.2"/>
+<text x="182" y="56" font-size="19" fill="#D97706" font-weight="700">75 %</text>
+<text x="182" y="74" font-size="9.5" fill="#475569">branch coverage</text>
+<rect x="304" y="30" width="124" height="54" rx="7" fill="#FFFBEB" stroke="none" stroke-width="1.2"/>
+<text x="314" y="56" font-size="19" fill="#D97706" font-weight="700">70 %</text>
+<text x="314" y="74" font-size="9.5" fill="#475569">MC/DC coverage</text>
+<rect x="436" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="446" y="56" font-size="19" fill="#0F172A" font-weight="700">34</text>
+<text x="446" y="74" font-size="9.5" fill="#475569">justified gaps</text>
+<rect x="40" y="92" width="93.8" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="86.9" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">opendbc e233362</text>
+<rect x="139.8" y="92" width="159.9" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="219.7" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">target 100 % with justified gaps</text>
+<rect x="305.7" y="92" width="136.9" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="374.1" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">justifications not reviewed</text>
+<text x="40" y="132" font-size="10" fill="#94A3B8" font-weight="700">Where it stands</text>
+<text x="40" y="157" font-size="10.5" fill="#0F172A" font-weight="700">U-SAF-CORE</text>
+<rect x="170" y="144" width="314.9" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="327.4" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">218</text>
+<rect x="484.9" y="144" width="75.1" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="522.4" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">52</text>
+<text x="40" y="185" font-size="10.5" fill="#0F172A" font-weight="700">U-SAF-LAT</text>
+<rect x="170" y="172" width="167.4" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="253.7" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">79</text>
+<rect x="337.4" y="172" width="222.6" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="448.7" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">105</text>
+<text x="40" y="213" font-size="10.5" fill="#0F172A" font-weight="700">U-SAF-LONG</text>
+<rect x="170" y="200" width="167.1" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="253.6" y="214" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">12</text>
+<rect x="337.1" y="200" width="222.9" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="448.6" y="214" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">16</text>
+<text x="40" y="241" font-size="10.5" fill="#0F172A" font-weight="700">U-SAF-TOY</text>
+<rect x="170" y="228" width="388.1" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="364" y="242" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">201</text>
+<rect x="558.1" y="228" width="1.9" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="170" y="258" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
+<text x="184" y="267" font-size="9.5" fill="#475569">branches covered</text>
+<rect x="274.2" y="258" width="10" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="288.2" y="267" font-size="9.5" fill="#475569">uncovered</text>
+<text x="40" y="292" font-size="10.5" fill="#0F172A">Branches covered per safety-layer unit at opendbc e233362: 510 of 684 overall; every gap needs a</text>
+<text x="40" y="307" font-size="10.5" fill="#0F172A">justification row, and 34 exist.</text>
+<text x="40" y="328" font-size="9.5" fill="#94A3B8">Generated by folder_cards.py from this folder's own records; the page's text follows below.</text>
+<g class="terms">
+<text x="40" y="348" font-size="10.5" fill="#475569">Terms: MC/DC modified condition/decision coverage: each condition shown to affect its</text>
+<text x="40" y="362.5" font-size="10.5" fill="#475569">decision independently · U-nn software component of the panda firmware, U-SAF-… safety layer</text>
+<text x="40" y="377" font-size="10.5" fill="#475569">and U-PND-… platform (WP-W-03 §3.1)</text>
+</g>
+</svg>

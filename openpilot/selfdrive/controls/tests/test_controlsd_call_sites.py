@@ -1,18 +1,25 @@
+import math
 from types import SimpleNamespace
 from unittest import mock
 
+import numpy as np
+
+from opendbc.can import CANParser
+from opendbc.car import Bus
 from opendbc.car.car_helpers import interfaces
-from opendbc.car.toyota.values import CAR as TOYOTA
+from opendbc.car.toyota.values import CAR as TOYOTA, DBC
 from openpilot.cereal import log
 from openpilot.common.params import Params
 from openpilot.common.test import OpenpilotTestCase
 from openpilot.selfdrive.controls import controlsd
+from openpilot.selfdrive.locationd.helpers import Measurement, Pose
 
 # The controlsd call sites of two LionDriver safety measures, run through the real Controls.state_control and publish
 # with the reference CarParams. The measures themselves are tested in test_stock_aeb.py (stock_aeb_stand_down) and
 # test_minimum_risk.py (the selfdrived latch); this checks that controlsd applies them:
 #   SWF-093.C1 (DQ-300): during a stock AEB event no positive acceleration is requested, from the first frame
 #   SWF-062.C1 (TSR-633): forceDecel is held while selfdrived reports the minimum-risk maneuver, and reaches the car
+#   SWSR-303i (DQ-439 A): when selfdriveState is not alive, carControl is not enabled and the cruise cancel reaches the car
 
 REFERENCE = TOYOTA.TOYOTA_COROLLA_TSS2
 State = log.SelfdriveState.OpenpilotState
@@ -166,3 +173,181 @@ class TestLateralResetCallSite(OpenpilotTestCase):
     t.sm['selfdriveState'].active = False
     step(t)
     assert t.c.LaC.pid.i == 0.
+
+
+class TestNonFiniteInputs(OpenpilotTestCase):
+  # SWF-045.C1, SWF-045.C2, SWF-047.C1 (TSR-604, SWF-ACT-044): a non-finite input for one step must not reach the
+  # controllers, whose state (integrator, desired curvature) would otherwise keep it for the rest of the drive, and must not
+  # raise. Run through the real Controls.state_control with the reference CarParams
+  WARM, BAD, AFTER = 200, 1, 50
+
+  def run_with(self, set_bad, set_good):
+    t = controls()
+    t.sm['modelV2'].action.desiredCurvature = 0.0005
+    for _ in range(self.WARM):
+      step(t)
+    set_bad(t.sm)
+    bad = t.c.state_control()[0]
+    finite_during = math.isfinite(t.c.curvature) and math.isfinite(t.c.desired_curvature)
+    set_good(t.sm)
+    for _ in range(self.AFTER):
+      CC, _ = t.c.state_control()
+    return t, bad, CC, finite_during
+
+  def assert_controllers_finite(self, t, CC):
+    for name, v in (('lateral integrator', t.c.LaC.pid.i), ('longitudinal integrator', t.c.LoC.pid.i),
+                    ('desired curvature', t.c.desired_curvature), ('torque', CC.actuators.torque), ('accel', CC.actuators.accel)):
+      self.assertTrue(math.isfinite(v), f'{name} is {v}')
+    self.assertNotEqual(CC.actuators.torque, 0.0)  # lateral control works again, not a sanitized 0
+    self.assertGreater(CC.actuators.accel, 0.0)
+
+  def test_non_finite_desired_curvature(self):
+    for bad in (float('nan'), float('inf')):
+      def set_bad(sm, bad=bad):
+        sm['modelV2'].action.desiredCurvature = bad
+      t, CCbad, CC, _ = self.run_with(set_bad, lambda sm: setattr(sm['modelV2'].action, 'desiredCurvature', 0.0005))
+      self.assertFalse(CCbad.latActive)
+      self.assert_controllers_finite(t, CC)
+
+  def test_non_finite_roll(self):
+    t, CCbad, CC, finite_during = self.run_with(lambda sm: setattr(sm['vehicleParameters'], 'roll', float('nan')),
+                                                lambda sm: setattr(sm['vehicleParameters'], 'roll', 0.0))
+    self.assertFalse(CCbad.latActive)
+    self.assertTrue(finite_during)
+    self.assert_controllers_finite(t, CC)
+
+  def test_non_finite_acceleration_target(self):
+    t, CCbad, CC, _ = self.run_with(lambda sm: setattr(sm['longitudinalPlan'], 'aTarget', float('nan')),
+                                    lambda sm: setattr(sm['longitudinalPlan'], 'aTarget', 1.5))
+    self.assertFalse(CCbad.longActive)
+    self.assert_controllers_finite(t, CC)
+
+  def test_non_finite_lateral_delay_does_not_raise(self):
+    t, _, CC, _ = self.run_with(lambda sm: setattr(sm['lateralDelay'], 'lateralDelay', float('nan')),
+                                lambda sm: setattr(sm['lateralDelay'], 'lateralDelay', 0.2))
+    self.assert_controllers_finite(t, CC)
+
+
+class TestNonFinitePoseToCard(OpenpilotTestCase):
+  # SWF-060.C1 (SWF-ACT-044): controlsd forwards the calibrated orientation to card, and the reference car's CarController filters the
+  # pitch for its compensation. A single non-finite orientation must not reach it (controlsd sends the last finite one again): the NaN
+  # would stay in the filter and card would raise on packing the acceleration (card has no exception handling), ending lateral and
+  # longitudinal control. Run through the real controlsd publish and the real Toyota CarInterface.apply
+  STEPS = 100
+
+  @staticmethod
+  def pose(pitch):
+    def m(xyz):
+      return Measurement(np.array(xyz, dtype=float), np.zeros(3))
+    return Pose(orientation=m([0., pitch, 0.]), velocity=m([25., 0., 0.]), acceleration=m([0., 0., 0.]),
+                angular_velocity=m([0., 0., pitch]))
+
+  def drive(self, bad):
+    t = controls()
+    CI = interfaces[REFERENCE](t.c.CP)
+    out = []
+    for i in range(self.STEPS):
+      t.c.calibrated_pose = self.pose(bad if i == self.STEPS // 2 else 0.02)
+      CC, lac_log = t.c.state_control()
+      t.c.publish(CC, lac_log)
+      sent = t.pm.sent['carControl'].carControl
+      actuators, _ = CI.apply(sent.as_reader(), int(i * 1e7))  # raises if a NaN reaches the packer
+      out.append((sent, actuators.accel))
+    return out
+
+  def test_non_finite_orientation_not_sent_and_card_keeps_running(self):
+    for bad in (float('nan'), float('inf')):
+      out = self.drive(bad)
+      sent, _ = out[self.STEPS // 2]
+      # the last finite values are sent again, so the planner keeps its coast limit (SWF-065.C3)
+      self.assertAlmostEqual(sent.orientationNED[1], 0.02, places=6)
+      self.assertAlmostEqual(sent.angularVelocity[2], 0.02, places=6)
+      self.assertTrue(all(math.isfinite(a) for _, a in out), bad)
+      self.assertGreater(out[-1][1], 0.)
+
+  def test_finite_orientation_sent(self):
+    sent, _ = self.drive(0.02)[-1]
+    self.assertAlmostEqual(sent.orientationNED[1], 0.02, places=6)
+
+
+class TestSelfdrivedLossCancelsCruise(OpenpilotTestCase):
+  # SWSR-303i (TSR-303, DQ-439 A): when selfdriveState is no longer alive, controlsd does not keep the engagement from selfdrived's
+  # last message: carControl.enabled is false and the PCM cruise cancel is requested from the first such frame, as on any other
+  # disengagement. Run through the real Controls.state_control and publish with the reference CarParams
+  def engaged(self):
+    t = controls()
+    t.sm['carState'].cruiseState.enabled = True
+    return t
+
+  @staticmethod
+  def sent(t):
+    step(t)
+    return t.pm.sent['carControl'].carControl
+
+  def test_no_cancel_while_alive(self):
+    t = self.engaged()
+    for _ in range(50):
+      CC = self.sent(t)
+      assert CC.enabled
+      assert not CC.cruiseControl.cancel
+
+  def test_cancel_from_the_first_frame_not_alive(self):
+    t = self.engaged()
+    for _ in range(50):
+      self.sent(t)
+    # selfdrived stops: its last message still says enabled, but it is no longer alive
+    t.sm.alive['selfdriveState'] = False
+    for i in range(50):
+      CC = self.sent(t)
+      assert not CC.enabled, i
+      assert CC.cruiseControl.cancel, i
+      assert not CC.latActive and not CC.longActive, i
+      assert not CC.cruiseControl.resume, i
+
+  def test_no_cancel_when_alive_again(self):
+    t = self.engaged()
+    t.sm.alive['selfdriveState'] = False
+    assert self.sent(t).cruiseControl.cancel
+    t.sm.alive['selfdriveState'] = True
+    for _ in range(10):
+      CC = self.sent(t)
+      assert CC.enabled
+      assert not CC.cruiseControl.cancel
+
+  def test_cancel_on_an_ordinary_disengagement(self):
+    # unchanged: selfdrived alive and no longer enabled
+    t = self.engaged()
+    t.sm['selfdriveState'].enabled = t.sm['selfdriveState'].active = False
+    CC = self.sent(t)
+    assert not CC.enabled
+    assert CC.cruiseControl.cancel
+
+  def test_not_alive_and_not_enabled(self):
+    # the start-up case: selfdriveState not alive and its default message, enabled false; nothing raises and the cancel is requested
+    t = self.engaged()
+    t.sm['selfdriveState'].enabled = t.sm['selfdriveState'].active = False
+    t.sm.alive['selfdriveState'] = False
+    CC = self.sent(t)
+    assert not CC.enabled
+    assert CC.cruiseControl.cancel
+
+  def test_cancel_reaches_the_car(self):
+    # through the real Toyota CarInterface.apply: the reference car runs openpilot longitudinal control, so the cancel is the
+    # CANCEL_REQ bit of ACC_CONTROL (0x343, every third frame)
+    t = self.engaged()
+    CI = interfaces[REFERENCE](t.c.CP)
+    parser = CANParser(DBC[REFERENCE][Bus.pt], [("ACC_CONTROL", 0)], 0)
+    cancel = []
+    for i in range(60):
+      if i == 30:
+        t.sm.alive['selfdriveState'] = False
+      CC = self.sent(t)
+      _, can_sends = CI.apply(CC.as_reader(), int(i * 1e7))
+      for addr, dat, bus in can_sends:
+        if addr == 0x343 and bus == 0:
+          parser.update([(int(i * 1e7), [(addr, dat, bus)])])
+          cancel.append((i, parser.vl["ACC_CONTROL"]["CANCEL_REQ"]))
+    assert [c for i, c in cancel if i < 30] and all(c == 0 for i, c in cancel if i < 30), cancel
+    after = [c for i, c in cancel if i >= 30]
+    assert after and all(c == 1 for c in after), cancel
+    assert min(i for i, _ in cancel if i >= 30) <= 32  # set in the first 0x343 frame after the stop

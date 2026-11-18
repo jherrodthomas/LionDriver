@@ -14,7 +14,7 @@ checks each release runs on recorded drives. Nineteen cases are specified. None 
 | DQ-nn | decision of the project lead (decision register) |
 | EPS | electric power steering |
 | FSC | functional safety concept |
-| G0–G6 | gate G0…G6 of the project lifecycle |
+| G0–G6 | gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) |
 | GAP-nn | gap found by the gap assessment |
 | GC-nn | global pass criterion of every integration test (WP-S-08 §5) |
 | GNSS | global navigation satellite system (GPS) |

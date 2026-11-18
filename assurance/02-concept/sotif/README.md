@@ -15,7 +15,7 @@ looks like a lane line, or a stopped car around a curve.
 | DQ-nn | decision of the project lead (decision register) |
 | FI-nn | functional insufficiency (WP-C-06) |
 | FM-nn | functional modification (WP-C-07) |
-| G0–G6 | gate G0…G6 of the project lifecycle |
+| G0–G6 | gate G0…G6 of the project lifecycle; in the safety case, a claim G0, G1, G1.1… (WP-K-01) |
 | GAP-nn | gap found by the gap assessment |
 | HARA | hazard analysis and risk assessment (ISO 26262-3) |
 | HMI | human-machine interface: display, sounds, cluster |

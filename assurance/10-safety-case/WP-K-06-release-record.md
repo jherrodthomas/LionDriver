@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-06 Release for production / release record |
 | Standard reference | ISO 26262-2:2018 §6 (release for production, documentation); ISO 26262-4:2018 §9 (release for production); ISO 21448:2022 §12 (release); ISO/SAE 21434:2021 §6 (release for post-development); ASPICE 4.0 SUP.8 |
-| Version | 0.3 (SOTIF signature: the project lead signs with an external SOTIF review, DQ-025; 2026-10-17). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.4 (§8 and OI-2: signatures are a signed git tag plus a signed commit of the filled record by each signer, DQ-180 A (lead, 2026-11-11); 2026-11-11). 0.3 (SOTIF signature: the project lead signs with an external SOTIF review, DQ-025; 2026-10-17). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Skeleton — template. **No LionDriver release has been made.** One copy of §2–§8 is filled per release |
 | ASIL / scope | All (FuSa, SOTIF, CS) |
 | Author | Assurance team (initial draft) |
@@ -100,6 +100,8 @@ Rule: no S-1 issue may be accepted. An S-2 issue needs the safety manager's acce
 
 The same person may not sign for a role whose independence requirement they do not meet ([WP-M-02 §3.1](../01-management/WP-M-02-safety-plan.md#31-role-assignments)). With one maintainer today, at least the FSA (I3) and CS assessment are external. The project lead signs the SOTIF lead row only with the external SOTIF review of WP-K-02 §5.3 attached (DQ-025 option B).
 
+How a signature is recorded (DQ-180 A (lead, 2026-11-11)): the release is a signed git tag, and each signer adds a signed commit of the filled record. The Signature column names that commit. The signatures can then be checked offline with git alone, wherever the repository is mirrored.
+
 ## 9. Release history
 
 | Release | Date | Result | Record |
@@ -111,5 +113,5 @@ The same person may not sign for a role whose independence requirement they do n
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Align §3 fields with the baseline manifest generator (WP-P-01 OI-5) so §3 can be filled automatically | G5 |
-| OI-2 | Decide how signatures are recorded (signed git tag plus signed commit of the filled record) | G5 |
+| OI-2 | Closed 2026-11-11 (DQ-180 A (lead, 2026-11-11)): signatures are a signed git tag of the release plus a signed commit of the filled record by each signer (§8). Each signer needs a signing key before the first release ([WP-P-10](../07-supporting/WP-P-10-release-management.md) §7) | G5 |
 | OI-3 | Fill the SOTIF lead and cybersecurity manager roles ([WP-M-02](../01-management/WP-M-02-safety-plan.md)) before the first release. SOTIF lead row decided 2026-10-14 (DQ-025 option B): the project lead signs, with an external SOTIF review; the reviewer is still to be engaged. Cybersecurity manager open | G5 |

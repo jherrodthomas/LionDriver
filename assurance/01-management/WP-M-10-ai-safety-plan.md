@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-10 AI safety management plan |
 | Standard reference | ISO/PAS 8800:2024 (AI safety management, AI safety lifecycle, data, V&V, operation phase, assurance argument); ISO 21448:2022 §7, §10, §13 (interface); ASPICE 4.0 MLE.1–MLE.4, SUP.11 |
-| Version | 0.3 (OI-6 decided: verified-hash precondition, DQ-162 A; 2026-11-02). 0.2 (status update: OI-7 closed 2026-10-12 recorded; §6.1 status of the work products that now exist as Draft; §3 and OI-2 AI-2 exclusion decided; owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2, OI-3 and OI-5; 2026-10-14). 0.1 |
+| Version | 0.4 (§5: no separate AI architecture view at G2, covered through IX-13 and IX-14, recorded as tailoring (DQ-058 A); AI-drafted, I0; 2026-11-02). 0.3 (OI-6 decided: verified-hash precondition, DQ-162 A; 2026-11-02). 0.2 (status update: OI-7 closed 2026-10-12 recorded; §6.1 status of the work products that now exist as Draft; §3 and OI-2 AI-2 exclusion decided; owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2, OI-3 and OI-5; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for driving models; safety-relevant for controllability (DM model, QM allocation proposed in WP-C-04 §7) |
 | Author | Assurance team (initial draft) |
@@ -66,6 +66,8 @@ ISO/PAS 8800 assumes that the developer of the AI system controls its data and t
 | Safety analysis of the AI system | During development | Insufficiency analysis (WP-C-06) with AI error causes: distribution shift, rare scenarios, sensor degradation, recurrent-state errors, numerical faults | As above |
 | Architectural measures | Chosen by developer | Containment by the safety envelope; driver supervision enforced by DM; runtime monitors added by LionDriver (§7) | The containment argument must close GAP-04 (limit rationale) to hold |
 | Operation-phase monitoring | Developer's fleet data | LionDriver-owned field data only ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md)) | Small fleet (initially one vehicle) |
+
+**No separate AI architecture view at G2 (tailoring, DQ-058 A, 2026-11-02).** The driving and monitoring models are QM and stay behind the envelope, so the architecture claim for them at G2 is containment, not their internal design. They reach the system design through two interfaces only: IX-13, the validation targets for their performance values ([WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md)), and IX-14, the envelope that contains their outputs ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md)). The description of the models as received stays in WP-W-10 (row above). Residual limitation: an assessor may still ask for the AI elements and their data flows to be drawn in WP-S-03; that would be one more view of the system architecture, not a new work product (OI-1).
 
 ## 6. Lifecycle activities
 

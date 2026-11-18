@@ -1,0 +1,298 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="801" viewBox="0 0 500 801" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-2a. The trust boundaries, one by one (WP-S-07 §3.2), animated</title>
+<desc>Trust boundaries of WP-S-07 §3.2, one per frame: TB-3 Z4 ↔ Z3 network, 22 controls, 3 in place, 2 partly, 15 not met, 2 not determined; TB-6 Z6 → device, 7 controls, 0 in place, 1 partly, 6 not met, 0 not determined; TB-4 Z3 → Z2 local integrity, 9 controls, 2 in place, 1 partly, 5 not met, 1 not determined; TB-1 Z2 → Z1 command channel (SPI/USB), 11 controls, 3 in place, 6 partly, 2 not met, 0 not determined; TB-2 Z2 → Z1 boot control (GPIO), 7 controls, 0 in place, 1 partly, 6 not met, 0 not determined; TB-5 Z1 ↔ Z5 vehicle CAN, 3 controls, 0 in place, 3 partly, 0 not met, 0 not determined; TB-7 Z7 physical, 6 controls, 0 in place, 2 partly, 0 not met, 4 not determined.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="500" height="801" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.fr{opacity:0;animation:25.6s steps(1,end) infinite}@keyframes k0{0%{opacity:1}0.00%{opacity:1}12.50%{opacity:0}100%{opacity:1}}.f0{animation-name:k0}@keyframes k1{0%{opacity:0}12.50%{opacity:1}25.00%{opacity:0}100%{opacity:0}}.f1{animation-name:k1}@keyframes k2{0%{opacity:0}25.00%{opacity:1}37.50%{opacity:0}100%{opacity:0}}.f2{animation-name:k2}@keyframes k3{0%{opacity:0}37.50%{opacity:1}50.00%{opacity:0}100%{opacity:0}}.f3{animation-name:k3}@keyframes k4{0%{opacity:0}50.00%{opacity:1}62.50%{opacity:0}100%{opacity:0}}.f4{animation-name:k4}@keyframes k5{0%{opacity:0}62.50%{opacity:1}75.00%{opacity:0}100%{opacity:0}}.f5{animation-name:k5}@keyframes k6{0%{opacity:0}75.00%{opacity:1}87.50%{opacity:0}100%{opacity:0}}.f6{animation-name:k6}@keyframes k7{0%{opacity:0}87.50%{opacity:1}100.00%{opacity:0}100%{opacity:0}}.f7{animation-name:k7}@media (prefers-reduced-motion:reduce){.fr{animation:none}.f7{opacity:1}}</style>
+<text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 3-2a · The trust boundaries, one by one</text>
+<text x="16" y="48" font-size="11" fill="#475569">WP-S-07 §3.2, from the outside in; controls by status (§4)</text>
+<rect x="110" y="148" width="250" height="130" rx="10" fill="none" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="364" y="160" font-size="9.5" fill="#94A3B8">comma device</text>
+<rect x="120" y="66" width="230" height="30" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="130" y="85" font-size="10.5" fill="#0F172A" font-weight="700">Z4 External network and back end</text>
+<rect x="120" y="110" width="230" height="30" rx="7" fill="#F0FDF4" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="130" y="129" font-size="10.5" fill="#0F172A" font-weight="700">Z6 Release environment</text>
+<rect x="120" y="154" width="230" height="30" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="130" y="173" font-size="10.5" fill="#0F172A" font-weight="700">Z3 SoC — network-facing</text>
+<rect x="120" y="198" width="230" height="30" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="130" y="217" font-size="10.5" fill="#0F172A" font-weight="700">Z2 SoC — safety-relevant host</text>
+<rect x="120" y="242" width="230" height="30" rx="7" fill="#F0FDF4" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="130" y="261" font-size="10.5" fill="#0F172A" font-weight="700">Z1 Safety MCU</text>
+<rect x="120" y="286" width="230" height="30" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="130" y="305" font-size="10.5" fill="#0F172A" font-weight="700">Z5 Vehicle bus</text>
+<rect x="120" y="330" width="230" height="30" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
+<text x="130" y="349" font-size="10.5" fill="#0F172A" font-weight="700">Z7 Physical device</text>
+<path d="M120 81.0 L104 81.0 L104 169.0 L120 169.0" stroke="#E2E8F0" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 125.0 L92 125.0 L92 169.0 L120 169.0" stroke="#E2E8F0" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 169.0 L80 169.0 L80 213.0 L120 213.0" stroke="#E2E8F0" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 213.0 L68 213.0 L68 257.0 L120 257.0" stroke="#E2E8F0" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 213.0 L56 213.0 L56 257.0 L120 257.0" stroke="#E2E8F0" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 257.0 L44 257.0 L44 301.0 L120 301.0" stroke="#E2E8F0" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 336.0 L32 336.0 L32 354.0 L120 354.0" stroke="#E2E8F0" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+<g class="fr f0">
+<path d="M120 81.0 L104 81.0 L104 169.0 L120 169.0" stroke="#0F172A" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="99" y="128" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="end">TB-3</text>
+<rect x="120" y="66" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<rect x="120" y="154" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">TB-3 · Z4 ↔ Z3 network</text>
+<text x="16" y="410" font-size="10.5" fill="#0F172A">Crosses: athena RPCs, uploads, SSH, git updates, AGNOS images, LFS objects</text>
+<text x="16" y="424" font-size="10.5" fill="#475569">Threats: TS-06, TS-07, TS-08, TS-10</text>
+<text x="16" y="446" font-size="12" fill="#D97706" font-weight="700">3 of its 22 controls in place</text>
+<rect x="16" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="44" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-101</text>
+<rect x="76" y="456" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="104" y="468" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-102</text>
+<rect x="136" y="456" width="56" height="17" rx="5" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="164" y="468" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">CSR-103</text>
+<rect x="196" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="224" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-104</text>
+<rect x="256" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="284" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-111</text>
+<rect x="316" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="344" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-112</text>
+<rect x="376" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="404" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-113</text>
+<rect x="16" y="478" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="44" y="490" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-114</text>
+<rect x="76" y="478" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="104" y="490" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-115</text>
+<rect x="136" y="478" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="164" y="490" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-116</text>
+<rect x="196" y="478" width="56" height="17" rx="5" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="224" y="490" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">CSR-117</text>
+<rect x="256" y="478" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="284" y="490" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-121</text>
+<rect x="316" y="478" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="344" y="490" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-122</text>
+<rect x="376" y="478" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="404" y="490" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-123</text>
+<rect x="16" y="500" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="44" y="512" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-124</text>
+<rect x="76" y="500" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="104" y="512" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-125</text>
+<rect x="136" y="500" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="164" y="512" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-126</text>
+<rect x="196" y="500" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="224" y="512" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-131</text>
+<rect x="256" y="500" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="284" y="512" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-132</text>
+<rect x="316" y="500" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="344" y="512" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-133</text>
+<rect x="376" y="500" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="404" y="512" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-134</text>
+<rect x="16" y="522" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="44" y="534" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-135</text>
+</g>
+<g class="fr f1">
+<path d="M120 125.0 L92 125.0 L92 169.0 L120 169.0" stroke="#0F172A" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="87" y="150" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="end">TB-6</text>
+<rect x="120" y="110" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<rect x="120" y="154" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">TB-6 · Z6 → device</text>
+<text x="16" y="410" font-size="10.5" fill="#0F172A">Crosses: Signed images and manifests; release key material never crosses</text>
+<text x="16" y="424" font-size="10.5" fill="#475569">Threats: TS-05, TS-06, TS-10</text>
+<text x="16" y="446" font-size="12" fill="#D2553F" font-weight="700">none of its 7 controls in place</text>
+<rect x="16" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="44" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-031</text>
+<rect x="76" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="104" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-032</text>
+<rect x="136" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="164" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-033</text>
+<rect x="196" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="224" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-034</text>
+<rect x="256" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="284" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-121</text>
+<rect x="316" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="344" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-126</text>
+<rect x="376" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="404" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-135</text>
+</g>
+<g class="fr f2">
+<path d="M120 169.0 L80 169.0 L80 213.0 L120 213.0" stroke="#0F172A" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="75" y="194" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="end">TB-4</text>
+<rect x="120" y="154" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<rect x="120" y="198" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">TB-4 · Z3 → Z2 local integrity</text>
+<text x="16" y="410" font-size="10.5" fill="#0F172A">Crosses: Params, msgq, model files, filesystem</text>
+<text x="16" y="424" font-size="10.5" fill="#475569">Threats: TS-04, TS-09, TS-12</text>
+<text x="16" y="446" font-size="12" fill="#D97706" font-weight="700">2 of its 9 controls in place</text>
+<rect x="16" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="44" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-062</text>
+<rect x="76" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="104" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-063</text>
+<rect x="136" y="456" width="56" height="17" rx="5" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="164" y="468" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">CSR-064</text>
+<rect x="196" y="456" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="224" y="468" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-071</text>
+<rect x="256" y="456" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="284" y="468" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-072</text>
+<rect x="316" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="344" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-073</text>
+<rect x="376" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="404" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-081</text>
+<rect x="16" y="478" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="44" y="490" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-082</text>
+<rect x="76" y="478" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="104" y="490" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-083</text>
+</g>
+<g class="fr f3">
+<path d="M120 213.0 L68 213.0 L68 257.0 L120 257.0" stroke="#0F172A" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="63" y="238" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="end">TB-1</text>
+<rect x="120" y="198" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<rect x="120" y="242" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">TB-1 · Z2 → Z1 command channel (SPI/USB)</text>
+<text x="16" y="410" font-size="10.5" fill="#0F172A">Crosses: Safety mode/param 0xdc, alternative experience 0xdf, bus config 0xdb/0xde, relay</text>
+<text x="16" y="424" font-size="10.5" fill="#0F172A">debug 0xc5, softloader 0xd1, CAN TX frames</text>
+<text x="16" y="438" font-size="10.5" fill="#475569">Threats: TS-02, TS-05, TS-12</text>
+<text x="16" y="460" font-size="12" fill="#D97706" font-weight="700">3 of its 11 controls in place</text>
+<rect x="16" y="470" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="44" y="482" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-011</text>
+<rect x="76" y="470" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="104" y="482" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-012</text>
+<rect x="136" y="470" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="164" y="482" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-013</text>
+<rect x="196" y="470" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="224" y="482" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-014</text>
+<rect x="256" y="470" width="56" height="17" rx="5" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="284" y="482" font-size="9" fill="#1D4ED8" font-weight="700" text-anchor="middle">CSR-015</text>
+<rect x="316" y="470" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="344" y="482" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-016</text>
+<rect x="376" y="470" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="404" y="482" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-021</text>
+<rect x="16" y="492" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="44" y="504" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-022</text>
+<rect x="76" y="492" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="104" y="504" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-023</text>
+<rect x="136" y="492" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="164" y="504" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-024</text>
+<rect x="196" y="492" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="224" y="504" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-061</text>
+</g>
+<g class="fr f4">
+<path d="M120 213.0 L56 213.0 L56 257.0 L120 257.0" stroke="#0F172A" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="51" y="238" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="end">TB-2</text>
+<rect x="120" y="198" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<rect x="120" y="242" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">TB-2 · Z2 → Z1 boot control (GPIO)</text>
+<text x="16" y="410" font-size="10.5" fill="#0F172A">Crosses: Panda boot and reset lines driven by the SoC</text>
+<text x="16" y="424" font-size="10.5" fill="#475569">Threats: TS-03</text>
+<text x="16" y="446" font-size="12" fill="#D2553F" font-weight="700">none of its 7 controls in place</text>
+<rect x="16" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="44" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-041</text>
+<rect x="76" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="104" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-042</text>
+<rect x="136" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="164" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-043</text>
+<rect x="196" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="224" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-051</text>
+<rect x="256" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="284" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-052</text>
+<rect x="316" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="344" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-053</text>
+<rect x="376" y="456" width="56" height="17" rx="5" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="404" y="468" font-size="9" fill="#D2553F" font-weight="700" text-anchor="middle">CSR-054</text>
+</g>
+<g class="fr f5">
+<path d="M120 257.0 L44 257.0 L44 301.0 L120 301.0" stroke="#0F172A" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="39" y="282" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="end">TB-5</text>
+<rect x="120" y="242" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<rect x="120" y="286" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">TB-5 · Z1 ↔ Z5 vehicle CAN</text>
+<text x="16" y="410" font-size="10.5" fill="#0F172A">Crosses: RX plausibility inputs, TX actuation, PCS forwarding</text>
+<text x="16" y="424" font-size="10.5" fill="#475569">Threats: TS-01</text>
+<text x="16" y="446" font-size="12" fill="#D2553F" font-weight="700">none of its 3 controls in place</text>
+<rect x="16" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="44" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-091</text>
+<rect x="76" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="104" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-092</text>
+<rect x="136" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="164" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-093</text>
+</g>
+<g class="fr f6">
+<path d="M120 336.0 L32 336.0 L32 354.0 L120 354.0" stroke="#0F172A" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<text x="27" y="348" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="end">TB-7</text>
+<rect x="120" y="330" width="230" height="30" rx="7" fill="none" stroke="#0F172A" stroke-width="2"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">TB-7 · Z7 physical</text>
+<text x="16" y="410" font-size="10.5" fill="#0F172A">Crosses: Data and keys at rest</text>
+<text x="16" y="424" font-size="10.5" fill="#475569">Threats: TS-11, TS-13</text>
+<text x="16" y="446" font-size="12" fill="#D2553F" font-weight="700">none of its 6 controls in place</text>
+<rect x="16" y="456" width="56" height="17" rx="5" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="44" y="468" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">CSR-141</text>
+<rect x="76" y="456" width="56" height="17" rx="5" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="104" y="468" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">CSR-142</text>
+<rect x="136" y="456" width="56" height="17" rx="5" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="164" y="468" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">CSR-143</text>
+<rect x="196" y="456" width="56" height="17" rx="5" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="224" y="468" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">CSR-144</text>
+<rect x="256" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="284" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-151</text>
+<rect x="316" y="456" width="56" height="17" rx="5" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="344" y="468" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">CSR-152</text>
+</g>
+<g class="fr f7">
+<path d="M120 81.0 L104 81.0 L104 169.0 L120 169.0" stroke="#D97706" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 125.0 L92 125.0 L92 169.0 L120 169.0" stroke="#D2553F" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 169.0 L80 169.0 L80 213.0 L120 213.0" stroke="#D97706" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 213.0 L68 213.0 L68 257.0 L120 257.0" stroke="#D97706" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 213.0 L56 213.0 L56 257.0 L120 257.0" stroke="#D2553F" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 257.0 L44 257.0 L44 301.0 L120 301.0" stroke="#D2553F" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M120 336.0 L32 336.0 L32 354.0 L120 354.0" stroke="#D2553F" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<text x="16" y="392" font-size="13" fill="#0F172A" font-weight="700">All seven boundaries: their controls by status</text>
+<text x="16" y="408" font-size="10.5" fill="#475569">Red: no control in place. Amber: some.</text>
+<text x="16" y="434" font-size="10.5" fill="#0F172A" font-weight="700">TB-3</text>
+<rect x="64" y="424" width="41.7" height="13" rx="3" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<rect x="105.7" y="424" width="27.8" height="13" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<rect x="133.5" y="424" width="208.6" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<rect x="342.2" y="424" width="27.8" height="13" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="378" y="434" font-size="10" fill="#D97706" font-weight="700">3/22 in place</text>
+<text x="16" y="453" font-size="10.5" fill="#0F172A" font-weight="700">TB-6</text>
+<rect x="64" y="443" width="43.7" height="13" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<rect x="107.7" y="443" width="262.3" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="378" y="453" font-size="10" fill="#D2553F" font-weight="700">0/7 in place</text>
+<text x="16" y="472" font-size="10.5" fill="#0F172A" font-weight="700">TB-4</text>
+<rect x="64" y="462" width="68" height="13" rx="3" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<rect x="132" y="462" width="34" height="13" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<rect x="166" y="462" width="170" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<rect x="336" y="462" width="34" height="13" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="378" y="472" font-size="10" fill="#D97706" font-weight="700">2/9 in place</text>
+<text x="16" y="491" font-size="10.5" fill="#0F172A" font-weight="700">TB-1</text>
+<rect x="64" y="481" width="83.5" height="13" rx="3" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1"/>
+<rect x="147.5" y="481" width="166.9" height="13" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<rect x="314.4" y="481" width="55.6" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="378" y="491" font-size="10" fill="#D97706" font-weight="700">3/11 in place</text>
+<text x="16" y="510" font-size="10.5" fill="#0F172A" font-weight="700">TB-2</text>
+<rect x="64" y="500" width="43.7" height="13" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<rect x="107.7" y="500" width="262.3" height="13" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="378" y="510" font-size="10" fill="#D2553F" font-weight="700">0/7 in place</text>
+<text x="16" y="529" font-size="10.5" fill="#0F172A" font-weight="700">TB-5</text>
+<rect x="64" y="519" width="306" height="13" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="378" y="529" font-size="10" fill="#D2553F" font-weight="700">0/3 in place</text>
+<text x="16" y="548" font-size="10.5" fill="#0F172A" font-weight="700">TB-7</text>
+<rect x="64" y="538" width="102" height="13" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<rect x="166" y="538" width="204" height="13" rx="3" fill="#F1F5F9" stroke="#475569" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="378" y="548" font-size="10" fill="#D2553F" font-weight="700">0/6 in place</text>
+</g>
+<rect x="16" y="570" width="22" height="14" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
+<text x="44" y="581" font-size="10.5" fill="#0F172A">in place</text>
+<rect x="110" y="570" width="22" height="14" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="138" y="581" font-size="10.5" fill="#0F172A">partly</text>
+<rect x="192" y="570" width="22" height="14" rx="4" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="220" y="581" font-size="10.5" fill="#0F172A">not met</text>
+<rect x="280" y="570" width="22" height="14" rx="4" fill="#F1F5F9" stroke="#475569" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="308" y="581" font-size="10.5" fill="#0F172A">not determined</text>
+<text x="16" y="599" font-size="10" fill="#475569">None is verified. Status: WP-S-07 Figure 4-1. Generated by fig_s07_boundaries_anim.py.</text>
+<g class="terms">
+<text x="16" y="619" font-size="10" fill="#475569">Terms: AGNOS the comma device's operating system · CAN controller area network: the</text>
+<text x="16" y="633" font-size="10" fill="#475569">vehicle's data bus · CSR-nn cybersecurity requirement: CSR-C-nn at concept level</text>
+<text x="16" y="647" font-size="10" fill="#475569">(WP-C-10 §7), CSR-nnn refined (WP-S-07) · GPIO general-purpose input/output pin · LFS</text>
+<text x="16" y="661" font-size="10" fill="#475569">Git Large File Storage (where the model files live) · MCU microcontroller: the panda</text>
+<text x="16" y="675" font-size="10" fill="#475569">safety processor (STM32H7) · PCS pre-collision system: Toyota's stock collision warning</text>
+<text x="16" y="689" font-size="10" fill="#475569">and braking · RPC remote procedure call · RX receive · SoC system on chip: the comma</text>
+<text x="16" y="703" font-size="10" fill="#475569">device's main processor, running openpilot (QM) · SPI serial peripheral interface (the</text>
+<text x="16" y="717" font-size="10" fill="#475569">link between SoC and MCU) · SSH secure shell (remote login) · TB-nn trust boundary</text>
+<text x="16" y="731" font-size="10" fill="#475569">(WP-S-07 §3.2) · TS-nn threat scenario (TARA §4) · TX transmit · USB universal serial</text>
+<text x="16" y="745" font-size="10" fill="#475569">bus (on the panda, a second host link the reference device does not use) · WP-nn work</text>
+<text x="16" y="759" font-size="10" fill="#475569">product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H</text>
+<text x="16" y="773" font-size="10" fill="#475569">hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

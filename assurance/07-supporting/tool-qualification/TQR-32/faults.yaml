@@ -1,0 +1,197 @@
+# TQR-32 fault catalogue: the errors a requirements-management and traceability tool must not let through,
+# each planted once in a copy of the real trace data (assurance/trace/items, links) and run through
+# check_trace.py. A fault passes when check_trace.py reports an error tagged with `expect` whose text contains
+# `match`. The same error classes apply to any tool in this use (DOORS, Jama, Polarion): see ../method.md §4.
+#
+# Operations (tools/qualify.py):
+#   set       item, field, value      set a field of one item
+#   delete    item, field             remove a field of one item
+#   unlink    ref, field[, kind]      remove ref from `field` of every item (of `kind`)
+#   copy      item[, id]              append a copy of an item (with a new id, or the same one)
+#   new       value                   append a new item
+#   link      test, reqs              set the requirements a test links to (links/verification.yaml)
+#   edit      file, find, replace     edit the text of a generated items file (X3 compares files)
+#
+# Fields: id, class (the error class of ../method.md §4), what (plain words), op, expect, match.
+
+- id: PF-01
+  class: EC-1 broken link
+  what: A TSR names a parent FSR that does not exist
+  op: {set: {item: TSR-101, field: parents, value: [FSR-01.99]}}
+  expect: K3
+  match: "TSR-101: parents reference FSR-01.99 does not resolve"
+
+- id: PF-02
+  class: EC-1 broken link
+  what: An SWSR names a hazard as its parent (wrong kind of parent)
+  op: {set: {item: SWSR-101, field: parents, value: [H-01]}}
+  expect: K3
+  match: "SWSR-101: parent H-01 is a hazard"
+
+- id: PF-03
+  class: EC-2 orphan
+  what: A TSR loses every parent
+  op: {set: {item: TSR-101, field: parents, value: []}}
+  expect: K3
+  match: "TSR-101: no parent"
+
+- id: PF-04
+  class: EC-2 orphan
+  what: An FSR loses its safety goal
+  op: {set: {item: FSR-01.01, field: parents, value: []}}
+  expect: K3
+  match: "FSR-01.01: no parent safety goal"
+
+- id: PF-05
+  class: EC-3 missing refinement
+  what: A safety goal is refined by no FSR
+  op: {unlink: {ref: SG-01, field: parents, kind: fsr}}
+  expect: K4
+  match: "SG-01: no FSR"
+
+- id: PF-06
+  class: EC-3 missing refinement
+  what: A TSR allocated to software is refined by no SWSR
+  op: {unlink: {ref: TSR-101, field: parents, kind: swsr}}
+  expect: K4
+  match: "TSR-101: allocated to"
+
+- id: PF-07
+  class: EC-4 ASIL not inherited
+  what: A TSR is rated lower than the FSR it refines
+  op: {set: {item: TSR-101, field: asil, value: A}}
+  expect: K5
+  match: "TSR-101: asil 'A' is below its parent FSR-01.01"
+
+- id: PF-08
+  class: EC-5 wrong ASIL
+  what: A hazardous event's ASIL does not follow from its S, E and C
+  op: {set: {item: HE-01.1, field: e, value: 2}}
+  expect: R1
+  match: "HE-01.1: asil B but S3 E2 C2 gives"
+
+- id: PF-09
+  class: EC-5 wrong ASIL
+  what: A safety goal is rated below its worst hazardous event
+  op: {set: {item: SG-01, field: asil, value: B}}
+  expect: R2
+  match: "SG-01: asil B but highest source HE ASIL is C"
+
+- id: PF-10
+  class: EC-5 wrong ASIL
+  what: The ASIL if an assumption fails is lower than the ASIL itself
+  op: {set: {item: SG-01, field: asil_if_aou_fails, value: A}}
+  expect: R3
+  match: "SG-01: asil_if_aou_fails A lower than asil C"
+
+- id: PF-11
+  class: EC-2 orphan
+  what: A hazard has no hazardous event
+  op: {new: {value: {id: H-99, kind: hazard, title: "Planted hazard", functions: [F-01], status: proposed, source: WP-C-03}}}
+  expect: R4
+  match: "H-99: no hazardous event"
+
+- id: PF-12
+  class: EC-3 missing refinement
+  what: A hazardous event is covered by no safety goal and has no exemption
+  op: {unlink: {ref: HE-01.1, field: parents, kind: safety-goal}}
+  expect: K12
+  match: "HE-01.1: not linked to a safety goal"
+
+- id: PF-13
+  class: EC-6 identity
+  what: Two items carry the same ID
+  op: {copy: {item: TSR-101}}
+  expect: K2
+  match: "duplicate ID TSR-101"
+
+- id: PF-14
+  class: EC-6 identity
+  what: An ID does not follow the ID scheme
+  op: {copy: {item: AOU-01, id: AOU-1}}
+  expect: K2
+  match: "bad ID 'AOU-1'"
+
+- id: PF-15
+  class: EC-7 missing attribute
+  what: A safety goal loses its safe state
+  op: {delete: {item: SG-01, field: safe_state}}
+  expect: K1
+  match: "SG-01: missing key 'safe_state'"
+
+- id: PF-16
+  class: EC-7 missing attribute
+  what: An item carries a status outside the lifecycle
+  op: {set: {item: TSR-101, field: status, value: approved}}
+  expect: K1
+  match: "TSR-101: status 'approved'"
+
+- id: PF-17
+  class: EC-8 test link
+  what: A test is linked to a requirement that was withdrawn
+  op: {set: {item: FSR-01.01, field: status, value: withdrawn}}
+  expect: K6
+  match: "links FSR-01.01, which is withdrawn"
+
+- id: PF-18
+  class: EC-8 test link
+  what: A test is linked to a requirement that does not exist
+  op: {link: {test: "opendbc_repo/opendbc/safety/tests/test_toyota.py::TestToyotaSafetyTorque::test_torque_absolute_limits", reqs: [FSR-01.98]}}
+  expect: K6
+  match: "links FSR-01.98, which does not exist"
+
+- id: PF-19
+  class: EC-9 copy differs from the record
+  what: A hazardous event's situation in the trace data differs from the HARA table
+  op: {set: {item: HE-01.2, field: situation, value: "Planted change"}}
+  expect: X1
+  match: "HE-01.2.situation"
+
+- id: PF-20
+  class: EC-9 copy differs from the record
+  what: An assumption of use differs from the item definition
+  op: {set: {item: AOU-01, field: text, value: "Planted change"}}
+  expect: X2
+  match: "AOU-01.text"
+
+- id: PF-21
+  class: EC-9 copy differs from the record
+  what: A generated requirement file is edited by hand
+  op: {edit: {file: tsr.yaml, find: "- id: TSR-101\n  kind: tsr\n  text: \"The envelope shall reject", replace: "- id: TSR-101\n  kind: tsr\n  text: \"The envelope may reject"}}
+  expect: X3
+  match: "tsr.yaml differs from the work products"
+
+- id: PF-22
+  class: EC-3 missing refinement
+  what: A SOTIF hazard has no functional insufficiency
+  op: {unlink: {ref: SH-01, field: parents, kind: functional-insufficiency}}
+  expect: S1
+  match: "SH-01: no functional insufficiency"
+
+- id: PF-23
+  class: EC-3 missing refinement
+  what: A cybersecurity goal has no cybersecurity requirement
+  op: {unlink: {ref: CSG-01, field: parents, kind: cybersecurity-requirement}}
+  expect: C1
+  match: "CSG-01: no cybersecurity requirement"
+
+- id: PF-24
+  class: EC-2 orphan
+  what: An AI safety requirement rests on nothing
+  op: {set: {item: AIR-01, field: parents, value: []}}
+  expect: A1
+  match: "AIR-01: no parent"
+
+- id: PF-25
+  class: EC-7 missing attribute
+  what: A system requirement loses its allocation
+  op: {set: {item: SYS-101, field: allocated_to, value: ""}}
+  expect: Q1
+  match: "SYS-101: no allocation"
+
+- id: PF-26
+  class: EC-10 status without evidence
+  what: An interface is marked agreed without a recorded review
+  op: {set: {item: IFR-01, field: status, value: agreed}}
+  expect: I1
+  match: "IFR-01: agreed without a review_ref"

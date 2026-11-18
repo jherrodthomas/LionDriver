@@ -994,3 +994,24 @@ SG-08: the safety mechanisms that implement a TSR derived from one of the goal's
 WP-S-03 §6 (implemented, partial, not there yet) and coloured by diagnostic-coverage target, with a bar of the shares. \
 Below, each FSR with no mechanism behind it: in red a gap, in grey an FSR met outside the item (an assumption of use) \
 or by reference to other FSRs."""
+
+# ======================================================================= V-28 CSR requirement diagrams
+
+[views.V-28]
+file = "fig-sysml-v28-csr-{f}.svg"
+kind = "csrgroups"
+width = 1520
+title = "CSR requirement diagrams"
+subtitle = "One SysML requirement diagram per sheet of WP-S-07 §4 groups"
+sheets = [
+  { key = "c01-c02", from = "CSR-C-01", to = "CSR-C-02", title = "configuration lock and release firmware" },
+  { key = "c03-c05", from = "CSR-C-03", to = "CSR-C-05", title = "boot, flash and recovery" },
+  { key = "c06-c09", from = "CSR-C-06", to = "CSR-C-09", title = "host, models and vehicle CAN" },
+  { key = "c10-c11", from = "CSR-C-10", to = "CSR-C-11", title = "remote access" },
+  { key = "c12-c13", from = "CSR-C-12", to = "CSR-C-13", title = "updates and supply chain" },
+  { key = "c14-c16", from = "CSR-C-14", to = "CSR-C-16", title = "personal data, decommissioning, vulnerabilities" },
+]
+desc = """SysML requirement diagram generated from the model for a sheet of WP-S-07 §4: each detailed cybersecurity \
+requirement with its status (in place, partly, not met, not determined; WP-S-07 Figure 4-1), its allocation and \
+verification methods, a «deriveReqt» arrow to the concept requirement CSR-C-nn it refines, the elements that satisfy it, \
+the safety requirements it states the same mechanism as («trace», WP-S-07 §8) and the verification cases that name it."""

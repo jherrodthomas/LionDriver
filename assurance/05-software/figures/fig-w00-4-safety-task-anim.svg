@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="566" viewBox="0 0 500 566" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure W-0-4. The safety task in time, animated</title>
+<desc>Heartbeat at 10 Hz stops at t = 0; the 100 Hz safety task counts the age to 30 ticks and revokes authority at 0.3 s (SM-TOY-AUTH T10a), siren for 3 s; budget detect ≤ 0.3 s, react ≤ 0.1 s</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="500" height="566" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<style>.st{opacity:0;animation:9s steps(1,end) infinite}@keyframes s0{0%{opacity:1}0.00%{opacity:1}4.00%{opacity:0}100%{opacity:1}}.s0{animation-name:s0}@keyframes s1{0%{opacity:0}4.00%{opacity:1}8.00%{opacity:0}100%{opacity:0}}.s1{animation-name:s1}@keyframes s2{0%{opacity:0}8.00%{opacity:1}12.00%{opacity:0}100%{opacity:0}}.s2{animation-name:s2}@keyframes s3{0%{opacity:0}12.00%{opacity:1}16.00%{opacity:0}100%{opacity:0}}.s3{animation-name:s3}@keyframes s4{0%{opacity:0}16.00%{opacity:1}20.00%{opacity:0}100%{opacity:0}}.s4{animation-name:s4}@keyframes s5{0%{opacity:0}20.00%{opacity:1}24.00%{opacity:0}100%{opacity:0}}.s5{animation-name:s5}@keyframes s6{0%{opacity:0}24.00%{opacity:1}28.00%{opacity:0}100%{opacity:0}}.s6{animation-name:s6}@keyframes s7{0%{opacity:0}28.00%{opacity:1}32.00%{opacity:0}100%{opacity:0}}.s7{animation-name:s7}@keyframes s8{0%{opacity:0}32.00%{opacity:1}36.00%{opacity:0}100%{opacity:0}}.s8{animation-name:s8}@keyframes s9{0%{opacity:0}36.00%{opacity:1}40.00%{opacity:0}100%{opacity:0}}.s9{animation-name:s9}@keyframes s10{0%{opacity:0}40.00%{opacity:1}44.00%{opacity:0}100%{opacity:0}}.s10{animation-name:s10}@keyframes s11{0%{opacity:0}44.00%{opacity:1}48.00%{opacity:0}100%{opacity:0}}.s11{animation-name:s11}@keyframes s12{0%{opacity:0}48.00%{opacity:1}52.00%{opacity:0}100%{opacity:0}}.s12{animation-name:s12}@keyframes s13{0%{opacity:0}52.00%{opacity:1}56.00%{opacity:0}100%{opacity:0}}.s13{animation-name:s13}@keyframes s14{0%{opacity:0}56.00%{opacity:1}60.00%{opacity:0}100%{opacity:0}}.s14{animation-name:s14}@keyframes s15{0%{opacity:0}60.00%{opacity:1}64.00%{opacity:0}100%{opacity:0}}.s15{animation-name:s15}@keyframes s16{0%{opacity:0}64.00%{opacity:1}68.00%{opacity:0}100%{opacity:0}}.s16{animation-name:s16}@keyframes s17{0%{opacity:0}68.00%{opacity:1}72.00%{opacity:0}100%{opacity:0}}.s17{animation-name:s17}@keyframes s18{0%{opacity:0}72.00%{opacity:1}76.00%{opacity:0}100%{opacity:0}}.s18{animation-name:s18}@keyframes s19{0%{opacity:0}76.00%{opacity:1}80.00%{opacity:0}100%{opacity:0}}.s19{animation-name:s19}@keyframes s20{0%{opacity:0}80.00%{opacity:1}84.00%{opacity:0}100%{opacity:0}}.s20{animation-name:s20}@keyframes s21{0%{opacity:0}84.00%{opacity:1}88.00%{opacity:0}100%{opacity:0}}.s21{animation-name:s21}@keyframes s22{0%{opacity:0}88.00%{opacity:1}92.00%{opacity:0}100%{opacity:0}}.s22{animation-name:s22}@keyframes s23{0%{opacity:0}92.00%{opacity:1}96.00%{opacity:0}100%{opacity:0}}.s23{animation-name:s23}@keyframes s24{0%{opacity:0}96.00%{opacity:1}100.00%{opacity:0}100%{opacity:0}}.s24{animation-name:s24}@keyframes cur{0%{transform:translateX(0)}96.00%{transform:translateX(360px)}100%{transform:translateX(360px)}}.cur{animation:cur 9s linear infinite}@media (prefers-reduced-motion:reduce){.st{animation:none}.s17{opacity:1}.cur{animation:none;transform:translateX(255.0px)}}</style>
+<text x="16" y="30" font-size="18" fill="#0F172A" font-weight="700">The safety task in time</text>
+<text x="16" y="50" font-size="11.5" fill="#475569">One heartbeat loss as a UML timing diagram: the 100 Hz</text>
+<text x="16" y="66" font-size="11.5" fill="#475569">task revokes authority 0.3 s after the last heartbeat.</text>
+<rect x="16" y="96" width="468" height="62" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="24" y="118" font-size="11" fill="#0F172A" font-weight="700">host heartbeat</text>
+<text x="24" y="134" font-size="9.5" fill="#475569">0xf3 at 10 Hz</text>
+<rect x="16" y="166" width="468" height="62" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="24" y="188" font-size="11" fill="#0F172A" font-weight="700">heartbeat age</text>
+<text x="24" y="204" font-size="9.5" fill="#475569">100 Hz task, ticks</text>
+<rect x="16" y="236" width="468" height="62" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="24" y="258" font-size="11" fill="#0F172A" font-weight="700">controls_allowed</text>
+<text x="24" y="274" font-size="9.5" fill="#475569">SM-TOY-AUTH</text>
+<rect x="16" y="306" width="468" height="62" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="24" y="328" font-size="11" fill="#0F172A" font-weight="700">siren</text>
+<text x="24" y="344" font-size="9.5" fill="#475569">3 s hold</text>
+<rect x="252.6" y="90" width="113.7" height="280" rx="0" fill="#FFFBEB" stroke="none" stroke-width="1.2" opacity="0.55"/>
+<rect x="366.3" y="90" width="37.9" height="280" rx="0" fill="#FFF7ED" stroke="none" stroke-width="1.2" opacity="0.7"/>
+<line x1="138.9" y1="146" x2="138.9" y2="114" stroke="#0F766E" stroke-width="2.4"/>
+<line x1="176.8" y1="146" x2="176.8" y2="114" stroke="#0F766E" stroke-width="2.4"/>
+<line x1="214.7" y1="146" x2="214.7" y2="114" stroke="#0F766E" stroke-width="2.4"/>
+<line x1="252.6" y1="146" x2="252.6" y2="114" stroke="#0F766E" stroke-width="2.4"/>
+<text x="256.6" y="116" font-size="9.5" fill="#0F766E" font-weight="700">last heartbeat</text>
+<path d="M138.9 222.0 L176.8 211.3 L176.8 222.0 L214.7 211.3 L214.7 222.0 L252.6 211.3 L252.6 222.0 L366.3 190.0 L480.0 190.0" stroke="#4F46E5" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<line x1="120" y1="190" x2="480" y2="190" stroke="#D2553F" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="478" y="187" font-size="9" fill="#D2553F" text-anchor="end">30 ticks</text>
+<path d="M120.0 256 L366.31578947368416 256 L366.31578947368416 286 L480.0 286" stroke="#0F172A" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<text x="124" y="252" font-size="9.5" fill="#475569">granted</text>
+<text x="372.3" y="282" font-size="9.5" fill="#D2553F" font-weight="700">revoked (T10a)</text>
+<path d="M120.0 356 L366.31578947368416 356 L366.31578947368416 326 L480.0 326" stroke="#C2410C" stroke-width="2" fill="none" stroke-linejoin="round"/>
+<text x="478" y="340" font-size="9.5" fill="#C2410C" text-anchor="end">on for 3 s →</text>
+<text x="138.9" y="386" font-size="9" fill="#94A3B8" text-anchor="middle">-0.3 s</text>
+<text x="252.6" y="386" font-size="9" fill="#94A3B8" text-anchor="middle">0</text>
+<text x="290.5" y="386" font-size="9" fill="#94A3B8" text-anchor="middle">+0.1 s</text>
+<text x="328.4" y="386" font-size="9" fill="#94A3B8" text-anchor="middle">+0.2 s</text>
+<text x="366.3" y="386" font-size="9" fill="#94A3B8" text-anchor="middle">+0.3 s</text>
+<text x="404.2" y="386" font-size="9" fill="#94A3B8" text-anchor="middle">+0.4 s</text>
+<text x="442.1" y="386" font-size="9" fill="#94A3B8" text-anchor="middle">+0.5 s</text>
+<text x="309.5" y="86" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">detect ≤ 0.3 s</text>
+<text x="385.3" y="86" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle">≤ 0.1 s</text>
+<g class="cur"><line x1="120" y1="92" x2="120" y2="376" stroke="#0F172A" stroke-width="1.4"/></g>
+<g class="st s0">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -350 ms · age 0 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s1">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -310 ms · age 4 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s2">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -271 ms · age 3 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s3">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -231 ms · age 7 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s4">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -192 ms · age 1 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s5">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -152 ms · age 5 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s6">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -113 ms · age 9 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s7">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -73 ms · age 3 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s8">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = -33 ms · age 7 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s9">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +6 ms · age 1 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s10">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +46 ms · age 5 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s11">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +85 ms · age 9 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s12">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +125 ms · age 12 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s13">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +165 ms · age 16 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s14">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +204 ms · age 20 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s15">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +244 ms · age 24 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s16">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#2E9E6A" font-weight="700">t = +283 ms · age 28 ticks · controls_allowed = 1</text>
+</g>
+<g class="st s17">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +323 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<g class="st s18">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +362 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<g class="st s19">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +402 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<g class="st s20">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +442 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<g class="st s21">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +481 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<g class="st s22">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +521 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<g class="st s23">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +560 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<g class="st s24">
+<rect x="16" y="406" width="468" height="34" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="28" y="428" font-size="11.5" fill="#D2553F" font-weight="700">t = +600 ms · age 30 ticks · controls_allowed = 0 · siren</text>
+</g>
+<text x="16" y="458" font-size="10" fill="#475569">Shaded: the TSR-407 budget, detect ≤ 0.3 s, react ≤ 0.1 s.</text>
+<text x="16" y="472" font-size="10" fill="#475569">Detection is up to one task period later by design; not</text>
+<text x="16" y="486" font-size="10" fill="#475569">measured on hardware.</text>
+<g class="terms">
+<text x="16" y="506" font-size="10" fill="#475569">Terms: SM-TOY SM-TOY-AUTH, the state machine of the Toyota authority controls_allowed</text>
+<text x="16" y="520" font-size="10" fill="#475569">(WP-W-05 §5.2) · TSR-nn technical safety requirement (WP-S-02) · UML Unified Modeling</text>
+<text x="16" y="534" font-size="10" fill="#475569">Language (OMG): state machine, sequence and component diagrams</text>
+</g>
+<text x="484" y="554" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_w00_stories.py</text>
+</svg>

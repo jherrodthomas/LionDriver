@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-02 Change management plan |
 | Standard reference | ISO 26262-8:2018 §8; ISO 26262-2:2018 §6 (impact analysis); ISO/SAE 21434:2021 §6 (change management in cybersecurity activities); ASPICE 4.0 SUP.10 |
-| Version | 0.4 (OI-1 notes the lead's decision to recruit a volunteer reviewer, DQ-010 A; 2026-10-23). 0.3 (§7.2 code owners named individually, since the repository stays on a personal account (DQ-111, B); 2026-10-18). 0.2 (§5 Figure 5-1, change request swimlane generated from the §5 table; 2026-10-14). 0.1 |
+| Version | 0.5 (§4 item 3: the change-class labels are defined in `.github/labels.yaml` and created by the `labels` workflow; 2026-11-12). 0.4 (OI-1 notes the lead's decision to recruit a volunteer reviewer, DQ-010 A; 2026-10-23). 0.3 (§7.2 code owners named individually, since the repository stays on a personal account (DQ-111, B); 2026-10-18). 0.2 (§5 Figure 5-1, change request swimlane generated from the §5 table; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -45,7 +45,7 @@ Current state: there is no CODEOWNERS file and no PR template under `.github/`. 
 
 1. **By path.** If any changed path matches the safety-relevant file list ([WP-P-01 §4](WP-P-01-configuration-management-plan.md#4-safety-relevant-file-list)), the change takes the class of the highest matching entry (SR-A > SR-Q > SR-T). Submodule bumps are classified by the diff inside the submodule.
 2. **By work product impact.** If the change alters behaviour, an interface, a limit, a timing value or an assumption that a work product states (requirement, HARA rating, FMEA row, TARA entry, ODD element, AoU), it is safety-relevant even if no listed path is touched.
-3. **By label.** The author applies one of `sr-a`, `sr-q`, `sr-t`, `nsr`. A reviewer may raise the class, never lower it without a written reason in the PR.
+3. **By label.** The author applies one of `sr-a`, `sr-q`, `sr-t`, `nsr`. A reviewer may raise the class, never lower it without a written reason in the PR. The four labels, with their colours and descriptions, are defined in [`.github/labels.yaml`](../../.github/labels.yaml) and created in the repository by the `labels` workflow ([`tools/ci/sync_labels.py`](../../tools/ci/sync_labels.py)) when that file changes on `liondriver-dev`; the workflow never deletes a label. Applying the label to a PR is still manual.
 
 Automation (proposed): a workflow that compares the PR diff to the machine-readable file list and applies the label, failing if the author's label is lower (OI-2).
 

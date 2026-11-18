@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="388" viewBox="0 0 600 388" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>AUTOSAR description: at a glance</title>
+<desc>21 software components, 16 of them the item's; 21 CAN frames: 3 with checksum and counter, 7 checksum only, 11 unprotected, 1 not checked by the item; 4 open items. The 21 CAN frames the description holds: 3 carry a checksum and a counter, 7 a checksum only, 11 neither; the item runs some check, a timeout at least, on 20.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="600" height="388" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="22" font-size="10" fill="#94A3B8" font-weight="700">At a glance</text>
+<rect x="40" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="50" y="56" font-size="19" fill="#0F172A" font-weight="700">21</text>
+<text x="50" y="74" font-size="9.5" fill="#475569">software components</text>
+<rect x="172" y="30" width="124" height="54" rx="7" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="182" y="56" font-size="19" fill="#0F172A" font-weight="700">21</text>
+<text x="182" y="74" font-size="9.5" fill="#475569">CAN frames</text>
+<rect x="304" y="30" width="124" height="54" rx="7" fill="#FEF2F2" stroke="none" stroke-width="1.2"/>
+<text x="314" y="56" font-size="19" fill="#D2553F" font-weight="700">11</text>
+<text x="314" y="74" font-size="9.5" fill="#475569">unprotected frames</text>
+<rect x="436" y="30" width="124" height="54" rx="7" fill="#FFFBEB" stroke="none" stroke-width="1.2"/>
+<text x="446" y="56" font-size="19" fill="#D97706" font-weight="700">4</text>
+<text x="446" y="74" font-size="9.5" fill="#475569">open items</text>
+<rect x="40" y="92" width="119.7" height="18" rx="9.0" fill="#F1F5F9" stroke="none" stroke-width="1"/>
+<text x="99.9" y="104.4" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">CFG-001 reference car</text>
+<rect x="165.7" y="92" width="132.5" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="232" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no AUTOSAR E2E profile</text>
+<rect x="304.3" y="92" width="105.9" height="18" rx="9.0" fill="#FEF2F2" stroke="none" stroke-width="1"/>
+<text x="357.2" y="104.4" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">no SecOC (AOU-18)</text>
+<text x="40" y="132" font-size="10" fill="#94A3B8" font-weight="700">Where it stands</text>
+<text x="40" y="157" font-size="10.5" fill="#0F172A" font-weight="700">Protection</text>
+<rect x="170" y="144" width="55.7" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="197.9" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<rect x="225.7" y="144" width="130" height="20" rx="0" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="290.7" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+<rect x="355.7" y="144" width="204.3" height="20" rx="0" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<text x="457.9" y="158" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">11</text>
+<text x="40" y="185" font-size="10.5" fill="#0F172A" font-weight="700">Item checks it</text>
+<rect x="170" y="172" width="371.4" height="20" rx="0" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="355.7" y="186" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">20</text>
+<rect x="541.4" y="172" width="18.6" height="20" rx="0" fill="#94A3B8" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="170" y="202" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
+<text x="184" y="211" font-size="9.5" fill="#475569">checksum and counter</text>
+<rect x="294.7" y="202" width="10" height="10" rx="2" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="308.7" y="211" font-size="9.5" fill="#475569">checksum only</text>
+<rect x="385.7" y="202" width="10" height="10" rx="2" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="399.7" y="211" font-size="9.5" fill="#475569">none</text>
+<rect x="170" y="218" width="10" height="10" rx="2" fill="#2E9E6A" stroke="none" stroke-width="1.2"/>
+<text x="184" y="227" font-size="9.5" fill="#475569">some check, a timeout at least</text>
+<rect x="331.7" y="218" width="10" height="10" rx="2" fill="#94A3B8" stroke="none" stroke-width="1.2"/>
+<text x="345.7" y="227" font-size="9.5" fill="#475569">no check</text>
+<text x="40" y="252" font-size="10.5" fill="#0F172A">The 21 CAN frames the description holds: 3 carry a checksum and a counter, 7 a checksum only, 11</text>
+<text x="40" y="267" font-size="10.5" fill="#0F172A">neither; the item runs some check, a timeout at least, on 20.</text>
+<text x="40" y="288" font-size="9.5" fill="#94A3B8">Generated by folder_cards.py from this folder's own records; the page's text follows below.</text>
+<g class="terms">
+<text x="40" y="308" font-size="10.5" fill="#475569">Terms: AOU-nn assumption of use (WP-C-01 §7); an R suffix marks the FSC's refined version ·</text>
+<text x="40" y="322.5" font-size="10.5" fill="#475569">AUTOSAR AUTomotive Open System ARchitecture: the automotive software standard; Classic</text>
+<text x="40" y="337" font-size="10.5" fill="#475569">Platform for ECUs · CAN controller area network: the vehicle's data bus · CFG-nn vehicle</text>
+<text x="40" y="351.5" font-size="10.5" fill="#475569">configuration in the vehicle register (CFG-001 is the reference Corolla) · SecOC secure</text>
+<text x="40" y="366" font-size="10.5" fill="#475569">onboard communication: AUTOSAR's message authentication for in-vehicle buses</text>
+</g>
+</svg>

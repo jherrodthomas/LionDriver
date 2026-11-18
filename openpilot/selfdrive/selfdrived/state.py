@@ -58,7 +58,12 @@ class StateMachine:
 
         # PRE ENABLING
         elif self.state == State.preEnabled:
-          if not events.contains(ET.PRE_ENABLE):
+          # LionDriver SWSR-302i (register DQ-433 A, the lead's decision of 2026-11-03): a soft-disable fault during
+          # the pre-enable wait ends the engagement attempt at once, so actuation never starts with the fault present
+          if events.contains(ET.SOFT_DISABLE):
+            self.state = State.disabled
+            self.current_alert_types.append(ET.SOFT_DISABLE)
+          elif not events.contains(ET.PRE_ENABLE):
             self.state = State.enabled
           else:
             self.current_alert_types.append(ET.PRE_ENABLE)

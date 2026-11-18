@@ -588,7 +588,39 @@
   behaviour: "panda host suite reference_lock (requirements from its module docstring)"
   source: WP-W-06
 
-- test: panda/tests/reference_lock/test_reference_lock.py::TestReferenceLock::test_config_requests_refused_in_car_mode_only
+- test: panda/tests/reference_lock/test_reference_lock.py::TestReferenceLock::test_car_mode_accepts_only_the_allow_list
+  reqs: [TSR-512, SWSR-512, TSR-513, SWSR-512a, SWSR-513]
+  level: unit
+  environment: host-x86
+  partial: false
+  behaviour: "panda host suite reference_lock (requirements from its module docstring)"
+  source: WP-W-06
+
+- test: panda/tests/reference_lock/test_reference_lock.py::TestReferenceLock::test_power_save_left_but_not_entered_in_car_mode
+  reqs: [TSR-512, SWSR-512, TSR-513, SWSR-512a, SWSR-513]
+  level: unit
+  environment: host-x86
+  partial: false
+  behaviour: "panda host suite reference_lock (requirements from its module docstring)"
+  source: WP-W-06
+
+- test: panda/tests/reference_lock/test_reference_lock.py::TestReferenceLock::test_requests_refused_in_every_mode
+  reqs: [TSR-512, SWSR-512, TSR-513, SWSR-512a, SWSR-513]
+  level: unit
+  environment: host-x86
+  partial: false
+  behaviour: "panda host suite reference_lock (requirements from its module docstring)"
+  source: WP-W-06
+
+- test: panda/tests/reference_lock/test_reference_lock.py::TestReferenceLock::test_other_requests_allowed_outside_a_car_mode
+  reqs: [TSR-512, SWSR-512, TSR-513, SWSR-512a, SWSR-513]
+  level: unit
+  environment: host-x86
+  partial: false
+  behaviour: "panda host suite reference_lock (requirements from its module docstring)"
+  source: WP-W-06
+
+- test: panda/tests/reference_lock/test_reference_lock.py::TestReferenceLock::test_softloader_and_obd_latched_after_toyota_until_ignition_off
   reqs: [TSR-512, SWSR-512, TSR-513, SWSR-512a, SWSR-513]
   level: unit
   environment: host-x86

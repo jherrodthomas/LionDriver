@@ -26,6 +26,10 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
     and the ASIL decomposition figures of dec_animations.py (from WP-A-01, WP-H-04 and WP-S-02)
     and the CAN and end-to-end figures of comms_animations.py (from WP-S-05 and the TSR list)
     likewise: a drawn phrase that is no longer in its source is a build problem;
+  * the first link on a page to a work product's file gets the version the change ledger gives it
+    (`<sub>v0.68.0</sub>`, WP-P-04 §5 and OI-7, DQ-441); `{{WP_VERSIONS}}` becomes the table of every work product
+    with its version, status and last change, and `{{LEDGER_SOURCE}}` says where the versions come from (the ledger
+    row, or the headers before the ledger's first run);
   * wiki/README.md, which describes the folder, is not published.
 
 It also checks the pages: every page is reachable from _Sidebar.md, every page link names a page that
@@ -68,7 +72,9 @@ SRC = ROOT / "wiki"
 EXCLUDED = {"README.md"}
 SPECIAL = {"_Sidebar.md", "_Footer.md"}
 LINK = re.compile(r"(!?\[[^\]]*\]\()([^)\s]+)(\))")
-PLACEHOLDER = re.compile(r"\{\{(REPO|BRANCH|SYNC_COMMIT|SYNC_DATE|MERGE_LOG)\}\}")
+PLACEHOLDER = re.compile(r"\{\{(REPO|BRANCH|SYNC_COMMIT|SYNC_DATE|MERGE_LOG|WP_VERSIONS|LEDGER_SOURCE)\}\}")
+WP_FILE = re.compile(r"(?:^|/)(WP-[A-Z]{1,2}-\d{2,3}[a-z]?)-[^/]*\.md$")
+NO_VERSIONS = "_No work-product versions are available in this checkout._"
 MERGE_SUBJECT = re.compile(r"^Merge pull request #(\d+) from ")
 MERGE_LOG_LIMIT = 120
 NO_MERGE_LOG = "_No merge history is available in this checkout._"
@@ -118,6 +124,33 @@ def render_merge_log(entries: list[tuple[str, int, str, str]], repo: str) -> str
   return "\n".join(lines).strip()
 
 
+def wp_versions(root: Path, commit: str) -> tuple[list[dict], str]:
+  """Every work product with the version the change ledger gives it at `commit` (WP-P-04 §5, OI-7; DQ-441), and
+  where the versions come from. ([], "") when the checkout has no ledger tooling or no git history (the tests)."""
+  tools = root / "assurance" / "07-supporting" / "ledger"
+  if not (tools / "export_wp.py").exists():
+    return [], ""
+  sys.path.insert(0, str(tools))
+  try:
+    import export_wp
+    import ledger
+    rows = ledger.load_ref("origin/ledger", root)
+    return export_wp.document_index(commit if commit != "unsynced" else "HEAD", rows)
+  except (OSError, subprocess.SubprocessError, SystemExit, ValueError, KeyError):
+    return [], ""
+
+
+def render_wp_versions(entries: list[dict], repo: str, branch: str) -> str:
+  if not entries:
+    return NO_VERSIONS
+  lines = ["| Work product | Version | Status | Last changed |", "|---|---|---|---|"]
+  for e in entries:
+    url = f"https://github.com/{repo}/blob/{branch}/{e['path']}"
+    lines.append(f"| [{e['doc']}]({url}) {e['title'].replace('|', '/')} | {e['version']} | {e['status'] or '—'} | "
+                 f"{e['changed'] or '—'} |")
+  return "\n".join(lines)
+
+
 def pages(src: Path) -> list[Path]:
   return sorted(p for p in src.glob("*.md") if p.name not in EXCLUDED)
 
@@ -129,6 +162,8 @@ def split_target(target: str) -> tuple[str, str]:
 
 def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str], problems: list[str]) -> str:
   names = {p.name for p in pages(src)}
+  stamp: dict[str, str] = values.get("WP_STAMP") or {}
+  stamped: set[str] = set()
 
   def link(m: re.Match) -> str:
     before, target, after = m.groups()
@@ -143,7 +178,13 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
         # An image: the wiki renders it only from the raw file address, never from the blob page.
         return f"{before}https://raw.githubusercontent.com/{values['REPO']}/{values['BRANCH']}/{rel}{after}"
       kind = "tree" if (root / rel).is_dir() else "blob"
-      return f"{before}https://github.com/{values['REPO']}/{kind}/{values['BRANCH']}/{rel}{anchor}{after}"
+      out = f"{before}https://github.com/{values['REPO']}/{kind}/{values['BRANCH']}/{rel}{anchor}{after}"
+      wp = WP_FILE.search(rel)
+      version = stamp.get(wp.group(1)) if wp and page.name not in SPECIAL else None
+      if version and wp.group(1) not in stamped:  # the first link to a work product on a page carries its version
+        stamped.add(wp.group(1))
+        out += f" <sub>v{version}</sub>"
+      return out
     if path.endswith(".md"):
       if path not in names:
         problems.append(f"{page.name}: page link target does not exist: {path}")
@@ -154,7 +195,7 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
     return m.group(0)
 
   text = LINK.sub(link, text)
-  return PLACEHOLDER.sub(lambda m: values[m.group(1)], text)
+  return PLACEHOLDER.sub(lambda m: str(values[m.group(1)]), text)
 
 
 def check_sidebar(src: Path, problems: list[str]) -> None:
@@ -176,6 +217,10 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
   values = {"REPO": repo, "BRANCH": branch, "SYNC_COMMIT": commit[:7] if commit != "unsynced" else commit,
             "SYNC_DATE": date or dt.date.today().isoformat(),
             "MERGE_LOG": render_merge_log(git_merges(root), repo)}
+  entries, source = wp_versions(root, commit)
+  values["WP_VERSIONS"] = render_wp_versions(entries, repo, branch)
+  values["LEDGER_SOURCE"] = source or "not available in this checkout"
+  values["WP_STAMP"] = {e["doc"]: e["version"] for e in entries}
   if not (src / "Home.md").exists():
     problems.append("Home.md is missing")
   check_sidebar(src, problems)

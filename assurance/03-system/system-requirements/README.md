@@ -23,12 +23,12 @@ same quantity the safety requirement wins.
 | OI-nn | open item of the document it appears in |
 | SN-nn | stakeholder need (WP-S-01 §1.3), SN-01…SN-12 |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
-| SYS | system requirement SYS-nnn of WP-S-01 |
+| SYS | system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5) |
 | SysML | Systems Modeling Language: the system model in models/sysml |
 | TBD | to be determined: a value not yet set |
 | TSR-nn | technical safety requirement (WP-S-02) |
 | UC-nn | use case (WP-S-01 §1.4), UC-01…UC-11 |
-| V-nn | view of the SysML model (V-01…V-27) |
+| V-nn | view of the SysML model (V-01…V-28) |
 | VS-nn | verification case: VS-SI system integration, VS-HW hardware, VS-SWQ software, VS-FI fault injection, VS-SQ system qualification |
 | WP-nn | work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case) |
 
