@@ -2,7 +2,7 @@
 
 # Change impact
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-07 · 12 Nov](impact-wp-p-07.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · **All changes**
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [WP-W-10 · 11 Nov](impact-wp-w-10.md) · **All changes**
 
 Each work product's latest dated change, and what depends on it in the process model (WP-P-11): how many of those have a version dated after the change, how many have not, and how many have no dated version. The 8 most recent changes have a page with the V. A dependence is a prompt to look, not proof of an impact; the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) decides.
 
@@ -12,11 +12,10 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-S-02](impact-wp-s-02.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 40 | 1 | 2 |
 | [WP-H-03](impact-wp-h-03.md) Hardware safety analysis (FMEA/FMEDA) | 0.12 | 2026-11-13 | 11 | 11 | 0 | 0 |
 | [WP-H-02](impact-wp-h-02.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | 0.15 | 2026-11-13 | 22 | 20 | 1 | 1 |
-| [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-12 | 17 | 16 | 0 | 1 |
 | [WP-P-04](impact-wp-p-04.md) Documentation management | 0.8 | 2026-11-12 | 1 | 1 | 0 | 0 |
 | [WP-P-02](impact-wp-p-02.md) Change management plan | 0.5 | 2026-11-12 | 2 | 2 | 0 | 0 |
 | [WP-W-11](impact-wp-w-11.md) Cybersecurity implementation and verification | 0.8 | 2026-11-11 | 5 | 2 | 2 | 1 |
-| [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
+| [WP-W-10](impact-wp-w-10.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
 | [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) Testing of the embedded software (SW qualification, HIL) | 0.4 | 2026-11-11 | 5 | 4 | 1 | 0 |
 | [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | 0.55 | 2026-11-11 | 14 | 11 | 2 | 1 |
 | [WP-P-10](../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | 0.7 | 2026-11-11 | 2 | 0 | 2 | 0 |
@@ -27,7 +26,7 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-M-11](../WP-M-11-upstream-and-supplier-management.md) Upstream (comma.ai) and supplier management, development interface agreements | 0.3 | 2026-11-11 | 12 | 8 | 3 | 1 |
 | [WP-M-09](../WP-M-09-cybersecurity-plan.md) Cybersecurity plan | 0.10 | 2026-11-11 | 14 | 9 | 4 | 1 |
 | [WP-M-07](../WP-M-07-risk-management.md) Project risk management plan and register | 0.11 | 2026-11-11 | 0 | 0 | 0 | 0 |
-| [WP-M-05](../WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | 0.4 | 2026-11-11 | 42 | 28 | 11 | 3 |
+| [WP-M-05](../WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | 0.4 | 2026-11-11 | 42 | 29 | 10 | 3 |
 | [WP-K-06](../../10-safety-case/WP-K-06-release-record.md) Release for production / release record | 0.4 | 2026-11-11 | 0 | 0 | 0 | 0 |
 | [WP-W-05](../../05-software/WP-W-05-software-unit-design.md) Software unit design and implementation | 0.9 | 2026-11-03 | 8 | 6 | 2 | 0 |
 | [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) Cybersecurity requirements and architectural design | 0.12 | 2026-11-03 | 12 | 6 | 5 | 1 |
@@ -43,6 +42,7 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-S-06](../../03-system/WP-S-06-requirements-production-operation.md) Requirements for production, operation, service and decommissioning | 0.5 | 2026-11-02 | 5 | 3 | 2 | 0 |
 | [WP-S-04](../../03-system/WP-S-04-timing-ftti-budget.md) Timing analysis: FTTI, fault detection and reaction budget | 0.31 | 2026-11-02 | 44 | 20 | 22 | 2 |
 | [WP-P-11](../../process/README.md) Integrated process model and generated process maps (all phases G0–G6 modelled) | 0.6 | 2026-11-02 | 0 | 0 | 0 | 0 |
+| [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) Software tool classification and qualification | 0.9 | 2026-11-02 | 17 | 7 | 9 | 1 |
 | [WP-M-10](../WP-M-10-ai-safety-plan.md) AI safety management plan | 0.4 | 2026-11-02 | 13 | 6 | 6 | 1 |
 | [WP-M-08](../WP-M-08-sotif-plan.md) SOTIF plan | 0.10 | 2026-11-02 | 14 | 6 | 7 | 1 |
 | [WP-H-04](../../04-hardware/WP-H-04-hardware-metrics.md) Hardware architectural metrics (SPFM, LFM) | 0.13 | 2026-11-02 | 1 | 1 | 0 | 0 |

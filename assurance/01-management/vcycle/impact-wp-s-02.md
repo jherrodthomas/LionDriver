@@ -2,7 +2,7 @@
 
 # Change impact: WP-S-02 Technical safety requirements specification
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 17 Nov](impact-wp-s-05.md) · **WP-S-02 · 17 Nov** · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-07 · 12 Nov](impact-wp-p-07.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 17 Nov](impact-wp-s-05.md) · **WP-S-02 · 17 Nov** · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [WP-W-10 · 11 Nov](impact-wp-w-10.md) · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-s-02.svg" width="100%" alt="Change impact of WP-S-02 Technical safety requirements specification, dated 2026-11-17: 43 work products depend on it in the process model; 40 have no version dated after it, 1 have been updated since, 2 have no dated version."></a>

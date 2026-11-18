@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the fourteen already built ([weather README](weather/README.md), [thermal README](thermal/README.md), [supply README](supply/README.md), [round 2](physics-plan.md)): what each answers, how, with which inputs, checks and picture, and in what order. They cover triggering conditions (TCs) the first two rounds left out: what the sensors can see, the vehicle at its limits, the driver camera and the device |
-| Status | Phase A built 2026-10-25 (studies 11, 12, 14, 15; §2); phase B built 2026-11-02 (studies 16 and 17's fog half; §3). Stopped for want of a source: 13, 17's truck spray, 18, 19. Phase C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-10-25 (studies 11, 12, 14, 15; §2); phase B built 2026-11-02 (studies 16 and 17's fog half; §3). Stopped for want of a source: 13, 17's truck spray, 18, 19. Phase C built 2026-11-02 (study 20, a code reading; §4). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit goes to the lead as a register question; the study itself does not move it |
 | Lead decisions needed | **None to start.** No new tool: every study runs in an existing environment. Inputs that have no public source yet (the radar's beam, the driver camera's light) are tasks, and the study that needs them waits in phase B |
 
@@ -185,6 +185,12 @@ Changes from the plan below:
 - **Feeds.** KS-17 test glasses. Waits for the wavelength.
 
 ## 4. Phase C: openpilot's localizer in the loop
+
+**Built 2026-11-02**, as a code reading. openpilot's `locationd` reads no GPS: it fuses the inertial sensors, the
+camera's odometry and the car's state into the device's motion, which the controller uses. selfdrived puts the GPS on
+its ignore lists and its noGps event (after 1500 m) carries no alert. So there is no position to drift, and the
+planned drift simulation would have measured nothing; the study pins those lines and fails on any new reader of the
+GPS ([`gnss-tunnel.md`](results/gnss-tunnel.md), [weather §17](weather/README.md#17-losing-gps-in-a-tunnel-tc-18)).
 
 ### 20. Losing GPS in a tunnel (TC-18)
 

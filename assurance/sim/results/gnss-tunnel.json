@@ -1,0 +1,101 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. A reading of openpilot's code, pinned.",
+ "pins": [
+  {
+   "file": "openpilot/selfdrive/locationd/locationd.py",
+   "means": "locationd publishes deviceMotion, the device's motion"
+  },
+  {
+   "file": "openpilot/selfdrive/locationd/locationd.py",
+   "means": "its inputs are the car's state, the calibration and the camera's odometry (and the IMU), no GPS"
+  },
+  {
+   "file": "openpilot/selfdrive/controls/controlsd.py",
+   "means": "the controller takes the motion from deviceMotion"
+  },
+  {
+   "file": "openpilot/selfdrive/selfdrived/selfdrived.py",
+   "means": "selfdrived ignores the GPS service for its alive, rate and valid checks"
+  },
+  {
+   "file": "openpilot/selfdrive/selfdrived/selfdrived.py",
+   "means": "the ignore list applies to alive and rate"
+  },
+  {
+   "file": "openpilot/selfdrive/selfdrived/selfdrived.py",
+   "means": "and to valid"
+  },
+  {
+   "file": "openpilot/selfdrive/selfdrived/selfdrived.py",
+   "means": "after 1500 m without a GPS fix it raises the noGps event"
+  },
+  {
+   "file": "openpilot/selfdrive/selfdrived/selfdrived.py",
+   "means": "the event itself"
+  },
+  {
+   "file": "openpilot/selfdrive/selfdrived/events.py",
+   "means": "noGps carries no alert in any state: it does not warn, disengage or block engaging"
+  }
+ ],
+ "gps_readers": [
+  {
+   "file": "openpilot/selfdrive/ui/ui_state.py",
+   "services": [
+    "gpsLocationExternal"
+   ],
+   "role": "the UI subscribes (shown only)"
+  },
+  {
+   "file": "openpilot/system/hardware/hardwared.py",
+   "services": [
+    "gpsLocationExternal"
+   ],
+   "role": "copies the last fix into the device's status message (not read by the driving functions)"
+  },
+  {
+   "file": "openpilot/system/qcomgpsd/qcomgpsd.py",
+   "services": [
+    "gpsLocation",
+    "qcomGnss"
+   ],
+   "role": "the GPS driver (publishes)"
+  },
+  {
+   "file": "openpilot/system/ubloxd/ubloxd.py",
+   "services": [
+    "gpsLocationExternal",
+    "ubloxGnss"
+   ],
+   "role": "the GPS driver (publishes)"
+  },
+  {
+   "file": "openpilot/common/gps.py",
+   "services": [
+    "gpsLocation",
+    "gpsLocationExternal"
+   ],
+   "role": "chooses which GPS service the device has"
+  }
+ ],
+ "no_gps_after_m": 1500.0,
+ "no_gps_after_s": 49.1,
+ "tunnels": [
+  {
+   "length_m": 1000.0,
+   "seconds": 32.7,
+   "no_gps_event": false
+  },
+  {
+   "length_m": 2000.0,
+   "seconds": 65.5,
+   "no_gps_event": true
+  },
+  {
+   "length_m": 4000.0,
+   "seconds": 130.9,
+   "no_gps_event": true
+  }
+ ],
+ "unreviewed_readers": []
+}
