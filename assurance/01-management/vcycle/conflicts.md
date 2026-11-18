@@ -5,7 +5,7 @@
 [← Back to the V-cycle](../../README.md#the-v-cycle) · [change impact](impact.md) · [V-cycle over time](over-time.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-conflicts.svg" width="100%" alt="Conflicts on the V-cycle: 51 work products older than an input they read, 3 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-conflicts.svg" width="100%" alt="Conflicts on the V-cycle: 49 work products older than an input they read, 3 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input."></a>
 </p>
 
 *Only what is out of step. A flag means look, not wrong: an older work product may still be right after its input changed. A new Version entry or a recorded review clears a flag; the view never does. Drawn by [`fig_m00_vcycle.py`](../figures/fig_m00_vcycle.py); CI fails if it is stale.*
@@ -20,7 +20,7 @@ The newest change on a verification box against the newest on the definition box
 | [System integration](system-integration.md) | [WP-S-08](../../03-system/WP-S-08-system-integration-test.md) 2026-11-02 | [System architecture](system-architecture.md) | [WP-S-05](../../03-system/WP-S-05-hsi-specification.md) 2026-11-17 | 15 |
 | [Unit verification](unit-verification.md) | [WP-W-06](../../05-software/WP-W-06-software-unit-verification.md) 2026-11-02 | [Detailed design](detailed-design.md) | [WP-H-03](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) 2026-11-13 | 11 |
 
-## Older than an input it reads (51)
+## Older than an input it reads (49)
 
 | Box | Work product | Last changed | Newer inputs |
 |---|---|---|---|
@@ -53,11 +53,9 @@ The newest change on a verification box against the newest on the definition box
 | [Hardware and software integration](hardware-and-software-integration.md) | [WP-W-07](../../05-software/WP-W-07-software-integration-verification.md) | 2026-10-13 | [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) 2026-11-11, [WP-W-05](../../05-software/WP-W-05-software-unit-design.md) 2026-11-03, [WP-W-06](../../05-software/WP-W-06-software-unit-verification.md) 2026-11-02, [WP-W-03](../../05-software/WP-W-03-software-architecture.md) 2026-11-02 |
 | [Hardware and software integration](hardware-and-software-integration.md) | [WP-H-06](../../04-hardware/WP-H-06-hardware-integration-verification.md) | 2026-10-27 | [WP-H-03](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) 2026-11-13, [WP-H-02](../../04-hardware/WP-H-02-hardware-design.md) 2026-11-13, [WP-H-01](../../04-hardware/WP-H-01-hardware-safety-requirements.md) 2026-11-02, [WP-H-07](../../04-hardware/WP-H-07-hardware-component-qualification.md) 2026-11-01 |
 | [Hardware and software integration](hardware-and-software-integration.md) | [WP-H-07](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 2026-11-01 | [WP-H-03](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) 2026-11-13, [WP-H-02](../../04-hardware/WP-H-02-hardware-design.md) 2026-11-13, [WP-M-11](../WP-M-11-upstream-and-supplier-management.md) 2026-11-11 |
-| [Unit verification](unit-verification.md) | [WP-W-06](../../05-software/WP-W-06-software-unit-verification.md) | 2026-11-02 | [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) 2026-11-17, [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) 2026-11-12, [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) 2026-11-11, [WP-W-05](../../05-software/WP-W-05-software-unit-design.md) 2026-11-03 |
+| [Unit verification](unit-verification.md) | [WP-W-06](../../05-software/WP-W-06-software-unit-verification.md) | 2026-11-02 | [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) 2026-11-17, [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) 2026-11-11, [WP-W-05](../../05-software/WP-W-05-software-unit-design.md) 2026-11-03 |
 | [Implementation](implementation.md) | [WP-W-05](../../05-software/WP-W-05-software-unit-design.md) | 2026-11-03 | [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) 2026-11-11 |
 | [Implementation](implementation.md) | [WP-W-09](../../05-software/WP-W-09-configuration-calibration-data.md) | 2026-10-27 | [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) 2026-11-17, [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) 2026-11-11 |
-| [Implementation](implementation.md) | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) | 2026-11-11 | [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) 2026-11-12 |
-| [Implementation](implementation.md) | [WP-W-11](../../05-software/WP-W-11-cybersecurity-implementation-verification.md) | 2026-11-11 | [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) 2026-11-12 |
 | [Management plans](management-plans.md) | [WP-M-04](../WP-M-04-organization-competence-safety-culture.md) | 2026-10-19 | [WP-M-02](../WP-M-02-safety-plan.md) 2026-10-23 |
 | [Management plans](management-plans.md) | [WP-M-06](../WP-M-06-confirmation-measures-plan.md) | 2026-10-23 | [WP-M-05](../WP-M-05-quality-assurance-plan.md) 2026-11-11 |
 | [Management plans](management-plans.md) | [WP-M-10](../WP-M-10-ai-safety-plan.md) | 2026-11-02 | [WP-M-09](../WP-M-09-cybersecurity-plan.md) 2026-11-11 |

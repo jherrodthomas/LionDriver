@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1640" height="1109" viewBox="0 0 1640 1109" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>LionDriver V-cycle over time</title>
-<desc>The V-cycle over time as of 2026-11-17: 11 rows from concept down to implementation and back up to vehicle validation. 86 work products have dated versions between 2026-10-12 and 2026-11-17 (3 undated); 51 have an input dated after their own last version. The plan runs each row from the previous gate to its own gate.</desc>
+<desc>The V-cycle over time as of 2026-11-17: 11 rows from concept down to implementation and back up to vehicle validation. 86 work products have dated versions between 2026-10-12 and 2026-11-17 (3 undated); 49 have an input dated after their own last version. The plan runs each row from the previous gate to its own gate.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1640" height="1109" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="28" fill="#0F172A" font-weight="700">LionDriver V-cycle over time</text>
@@ -205,7 +205,7 @@
 <circle cx="739.4" cy="478" r="4.2" fill="#0F172A" opacity=".55"/>
 <circle cx="888.3" cy="478" r="5.4" fill="#0F172A" opacity=".55"/>
 <circle cx="1014" cy="478" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
-<text x="1014" y="482" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">4</text>
+<text x="1014" y="482" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">2</text>
 <rect x="1171.8" y="470" width="81.7" height="16" rx="4" fill="#F1F5F9" stroke="#0F172A" stroke-width="1.2"/>
 <rect x="1253.6" y="470" width="91.5" height="16" rx="4" fill="#F1F5F9" stroke="#0F172A" stroke-width="1" stroke-dasharray="3 2" opacity=".6"/>
 <rect x="40" y="510" width="1560" height="48" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
@@ -311,7 +311,7 @@
 <text x="1302" y="842" font-size="11" fill="#475569">to its latest date</text>
 <rect x="40" y="882" width="381" height="118" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
 <text x="56" y="906" font-size="12" fill="#475569" font-weight="700">Trace freshness</text>
-<text x="56" y="936" font-size="22" fill="#C2410C" font-weight="700">51 of 86</text>
+<text x="56" y="936" font-size="22" fill="#C2410C" font-weight="700">49 of 86</text>
 <text x="56" y="958" font-size="10.5" fill="#475569">work products have an input dated after their own last version, e.g.</text>
 <text x="56" y="972" font-size="10.5" fill="#475569">WP-W-09 (27 Oct) needs WP-S-02 (dated 17 Nov)</text>
 <rect x="433" y="882" width="381" height="118" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
