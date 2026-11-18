@@ -72,6 +72,7 @@ FIGURES = [
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-std-*.svg")),  # one per standard
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-x-*.svg")),  # exploded views, one per box
   A / "05-software/coverage/card-overview.svg",
+  *sorted((REPO / "docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures").glob("fig-fi001-*.svg")),
   A / "05-software/coverage/card-status.svg",
   A / "05-software/design-notes/card-overview.svg",
   A / "05-software/design-notes/card-status.svg",
@@ -225,6 +226,10 @@ TERMS = {
   "XML": "extensible markup language",
   "RTE": "AUTOSAR runtime environment: the layer that connects software components to each other and to basic software",
   "OEM": "original equipment manufacturer: the carmaker",
+  "NHTSA": "National Highway Traffic Safety Administration: the US vehicle-safety regulator",
+  "ODI": "Office of Defects Investigation: the NHTSA office that opens defect investigations",
+  "RCA": "root cause analysis",
+  "SGO": "Standing General Order 2021-01: NHTSA's crash-reporting order for driving automation systems",
   "CSAR": "configuration, software and architecture repository: the project lead's Tier-1 toolchain term, not an AUTOSAR one",
   "OBD": "on-board diagnostics port",
   "OBD-II": "on-board diagnostics port",

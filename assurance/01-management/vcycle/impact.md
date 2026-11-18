@@ -2,12 +2,13 @@
 
 # Change impact
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [WP-W-10 · 11 Nov](impact-wp-w-10.md) · **All changes**
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · **All changes**
 
 Each work product's latest dated change, and what depends on it in the process model (WP-P-11): how many of those have a version dated after the change, how many have not, and how many have no dated version. The 8 most recent changes have a page with the V. A dependence is a prompt to look, not proof of an impact; the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) decides.
 
 | Change | Version | Dated | Downstream | Worth a look | Updated since | Undated |
 |---|---|---|---|---|---|---|
+| [WP-C-05](impact-wp-c-05.md) SOTIF hazard identification and risk evaluation, acceptance criteria | 0.11 | 2026-11-18 | 25 | 25 | 0 | 0 |
 | [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.25 | 2026-11-17 | 23 | 22 | 0 | 1 |
 | [WP-S-02](impact-wp-s-02.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 40 | 1 | 2 |
 | [WP-H-03](impact-wp-h-03.md) Hardware safety analysis (FMEA/FMEDA) | 0.12 | 2026-11-13 | 11 | 11 | 0 | 0 |
@@ -15,7 +16,7 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-P-04](impact-wp-p-04.md) Documentation management | 0.8 | 2026-11-12 | 1 | 1 | 0 | 0 |
 | [WP-P-02](impact-wp-p-02.md) Change management plan | 0.5 | 2026-11-12 | 2 | 2 | 0 | 0 |
 | [WP-W-11](impact-wp-w-11.md) Cybersecurity implementation and verification | 0.8 | 2026-11-11 | 5 | 2 | 2 | 1 |
-| [WP-W-10](impact-wp-w-10.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
+| [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
 | [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) Testing of the embedded software (SW qualification, HIL) | 0.4 | 2026-11-11 | 5 | 4 | 1 | 0 |
 | [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | 0.55 | 2026-11-11 | 14 | 11 | 2 | 1 |
 | [WP-P-10](../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | 0.7 | 2026-11-11 | 2 | 0 | 2 | 0 |
@@ -58,7 +59,6 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md) Safety case (GSN, integrated FuSa, SOTIF and AI argument) | 0.9 | 2026-10-30 | 2 | 1 | 1 | 0 |
 | [WP-C-07](../../02-concept/WP-C-07-sotif-functional-modifications.md) Functional modifications addressing SOTIF risk | 0.6 | 2026-10-30 | 12 | 4 | 8 | 0 |
 | [WP-C-06](../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) Functional insufficiencies and triggering conditions analysis | 0.7 | 2026-10-30 | 24 | 7 | 17 | 0 |
-| [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | 0.11 | 2026-10-30 | 25 | 7 | 18 | 0 |
 | [WP-C-03](../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | 0.12 | 2026-10-30 | 60 | 19 | 39 | 2 |
 | [WP-A-04](../../08-analyses/WP-A-04-system-fta-fmea.md) System-level safety analyses (FTA, FMEA) | 1.21 | 2026-10-29 | 13 | 3 | 10 | 0 |
 | [WP-W-09](../../05-software/WP-W-09-configuration-calibration-data.md) Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) | 0.7 | 2026-10-27 | 0 | 0 | 0 | 0 |

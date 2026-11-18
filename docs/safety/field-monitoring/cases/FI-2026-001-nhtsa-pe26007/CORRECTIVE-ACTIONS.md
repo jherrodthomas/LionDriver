@@ -26,7 +26,8 @@ Each CA gets its own `CA-NNN.md` (from `templates/CORRECTIVE-ACTION.md`) when it
 | CA-012 | Operating-domain speed cap for openpilot longitudinal, from the verified confirmation range | RC-02, RC-06 | HZ-001 | 2 | Proposed (from CA-004); waits on CA-003 |
 | PA-01 | Seed the first HARA from the hazard log | — | all | — | Proposed |
 | PA-02 | Create the SOTIF triggering-condition catalog (TC-01…TC-06) | — | HZ-001 | — | Proposed |
-| FA-01 | Retrieve the NHTSA ODI resume for PE26007 and update REPORT §2 | — | — | — | Open |
+| FA-01 | Retrieve the NHTSA ODI resume for PE26007 and update REPORT §2 | — | — | — | **Done** 2026-11-18: [`evidence/INOA-PE26007-17274.pdf`](evidence/INOA-PE26007-17274.pdf); REPORT rev B; [problem statement](PROBLEM-STATEMENT.md) |
+| FA-02 | Retrieve the five SGO crash reports the resume lists (30351-15888, 30351-14668, 30351-11961, 30351-1807, 62-14853) and add what they say to REPORT §2 | — | — | — | Open |
 
 ---
 
@@ -268,4 +269,5 @@ Full study: [`evidence/CA-004-BRAKING-AUTHORITY-STUDY.md`](evidence/CA-004-BRAKI
 
 ## Follow-up actions
 
-- **FA-01:** retrieve the NHTSA ODI resume for PE26007. Update REPORT §2 facts from **Reported** to primary-source **Verified**. Track any upgrade to an Engineering Analysis or a recall.
+- **FA-01:** retrieve the NHTSA ODI resume for PE26007. Update REPORT §2 facts from **Reported** to primary-source **Verified**. Track any upgrade to an Engineering Analysis or a recall. **Done 2026-11-18** (resume filed, REPORT rev B); tracking the upgrade continues under the monitoring log.
+- **FA-02:** retrieve the five Standing General Order crash reports the resume lists from NHTSA's SGO page and record vehicle, software, speeds and system state for each in REPORT §2.

@@ -138,6 +138,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | NACK | not acknowledge |
 | NaN | not a number: an invalid floating-point value |
 | NC | normally closed terminal of a changeover switch (connected to COM when not driven) |
+| NHTSA | National Highway Traffic Safety Administration: the US vehicle-safety regulator |
 | NLOC | non-comment lines of code: the lines of a function that are neither blank nor only comment (lizard's count) |
 | NMI | non-maskable interrupt |
 | NO | normally open terminal of a changeover switch (connected to COM when driven) |
@@ -149,6 +150,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | OBD-II | on-board diagnostics port |
 | ODD | operational design domain: where the system is meant to work |
 | ODD-H | the claimed ODD: limited-access highways |
+| ODI | Office of Defects Investigation: the NHTSA office that opens defect investigations |
 | OEM | original equipment manufacturer: the carmaker |
 | ONNX | Open Neural Network Exchange, the model file format |
 | OOD | out of distribution: unlike the data the model learned from |
@@ -179,6 +181,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | R-USR | installation record block: driver briefing (WP-O-01 §5) |
 | R-VEH | installation record block: vehicle (WP-O-01 §5) |
 | RAM | random-access memory |
+| RCA | root cause analysis |
 | RDP | read-out protection of the MCU's flash (option bytes) |
 | RF | residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5) |
 | ROM | read-only memory |
@@ -194,6 +197,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
 | SEC | cybersecurity engineering process group of ASPICE (SEC.1 … SEC.4) |
 | SecOC | secure onboard communication: AUTOSAR's message authentication for in-vehicle buses |
+| SGO | Standing General Order 2021-01: NHTSA's crash-reporting order for driving automation systems |
 | SHA-1 | secure hash algorithm 1, an outdated hash |
 | SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |

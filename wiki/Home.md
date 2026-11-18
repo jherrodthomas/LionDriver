@@ -18,10 +18,18 @@ around them: functional safety, SOTIF, cybersecurity, AI safety and a safety cas
 built, with the evidence for each claim and the known counter-evidence against it. The
 [README](../README.md) is the long version.
 
+## Why LionDriver exists
+
+In September 2026 NHTSA opened an investigation into five crashes in which cars driven by openpilot struck a stopped
+or slow vehicle in their own lane; three people died. LionDriver runs the same driving stack, and was started weeks
+later to put an engineering safety record around it. [Problem statement](Problem-statement.md) tells that story and
+links to the field case that holds the facts.
+
 ## Start here
 
 | If you want to | Read |
 |---|---|
+| Know why the project exists | [Problem statement](Problem-statement.md) |
 | See how the device connects to the car and steers it safely | [How LionDriver works](How-LionDriver-works.md) |
 | Understand how the code and the record fit together | [How the repository is organized](How-the-repository-is-organized.md) |
 | See what is done, active and planned | [Roadmap and status](Roadmap-and-status.md) |
