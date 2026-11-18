@@ -63,7 +63,7 @@ B issues cannot close without a review by someone other than the analyst. The pr
 In September 2026 NHTSA opened a preliminary evaluation, PE26007, into comma devices and openpilot after five
 crashes in which equipped vehicles struck stopped or slow vehicles in their own lane. The project recorded it as
 [FI-2026-001](../docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/REPORT.md), Class A, applicable
-to LionDriver because it runs the same stack. The root cause analysis is complete at the code level and waits
+to LionDriver because it runs the same stack; [Problem statement](Problem-statement.md) tells the story. The root cause analysis is complete at the code level and waits
 on field logs and a reproduction. Two lessons already feed the analyses:
 
 - A limitation that is only documented is not a control. Stationary in-lane vehicles were a known upstream
