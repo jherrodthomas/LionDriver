@@ -5,7 +5,7 @@
 [← Back to the V-cycle](../../README.md#the-v-cycle) · [change impact](impact.md) · [V-cycle over time](over-time.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-conflicts.svg" width="100%" alt="Conflicts on the V-cycle: 49 work products older than an input they read, 3 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-conflicts.svg" width="100%" alt="Conflicts on the V-cycle: 51 work products older than an input they read, 4 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input."></a>
 </p>
 
 *Only what is out of step. A flag means look, not wrong: an older work product may still be right after its input changed. A new Version entry or a recorded review clears a flag; the view never does. Drawn by [`fig_m00_vcycle.py`](../figures/fig_m00_vcycle.py); CI fails if it is stale.*
@@ -16,14 +16,16 @@ The newest change on a verification box against the newest on the definition box
 
 | Verification box | Newest change | Checks | Newest change there | Days behind |
 |---|---|---|---|---|
+| [Vehicle validation](vehicle-validation.md) | [WP-V-07](../../06-validation/WP-V-07-vehicle-test-operations.md) 2026-11-02 | [Concept and hazards](concept-and-hazards.md) | [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) 2026-11-18 | 16 |
 | [System verification](system-verification.md) | [WP-S-09](../../03-system/WP-S-09-system-verification.md) 2026-10-26 | [System requirements](system-requirements.md) | [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) 2026-11-17 | 22 |
 | [System integration](system-integration.md) | [WP-S-08](../../03-system/WP-S-08-system-integration-test.md) 2026-11-02 | [System architecture](system-architecture.md) | [WP-S-05](../../03-system/WP-S-05-hsi-specification.md) 2026-11-17 | 15 |
 | [Unit verification](unit-verification.md) | [WP-W-06](../../05-software/WP-W-06-software-unit-verification.md) 2026-11-02 | [Detailed design](detailed-design.md) | [WP-H-03](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) 2026-11-13 | 11 |
 
-## Older than an input it reads (49)
+## Older than an input it reads (51)
 
 | Box | Work product | Last changed | Newer inputs |
 |---|---|---|---|
+| [Concept and hazards](concept-and-hazards.md) | [WP-C-06](../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) | 2026-10-30 | [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) 2026-11-18 |
 | [Concept and hazards](concept-and-hazards.md) | [WP-C-07](../../02-concept/WP-C-07-sotif-functional-modifications.md) | 2026-10-30 | [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md) 2026-11-01 |
 | [Concept and hazards](concept-and-hazards.md) | [WP-C-08](../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) | 2026-10-23 | [WP-C-02](../../02-concept/WP-C-02-odd-and-intended-functionality.md) 2026-10-25, [WP-C-01](../../02-concept/WP-C-01-item-definition.md) 2026-10-25 |
 | [Concept and hazards](concept-and-hazards.md) | [WP-C-09](../../02-concept/WP-C-09-tara.md) | 2026-10-26 | [WP-C-03](../../02-concept/WP-C-03-hara.md) 2026-10-30 |
@@ -44,6 +46,7 @@ The newest change on a verification box against the newest on the definition box
 | [Detailed design](detailed-design.md) | [WP-H-02](../../04-hardware/WP-H-02-hardware-design.md) | 2026-11-13 | [WP-S-05](../../03-system/WP-S-05-hsi-specification.md) 2026-11-17 |
 | [Detailed design](detailed-design.md) | [WP-H-04](../../04-hardware/WP-H-04-hardware-metrics.md) | 2026-11-02 | [WP-H-03](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) 2026-11-13 |
 | [Detailed design](detailed-design.md) | [WP-H-05](../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | 2026-11-01 | [WP-H-03](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) 2026-11-13, [WP-H-04](../../04-hardware/WP-H-04-hardware-metrics.md) 2026-11-02 |
+| [Vehicle validation](vehicle-validation.md) | [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) | 2026-11-02 | [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) 2026-11-18 |
 | [Vehicle validation](vehicle-validation.md) | [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) | 2026-11-02 | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) 2026-11-11 |
 | [Vehicle validation](vehicle-validation.md) | [WP-V-04](../../06-validation/WP-V-04-sotif-unknown-scenarios.md) | 2026-10-25 | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) 2026-11-11, [WP-V-07](../../06-validation/WP-V-07-vehicle-test-operations.md) 2026-11-02, [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) 2026-11-02, [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) 2026-11-02 |
 | [Vehicle validation](vehicle-validation.md) | [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) | 2026-11-01 | [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) 2026-11-17, [WP-S-04](../../03-system/WP-S-04-timing-ftti-budget.md) 2026-11-02 |
@@ -65,9 +68,9 @@ The newest change on a verification box against the newest on the definition box
 | [Supporting processes](supporting-processes.md) | [WP-P-03](../../07-supporting/WP-P-03-problem-resolution.md) | 2026-10-14 | [WP-M-05](../WP-M-05-quality-assurance-plan.md) 2026-11-11, [WP-M-02](../WP-M-02-safety-plan.md) 2026-10-23 |
 | [Supporting processes](supporting-processes.md) | [WP-P-06](../../07-supporting/WP-P-06-requirements-management-traceability.md) | 2026-10-22 | [WP-M-02](../WP-M-02-safety-plan.md) 2026-10-23 |
 | [Supporting processes](supporting-processes.md) | [WP-P-08](../../07-supporting/WP-P-08-software-component-qualification.md) | 2026-10-23 | [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) 2026-11-11, [WP-W-03](../../05-software/WP-W-03-software-architecture.md) 2026-11-02, [WP-A-02](../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) 2026-10-27 |
-| [Traceability](traceability.md) | [WP-T-01](../../trace/README.md) | 2026-10-26 | [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) 2026-11-02, [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md) 2026-11-01, [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) 2026-10-30, [WP-C-03](../../02-concept/WP-C-03-hara.md) 2026-10-30 |
-| [Safety case](safety-case.md) | [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md) | 2026-10-30 | [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) 2026-11-02, [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md) 2026-11-01 |
-| [Safety case](safety-case.md) | [WP-K-02](../../10-safety-case/WP-K-02-sotif-release-argument.md) | 2026-10-30 | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) 2026-11-11, [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) 2026-11-02, [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) 2026-11-02 |
+| [Traceability](traceability.md) | [WP-T-01](../../trace/README.md) | 2026-10-26 | [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) 2026-11-18, [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) 2026-11-02, [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md) 2026-11-01, [WP-C-03](../../02-concept/WP-C-03-hara.md) 2026-10-30 |
+| [Safety case](safety-case.md) | [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md) | 2026-10-30 | [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) 2026-11-18, [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) 2026-11-02, [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md) 2026-11-01 |
+| [Safety case](safety-case.md) | [WP-K-02](../../10-safety-case/WP-K-02-sotif-release-argument.md) | 2026-10-30 | [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) 2026-11-18, [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) 2026-11-11, [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) 2026-11-02, [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) 2026-11-02 |
 | [Safety case](safety-case.md) | [WP-K-03](../../10-safety-case/WP-K-03-cybersecurity-case.md) | 2026-10-23 | [WP-W-11](../../05-software/WP-W-11-cybersecurity-implementation-verification.md) 2026-11-11, [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) 2026-11-03, [WP-C-09](../../02-concept/WP-C-09-tara.md) 2026-10-26, [WP-C-10](../../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) 2026-10-25 |
 | [Safety case](safety-case.md) | [WP-K-04](../../10-safety-case/WP-K-04-functional-safety-assessment.md) | 2026-10-12 | [WP-V-01](../../06-validation/WP-V-01-safety-validation.md) 2026-11-02, [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) 2026-11-01, [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md) 2026-10-30 |
 | [Operation and field](operation-and-field.md) | [WP-O-02](../../09-production-operation/WP-O-02-operation-service-decommissioning.md) | 2026-10-25 | [WP-O-01](../../09-production-operation/WP-O-01-installation-and-provisioning-control.md) 2026-11-11, [WP-S-06](../../03-system/WP-S-06-requirements-production-operation.md) 2026-11-02 |

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="735" viewBox="0 0 960 735" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-1 · Three barriers, all of them failed</title>
+<desc>Three protection layers, each with a hole the hazard passes through: L1 openpilot longitudinal control, meant to detect the in-lane obstacle and brake in time: At speed, stopped objects need the camera to see them, Radar alone is trusted only below 4 m/s, Braking capped at -3.5 m/s², No emergency braking of its own; L2 Driver, meant to monitor the road and take over: 5 s eyes-off before the first alert, Warning tied to the same perception as layer 1, Over-trust after long good drives; L3 Stock OEM AEB / PCS, meant to independent last-resort braking: Alpha longitudinal silences the radar ECU, Sends PCS_OFF = 1: stock PCS turned off, On camera-ACC cars (our Corolla) PCS stays on. Common cause: L1 and L2-warning are not independent.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="960" height="735" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · Three barriers, all of them failed</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">A collision needs every layer to fail. The weaknesses the root cause analysis found in each.</text>
+<text x="920" y="44" font-size="11" fill="#475569" text-anchor="end">NHTSA PE26007 · problem statement</text>
+<line x1="40" y1="82" x2="920" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="124" font-size="12.5" fill="#C2410C" font-weight="700">Stopped or slow vehicle ahead</text>
+<path d="M40 242 L890 242" stroke="#C2410C" stroke-width="3.2" fill="none" stroke-linejoin="round"/>
+<path d="M890 235 L904 242 L890 249 Z" stroke="#C2410C" stroke-width="1" fill="#C2410C" stroke-linejoin="round"/>
+<rect x="96" y="150" width="222" height="390" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="181" y="227" width="52" height="30" rx="15" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="112" y="172" font-size="11" fill="#475569" font-weight="700">Layer 1</text>
+<text x="112" y="192" font-size="14" fill="#0F172A" font-weight="700">openpilot longitudinal</text>
+<text x="112" y="210" font-size="14" fill="#0F172A" font-weight="700">control</text>
+<text x="112" y="284" font-size="10.5" fill="#94A3B8" font-weight="700">Meant to:</text>
+<text x="112" y="301" font-size="12" fill="#0F172A">Detect the in-lane obstacle and</text>
+<text x="112" y="318" font-size="12" fill="#0F172A">brake in time</text>
+<line x1="112" y1="336" x2="302" y2="336" stroke="#E2E8F0" stroke-width="1"/>
+<text x="112" y="356" font-size="10.5" fill="#94A3B8" font-weight="700">Weaknesses found:</text>
+<rect x="108" y="366" width="198" height="40" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="118" y="383" font-size="11.5" fill="#0F172A">At speed, stopped objects need</text>
+<text x="118" y="398" font-size="11.5" fill="#0F172A">the camera to see them</text>
+<rect x="108" y="412" width="198" height="40" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="118" y="429" font-size="11.5" fill="#0F172A">Radar alone is trusted only</text>
+<text x="118" y="444" font-size="11.5" fill="#0F172A">below 4 m/s</text>
+<rect x="108" y="458" width="198" height="25" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="118" y="475" font-size="11.5" fill="#0F172A">Braking capped at -3.5 m/s²</text>
+<rect x="108" y="489" width="198" height="25" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="118" y="506" font-size="11.5" fill="#0F172A">No emergency braking of its own</text>
+<rect x="348" y="150" width="222" height="390" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="433" y="227" width="52" height="30" rx="15" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="364" y="172" font-size="11" fill="#475569" font-weight="700">Layer 2</text>
+<text x="364" y="192" font-size="14" fill="#0F172A" font-weight="700">Driver</text>
+<text x="364" y="284" font-size="10.5" fill="#94A3B8" font-weight="700">Meant to:</text>
+<text x="364" y="301" font-size="12" fill="#0F172A">Monitor the road and take over</text>
+<line x1="364" y1="319" x2="554" y2="319" stroke="#E2E8F0" stroke-width="1"/>
+<text x="364" y="339" font-size="10.5" fill="#94A3B8" font-weight="700">Weaknesses found:</text>
+<rect x="360" y="349" width="198" height="40" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="370" y="366" font-size="11.5" fill="#0F172A">5 s eyes-off before the first</text>
+<text x="370" y="381" font-size="11.5" fill="#0F172A">alert</text>
+<rect x="360" y="395" width="198" height="40" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="370" y="412" font-size="11.5" fill="#0F172A">Warning tied to the same</text>
+<text x="370" y="427" font-size="11.5" fill="#0F172A">perception as layer 1</text>
+<rect x="360" y="441" width="198" height="25" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="370" y="458" font-size="11.5" fill="#0F172A">Over-trust after long good drives</text>
+<rect x="600" y="150" width="222" height="390" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="685" y="227" width="52" height="30" rx="15" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="616" y="172" font-size="11" fill="#475569" font-weight="700">Layer 3</text>
+<text x="616" y="192" font-size="14" fill="#0F172A" font-weight="700">Stock OEM AEB / PCS</text>
+<text x="616" y="284" font-size="10.5" fill="#94A3B8" font-weight="700">Meant to:</text>
+<text x="616" y="301" font-size="12" fill="#0F172A">Independent last-resort braking</text>
+<line x1="616" y1="319" x2="806" y2="319" stroke="#E2E8F0" stroke-width="1"/>
+<text x="616" y="339" font-size="10.5" fill="#94A3B8" font-weight="700">Weaknesses found:</text>
+<rect x="612" y="349" width="198" height="40" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="622" y="366" font-size="11.5" fill="#0F172A">Alpha longitudinal silences the</text>
+<text x="622" y="381" font-size="11.5" fill="#0F172A">radar ECU</text>
+<rect x="612" y="395" width="198" height="40" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="622" y="412" font-size="11.5" fill="#0F172A">Sends PCS_OFF = 1: stock</text>
+<text x="622" y="427" font-size="11.5" fill="#0F172A">PCS turned off</text>
+<rect x="612" y="441" width="198" height="40" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="622" y="458" font-size="11.5" fill="#0F172A">On camera-ACC cars (our</text>
+<text x="622" y="473" font-size="11.5" fill="#0F172A">Corolla) PCS stays on</text>
+<text x="920" y="268" font-size="12.5" fill="#D2553F" font-weight="700" text-anchor="end">Collision</text>
+<rect x="40" y="564" width="880" height="44" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="56" y="591" font-size="12" fill="#0F172A">Common cause: the forward collision warning (layer 2) uses the same perception that missed the vehicle (layer 1), so both fail together.</text>
+<rect x="40" y="624" width="14" height="12" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="60" y="634" font-size="11" fill="#475569">weakness: a hole in the layer</text>
+<rect x="230.6" y="624" width="14" height="12" rx="3" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="250.6" y="634" font-size="11" fill="#475569">what holds on our reference car</text>
+<text x="40" y="660" font-size="11" fill="#475569">From RCA §3 (barrier analysis) and §4 (fault tree). A weakness is in our inherited baseline; whether it acted in a given crash is not known.</text>
+<g class="terms">
+<text x="40" y="682" font-size="10.5" fill="#475569">Terms: AEB automatic emergency braking · ECU electronic control unit · NHTSA National Highway Traffic Safety Administration: the US vehicle-safety regulator ·</text>
+<text x="40" y="696.5" font-size="10.5" fill="#475569">OEM original equipment manufacturer: the carmaker · PCS pre-collision system: Toyota's stock collision warning and braking · RCA root cause analysis</text>
+</g>
+<text x="40" y="717" font-size="10" fill="#94A3B8">Drawn by fig_fi001_problem.py from the case files; CI fails if it is stale.</text>
+</svg>

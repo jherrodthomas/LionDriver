@@ -23,6 +23,7 @@ on:
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
       - 'docs/assets/liondriver/**'
+      - 'docs/safety/**'
       - '.github/workflows/assurance.yaml'
       - '.claude/skills/**'
   pull_request:
@@ -40,6 +41,7 @@ on:
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
       - 'docs/assets/liondriver/**'
+      - 'docs/safety/**'
       - '.github/workflows/assurance.yaml'
       - '.claude/skills/**'
 
@@ -125,6 +127,8 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c02_exits.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
+        python3 docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures/fig_fi001_problem.py --check
+        python3 docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures/test_fig_fi001_problem.py
         python3 assurance/02-concept/figures/fig_c09_boundary.py --check
         python3 assurance/02-concept/figures/test_fig_c09_boundary.py
         python3 assurance/02-concept/figures/fig_c05_four_areas.py --check
