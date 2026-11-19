@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why LionDriver exists</title>
+<!-- One-page answer to "why are you doing this?". Source of why-liondriver-exists.pdf and .png, printed by
+     render.cjs (US Letter). Every fact is quoted from the NHTSA ODI resume for PE26007 or from field case
+     FI-2026-001; check_one_pager.py (CI) fails when a quoted fact or number is no longer in its source. -->
+<style>
+  @page { size: Letter; margin: 0; }
+  :root {
+    --navy: #0B1528; --gold: #E2B85C; --sky: #4EA8FF; --ink: #0F172A; --muted: #475569; --faint: #94A3B8;
+    --line: #CBD5E1; --hair: #E2E8F0; --safety: #C2410C; --safety-bg: #FFF7ED; --red: #D2553F; --red-bg: #FEF2F2;
+    --green: #2E9E6A; --green-bg: #ECFDF5; --chip: #F8FAFC;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #FFFFFF; color: var(--ink);
+    font-family: Inter, "Segoe UI", Helvetica, Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 8.5in; height: 11in; overflow: hidden; display: flex; flex-direction: column; }
+  header { background: var(--navy); color: #F4F6FA; padding: 0.26in 0.5in 0.2in; position: relative; }
+  header .kicker { color: var(--gold); font-size: 9.5pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+  header h1 { margin: 2pt 0 4pt; font-size: 26pt; line-height: 1.05; font-weight: 800; letter-spacing: -0.01em; }
+  header .q { color: #BFE0FF; font-size: 11.5pt; font-style: italic; }
+  header .stamp { position: absolute; right: 0.5in; top: 0.28in; text-align: right; font-size: 8pt; color: #BFE0FF; line-height: 1.4; }
+  main { padding: 0.18in 0.5in 0; flex: 1; display: flex; flex-direction: column; gap: 0.12in; }
+  .answer { display: flex; flex-direction: column; gap: 8pt; }
+  .answer p { margin: 0; font-size: 10.4pt; line-height: 1.42; }
+  .answer p strong { color: var(--navy); }
+  .nums { display: grid; grid-template-columns: 1fr 1fr; gap: 5pt; margin-top: 6pt; }
+  .num { background: var(--chip); border: 1px solid var(--hair); border-radius: 8pt; padding: 5pt 8pt; display: flex; align-items: center; gap: 7pt; }
+  .num b { display: block; font-size: 17pt; line-height: 1; font-weight: 800; color: var(--navy); }
+  .num b.red { color: var(--red); }
+  .num span { font-size: 7.6pt; color: var(--muted); line-height: 1.2; display: block; }
+  h2 { margin: 0 0 5pt; font-size: 10pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--safety); font-weight: 800; }
+  .report { display: grid; grid-template-columns: 1.9in 1fr; gap: 0.22in; align-items: start; }
+  .report figure { margin: 0; }
+  .report img { width: 100%; border: 1px solid var(--line); border-radius: 3pt; box-shadow: 0 1pt 4pt rgba(15,23,42,0.12); display: block; }
+  .report figcaption { font-size: 7.4pt; color: var(--muted); margin-top: 3pt; line-height: 1.3; }
+  ul.says { margin: 0; padding: 0; list-style: none; }
+  ul.says li { font-size: 9.1pt; line-height: 1.34; padding: 2.5pt 0 2.5pt 13pt; position: relative; border-bottom: 1px solid var(--hair); }
+  ul.says li:last-child { border-bottom: 0; }
+  ul.says li::before { content: ""; position: absolute; left: 0; top: 8.5pt; width: 6pt; height: 6pt; border-radius: 3pt; background: var(--gold); }
+  ul.says li b { color: var(--navy); }
+  .problem { background: var(--safety-bg); border-left: 4pt solid var(--safety); border-radius: 0 8pt 8pt 0; padding: 6pt 12pt; }
+  .problem p { margin: 0; font-size: 10.2pt; line-height: 1.4; font-weight: 600; }
+  .layers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7pt; }
+  .layer { border: 1px solid var(--line); border-radius: 8pt; padding: 6pt 9pt 7pt; background: #FFFFFF; }
+  .layer .n { font-size: 7.6pt; color: var(--faint); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .layer .t { font-size: 10pt; font-weight: 800; margin: 1pt 0 3pt; }
+  .layer .w { font-size: 8.2pt; line-height: 1.32; color: var(--ink); background: var(--red-bg); border-radius: 5pt; padding: 3pt 6pt; border: 1px solid #F3C4BA; }
+  .note { font-size: 8.6pt; color: var(--muted); margin: 5pt 0 0; line-height: 1.35; }
+  .note b { color: var(--ink); }
+  .does { display: grid; grid-template-columns: 1fr 1fr; gap: 5pt 14pt; }
+  .does div { font-size: 8.6pt; line-height: 1.3; border-left: 2.5pt solid var(--green); padding: 1pt 0 1pt 7pt; }
+  .does span { display: block; font-size: 7.6pt; color: var(--muted); font-weight: 700; }
+  footer { margin-top: auto; padding: 6pt 0.5in 0.2in; border-top: 1px solid var(--hair); font-size: 7.4pt; color: var(--muted); line-height: 1.4; display: grid; grid-template-columns: 1fr auto; gap: 12pt; }
+  footer b { color: var(--ink); }
+  footer .links { text-align: right; }
+  @media screen and (max-width: 760px) {
+    .page { width: auto; height: auto; }
+    .answer, .report { grid-template-columns: 1fr; }
+    .layers, .does, .nums { grid-template-columns: 1fr; }
+    header .stamp { position: static; text-align: left; margin-top: 6pt; }
+    footer { grid-template-columns: 1fr; }
+    footer .links { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="kicker">LionDriver · the one-page answer</div>
+    <h1>Why LionDriver exists</h1>
+    <div class="q">"Why are you doing this? Why did you start LionDriver?"</div>
+    <div class="stamp">NHTSA PE26007<br>opened 21 Sep 2026<br>LionDriver started 9 Oct 2026</div>
+  </header>
+
+  <main>
+    <section class="answer">
+      <p>On <strong>21 September 2026</strong> NHTSA, the US vehicle-safety regulator, opened an investigation into five
+        crashes in which cars running openpilot on comma devices <strong>"reportedly struck stopped or slowly moving
+        vehicles within the same travel lane"</strong>. openpilot does not come with an engineered, checked argument that
+        it is safe enough there; its documentation leaves stopped vehicles to the driver. <strong>LionDriver runs the
+        same driving stack</strong>, and started eighteen days later to build that argument in the open: what can go
+        wrong, what should stop it, and the evidence for whether it does.</p>
+
+    </section>
+
+    <section class="report">
+      <figure>
+        <img src="../../safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/evidence/INOA-PE26007-17274-page-1.png"
+             alt="NHTSA ODI resume for PE26007, page 1, as issued">
+        <figcaption>NHTSA ODI Resume PE26007, page 1 of 2, as issued. Full PDF in field case FI-2026-001.</figcaption>
+      </figure>
+      <div>
+        <h2>What the report says</h2>
+        <ul class="says">
+          <li><b>The pattern.</b> In all five crashes, a stopped or slow vehicle ahead, in the same lane.</li>
+          <li><b>The system was on.</b> NHTSA confirmed it was "powered on or engaged in multiple crashes", and its
+            first look suggests it "may not have adequately detected or responded to the in-lane vehicles".</li>
+          <li><b>Forks are in it.</b> NHTSA will "consider the shared components between openpilot and the fork".
+            LionDriver is a fork.</li>
+          <li><b>What it is not.</b> A Preliminary Evaluation is the first step of an investigation, not a finding of a
+            defect. No crash in it has been reconstructed.</li>
+        </ul>
+        <div class="nums">
+        <div class="num"><b>5</b><span>crashes into a stopped or slow vehicle in the lane</span></div>
+        <div class="num"><b class="red">3</b><span>people killed, in two of the crashes</span></div>
+        <div class="num"><b class="red">11</b><span>more injured, some seriously</span></div>
+        <div class="num"><b>30,000</b><span>comma devices and openpilot in scope (estimated)</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The problem statement</h2>
+      <div class="problem">
+        <p>With openpilot engaged on public roads, a car can hit a stopped or slow vehicle in its own lane: openpilot does
+          not brake enough in time, the driver does not take over in time, and the car's own emergency braking, where
+          fitted, does not prevent the crash.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Three protections, a weakness in each</h2>
+      <div class="layers">
+        <div class="layer"><div class="n">Layer 1</div><div class="t">openpilot</div>
+          <div class="w">A stopped car must be seen by the camera; braking is capped at -3.5&nbsp;m/s², half of full
+            braking.</div></div>
+        <div class="layer"><div class="n">Layer 2</div><div class="t">The driver</div>
+          <div class="w">5 s eyes-off before the first alert; the warning comes from the same perception that missed the
+            car.</div></div>
+        <div class="layer"><div class="n">Layer 3</div><div class="t">Stock emergency braking</div>
+          <div class="w">On radar-ACC Toyotas, openpilot's alpha longitudinal turns the stock pre-collision system
+            off.</div></div>
+      </div>
+      <p class="note">At <b>108 km/h</b> openpilot needs about <b>144 m</b> to stop once it is sure of the stopped car;
+        full braking needs 71 m. From the code LionDriver inherits, not from any one crash.</p>
+    </section>
+
+    <section>
+      <h2>What LionDriver does about it</h2>
+      <div class="does">
+        <div><span>A hazard only told to the user</span>Analyse it, set a safety goal, write requirements and tests that can fail</div>
+        <div><span>Works as designed, still not safe enough</span>Find the conditions where it is not, like a late reveal, and validate against them</div>
+        <div><span>No argument the protections are enough</span>A safety case published as it is built, with evidence and counter-evidence</div>
+        <div><span>The regulator finds the crashes first</span>Field monitoring from intake to root cause to corrective action</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div><b>Research and development software.</b> The driver must stay attentive and in control. LionDriver is not
+      certified and does not claim to be safer than openpilot; it builds the record that would show whether it is.
+      Sources: NHTSA ODI Resume PE26007; LionDriver field case FI-2026-001.</div>
+    <div class="links">github.com/jherrodthomas/LionDriver<br>Wiki: Why LionDriver exists</div>
+  </footer>
+</div>
+</body>
+</html>

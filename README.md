@@ -32,7 +32,7 @@ LionDriver runs that same driving stack. It was started eighteen days later to b
 </p>
 <p align="center"><sub>NHTSA ODI Resume PE26007, page 1 of 2, as issued. Click for the full PDF.</sub></p>
 
-The problem, the report itself and how LionDriver answers it: **[Why LionDriver exists](https://github.com/jherrodthomas/LionDriver/wiki/Problem-statement)** on the wiki, and the [FI-2026-001 problem statement](docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/PROBLEM-STATEMENT.md) in the record.
+**One page:** [Why LionDriver exists (PDF)](docs/liondriver/why/why-liondriver-exists.pdf), to print or hand to anyone who asks why. The long version, with both pages of the report: **[Why LionDriver exists](https://github.com/jherrodthomas/LionDriver/wiki/Problem-statement)** on the wiki, and the [FI-2026-001 problem statement](docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/PROBLEM-STATEMENT.md) in the record.
 
 ## Living Safety Case
 
