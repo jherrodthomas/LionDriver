@@ -7,8 +7,10 @@ fall out of step with the record. The generated .tex is committed and checked; t
 build artifact, never committed.
 
 Reports so far:
-  fsc   WP-C-04 Functional safety concept: safety goals, the FSRs per goal, FTTI allocation, the allocation and
-        degradation figures, abbreviations from the project's terms list, bibliography
+  fsc          WP-C-04 Functional safety concept: safety goals, the FSRs per goal, FTTI allocation, the allocation
+               and degradation figures, abbreviations from the project's terms list, bibliography
+  harness-box  WP-H-03 §6.5 Harness box component FMEDA: blocks, the FMEDA flow, rate per mode and category, useful
+               life, diagnostic coverage, periodic tests, findings and the what-if metrics
 
     python3 build_reports.py               # write every report's .tex
     python3 build_reports.py --check       # fail if a record changed shape or a generated .tex is stale
@@ -48,7 +50,7 @@ class ReportError(ValueError):
 
 MATH = {"≤": r"$\le$", "≥": r"$\ge$", "→": r"$\to$", "←": r"$\leftarrow$", "↔": r"$\leftrightarrow$", "≈": r"$\approx$",
         "≠": r"$\ne$", "±": r"$\pm$", "×": r"$\times$", "·": r"$\cdot$", "τ": r"$\tau$", "Δ": r"$\Delta$", "µ": r"$\mu$",
-        "Ω": r"$\Omega$", "²": r"$^2$", "³": r"$^3$", "‡": r"\dagr{}", "⚠": r"\warn{}", "…": r"\ldots{}",
+        "Ω": r"$\Omega$", "²": r"$^2$", "³": r"$^3$", "⁹": r"$^9$", "⁻": r"$^{-}$", "λ": r"$\lambda$", "‡": r"\dagr{}", "⚠": r"\warn{}", "…": r"\ldots{}",
         "°": r"\textdegree{}", "✓": r"$\checkmark$"}
 PLAIN = set("–—‘’“”§éèüöäÉ ")   # set directly by T1 with utf8 input
 SPECIAL = (("\\", r"\textbackslash{}"), ("&", r"\&"), ("%", r"\%"), ("$", r"\$"), ("#", r"\#"), ("_", r"\_"),
@@ -257,7 +259,177 @@ def fsc() -> tuple[dict[str, str], list[Path]]:
           [FSC_FIG / "fig-c04-5-1-sg-fsr-allocation.svg", FSC_FIG / "fig-c04-12-1-degradation-ladder.svg"])
 
 
-REPORTS = {"fsc": fsc}
+# ---------------------------------------------------------------- the harness box component FMEDA report
+
+HB_DIR = ASSURANCE / "04-hardware" / "fmeda"
+HB_STATE = {"done": "done", "partial": "partial", "missing": "missing", "not-needed": "not needed"}
+
+
+def harness_box() -> tuple[dict[str, str], list[Path]]:
+  """WP-H-03 §6.5, the part-level FMEDA of the harness box, from harness-box-parts.yaml through the same checks and
+  computations as its generated page (harness_box_fmeda.build), so the report and the page cannot disagree."""
+  sys.path.insert(0, str(HB_DIR))
+  import harness_box_fmeda as hb  # noqa: E402
+  where = "harness-box-parts.yaml"
+  try:
+    r = hb.build()
+  except hb.BoxError as e:
+    raise ReportError(f"{where}: {e}") from e
+  data, parts, cat, wi = r["data"], r["parts"], r["cat"], r["whatif"]
+  rev = data["revisions"][-1]
+  rated = [p for p in parts if p["rate_fit"] is not None]
+  opens = [(p["ref"], m["mode"]) for p in parts for m in p["modes"] if "open" in m["goals"].values()]
+  new = [p["ref"] for p in rated if not any(m.get("rows") for m in p["modes"])]
+  if len(wi) != 3:
+    raise ReportError(f"{where}: the what-if has {len(wi)} cases, the report expects 3")
+  pct = lambda x: f"{x * 100:.2f}"  # noqa: E731
+  numbers = {"HbVersion": rev["version"], "HbDate": rev["date"], "PartCount": len(parts),
+             "ModeCount": sum(len(p["modes"]) for p in parts), "RatedCount": len(rated),
+             "BlockCount": len(data["blocks"]), "BoxFit": hb.fit(sum(p["rate_fit"] for p in rated)),
+             "SgSevenSpf": hb.fit(cat["SG-07"]["SPF"]), "SgOneRf": hb.fit(cat["SG-01"]["RF"]),
+             "SgOneLatent": hb.fit(cat["SG-01"]["MPF-L"]), "SgOneSafe": hb.fit(cat["SG-01"]["safe"]),
+             "SpfmNow": pct(wi[0]["spfm"]), "SpfmAfter": pct(wi[2]["spfm"]), "LfmNow": pct(wi[0]["lfm"]),
+             "LfmAfter": pct(wi[2]["lfm"]), "OpenModes": len(opens), "NewParts": len(new),
+             "PeriodicTests": len(data["periodic_tests"])}
+  t = lambda s: tex(str(s), where)  # noqa: E731
+  names = {"SPF": "Single-point", "RF": "Covered by a mechanism (before DC)", "MPF-L": "Latent multiple-point",
+           "safe": "Safe", "none": "No effect on this goal", "open": "Effect not yet analysed"}
+
+  blocks = []
+  for b in data["blocks"]:
+    s = hb.block_summary(b, parts)
+    blocks.append([b["id"], t(b["name"]), t(b["shall"]), ", ".join(s["refs"]), hb.fit(s["fit"])])
+  flow_in = [[t(i["name"]), HB_STATE[i["state"]], t(i["note"])] for i in r["flow"]["inputs"]]
+  flow_out = [[t(o["name"]), HB_STATE[o["state"]], t(o["note"])] for o in r["flow"]["outputs"]]
+  part_rows = []
+  for p in parts:
+    lam = (hb.fit(p["rate_fit"]) if p["rate_fit"] is not None else
+           "in the wiring row" if any((p.get("included_in") or {}).values()) else "no rate")
+    for i, m in enumerate(p["modes"]):
+      rows = ", ".join(f"{k.replace('fmeda-', '')} {v}" for k, v in (m.get("rows") or {}).items()) or "none"
+      part_rows.append([p["ref"] if i == 0 else "", lam if i == 0 else "", t(m["mode"]), f"{m['distribution']:.0%}"
+                        .replace("%", r"\%"), m["goals"]["SG-07"], m["goals"]["SG-01"], t(rows)])
+  dc_rows = []
+  for p in parts:
+    for m in p["modes"]:
+      for g, fname in hb.GOAL_FILE.items():
+        sm, dc = hb.dc_of(m, fname, r["goals"])
+        if sm:
+          dc_rows.append([p["ref"], t(m["mode"]), g, t(sm), f"{dc:.0%}".replace("%", r"\%")])
+  life = data["useful_life"]
+
+  body = [r"\chapter{Introduction}",
+          r"This report renders the component-level FMEDA of the harness box v3 (element E-05; WP-H-03 \S6.5, part "
+          r"list version \HbVersion{} of \HbDate{}) from its source of record, the hardware-level analysis ISO 26262-5 "
+          r"asks for \cite{iso26262-5}. It takes the box part by part: \PartCount{} parts with \ModeCount{} failure "
+          r"modes, in \BlockCount{} functional blocks, and proves that the parts add up to the box rows of the two goal "
+          r"FMEDAs, for SG-07 (keep the stock pre-collision braking) and SG-01 (lateral control within the envelope).",
+          "",
+          r"\paragraph{The box in five lines.}",
+          r"\begin{enumerate}",
+          r"\item \PartCount{} parts and \ModeCount{} failure modes, every designator of the v3 drawing and the BOM; "
+          r"\RatedCount{} carry their own rate, the connectors sit inside the wiring row.",
+          r"\item For stock braking (SG-07) the box puts \SgSevenSpf{}~FIT on single points out of \BoxFit{}~FIT, "
+          r"almost all of it the two DG419LE switches.",
+          r"\item For steering (SG-01) the box has no single point: \SgOneRf{}~FIT is covered by a mechanism, "
+          r"\SgOneLatent{}~FIT is latent and \SgOneSafe{}~FIT is safe.",
+          r"\item The part-level view found what the block view hid: the goal FMEDAs split the same switch two ways, "
+          r"and \NewParts{} parts are in no goal FMEDA. Applied, the SPFM of SG-01 goes from \SpfmNow{}\,\% to "
+          r"\SpfmAfter{}\,\% and its LFM from \LfmNow{}\,\% to \LfmAfter{}\,\%.",
+          r"\item No periodic test of the box exists in service, so every latent fault stays latent for the box's "
+          r"life; \OpenModes{} modes still need their effect analysed.",
+          r"\end{enumerate}",
+          r"The rates are generic estimates: neither the Siemens failure-rate standard \cite{sn29500} nor a failure-mode "
+          r"handbook is held, and no stress conversion to "
+          r"the mission profile is applied. These numbers show where the box falls short; they are not evidence of "
+          r"compliance. Every number in this report is a macro written from the record (\texttt{numbers.tex}), and "
+          r"every table and finding is computed by the same checks as the record's generated page, so the report "
+          r"cannot fall out of step with the analysis. The record is a draft, AI-assisted (independence I0) and not "
+          r"reviewed; so is this report.",
+          r"\chapter{The box and its blocks}",
+          r"Figure~\ref{fig:blocks} shows the functional blocks of the box between the Toyota harness and the comma "
+          r"device; Table~\ref{tab:blocks} gives what each block shall do, its parts and their summed rate.",
+          r"\begin{figure}[htbp]\centering",
+          r"\includegraphics[width=\linewidth,height=0.8\textheight,keepaspectratio]{fig-h02-3-9-box-blocks.pdf}",
+          r"\caption{The functional blocks of the harness box (WP-H-02 Figure 3-9).}\label{fig:blocks}",
+          r"\end{figure}",
+          longtable(r"p{1.0cm}p{3.0cm}p{6.4cm}p{2.4cm}p{1.2cm}", ["Block", "Name", "Shall", "Parts", "FIT"], blocks,
+                    r"Functional blocks with their parts and summed rate.", "tab:blocks"),
+          r"\chapter{The FMEDA flow}",
+          r"Figure~\ref{fig:flow} shows the inputs a detailed component FMEDA needs and the outputs it gives, with "
+          r"the records that hold each here and how far each has got (Tables~\ref{tab:in} and~\ref{tab:out}).",
+          r"\begin{figure}[htbp]\centering",
+          r"\includegraphics[width=\linewidth,height=0.75\textheight,keepaspectratio]{fig-h03-6-0-fmeda-flow.pdf}",
+          r"\caption{The FMEDA flow (WP-H-03 Figure 6-0).}\label{fig:flow}",
+          r"\end{figure}",
+          longtable(r"p{4.4cm}p{1.8cm}p{7.8cm}", ["Input", "State", "Note"], flow_in, "FMEDA inputs.", "tab:in"),
+          longtable(r"p{4.4cm}p{1.8cm}p{7.8cm}", ["Output", "State", "Note"], flow_out, "FMEDA outputs.", "tab:out"),
+          r"\chapter{Failure rate per mode and category}",
+          r"Figure~\ref{fig:parts} shows every part with its rate and the class of each failure mode for both goals; "
+          r"Table~\ref{tab:cat} sums the rated parts by category and Table~\ref{tab:parts} lists every mode with the "
+          r"goal FMEDA row it rolls up into.",
+          r"\begin{figure}[htbp]\centering",
+          r"\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{fig-h03-6-5-box-parts.pdf}",
+          r"\caption{The parts, their rates and the class of each mode (WP-H-03 Figure 6-5).}\label{fig:parts}",
+          r"\end{figure}",
+          longtable(r"p{6.4cm}p{3.4cm}p{3.4cm}", ["Category", "SG-07 braking (FIT)", "SG-01 steering (FIT)"],
+                    [[names[c], hb.fit(cat["SG-07"][c]), hb.fit(cat["SG-01"][c])] for c in hb.CLASSES],
+                    "Rate of the rated parts per category and goal.", "tab:cat", small=False),
+          longtable(r"p{0.8cm}p{1.7cm}p{5.4cm}p{1.1cm}p{0.9cm}p{0.9cm}p{2.6cm}",
+                    ["Part", "FIT", "Failure mode", "Share", "SG-07", "SG-01", "Goal FMEDA row"], part_rows,
+                    r"Every part and failure mode with its class per goal.", "tab:parts"),
+          r"\chapter{Useful life}",
+          rf"Mission: {t(life['mission'])}. The rates assume a constant failure rate, which holds only while no part "
+          r"reaches wear-out (Table~\ref{tab:life}). " + t(life["absent"]) + ".",
+          longtable(r"p{3.6cm}p{5.4cm}p{5.0cm}", ["Parts", "Wear-out", "Limit"],
+                    [[", ".join(u["refs"]), t(u["wear_out"]), t(u["limit"])] for u in life["parts"]],
+                    "Wear-out per part group.", "tab:life"),
+          r"\chapter{Diagnostic coverage per failure mode}",
+          r"Table~\ref{tab:dc} lists the modes a goal FMEDA credits a safety mechanism for, with its diagnostic "
+          r"coverage. Every other mode of the box has no mechanism: DC 0\,\%.",
+          longtable(r"p{0.8cm}p{4.6cm}p{1.2cm}p{6.2cm}p{0.9cm}", ["Part", "Failure mode", "Goal", "Mechanism", "DC"],
+                    dc_rows, "Diagnostic coverage the goal FMEDAs credit.", "tab:dc"),
+          r"\chapter{Periodic tests}",
+          r"Table~\ref{tab:tests} lists the \PeriodicTests{} tests that find latent faults of the box, the proof tests "
+          r"of the FMEDA vocabulary. None runs in service.",
+          longtable(r"p{3.2cm}p{2.4cm}p{3.2cm}p{1.4cm}p{3.8cm}", ["Test", "When", "Finds", "In service", "Note"],
+                    [[t(x["name"]), t(x["when"]), t(", ".join(x["finds"])), f"{x['coverage_in_service']:.0%}"
+                      .replace("%", r"\%"), t(x["note"])] for x in data["periodic_tests"]],
+                    "Tests that find latent faults of the box.", "tab:tests"),
+          r"\chapter{Findings}",
+          r"\section{Disagreements with the goal FMEDAs}",
+          r"The check reports them; a new one fails the build and a resolved one must be removed, so the list only "
+          r"shrinks.",
+          r"\begin{itemize}"]
+  for d in r["diffs"]:
+    reason = next(k["reason"] for k in data["known_differences"] if (k["file"], k["row"]) == (d["file"], d["row"]))
+    body.append(rf"\item {t(d['file'])} {t(d['row'])}: {t(d['what'])}. {t(reason)}")
+  body += [r"\end{itemize}",
+           r"\section{Parts in no goal FMEDA}",
+           rf"{t(', '.join(new))}. Their modes are classified in Table~\ref{{tab:parts}}; the Q6 drain-source short is "
+           r"latent for SG-01 (DFM-014.C2).",
+           r"\section{What the goal metrics would be}",
+           r"Table~\ref{tab:whatif} gives the SG-01 metrics with these findings applied, computed in memory with the "
+           r"project's FMEDA metrics; the FMEDA files are not changed (WP-H-03 OI-11, OI-12).",
+           longtable(r"p{6.6cm}p{2.0cm}p{2.0cm}p{2.6cm}", ["Case", "SPFM", "LFM", "Total (FIT)"],
+                     [[t(w["case"]), pct(w["spfm"]) + r"\,\%", pct(w["lfm"]) + r"\,\%", hb.fit(w["total"])] for w in wi],
+                     "SG-01 metrics today and with the part-level findings applied.", "tab:whatif", small=False),
+           r"\section{Modes whose effect is not yet analysed}",
+           r"\begin{itemize}"]
+  body += [rf"\item {ref}: {t(mode)}" for ref, mode in opens]
+  body.append(r"\end{itemize}")
+  main = "\n".join(body) + "\n"
+  doc = (HEADER + r"\documentclass[11pt,a4paper]{report}" + "\n" + r"\usepackage{../latex/liondriver-report}" + "\n"
+         + r"\input{numbers.tex}" + "\n" + r"\LDsetdoc{WP-H-03 Harness Box Component FMEDA}{\HbVersion}" + "\n"
+         + r"\title{Harness Box Component FMEDA\\[4pt]\large WP-H-03 \S6.5, part list version \HbVersion}" + "\n"
+         + r"\author{LionDriver assurance\\\small generated from \texttt{assurance/04-hardware/fmeda/harness-box-parts.yaml}}"
+         + "\n" + r"\date{\HbDate}" + "\n" + r"\begin{document}" + "\n" + r"\maketitle" + "\n" + r"\tableofcontents"
+         + "\n" + main + r"\appendix" + "\n" + abbreviations(main) + bibliography(main) + r"\end{document}" + "\n")
+  return ({"harness-box/harness-box.tex": doc, "harness-box/numbers.tex": numbers_tex(numbers)},
+          [HB_DIR / hb.OUT_BLOCKS, HB_DIR / hb.OUT_FLOW, HB_DIR / hb.OUT_PARTS])
+
+
+REPORTS = {"fsc": fsc, "harness-box": harness_box}
 
 
 # ---------------------------------------------------------------- build

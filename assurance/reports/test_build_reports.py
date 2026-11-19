@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests of the LaTeX report generator (build_reports.py). The PDF build itself runs in the CI job that has TeX."""
+"""Tests of the LaTeX report generator (build_reports.py): the FSC and the harness box FMEDA. The PDF build itself runs in the CI job that has TeX."""
 
 import re
 import sys
@@ -66,6 +66,44 @@ class TestFsc(unittest.TestCase):
 
   def test_committed_outputs_current(self):
     self.assertEqual(br.main(["--check"]), 0)
+
+
+class TestHarnessBox(unittest.TestCase):
+  @classmethod
+  def setUpClass(cls):
+    cls.files, cls.figures = br.harness_box()
+    cls.doc = cls.files["harness-box/harness-box.tex"]
+    cls.n = dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}", cls.files["harness-box/numbers.tex"]))
+    import harness_box_fmeda as hb
+    cls.hb = hb
+    cls.r = hb.build()
+
+  def test_numbers_match_the_record(self):
+    parts = self.r["parts"]
+    self.assertEqual(int(self.n["PartCount"]), len(parts))
+    self.assertEqual(int(self.n["ModeCount"]), sum(len(p["modes"]) for p in parts))
+    self.assertEqual(self.n["SgSevenSpf"], self.hb.fit(self.r["cat"]["SG-07"]["SPF"]))
+    self.assertEqual(self.n["SpfmNow"], f"{self.r['whatif'][0]['spfm'] * 100:.2f}")
+    self.assertEqual(self.n["HbVersion"], self.r["data"]["revisions"][-1]["version"])
+
+  def test_every_part_and_mode_once(self):
+    table = self.doc[self.doc.index(r"\label{tab:parts}"):]
+    table = table[:table.index(r"\end{longtable}")]
+    for p in self.r["parts"]:
+      self.assertEqual(len(re.findall(rf"^{p['ref']} &", table, re.M)), 1, p["ref"])
+    self.assertEqual(table.count(r"\\ \midrule") - 2, int(self.n["ModeCount"]))  # two header rows
+
+  def test_prose_numbers_are_macros(self):
+    intro = self.doc[self.doc.index(r"\chapter{Introduction}"):self.doc.index(r"\chapter{The box and its blocks}")]
+    self.assertNotRegex(intro, r"(?<![\w.-])\d{2,}(?![\w.-])")
+
+  def test_figures_findings_and_citation(self):
+    for fig in self.figures:
+      self.assertTrue(fig.exists(), fig)
+      self.assertIn(fig.stem + ".pdf", self.doc)
+    for d in self.r["diffs"]:
+      self.assertIn(d["row"], self.doc)
+    self.assertIn(r"\bibitem{iso26262-5}", self.doc)
 
 
 if __name__ == "__main__":

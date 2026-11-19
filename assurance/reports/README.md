@@ -20,6 +20,7 @@ LaTeX reports, the format academic and assessment readers expect, without making
 | Report | Record | Generated sources |
 |---|---|---|
 | Functional Safety Concept | [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) | [`fsc/fsc.tex`](fsc/fsc.tex), [`fsc/numbers.tex`](fsc/numbers.tex) |
+| Harness Box Component FMEDA | [WP-H-03 §6.5](../04-hardware/fmeda/README.md), from [`harness-box-parts.yaml`](../04-hardware/fmeda/harness-box-parts.yaml) through the checks of `harness_box_fmeda.py` | [`harness-box/harness-box.tex`](harness-box/harness-box.tex), [`harness-box/numbers.tex`](harness-box/numbers.tex) |
 
 ```bash
 python3 assurance/reports/build_reports.py               # regenerate the .tex after a record changes
