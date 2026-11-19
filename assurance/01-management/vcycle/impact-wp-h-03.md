@@ -2,7 +2,7 @@
 
 # Change impact: WP-H-03 Hardware safety analysis (FMEA/FMEDA)
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · **WP-H-03 · 13 Nov** · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · **WP-H-03 · 13 Nov** · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-h-03.svg" width="100%" alt="Change impact of WP-H-03 Hardware safety analysis (FMEA/FMEDA), dated 2026-11-13: 11 work products depend on it in the process model; 10 have no version dated after it, 1 have been updated since, 0 have no dated version."></a>
