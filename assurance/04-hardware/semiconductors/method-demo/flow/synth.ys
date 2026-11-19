@@ -1,0 +1,8 @@
+read_verilog picorv32.v
+chparam -set ENABLE_MUL 1 -set ENABLE_DIV 1 -set ENABLE_IRQ 1 -set ENABLE_IRQ_QREGS 1 -set ENABLE_COUNTERS 1 picorv32
+synth -top picorv32 -flatten
+dfflibmap -liberty tt.lib
+abc -liberty tt.lib
+opt_clean -purge
+tee -o stat.txt stat -liberty tt.lib
+write_json netlist.json

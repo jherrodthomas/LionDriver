@@ -1,0 +1,32 @@
+{
+ "app_cycles": 8027,
+ "faults": 20229,
+ "wrong_cmd": 6537,
+ "caught_first": 6537,
+ "lead_median": 105,
+ "seu_seen": 655,
+ "seu_latency_median": 7,
+ "stuck_n": 17862,
+ "stuck_seen": 8188,
+ "per_sub_part": {
+  "ALU + execute": 0.7707,
+  "Control": 0.7208,
+  "Counters": 0.0095,
+  "Decoder": 0.8002,
+  "Divider": 0.0099,
+  "Fetch + PC": 0.6238,
+  "IRQ + timer": 0.233,
+  "Load / store": 0.8098,
+  "Multiplier": 0.5007,
+  "Register file": 0.3764
+ },
+ "cc_glitches": 2367,
+ "cc_wrong_cmd": 289,
+ "cc_visible": 669,
+ "cc_delayed_caught": 373,
+ "cc_wrong_cmd_delayed_caught": 80,
+ "area_um2": {
+  "single": 113312.4256,
+  "lockstep": 231110.4032
+ }
+}

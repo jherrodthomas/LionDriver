@@ -2,20 +2,21 @@
 
 # Change impact
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · **All changes**
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · **All changes**
 
 Each work product's latest dated change, and what depends on it in the process model (WP-P-11): how many of those have a version dated after the change, how many have not, and how many have no dated version. The 8 most recent changes have a page with the V. A dependence is a prompt to look, not proof of an impact; the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) decides.
 
 | Change | Version | Dated | Downstream | Worth a look | Updated since | Undated |
 |---|---|---|---|---|---|---|
+| [WP-H-07](impact-wp-h-07.md) Qualification of hardware components (comma device, STM32H7, harness) | 0.6 | 2026-11-19 | 8 | 8 | 0 | 0 |
 | [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-18 | 17 | 16 | 0 | 1 |
-| [WP-C-05](impact-wp-c-05.md) SOTIF hazard identification and risk evaluation, acceptance criteria | 0.11 | 2026-11-18 | 25 | 25 | 0 | 0 |
-| [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.25 | 2026-11-17 | 23 | 22 | 0 | 1 |
-| [WP-S-02](impact-wp-s-02.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 40 | 1 | 2 |
-| [WP-H-03](impact-wp-h-03.md) Hardware safety analysis (FMEA/FMEDA) | 0.12 | 2026-11-13 | 11 | 11 | 0 | 0 |
-| [WP-H-02](impact-wp-h-02.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | 0.15 | 2026-11-13 | 22 | 20 | 1 | 1 |
+| [WP-C-05](impact-wp-c-05.md) SOTIF hazard identification and risk evaluation, acceptance criteria | 0.11 | 2026-11-18 | 25 | 24 | 1 | 0 |
+| [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.25 | 2026-11-17 | 23 | 21 | 1 | 1 |
+| [WP-S-02](impact-wp-s-02.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 39 | 2 | 2 |
+| [WP-H-03](impact-wp-h-03.md) Hardware safety analysis (FMEA/FMEDA) | 0.12 | 2026-11-13 | 11 | 10 | 1 | 0 |
+| [WP-H-02](impact-wp-h-02.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | 0.15 | 2026-11-13 | 22 | 19 | 2 | 1 |
 | [WP-P-04](impact-wp-p-04.md) Documentation management | 0.8 | 2026-11-12 | 1 | 1 | 0 | 0 |
-| [WP-P-02](impact-wp-p-02.md) Change management plan | 0.5 | 2026-11-12 | 2 | 2 | 0 | 0 |
+| [WP-P-02](../../07-supporting/WP-P-02-change-management.md) Change management plan | 0.5 | 2026-11-12 | 2 | 2 | 0 | 0 |
 | [WP-W-11](../../05-software/WP-W-11-cybersecurity-implementation-verification.md) Cybersecurity implementation and verification | 0.8 | 2026-11-11 | 5 | 2 | 2 | 1 |
 | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
 | [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) Testing of the embedded software (SW qualification, HIL) | 0.4 | 2026-11-11 | 5 | 4 | 1 | 0 |
@@ -25,10 +26,10 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting | 0.5 | 2026-11-11 | 1 | 0 | 1 | 0 |
 | [WP-O-01](../../09-production-operation/WP-O-01-installation-and-provisioning-control.md) Installation, provisioning and production control | 0.6 | 2026-11-11 | 2 | 1 | 1 | 0 |
 | [WP-M-14](../WP-M-14-iso26262-6-implementation-specification.md) ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-14) | 0.6 | 2026-11-11 | 0 | 0 | 0 | 0 |
-| [WP-M-11](../WP-M-11-upstream-and-supplier-management.md) Upstream (comma.ai) and supplier management, development interface agreements | 0.3 | 2026-11-11 | 12 | 8 | 3 | 1 |
-| [WP-M-09](../WP-M-09-cybersecurity-plan.md) Cybersecurity plan | 0.10 | 2026-11-11 | 14 | 9 | 4 | 1 |
+| [WP-M-11](../WP-M-11-upstream-and-supplier-management.md) Upstream (comma.ai) and supplier management, development interface agreements | 0.3 | 2026-11-11 | 12 | 7 | 4 | 1 |
+| [WP-M-09](../WP-M-09-cybersecurity-plan.md) Cybersecurity plan | 0.10 | 2026-11-11 | 14 | 8 | 5 | 1 |
 | [WP-M-07](../WP-M-07-risk-management.md) Project risk management plan and register | 0.11 | 2026-11-11 | 0 | 0 | 0 | 0 |
-| [WP-M-05](../WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | 0.4 | 2026-11-11 | 42 | 28 | 11 | 3 |
+| [WP-M-05](../WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | 0.4 | 2026-11-11 | 42 | 27 | 12 | 3 |
 | [WP-K-06](../../10-safety-case/WP-K-06-release-record.md) Release for production / release record | 0.4 | 2026-11-11 | 0 | 0 | 0 | 0 |
 | [WP-W-05](../../05-software/WP-W-05-software-unit-design.md) Software unit design and implementation | 0.9 | 2026-11-03 | 8 | 6 | 2 | 0 |
 | [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) Cybersecurity requirements and architectural design | 0.12 | 2026-11-03 | 12 | 6 | 5 | 1 |
@@ -42,17 +43,16 @@ Each work product's latest dated change, and what depends on it in the process m
 | [WP-V-01](../../06-validation/WP-V-01-safety-validation.md) Safety validation plan, specification and report | 0.12 | 2026-11-02 | 2 | 1 | 1 | 0 |
 | [WP-S-08](../../03-system/WP-S-08-system-integration-test.md) System integration and test strategy, specification and report | 0.9 | 2026-11-02 | 4 | 2 | 2 | 0 |
 | [WP-S-06](../../03-system/WP-S-06-requirements-production-operation.md) Requirements for production, operation, service and decommissioning | 0.5 | 2026-11-02 | 5 | 3 | 2 | 0 |
-| [WP-S-04](../../03-system/WP-S-04-timing-ftti-budget.md) Timing analysis: FTTI, fault detection and reaction budget | 0.31 | 2026-11-02 | 44 | 20 | 22 | 2 |
+| [WP-S-04](../../03-system/WP-S-04-timing-ftti-budget.md) Timing analysis: FTTI, fault detection and reaction budget | 0.31 | 2026-11-02 | 44 | 19 | 23 | 2 |
 | [WP-P-11](../../process/README.md) Integrated process model and generated process maps (all phases G0–G6 modelled) | 0.6 | 2026-11-02 | 0 | 0 | 0 | 0 |
-| [WP-M-10](../WP-M-10-ai-safety-plan.md) AI safety management plan | 0.4 | 2026-11-02 | 13 | 6 | 6 | 1 |
-| [WP-M-08](../WP-M-08-sotif-plan.md) SOTIF plan | 0.10 | 2026-11-02 | 14 | 6 | 7 | 1 |
+| [WP-M-10](../WP-M-10-ai-safety-plan.md) AI safety management plan | 0.4 | 2026-11-02 | 13 | 5 | 7 | 1 |
+| [WP-M-08](../WP-M-08-sotif-plan.md) SOTIF plan | 0.10 | 2026-11-02 | 14 | 5 | 8 | 1 |
 | [WP-H-04](../../04-hardware/WP-H-04-hardware-metrics.md) Hardware architectural metrics (SPFM, LFM) | 0.13 | 2026-11-02 | 1 | 1 | 0 | 0 |
-| [WP-H-01](../../04-hardware/WP-H-01-hardware-safety-requirements.md) Hardware safety requirements specification | 0.11 | 2026-11-02 | 21 | 9 | 11 | 1 |
+| [WP-H-01](../../04-hardware/WP-H-01-hardware-safety-requirements.md) Hardware safety requirements specification | 0.11 | 2026-11-02 | 21 | 8 | 12 | 1 |
 | [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) AI system definition and AI safety requirements | 0.9 | 2026-11-02 | 11 | 6 | 5 | 0 |
 | [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) Fault injection test specification and report | 0.14 | 2026-11-01 | 5 | 2 | 3 | 0 |
 | [WP-S-03](../../03-system/WP-S-03-technical-safety-concept-architecture.md) Technical safety concept and system architectural design | 0.25 | 2026-11-01 | 28 | 10 | 17 | 1 |
 | [WP-M-03](../WP-M-03-project-plan.md) Project plan (scope, WBS, schedule, resources) | 0.11 | 2026-11-01 | 1 | 0 | 1 | 0 |
-| [WP-H-07](../../04-hardware/WP-H-07-hardware-component-qualification.md) Qualification of hardware components (comma device, STM32H7, harness) | 0.5 | 2026-11-01 | 8 | 3 | 5 | 0 |
 | [WP-H-05](../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) Evaluation of safety goal violations due to random HW failures (PMHF) | 0.8 | 2026-11-01 | 0 | 0 | 0 | 0 |
 | [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md) Functional safety concept (FSRs, allocation, AoUs) | 0.32 | 2026-11-01 | 54 | 21 | 31 | 2 |
 | [WP-K-02](../../10-safety-case/WP-K-02-sotif-release-argument.md) SOTIF achievement evaluation and release recommendation | 0.3 | 2026-10-30 | 1 | 0 | 1 | 0 |

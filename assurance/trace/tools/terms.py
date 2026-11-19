@@ -60,6 +60,7 @@ PAGES = [
   A / "07-supporting/tool-qualification/TQR-32-check-trace.md",
 ]
 FIGURES = [
+  *sorted((A / "04-hardware/semiconductors/method-demo/figures").glob("fig-md-*.svg")),  # Part 11 method demonstration
   A / "01-management/figures/vcycle/fig-m00-vcycle.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-legend.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-time.svg",
@@ -162,6 +163,15 @@ TERMS = {
   "STPA": "system-theoretic process analysis",
   "FMEA": "failure mode and effects analysis",
   "FMEDA": "failure modes, effects and diagnostic analysis (hardware metrics)",
+  # semiconductors (ISO 26262-11 method demonstration, 04-hardware/semiconductors)
+  "ALU": "arithmetic logic unit: the part of a processor that adds, compares and shifts",
+  "CPU": "central processing unit: a processor core",
+  "FF": "flip-flop: a one-bit storage cell clocked by the processor clock",
+  "ISA": "instruction-set architecture; an ISA model runs a program instruction by instruction to give the expected results",
+  "RISC-V": "an open instruction-set architecture; PicoRV32 is an open-source RISC-V core",
+  "SECDED": "single-error-correcting, double-error-detecting code (here Hamming 39,32 on each register)",
+  "GDS": "GDSII, the standard file format for chip layouts",
+  "ISC": "ISC licence: a short permissive open-source licence (Internet Systems Consortium)",
   "DFMEA": "design FMEA: failure modes and effects analysis of a design (here the harness box and device)",
   "PFMEA": "process FMEA: failure modes of making, installing or updating the item",
   "DFM-": "DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea)",
@@ -510,6 +520,7 @@ NOT_TERMS = {
   "SAFE", "SITUATION", "SITUATIONS", "SPEED", "STATES", "SURFACE", "TO", "TRIGGER", "TRIGGERING", "VALIDATION",
   "WEATHER", "WHAT", "SAFETY", "GOAL", "SOTIF HAZARD", "ELEMENT", "STATE", "THE", "OF", "VIEW", "IN", "ON", "AT",
   "WAY", "OUT", "DOES", "NOTICE", "TODAY", "CLOSES", "BRAKE",
+  "PART", "ONE", "MINUTE", "SkyWater", "MHz",
   "LionDriver", "GitHub", "LibreOffice", "README", "II", "IV", "YAML", "OpenpilotState", "ENABLE", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator", "OK", "PyYAML",
 }
 

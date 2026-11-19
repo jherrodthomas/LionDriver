@@ -1,0 +1,34 @@
+{
+ "base_single": {
+  "wrong": 88,
+  "flagged": 0,
+  "corrected": 0,
+  "none": 1032,
+  "n": 1120
+ },
+ "base_double": {
+  "wrong": 50,
+  "flagged": 0,
+  "corrected": 0,
+  "none": 550,
+  "n": 600
+ },
+ "ecc_single": {
+  "wrong": 0,
+  "flagged": 0,
+  "corrected": 1043,
+  "none": 322,
+  "n": 1365
+ },
+ "ecc_double": {
+  "wrong": 0,
+  "flagged": 455,
+  "corrected": 0,
+  "none": 145,
+  "n": 600
+ },
+ "area_um2": {
+  "base": 113312.4256,
+  "ecc": 129547.9968
+ }
+}
