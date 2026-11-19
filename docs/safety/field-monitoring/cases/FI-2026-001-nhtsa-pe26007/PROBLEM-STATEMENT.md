@@ -5,7 +5,7 @@
 | Case | [FI-2026-001](REPORT.md) · Class A (fatalities; regulatory defect investigation) |
 | Primary source | NHTSA Office of Defects Investigation, resume of Preliminary Evaluation PE26007, opened 2026-09-21: [`evidence/INOA-PE26007-17274.pdf`](evidence/INOA-PE26007-17274.pdf) (2 pages, SHA-256 `e8eac190…62da6c`; full hash in [REPORT §1](REPORT.md#1-header)) |
 | Read with | [Report](REPORT.md) (facts, applicability, containment) · [Root cause analysis](RCA.md) · [Corrective actions](CORRECTIVE-ACTIONS.md) |
-| Revision | A, 2026-11-18 |
+| Revision | B, 2026-11-18 |
 
 > **In one paragraph.** The US vehicle-safety regulator is investigating five crashes in which cars fitted with comma
 > devices drove into a stopped or slow vehicle in their own lane. Three people died and eleven more were injured.
@@ -16,6 +16,16 @@
 > own braking, the driver, and the car's stock emergency braking. Our root cause analysis found a weakness in each, and
 > one shared by two of them. A Preliminary Evaluation is not a finding of defect, and no crash has yet been
 > reconstructed.
+
+## The report
+
+The NHTSA resume as issued, page for page, rendered from
+[`evidence/INOA-PE26007-17274.pdf`](evidence/INOA-PE26007-17274.pdf). Everything this page marks as verified is
+quoted from it.
+
+![NHTSA ODI resume for PE26007, page 1 of 2: opened 09/21/2026, prompted by SGO 2021-01 reports, a VOQ and police outreach; subject: crashes involving comma.ai driving automation products; products comma three, comma 3X, comma four, openpilot; population 30,000 (estimated); problem description: crashes involving stopped or slow moving in-lane vehicles; totals 5 crashes, 4 injury incidents, 14 injuries, 2 fatality incidents, 3 fatalities; action: open this Preliminary Evaluation.](evidence/INOA-PE26007-17274-page-1.png)
+
+![NHTSA ODI resume for PE26007, page 2 of 2: the system may not have adequately detected or responded to the in-lane vehicles; three fatalities in two crashes and eleven injured in four; the devices and the company's claims; ODI will verify system status, evaluate performance and safeguards and, for a fork, the components it shares with openpilot; SGO report IDs 30351-15888, 30351-14668, 30351-11961, 30351-1807 and 62-14853.](evidence/INOA-PE26007-17274-page-2.png)
 
 ## 1. What happened
 
@@ -150,3 +160,4 @@ The resume is a US government record, reproduced unaltered. Quotations on this p
 | Rev | Date | Change |
 |---|---|---|
 | A | 2026-11-18 | First issue, on receipt of the ODI resume (FA-01). |
+| B | 2026-11-18 | The report shown as issued, both pages, above §1. |
