@@ -2,10 +2,10 @@
 
 # Change impact: WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay)
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · **WP-H-02 · 13 Nov** · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · **WP-H-02 · 13 Nov** · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [All changes](impact.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-h-02.svg" width="100%" alt="Change impact of WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay), dated 2026-11-13: 22 work products depend on it in the process model; 20 have no version dated after it, 1 have been updated since, 1 have no dated version."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-h-02.svg" width="100%" alt="Change impact of WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay), dated 2026-11-13: 22 work products depend on it in the process model; 19 have no version dated after it, 2 have been updated since, 1 have no dated version."></a>
 </p>
 
 *The change: WP-H-02 version 0.15, dated 2026-11-13: §3.6 Figure 3-9: the harness box v3 as functional blocks B1…B7, each with what it shall do, its parts and its FMEDA share, generated from the component FMEDA of WP-H-03 §6.5; AI-drafted*
@@ -19,7 +19,7 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-H-01 Hardware safety requirements specification](../../04-hardware/WP-H-01-hardware-safety-requirements.md) | 1 | 2026-11-02 | worth a look |
 | [WP-H-03 Hardware safety analysis (FMEA/FMEDA)](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | 1 | 2026-11-13 | updated |
 | [WP-H-06 Hardware integration and verification specification and report](../../04-hardware/WP-H-06-hardware-integration-verification.md) | 1 | 2026-10-27 | worth a look |
-| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 1 | 2026-11-01 | worth a look |
+| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 1 | 2026-11-19 | updated |
 | [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 2 | 2026-11-02 | worth a look |
 | [WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF)](../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | 2 | 2026-11-01 | worth a look |
 | [WP-S-08 System integration and test strategy, specification and report](../../03-system/WP-S-08-system-integration-test.md) | 2 | 2026-11-02 | worth a look |

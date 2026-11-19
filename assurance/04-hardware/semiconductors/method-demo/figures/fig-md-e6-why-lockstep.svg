@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1275" viewBox="0 0 720 1275" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Part 11 in one minute 6 · lockstep</title>
+<desc>Lockstep caught all 6,537 faults that sent a wrong command, a median 105 cycles early; area ×2.04; plain lockstep missed all 289 common-cause wrong commands, delayed lockstep caught 80.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="720" height="1275" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="24" y="22" width="236" height="30" rx="15" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="142" y="42" font-size="12" fill="#4F46E5" font-weight="700" text-anchor="middle">PART 11 IN ONE MINUTE · 6</text>
+<text x="360" y="92" font-size="30" fill="#0F172A" font-weight="800" text-anchor="middle">Why run two CPUs to do</text>
+<text x="360" y="130" font-size="30" fill="#0F172A" font-weight="800" text-anchor="middle">the work of one?</text>
+<text x="360" y="170" font-size="15" fill="#475569" text-anchor="middle">lockstep: same inputs, compare every output, every cycle</text>
+<rect x="24" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="88.8" y="215" font-size="11" fill="#475569" text-anchor="middle">copy</text>
+<rect x="159.6" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="224.4" y="215" font-size="11" fill="#475569" text-anchor="middle">compare</text>
+<rect x="295.2" y="198" width="129.6" height="26" rx="13" fill="#C2410C" stroke="#C2410C" stroke-width="1"/>
+<text x="360" y="215" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">catch</text>
+<rect x="430.8" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="495.6" y="215" font-size="11" fill="#475569" text-anchor="middle">blind spot</text>
+<rect x="566.4" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="631.2" y="215" font-size="11" fill="#475569" text-anchor="middle">cost</text>
+<rect x="24" y="242" width="672" height="250" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="270" font-size="14" fill="#0F172A" font-weight="700">a torque limiter running on two cores</text>
+<rect x="44" y="334" width="90" height="50" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<text x="89" y="356" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">sensor</text>
+<text x="89" y="372" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">inputs</text>
+<rect x="180" y="286" width="150" height="80" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="255" y="318" font-size="15" fill="#D2553F" font-weight="700" text-anchor="middle">core A</text>
+<text x="255" y="338" font-size="12" fill="#475569" text-anchor="middle">PicoRV32</text>
+<text x="255" y="356" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">fault inside</text>
+<rect x="180" y="382" width="150" height="80" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.6"/>
+<text x="255" y="414" font-size="15" fill="#4F46E5" font-weight="700" text-anchor="middle">core B</text>
+<text x="255" y="434" font-size="12" fill="#475569" text-anchor="middle">PicoRV32</text>
+<line x1="136" y1="359" x2="170.4" y2="336.9" stroke="#475569" stroke-width="1.6"/>
+<path d="M178,332 L172.9,340.7 L168,333.1 Z" fill="#475569"/>
+<line x1="136" y1="359" x2="173" y2="414.5" stroke="#475569" stroke-width="1.6"/>
+<path d="M178,422 L169.3,417 L176.8,412 Z" fill="#475569"/>
+<circle cx="440" cy="392" r="34" fill="#FFF7ED" stroke="#C2410C" stroke-width="2"/>
+<text x="440" y="389" font-size="18" fill="#C2410C" font-weight="800" text-anchor="middle">=?</text>
+<text x="440" y="408" font-size="10" fill="#C2410C" text-anchor="middle">every cycle</text>
+<line x1="332" y1="326" x2="400.6" y2="372.9" stroke="#475569" stroke-width="1.6"/>
+<path d="M408,378 L398,376.6 L403.1,369.2 Z" fill="#475569"/>
+<line x1="332" y1="422" x2="399.2" y2="407.9" stroke="#475569" stroke-width="1.6"/>
+<path d="M408,406 L400.1,412.3 L398.3,403.5 Z" fill="#475569"/>
+<line x1="476" y1="392" x2="532.5" y2="354.9" stroke="#475569" stroke-width="1.6"/>
+<path d="M540,350 L534.9,358.7 L530,351.2 Z" fill="#475569"/>
+<line x1="476" y1="392" x2="532.6" y2="430.9" stroke="#475569" stroke-width="1.6"/>
+<path d="M540,436 L530,434.6 L535.1,427.2 Z" fill="#475569"/>
+<rect x="544" y="326" width="128" height="44" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<text x="608" y="353" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">command</text>
+<rect x="544" y="414" width="128" height="44" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
+<text x="608" y="441" font-size="12" fill="#D2553F" font-weight="700" text-anchor="middle">stop: mismatch</text>
+<text x="44" y="478" font-size="11" fill="#475569">In simulation core B is the fault-free copy; the comparator watches all core outputs.</text>
+<text x="132" y="528" font-size="12" fill="#475569" text-anchor="middle">wrong commands caught first</text>
+<text x="132" y="572" font-size="40" fill="#2E9E6A" font-weight="800" text-anchor="middle">100 %</text>
+<text x="132" y="596" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">6,537 of 6,537 faults</text>
+<text x="132" y="614" font-size="11" fill="#475569" text-anchor="middle">median 105 cycles before the write</text>
+<text x="360" y="528" font-size="12" fill="#475569" text-anchor="middle">a bit flip is caught</text>
+<text x="360" y="572" font-size="40" fill="#4F46E5" font-weight="800" text-anchor="middle">7</text>
+<text x="360" y="596" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">cycles, median</text>
+<text x="360" y="614" font-size="11" fill="#475569" text-anchor="middle">after it happens, when seen</text>
+<text x="588" y="528" font-size="12" fill="#475569" text-anchor="middle">area cost</text>
+<text x="588" y="572" font-size="40" fill="#C2410C" font-weight="800" text-anchor="middle">×2.04</text>
+<text x="588" y="596" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">of one core</text>
+<text x="588" y="614" font-size="11" fill="#475569" text-anchor="middle">two cores + comparator</text>
+<text x="24" y="646" font-size="13" fill="#0F172A" font-weight="700">blind spot 1: logic the program never uses stays silent</text>
+<text x="24" y="664" font-size="11" fill="#475569">stuck-at faults that reach an output during this application</text>
+<text x="180" y="689" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Load / store</text>
+<rect x="190" y="678" width="372.5" height="14" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="568.5" y="690" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">81 %</text>
+<text x="180" y="713" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Decoder</text>
+<rect x="190" y="702" width="368.1" height="14" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="564.1" y="714" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">80 %</text>
+<text x="180" y="737" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">ALU + execute</text>
+<rect x="190" y="726" width="354.5" height="14" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="550.5" y="738" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">77 %</text>
+<text x="180" y="761" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Control</text>
+<rect x="190" y="750" width="331.6" height="14" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="527.6" y="762" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">72 %</text>
+<text x="180" y="785" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Program counter</text>
+<rect x="190" y="774" width="286.9" height="14" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="482.9" y="786" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">62 %</text>
+<text x="180" y="809" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Multiplier</text>
+<rect x="190" y="798" width="230.3" height="14" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="426.3" y="810" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">50 %</text>
+<text x="180" y="833" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Register file</text>
+<rect x="190" y="822" width="173.1" height="14" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="369.1" y="834" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">38 %</text>
+<text x="180" y="857" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">IRQ + timer</text>
+<rect x="190" y="846" width="107.2" height="14" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="303.2" y="858" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">23 %</text>
+<text x="180" y="881" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Divider</text>
+<rect x="190" y="870" width="4.6" height="14" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="200.6" y="882" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1 %</text>
+<text x="180" y="905" font-size="12" fill="#0F172A" font-weight="600" text-anchor="end">Counters</text>
+<rect x="190" y="894" width="4.4" height="14" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="200.4" y="906" font-size="11" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1 %</text>
+<text x="24" y="930" font-size="12" fill="#0F172A">The limiter never divides, so a broken divider is invisible until the day it is used.</text>
+<text x="24" y="948" font-size="12" fill="#0F172A" font-weight="600">That is why a start-up self-test still runs on a lockstep core.</text>
+<rect x="24" y="970" width="672" height="154" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
+<text x="44" y="996" font-size="14" fill="#C2410C" font-weight="700">blind spot 2: one glitch that hits both cores the same way</text>
+<text x="44" y="1020" font-size="12" fill="#0F172A">Same flip-flop flipped in both cores at the same cycle (2,367 glitches,</text>
+<text x="44" y="1038" font-size="12" fill="#0F172A" font-weight="700">289 of them sent a wrong command): plain lockstep caught 0.</text>
+<text x="44" y="1060" font-size="12" fill="#0F172A">Checker 2 cycles behind (delayed lockstep): caught 373 glitches,</text>
+<text x="44" y="1078" font-size="12" fill="#D97706" font-weight="700">including 80 of the 289 wrong commands.</text>
+<text x="44" y="1100" font-size="12" fill="#0F172A">A value that doesn't change in those 2 cycles is corrupted the same way in</text>
+<text x="44" y="1116" font-size="12" fill="#0F172A">both cores. Real designs add physical separation and diverse clocking too.</text>
+<text x="360" y="1158" font-size="16" fill="#0F172A" font-weight="700" text-anchor="middle">Two cores catch what one can't see, except what hits both alike.</text>
+<text x="360" y="1184" font-size="11" fill="#94A3B8" text-anchor="middle">PicoRV32; 20,229 faults in one core while a 64-sample torque limiter runs (8,027 cycles).</text>
+<text x="360" y="1201" font-size="11" fill="#94A3B8" text-anchor="middle">Lockstep area from synthesising two cores and a comparator (flow/lockstep_top.v).</text>
+<g class="terms">
+<text x="24" y="1230" font-size="10.5" fill="#475569">Terms: ALU arithmetic logic unit: the part of a processor that adds, compares and shifts · CPU central processing unit:</text>
+<text x="24" y="1244.5" font-size="10.5" fill="#475569">a processor core · IRQ interrupt request</text>
+</g>
+</svg>

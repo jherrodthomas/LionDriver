@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-07 Qualification of hardware components (comma device, STM32H7, harness) |
 | Standard reference | ISO 26262-8:2018 §13 (qualification of hardware components); ISO 26262-5:2018 §7–§9 (for complex elements); ISO 26262-11:2018 (semiconductors, informative); ASPICE 4.0 — (no direct process; supports HWE.1–4 at CL1 per T-12) |
-| Version | 0.5 (OI-7: LSI minimum and maximum from the STM32H725 datasheet decide TSR-501, from the reference-build hang simulation; QE-04 names it; AI-drafted; 2026-11-01). 0.4 (OI-6 closed: the §5 residual risks are recorded as WP-M-07 R-30 and WP-K-01 DF-42; 2026-10-19). 0.3 (decisions applied 2026-10-19: no ST licence, own self-tests with low CPU coverage, DQ-069 option B (QE-03, §5, OI-2); §5 residual risks accepted with the stated conditions, EMC and environment recorded as residual risks, DQ-078 option A (OI-6); harness rows re-based from a relay to the harness box v3 analog switches (RR-2026-010), with the Toyota A harness and box v3 still assumed, not read from the parts, DQ-211 option C). 0.2 (OI-5: no teardown, DQ-065; 2026-10-16). 0.1 |
+| Version | 0.6 (§7: the Part 11 records now live in the 04-hardware/semiconductors folder, with a method demonstration of the MCU split and of measured diagnostic coverage on an open core; demonstration only, no change to the plan or to any claim; AI-drafted; 2026-11-19). 0.5 (OI-7: LSI minimum and maximum from the STM32H725 datasheet decide TSR-501, from the reference-build hang simulation; QE-04 names it; AI-drafted; 2026-11-01). 0.4 (OI-6 closed: the §5 residual risks are recorded as WP-M-07 R-30 and WP-K-01 DF-42; 2026-10-19). 0.3 (decisions applied 2026-10-19: no ST licence, own self-tests with low CPU coverage, DQ-069 option B (QE-03, §5, OI-2); §5 residual risks accepted with the stated conditions, EMC and environment recorded as residual risks, DQ-078 option A (OI-6); harness rows re-based from a relay to the harness box v3 analog switches (RR-2026-010), with the Toyota A harness and box v3 still assumed, not read from the parts, DQ-211 option C). 0.2 (OI-5: no teardown, DQ-065; 2026-10-16). 0.1 |
 | Status | Draft (qualification plan; no qualification performed) |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -154,7 +154,7 @@ the safety function onto LionDriver-controlled, analysable hardware; or restrict
 
 ## 7. Informative guidance from ISO 26262-11 used in this plan
 
-ISO 26262-11 is informative. The following topics are used as hints for QC-02 and QC-06:
+ISO 26262-11 is informative. The following topics are used as hints for QC-02 and QC-06. Where each Part 11 topic is answered is tracked in [`semiconductors/`](semiconductors/README.md) §1. Its [method demonstration](semiconductors/method-demo/README.md) runs the split, a self-test fault campaign, ECC and lockstep on an open RISC-V core's real gate netlist; it shows the method and earns no credit for QC-02.
 
 | Topic | Use here |
 |---|---|

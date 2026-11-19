@@ -2,10 +2,10 @@
 
 # Change impact: WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: **WP-C-05 · 18 Nov** · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [WP-W-11 · 11 Nov](impact-wp-w-11.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · **WP-C-05 · 18 Nov** · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [WP-P-02 · 12 Nov](impact-wp-p-02.md) · [All changes](impact.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-c-05.svg" width="100%" alt="Change impact of WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria, dated 2026-11-18: 25 work products depend on it in the process model; 25 have no version dated after it, 0 have been updated since, 0 have no dated version."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-c-05.svg" width="100%" alt="Change impact of WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria, dated 2026-11-18: 25 work products depend on it in the process model; 24 have no version dated after it, 1 have been updated since, 0 have no dated version."></a>
 </p>
 
 *The change: WP-C-05 version 0.11, dated 2026-11-18*
@@ -37,7 +37,7 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 4 | 2026-11-02 | worth a look |
 | [WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF)](../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | 4 | 2026-11-01 | worth a look |
 | [WP-H-06 Hardware integration and verification specification and report](../../04-hardware/WP-H-06-hardware-integration-verification.md) | 4 | 2026-10-27 | worth a look |
-| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 4 | 2026-11-01 | worth a look |
+| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 4 | 2026-11-19 | updated |
 | [WP-S-08 System integration and test strategy, specification and report](../../03-system/WP-S-08-system-integration-test.md) | 4 | 2026-11-02 | worth a look |
 | [WP-V-01 Safety validation plan, specification and report](../../06-validation/WP-V-01-safety-validation.md) | 4 | 2026-11-02 | worth a look |
 | [WP-W-08 Testing of the embedded software (SW qualification, HIL)](../../05-software/WP-W-08-embedded-software-testing.md) | 5 | 2026-11-11 | worth a look |
