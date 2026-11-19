@@ -24,15 +24,15 @@ python3 "$HERE/analyze.py" netlist.json subparts.json subparts-cells.json faults
 
 # ECC: the same flips in both register files
 for p in 0 1; do
-  NETLIST=netlist.json python3 "$HERE/ecc_campaign.py" base $p 2 ecc_base_$p.json &
-  NETLIST=netlist_ecc.json python3 "$HERE/ecc_campaign.py" ecc $p 2 ecc_ecc_$p.json &
+  NETLIST=netlist.json python3 "$HERE/ecc_campaign.py" base "$p" 2 "ecc_base_$p.json" &
+  NETLIST=netlist_ecc.json python3 "$HERE/ecc_campaign.py" ecc "$p" 2 "ecc_ecc_$p.json" &
 done
 wait
 python3 "$HERE/ecc_score.py" stat_base.txt stat_ecc.txt
 
 # lockstep: all faults in one core, then the common-cause glitches
 python3 "$HERE/lockstep.py" golden
-for p in 0 1 2 3; do python3 "$HERE/lockstep.py" run $p 4 ls_$p.json & done
+for p in 0 1 2 3; do python3 "$HERE/lockstep.py" run "$p" 4 "ls_$p.json" & done
 wait
 python3 "$HERE/lockstep_cc.py"
 python3 "$HERE/lockstep_score.py" stat_base.txt stat_lockstep.txt
