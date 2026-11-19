@@ -463,6 +463,38 @@ jobs:
         python3 assurance/04-hardware/wiring/make_wiring.py --check
         python3 assurance/04-hardware/wiring/test_make_wiring.py
 
+  latex-reports:
+    name: LaTeX reports
+    # Generated LaTeX renderings of the work products (assurance/reports): the .tex is checked against the records,
+    # then the PDFs are built with TeX Live 2023 from the Ubuntu 24.04 archive (WP-P-07 TL-66) and kept as an artifact.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Install PyYAML (pinned), TeX Live and the SVG converter
+      run: |
+        python3 -m pip install --quiet --user --break-system-packages -r assurance/trace/requirements.txt
+        sudo apt-get update -q
+        sudo apt-get install -y -q --no-install-recommends texlive-latex-base texlive-latex-recommended \
+          texlive-latex-extra texlive-fonts-recommended lmodern librsvg2-bin poppler-utils
+        pdflatex --version | head -1 | grep -F "TeX Live 2023"
+        rsvg-convert --version
+    - name: Generated .tex current, and the generator's tests
+      run: |
+        python3 assurance/reports/build_reports.py --check
+        python3 assurance/reports/test_build_reports.py
+    - name: Build the PDFs (fails on a LaTeX error or an undefined reference)
+      run: |
+        python3 assurance/reports/build_reports.py --pdf build/reports
+        for f in build/reports/*/*.pdf; do pdfinfo "$f" | grep -E "^Pages"; done
+    - name: Keep the PDFs
+      uses: actions/upload-artifact@v7
+      with:
+        name: latex-reports
+        path: build/reports/*/*.pdf
+
   box-spice:
     name: harness box ngspice pilot
     # Passive-network faults of comma's harness box v3 (assurance/04-hardware/spice, tool TL-58): predictions for the
