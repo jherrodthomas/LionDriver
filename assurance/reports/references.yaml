@@ -1,0 +1,10 @@
+# The references the generated reports may cite (\cite{key}). build_reports.py writes each report's bibliography
+# from the keys it cites, in citation order, and fails on a cited key that is not here.
+- key: iso26262-3
+  text: "ISO 26262-3:2018, Road vehicles: Functional safety. Part 3: Concept phase. ISO, Geneva."
+- key: iso26262-4
+  text: "ISO 26262-4:2018, Road vehicles: Functional safety. Part 4: Product development at the system level. ISO, Geneva."
+- key: iso26262-9
+  text: "ISO 26262-9:2018, Road vehicles: Functional safety. Part 9: ASIL-oriented and safety-oriented analyses. ISO, Geneva."
+- key: iso21448
+  text: "ISO 21448:2022, Road vehicles: Safety of the intended functionality. ISO, Geneva."
