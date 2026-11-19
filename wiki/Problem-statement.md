@@ -9,6 +9,9 @@
 > stopped vehicles in the lane as a limitation and leaves them to the driver. LionDriver started eighteen days later to
 > build that argument in the open: what can go wrong, what should stop it, and the evidence for whether it does.
 
+> **The one-page version:** [Why LionDriver exists (PDF)](../docs/liondriver/why/why-liondriver-exists.pdf), a
+> single sheet to print or send to anyone who asks.
+
 This page is the long answer. It shows the regulator's report as it was issued, states the problem it describes,
 and shows how the rest of this wiki answers it. The facts belong to field case
 [FI-2026-001](../docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/PROBLEM-STATEMENT.md), where they are
