@@ -2,7 +2,7 @@
 
 # Change impact: WP-S-02 Technical safety requirements specification
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · **WP-S-02 · 17 Nov** · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · **WP-S-02 · 17 Nov** · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-s-02.svg" width="100%" alt="Change impact of WP-S-02 Technical safety requirements specification, dated 2026-11-17: 43 work products depend on it in the process model; 39 have no version dated after it, 2 have been updated since, 2 have no dated version."></a>
@@ -54,7 +54,7 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-W-08 Testing of the embedded software (SW qualification, HIL)](../../05-software/WP-W-08-embedded-software-testing.md) | 2 | 2026-11-11 | worth a look |
 | [WP-W-11 Cybersecurity implementation and verification](../../05-software/WP-W-11-cybersecurity-implementation-verification.md) | 2 | 2026-11-11 | worth a look |
 | [WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF)](../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | 3 | 2026-11-01 | worth a look |
-| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 3 | 2026-11-19 | updated |
+| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 3 | 2026-11-20 | updated |
 | [WP-K-02 SOTIF achievement evaluation and release recommendation](../../10-safety-case/WP-K-02-sotif-release-argument.md) | 3 | 2026-10-30 | worth a look |
 | [WP-K-05 Cybersecurity assessment report (performed independently)](../../10-safety-case/WP-K-05-cybersecurity-assessment.md) | 3 | — | undated |
 | [WP-K-06 Release for production / release record](../../10-safety-case/WP-K-06-release-record.md) | 3 | 2026-11-11 | worth a look |

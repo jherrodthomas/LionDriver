@@ -2,13 +2,13 @@
 
 # Change impact
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · **All changes**
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · **All changes**
 
 Each work product's latest dated change, and what depends on it in the process model (WP-P-11): how many of those have a version dated after the change, how many have not, and how many have no dated version. The 8 most recent changes have a page with the V. A dependence is a prompt to look, not proof of an impact; the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) decides.
 
 | Change | Version | Dated | Downstream | Worth a look | Updated since | Undated |
 |---|---|---|---|---|---|---|
-| [WP-H-07](impact-wp-h-07.md) Qualification of hardware components (comma device, STM32H7, harness) | 0.6 | 2026-11-19 | 8 | 8 | 0 | 0 |
+| [WP-H-07](impact-wp-h-07.md) Qualification of hardware components (comma device, STM32H7, harness) | 0.7 | 2026-11-20 | 8 | 8 | 0 | 0 |
 | [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-18 | 17 | 16 | 0 | 1 |
 | [WP-C-05](impact-wp-c-05.md) SOTIF hazard identification and risk evaluation, acceptance criteria | 0.11 | 2026-11-18 | 25 | 24 | 1 | 0 |
 | [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.25 | 2026-11-17 | 23 | 21 | 1 | 1 |

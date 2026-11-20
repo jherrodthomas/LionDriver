@@ -1,0 +1,74 @@
+# Dependent failures inside the STM32H725 (ISO 26262-11 §4.7): shared resources on the die against the mechanisms that
+# watch the CPU. Each cell says whether one cause can disable the CPU and that mechanism together.
+#
+#   rating   common: the cause can hit the CPU and the mechanism together; needs an argument or a measure (WP-A-03)
+#            partial: a weaker coupling (drift, a delayed or lost reaction); note it and bound it
+#            independent: the mechanism does not depend on the cause, or is the monitor for it
+#   note     one line, in our own words, that the figure prints
+#   basis    where the rating comes from: an MCU feature (MF-nn) of features.yaml, the firmware, or "RM0468" where the reference
+#            manual must still confirm it (README §4)
+#
+# AI-drafted (I0) from the firmware at panda fd0a6a7 and the device header; not reviewed. It feeds WP-A-03.
+schema_version: 1
+part: STM32H725
+checks:
+  - {id: IWDG, label: "IWDG (watchdog)"}
+  - {id: CSS, label: "CSS (crystal monitor)"}
+  - {id: ECC, label: "ECC (SRAM, flash)"}
+  - {id: BOR, label: "BOR (brown-out)"}
+  - {id: SW, label: "Software checks on the CPU"}
+causes:
+  - id: supply
+    label: Core supply
+    detail: VDD and the internal SMPS
+    cells:
+      IWDG: {rating: partial, note: "same VDD; BOR level unknown", basis: "MF-04"}
+      CSS: {rating: partial, note: "same supply domain", basis: "RM0468"}
+      ECC: {rating: partial, note: "same supply domain", basis: "RM0468"}
+      BOR: {rating: independent, note: "the monitor, level unknown", basis: "MF-04"}
+      SW: {rating: common, note: "run on the CPU they check", basis: "firmware"}
+  - id: clock
+    label: Main clock
+    detail: crystal (HSE) to PLL1, 240 MHz
+    cells:
+      IWDG: {rating: independent, note: "own clock, the LSI", basis: "MF-01"}
+      CSS: {rating: partial, note: "sees a stop, not drift", basis: "MF-03"}
+      ECC: {rating: independent, note: "works at any clock", basis: "RM0468"}
+      BOR: {rating: independent, note: "no clock needed", basis: "RM0468"}
+      SW: {rating: common, note: "timed by the same clock", basis: "firmware"}
+  - id: lsi
+    label: Watchdog clock
+    detail: LSI RC oscillator, 32 kHz nominal
+    cells:
+      IWDG: {rating: partial, note: "drift sets the time-out", basis: "WP-H-07 OI-7"}
+      CSS: {rating: independent, note: "not on the LSI", basis: "firmware"}
+      ECC: {rating: independent, note: "not on the LSI", basis: "firmware"}
+      BOR: {rating: independent, note: "not on the LSI", basis: "firmware"}
+      SW: {rating: independent, note: "CPU not on the LSI", basis: "firmware"}
+  - id: reset
+    label: Reset
+    detail: NRST, power-on and brown-out reset
+    cells:
+      IWDG: {rating: independent, note: "reset is the safe state", basis: "MF-01"}
+      CSS: {rating: independent, note: "reset is the safe state", basis: "MF-03"}
+      ECC: {rating: independent, note: "reset is the safe state", basis: "MF-06"}
+      BOR: {rating: partial, note: "shares the reset path", basis: "RM0468"}
+      SW: {rating: partial, note: "a hang before the IWDG starts", basis: "MF-03, MF-15"}
+  - id: debug
+    label: Debug access
+    detail: SWD left enabled in every build
+    cells:
+      IWDG: {rating: common, note: "a debugger can freeze it", basis: "MF-14"}
+      CSS: {rating: independent, note: "not affected by a halt", basis: "RM0468"}
+      ECC: {rating: partial, note: "a debugger can write RAM", basis: "MF-14"}
+      BOR: {rating: independent, note: "not affected by a halt", basis: "RM0468"}
+      SW: {rating: common, note: "a halted CPU checks nothing", basis: "MF-14"}
+  - id: heat
+    label: Die temperature
+    detail: sun load; DTS read, no reaction
+    cells:
+      IWDG: {rating: partial, note: "LSI drifts with heat", basis: "WP-H-07 OI-7"}
+      CSS: {rating: independent, note: "a stop is still seen", basis: "MF-03"}
+      ECC: {rating: partial, note: "soft errors rise with heat", basis: "WP-H-03 §6.3"}
+      BOR: {rating: partial, note: "threshold drift", basis: "RM0468"}
+      SW: {rating: partial, note: "timing margins shrink", basis: "MF-11"}
