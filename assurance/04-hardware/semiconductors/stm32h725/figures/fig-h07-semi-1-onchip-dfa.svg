@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="911" viewBox="0 0 1500 911" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>STM32H725 on-chip dependent failures</title>
+<desc>6 shared causes against 5 mechanisms: 4 of 30 cells common cause, 12 partial, 14 independent. Drawn from onchip-dfa.yaml.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1500" height="911" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 1 · STM32H725: what inside the chip can fail two things at once</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Each row is something shared on the die; each column a mechanism that watches the CPU. Red: one cause can disable the CPU and that mechanism together.</text>
+<text x="1460" y="44" font-size="11" fill="#475569" text-anchor="end">ISO 26262-11 §4.7 · feeds WP-A-03</text>
+<line x1="40" y1="82" x2="1460" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="134" font-size="13" fill="#475569" font-weight="600">Shared cause ↓   mechanism →</text>
+<rect x="304" y="104" width="224" height="46" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<text x="416" y="133" font-size="14" fill="#0F766E" font-weight="700" text-anchor="middle">IWDG (watchdog)</text>
+<rect x="536" y="104" width="224" height="46" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<text x="648" y="133" font-size="14" fill="#0F766E" font-weight="700" text-anchor="middle">CSS (crystal monitor)</text>
+<rect x="768" y="104" width="224" height="46" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<text x="880" y="133" font-size="14" fill="#0F766E" font-weight="700" text-anchor="middle">ECC (SRAM, flash)</text>
+<rect x="1000" y="104" width="224" height="46" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<text x="1112" y="133" font-size="14" fill="#0F766E" font-weight="700" text-anchor="middle">BOR (brown-out)</text>
+<rect x="1232" y="104" width="224" height="46" rx="8" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
+<text x="1344" y="133" font-size="14" fill="#0F766E" font-weight="700" text-anchor="middle">Software checks on the CPU</text>
+<rect x="40" y="166" width="252" height="84" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="200" font-size="16" fill="#0F172A" font-weight="700">Core supply</text>
+<text x="56" y="222" font-size="12" fill="#475569">VDD and the internal SMPS</text>
+<rect x="304" y="166" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="316" y="202" font-size="13" fill="#0F172A">same VDD; BOR level unknown</text>
+<text x="316" y="224" font-size="11" fill="#475569">basis: MF-04</text>
+<rect x="536" y="166" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="548" y="202" font-size="13" fill="#0F172A">same supply domain</text>
+<text x="548" y="224" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="768" y="166" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="780" y="202" font-size="13" fill="#0F172A">same supply domain</text>
+<text x="780" y="224" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="1000" y="166" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="1012" y="202" font-size="13" fill="#0F172A">the monitor, level unknown</text>
+<text x="1012" y="224" font-size="11" fill="#475569">basis: MF-04</text>
+<rect x="1232" y="166" width="224" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="1244" y="202" font-size="13" fill="#D2553F" font-weight="600">run on the CPU they check</text>
+<text x="1244" y="224" font-size="11" fill="#475569">basis: firmware</text>
+<rect x="40" y="258" width="252" height="84" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="292" font-size="16" fill="#0F172A" font-weight="700">Main clock</text>
+<text x="56" y="314" font-size="12" fill="#475569">crystal (HSE) to PLL1, 240 MHz</text>
+<rect x="304" y="258" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="316" y="294" font-size="13" fill="#0F172A">own clock, the LSI</text>
+<text x="316" y="316" font-size="11" fill="#475569">basis: MF-01</text>
+<rect x="536" y="258" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="548" y="294" font-size="13" fill="#0F172A">sees a stop, not drift</text>
+<text x="548" y="316" font-size="11" fill="#475569">basis: MF-03</text>
+<rect x="768" y="258" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="780" y="294" font-size="13" fill="#0F172A">works at any clock</text>
+<text x="780" y="316" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="1000" y="258" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="1012" y="294" font-size="13" fill="#0F172A">no clock needed</text>
+<text x="1012" y="316" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="1232" y="258" width="224" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="1244" y="294" font-size="13" fill="#D2553F" font-weight="600">timed by the same clock</text>
+<text x="1244" y="316" font-size="11" fill="#475569">basis: firmware</text>
+<rect x="40" y="350" width="252" height="84" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="384" font-size="16" fill="#0F172A" font-weight="700">Watchdog clock</text>
+<text x="56" y="406" font-size="12" fill="#475569">LSI RC oscillator, 32 kHz nominal</text>
+<rect x="304" y="350" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="316" y="386" font-size="13" fill="#0F172A">drift sets the time-out</text>
+<text x="316" y="408" font-size="11" fill="#475569">basis: WP-H-07 OI-7</text>
+<rect x="536" y="350" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="548" y="386" font-size="13" fill="#0F172A">not on the LSI</text>
+<text x="548" y="408" font-size="11" fill="#475569">basis: firmware</text>
+<rect x="768" y="350" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="780" y="386" font-size="13" fill="#0F172A">not on the LSI</text>
+<text x="780" y="408" font-size="11" fill="#475569">basis: firmware</text>
+<rect x="1000" y="350" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="1012" y="386" font-size="13" fill="#0F172A">not on the LSI</text>
+<text x="1012" y="408" font-size="11" fill="#475569">basis: firmware</text>
+<rect x="1232" y="350" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="1244" y="386" font-size="13" fill="#0F172A">CPU not on the LSI</text>
+<text x="1244" y="408" font-size="11" fill="#475569">basis: firmware</text>
+<rect x="40" y="442" width="252" height="84" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="476" font-size="16" fill="#0F172A" font-weight="700">Reset</text>
+<text x="56" y="498" font-size="12" fill="#475569">NRST, power-on and brown-out reset</text>
+<rect x="304" y="442" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="316" y="478" font-size="13" fill="#0F172A">reset is the safe state</text>
+<text x="316" y="500" font-size="11" fill="#475569">basis: MF-01</text>
+<rect x="536" y="442" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="548" y="478" font-size="13" fill="#0F172A">reset is the safe state</text>
+<text x="548" y="500" font-size="11" fill="#475569">basis: MF-03</text>
+<rect x="768" y="442" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="780" y="478" font-size="13" fill="#0F172A">reset is the safe state</text>
+<text x="780" y="500" font-size="11" fill="#475569">basis: MF-06</text>
+<rect x="1000" y="442" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1012" y="478" font-size="13" fill="#0F172A">shares the reset path</text>
+<text x="1012" y="500" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="1232" y="442" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1244" y="478" font-size="13" fill="#0F172A">a hang before the IWDG starts</text>
+<text x="1244" y="500" font-size="11" fill="#475569">basis: MF-03, MF-15</text>
+<rect x="40" y="534" width="252" height="84" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="568" font-size="16" fill="#0F172A" font-weight="700">Debug access</text>
+<text x="56" y="590" font-size="12" fill="#475569">SWD left enabled in every build</text>
+<rect x="304" y="534" width="224" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="316" y="570" font-size="13" fill="#D2553F" font-weight="600">a debugger can freeze it</text>
+<text x="316" y="592" font-size="11" fill="#475569">basis: MF-14</text>
+<rect x="536" y="534" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="548" y="570" font-size="13" fill="#0F172A">not affected by a halt</text>
+<text x="548" y="592" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="768" y="534" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="780" y="570" font-size="13" fill="#0F172A">a debugger can write RAM</text>
+<text x="780" y="592" font-size="11" fill="#475569">basis: MF-14</text>
+<rect x="1000" y="534" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="1012" y="570" font-size="13" fill="#0F172A">not affected by a halt</text>
+<text x="1012" y="592" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="1232" y="534" width="224" height="84" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="1244" y="570" font-size="13" fill="#D2553F" font-weight="600">a halted CPU checks nothing</text>
+<text x="1244" y="592" font-size="11" fill="#475569">basis: MF-14</text>
+<rect x="40" y="626" width="252" height="84" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="56" y="660" font-size="16" fill="#0F172A" font-weight="700">Die temperature</text>
+<text x="56" y="682" font-size="12" fill="#475569">sun load; DTS read, no reaction</text>
+<rect x="304" y="626" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="316" y="662" font-size="13" fill="#0F172A">LSI drifts with heat</text>
+<text x="316" y="684" font-size="11" fill="#475569">basis: WP-H-07 OI-7</text>
+<rect x="536" y="626" width="224" height="84" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1"/>
+<text x="548" y="662" font-size="13" fill="#0F172A">a stop is still seen</text>
+<text x="548" y="684" font-size="11" fill="#475569">basis: MF-03</text>
+<rect x="768" y="626" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="780" y="662" font-size="13" fill="#0F172A">soft errors rise with heat</text>
+<text x="780" y="684" font-size="11" fill="#475569">basis: WP-H-03 §6.3</text>
+<rect x="1000" y="626" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1012" y="662" font-size="13" fill="#0F172A">threshold drift</text>
+<text x="1012" y="684" font-size="11" fill="#475569">basis: RM0468</text>
+<rect x="1232" y="626" width="224" height="84" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
+<text x="1244" y="662" font-size="13" fill="#0F172A">timing margins shrink</text>
+<text x="1244" y="684" font-size="11" fill="#475569">basis: MF-11</text>
+<rect x="40" y="736" width="22" height="22" rx="4" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6"/>
+<text x="72" y="752" font-size="13" fill="#0F172A">common cause: needs an argument or a measure in WP-A-03 (4)</text>
+<rect x="505" y="736" width="22" height="22" rx="4" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6"/>
+<text x="537" y="752" font-size="13" fill="#0F172A">partial: note it and bound it (12)</text>
+<rect x="798.4" y="736" width="22" height="22" rx="4" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.6"/>
+<text x="830.4" y="752" font-size="13" fill="#0F172A">independent, or this mechanism is the monitor for that cause (14)</text>
+<text x="40" y="786" font-size="12" fill="#94A3B8">Drawn from the firmware at panda fd0a6a7 and the device header; cells whose basis is RM0468 still need ST's reference manual. AI-drafted (I0), not reviewed.</text>
+<g class="terms">
+<text x="40" y="810" font-size="10.5" fill="#475569">Terms: AI artificial intelligence · BOR brown-out reset (MCU supply monitor) · CPU central processing unit: a processor core · CSS clock security system (MCU clock monitor) · DTS digital temperature sensor of the MCU · ECC error-correcting code (memory) ·</text>
+<text x="40" y="824.5" font-size="10.5" fill="#475569">HSE high-speed external oscillator: the crystal that clocks the panda MCU · I0–I3 independence level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation) · ISO International Organization for Standardization · IWDG independent</text>
+<text x="40" y="839" font-size="10.5" fill="#475569">watchdog of the MCU · LSI low-speed internal oscillator of the MCU (32 kHz RC); it clocks the IWDG · MF-nn MCU feature: a safety feature of the STM32H725 and what the firmware does with it (04-hardware/semiconductors/stm32h725/features.yaml) · NRST the</text>
+<text x="40" y="853.5" font-size="10.5" fill="#475569">MCU's reset line (BOOT0 is its boot-mode line) · OI-nn open item of the document it appears in · RAM random-access memory · RC resistor-capacitor; an RC oscillator needs no crystal and drifts more than one · SMPS switched-mode power supply (the STM32H7's</text>
+<text x="40" y="868" font-size="10.5" fill="#475569">internal step-down regulator) · SRAM static RAM: the MCU's working memory · ST STMicroelectronics, the maker of the safety MCU · SWD serial wire debug: the MCU's two-pin debug port · VDD the MCU's main supply voltage · WP-nn work product, e.g. WP-C-04;</text>
+<text x="40" y="882.5" font-size="10.5" fill="#475569">the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>
