@@ -17,8 +17,8 @@ This report renders the component-level FMEDA of the harness box v3 (element E-0
 \item \PartCount{} parts and \ModeCount{} failure modes, every designator of the v3 drawing and the BOM; \RatedCount{} carry their own rate, the connectors sit inside the wiring row.
 \item For stock braking (SG-07) the box puts \SgSevenSpf{}~FIT on single points out of \BoxFit{}~FIT, almost all of it the two DG419LE switches.
 \item For steering (SG-01) the box has no single point: \SgOneRf{}~FIT is covered by a mechanism, \SgOneLatent{}~FIT is latent and \SgOneSafe{}~FIT is safe.
-\item The part-level view found what the block view hid: the goal FMEDAs split the same switch two ways, and \NewParts{} parts are in no goal FMEDA. Applied, the SPFM of SG-01 goes from \SpfmNow{}\,\% to \SpfmAfter{}\,\% and its LFM from \LfmNow{}\,\% to \LfmAfter{}\,\%.
-\item No periodic test of the box exists in service, so every latent fault stays latent for the box's life; \OpenModes{} modes still need their effect analysed.
+\item The part-level view found what the block view hid: the goal FMEDAs split the same switch two ways, and \AppliedParts{} ignition-sense parts were in no goal FMEDA. Both findings are now in the SG-001 FMEDA (revision \FmedaRev{}): the SPFM of SG-01 went from \SpfmBefore{}\,\% to \SpfmNow{}\,\% and its LFM from \LfmBefore{}\,\% to \LfmNow{}\,\%.
+\item No periodic test of the box exists in service, so every latent fault stays latent for the box's life; modes whose effect is still to be analysed: \OpenModes{}.
 \end{enumerate}
 The rates are generic estimates: neither the Siemens failure-rate standard \cite{sn29500} nor a failure-mode handbook is held, and no stress conversion to the mission profile is applied. These numbers show where the box falls short; they are not evidence of compliance. Every number in this report is a macro written from the record (\texttt{numbers.tex}), and every table and finding is computed by the same checks as the record's generated page, so the report cannot fall out of step with the analysis. The record is a draft, AI-assisted (independence I0) and not reviewed; so is this report.
 \chapter{The box and its blocks}
@@ -86,10 +86,10 @@ Figure~\ref{fig:parts} shows every part with its rate and the class of each fail
 \toprule \textbf{Category} & \textbf{SG-07 braking (FIT)} & \textbf{SG-01 steering (FIT)} \\ \midrule\endhead
 Single-point & 37.56 & 0 \\ \midrule
 Covered by a mechanism (before DC) & 0 & 15.16 \\ \midrule
-Latent multiple-point & 3.08 & 20.5 \\ \midrule
-Safe & 15.16 & 17.04 \\ \midrule
-No effect on this goal & 1.6 & 3.8 \\ \midrule
-Effect not yet analysed & 0.2 & 1.1 \\ \midrule
+Latent multiple-point & 3.08 & 20.7 \\ \midrule
+Safe & 15.24 & 17.94 \\ \midrule
+No effect on this goal & 1.72 & 3.8 \\ \midrule
+Effect not yet analysed & 0 & 0 \\ \midrule
 \bottomrule
 \end{longtable}
 {\small
@@ -121,14 +121,14 @@ D2 & 1 & Short or leakage on a CAN line & 30\% & SPF & none & sg009 FMD-033 \\ \
  &  & Open (clamp lost) & 70\% & MPF-L & none & sg009 FMD-034 \\ \midrule
 D3 & 1 & Short or leakage on a CAN line & 30\% & SPF & none & sg009 FMD-033 \\ \midrule
  &  & Open (clamp lost) & 70\% & MPF-L & none & sg009 FMD-034 \\ \midrule
-Q6 & 1 & Drain-source short (SBU2 held low) & 50\% & none & MPF-L & none \\ \midrule
- &  & Open (SBU2 never pulled low) & 50\% & none & open & none \\ \midrule
-R1 & 0.2 & Open & 60\% & open & open & none \\ \midrule
- &  & Short & 40\% & open & open & none \\ \midrule
-R4 & 0.2 & Open & 60\% & none & open & none \\ \midrule
- &  & Short & 40\% & none & open & none \\ \midrule
-R5 & 0.2 & Open & 60\% & none & open & none \\ \midrule
- &  & Short & 40\% & none & open & none \\ \midrule
+Q6 & 1 & Drain-source short (SBU2 held low) & 50\% & none & MPF-L & sg001 FMD-025 \\ \midrule
+ &  & Open (SBU2 never pulled low) & 50\% & none & safe & sg001 FMD-026 \\ \midrule
+R1 & 0.2 & Open & 60\% & none & safe & sg001 FMD-027 \\ \midrule
+ &  & Short & 40\% & safe & safe & sg001 FMD-028 \\ \midrule
+R4 & 0.2 & Open & 60\% & none & safe & sg001 FMD-029 \\ \midrule
+ &  & Short & 40\% & none & MPF-L & sg001 FMD-030 \\ \midrule
+R5 & 0.2 & Open & 60\% & none & MPF-L & sg001 FMD-031 \\ \midrule
+ &  & Short & 40\% & none & safe & sg001 FMD-032 \\ \midrule
 J1 & in the wiring row & Contact open in the stock path & 30\% & SPF & none & sg009 FMD-023 \\ \midrule
  &  & Plug loose (whole box off the harness) & 70\% & safe & safe & sg009 FMD-024 \\ \midrule
 J3 & in the wiring row & SBU1 contact open & 30\% & safe & RF & none \\ \midrule
@@ -179,33 +179,25 @@ Harness box bench tests VS-HW-22\ldots{}24 & On a sample box, at verification (W
 \end{longtable}
 }
 \chapter{Findings}
-\section{Disagreements with the goal FMEDAs}
-The check reports them; a new one fails the build and a resolved one must be removed, so the list only shrinks.
+\section{Applied to the goal FMEDAs}
+The findings of the part-level view are in the SG-001 FMEDA, revision 0.9; the roll-up check now finds the parts and both goal FMEDAs in agreement, row by row.
 \begin{itemize}
-\item fmeda-sg001 FMD-C-007: FMD-020 parts 15.00 FIT, row 17.50 FIT; FMD-021 parts 15.00 FIT, row 17.50 FIT; FMD-022 parts 20.00 FIT, row 15.00 FIT. The SG-001 file splits the DG419LE as 0.35 stuck in pass-through, 0.35 stuck in intercept and 0.30 channel open; the SG-009 file, and this part list, as 0.30, 0.30 and 0.40. One part can have only one failure-mode distribution: the two goal FMEDAs should be aligned (WP-H-03 OI-11).
+\item OI-11: The DG419LE split of the SG-001 file aligned with the SG-009 file and this part list (30 \% pass-through, 30 \% intercept, 40 \% channel open).
+\item OI-12: Q6, R1, R4 and R5 of the ignition sense carried as FMD-C-009 to FMD-C-012 and classified for SG-01, and a DFMEA row added for the ignition sense reading off while driving (DFM-024).
 \end{itemize}
-\section{Parts in no goal FMEDA}
-R6, Q6, R1, R4, R5. Their modes are classified in Table~\ref{tab:parts}; the Q6 drain-source short is latent for SG-01 (DFM-014.C2).
-\section{What the goal metrics would be}
-Table~\ref{tab:whatif} gives the SG-01 metrics with these findings applied, computed in memory with the project's FMEDA metrics; the FMEDA files are not changed (WP-H-03 OI-11, OI-12).
+R6 has no effect on either goal in the reference configuration, so it has no goal FMEDA row (Table~\ref{tab:parts}).
+\section{SG-01 metrics before and after}
+Table~\ref{tab:whatif} gives the SG-01 metrics before the findings were applied, as recorded, and now, computed from the SG-001 FMEDA with the project's FMEDA metrics. The ASIL~C SPFM target of 97\,\% is still missed, by 0.04 points (WP-H-04 OI-6).
 \begin{longtable}{@{}p{6.6cm}p{2.0cm}p{2.0cm}p{2.6cm}@{}}
-\caption{SG-01 metrics today and with the part-level findings applied.}\label{tab:whatif}\\
+\caption{SG-01 metrics before and after the part-level findings.}\label{tab:whatif}\\
 \toprule \textbf{Case} & \textbf{SPFM} & \textbf{LFM} & \textbf{Total (FIT)} \\ \midrule\endfirsthead
 \toprule \textbf{Case} & \textbf{SPFM} & \textbf{LFM} & \textbf{Total (FIT)} \\ \midrule\endhead
-SG-01 today (fmeda-sg001) & 96.84\,\% & 88.94\,\% & 255.4 \\ \midrule
-with the DG419LE split aligned & 96.94\,\% & 88.75\,\% & 255.4 \\ \midrule
-and Q6 short carried as a latent row & 96.95\,\% & 88.60\,\% & 256.4 \\ \midrule
+SG-01 before the findings (fmeda-sg001 rev 0.8) & 96.84\,\% & 88.94\,\% & 255.4 \\ \midrule
+SG-01 now (fmeda-sg001 rev 0.9) & 96.96\,\% & 88.54\,\% & 257 \\ \midrule
 \bottomrule
 \end{longtable}
 \section{Modes whose effect is not yet analysed}
 \begin{itemize}
-\item Q6: Open (SBU2 never pulled low)
-\item R1: Open
-\item R1: Short
-\item R4: Open
-\item R4: Short
-\item R5: Open
-\item R5: Short
 \item J2: Contact open or short
 \end{itemize}
 \appendix
@@ -213,6 +205,7 @@ and Q6 short carried as a latent row & 96.95\,\% & 88.60\,\% & 256.4 \\ \midrule
 Written from the project's single list of terms (\texttt{terms.py}), with only the terms this report uses.
 \begin{description}\small
 \item[AI] artificial intelligence
+\item[ASIL] Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262
 \item[BOM] bill of materials
 \item[CAN] controller area network: the vehicle's data bus
 \item[DC] diagnostic coverage: the share of faults a safety mechanism detects
@@ -221,10 +214,12 @@ Written from the project's single list of terms (\texttt{terms.py}), with only t
 \item[DQ-nn] decision of the project lead (decision register)
 \item[E-nn] element of the item (WP-C-01 §3.1), E-01\ldots{}E-06
 \item[FIT] failures in time: failures per 10$^9$ hours
+\item[FMD-nn] FMEDA row: component FMD-C-nnn, failure mode FMD-nnn (08-analyses/fmea)
 \item[FMEA] failure mode and effects analysis
 \item[FMEDA] failure modes, effects and diagnostic analysis (hardware metrics)
 \item[I0–I3] independence level of a review, I0 (none, e.g. the author or an AI) to I3 (independent organisation)
 \item[ISO] International Organization for Standardization
+\item[LFM] latent fault metric: share of the multiple-point failure rate that is not latent (ISO 26262-5)
 \item[MPF-L] latent multiple-point fault: violates a safety goal only together with another fault, and nothing detects it
 \item[OI-nn] open item of the document it appears in
 \item[RF] residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5)
@@ -233,6 +228,7 @@ Written from the project's single list of terms (\texttt{terms.py}), with only t
 \item[SM-nn] safety mechanism (TSC §6)
 \item[SN] SN 29500, the Siemens standard of reference failure rates for electronic components
 \item[SPF] single-point fault: a fault no safety mechanism covers that violates a safety goal on its own (ISO 26262-5)
+\item[SPFM] single-point fault metric: share of the safety-related failure rate not single-point or residual (ISO 26262-5)
 \item[T-nn] code-derived detection or reaction time (WP-S-04 §4); in WP-M-01 and WP-S-06, a tailoring decision T-01\ldots{}T-08 (WP-M-01 §5)
 \item[UK-nn] unknown that WP-H-02 must obtain (UK-01\ldots{}UK-09, WP-H-02 §5)
 \item[VIN] vehicle identification number; in the harness box and its simulations, the box supply voltage

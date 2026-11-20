@@ -20,12 +20,18 @@
 # asil_target for reference only. FMD-001 and FMD-009 carry their SG-05 classification (single-point, FTA BE-5.02) as per_goal entries,
 # so SG-05 gets its own estimate. Rate kind, handbook reference and wire ends are separate fields; history is data. SG-01 rates and
 # classifications are unchanged.
+# Rev 0.9 (2026-11-19, WP-H-03 OI-11 and OI-12, from the component FMEDA of the harness box, WP-H-03 §6.5): FMD-C-007 takes the
+# DG419LE failure-mode split of the SG-009 file and the part list (30 % pass-through, 30 % intercept, 40 % channel open; was 35/35/30),
+# since one part has one distribution. The ignition-sense parts Q6, R1, R4, R5 get their own rows (FMD-C-009…012), classified from
+# WP-H-03 FM-IGN-01/02 and FM-HAR-02 and the firmware (harness.h orientation detection, main.c heartbeat timeouts, pandad
+# should_close_relay). SG-01 moves from λ 255 FIT, SPFM 96.84 %, LFM 88.94 % to 257 FIT, 96.96 %, 88.54 %; the ASIL C SPFM target is still missed
+# (by 0.04 points, WP-H-04 OI-6).
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-001 lateral (panda safety path), generic failure rates
-  revision: '0.8'
+  revision: '0.9'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -67,7 +73,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-11-01'
+  updated: '2026-11-19'
   history:
   - revision: '0.1'
     date: '2026-10-10'
@@ -93,6 +99,9 @@ analysis:
   - revision: '0.8'
     date: '2026-11-01'
     change: 'Mechanisms linked to the WP-S-03 §6 catalogue (catalogue_ref); FMD-SM-004 (TX XOR) no longer tagged TSR-517, which is the post-load read-back SM-38; SM-14, SM-23 and SM-41 listed as not credited, with the reason; no rate, classification or metric change'
+  - revision: '0.9'
+    date: '2026-11-19'
+    change: 'WP-H-03 OI-11 and OI-12 (Claude, I0): FMD-C-007 DG419LE split aligned with the SG-009 file and the harness box part list (30/30/40 %); Q6, R1, R4 and R5 of the ignition sense added as FMD-C-009…012. SG-01 λ 255 → 257 FIT, SPFM 96.84 → 96.96 %, LFM 88.94 → 88.54 %, λSPF + λRF 8.1 → 7.8 FIT'
 safety_mechanisms:
 - id: FMD-SM-001
   catalogue_ref: SM-17
@@ -380,7 +389,7 @@ components:
   failure_modes:
   - id: FMD-020
     mode: Stuck in pass-through while driven (stock LKA and item commands both reach the EPS)
-    distribution: 0.35
+    distribution: 0.3
     violates_sg_directly: true
     mpf_potential: false
     dfmea_ref: DFM-011
@@ -389,14 +398,14 @@ components:
     notes: Usually detected after the mode change and before engagement; detection inside the FTTI while engaged is not shown
   - id: FMD-021
     mode: Stuck in intercept, or IN input damaged high
-    distribution: 0.35
+    distribution: 0.3
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-010
     notes: No effect on SG-001; see SG-009
   - id: FMD-022
     mode: Channel open, increased on-resistance, leakage or latch-up
-    distribution: 0.3
+    distribution: 0.4
     violates_sg_directly: false
     mpf_potential: true
     dfmea_ref: DFM-013
@@ -430,3 +439,99 @@ components:
     mpf_potential: false
     dfmea_ref: DFM-010
     notes: No effect on SG-001; latent for SG-009
+- id: FMD-C-009
+  ref_des: Q6 (harness box)
+  rate_kind: generic
+  stress_converted: false
+  part: 'Ignition sense: DMN3200U-7 N-channel MOSFET pulling SBU2 low when the ignition is on'
+  dfmea_element: DFM-SE-007
+  failure_rate_fit: 1
+  failure_rate_source: 'Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)'
+  safety_related: true
+  failure_modes:
+  - id: FMD-025
+    mode: Drain-source short (SBU2 held low, ignition sense reads on with the ignition off)
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-014
+    notes: 'Heartbeat timeout keeps its 5 s ignition-on value: a longer actuation window only after a second fault (SoC loss). No mechanism detects it (WP-H-03 FM-IGN-02)'
+  - id: FMD-026
+    mode: Open (SBU2 never pulled low, ignition sense reads off while driving)
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-024
+    notes: 'Safe for SG-001 (WP-H-03 FM-IGN-01): heartbeat timeout 2 s, pandad closes the relay (pass-through, should_close_relay) and the device goes offroad. Loss of the item without its take-control warning: DFM-024, HZ-004'
+- id: FMD-C-010
+  ref_des: R1 (harness box)
+  rate_kind: generic
+  stress_converted: false
+  part: 'Ignition sense: 1 kΩ series resistor between Q6 and SBU2'
+  dfmea_element: DFM-SE-007
+  failure_rate_fit: 0.2
+  failure_rate_source: 'Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)'
+  safety_related: true
+  failure_modes:
+  - id: FMD-027
+    mode: Open (ignition sense reads off while driving)
+    distribution: 0.6
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-024
+    notes: 'As FMD-026. The SBU2 side stays high, so the orientation detection still picks the R2/R3 side (lower voltage) as the switch line: orientation unchanged'
+  - id: FMD-028
+    mode: Short (SBU2 pulled low through Q6 alone)
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-024
+    notes: 'With the ignition on and the switch undriven, the SBU2 side reads lower than the 240 Ω R2/R3 side, so harness.h detects the orientation flipped (WP-H-03 FM-HAR-02): the intercept drive goes to the ignition line, the switch stays in pass-through and the relay-malfunction check (FMD-SM-006) blocks all TX. Safe for SG-001; item unavailable. Relies on Q6 on-resistance well below 240 Ω (datasheet value, not measured)'
+- id: FMD-C-011
+  ref_des: R4 (harness box)
+  rate_kind: generic
+  stress_converted: false
+  part: 'Ignition sense: upper leg of the IGN_12 divider to the Q6 gate'
+  dfmea_element: DFM-SE-007
+  failure_rate_fit: 0.2
+  failure_rate_source: 'Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)'
+  safety_related: true
+  failure_modes:
+  - id: FMD-029
+    mode: Open (Q6 stays off, ignition sense reads off while driving)
+    distribution: 0.6
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-024
+    notes: As FMD-026
+  - id: FMD-030
+    mode: Short (Q6 gate at the full ignition voltage)
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-014
+    notes: 'Classified as FMD-025, the worse Q6 outcome for SG-001, until the Q6 gate rating against the ignition voltage is checked (resistor values and the shipped part unconfirmed, VS-HW-02). Conservative'
+- id: FMD-C-012
+  ref_des: R5 (harness box)
+  rate_kind: generic
+  stress_converted: false
+  part: 'Ignition sense: lower leg of the IGN_12 divider (Q6 gate to GND)'
+  dfmea_element: DFM-SE-007
+  failure_rate_fit: 0.2
+  failure_rate_source: 'Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)'
+  safety_related: true
+  failure_modes:
+  - id: FMD-031
+    mode: Open (Q6 gate at the full ignition voltage)
+    distribution: 0.6
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-014
+    notes: As FMD-030, conservative
+  - id: FMD-032
+    mode: Short (Q6 stays off, ignition sense reads off while driving)
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-024
+    notes: As FMD-026

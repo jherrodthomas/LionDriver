@@ -4,11 +4,11 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.8 | draft | BL-002 | RT-1 | 2026-11-01 |
+| 0.9 | draft | BL-002 | RT-1 | 2026-11-19 |
 
 **Scope.** Random hardware faults of the panda section that can let an out-of-envelope or unauthorised steering request reach the EPS (LD-HARA-001 SG-001, ASIL D; assurance WP-C-03 SG-01, ASIL C pending OI-1). Reference device at BL-002. By decision DQ-362 (2026-10-18) the rows also stand for assurance SG-02, SG-03, SG-06 (ASIL C) and SG-05 (ASIL B), classified for SG-001; per-goal notes in WP-H-03 §6.4
 
-> ⚠️ **Estimate.** 7 of 8 failure rates are generic order-of-magnitude estimates, and 0 are converted to the mission profile. The metrics show where the design falls short. They are not evidence that a target is met.
+> ⚠️ **Estimate.** 11 of 12 failure rates are generic order-of-magnitude estimates, and 0 are converted to the mission profile. The metrics show where the design falls short. They are not evidence that a target is met.
 
 ![Metrics per goal and failure-rate split](../../figures/generated/fig-3-10-fmeda-sg001-metrics.svg)
 
@@ -18,11 +18,11 @@
 
 ![The worksheet as a spreadsheet: a group row per component, a row per failure mode with its class, mechanism, DC and λ split, and the totals with SPFM and LFM](fmeda-views/fmeda-sg001-sheet.svg)
 
-Both drawn by `tools/safety/fmeda_views.py`. The [live worksheet](https://claude.ai/artifact/PCbGoJH1mrjZGDmEzegu7N) (private link) has every row for every goal, with filters, search and each row's notes.
+Both drawn by `tools/safety/fmeda_views.py`. The [live worksheet](https://claude.ai/artifact/GqXdK8QZmYi2EVSbj3FiSp) (private link) has every row for every goal, with filters, search and each row's notes.
 
 ## How to review
 
-Start with the metrics per goal, then the failure modes that drive them (SPF and latent rows). Comment on this page's lines in a pull request, or open an issue naming the row ID (FMD-…). For a rate or DC, say which value you would use and its source. To try values before asking for a change, use the [what-if page](https://claude.ai/artifact/6btZjojvGtcyZdYrhzsR8Z) (private link; it holds a snapshot of this revision). The same data as a workbook with live formulas: [`fmeda-sg001-review.xlsx`](fmeda-sg001-review.xlsx).
+Start with the metrics per goal, then the failure modes that drive them (SPF and latent rows). Comment on this page's lines in a pull request, or open an issue naming the row ID (FMD-…). For a rate or DC, say which value you would use and its source. To try values before asking for a change, use the [what-if page](https://claude.ai/artifact/FwMt6jccCRfNSZ3BbGJHr1) (private link; it holds a snapshot of this revision). The same data as a workbook with live formulas: [`fmeda-sg001-review.xlsx`](fmeda-sg001-review.xlsx).
 
 ## Contents
 
@@ -40,15 +40,15 @@ Targets from WP-H-04 §4. LD-HARA-001 rates this file's goal SG-001 at ASIL D; t
 
 | Goal | ASIL | SPFM | LFM | λSPF + λRF (FIT) | Result | Basis |
 |---|---|---:|---:|---:|---|---|
-| SG-01 | C | 96.84 % | 88.94 % | 8.07 | 🔴 missed: SPFM < 97 % | WP-C-03 SG-01 at ASIL C until the HARA re-rates it, with the ASIL B result shown alongside (DQ-063). LD-HARA-001 SG-001 is rated D |
-| SG-01 | B (alongside) | 96.84 % | 88.94 % | 8.07 | 🟠 met on this estimate |  |
-| SG-02 | C | 96.84 % | 88.94 % | 8.07 | 🔴 missed: SPFM < 97 % | WP-C-03 v0.4; the shared rows are reused with the SG-01 classification (DQ-362 option A, WP-H-03 §6.4) |
-| SG-03 | C | 96.84 % | 88.94 % | 8.07 | 🔴 missed: SPFM < 97 % | WP-C-03 v0.4; 0x343 leaves through the same TX path, rows reused with the SG-01 classification (DQ-362 option A) |
-| SG-04 | B | 96.84 % | 88.94 % | 8.07 | 🟠 met on this estimate | WP-C-03 v0.4; rows reused with the SG-01 classification (DQ-002) |
-| SG-05 | B | 90.38 % | 95.30 % | 24.6 | 🟠 met on this estimate | WP-C-03 v0.4; rows reused (DQ-362 option A), with FMD-001 and FMD-009 single-point for this goal (FTA BE-5.02) |
-| SG-06 | C | 96.84 % | 88.94 % | 8.07 | 🔴 missed: SPFM < 97 % | WP-C-03 v0.4; the shared rows are reused with the SG-01 classification (DQ-362 option A, WP-H-03 §6.4) |
+| SG-01 | C | 96.96 % | 88.54 % | 7.82 | 🔴 missed: SPFM < 97 % | WP-C-03 SG-01 at ASIL C until the HARA re-rates it, with the ASIL B result shown alongside (DQ-063). LD-HARA-001 SG-001 is rated D |
+| SG-01 | B (alongside) | 96.96 % | 88.54 % | 7.82 | 🟠 met on this estimate |  |
+| SG-02 | C | 96.96 % | 88.54 % | 7.82 | 🔴 missed: SPFM < 97 % | WP-C-03 v0.4; the shared rows are reused with the SG-01 classification (DQ-362 option A, WP-H-03 §6.4) |
+| SG-03 | C | 96.96 % | 88.54 % | 7.82 | 🔴 missed: SPFM < 97 % | WP-C-03 v0.4; 0x343 leaves through the same TX path, rows reused with the SG-01 classification (DQ-362 option A) |
+| SG-04 | B | 96.96 % | 88.54 % | 7.82 | 🟠 met on this estimate | WP-C-03 v0.4; rows reused with the SG-01 classification (DQ-002) |
+| SG-05 | B | 90.54 % | 94.82 % | 24.3 | 🟠 met on this estimate | WP-C-03 v0.4; rows reused (DQ-362 option A), with FMD-001 and FMD-009 single-point for this goal (FTA BE-5.02) |
+| SG-06 | C | 96.96 % | 88.54 % | 7.82 | 🔴 missed: SPFM < 97 % | WP-C-03 v0.4; the shared rows are reused with the SG-01 classification (DQ-362 option A, WP-H-03 §6.4) |
 
-Total safety-related λ 255.4 FIT. λSPF + λRF is the single-point and residual part of PMHF only; the dual-point term is not computed (rating-tables §6.3). 🟠 means met on generic estimates, not verified.
+Total safety-related λ 257.0 FIT. λSPF + λRF is the single-point and residual part of PMHF only; the dual-point term is not computed (rating-tables §6.3). 🟠 means met on generic estimates, not verified.
 
 ## 2. Components and failure-rate sources
 
@@ -62,6 +62,10 @@ Total safety-related λ 255.4 FIT. λSPF + λRF is the single-point and residual
 | FMD-C-006 | Car-side CAN transceiver XCVR1 | 10 | generic | — | — | no | — |
 | FMD-C-007 | Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box) | 50 | handbook | SN 29500-2 Table 5, CMOS/BiCMOS analog and mixed-signal ICs (quoted from TI functional-safety reports; standard not read) | 55 °C | no | <sub>HB.U1.6-J3.A8, HB.U2.6-J3.A8, HB.J1.4-U1.2, HB.J1.6-U2.1, HB.J1.16-U1.1, HB.J1.18-U2.2</sub> |
 | FMD-C-008 | SBU1 pull-down: 2 × 120 Ω thick-film resistor in series | 0.4 | generic | — | — | no | <sub>HB.R2/R3.1-J3.A8</sub> |
+| FMD-C-009 | Ignition sense: DMN3200U-7 N-channel MOSFET pulling SBU2 low when the ignition is on | 1 | generic | — | — | no | — |
+| FMD-C-010 | Ignition sense: 1 kΩ series resistor between Q6 and SBU2 | 0.2 | generic | — | — | no | — |
+| FMD-C-011 | Ignition sense: upper leg of the IGN_12 divider to the Q6 gate | 0.2 | generic | — | — | no | — |
+| FMD-C-012 | Ignition sense: lower leg of the IGN_12 divider (Q6 gate to GND) | 0.2 | generic | — | — | no | — |
 
 <details><summary>Rate source text per component</summary>
 
@@ -73,6 +77,10 @@ Total safety-related λ 255.4 FIT. λSPF + λRF is the single-point and residual
 - **FMD-C-006:** Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
 - **FMD-C-007:** SN 29500-2 reference value for CMOS/BiCMOS analog and mixed-signal ICs (Table 5, supply up to 50 V): 25 FIT per IC at a virtual junction temperature of 55 °C, as quoted in TI functional-safety FIT reports (TPS1663 SFFS110, LM73605 SFFS410, LMR36015-Q1 SNVA922); other TI reports (OPA991-Q1, TPS22965-Q1) quote 20 FIT, and the higher value is used. 2 × 25 FIT. Secondary source: the standard itself was not read (not reachable from the analysis environment), and no temperature or stress conversion to the mission profile is applied. Part number DG419LE from the harness box v3 drawing (RR-2026-010 HB-01); shipped parts unconfirmed (VS-HW-02)
 - **FMD-C-008:** Generic estimate (SMD thick-film chip resistor, 2 × about 0.2 FIT). Part class known from the harness box v3 drawing (RR-2026-010 HB-02); maps to the SN 29500 passive-component class, but no reference value could be obtained (standard not reachable, 2026-10-16). Stays generic until the source is confirmed (WP-H-03 OI-2); shipped parts unconfirmed (VS-HW-02)
+- **FMD-C-009:** Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)
+- **FMD-C-010:** Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)
+- **FMD-C-011:** Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)
+- **FMD-C-012:** Generic estimate; part class known from the harness box v3 drawing (RR-2026-010 HB-06), no reference value held (SN 29500 not reachable). Rate and mode split as the component FMEDA of the harness box (WP-H-03 §6.5, harness-box-parts.yaml); shipped parts unconfirmed (VS-HW-02)
 
 </details>
 
@@ -101,11 +109,19 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 | FMD-017 | FMD-C-006 | TX stuck dominant | 30 % | 3 | safe | — | DFM-008 | — |
 | FMD-018 | FMD-C-006 | RX open or stuck recessive | 30 % | 3 | safe | — | DFM-009 | — |
 | FMD-019 | FMD-C-006 | Bit errors on the line | 40 % | 4 | MPF, detected and latent parts | FMD-SM-008 (99 %) | — | — |
-| FMD-020 | FMD-C-007 | Stuck in pass-through while driven (stock LKA and item commands both reach the EPS) | 35 % | 17.5 | 🟠 RF | FMD-SM-006 (90 %) | DFM-011 | — |
-| FMD-021 | FMD-C-007 | Stuck in intercept, or IN input damaged high | 35 % | 17.5 | safe | — | DFM-010 | — |
-| FMD-022 | FMD-C-007 | Channel open, increased on-resistance, leakage or latch-up | 30 % | 15.0 | MPF, detected and latent parts | FMD-SM-008 (90 %) | DFM-013 | — |
+| FMD-020 | FMD-C-007 | Stuck in pass-through while driven (stock LKA and item commands both reach the EPS) | 30 % | 15.0 | 🟠 RF | FMD-SM-006 (90 %) | DFM-011 | — |
+| FMD-021 | FMD-C-007 | Stuck in intercept, or IN input damaged high | 30 % | 15.0 | safe | — | DFM-010 | — |
+| FMD-022 | FMD-C-007 | Channel open, increased on-resistance, leakage or latch-up | 40 % | 20.0 | MPF, detected and latent parts | FMD-SM-008 (90 %) | DFM-013 | — |
 | FMD-023 | FMD-C-008 | Short (SBU1 held low, so the switch cannot reach intercept) | 40 % | 0.16 | 🟠 RF | FMD-SM-006 (90 %) | DFM-011 | — |
 | FMD-024 | FMD-C-008 | Open (IN floats when SBU1 is undriven) | 60 % | 0.24 | safe | — | DFM-010 | — |
+| FMD-025 | FMD-C-009 | Drain-source short (SBU2 held low, ignition sense reads on with the ignition off) | 50 % | 0.5 | 🟡 MPF, latent part | — | DFM-014 | — |
+| FMD-026 | FMD-C-009 | Open (SBU2 never pulled low, ignition sense reads off while driving) | 50 % | 0.5 | safe | — | DFM-024 | — |
+| FMD-027 | FMD-C-010 | Open (ignition sense reads off while driving) | 60 % | 0.12 | safe | — | DFM-024 | — |
+| FMD-028 | FMD-C-010 | Short (SBU2 pulled low through Q6 alone) | 40 % | 0.08 | safe | — | DFM-024 | — |
+| FMD-029 | FMD-C-011 | Open (Q6 stays off, ignition sense reads off while driving) | 60 % | 0.12 | safe | — | DFM-024 | — |
+| FMD-030 | FMD-C-011 | Short (Q6 gate at the full ignition voltage) | 40 % | 0.08 | 🟡 MPF, latent part | — | DFM-014 | — |
+| FMD-031 | FMD-C-012 | Open (Q6 gate at the full ignition voltage) | 60 % | 0.12 | 🟡 MPF, latent part | — | DFM-014 | — |
+| FMD-032 | FMD-C-012 | Short (Q6 stays off, ignition sense reads off while driving) | 40 % | 0.08 | safe | — | DFM-024 | — |
 
 <details><summary>Notes per failure mode</summary>
 
@@ -129,6 +145,14 @@ Classified for this file's own goal (rating-tables §6.1). λ is the component r
 - **FMD-022:** RX timeouts and CAN errors
 - **FMD-023:** Same effect as FMD-020: stock path stays joined while driven
 - **FMD-024:** No effect on SG-001; latent for SG-009
+- **FMD-025:** Heartbeat timeout keeps its 5 s ignition-on value: a longer actuation window only after a second fault (SoC loss). No mechanism detects it (WP-H-03 FM-IGN-02)
+- **FMD-026:** Safe for SG-001 (WP-H-03 FM-IGN-01): heartbeat timeout 2 s, pandad closes the relay (pass-through, should_close_relay) and the device goes offroad. Loss of the item without its take-control warning: DFM-024, HZ-004
+- **FMD-027:** As FMD-026. The SBU2 side stays high, so the orientation detection still picks the R2/R3 side (lower voltage) as the switch line: orientation unchanged
+- **FMD-028:** With the ignition on and the switch undriven, the SBU2 side reads lower than the 240 Ω R2/R3 side, so harness.h detects the orientation flipped (WP-H-03 FM-HAR-02): the intercept drive goes to the ignition line, the switch stays in pass-through and the relay-malfunction check (FMD-SM-006) blocks all TX. Safe for SG-001; item unavailable. Relies on Q6 on-resistance well below 240 Ω (datasheet value, not measured)
+- **FMD-029:** As FMD-026
+- **FMD-030:** Classified as FMD-025, the worse Q6 outcome for SG-001, until the Q6 gate rating against the ignition voltage is checked (resistor values and the shipped part unconfirmed, VS-HW-02). Conservative
+- **FMD-031:** As FMD-030, conservative
+- **FMD-032:** As FMD-026
 
 </details>
 
@@ -167,9 +191,12 @@ From the workbook's `11_Open_Items` tab.
 - **OI-5:** FMD-013 (FMD-C-004): latent fault without coverage: Frequency drift (all timeouts and rate windows scale)
 - **OI-6:** FMD-015 (FMD-C-005): single-point fault without a safety mechanism: Under-voltage in the brown-out zone or over-voltage (erratic logic)
 - **OI-7:** FMD-016 (FMD-C-005): latent fault without coverage: Ripple or noise
-- **OI-8:** 7 of 8 failure rates are generic estimates: replace with handbook or supplier values per part (WP-H-03 §2.3, OI-10)
-- **OI-9:** No rate is converted to the mission profile (IEC 61709)
-- **OI-10:** Dual-point PMHF term not computed
+- **OI-8:** FMD-025 (FMD-C-009): latent fault without coverage: Drain-source short (SBU2 held low, ignition sense reads on with the ignition off)
+- **OI-9:** FMD-030 (FMD-C-011): latent fault without coverage: Short (Q6 gate at the full ignition voltage)
+- **OI-10:** FMD-031 (FMD-C-012): latent fault without coverage: Open (Q6 gate at the full ignition voltage)
+- **OI-11:** 11 of 12 failure rates are generic estimates: replace with handbook or supplier values per part (WP-H-03 §2.3, OI-10)
+- **OI-12:** No rate is converted to the mission profile (IEC 61709)
+- **OI-13:** Dual-point PMHF term not computed
 
 ## 7. Revision history
 
@@ -183,3 +210,4 @@ From the workbook's `11_Open_Items` tab.
 | 0.6 | 2026-10-20 | Wire-end IDs of the WireViz drawings added; no rate, classification or metric change |
 | 0.7 | 2026-10-20 | Format review: targets per goal (C with B alongside for SG-01), SG-05 classification of FMD-001 and FMD-009, rate kind and wire ends as fields; SG-01 metrics unchanged |
 | 0.8 | 2026-11-01 | Mechanisms linked to the WP-S-03 §6 catalogue (catalogue_ref); FMD-SM-004 (TX XOR) no longer tagged TSR-517, which is the post-load read-back SM-38; SM-14, SM-23 and SM-41 listed as not credited, with the reason; no rate, classification or metric change |
+| 0.9 | 2026-11-19 | WP-H-03 OI-11 and OI-12 (Claude, I0): FMD-C-007 DG419LE split aligned with the SG-009 file and the harness box part list (30/30/40 %); Q6, R1, R4 and R5 of the ignition sense added as FMD-C-009…012. SG-01 λ 255 → 257 FIT, SPFM 96.84 → 96.96 %, LFM 88.94 → 88.54 %, λSPF + λRF 8.1 → 7.8 FIT |

@@ -6,7 +6,7 @@ Usage: tools/safety/fmeda_whatif.py --out <file.html>
 The page embeds a snapshot of analyses/fmeda-*.yaml and computes the metrics in the browser with the same rules as
 fmea_lint.fmeda_metrics (rating-tables §6.1, per_goal classification). It changes nothing in the repository: a value
 worth keeping goes into the YAML through a pull request. The page is published as a private claude.ai page (URL in
-fmeda_review_md.WHAT_IF, https://claude.ai/artifact/6btZjojvGtcyZdYrhzsR8Z); rebuild and republish it to that URL when an FMEDA file changes.
+fmeda_review_md.WHAT_IF, https://claude.ai/artifact/FwMt6jccCRfNSZ3BbGJHr1); rebuild and republish it to that URL when an FMEDA file changes.
 
 The scenarios are the planned measures of WP-H-03 §6.3 with the DC values stated there. test_fmea_lint checks that
 they reproduce the §6.3 results through fmea_lint.

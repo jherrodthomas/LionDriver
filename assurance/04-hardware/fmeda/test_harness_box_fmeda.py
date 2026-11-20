@@ -27,8 +27,17 @@ class TestHarnessBoxFmeda(unittest.TestCase):
       hb.check_parts(data)
 
   def test_parts_add_up_to_the_goal_rows(self):
-    # every difference is a listed one: the DG419LE split of the SG-001 file
-    self.assertEqual([(d["file"], d["row"]) for d in self.r["diffs"]], [("fmeda-sg001", "FMD-C-007")])
+    # OI-11 and OI-12 are applied: the parts and both goal FMEDAs agree row by row
+    self.assertEqual(self.r["diffs"], [])
+
+  def test_applied_findings_are_in_the_file(self):
+    before, now = self.r["whatif"]
+    self.assertAlmostEqual(now["spfm"], hb.fmea_lint.fmeda_metrics(self.goals["fmeda-sg001"])["spfm"])
+    self.assertNotEqual(before["spfm"], now["spfm"])
+    data = copy.deepcopy(self.data)
+    next(p for p in data["parts"] if p["ref"] == "R5")["modes"][0].pop("rows")
+    with self.assertRaises(hb.BoxError):
+      hb.what_if(data, self.goals)
 
   def test_a_changed_rate_or_class_fails(self):
     parts = copy.deepcopy(self.r["parts"])

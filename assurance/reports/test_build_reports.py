@@ -83,7 +83,7 @@ class TestHarnessBox(unittest.TestCase):
     self.assertEqual(int(self.n["PartCount"]), len(parts))
     self.assertEqual(int(self.n["ModeCount"]), sum(len(p["modes"]) for p in parts))
     self.assertEqual(self.n["SgSevenSpf"], self.hb.fit(self.r["cat"]["SG-07"]["SPF"]))
-    self.assertEqual(self.n["SpfmNow"], f"{self.r['whatif'][0]['spfm'] * 100:.2f}")
+    self.assertEqual(self.n["SpfmNow"], f"{self.r['whatif'][1]['spfm'] * 100:.2f}")
     self.assertEqual(self.n["HbVersion"], self.r["data"]["revisions"][-1]["version"])
 
   def test_every_part_and_mode_once(self):
@@ -103,6 +103,8 @@ class TestHarnessBox(unittest.TestCase):
       self.assertIn(fig.stem + ".pdf", self.doc)
     for d in self.r["diffs"]:
       self.assertIn(d["row"], self.doc)
+    for f in self.r["data"]["applied"]["findings"]:
+      self.assertIn(f["id"], self.doc)
     self.assertIn(r"\bibitem{iso26262-5}", self.doc)
 
 

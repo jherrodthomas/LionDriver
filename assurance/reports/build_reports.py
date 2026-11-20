@@ -279,17 +279,21 @@ def harness_box() -> tuple[dict[str, str], list[Path]]:
   rev = data["revisions"][-1]
   rated = [p for p in parts if p["rate_fit"] is not None]
   opens = [(p["ref"], m["mode"]) for p in parts for m in p["modes"] if "open" in m["goals"].values()]
-  new = [p["ref"] for p in rated if not any(m.get("rows") for m in p["modes"])]
-  if len(wi) != 3:
-    raise ReportError(f"{where}: the what-if has {len(wi)} cases, the report expects 3")
+  ap = data["applied"]
+  unmapped = [p for p in rated if not any(m.get("rows") for m in p["modes"])]
+  no_effect = [p["ref"] for p in unmapped if all(c == "none" for m in p["modes"] for c in m["goals"].values())]
+  new = [p["ref"] for p in unmapped if p["ref"] not in no_effect]
+  if len(wi) != 2:
+    raise ReportError(f"{where}: the metrics have {len(wi)} cases, the report expects before and now")
   pct = lambda x: f"{x * 100:.2f}"  # noqa: E731
   numbers = {"HbVersion": rev["version"], "HbDate": rev["date"], "PartCount": len(parts),
              "ModeCount": sum(len(p["modes"]) for p in parts), "RatedCount": len(rated),
              "BlockCount": len(data["blocks"]), "BoxFit": hb.fit(sum(p["rate_fit"] for p in rated)),
              "SgSevenSpf": hb.fit(cat["SG-07"]["SPF"]), "SgOneRf": hb.fit(cat["SG-01"]["RF"]),
              "SgOneLatent": hb.fit(cat["SG-01"]["MPF-L"]), "SgOneSafe": hb.fit(cat["SG-01"]["safe"]),
-             "SpfmNow": pct(wi[0]["spfm"]), "SpfmAfter": pct(wi[2]["spfm"]), "LfmNow": pct(wi[0]["lfm"]),
-             "LfmAfter": pct(wi[2]["lfm"]), "OpenModes": len(opens), "NewParts": len(new),
+             "SpfmBefore": pct(wi[0]["spfm"]), "SpfmNow": pct(wi[1]["spfm"]), "LfmBefore": pct(wi[0]["lfm"]),
+             "LfmNow": pct(wi[1]["lfm"]), "OpenModes": len(opens), "AppliedParts": len(ap["new_parts"]),
+             "FmedaRev": ap["revision"],
              "PeriodicTests": len(data["periodic_tests"])}
   t = lambda s: tex(str(s), where)  # noqa: E731
   names = {"SPF": "Single-point", "RF": "Covered by a mechanism (before DC)", "MPF-L": "Latent multiple-point",
@@ -334,10 +338,11 @@ def harness_box() -> tuple[dict[str, str], list[Path]]:
           r"\item For steering (SG-01) the box has no single point: \SgOneRf{}~FIT is covered by a mechanism, "
           r"\SgOneLatent{}~FIT is latent and \SgOneSafe{}~FIT is safe.",
           r"\item The part-level view found what the block view hid: the goal FMEDAs split the same switch two ways, "
-          r"and \NewParts{} parts are in no goal FMEDA. Applied, the SPFM of SG-01 goes from \SpfmNow{}\,\% to "
-          r"\SpfmAfter{}\,\% and its LFM from \LfmNow{}\,\% to \LfmAfter{}\,\%.",
+          r"and \AppliedParts{} ignition-sense parts were in no goal FMEDA. Both findings are now in the SG-001 FMEDA "
+          r"(revision \FmedaRev{}): the SPFM of SG-01 went from \SpfmBefore{}\,\% to \SpfmNow{}\,\% and its LFM from "
+          r"\LfmBefore{}\,\% to \LfmNow{}\,\%.",
           r"\item No periodic test of the box exists in service, so every latent fault stays latent for the box's "
-          r"life; \OpenModes{} modes still need their effect analysed.",
+          r"life; modes whose effect is still to be analysed: \OpenModes{}.",
           r"\end{enumerate}",
           r"The rates are generic estimates: neither the Siemens failure-rate standard \cite{sn29500} nor a failure-mode "
           r"handbook is held, and no stress conversion to "
@@ -397,23 +402,35 @@ def harness_box() -> tuple[dict[str, str], list[Path]]:
                       .replace("%", r"\%"), t(x["note"])] for x in data["periodic_tests"]],
                     "Tests that find latent faults of the box.", "tab:tests"),
           r"\chapter{Findings}",
-          r"\section{Disagreements with the goal FMEDAs}",
-          r"The check reports them; a new one fails the build and a resolved one must be removed, so the list only "
-          r"shrinks.",
+          r"\section{Applied to the goal FMEDAs}",
+          rf"The findings of the part-level view are in the SG-001 FMEDA, revision {t(ap['revision'])}; the roll-up "
+          r"check now finds the parts and both goal FMEDAs in agreement, row by row.",
           r"\begin{itemize}"]
-  for d in r["diffs"]:
-    reason = next(k["reason"] for k in data["known_differences"] if (k["file"], k["row"]) == (d["file"], d["row"]))
-    body.append(rf"\item {t(d['file'])} {t(d['row'])}: {t(d['what'])}. {t(reason)}")
-  body += [r"\end{itemize}",
-           r"\section{Parts in no goal FMEDA}",
-           rf"{t(', '.join(new))}. Their modes are classified in Table~\ref{{tab:parts}}; the Q6 drain-source short is "
-           r"latent for SG-01 (DFM-014.C2).",
-           r"\section{What the goal metrics would be}",
-           r"Table~\ref{tab:whatif} gives the SG-01 metrics with these findings applied, computed in memory with the "
-           r"project's FMEDA metrics; the FMEDA files are not changed (WP-H-03 OI-11, OI-12).",
+  body += [rf"\item {t(f['id'])}: {t(f['text'])}." for f in ap["findings"]]
+  body.append(r"\end{itemize}")
+  if r["diffs"]:
+    body += [r"\section{Disagreements with the goal FMEDAs}",
+             r"The check reports them; a new one fails the build and a resolved one must be removed, so the list only "
+             r"shrinks.", r"\begin{itemize}"]
+    for d in r["diffs"]:
+      reason = next(k["reason"] for k in data["known_differences"] if (k["file"], k["row"]) == (d["file"], d["row"]))
+      body.append(rf"\item {t(d['file'])} {t(d['row'])}: {t(d['what'])}. {t(reason)}")
+    body.append(r"\end{itemize}")
+  if new:
+    body += [r"\section{Parts in no goal FMEDA}", t(", ".join(new)) + "."]
+  if no_effect:
+    body.append(rf"{t(', '.join(no_effect))} has no effect on either goal in the reference configuration, so it has no "
+                r"goal FMEDA row (Table~\ref{tab:parts}).")
+  target = hb.fmea_lint.FMEDA_TARGETS["C"][0]
+  spfm_vs_c = (rf"The ASIL~C SPFM target of {target * 100:g}\,\% is still missed, by "
+               rf"{(target - wi[1]['spfm']) * 100:.2f} points (WP-H-04 OI-6)." if wi[1]["spfm"] < target else
+               rf"The ASIL~C SPFM target of {target * 100:g}\,\% is now met.")
+  body += [r"\section{SG-01 metrics before and after}",
+           r"Table~\ref{tab:whatif} gives the SG-01 metrics before the findings were applied, as recorded, and now, "
+           r"computed from the SG-001 FMEDA with the project's FMEDA metrics. " + spfm_vs_c,
            longtable(r"p{6.6cm}p{2.0cm}p{2.0cm}p{2.6cm}", ["Case", "SPFM", "LFM", "Total (FIT)"],
                      [[t(w["case"]), pct(w["spfm"]) + r"\,\%", pct(w["lfm"]) + r"\,\%", hb.fit(w["total"])] for w in wi],
-                     "SG-01 metrics today and with the part-level findings applied.", "tab:whatif", small=False),
+                     "SG-01 metrics before and after the part-level findings.", "tab:whatif", small=False),
            r"\section{Modes whose effect is not yet analysed}",
            r"\begin{itemize}"]
   body += [rf"\item {ref}: {t(mode)}" for ref, mode in opens]

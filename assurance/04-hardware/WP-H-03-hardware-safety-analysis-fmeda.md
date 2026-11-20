@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.12 (§6.5: component-level FMEDA of the harness box v3, part by part, with its roll-up check against the goal FMEDAs and the four FMEDA outputs; findings: the two goal FMEDAs split the DG419LE differently (OI-11), and Q6, R1, R4, R5 are in no goal FMEDA (OI-12); AI-drafted; 2026-11-13). 0.11 (§4: IWDG credit aligned with the FMEDA, 90 % provisional by DQ-114 A; §6.3: SM-20 readback credited at 90 % against a high target, TX read-back is SM-38 and not the TX XOR; AI-drafted; 2026-11-01). 0.10 (§6.2/§6.3: SG-07 figures from FMEDA SG-009 rev 0.9, camera-side termination R7/R8 added; λ 288 FIT, LFM 97.6 %, λSPF + λRF 63.1 FIT; planned-measure chain 83.6 → 87.3 → 94.5 %; AI-drafted; 2026-10-27). 0.9 (§6.4: SG-05 estimate from the FMEDA rev 0.7 per-goal classification, SPFM 90.38 %; 2026-10-20). 0.8 (FM-HAR-02: a flipped reading also swaps logical CAN buses 0 and 2; effect traced to the relay-malfunction check; 2026-10-20). 0.7 (§2.3 handbook set approved, DQ-068 option A, OI-2 closed; no ST licence, own self-tests with low CPU coverage, DQ-069 option B: §2.3 STM32H7 row, OI-3 and §6.4 updated, the ASIL C SPFM target likely missed and carried to G2; 2026-10-19). 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
+| Version | 0.13 (§6.5 findings applied, OI-11 and OI-12 closed: the SG-001 FMEDA rev 0.9 takes the DG419LE split of the SG-009 file and carries the ignition-sense parts Q6, R1, R4, R5; DFMEA DFM-024 for the ignition sense reading off while driving. §6.3/§6.4 SG-01 figures recomputed: λ 257 FIT, SPFM 96.96 %, LFM 88.54 %, ASIL C SPFM missed by 0.04 points; SG-05 90.54 %; planned measures 99.2 % / 94.9 %; TSR-517 alone 97.64 %. J2 left as OI-13; AI-drafted; 2026-11-19). 0.12 (§6.5: component-level FMEDA of the harness box v3, part by part, with its roll-up check against the goal FMEDAs and the four FMEDA outputs; findings: the two goal FMEDAs split the DG419LE differently (OI-11), and Q6, R1, R4, R5 are in no goal FMEDA (OI-12); AI-drafted; 2026-11-13). 0.11 (§4: IWDG credit aligned with the FMEDA, 90 % provisional by DQ-114 A; §6.3: SM-20 readback credited at 90 % against a high target, TX read-back is SM-38 and not the TX XOR; AI-drafted; 2026-11-01). 0.10 (§6.2/§6.3: SG-07 figures from FMEDA SG-009 rev 0.9, camera-side termination R7/R8 added; λ 288 FIT, LFM 97.6 %, λSPF + λRF 63.1 FIT; planned-measure chain 83.6 → 87.3 → 94.5 %; AI-drafted; 2026-10-27). 0.9 (§6.4: SG-05 estimate from the FMEDA rev 0.7 per-goal classification, SPFM 90.38 %; 2026-10-20). 0.8 (FM-HAR-02: a flipped reading also swaps logical CAN buses 0 and 2; effect traced to the relay-malfunction check; 2026-10-20). 0.7 (§2.3 handbook set approved, DQ-068 option A, OI-2 closed; no ST licence, own self-tests with low CPU coverage, DQ-069 option B: §2.3 STM32H7 row, OI-3 and §6.4 updated, the ASIL C SPFM target likely missed and carried to G2; 2026-10-19). 0.6 (§2.4 mission profile: the WP-H-05 §3 working values approved by the lead 2026-10-18 (DQ-067, A); 2026-10-19). 0.5 (§6.4 added: the SG-001/SG-009 FMEDA rows reused for SG-02, SG-03, SG-05 and SG-06, a note per goal, decision DQ-362 option A; the ASIL C SPFM miss of 0.16 points carried as WP-H-04 OI-6 for G2; 2026-10-18). 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (SG-01 provisional; SG-02, SG-03, SG-06 since WP-C-03 v0.4) / ASIL B (SG-04, SG-05, SG-07) |
 | Author | Assurance team (initial draft) |
@@ -267,7 +267,7 @@ The rates are order-of-magnitude estimates per part type, not values looked up f
 
 | Goal | Target used | λ (FIT) | SPFM | LFM | λSPF + λRF (FIT) | Result |
 |---|---|---|---|---|---|---|
-| SG-01 lateral | ASIL D (LD-HARA-001); ASIL C here, ASIL B shown alongside (DQ-063) | 255 | 96.8 % | 88.9 % | 8.1 | Misses D on SPFM and LFM. Misses C on SPFM (97 %) by 0.2 points; meets C on LFM. Meets B (90 % / 60 %) |
+| SG-01 lateral | ASIL D (LD-HARA-001); ASIL C here, ASIL B shown alongside (DQ-063) | 257 | 96.96 % | 88.5 % | 7.8 | Misses D on SPFM and LFM. Misses C on SPFM (97 %) by 0.04 points; meets C on LFM. Meets B (90 % / 60 %) |
 | SG-07 stock PCS | ASIL B | 288 | 78.1 % | 97.6 % | 63.1 | Misses B on SPFM (90 %). Accepted by the lead as a recorded deviation, conditional on the harness box bench tests ([WP-H-04](WP-H-04-hardware-metrics.md) §5.3, DQ-320) |
 
 The SG-07 drop from 85.9 % (rev 0.3) to 78.1 % comes entirely from the switch rate: 2 × 5 FIT generic became 2 × 25 FIT. With no readback and no stock-path check, 70 % of that rate is single-point for SG-07.
@@ -278,7 +278,7 @@ Largest contributors:
   - wrong result of a CPU limit or authority check, fully latent (12.5 FIT λMPF,L);
   - clock drift with no cross-check (5.0);
   - supply in the brown-out zone (4.5 FIT λSPF);
-  - intercept switch stuck in pass-through while driven (1.75 FIT λRF after the relay-malfunction check).
+  - intercept switch stuck in pass-through while driven (1.5 FIT λRF after the relay-malfunction check).
 - **SG-07:**
   - intercept switch channel open, high on-resistance, leakage or latch-up in the stock path (20.0 FIT λSPF);
   - intercept switch stuck in intercept (15.0);
@@ -286,13 +286,13 @@ Largest contributors:
   - stock-path open in the harness or connector (3.0);
   - SBU1 driver stuck on, and wrong forwarding decision (2.5 each).
 
-**Sensitivity.** About 90 of the 255 FIT are single-bit SRAM upsets that ECC corrects. They count as covered multiple-point faults and so raise SPFM. With the SRAM soft-error rate at 10, 100 and 500 FIT for the 64 KB considered, the results move as follows:
+**Sensitivity.** About 90 of the 257 FIT are single-bit SRAM upsets that ECC corrects. They count as covered multiple-point faults and so raise SPFM. With the SRAM soft-error rate at 10, 100 and 500 FIT for the 64 KB considered, the results move as follows:
 
 | SRAM rate (FIT) | SG-01 SPFM | SG-07 SPFM |
 |---|---|---|
-| 10 | 95.6 % | 68.4 % |
-| 100 | 96.8 % | 78.1 % |
-| 500 | 98.3 % | 90.6 % |
+| 10 | 95.75 % | 68.4 % |
+| 100 | 96.96 % | 78.1 % |
+| 500 | 98.32 % | 90.6 % |
 
 The switch rate matters as much: SG-07 SPFM is 85.9 % at 5 FIT per IC and 78.1 % at 25 FIT per IC. A real SER figure for the STM32H725 (OI-3) and a confirmed reference value for the DG419LE therefore matter as much as the part list.
 
@@ -304,7 +304,7 @@ The switch rate matters as much: SG-07 SPFM is 85.9 % at 5 FIT per IC and 78.1 %
   - a low-coverage CPU self-test (DFM-ACT-001): DC 60 % latent on wrong check results;
   - TX read-back (TSR-517, WP-S-03 SM-38): DC 99 % on frames altered after the check. It is not the existing 8-bit TX XOR (FMEDA FMD-SM-004), which covers the software queue only.
 
-  Result: SPFM 99.1 %, LFM 95.4 %, λSPF + λRF 2.3 FIT. That meets ASIL D on generic rates, and so ASIL C and B.
+  Result: SPFM 99.2 %, LFM 94.9 %, λSPF + λRF 2.0 FIT. That meets ASIL D on generic rates, and so ASIL C and B.
 - **SG-07**, added in this order, each with DC 90 %:
   - switch position readback (DFM-ACT-007, DC-03, WP-S-03 SM-20) on stuck in intercept and SBU1 driver stuck on: SPFM 83.6 %. The estimate credits the readback at 90 % (medium); SM-20 targets high, so these figures are a floor;
   - releasing the switch on a transceiver fault (DFM-ACT-006) on TX stuck dominant and RX open: 87.3 %;
@@ -322,9 +322,9 @@ The lead decided to reuse the rows of the two FMEDA files for the other goals ra
 | SG-02 lateral loss without warning | C | SG-001: FMD-003 (hang), FMD-014 (supply loss), FMD-017 (TX stuck dominant), FMD-018 (RX open); SG-009: FMD-001 (hang with the relay driven), FMD-030 (harness box unpowered) | These faults stop actuation. They are safe for SG-01 but violate SG-02 when no warning follows. The warning comes from the host (`controlsMismatch`, TSR-621) or from the panda siren when the panda still runs; the siren path has no FMEDA row (no rate data, DFM-017, FM-SIR-01) |
 | SG-06 longitudinal loss without warning | C | As SG-02 | As SG-02, for ACC_CONTROL |
 | SG-03 unintended acceleration | C | SG-001: FMD-002, FMD-010 (frame altered after the TX check), FMD-019 (bit errors on the line) | `0x343` leaves through the same TX path as `0x2E4`, so the rows and rates apply as for SG-04 |
-| SG-05 release on brake, cancel or override | B | SG-001: FMD-001 (wrong authority check), FMD-009 (multi-bit upset in authority variables) | Multiple-point for SG-01 (they need an out-of-envelope SoC command), but effectively single-point for SG-05: authority that stays on after the brake needs no second fault. Since FMEDA rev 0.7 this is a `per_goal` entry on both rows, which gives SG-05 its own estimate: SPFM 90.38 %, LFM 95.30 %, λSPF + λRF 24.6 FIT; ASIL B met by 0.38 points |
+| SG-05 release on brake, cancel or override | B | SG-001: FMD-001 (wrong authority check), FMD-009 (multi-bit upset in authority variables) | Multiple-point for SG-01 (they need an out-of-envelope SoC command), but effectively single-point for SG-05: authority that stays on after the brake needs no second fault. Since FMEDA rev 0.7 this is a `per_goal` entry on both rows, which gives SG-05 its own estimate: SPFM 90.54 %, LFM 94.82 %, λSPF + λRF 24.3 FIT; ASIL B met by 0.54 points (FMEDA rev 0.9) |
 
-**Result against ASIL C.** SG-02, SG-03 and SG-06 carry the SG-01 estimate: SPFM 96.84 %, LFM 88.94 %. LFM meets the ASIL C target (80 %). SPFM misses 97 % by 0.16 points. The lead accepted this as an open hardware item for G2, [WP-H-04](WP-H-04-hardware-metrics.md) OI-6. It closes with supplier rates (OI-3, OI-10) or with the TSR-517 transmit read-back. The lead decided not to pay for ST's safety package and to write LionDriver's own CPU and RAM self-tests with low CPU coverage ([DQ-069](../01-management/decisions/register.yaml), option B, 2026-10-19), so part-specific MCU rates and a higher CPU coverage claim are unlikely and **the ASIL C SPFM target is likely missed**; the gap moves to G2. As an estimate, TSR-517 alone at an assumed DC 99 % on FMD-002 and FMD-010 gives SPFM 97.53 % and LFM 89.02 %. If neither closes the gap by G2, it goes back to the lead.
+**Result against ASIL C.** SG-02, SG-03 and SG-06 carry the SG-01 estimate: SPFM 96.96 %, LFM 88.54 % (FMEDA rev 0.9; 96.84 % and 88.94 % before the §6.5 findings were applied). LFM meets the ASIL C target (80 %). SPFM misses 97 % by 0.04 points. The lead accepted this as an open hardware item for G2, [WP-H-04](WP-H-04-hardware-metrics.md) OI-6. It closes with supplier rates (OI-3, OI-10) or with the TSR-517 transmit read-back. The lead decided not to pay for ST's safety package and to write LionDriver's own CPU and RAM self-tests with low CPU coverage ([DQ-069](../01-management/decisions/register.yaml), option B, 2026-10-19), so part-specific MCU rates and a higher CPU coverage claim are unlikely and **the ASIL C SPFM target is likely missed**; the gap moves to G2. As an estimate, TSR-517 alone at an assumed DC 99 % on FMD-002 and FMD-010 gives SPFM 97.64 % and LFM 88.62 %. If neither closes the gap by G2, it goes back to the lead.
 
 **Not covered.** Reusing SG-01 classifications means the faults that are safe for SG-01 and dangerous for SG-02/SG-06 (loss of actuation) are not scored as such. A goal-specific classification was the option the lead did not choose (DQ-362 option B). The FTA events that rest on these rows (BE-2.06, BE-2.07, BE-3.04, BE-5.02, BE-6.02) now have their FMEDA rows named here.
 
@@ -349,21 +349,29 @@ FMEDA of step 4 (§2.1) can be done now. It lives in [`fmeda/`](fmeda/README.md)
 *Figure 6-0.* The component FMEDA's inputs and outputs, with the records that hold each here and how far each has got.
 The schematic and BOM input is met for the harness box only; the comma device stays at block level (OI-1).
 
-What the part-level view found that the block rows hid:
+What the part-level view found that the block rows hid, and what was done (SG-001 FMEDA rev 0.9, DFMEA rev 0.14):
 
-- **The same switch is split two ways.** The SG-009 file gives the DG419LE 30 % stuck in intercept, 30 % stuck in
-  pass-through and 40 % channel open; the SG-001 file 35 %, 35 % and 30 %. A part has one failure-mode distribution
-  (OI-11). Aligned on the SG-009 split, SG-01's SPFM and LFM move by less than 0.2 points
-  ([`fmeda/README.md`](fmeda/README.md) has the figures).
-- **Four parts are in no goal FMEDA:** the ignition sense Q6, R1, R4 and R5 (and R6, which has no function with the
-  Toyota A harness). A Q6 drain-source short makes the ignition read on with the ignition off, which DFM-014.C2 rates for
-  the heartbeat timeout: a latent fault for SG-01. The modes where the ignition reads off while driving have no DFMEA row
-  (OI-12).
+- **The same switch was split two ways.** The SG-009 file gave the DG419LE 30 % stuck in intercept, 30 % stuck in
+  pass-through and 40 % channel open; the SG-001 file 35 %, 35 % and 30 %. A part has one failure-mode distribution, so
+  the SG-001 row now takes the SG-009 split (OI-11, closed).
+- **Four parts were in no goal FMEDA:** the ignition sense Q6, R1, R4 and R5 (R6 has no function with the Toyota A
+  harness and needs none). They are now FMD-C-009…012 of the SG-001 file (OI-12, closed), classified from FM-IGN-01/02,
+  FM-HAR-02 and the firmware:
+  - the ignition reading **on** with the ignition off (Q6 drain-source short, DFM-014.C2) is latent for SG-01: the
+    heartbeat timeout keeps its 5 s value and matters only after a host loss;
+  - the ignition reading **off** while driving (Q6, R1, R4 open; R5 short) is safe for SG-01: the heartbeat timeout drops
+    to 2 s, pandad closes the relay to pass-through and the device goes offroad. It is a loss of the item without its
+    take-control warning, now DFMEA DFM-024 (HZ-004), recorded as a tree gap of SG-02 for the FTA owner;
+  - an R1 short makes the SBU2 side read below the 240 Ω R2/R3 side with the ignition on, so the orientation is detected
+    flipped (FM-HAR-02) and the relay-malfunction check blocks TX: safe for SG-01 and SG-07;
+  - an R4 short or R5 open puts the full ignition voltage on the Q6 gate. Its rating is not checked, so these are
+    classified as the worse Q6 outcome, latent, until DFM-ACT-017 records it.
+
+  SG-01 moved from λ 255 FIT, SPFM 96.84 %, LFM 88.94 % to 257 FIT, 96.96 %, 88.54 %. The ASIL C SPFM target is still
+  missed, now by 0.04 points (WP-H-04 OI-6).
 - **No periodic test of the box exists.** The installation check runs once and the bench tests run on a sample, so every
   latent mode of the box stays latent for its 15-year life.
-
-The goal FMEDA files are not changed by this section: aligning them (OI-11) and adding the new rows (OI-12) change the
-metrics and are the next revision of those files.
+- **One mode is still not analysed:** J2, the comma power input, contact open or short (OI-13).
 
 ## 7. Open items
 
@@ -379,5 +387,6 @@ metrics and are the next revision of those files.
 | OI-8 | Re-run the FMEA after each WP-H-02 §6 change is implemented | G3 |
 | OI-9 | ~~SG-07: decide the safe state when relay readback finds the relay welded in the intercept position~~ **Decided** ([DQ-064](../01-management/decisions/register.yaml), option A, 2026-10-14): warn the driver that stock AEB is unavailable and refuse to engage; accepted as the degraded state. It applies only once readback exists (DC-03, HWSR-506a, DQ-209); with the v3 box the same case is a switch stuck in intercept (FM-REL-02/04). The HMI warning requirement belongs to the FSC and TSR owners | G2 |
 | OI-10 | Replace the generic rates of §6.3 with part-specific values (BOM, ST data, SER) and add the dual-point PMHF term. 2026-10-16: U1/U2 at the SN 29500-2 reference value (secondary source); the other harness box parts are classed but still generic | G3 |
-| OI-11 | Align the DG419LE failure-mode distribution of the two goal FMEDAs (SG-001 file 35/35/30 %, SG-009 file and the part list 30/30/40 %); the roll-up check of §6.5 lists the difference until it is gone | G2 |
-| OI-12 | Carry the harness box ignition-sense parts (Q6, R1, R4, R5) in the SG-001 FMEDA, and add a DFMEA row for the ignition sense reading off while driving; analyse the eight modes §6.5 marks as not yet analysed | G2 |
+| OI-11 | ~~Align the DG419LE failure-mode distribution of the two goal FMEDAs (SG-001 file 35/35/30 %, SG-009 file and the part list 30/30/40 %)~~ **Closed** 2026-11-19: SG-001 FMEDA rev 0.9 takes 30/30/40 %; the roll-up check of §6.5 finds no difference | G2 |
+| OI-12 | ~~Carry the harness box ignition-sense parts (Q6, R1, R4, R5) in the SG-001 FMEDA, and add a DFMEA row for the ignition sense reading off while driving; analyse the eight modes §6.5 marks as not yet analysed~~ **Closed** 2026-11-19: FMD-C-009…012 (SG-001 FMEDA rev 0.9), DFM-024 with DFM-ACT-017 (DFMEA rev 0.14); seven of the eight modes classified, J2 carried as OI-13 | G2 |
+| OI-13 | Analyse the J2 (comma power input) contact open or short for both goals and give it a goal FMEDA row if it has an effect; with DFM-ACT-017, record the Q6 gate rating that the R4 short and R5 open classification assumes | G2 |
