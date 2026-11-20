@@ -357,3 +357,38 @@ beacons:
   person_out_m: {value: 0.6, status: assumed, source: "a person standing at the vehicle's traffic-side door"}
   our_half_width_m: {value: 0.89, status: published, source: "the Corolla's body, 1.78 m wide"}
   move_over: {status: published, source: "every US state has a move-over law: change lanes away from, or slow down for, a stopped emergency vehicle with its lights on (NHTSA)"}
+
+steer_authority:
+  # Steering authority for the ODD's curves (steer_authority.py, physics plan round 4 study 26): the lateral
+  # acceleration openpilot's torque controller can command on the Corolla, from opendbc's fleet-fitted torque data,
+  # against what a curve at the ODD's bound asks for with the road's bank, an adverse crown and a side wind.
+  speeds_kph: [60, 80, 100, 110]
+  bank: {value: [-0.02, 0.0, 0.06], status: assumed,
+         source: "the road's cross slope in the curve, toward its inside: −2 % an adverse crown left in a flat curve, 0 none, 6 % a common highway superelevation (the wet-curve study's band)"}
+  wind_kph: {value: [15.0, 30.0], status: assumed, source: "a side wind of 15 and 30 km/h (KS-02 treats 30 km/h as inside the ODD); the crosswind study's steering need at that wind, its band"}
+
+wheel_weight:
+  # A weight on the steering wheel (wheel_weight.py, physics plan round 4 study 25): how heavy a weight hung on the
+  # rim reads as the driver steering, what driver monitoring does with it, and how much steering authority it uses.
+  rim_radius_m: {value: 0.185, low: 0.17, high: 0.19, status: estimate,
+                 source: "half a compact car's steering wheel (about 370 mm across); T1 measures the Corolla's"}
+  rim_angle_deg: {value: [90.0, 45.0], status: assumed, source: "where the weight hangs, from the top of the wheel: 90° (at 3 or 9 o'clock, the most torque) and 45°"}
+
+radar_cover:
+  # Water, ice and slush on the radar cover (radar_cover.py, physics plan round 4 study 27): the two-way loss at
+  # 77 GHz through a layer on the bumper in front of the stock radar, and the range the radar keeps.
+  frequency_ghz: {value: 76.5, status: published, source: "automotive long-range radar band 76–77 GHz, its middle"}
+  water_temp_c: {value: [0.0, 20.0], status: assumed, source: "a film of rain or melt water, near freezing and mild"}
+  water_permittivity: {status: published,
+                       source: "ITU-R P.840-9 (08/2023) §2 eqs. 4–10: the double-Debye model of liquid water, f in GHz, T in K"}
+  ice_permittivity: {real: 3.15, imag: 0.002, status: estimate,
+                     source: "pure ice at millimetre waves: ε′ about 3.15 at any temperature, its loss far below water's (order 1e-3); a band would change nothing here"}
+  slush_water_fraction: {value: [0.2, 0.5], status: assumed,
+                         source: "wet snow or slush on the bumper, the share of its volume that is liquid; the rest ice, no air (an upper bound on loss for that water)"}
+  mixing: {status: published, source: "Birchak's refractive mixing rule, √ε = Σ vᵢ √εᵢ, for the water and ice in slush"}
+  thickness_mm:
+    water: [0.05, 0.1, 0.2, 0.5, 1.0]
+    ice: [0.5, 1.0, 2.0, 5.0]
+    slush: [0.5, 1.0, 2.0, 5.0]
+    status: assumed
+    source: "a rain film on a vertical bumper at speed is a fraction of a millimetre; ice and slush build to millimetres"

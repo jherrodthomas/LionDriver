@@ -1,0 +1,106 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. The override study's torque-scale band; driver monitoring read from openpilot.",
+ "code": {
+  "steer_threshold": 100,
+  "max_user_torque": 500,
+  "host_threshold_nm": [
+   2.0,
+   3.5,
+   5.0
+  ],
+  "lka_full_nm": [
+   1.5,
+   3.0
+  ],
+  "fallback_s": 10.0,
+  "pins": 8
+ },
+ "rim_radius_m": 0.185,
+ "press_nm": [
+  0.4,
+  0.7,
+  1.0
+ ],
+ "override_nm": [
+  2.0,
+  3.5,
+  5.0
+ ],
+ "by_angle": {
+  "90": {
+   "press_kg": [
+    0.22,
+    0.386,
+    0.551
+   ],
+   "override_kg": [
+    1.102,
+    1.929,
+    2.755
+   ],
+   "hold_kg": [
+    0.827,
+    1.653
+   ]
+  },
+  "45": {
+   "press_kg": [
+    0.312,
+    0.545,
+    0.779
+   ],
+   "override_kg": [
+    1.558,
+    2.727,
+    3.896
+   ],
+   "hold_kg": [
+    1.169,
+    2.338
+   ]
+  }
+ },
+ "authority": [
+  {
+   "weight_nm": 0.4,
+   "lka_full_nm": 1.5,
+   "share_used": 0.267,
+   "lateral_left_m_s2": 1.46
+  },
+  {
+   "weight_nm": 0.4,
+   "lka_full_nm": 3.0,
+   "share_used": 0.133,
+   "lateral_left_m_s2": 1.726
+  },
+  {
+   "weight_nm": 0.7,
+   "lka_full_nm": 1.5,
+   "share_used": 0.467,
+   "lateral_left_m_s2": 1.062
+  },
+  {
+   "weight_nm": 0.7,
+   "lka_full_nm": 3.0,
+   "share_used": 0.233,
+   "lateral_left_m_s2": 1.526
+  },
+  {
+   "weight_nm": 1.0,
+   "lka_full_nm": 1.5,
+   "share_used": 0.667,
+   "lateral_left_m_s2": 0.664
+  },
+  {
+   "weight_nm": 1.0,
+   "lka_full_nm": 3.0,
+   "share_used": 0.333,
+   "lateral_left_m_s2": 1.327
+  }
+ ],
+ "ceiling_m_s2": 1.991,
+ "press_kg_radius_band": [
+  0.215,
+  0.6
+ ]
+}

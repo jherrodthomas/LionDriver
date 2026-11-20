@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the twenty of rounds 2 and 3 ([round 2](physics-plan.md), [round 3](physics-plan-round3.md)): what each answers, how, with which inputs, checks and picture, and in what order. They cover triggering conditions (TCs) no study has touched yet, or only a Blender render has: the night, grades and curves, emergency vehicles, the driver's hands, the steering's torque, the radar's cover, and the traffic ahead changing lanes or braking hard |
-| Status | Phase A built 2026-11-20 (studies 21–24; §2); phases B and C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-11-20 (studies 21–24; §2); phase B built 2026-11-20 (studies 25–27; §3); phase C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit or a requirement goes to the lead as a register question; the study itself does not move it |
 | Lead decisions needed | **None to start.** Phases A and B run in existing environments. Phase C adds one tool, openpilot's own MPC solver (acados, from the `comma-deps-acados` wheel openpilot's `uv.lock` pins), as a new tool entry; that is a reversible technical choice. Inputs with no public source (raw torque scales, the radar cover's material) are T1 tasks, and the study gives a band until they come |
 
@@ -107,6 +107,22 @@ Changes from the plan below:
 - **Feeds.** TC-36; KS night test conditions.
 
 ## 3. Phase B: statics and code readings
+
+**Built 2026-11-20.** Results, synthetic:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 25 | A weight on the steering wheel | 0.22–0.55 kg at the side of the rim reads as the driver steering (the override study's torque-scale band). With the driver camera blind, monitoring falls back to wheel-touch, where a steady `steeringPressed` resets awareness every frame: no alert ever. FM-05(b) as worded does not catch a weight; a variation test or the restore cap would | [`wheel-weight.md`](results/wheel-weight.md), [weather §23](weather/README.md#23-a-weight-on-the-steering-wheel-tc-25-mc-06) |
+| 26 | Steering authority for the ODD's curves | The torque controller's own ceiling for the Corolla TSS2 is 1.99 m/s² (comma's fleet fit; 1.87 measured). The ODD's bound asks for 2.5: on a flat curve the steering is 0.51 m/s² short at every speed; a 6 % bank closes it with 0.08 to spare. Queued for the lead as DQ-444 | [`steer-authority.md`](results/steer-authority.md), [weather §22](weather/README.md#22-steering-authority-for-the-odds-curves-gap-04-tc-14-tc-15) |
+| 27 | Water, ice and slush on the radar cover | At 77 GHz 0.1 mm of water costs 10 dB both ways (55 % of the range); clear ice hardly anything; wet slush 2 mm 48 dB. The stock PCS backstop brakes on this radar | [`radar-cover.md`](results/radar-cover.md), [weather §24](weather/README.md#24-water-ice-and-slush-on-the-radar-cover-tc-03-tc-04) |
+
+Changes from the plan below:
+- **Study 26** uses the ceiling openpilot's own torque controller sets, from opendbc's fleet-fitted torque data,
+  instead of a brush tyre model and a raw torque scale: it is measured (by comma, on their fleet) and in m/s².
+- **Study 25** gives the defeat as statics and a code reading; the drift is read through study 26's ceiling rather
+  than run through the single-track car.
+- **Studies 25 and 26** sit in `weather/` with the other studies, for their CI job and figures.
+- **For the lead:** study 26 is a question about an ODD limit, queued as DQ-444 (the register has no open batch).
 
 ### 25. A weight on the steering wheel (TC-25)
 

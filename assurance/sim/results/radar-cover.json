@@ -1,0 +1,171 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. Water from ITU-R P.840-9; ice estimated; slush by Birchak's rule; a layer in air.",
+ "frequency_ghz": 76.5,
+ "permittivity": {
+  "water_0C": [
+   6.881,
+   9.895
+  ],
+  "water_20C": [
+   8.849,
+   15.993
+  ],
+  "ice": [
+   3.15,
+   0.002
+  ],
+  "slush_0.2": [
+   4.038,
+   1.311
+  ],
+  "slush_0.5": [
+   5.238,
+   3.902
+  ]
+ },
+ "layers": {
+  "water_0C": [
+   {
+    "thickness_mm": 0.05,
+    "two_way_db": 5.99,
+    "range_kept": 0.708,
+    "absorbed_db": 2.24
+   },
+   {
+    "thickness_mm": 0.1,
+    "two_way_db": 10.44,
+    "range_kept": 0.548,
+    "absorbed_db": 4.48
+   },
+   {
+    "thickness_mm": 0.2,
+    "two_way_db": 16.37,
+    "range_kept": 0.39,
+    "absorbed_db": 8.96
+   },
+   {
+    "thickness_mm": 0.5,
+    "two_way_db": 27.69,
+    "range_kept": 0.203,
+    "absorbed_db": 22.39
+   },
+   {
+    "thickness_mm": 1.0,
+    "two_way_db": 50.44,
+    "range_kept": 0.055,
+    "absorbed_db": 44.79
+   }
+  ],
+  "water_20C": [
+   {
+    "thickness_mm": 0.05,
+    "two_way_db": 8.83,
+    "range_kept": 0.602,
+    "absorbed_db": 3.02
+   },
+   {
+    "thickness_mm": 0.1,
+    "two_way_db": 14.54,
+    "range_kept": 0.433,
+    "absorbed_db": 6.05
+   },
+   {
+    "thickness_mm": 0.2,
+    "two_way_db": 21.56,
+    "range_kept": 0.289,
+    "absorbed_db": 12.1
+   },
+   {
+    "thickness_mm": 0.5,
+    "two_way_db": 37.7,
+    "range_kept": 0.114,
+    "absorbed_db": 30.24
+   },
+   {
+    "thickness_mm": 1.0,
+    "two_way_db": 68.17,
+    "range_kept": 0.02,
+    "absorbed_db": 60.48
+   }
+  ],
+  "ice": [
+   {
+    "thickness_mm": 0.5,
+    "two_way_db": 2.67,
+    "range_kept": 0.857,
+    "absorbed_db": 0.01
+   },
+   {
+    "thickness_mm": 1.0,
+    "two_way_db": 0.28,
+    "range_kept": 0.984,
+    "absorbed_db": 0.02
+   },
+   {
+    "thickness_mm": 2.0,
+    "two_way_db": 0.97,
+    "range_kept": 0.946,
+    "absorbed_db": 0.03
+   },
+   {
+    "thickness_mm": 5.0,
+    "two_way_db": 2.76,
+    "range_kept": 0.853,
+    "absorbed_db": 0.08
+   }
+  ],
+  "slush_0.2": [
+   {
+    "thickness_mm": 0.5,
+    "two_way_db": 7.73,
+    "range_kept": 0.641,
+    "absorbed_db": 4.48
+   },
+   {
+    "thickness_mm": 1.0,
+    "two_way_db": 10.46,
+    "range_kept": 0.548,
+    "absorbed_db": 8.97
+   },
+   {
+    "thickness_mm": 2.0,
+    "two_way_db": 19.89,
+    "range_kept": 0.318,
+    "absorbed_db": 17.94
+   },
+   {
+    "thickness_mm": 5.0,
+    "two_way_db": 46.98,
+    "range_kept": 0.067,
+    "absorbed_db": 44.85
+   }
+  ],
+  "slush_0.5": [
+   {
+    "thickness_mm": 0.5,
+    "two_way_db": 14.82,
+    "range_kept": 0.426,
+    "absorbed_db": 11.2
+   },
+   {
+    "thickness_mm": 1.0,
+    "two_way_db": 25.87,
+    "range_kept": 0.226,
+    "absorbed_db": 22.4
+   },
+   {
+    "thickness_mm": 2.0,
+    "two_way_db": 48.15,
+    "range_kept": 0.063,
+    "absorbed_db": 44.8
+   },
+   {
+    "thickness_mm": 5.0,
+    "two_way_db": 115.34,
+    "range_kept": 0.001,
+    "absorbed_db": 112.01
+   }
+  ]
+ },
+ "water_db_per_mm_one_way": 22.39
+}
