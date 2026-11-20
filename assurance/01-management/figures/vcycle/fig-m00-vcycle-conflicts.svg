@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1640" height="906" viewBox="0 0 1640 906" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Conflicts on the V-cycle</title>
-<desc>Conflicts on the V-cycle: 51 work products older than an input they read, 4 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input.</desc>
+<desc>Conflicts on the V-cycle: 50 work products older than an input they read, 4 verification boxes more than 7 days older than what they check, 8 citing a standard no input cites, 0 due before an input.</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1640" height="906" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="26" fill="#0F172A" font-weight="700">Conflicts on the V-cycle</text>
@@ -61,8 +61,8 @@
 <text x="652" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software integration</text>
 <text x="996" y="450" font-size="11" fill="#475569" text-anchor="end">4 work products</text>
 <rect x="652" y="462" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
-<text x="660" y="476" font-size="10.5" fill="#D97706" font-weight="700">3 older than input</text>
-<g transform="translate(652.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-W-07 last 13 Oct, reads WP-W-02 changed 11 Nov (+2 more)</text></g>
+<text x="660" y="476" font-size="10.5" fill="#D97706" font-weight="700">2 older than input</text>
+<g transform="translate(652.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-W-07 last 13 Oct, reads WP-W-02 changed 11 Nov (+1 more)</text></g>
 <rect x="160" y="536" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
 <text x="174" y="558" font-size="13" fill="#0F172A" font-weight="700">Detailed design</text>
 <text x="518" y="558" font-size="11" fill="#475569" text-anchor="end">6 work products</text>
@@ -108,7 +108,7 @@
 <text x="1160" y="134" font-size="12" fill="#475569" font-weight="700">Out of step, by kind</text>
 <rect x="1160" y="154" width="420" height="92" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="1176" y="180" font-size="14" fill="#D97706" font-weight="700">Older than an input it reads</text>
-<text x="1564" y="182" font-size="20" fill="#D97706" font-weight="700" text-anchor="end">51</text>
+<text x="1564" y="182" font-size="20" fill="#D97706" font-weight="700" text-anchor="end">50</text>
 <text x="1176" y="204" font-size="11" fill="#475569">a work product dated before the newest change</text>
 <text x="1176" y="220" font-size="11" fill="#475569">to a work product it reads (WP-M-03 inputs)</text>
 <rect x="1160" y="258" width="420" height="92" rx="10" fill="#FEF2F2" stroke="#C2410C" stroke-width="1.4"/>

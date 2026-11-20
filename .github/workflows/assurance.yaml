@@ -177,6 +177,10 @@ jobs:
         python3 assurance/04-hardware/figures/test_fig_h02_box_anim.py
         python3 assurance/04-hardware/figures/fig_h02_crank_anim.py --check
         python3 assurance/04-hardware/figures/test_fig_h02_crank_anim.py
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/fig_md_core.py --check
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/test_fig_md_core.py
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/fig_md_explainers.py --check
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/test_fig_md_explainers.py
         python3 assurance/05-software/figures/fig_w05_uml_states.py --check
         python3 assurance/05-software/figures/test_fig_w05_uml_states.py
         python3 assurance/05-software/figures/fig_w00_overview.py --check

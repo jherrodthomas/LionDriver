@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1007" viewBox="0 0 1500 1007" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 1 · PicoRV32 sub-part split</title>
+<desc>Tree map of the 8,931-cell PicoRV32 netlist in ten sub-parts by cell area; register file 43.2 %. Drawn from results/subparts.json.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1500" height="1007" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 1 · PicoRV32 synthesised to real cells, split for the FMEDA</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">An open RISC-V core turned into SkyWater 130 nm standard cells with Yosys. Every count on this figure comes from that netlist.</text>
+<text x="1460" y="44" font-size="11" fill="#475569" text-anchor="end">ISO 26262-11 method demonstration · supports WP-H-03, WP-H-07</text>
+<line x1="40" y1="82" x2="1460" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="42" y="102" width="380.7" height="616" rx="6" fill="#CA8A04" stroke="#FFFFFF" stroke-width="2"/>
+<text x="52" y="128" font-size="17" fill="#FFFFFF" font-weight="700">Register file</text>
+<text x="52" y="150" font-size="13" fill="#FFFFFF" font-weight="600">43.2 % of core area</text>
+<text x="52" y="174" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1,163 flip-flops</text>
+<text x="52" y="192" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">823 logic cells</text>
+<rect x="426.7" y="102" width="258.2" height="211.9" rx="6" fill="#9333EA" stroke="#FFFFFF" stroke-width="2"/>
+<text x="436.7" y="128" font-size="17" fill="#FFFFFF" font-weight="700">Multiplier</text>
+<text x="436.7" y="150" font-size="13" fill="#FFFFFF" font-weight="600">10.3 % of core area</text>
+<text x="436.7" y="174" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">255 flip-flops</text>
+<text x="436.7" y="192" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">699 logic cells</text>
+<rect x="688.9" y="102" width="239.1" height="211.9" rx="6" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2"/>
+<text x="698.9" y="128" font-size="17" fill="#FFFFFF" font-weight="700">Divider</text>
+<text x="698.9" y="150" font-size="13" fill="#FFFFFF" font-weight="600">9.5 % of core area</text>
+<text x="698.9" y="174" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">200 flip-flops</text>
+<text x="698.9" y="192" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">921 logic cells</text>
+<rect x="426.7" y="317.9" width="176.7" height="207.2" rx="6" fill="#EA580C" stroke="#FFFFFF" stroke-width="2"/>
+<text x="436.7" y="343.9" font-size="17" fill="#FFFFFF" font-weight="700">ALU + execute</text>
+<text x="436.7" y="365.9" font-size="13" fill="#FFFFFF" font-weight="600">6.9 % of core area</text>
+<text x="436.7" y="389.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">70 flip-flops</text>
+<text x="436.7" y="407.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1,060 logic cells</text>
+<rect x="426.7" y="529.1" width="176.7" height="188.9" rx="6" fill="#64748B" stroke="#FFFFFF" stroke-width="2"/>
+<text x="436.7" y="555.1" font-size="17" fill="#FFFFFF" font-weight="700">Control</text>
+<text x="436.7" y="577.1" font-size="13" fill="#FFFFFF" font-weight="600">6.3 % of core area</text>
+<text x="436.7" y="601.1" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">77 flip-flops</text>
+<text x="436.7" y="619.1" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">870 logic cells</text>
+<rect x="607.4" y="317.9" width="161.5" height="175.1" rx="6" fill="#DB2777" stroke="#FFFFFF" stroke-width="2"/>
+<text x="617.4" y="343.9" font-size="17" fill="#FFFFFF" font-weight="700">IRQ + timer</text>
+<text x="617.4" y="365.9" font-size="13" fill="#FFFFFF" font-weight="600">5.4 % of core area</text>
+<text x="617.4" y="389.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">138 flip-flops</text>
+<text x="617.4" y="407.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">559 logic cells</text>
+<rect x="772.9" y="317.9" width="155.1" height="175.1" rx="6" fill="#16A34A" stroke="#FFFFFF" stroke-width="2"/>
+<text x="782.9" y="343.9" font-size="17" fill="#FFFFFF" font-weight="700">Decoder</text>
+<text x="782.9" y="365.9" font-size="13" fill="#FFFFFF" font-weight="600">5.2 % of core area</text>
+<text x="782.9" y="389.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">152 flip-flops</text>
+<text x="782.9" y="407.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">270 logic cells</text>
+<rect x="607.4" y="496.9" width="116.4" height="221.1" rx="6" fill="#0891B2" stroke="#FFFFFF" stroke-width="2"/>
+<text x="617.4" y="522.9" font-size="14" fill="#FFFFFF" font-weight="700">Load / store</text>
+<text x="617.4" y="544.9" font-size="13" fill="#FFFFFF" font-weight="600">4.9 %</text>
+<text x="617.4" y="568.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">118 FF</text>
+<text x="617.4" y="586.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">374 cells</text>
+<rect x="727.7" y="496.9" width="200.3" height="108.9" rx="6" fill="#0D9488" stroke="#FFFFFF" stroke-width="2"/>
+<text x="737.7" y="522.9" font-size="17" fill="#FFFFFF" font-weight="700">Program counter</text>
+<text x="737.7" y="544.9" font-size="13" fill="#FFFFFF" font-weight="600">4.2 % of core area</text>
+<text x="737.7" y="568.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">66 flip-flops</text>
+<text x="737.7" y="586.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">576 logic cells</text>
+<rect x="727.7" y="609.9" width="200.3" height="108.1" rx="6" fill="#94A3B8" stroke="#FFFFFF" stroke-width="2"/>
+<text x="737.7" y="635.9" font-size="17" fill="#FFFFFF" font-weight="700">Counters</text>
+<text x="737.7" y="657.9" font-size="13" fill="#FFFFFF" font-weight="600">4.2 % of core area</text>
+<text x="737.7" y="681.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">128 flip-flops</text>
+<text x="737.7" y="699.9" font-size="12" fill="#FFFFFF" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">413 logic cells</text>
+<text x="40" y="744" font-size="12" fill="#475569">Tile area = cell area of the sub-part: its flip-flops plus the logic that feeds them</text>
+<rect x="960" y="100" width="500" height="232" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="980" y="130" font-size="16" fill="#4F46E5" font-weight="700">The netlist</text>
+<text x="980" y="160" font-size="13" fill="#0F172A">standard cells</text>
+<text x="1440" y="160" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">8,931</text>
+<text x="980" y="188" font-size="13" fill="#0F172A">flip-flops</text>
+<text x="1440" y="188" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">2,367</text>
+<text x="980" y="216" font-size="13" fill="#0F172A">cell area</text>
+<text x="1440" y="216" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">113,312 µm² (0.113 mm²)</text>
+<text x="980" y="244" font-size="13" fill="#0F172A">register-file read-port cells</text>
+<text x="1440" y="244" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">559</text>
+<text x="980" y="272" font-size="13" fill="#0F172A">cells not assigned to a sub-part</text>
+<text x="1440" y="272" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0</text>
+<text x="980" y="300" font-size="13" fill="#0F172A">fault list (stuck-at 0/1 per cell output, one flip per flip-flop)</text>
+<text x="1440" y="300" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">20,229</text>
+<text x="960" y="362" font-size="15" fill="#0F172A" font-weight="700">Most used cells</text>
+<text x="960" y="393" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">edfxtp_1</text>
+<rect x="1110" y="381" width="290" height="16" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="1406" y="394" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1,860</text>
+<text x="960" y="420" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">nor2_1</text>
+<rect x="1110" y="408" width="142.5" height="16" rx="3" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="1258.5" y="421" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">914</text>
+<text x="960" y="447" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">nand2_1</text>
+<rect x="1110" y="435" width="118" height="16" rx="3" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="1234" y="448" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">757</text>
+<text x="960" y="474" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">a21oi_1</text>
+<rect x="1110" y="462" width="114.8" height="16" rx="3" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="1230.8" y="475" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">736</text>
+<text x="960" y="501" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">o21ai_0</text>
+<rect x="1110" y="489" width="110.9" height="16" rx="3" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="1226.9" y="502" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">711</text>
+<text x="960" y="528" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">mux4_2</text>
+<rect x="1110" y="516" width="86.2" height="16" rx="3" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="1202.2" y="529" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">553</text>
+<text x="960" y="555" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">dfxtp_1</text>
+<rect x="1110" y="543" width="79" height="16" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="1195" y="556" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">507</text>
+<text x="960" y="582" font-size="12" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">xnor2_1</text>
+<rect x="1110" y="570" width="32.9" height="16" rx="3" fill="#4F46E5" stroke="none" stroke-width="0"/>
+<text x="1148.9" y="583" font-size="12" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">211</text>
+<text x="960" y="610" font-size="12" fill="#475569">orange = flip-flops (edfxtp has an enable input)</text>
+<rect x="960" y="640" width="500" height="120" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
+<text x="980" y="668" font-size="15" fill="#C2410C" font-weight="700">What this changes in the FMEDA</text>
+<text x="980" y="694" font-size="13" fill="#0F172A">The register file is 43 % of the core (1,163 flip-flops), so it carries</text>
+<text x="980" y="714" font-size="13" fill="#0F172A">that share of the core's failure rate. A register file built from flip-flops is</text>
+<text x="980" y="734" font-size="13" fill="#0F172A">big; a memory macro with ECC would change the split.</text>
+<rect x="40" y="790" width="1420" height="110" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="60" y="818" font-size="15" fill="#0F172A" font-weight="700">How the split was made, and its limits</text>
+<text x="60" y="844" font-size="12.5" fill="#0F172A">• Flip-flops are grouped by the register they implement; each logic cell goes to the sub-parts whose flip-flops it feeds (shared cells split equally).</text>
+<text x="60" y="866" font-size="12.5" fill="#0F172A">• Register-file read multiplexers count in the register file. Cell area at the typical corner: no placement, wiring or clock tree.</text>
+<text x="60" y="888" font-size="12.5" fill="#0F172A">• Configuration: RV32I with multiply, divide, interrupts and counters. Sizes only, no failure rate. An open core, not the STM32 in LionDriver: this is a method demonstration, not evidence.</text>
+<text x="40" y="926" font-size="11" fill="#94A3B8">PicoRV32 © 2015 Claire Xenia Wolf, ISC licence. sky130_fd_sc_hd cell library, Apache-2.0. Synthesis: Yosys, synth -flatten, dfflibmap and abc to the tt_025C_1v80 liberty (flow/synth.ys).</text>
+<g class="terms">
+<text x="40" y="950" font-size="10.5" fill="#475569">Terms: ALU arithmetic logic unit: the part of a processor that adds, compares and shifts · ECC error-correcting code (memory) · FF flip-flop: a one-bit storage cell clocked by the processor clock · FMEDA failure modes, effects and diagnostic analysis</text>
+<text x="40" y="964.5" font-size="10.5" fill="#475569">(hardware metrics) · IRQ interrupt request · ISC ISC licence: a short permissive open-source licence (Internet Systems Consortium) · ISO International Organization for Standardization · RISC-V an open instruction-set architecture; PicoRV32 is an</text>
+<text x="40" y="979" font-size="10.5" fill="#475569">open-source RISC-V core · WP-nn work product, e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K safety case)</text>
+</g>
+</svg>

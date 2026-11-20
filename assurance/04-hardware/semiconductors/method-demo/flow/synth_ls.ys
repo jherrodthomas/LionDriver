@@ -1,0 +1,6 @@
+read_verilog picorv32.v lockstep_top.v
+synth -top lockstep_top -flatten
+dfflibmap -liberty tt.lib
+abc -liberty tt.lib
+opt_clean -purge
+tee -o stat.txt stat -liberty tt.lib

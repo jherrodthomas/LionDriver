@@ -2,10 +2,10 @@
 
 # Change impact: WP-H-03 Hardware safety analysis (FMEA/FMEDA)
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-04 · 19 Nov](impact-wp-h-04.md) · **WP-H-03 · 19 Nov** · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · **WP-H-03 · 19 Nov** · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [All changes](impact.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-h-03.svg" width="100%" alt="Change impact of WP-H-03 Hardware safety analysis (FMEA/FMEDA), dated 2026-11-19: 11 work products depend on it in the process model; 10 have no version dated after it, 1 have been updated since, 0 have no dated version."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-h-03.svg" width="100%" alt="Change impact of WP-H-03 Hardware safety analysis (FMEA/FMEDA), dated 2026-11-19: 11 work products depend on it in the process model; 9 have no version dated after it, 2 have been updated since, 0 have no dated version."></a>
 </p>
 
 *The change: WP-H-03 version 0.13, dated 2026-11-19: §6.5 findings applied, OI-11 and OI-12 closed: the SG-001 FMEDA rev 0.9 takes the DG419LE split of the SG-009 file and carries the ignition-sense parts Q6, R1, R4, R5; DFMEA DFM-024 for the ignition sense reading off while driving. §6.3/§6.4 SG-01 figures recomputed: λ 257 FIT, SPFM 96.96 %, LFM 88.54 %, ASIL C SPFM missed by 0.04 points; SG-05 90.54 %; planned measures 99.2 % / 94.9 %; TSR-517 alone 97.64 %. J2 left as OI-13; AI-drafted*
@@ -19,7 +19,7 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 1 | 2026-11-19 | updated |
 | [WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF)](../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | 1 | 2026-11-01 | worth a look |
 | [WP-H-06 Hardware integration and verification specification and report](../../04-hardware/WP-H-06-hardware-integration-verification.md) | 1 | 2026-10-27 | worth a look |
-| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 1 | 2026-11-01 | worth a look |
+| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 1 | 2026-11-19 | updated |
 | [WP-S-08 System integration and test strategy, specification and report](../../03-system/WP-S-08-system-integration-test.md) | 2 | 2026-11-02 | worth a look |
 | [WP-V-05 Fault injection test specification and report](../../06-validation/WP-V-05-fault-injection.md) | 2 | 2026-11-01 | worth a look |
 | [WP-W-08 Testing of the embedded software (SW qualification, HIL)](../../05-software/WP-W-08-embedded-software-testing.md) | 2 | 2026-11-11 | worth a look |

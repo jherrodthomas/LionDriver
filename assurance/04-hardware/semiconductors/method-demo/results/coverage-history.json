@@ -1,0 +1,62 @@
+{
+ "note": "Runs 1 and 2 used earlier versions of selftest.py; only run 3 is reproducible from the committed flow.",
+ "runs": [
+  {
+   "run": "1",
+   "change": "first self-test",
+   "perm_dc": 0.8792,
+   "perm_dc_excl_safe": 0.8838,
+   "cycles": 36858,
+   "sub_parts": {
+    "Register file": 0.9145,
+    "Multiplier": 0.9979,
+    "Divider": 0.9942,
+    "ALU + execute": 0.9185,
+    "Control": 0.9437,
+    "IRQ + timer": 0.6078,
+    "Decoder": 0.8979,
+    "Load / store": 0.9418,
+    "Fetch + PC": 0.7224,
+    "Counters": 0.5707
+   }
+  },
+  {
+   "run": "2",
+   "change": "x31 and IRQ-register patterns; code stubs at every 1<<k; every IRQ line, masking, timer values",
+   "perm_dc": 0.9183,
+   "perm_dc_excl_safe": 0.9231,
+   "cycles": 43406,
+   "sub_parts": {
+    "Register file": 0.9576,
+    "Multiplier": 0.9979,
+    "Divider": 0.9942,
+    "ALU + execute": 0.9242,
+    "Control": 0.9515,
+    "IRQ + timer": 0.7856,
+    "Decoder": 0.9204,
+    "Load / store": 0.9671,
+    "Fetch + PC": 0.8768,
+    "Counters": 0.5794
+   }
+  },
+  {
+   "run": "3",
+   "change": "stubs save a link (upper program-counter bits); illegal instruction, ebreak, ecall trapped",
+   "perm_dc": 0.9238,
+   "perm_dc_excl_safe": 0.9287,
+   "cycles": 44900,
+   "sub_parts": {
+    "Register file": 0.9636,
+    "Multiplier": 0.9979,
+    "Divider": 0.9942,
+    "ALU + execute": 0.9234,
+    "Control": 0.9688,
+    "IRQ + timer": 0.787,
+    "Decoder": 0.9229,
+    "Load / store": 0.9671,
+    "Fetch + PC": 0.9088,
+    "Counters": 0.5785
+   }
+  }
+ ]
+}

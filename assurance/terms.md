@@ -25,6 +25,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | AGNOS | the comma device's operating system |
 | AI | artificial intelligence |
 | ALLOWED | the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 |
+| ALU | arithmetic logic unit: the part of a processor that adds, compares and shifts |
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
 | ARXML | AUTOSAR XML: the file format AUTOSAR tools exchange |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
@@ -39,6 +40,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | CLU | instrument cluster |
 | CM | configuration management: identifying, baselining and controlling changes to work products (WP-P-01) |
 | COM | common terminal of a changeover switch |
+| CPU | central processing unit: a processor core |
 | CRC | cyclic redundancy check |
 | CSAR | configuration, software and architecture repository: the project lead's Tier-1 toolchain term, not an AUTOSAR one |
 | CSS | clock security system (MCU clock monitor) |
@@ -70,6 +72,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FD | flexible data rate (CAN FD: CAN with a faster data phase and up to 64 bytes) |
 | FDCAN | CAN with flexible data rate (the MCU's CAN controller) |
 | FDTI | fault detection time interval |
+| FF | flip-flop: a one-bit storage cell clocked by the processor clock |
 | FFI | freedom from interference |
 | FHTI | fault handling time interval: FDTI + FRTI |
 | FIT | failures in time: failures per 10⁹ hours |
@@ -84,6 +87,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FTTI | fault-tolerant time interval: fault to hazard, the time a safety mechanism has |
 | FuSa | functional safety (ISO 26262) |
 | FW | firmware |
+| GDS | GDSII, the standard file format for chip layouts |
 | GiB | gibibyte (2³⁰ bytes) |
 | GND | ground |
 | GNSS | global navigation satellite system (GPS) |
@@ -109,6 +113,8 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | IPC | inter-process communication |
 | IR | infrared |
 | IRQ | interrupt request |
+| ISA | instruction-set architecture; an ISA model runs a program instruction by instruction to give the expected results |
+| ISC | ISC licence: a short permissive open-source licence (Internet Systems Consortium) |
 | ISO | International Organization for Standardization |
 | ISR | interrupt service routine |
 | IWDG | independent watchdog of the MCU |
@@ -185,6 +191,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | RCA | root cause analysis |
 | RDP | read-out protection of the MCU's flash (option bytes) |
 | RF | residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5) |
+| RISC-V | an open instruction-set architecture; PicoRV32 is an open-source RISC-V core |
 | ROM | read-only memory |
 | RPC | remote procedure call |
 | RSA-1024 | RSA signature with a 1024-bit key, too short today |
@@ -197,6 +204,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SBU | sideband-use pins of a USB-C connector (in the harness, the intercept drive, orientation and ignition lines) |
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
 | SEC | cybersecurity engineering process group of ASPICE (SEC.1 … SEC.4) |
+| SECDED | single-error-correcting, double-error-detecting code (here Hamming 39,32 on each register) |
 | SecOC | secure onboard communication: AUTOSAR's message authentication for in-vehicle buses |
 | SGO | Standing General Order 2021-01: NHTSA's crash-reporting order for driving automation systems |
 | SHA-1 | secure hash algorithm 1, an outdated hash |

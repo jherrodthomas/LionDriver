@@ -2,10 +2,10 @@
 
 # Change impact: WP-A-04 System-level safety analyses (FTA, FMEA)
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · **WP-A-04 · 19 Nov** · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · **WP-A-04 · 19 Nov** · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [All changes](impact.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-a-04.svg" width="100%" alt="Change impact of WP-A-04 System-level safety analyses (FTA, FMEA), dated 2026-11-19: 13 work products depend on it in the process model; 11 have no version dated after it, 2 have been updated since, 0 have no dated version."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-a-04.svg" width="100%" alt="Change impact of WP-A-04 System-level safety analyses (FTA, FMEA), dated 2026-11-19: 13 work products depend on it in the process model; 10 have no version dated after it, 3 have been updated since, 0 have no dated version."></a>
 </p>
 
 *The change: WP-A-04 version 1.22, dated 2026-11-19: MCS-05.4: SG-05 estimate from FMEDA SG-001 rev 0.9, 90.54 %, met by 0.54 points; DFM-024 (ignition sense reads off while driving) is a tree gap of SG-02 in fta-fmea-map.yaml, for the FTA owner; AI-drafted*
@@ -22,7 +22,7 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 2 | 2026-11-19 | updated |
 | [WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF)](../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | 2 | 2026-11-01 | worth a look |
 | [WP-H-06 Hardware integration and verification specification and report](../../04-hardware/WP-H-06-hardware-integration-verification.md) | 2 | 2026-10-27 | worth a look |
-| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 2 | 2026-11-01 | worth a look |
+| [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 2 | 2026-11-19 | updated |
 | [WP-K-04 Functional safety assessment report (performed independently, I3)](../../10-safety-case/WP-K-04-functional-safety-assessment.md) | 2 | 2026-10-12 | worth a look |
 | [WP-S-08 System integration and test strategy, specification and report](../../03-system/WP-S-08-system-integration-test.md) | 2 | 2026-11-02 | worth a look |
 | [WP-S-09 System verification (qualification) specification and report](../../03-system/WP-S-09-system-verification.md) | 2 | 2026-10-26 | worth a look |
