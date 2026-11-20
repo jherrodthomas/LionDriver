@@ -1,0 +1,16 @@
+# The planner studies (README in this folder): openpilot's longitudinal MPC built outside openpilot. Exact pins of
+# the whole tree; the acados and Cython versions are openpilot's own (uv.lock). Synthetic (DSR-12).
+comma-deps-acados==0.2.2.post103  # BSD-2-Clause (acados, BLASFEO, HPIPM), LGPL-2.1 (qpOASES), LGPL-3.0 (CasADi, vendored)
+Cython==3.3.0              # Apache-2.0; acados's Python wrapper
+numpy==2.5.3               # BSD-3-Clause
+PyYAML==6.0.3              # MIT
+matplotlib==3.11.2         # matplotlib licence (PSF-based)
+contourpy==1.4.0           # BSD-3-Clause
+cycler==0.12.1             # BSD-3-Clause
+fonttools==4.67.0          # MIT
+kiwisolver==1.5.1          # BSD-3-Clause
+packaging==26.3            # Apache-2.0 or BSD-2-Clause
+pillow==13.0.0             # MIT-CMU; writes the WebP figures
+pyparsing==3.3.3           # MIT
+python-dateutil==2.9.0.post0  # Apache-2.0 or BSD-3-Clause
+six==1.17.0                # MIT

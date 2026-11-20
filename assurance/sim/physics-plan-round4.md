@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the twenty of rounds 2 and 3 ([round 2](physics-plan.md), [round 3](physics-plan-round3.md)): what each answers, how, with which inputs, checks and picture, and in what order. They cover triggering conditions (TCs) no study has touched yet, or only a Blender render has: the night, grades and curves, emergency vehicles, the driver's hands, the steering's torque, the radar's cover, and the traffic ahead changing lanes or braking hard |
-| Status | Phase A built 2026-11-20 (studies 21–24; §2); phase B built 2026-11-20 (studies 25–27; §3); phase C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-11-20 (studies 21–24; §2); phase B built 2026-11-20 (studies 25–27; §3); phase C built 2026-11-20 (studies 28–30; §4). AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit or a requirement goes to the lead as a register question; the study itself does not move it |
 | Lead decisions needed | **None to start.** Phases A and B run in existing environments. Phase C adds one tool, openpilot's own MPC solver (acados, from the `comma-deps-acados` wheel openpilot's `uv.lock` pins), as a new tool entry; that is a reversible technical choice. Inputs with no public source (raw torque scales, the radar cover's material) are T1 tasks, and the study gives a band until they come |
 
@@ -165,6 +165,21 @@ Changes from the plan below:
 - **Feeds.** TC-03, TC-04; a note on where the radar's loss matters.
 
 ## 4. Phase C: openpilot's longitudinal planner in the loop
+
+**Built 2026-11-20**, with openpilot's own solver (tool TL-67). Results, synthetic:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 28 | A close cut-in | The planner ramps its braking rather than braking at once; 4 of 36 cut-ins hit, all half a second ahead and 20–30 km/h slower | [`lead-events.md`](results/lead-events.md), [planner README](planner/README.md) |
+| 29 | A cut-out uncovers a stopped car | Beyond the item: at 110 km/h the car is 81–142 m away and the item alone hits it at 34–82 km/h; even at 60 km/h a late swerve hits | as above |
+| 30 | A lead braking hard | Beyond the item even at 4 m/s²: impacts at 10–66 km/h; openpilot's FCW comes 1.2–6.4 s after the lead brakes, and a driver braking 1.5 s after it still hits in 18 of 24 runs. The stock PCS is the backstop | as above |
+
+Changes from the plan below:
+- **The solver built** from the wheel openpilot pins; no fallback to closed forms was needed.
+- **The stock PCS is not modelled** (no published onset times for the Corolla's); the studies say where it has to act.
+- **The driver** in study 30 reacts to openpilot's FCW, not to the DM's alert timing.
+- **For the lead:** no new question. WP-C-02 F-02 already leaves stopped cars and hard-braking leads to the driver and
+  the stock PCS; these runs show how much rests on that.
 
 openpilot's longitudinal MPC (`long_mpc.py`) is generated with acados and casadi. openpilot's `uv.lock` pins acados
 as the `comma-deps-acados` wheel, which downloads here. Phase C builds the solver from openpilot's own generator and

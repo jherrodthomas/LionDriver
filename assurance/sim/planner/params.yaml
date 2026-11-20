@@ -1,0 +1,20 @@
+# Inputs of the planner studies (physics plan round 4, phase C: lead_events.py). Synthetic (DSR-12), no credit.
+speed_kph: {value: [60, 80, 100, 110], status: assumed, source: "highway speeds up to the ODD's 110 km/h bound (DQ-260)"}
+latency_s:
+  value: [0.2, 0.5, 1.0]
+  status: assumed
+  source: "from a car entering our lane (or being uncovered) to openpilot's model reporting it as the lead (probability over 0.5): not published; a band"
+cut_in:
+  ego_kph: 110.0
+  gap_s: {value: [0.5, 1.0, 1.5], status: assumed, source: "the cutting-in car's gap ahead of us when it enters our lane, in seconds at our speed"}
+  slower_kph: {value: [0, 10, 20, 30], status: assumed, source: "how much slower it goes than we do"}
+cut_out:
+  reveal_s: {value: [1.0, 1.5, 2.0, 3.0], status: assumed,
+             source: "when the lead clears our lane, the time it would have taken to reach the stopped car it swerved round: how late it swerved"}
+hard_brake:
+  speeds_kph: [80, 110]
+  lead_decel: {value: [4.0, 6.0, 8.0, 9.0], status: assumed,
+               source: "a lead braking from 4 m/s² (firm) to 9 m/s² (an emergency stop on a dry road with ABS)"}
+driver:
+  reaction_s: {value: 1.5, status: published, source: "WP-S-04: an attentive driver's 1.5 s after a warning (the stopped-car study's value)"}
+  decel: {value: 7.8, status: assumed, source: "a driver's full braking on a dry road, friction 0.8 (the wet-braking study's dry value)"}

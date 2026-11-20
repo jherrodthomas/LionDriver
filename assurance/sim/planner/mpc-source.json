@@ -1,0 +1,25 @@
+{
+ "long_mpc_sha256": "63b03a511d8e0a955f6abc3ef010e79e8304d5ee9fe13637741f9c13e0ca92d5",
+ "constants": {
+  "ACCEL_MIN": -3.5,
+  "ACCEL_MAX": 2.0,
+  "DT_MDL": 0.05,
+  "_LEAD_ACCEL_TAU": 1.5
+ },
+ "enums": {
+  "LongitudinalPersonality": {
+   "aggressive": 0,
+   "standard": 1,
+   "relaxed": 2
+  },
+  "LongitudinalPlanSource": {
+   "cruise": 0,
+   "lead0": 1,
+   "lead1": 2,
+   "lead2": 3,
+   "e2e": 4
+  }
+ },
+ "acados_package": "comma-deps-acados",
+ "acados_template": "acados_template"
+}

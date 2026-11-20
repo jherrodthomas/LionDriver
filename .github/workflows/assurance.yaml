@@ -1035,6 +1035,30 @@ jobs:
         python3 assurance/sim/assets/tools/vehicle_geometry.py --check
         python3 assurance/sim/assets/tools/device_shading.py --check
 
+  sim-planner:
+    name: simulation planner
+    # openpilot's longitudinal MPC (long_mpc.py) built outside openpilot with its own acados and Cython (tool TL-67),
+    # in a closed loop through a cut-in, a cut-out and a hard-braking lead (physics plan round 4, phase C;
+    # assurance/sim/planner). Design aid: synthetic data (DSR-12), no credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout the opendbc submodule (ACCEL_MIN and the Toyota actuator delay)
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Install the pinned packages of the planner studies
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/planner/requirements.txt
+    - name: Build openpilot's MPC; the source record still holds
+      run: |
+        python3 assurance/sim/planner/mpc_build.py --check
+        python3 assurance/sim/planner/mpc_build.py
+    - name: Checks (source record, steady following, the planner step from its source, a lead within the bound)
+      run: python3 assurance/sim/planner/test_planner.py
+    - name: Results within 5 % of the committed JSON, results page current
+      run: python3 assurance/sim/planner/lead_events.py --check
+
   sim-scenarios:
     name: simulation known scenarios
     # WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files (assurance/sim/scenarios, layer 2): the committed files
