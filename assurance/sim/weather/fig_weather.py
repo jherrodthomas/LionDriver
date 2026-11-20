@@ -1204,3 +1204,227 @@ def fog_visibility_figures(p, r, out: Path):
   out.mkdir(exist_ok=True)
   _fog_visibility(p, r, out / "fig-wx-25-fog-visibility.webp")
   _report(out, "fig-wx-25")
+
+
+# ------------------------------------------------------------------------------------------------ night car
+
+def _night_car(p, r, path):
+  c = r["curve"]
+  d = np.array(c["d"])
+  s = r["stop_m"]
+  fig, (a1, a2) = plt.subplots(2, 1, figsize=(9, 11), dpi=100, sharex=True)
+  fig.subplots_adjust(left=0.13, right=0.95, top=0.88, bottom=0.17, hspace=0.12)
+  fig.text(0.05, 0.955, "A stopped car beyond the headlights", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "Unlit road, our own beams only · UN R112 class B limits · auto exposure settled on the road "
+           "near the car", fontsize=11.5, color=INK2)
+  a1.fill_between(d, c["lux"]["low"], c["lux"]["high"], color=BLUE[0], alpha=0.6, lw=0,
+                  label="low beam (above the cut-off: at most, the regulation's caps)")
+  a1.plot(d, c["lux"]["value"], color=BLUE[1], lw=2)
+  a1.plot(d, c["lux"]["driving"], color=INK, lw=2, ls=(0, (5, 2)), label="driving beam (at least)")
+  a1.axvline(r["rear_over_cutoff_beyond_m"], color=MUTED, lw=1)
+  a1.text(r["rear_over_cutoff_beyond_m"] + 3, 0.03, "beyond this the\nwhole rear is above\nthe low beam's cut-off", fontsize=10, color=INK2)
+  a1.set_yscale("log"); a1.set_ylim(0.01, 100); a1.set_ylabel("light on the car's rear, lux")
+  a1.legend(loc="upper right", frameon=False, fontsize=10.5)
+  names = {"reflector": ("a red reflector (minimum)", CRIT), "white": ("white rear", BLUE[2]),
+           "road_dry": ("road beside it, dry", MUTED), "dark": ("dark rear", INK)}
+  for k, (lab, col) in names.items():
+    a2.plot(d, -np.array(c["stops"][k]), color=col, lw=2.2, label=lab)
+  a2.axhline(0, color=INK2, lw=1)
+  a2.text(218, 0.4, "the road near our car, where the exposure sits", ha="right", fontsize=10, color=INK2)
+  a2.set_ylabel("stops over (+) or under (−) the exposure's road"); a2.set_ylim(-14, 6)
+  a2.set_xlabel("distance to the stopped car, m (low beam, middle of the band)")
+  a2.legend(loc="lower left", frameon=False, fontsize=10.5)
+  for ax in (a1, a2):
+    for x, lab in ((s["item_110"], f"item stops: {s['item_110']:.0f} m"), (s["item_120"], f"120 km/h: {s['item_120']:.0f} m")):
+      ax.axvline(x, color=CRIT, lw=1.3, ls=(0, (4, 2)))
+    ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False); ax.set_xlim(15, 220)
+  a1.text(s["item_110"] - 2, 0.013, f"item stops\n{s['item_110']:.0f} m", ha="right", fontsize=10, color=CRIT)
+  a1.text(s["item_120"] + 2, 0.013, f"at 120 km/h\n{s['item_120']:.0f} m", fontsize=10, color=CRIT)
+  fig.text(0.05, 0.07, f"On low beams an unlit car beyond {r['rear_over_cutoff_beyond_m']:.0f} m is lit only by the beam above its cut-off: a dark rear "
+           "sinks\nto near black, about the road's own level; its reflectors are the brightest part, a pixel or less.",
+           fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def night_car_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _night_car(p, r, out / "fig-wx-26-night-car.webp")
+  _report(out, "fig-wx-26")
+
+
+# ------------------------------------------------------------------------------------------------ grades
+
+def _grades(p, r, path):
+  fig, (a1, a2) = plt.subplots(2, 1, figsize=(9, 11), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.88, bottom=0.15, hspace=0.32)
+  fig.text(0.05, 0.955, "Grades and sag curves", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "Braking downhill at the item's −3.5 m/s² · the low beam over a sag built for 110 km/h",
+           fontsize=11.5, color=INK2)
+  gp = np.linspace(0, 8, 81)
+  import wet_braking as wb
+  a1.plot(gp, [wb.need(3.5, g) for g in gp], color=INK, lw=2.4, label="friction the item's −3.5 m/s² needs")
+  cols = {"dry": BLUE[0], "wet_new": BLUE[1], "wet_3mm_continental": BLUE[2], "wet_3mm_mira": CRIT}
+  labs = {"dry": "dry", "wet_new": "wet, new tyres", "wet_3mm_continental": "wet, 3 mm (Continental)",
+          "wet_3mm_mira": "wet, 3 mm (MIRA)"}
+  for k, v in r["available"].items():
+    a1.axhline(v, color=cols[k], lw=1.6, ls=(0, (5, 2)))
+    a1.text(0.1, v + 0.008, f"available, {labs[k]}: {v:.2f}", fontsize=10, color=cols[k])
+  a1.axvline(r["odd_grade_pct"], color=INK2, lw=1.2)
+  a1.text(r["odd_grade_pct"] + 0.1, 0.62, "ODD bound\n6 %", fontsize=10, color=INK2)
+  a1.set_xlim(0, 8); a1.set_ylim(0.3, 0.85); a1.set_xlabel("downhill grade, %"); a1.set_ylabel("tyre-road friction")
+  a1.legend(loc="upper right", frameon=False, fontsize=10.5)
+  s = next(x for x in r["sags"] if x["design_speed_kph"] == 110)
+  k = s["k"]
+  x = np.linspace(0, 260, 400)
+  road = x ** 2 / (200 * k)
+  sf = p["grades"]["sag_formula"]; nc = p["night_car"]
+  a2.fill_between(x, road - 0.6, road, color="#d9d7cf", lw=0)
+  a2.plot(x, road, color=INK2, lw=1.5)
+  h = nc["lamp_height_m"]["value"]
+  xs = np.linspace(0, s["aashto_light_m"], 50)
+  a2.plot(xs, sf["headlight_m"] + xs * math.tan(math.radians(sf["divergence_deg"])), color=MUTED, lw=1.6, ls=(0, (5, 2)),
+          label=f"AASHTO's design beam, 1° up: meets the road at {s['aashto_light_m']:.0f} m")
+  xc = np.linspace(0, s["cutoff_m"], 50)
+  a2.plot(xc, h + xc * math.tan(math.radians(nc["passing_beam_cd"]["cutoff_deg"])), color=BLUE[1], lw=2.2,
+          label=f"low beam's cut-off, 0.57° down: meets the road at {s['cutoff_m']:.0f} m")
+  a2.add_patch(Rectangle((-4.4, 0), 4.4, 1.45, color=INK, alpha=0.85))
+  a2.axvline(r["item_stop_m"], color=CRIT, lw=1.3, ls=(0, (4, 2)))
+  a2.text(r["item_stop_m"] + 2, 0.3, f"item stops\n{r['item_stop_m']:.0f} m", fontsize=10, color=CRIT)
+  a2.set_xlim(-6, 260); a2.set_ylim(-0.6, 7)
+  a2.set_xlabel("distance ahead of our car, at the low point of a long sag, m"); a2.set_ylabel("height above the low point, m")
+  a2.legend(loc="upper left", frameon=False, fontsize=10.5)
+  for ax in (a1, a2):
+    ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  odd = next(x for x in r["rows"] if x["grade_pct"] == int(r["odd_grade_pct"]))
+  fig.text(0.05, 0.07, f"On 6 % downhill the item's braking needs {odd['need']:.2f} of friction; worn tyres in rain give "
+           f"{r['available']['wet_3mm_mira']:.2f}–{r['available']['wet_3mm_continental']:.2f}.\nOver a sag the bright part of "
+           f"the low beam reaches {s['cutoff_m']:.0f} m, not the {s['aashto_light_m']:.0f} m the design assumes.",
+           fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def grades_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _grades(p, r, out / "fig-wx-27-grades.webp")
+  _report(out, "fig-wx-27")
+
+
+# ------------------------------------------------------------------------------------------------ curve sight
+
+def _curve_sight(p, r, path):
+  rows = r["rows"]
+  fig, (a1, a2) = plt.subplots(2, 1, figsize=(9, 11.5), dpi=100, gridspec_kw={"height_ratios": [1.1, 1]})
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.88, bottom=0.14, hspace=0.3)
+  fig.text(0.05, 0.955, "A stopped car hidden on the inside of a curve", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "The ODD's tightest curve, R = v² / 2.5 m/s² · our car in the lane next to the inside shoulder",
+           fontsize=11.5, color=INK2)
+  x110 = next(x for x in rows if x["speed_kph"] == 110)
+  R = x110["radius_m"]
+  lw = p["curve_sight"]["lane_width_m"]["value"]
+  o = r["offsets_m"][0]
+  s_see = x110["sight"]["wall_0"]["tail_lights_m"]
+  s_stop = x110["need_m"]["item"]
+  th = np.linspace(-0.02, 0.5, 400)
+  def arc(rad):
+    return rad * np.sin(th), R - rad * np.cos(th)          # centre at (0, R); we start at (0, 0) heading +x
+  for rad, col, lwid in ((R - lw / 2, INK2, 1.2), (R + lw / 2, INK2, 1.2), (R + 3 * lw / 2, MUTED, 1.0)):
+    a1.plot(*arc(rad), color=col, lw=lwid)
+  wx, wy = arc(R - o)
+  a1.plot(wx, wy, color=INK, lw=4, label="wall or cutting at the inside shoulder's edge")
+  def at(s):
+    t = s / R
+    return R * math.sin(t), R - R * math.cos(t)
+  p0 = at(0)
+  for s, col, lab in ((s_see, BLUE[1], f"seen from {s_see:.0f} m"), (s_stop, CRIT, f"item needs {s_stop:.0f} m")):
+    p1 = at(s)
+    a1.plot([p0[0], p1[0]], [p0[1], p1[1]], color=col, lw=1.8, ls=(0, (5, 2)) if col == CRIT else "-")
+    a1.add_patch(Rectangle((p1[0] - 2.3, p1[1] - 0.9), 4.6, 1.8, angle=math.degrees(s / R), rotation_point="center",
+                           color=col, alpha=0.9))
+    a1.text(p1[0] + 3, p1[1] - 6, lab, fontsize=10.5, color=col)
+  a1.add_patch(Rectangle((-2.3, -0.9), 4.6, 1.8, color=INK))
+  a1.text(0, -7, "our car", fontsize=10.5, color=INK, ha="center")
+  a1.set_xlim(-10, 175); a1.set_ylim(-14, 45); a1.set_aspect("equal")
+  a1.set_xlabel("m"); a1.legend(loc="upper left", frameon=False, fontsize=10.5)
+  a1.set_title(f"110 km/h, R = {R:.0f} m, {p['curve_sight']['inside_shoulder_m']['value'][0]:.1f} m inside shoulder",
+               fontsize=12, color=INK2, loc="left")
+  v = [x["speed_kph"] for x in rows]
+  a2.plot(v, [x["need_m"]["item"] for x in rows], color=CRIT, lw=2.2, label="the item's stop (−3.5 m/s²)")
+  a2.plot(v, [x["need_m"]["driver_wet_3mm"] for x in rows], color=CRIT, lw=1.6, ls=(0, (5, 2)),
+          label="a driver's stop, wet, 3 mm")
+  a2.fill_between(v, [x["sight"]["wall_0"]["tail_lights_m"] for x in rows],
+                  [x["sight"]["wall_1"]["tail_lights_m"] for x in rows], color=BLUE[1], alpha=0.35, lw=0,
+                  label="seen past a wall or cutting (narrow to wide shoulder)")
+  a2.fill_between(v, [x["sight"]["barrier_0"]["tail_lights_m"] for x in rows],
+                  [x["sight"]["barrier_1"]["tail_lights_m"] for x in rows], color=BLUE[0], alpha=0.35, lw=0,
+                  label="tail lights past a 0.81 m barrier (roof stays in view)")
+  a2.axvline(110, color=INK2, lw=1.2)
+  a2.text(108, 20, "ODD speed bound", rotation=90, fontsize=10, color=INK2, ha="right")
+  a2.set_xlim(40, 120); a2.set_ylim(0, 240); a2.set_xlabel("speed, km/h (on the ODD's tightest curve for it)")
+  a2.set_ylabel("distance, m"); a2.legend(loc="upper left", frameon=False, fontsize=10.5)
+  for ax in (a1, a2):
+    ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.07, f"A lead at the follow gap stays in the camera's frame. A stopped car round the bend does not stay "
+           f"in view:\nat 110 km/h a wall on the inside hides it beyond {s_see:.0f} m, short of the {s_stop:.0f} m the "
+           "item needs to stop.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def curve_sight_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _curve_sight(p, r, out / "fig-wx-28-curve-sight.webp")
+  _report(out, "fig-wx-28")
+
+
+# ------------------------------------------------------------------------------------------------ beacons
+
+def _beacons(p, r, path):
+  tr = r["trace"]
+  fig, (a1, a2) = plt.subplots(2, 1, figsize=(9, 10.5), dpi=100, gridspec_kw={"height_ratios": [1.2, 1]})
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.88, bottom=0.15, hspace=0.35)
+  fig.text(0.05, 0.955, "Emergency beacons at night", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "A vehicle stopped on the shoulder, beacons flashing · openpilot's auto exposure · 110 km/h",
+           fontsize=11.5, color=INK2)
+  b = p["beacons"]
+  a1.plot(tr["d"], tr["stops"], color=BLUE[1], lw=1.4,
+          label=f"{b['peak_cd']['value']:,.0f} cd, {tr['hz']:g} Hz, 3 % scatter")
+  tw = r["trace_worst"]
+  a1.plot(tw["d"], tw["stops"], color=CRIT, lw=1.4,
+          label=f"{b['peak_cd']['high']:,.0f} cd, {tr['hz']:g} Hz, 10 % scatter (dirty windshield)")
+  a1.axhline(-1, color=CRIT, lw=1.0, ls=(0, (4, 2)))
+  a1.text(118, -0.96, "a stop darker", fontsize=10, color=CRIT)
+  a1.set_xlim(120, 0); a1.set_ylim(-1.2, 0.1)
+  a1.set_xlabel("distance to the stopped vehicle, m"); a1.set_ylabel("road in the image, stops vs no beacons")
+  a1.legend(loc="lower left", frameon=False, fontsize=10.5)
+  cl = r["clearance"]
+  lane = p["curve_sight"]["lane_width_m"]["value"]
+  a2.add_patch(Rectangle((0, 0), 60, lane, color="#d9d7cf"))
+  a2.add_patch(Rectangle((0, -b["shoulder_m"]["value"]), 60, b["shoulder_m"]["value"], color="#ecebe6"))
+  a2.plot([0, 60], [0, 0], color=INK, lw=1.5); a2.plot([0, 60], [lane, lane], color=INK2, lw=1, ls=(0, (6, 4)))
+  hw = b["our_half_width_m"]["value"]
+  a2.add_patch(Rectangle((10, lane / 2 - hw), 4.6, 2 * hw, color=INK))
+  a2.text(12.3, lane / 2, "us", color="white", ha="center", va="center", fontsize=10)
+  e = cl[0]["vehicle_from_edge_m"]
+  a2.add_patch(Rectangle((40, -e - 1.8), 4.8, 1.8, color=CRIT))
+  a2.add_patch(Circle((44, -e + p["beacons"]["person_out_m"]["value"] - 0.3), 0.3, color=CRIT))
+  a2.annotate("", xy=(42, lane / 2 - hw), xytext=(42, -e), arrowprops=dict(arrowstyle="<->", color=INK2))
+  a2.text(2, -1.6, f"{cl[0]['to_vehicle_m']:.2f} m to the vehicle,\n{cl[0]['to_person_m']:.2f} m to a "
+          "person at its door", fontsize=10, color=INK2, va="center")
+  a2.set_xlim(0, 60); a2.set_ylim(-b["shoulder_m"]["value"] - 0.2, lane + 0.3); a2.set_aspect(2.5)
+  a2.set_yticks([]); a2.set_xlabel("m · lane centring, the vehicle on the edge line")
+  for ax in (a1, a2):
+    ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  worst = min((x for x in r["cases"].values() if x["mode"] == "off"), key=lambda x: x["darkest_stops"])
+  fig.text(0.05, 0.07, f"The beacons barely touch the exposure until the last 50 m; then each flash darkens the road "
+           f"(up to {worst['swing_stops']['50']:.1f} stops\nat worst). The hazard is the pass itself: lane centring "
+           "does not move over.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def beacons_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _beacons(p, r, out / "fig-wx-29-beacons.webp")
+  _report(out, "fig-wx-29")

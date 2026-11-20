@@ -2,7 +2,7 @@
 
 # Change impact: WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: **WP-H-07 · 20 Nov** · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-P-07 · 20 Nov](impact-wp-p-07.md) · **WP-H-07 · 20 Nov** · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-h-07.svg" width="100%" alt="Change impact of WP-H-07 Qualification of hardware components (comma device, STM32H7, harness), dated 2026-11-20: 8 work products depend on it in the process model; 8 have no version dated after it, 0 have been updated since, 0 have no dated version."></a>

@@ -283,3 +283,77 @@ gnss_tunnel:
   # GPS, read from the code, and what a long tunnel does to them.
   speed_kph: 110.0
   tunnel_m: {value: [1000.0, 2000.0, 4000.0], status: assumed, source: "road tunnels of 1, 2 and 4 km (the longest US road tunnels are a few km)"}
+
+night_car:
+  # A stopped car beyond the headlights (night_car.py, physics plan round 4 study 21): how much of our own low beam
+  # reaches an unlit stopped car's rear, and what the road camera then sees of it, its reflectors and the road.
+  speed_kph: 110.0
+  distances_m: [25, 50, 75, 100, 125, 150, 200]
+  lamp_height_m: {value: 0.65, low: 0.6, high: 0.75, status: estimate,
+                  source: "our headlamps' centre height; a compact car's are 0.6–0.75 m (T1 measures the Corolla's)"}
+  lamp_half_track_m: {value: 0.6, status: estimate, source: "half the distance between our two headlamps (Corolla body 1.78 m wide)"}
+  passing_beam_cd:
+    below_cutoff: 5100.0
+    above_cutoff: {value: 625.0, low: 350.0, high: 1750.0}
+    cutoff_deg: -0.57
+    shoulder_deg: 15.0
+    status: published
+    source: "UN R112 (class B, right-hand traffic) §6.2.2.1 and §6.2.4: the cut-off's horizontal part aimed 0.57° below H-H, rising to the right at the elbow; at least 5,100 cd at 50V (0.86D, 0); above the cut-off at most 350 cd at B50L (0.57U, 3.43L), 625 in zone III, 1,750 at BR (1U, 2.5R). The beam directly ahead above the cut-off has no limit of its own: the three caps band it"
+  cutoff_width_deg: {value: 0.2, status: assumed, source: "the angle over which the beam falls from below the cut-off to above it; a sharp cut-off is a few tenths of a degree"}
+  driving_beam_hv_cd: {value: 32400.0, status: published,
+                       source: "UN R112 §6.3.3 and §6.3.3.1, class B: Imax at least 40,500 cd and HV inside the 80 % isolux, so at least 32,400 cd straight ahead"}
+  paint_reflectance: {dark: 0.03, grey: 0.25, white: 0.75, status: assumed,
+                      source: "diffuse reflectance of the rear's paint: automotive black under 2 % by its maker (Axalta, quoted by Repairer Driven News, 10 Jul 2018), taken as 3 % with dirt; a mid grey 25 %; a white about 75 %"}
+  rear_heights_m: {body: [0.4, 0.9, 1.3], reflector: 0.5, status: estimate,
+                   source: "a car's rear: bumper, boot lid and rear window; red reflex reflectors in the bumper (FMVSS 108 allows 380–1,530 mm)"}
+  reflector:
+    cil_mcd_lx: [[0.2, 420.0], [1.5, 6.0]]
+    half_spacing_m: 0.6
+    area_m2: 0.003
+    status: published
+    source: "FMVSS 108 Table XVI-a, red reflex reflector, entrance 0°: at least 420 mcd/lx at 0.2° observation and 6 at 1.5° (a minimum, read as the value; between the two, log-linear). Spacing and a 30 cm² lens estimated"
+
+grades:
+  # Grades and sag curves (grades.py, physics plan round 4 study 22): the friction the item's braking needs on the
+  # ODD's steepest downhill, how openpilot's Toyota controller treats the grade (read from the code), and how far
+  # our low beam lights the road over a sag curve built to the design standard.
+  speed_kph: 110.0
+  grades_pct: [0, 2, 4, 6]
+  odd_grade_pct: {value: 6.0, status: published, source: "WP-C-02 §3.1 geometry: longitudinal grade at most 6 % (to be confirmed, OI-5)"}
+  sag_formula:
+    headlight_m: 0.6
+    divergence_deg: 1.0
+    status: published
+    source: "MDT Road Design Manual ch. 4 §4.4.2 (AASHTO's model): headlights 2.0 ft (0.6 m) above the road, a 1.0° upward divergence of the beam; L = A S² / (200 (h + S tan 1°)) when S < L, i.e. K = S² / (400 + 3.5 S) in feet and S² / (120 + 3.5 S) in metres"
+
+curve_sight:
+  # A lead hidden on the inside of a curve (curve_sight.py, physics plan round 4 study 23): where a lead at
+  # openpilot's follow gap sits in the camera's and the model's frames on the ODD's tightest curve, and how far a
+  # barrier, wall or cutting on the curve's inside lets the camera see a stopped car ahead.
+  speeds_kph: [40, 60, 80, 100, 110, 120]
+  lane_width_m: {value: 3.66, status: published, source: "a 12 ft Interstate lane"}
+  inside_shoulder_m: {value: [1.2, 3.0], status: published,
+                      source: "Interstate inside (median) shoulder: at least 4 ft on four-lane roads, 10 ft with six lanes or more (AASHTO, design standards for the Interstate System)"}
+  obstruction_heights_m: {wall: 3.0, tall_barrier: 1.07, barrier: 0.81, status: published,
+                          source: "a wall, cutting or hedge taller than the sight line; concrete safety-shape barriers of 42 in (1.07 m) and 32 in (0.81 m), the common heights"}
+  camera_height_m: {value: 1.2, status: mesh-derived, source: "the road camera just below the top of the Corolla's windshield, as the crest study"}
+
+beacons:
+  # Emergency beacons at night (beacons.py, physics plan round 4 study 24): a vehicle stopped on the shoulder with
+  # its warning beacons flashing, as our car approaches at night: the veil the flashes put over the road camera's
+  # image, what openpilot's auto exposure does with it, and how close lane centring passes the vehicle.
+  speed_kph: 110.0
+  start_m: 300.0
+  peak_cd: {value: 2000.0, low: 750.0, high: 3100.0, status: published,
+            source: "Rea and Bullough, Transp. Res. Part F 43 (2016) 36–47: peak intensity of a warning beacon at least 750 cd and at most 2000 cd (their recommendation); 3100 cd the brightest they tested. SAE J595 asks at least 600 cd of a yellow beacon"}
+  beacons: {value: 2, status: published, source: "Rea and Bullough (2016) recommend two beacons on a service vehicle; a light bar has more"}
+  flash_hz: {value: [1.0, 2.0, 4.0], status: published, source: "SAE J845 allows 1–4 Hz (as quoted by Rea and Bullough 2016); their beacon ran at 1 Hz, 50 % duty"}
+  duty: {value: 0.5, status: published, source: "Rea and Bullough (2016): 50 % duty cycle, fully on and fully off"}
+  partial_off: {value: 0.1, status: published, source: "Rea and Bullough (2016) recommend fully-on / partly-off flashing, at least 10 % of the peak between flashes"}
+  beacon_height_m: {value: 1.8, status: estimate, source: "a roof light bar on a police car or SUV"}
+  shoulder_m: {value: 3.0, status: published, source: "Interstate outside shoulder 10 ft (AASHTO)"}
+  vehicle_from_edge_m: {value: [0.0, 0.5, 1.0], status: assumed,
+                        source: "the stopped vehicle's near side from the lane's edge line: on it (a police car shielding a stop) to a metre in"}
+  person_out_m: {value: 0.6, status: assumed, source: "a person standing at the vehicle's traffic-side door"}
+  our_half_width_m: {value: 0.89, status: published, source: "the Corolla's body, 1.78 m wide"}
+  move_over: {status: published, source: "every US state has a move-over law: change lanes away from, or slow down for, a stopped emergency vehicle with its lights on (NHTSA)"}

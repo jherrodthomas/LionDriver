@@ -1,0 +1,426 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. Arc geometry on the ODD's curve bound; openpilot's follow gaps; Interstate shoulders and barrier heights.",
+ "mpc": {
+  "stop_distance_m": 6.0,
+  "comfort_brake": 2.5,
+  "t_follow_s": {
+   "relaxed": 1.75,
+   "standard": 1.45,
+   "aggressive": 1.25
+  }
+ },
+ "half_angle_deg": {
+  "camera": 20.0,
+  "model_narrow": 15.71,
+  "model_wide": 29.36
+ },
+ "offsets_m": [
+  3.03,
+  4.83
+ ],
+ "camera_height_m": 1.2,
+ "rows": [
+  {
+   "speed_kph": 40,
+   "radius_m": 49.4,
+   "leads": {
+    "relaxed": {
+     "gap_m": 25.4,
+     "bearing_deg": 14.76
+    },
+    "standard": {
+     "gap_m": 22.1,
+     "bearing_deg": 12.83
+    },
+    "aggressive": {
+     "gap_m": 19.9,
+     "bearing_deg": 11.54
+    }
+   },
+   "need_m": {
+    "item": 23.2,
+    "driver_dry": 35.2,
+    "driver_wet_3mm": 40.8
+   },
+   "sight": {
+    "wall_0": {
+     "offset_m": 3.03,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 34.8,
+     "roof_m": 34.8
+    },
+    "tall_barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 34.8,
+     "roof_m": null
+    },
+    "barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 36.5,
+     "roof_m": null
+    },
+    "wall_1": {
+     "offset_m": 4.83,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 44.0,
+     "roof_m": 44.0
+    },
+    "tall_barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 44.0,
+     "roof_m": null
+    },
+    "barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 46.3,
+     "roof_m": null
+    }
+   }
+  },
+  {
+   "speed_kph": 60,
+   "radius_m": 111.1,
+   "leads": {
+    "relaxed": {
+     "gap_m": 35.2,
+     "bearing_deg": 9.07
+    },
+    "standard": {
+     "gap_m": 30.2,
+     "bearing_deg": 7.78
+    },
+    "aggressive": {
+     "gap_m": 26.8,
+     "bearing_deg": 6.92
+    }
+   },
+   "need_m": {
+    "item": 48.0,
+    "driver_dry": 58.6,
+    "driver_wet_3mm": 71.6
+   },
+   "sight": {
+    "wall_0": {
+     "offset_m": 3.03,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 52.0,
+     "roof_m": 52.0
+    },
+    "tall_barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 52.0,
+     "roof_m": null
+    },
+    "barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 54.6,
+     "roof_m": null
+    },
+    "wall_1": {
+     "offset_m": 4.83,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 65.8,
+     "roof_m": 65.8
+    },
+    "tall_barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 65.8,
+     "roof_m": null
+    },
+    "barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 69.0,
+     "roof_m": null
+    }
+   }
+  },
+  {
+   "speed_kph": 80,
+   "radius_m": 197.5,
+   "leads": {
+    "relaxed": {
+     "gap_m": 44.9,
+     "bearing_deg": 6.51
+    },
+    "standard": {
+     "gap_m": 38.2,
+     "bearing_deg": 5.54
+    },
+    "aggressive": {
+     "gap_m": 33.8,
+     "bearing_deg": 4.9
+    }
+   },
+   "need_m": {
+    "item": 81.7,
+    "driver_dry": 86.5,
+    "driver_wet_3mm": 111.0
+   },
+   "sight": {
+    "wall_0": {
+     "offset_m": 3.03,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 69.3,
+     "roof_m": 69.3
+    },
+    "tall_barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 69.3,
+     "roof_m": null
+    },
+    "barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 72.7,
+     "roof_m": null
+    },
+    "wall_1": {
+     "offset_m": 4.83,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 87.5,
+     "roof_m": 87.5
+    },
+    "tall_barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 87.5,
+     "roof_m": null
+    },
+    "barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 91.8,
+     "roof_m": null
+    }
+   }
+  },
+  {
+   "speed_kph": 100,
+   "radius_m": 308.6,
+   "leads": {
+    "relaxed": {
+     "gap_m": 54.6,
+     "bearing_deg": 5.07
+    },
+    "standard": {
+     "gap_m": 46.3,
+     "bearing_deg": 4.3
+    },
+    "aggressive": {
+     "gap_m": 40.7,
+     "bearing_deg": 3.78
+    }
+   },
+   "need_m": {
+    "item": 124.1,
+    "driver_dry": 119.4,
+    "driver_wet_3mm": 159.8
+   },
+   "sight": {
+    "wall_0": {
+     "offset_m": 3.03,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 86.6,
+     "roof_m": 86.6
+    },
+    "tall_barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 86.6,
+     "roof_m": null
+    },
+    "barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 90.8,
+     "roof_m": null
+    },
+    "wall_1": {
+     "offset_m": 4.83,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 109.3,
+     "roof_m": 109.3
+    },
+    "tall_barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 109.3,
+     "roof_m": null
+    },
+    "barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 114.7,
+     "roof_m": null
+    }
+   }
+  },
+  {
+   "speed_kph": 110,
+   "radius_m": 373.5,
+   "leads": {
+    "relaxed": {
+     "gap_m": 59.5,
+     "bearing_deg": 4.56
+    },
+    "standard": {
+     "gap_m": 50.3,
+     "bearing_deg": 3.86
+    },
+    "aggressive": {
+     "gap_m": 44.2,
+     "bearing_deg": 3.39
+    }
+   },
+   "need_m": {
+    "item": 148.7,
+    "driver_dry": 137.8,
+    "driver_wet_3mm": 188.1
+   },
+   "sight": {
+    "wall_0": {
+     "offset_m": 3.03,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 95.2,
+     "roof_m": 95.2
+    },
+    "tall_barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 95.2,
+     "roof_m": null
+    },
+    "barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 99.8,
+     "roof_m": null
+    },
+    "wall_1": {
+     "offset_m": 4.83,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 120.3,
+     "roof_m": 120.3
+    },
+    "tall_barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 120.3,
+     "roof_m": null
+    },
+    "barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 126.1,
+     "roof_m": null
+    }
+   }
+  },
+  {
+   "speed_kph": 120,
+   "radius_m": 444.4,
+   "leads": {
+    "relaxed": {
+     "gap_m": 64.3,
+     "bearing_deg": 4.15
+    },
+    "standard": {
+     "gap_m": 54.3,
+     "bearing_deg": 3.5
+    },
+    "aggressive": {
+     "gap_m": 47.7,
+     "bearing_deg": 3.07
+    }
+   },
+   "need_m": {
+    "item": 175.4,
+    "driver_dry": 157.6,
+    "driver_wet_3mm": 219.2
+   },
+   "sight": {
+    "wall_0": {
+     "offset_m": 3.03,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 103.9,
+     "roof_m": 103.9
+    },
+    "tall_barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 103.9,
+     "roof_m": null
+    },
+    "barrier_0": {
+     "offset_m": 3.03,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 108.9,
+     "roof_m": null
+    },
+    "wall_1": {
+     "offset_m": 4.83,
+     "obstruction": "wall",
+     "height_m": 3.0,
+     "tail_lights_m": 131.2,
+     "roof_m": 131.2
+    },
+    "tall_barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "tall_barrier",
+     "height_m": 1.07,
+     "tail_lights_m": 131.2,
+     "roof_m": null
+    },
+    "barrier_1": {
+     "offset_m": 4.83,
+     "obstruction": "barrier",
+     "height_m": 0.81,
+     "tail_lights_m": 137.5,
+     "roof_m": null
+    }
+   }
+  }
+ ]
+}
