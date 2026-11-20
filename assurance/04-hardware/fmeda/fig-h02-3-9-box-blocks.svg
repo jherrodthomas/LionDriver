@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1232" viewBox="0 0 640 1232" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1294" viewBox="0 0 640 1294" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 3-9. Harness box v3: functional blocks</title>
 <desc>Blocks: B1 Box supply and protection: Supply both switches from the ignition line through D1 (or from comma power on J2), and clamp supply transients above the 16 V stand-off of D4; B2 Switch drive: Hold both switch inputs low through 240 Ω, so that the stock path is selected whenever the device does not drive SBU1; B3 Intercept switch: Join the camera bus to the car bus while undriven (pass-through), and separate them while SBU1 is driven high (intercept), on CAN_H (U1) and CAN_L (U2); B4 Termination in intercept: Terminate the separated camera bus with 60 Ω while intercepting (R7, and R8 through the harness loop of pins 13 and 15); R6 serves cars whose plug loops pins 3 and 5, and is unused with Toyota A; B5 Bus clamps: Clamp the CAN0 and CAN2 lines to box VIN and ground; B6 Ignition sense: Pull SBU2 low through 1 kΩ while the ignition line is on, so that the device reads the ignition; B7 Connectors: Carry the car and camera buses, ignition and ground from the harness plug (J1) and the buses, SBU lines and supply to the device cable (J3)</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="640" height="1232" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="640" height="1294" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 3-9 · Harness box v3: functional blocks</text>
 <text x="16" y="48" font-size="11" fill="#475569">Block diagram, what each block shall do, and its FMEDA share</text>
 <text x="16" y="80" font-size="9.5" fill="#475569" font-weight="700">Toyota A harness</text>
@@ -107,7 +107,7 @@
 <text x="28" y="877" font-size="11.5" fill="#0F172A" font-weight="700">B6 Ignition sense</text>
 <text x="612" y="877" font-size="9.5" fill="#94A3B8" text-anchor="end">HB-06</text>
 <text x="28" y="893" font-size="10.5" fill="#0F172A">Pull SBU2 low through 1 kΩ while the ignition line is on, so that the device reads the ignition</text>
-<text x="28" y="907" font-size="9.5" fill="#475569">SG-07: 0 FIT single-point, 0 latent · SG-01: 0 FIT covered, 0.5 latent</text>
+<text x="28" y="907" font-size="9.5" fill="#475569">SG-07: 0 FIT single-point, 0 latent · SG-01: 0 FIT covered, 0.7 latent</text>
 <rect x="16" y="922" width="608" height="68" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.1"/>
 <text x="28" y="939" font-size="11.5" fill="#0F172A" font-weight="700">B7 Connectors</text>
 <text x="612" y="939" font-size="9.5" fill="#94A3B8" text-anchor="end">HB-07 · HB-08</text>
@@ -127,15 +127,22 @@
 <text x="24" y="1074" font-size="10" fill="#0F172A">0.2</text>
 <text x="70" y="1074" font-size="10" fill="#0F172A">2026-11-13</text>
 <text x="160" y="1074" font-size="10" fill="#0F172A">Functional blocks and the block diagram (WP-H-02 Figure 3-9)</text>
+<rect x="16" y="1080" width="608" height="20" rx="0" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+<text x="24" y="1094" font-size="10" fill="#0F172A">0.3</text>
+<text x="70" y="1094" font-size="10" fill="#0F172A">2026-11-19</text>
+<text x="160" y="1094" font-size="10" fill="#0F172A">Findings applied to the SG-001 FMEDA rev 0.9 (OI-11, OI-12): the DG419LE split aligned, Q6, R1, R4 and R5 carried as FMD-C-009…012 and classified for SG-01; DFMEA DFM-024 added</text>
 <g class="terms">
-<text x="16" y="1102" font-size="10" fill="#475569">Terms: FIT failures in time: failures per 10⁹ hours · FMEDA failure modes, effects and diagnostic analysis</text>
-<text x="16" y="1116" font-size="10" fill="#475569">(hardware metrics) · HB-nn row of the harness box v3 drawing review (RR-2026-010 §2, HB-01…HB-10) · NO normally</text>
-<text x="16" y="1130" font-size="10" fill="#475569">open terminal of a changeover switch (connected to COM when driven) · OBD on-board diagnostics port · SBU</text>
-<text x="16" y="1144" font-size="10" fill="#475569">sideband-use pins of a USB-C connector (in the harness, the intercept drive, orientation and ignition lines) ·</text>
-<text x="16" y="1158" font-size="10" fill="#475569">SG-nn safety goal (HARA §6) · VIN vehicle identification number; in the harness box and its simulations, the box</text>
-<text x="16" y="1172" font-size="10" fill="#475569">supply voltage · VL logic supply pin of the DG419LE switch (in the harness box, tied to VIN) · WP-nn work product,</text>
-<text x="16" y="1186" font-size="10" fill="#475569">e.g. WP-C-04; the letter is its area (M management, C concept, S system, H hardware, W software, V validation, P</text>
-<text x="16" y="1200" font-size="10" fill="#475569">processes, A analyses, O operation, K safety case)</text>
+<text x="16" y="1122" font-size="10" fill="#475569">Terms: DFM-nn DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea) · DFMEA design FMEA: failure modes and</text>
+<text x="16" y="1136" font-size="10" fill="#475569">effects analysis of a design (here the harness box and device) · FIT failures in time: failures per 10⁹ hours ·</text>
+<text x="16" y="1150" font-size="10" fill="#475569">FMD-nn FMEDA row: component FMD-C-nnn, failure mode FMD-nnn (08-analyses/fmea) · FMEDA failure modes, effects and</text>
+<text x="16" y="1164" font-size="10" fill="#475569">diagnostic analysis (hardware metrics) · HB-nn row of the harness box v3 drawing review (RR-2026-010 §2,</text>
+<text x="16" y="1178" font-size="10" fill="#475569">HB-01…HB-10) · NO normally open terminal of a changeover switch (connected to COM when driven) · OBD on-board</text>
+<text x="16" y="1192" font-size="10" fill="#475569">diagnostics port · OI-nn open item of the document it appears in · SBU sideband-use pins of a USB-C connector (in</text>
+<text x="16" y="1206" font-size="10" fill="#475569">the harness, the intercept drive, orientation and ignition lines) · SG-nn safety goal (HARA §6) · VIN vehicle</text>
+<text x="16" y="1220" font-size="10" fill="#475569">identification number; in the harness box and its simulations, the box supply voltage · VL logic supply pin of the</text>
+<text x="16" y="1234" font-size="10" fill="#475569">DG419LE switch (in the harness box, tied to VIN) · WP-nn work product, e.g. WP-C-04; the letter is its area (M</text>
+<text x="16" y="1248" font-size="10" fill="#475569">management, C concept, S system, H hardware, W software, V validation, P processes, A analyses, O operation, K</text>
+<text x="16" y="1262" font-size="10" fill="#475569">safety case)</text>
 </g>
-<text x="624" y="1220" font-size="10" fill="#94A3B8" text-anchor="end">Generated by harness_box_fmeda.py from harness-box-parts.yaml</text>
+<text x="624" y="1282" font-size="10" fill="#94A3B8" text-anchor="end">Generated by harness_box_fmeda.py from harness-box-parts.yaml</text>
 </svg>

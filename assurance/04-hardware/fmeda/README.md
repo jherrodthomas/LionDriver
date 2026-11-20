@@ -8,9 +8,9 @@ The detailed component FMEDA of the harness box v3 (E-05), one row per part, as 
 
 1. **18 parts, 37 failure modes**, every designator of the v3 drawing and the BOM; 15 carry their own rate, the connectors sit inside the wiring row.
 2. **For stock braking (SG-07) the box puts 37.56 FIT on single points** out of 57.6 FIT, almost all of it the two DG419LE switches.
-3. **For steering (SG-01) the box has no single point:** 15.16 FIT is covered by a mechanism, 20.5 FIT is latent and 17.04 FIT is safe.
-4. **The part-level view found what the block view hid:** the goal FMEDAs split the same switch two ways, and R6, Q6, R1, R4, R5 are in no goal FMEDA. Applied, SG-01's SPFM goes from 96.84 % to 96.95 % and its LFM from 88.94 % to 88.60 %.
-5. **No periodic test of the box exists**, so every latent fault stays latent for the box's life; 8 modes still need their effect analysed.
+3. **For steering (SG-01) the box has no single point:** 15.16 FIT is covered by a mechanism, 20.7 FIT is latent and 17.94 FIT is safe.
+4. **The part-level view found what the block view hid,** and its findings are now in the SG-001 FMEDA: the two goal FMEDAs had split the same switch two ways, and 4 ignition-sense parts were in no goal FMEDA. SG-01's SPFM went from 96.84 % to 96.96 % and its LFM from 88.94 % to 88.54 %.
+5. **No periodic test of the box exists**, so every latent fault stays latent for the box's life; modes whose effect is still to be analysed: 1 (J2).
 
 ## The FMEDA flow
 
@@ -28,10 +28,10 @@ The detailed component FMEDA of the harness box v3 (E-05), one row per part, as 
 |---|---|---|
 | Single-point | 37.56 | 0 |
 | Covered by a mechanism (before DC) | 0 | 15.16 |
-| Latent multiple-point | 3.08 | 20.5 |
-| Safe | 15.16 | 17.04 |
-| No effect on this goal | 1.6 | 3.8 |
-| Effect not yet analysed | 0.2 | 1.1 |
+| Latent multiple-point | 3.08 | 20.7 |
+| Safe | 15.24 | 17.94 |
+| No effect on this goal | 1.72 | 3.8 |
+| Effect not yet analysed | 0 | 0 |
 
 | Part | λ (FIT) | Failure mode | Share | SG-07 | SG-01 | Goal FMEDA row |
 |---|---|---|---|---|---|---|
@@ -59,14 +59,14 @@ The detailed component FMEDA of the harness box v3 (E-05), one row per part, as 
 | D2 | 1 | Open (clamp lost) | 70% | MPF-L | none | sg009 FMD-034 |
 | D3 | 1 | Short or leakage on a CAN line | 30% | SPF | none | sg009 FMD-033 |
 | D3 | 1 | Open (clamp lost) | 70% | MPF-L | none | sg009 FMD-034 |
-| Q6 | 1 | Drain-source short (SBU2 held low) | 50% | none | MPF-L | none |
-| Q6 | 1 | Open (SBU2 never pulled low) | 50% | none | open | none |
-| R1 | 0.2 | Open | 60% | open | open | none |
-| R1 | 0.2 | Short | 40% | open | open | none |
-| R4 | 0.2 | Open | 60% | none | open | none |
-| R4 | 0.2 | Short | 40% | none | open | none |
-| R5 | 0.2 | Open | 60% | none | open | none |
-| R5 | 0.2 | Short | 40% | none | open | none |
+| Q6 | 1 | Drain-source short (SBU2 held low) | 50% | none | MPF-L | sg001 FMD-025 |
+| Q6 | 1 | Open (SBU2 never pulled low) | 50% | none | safe | sg001 FMD-026 |
+| R1 | 0.2 | Open | 60% | none | safe | sg001 FMD-027 |
+| R1 | 0.2 | Short | 40% | safe | safe | sg001 FMD-028 |
+| R4 | 0.2 | Open | 60% | none | safe | sg001 FMD-029 |
+| R4 | 0.2 | Short | 40% | none | MPF-L | sg001 FMD-030 |
+| R5 | 0.2 | Open | 60% | none | MPF-L | sg001 FMD-031 |
+| R5 | 0.2 | Short | 40% | none | safe | sg001 FMD-032 |
 | J1 | in the wiring row | Contact open in the stock path | 30% | SPF | none | sg009 FMD-023 |
 | J1 | in the wiring row | Plug loose (whole box off the harness) | 70% | safe | safe | sg009 FMD-024 |
 | J3 | in the wiring row | SBU1 contact open | 30% | safe | RF | none |
@@ -109,29 +109,22 @@ In ISO 26262 terms the slide's proof test is the test that finds latent faults.
 
 ## Findings
 
-**Disagreements with the goal FMEDAs** (the check reports them; the list only shrinks):
+**Applied to the SG-001 FMEDA** (rev 0.9, WP-H-03; the roll-up check above now finds no difference):
 
-- fmeda-sg001 FMD-C-007: FMD-020 parts 15.00 FIT, row 17.50 FIT; FMD-021 parts 15.00 FIT, row 17.50 FIT; FMD-022 parts 20.00 FIT, row 15.00 FIT. The SG-001 file splits the DG419LE as 0.35 stuck in pass-through, 0.35 stuck in intercept and 0.30 channel open; the SG-009 file, and this part list, as 0.30, 0.30 and 0.40. One part can have only one failure-mode distribution: the two goal FMEDAs should be aligned (WP-H-03 OI-11).
+- OI-11: The DG419LE split of the SG-001 file aligned with the SG-009 file and this part list (30 % pass-through, 30 % intercept, 40 % channel open).
+- OI-12: Q6, R1, R4 and R5 of the ignition sense carried as FMD-C-009 to FMD-C-012 and classified for SG-01, and a DFMEA row added for the ignition sense reading off while driving (DFM-024).
 
-**Parts in no goal FMEDA:** R6, Q6, R1, R4, R5. Their modes are classified above; the Q6 drain-source short is latent for SG-01 (DFM-014.C2).
+**Parts with no effect on either goal,** so in no goal FMEDA: R6.
 
-**What the goal metrics would be with these applied** (computed in memory with fmea_lint; the FMEDA files are not changed here):
+**SG-01 metrics before and after** (after: computed from the file with fmea_lint):
 
 | Case | SPFM | LFM | λ total (FIT) |
 |---|---|---|---|
-| SG-01 today (fmeda-sg001) | 96.84 % | 88.94 % | 255.4 |
-| with the DG419LE split aligned | 96.94 % | 88.75 % | 255.4 |
-| and Q6 short carried as a latent row | 96.95 % | 88.60 % | 256.4 |
+| SG-01 before the findings (fmeda-sg001 rev 0.8) | 96.84 % | 88.94 % | 255.4 |
+| SG-01 now (fmeda-sg001 rev 0.9) | 96.96 % | 88.54 % | 257 |
 
 **Modes whose effect is not yet analysed:**
 
-- Q6: Open (SBU2 never pulled low)
-- R1: Open
-- R1: Short
-- R4: Open
-- R4: Short
-- R5: Open
-- R5: Short
 - J2: Contact open or short
 
 ## Where this comes from

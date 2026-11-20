@@ -808,8 +808,8 @@ class TestFmedaExport(unittest.TestCase):
     for sc in fmeda_whatif.SCENARIOS:
       sets.setdefault(sc["file"], {}).update(sc["sets"])
     m = fmea_lint.fmeda_metrics(fmeda_whatif.scenario_doc(docs["fmeda-sg001"], sets["fmeda-sg001"]), "SG-01")
-    self.assertAlmostEqual(m["spfm"], 0.991, places=3)  # WP-H-03 §6.3: 99.1 %, LFM 95.4 %
-    self.assertAlmostEqual(m["lfm"], 0.954, places=3)
+    self.assertAlmostEqual(m["spfm"], 0.992, places=3)  # WP-H-03 §6.3: 99.2 %, LFM 94.9 % (FMEDA SG-001 rev 0.9)
+    self.assertAlmostEqual(m["lfm"], 0.949, places=3)
     m = fmea_lint.fmeda_metrics(fmeda_whatif.scenario_doc(docs["fmeda-sg009"], sets["fmeda-sg009"]), "SG-07")
     self.assertAlmostEqual(m["spfm"], 0.945, places=3)  # WP-H-03 §6.3: 94.5 %
 

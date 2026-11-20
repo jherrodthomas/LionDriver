@@ -57,12 +57,15 @@
 # Rev 0.13 (2026-10-27, after BL-007): new DFM-022 (camera bus unterminated in intercept, R7 with R8 or the loopback open) and
 #   DFM-023 (R7 or R8 short), from FMEDA SG-009 rev 0.9 FMD-C-014 (#511) and the harness box SPICE pilot (#510). O 2 / O 3, D 10
 #   (VS-HW-24 (e) not run), AP H; DFM-ACT-014 covers the bench step. SG-07 tree gap recorded for the FTA owner.
+# Rev 0.14 (2026-11-19, WP-H-03 OI-12, Claude, I0): new DFM-024 (ignition sense reads off while driving: Q6, R1, R4 or R5 open or
+#   shorted the safe way, FMEDA SG-001 rev 0.9 FMD-C-009…012). The item drops out without its take-control warning (HZ-004). O 3,
+#   D 10, AP H; new action DFM-ACT-017 (bench step and the Q6 gate rating). Existing ratings unchanged.
 schema_version: 1
 analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.13"
+  revision: "0.14"
   status: draft
   baseline: BL-007
   rating_tables: RT-3
@@ -77,7 +80,7 @@ analysis:
     - assurance/04-hardware/WP-H-02-hardware-design.md
     - assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
     - assurance/08-analyses/WP-A-03-dependent-failure-analysis.md
-  updated: 2026-10-16
+  updated: 2026-11-19
 structure:
 - id: DFM-SE-001
   name: 'Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a Corolla E210 · ZRE212 · US (CFG-001)'
@@ -1520,6 +1523,52 @@ failure_modes:
   - description: 'None: RX checks cover car-side messages only'
     ref: assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml
   notes: Added after BL-007 from FMEDA SG-009 rev 0.9 (FMD-C-014). Not yet in the SG-07 fault tree (fta-fmea-map not_in_fta, tree gap).
+- id: DFM-024
+  element: DFM-SE-007
+  function: DFM-FN-006
+  failure_mode: Ignition sense reads off while driving
+  guideword: open
+  effects:
+  - level: local
+    description: 'SBU2 is not pulled low, so harness_check_ignition reads off; the heartbeat timeout takes its 2 s ignition-off value'
+  - level: next_higher
+    description: 'pandad closes the relay (should_close_relay), so the switch returns to pass-through and the stock camera rejoins the car bus; the device goes offroad and stops sending'
+  - level: end
+    description: 'The item stops steering while engaged without its take-control warning; stock LKA resumes'
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-024.C1
+    description: 'Ignition-sense parts of the harness box open, or shorted the safe way: Q6 open, R1 open, R4 open, R5 short (FMEDA SG-001 FMD-026, FMD-027, FMD-029, FMD-032)'
+    element: DFM-SE-007
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-017
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the panda and the host take the line reading as the ignition state; Toyota has no CAN ignition hook to cross-check (WP-H-03 FM-IGN-01)'
+      system_response: 'Relay closed to pass-through, heartbeat timeout 2 s, device offroad'
+      effect_after_response: 'Item lateral control ends while engaged; stock LKA resumes; whether the driver gets a warning is not shown'
+      severity_after: 10
+      frequency: 3
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-026
+      actions:
+      - DFM-ACT-017
+  safety_mechanisms:
+  - description: 'None: the reading is not cross-checked'
+    ref: panda/board/drivers/harness.h
+  notes: 'Added from the component FMEDA of the harness box (WP-H-03 §6.5, OI-12). Safe for SG-01 (no torque from the item); a loss of function for the warning goals (HZ-004). R1 short is not this mode: it misreads the orientation (WP-H-03 FM-HAR-02) and the relay-malfunction check blocks TX.'
 actions:
 - id: DFM-ACT-001
   kind: prevention
@@ -1615,5 +1664,12 @@ actions:
     authority is granted and measure fault onset to audible siren against the 0.96 s design worst case and the SG-02 1 s budget
     (margin 0.04 s), with the speaker phase varied. Persistence 0.7 s since panda bf8102a (DQ-048). Waits for the HIL bench, which
     the lead deferred (DQ-049, 2026-10-14)'
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-017
+  kind: detection
+  description: 'Bench-test the ignition sense of the harness box (WP-H-03 OI-12): open Q6 and R1 with the device engaged on the HIL
+    bench and record what the driver is told and when; record the Q6 gate rating against the ignition voltage with R4 shorted or R5
+    open (DMN3200U-7 datasheet, resistor values from the shipped box, VS-HW-02). Waits for the HIL bench (DQ-049) and DFM-ACT-014'
   owner: Jherrod Thomas
   status: open
