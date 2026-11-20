@@ -23,6 +23,7 @@ on:
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
       - 'docs/assets/liondriver/**'
+      - 'docs/safety/**'
       - '.github/workflows/assurance.yaml'
       - '.claude/skills/**'
   pull_request:
@@ -40,6 +41,7 @@ on:
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
       - 'docs/assets/liondriver/**'
+      - 'docs/safety/**'
       - '.github/workflows/assurance.yaml'
       - '.claude/skills/**'
 
@@ -125,6 +127,9 @@ jobs:
         python3 assurance/02-concept/figures/test_fig_c02_exits.py
         python3 assurance/02-concept/figures/fig_c09_scenes.py --check
         python3 assurance/02-concept/figures/test_fig_c09_scenes.py
+        python3 docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures/fig_fi001_problem.py --check
+        python3 docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures/test_fig_fi001_problem.py
+        python3 docs/liondriver/why/check_one_pager.py
         python3 assurance/02-concept/figures/fig_c09_boundary.py --check
         python3 assurance/02-concept/figures/test_fig_c09_boundary.py
         python3 assurance/02-concept/figures/fig_c05_four_areas.py --check
@@ -172,6 +177,10 @@ jobs:
         python3 assurance/04-hardware/figures/test_fig_h02_box_anim.py
         python3 assurance/04-hardware/figures/fig_h02_crank_anim.py --check
         python3 assurance/04-hardware/figures/test_fig_h02_crank_anim.py
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/fig_md_core.py --check
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/test_fig_md_core.py
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/fig_md_explainers.py --check
+        python3 assurance/04-hardware/semiconductors/method-demo/figures/test_fig_md_explainers.py
         python3 assurance/05-software/figures/fig_w05_uml_states.py --check
         python3 assurance/05-software/figures/test_fig_w05_uml_states.py
         python3 assurance/05-software/figures/fig_w00_overview.py --check
@@ -458,6 +467,47 @@ jobs:
       run: |
         python3 assurance/04-hardware/wiring/make_wiring.py --check
         python3 assurance/04-hardware/wiring/test_make_wiring.py
+
+  latex-reports:
+    name: LaTeX reports
+    # Generated LaTeX renderings of the work products (assurance/reports): the .tex is checked against the records,
+    # then the PDFs are built with TeX Live 2023 from the Ubuntu 24.04 archive (WP-P-07 TL-66) and kept as an artifact.
+    runs-on: ubuntu-24.04
+    # the TeX Live packages are about 60 MB; a slow archive mirror once took more than 15 minutes to serve them, so the
+    # downloaded .deb files are cached and the limit leaves room for a cold cache on a slow mirror
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Cache the downloaded TeX Live packages
+      uses: actions/cache@v4
+      with:
+        path: ~/apt-archives
+        key: latex-reports-debs-ubuntu-24.04-v1
+    - name: Install PyYAML (pinned), TeX Live and the SVG converter
+      run: |
+        python3 -m pip install --quiet --user --break-system-packages -r assurance/trace/requirements.txt
+        mkdir -p ~/apt-archives/partial
+        sudo apt-get update -q
+        sudo apt-get install -y -q --no-install-recommends -o Dir::Cache::Archives="$HOME/apt-archives" texlive-latex-base texlive-latex-recommended \
+          texlive-latex-extra texlive-fonts-recommended lmodern librsvg2-bin poppler-utils
+        sudo rm -f ~/apt-archives/lock && sudo chown -R "$USER" ~/apt-archives
+        pdflatex --version | head -1 | grep -F "TeX Live 2023"
+        rsvg-convert --version
+    - name: Generated .tex current, and the generator's tests
+      run: |
+        python3 assurance/reports/build_reports.py --check
+        python3 assurance/reports/test_build_reports.py
+    - name: Build the PDFs (fails on a LaTeX error or an undefined reference)
+      run: |
+        python3 assurance/reports/build_reports.py --pdf build/reports
+        for f in build/reports/*/*.pdf; do pdfinfo "$f" | grep -E "^Pages"; done
+    - name: Keep the PDFs
+      uses: actions/upload-artifact@v7
+      with:
+        name: latex-reports
+        path: build/reports/*/*.pdf
 
   box-spice:
     name: harness box ngspice pilot

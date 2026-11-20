@@ -22,4 +22,4 @@ This folder holds LionDriver's closed loop from the field back to the safety cas
 
 | FI ID | Summary | Class | Status |
 |---|---|---|---|
-| [FI-2026-001](cases/FI-2026-001-nhtsa-pe26007/REPORT.md) | NHTSA PE26007: collisions with stopped/slow in-lane vehicles | A | RCA |
+| [FI-2026-001](cases/FI-2026-001-nhtsa-pe26007/REPORT.md) | NHTSA PE26007: collisions with stopped/slow in-lane vehicles. Start with the [problem statement](cases/FI-2026-001-nhtsa-pe26007/PROBLEM-STATEMENT.md) | A | RCA |

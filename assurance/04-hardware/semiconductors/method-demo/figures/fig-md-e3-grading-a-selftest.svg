@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1180" viewBox="0 0 720 1180" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Part 11 in one minute 3 · grading a self-test</title>
+<desc>20,229 faults simulated on PicoRV32; the self-test finds 92.4 % of stuck-at faults, up from 87.9 % in the first run.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="720" height="1180" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="24" y="22" width="236" height="30" rx="15" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="142" y="42" font-size="12" fill="#4F46E5" font-weight="700" text-anchor="middle">PART 11 IN ONE MINUTE · 3</text>
+<text x="360" y="92" font-size="30" fill="#0F172A" font-weight="800" text-anchor="middle">How do you check that a</text>
+<text x="360" y="130" font-size="30" fill="#0F172A" font-weight="800" text-anchor="middle">CPU self-test really works?</text>
+<text x="360" y="170" font-size="15" fill="#475569" text-anchor="middle">break the CPU on purpose, thousands of times</text>
+<rect x="24" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="88.8" y="215" font-size="11" fill="#475569" text-anchor="middle">synthesise</text>
+<rect x="159.6" y="198" width="129.6" height="26" rx="13" fill="#C2410C" stroke="#C2410C" stroke-width="1"/>
+<text x="224.4" y="215" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">break</text>
+<rect x="295.2" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="360" y="215" font-size="11" fill="#475569" text-anchor="middle">run</text>
+<rect x="430.8" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="495.6" y="215" font-size="11" fill="#475569" text-anchor="middle">compare</text>
+<rect x="566.4" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="631.2" y="215" font-size="11" fill="#475569" text-anchor="middle">score</text>
+<rect x="24" y="242" width="672" height="250" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="270" font-size="14" fill="#0F172A" font-weight="700">one of 20,229 faults, followed through (example values)</text>
+<rect x="44" y="292" width="115.2" height="110" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.5"/>
+<text x="101.6" y="326" font-size="13" fill="#D2553F" font-weight="700" text-anchor="middle">gate output</text>
+<text x="101.6" y="354" font-size="12" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">stuck at 1</text>
+<line x1="160.2" y1="347" x2="163.2" y2="347" stroke="#475569" stroke-width="1.6"/>
+<path d="M172.2,347 L163.2,351.5 L163.2,342.5 Z" fill="#475569"/>
+<rect x="173.2" y="292" width="115.2" height="110" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.5"/>
+<text x="230.8" y="326" font-size="13" fill="#D2553F" font-weight="700" text-anchor="middle">adder</text>
+<text x="230.8" y="354" font-size="12" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">7 + 5 =</text>
+<text x="230.8" y="372" font-size="12" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">13</text>
+<line x1="289.4" y1="347" x2="292.4" y2="347" stroke="#475569" stroke-width="1.6"/>
+<path d="M301.4,347 L292.4,351.5 L292.4,342.5 Z" fill="#475569"/>
+<rect x="302.4" y="292" width="115.2" height="110" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+<text x="360" y="326" font-size="13" fill="#D97706" font-weight="700" text-anchor="middle">result stored</text>
+<text x="360" y="354" font-size="12" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">mem[...] =</text>
+<text x="360" y="372" font-size="12" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">13</text>
+<line x1="418.6" y1="347" x2="421.6" y2="347" stroke="#475569" stroke-width="1.6"/>
+<path d="M430.6,347 L421.6,351.5 L421.6,342.5 Z" fill="#475569"/>
+<rect x="431.6" y="292" width="115.2" height="110" rx="10" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.5"/>
+<text x="489.2" y="326" font-size="13" fill="#0F766E" font-weight="700" text-anchor="middle">compare</text>
+<text x="489.2" y="354" font-size="12" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">expected 12</text>
+<line x1="547.8" y1="347" x2="550.8" y2="347" stroke="#475569" stroke-width="1.6"/>
+<path d="M559.8,347 L550.8,351.5 L550.8,342.5 Z" fill="#475569"/>
+<rect x="560.8" y="292" width="115.2" height="110" rx="10" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.5"/>
+<text x="618.4" y="326" font-size="13" fill="#2E9E6A" font-weight="700" text-anchor="middle">caught</text>
+<text x="618.4" y="354" font-size="12" fill="#0F172A" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">detected</text>
+<text x="44" y="434" font-size="12" fill="#475569">The test stores every result. A fault that changes any result, address</text>
+<text x="44" y="454" font-size="12" fill="#475569">or timing is visible; a compare plus a watchdog would catch it.</text>
+<text x="44" y="474" font-size="12" fill="#475569">Thousands of faulty copies run side by side in one simulation.</text>
+<text x="132" y="528" font-size="12" fill="#475569" text-anchor="middle">faults simulated</text>
+<text x="132" y="572" font-size="40" fill="#4F46E5" font-weight="800" text-anchor="middle">20,229</text>
+<text x="132" y="596" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">one per run</text>
+<text x="132" y="614" font-size="11" fill="#475569" text-anchor="middle">cells × 2 + one flip per FF</text>
+<text x="360" y="528" font-size="12" fill="#475569" text-anchor="middle">found by the test</text>
+<text x="360" y="572" font-size="40" fill="#2E9E6A" font-weight="800" text-anchor="middle">92.4 %</text>
+<text x="360" y="596" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">of stuck-at faults</text>
+<text x="360" y="614" font-size="11" fill="#475569" text-anchor="middle">run 1: 87.9 %</text>
+<text x="588" y="528" font-size="12" fill="#475569" text-anchor="middle">campaign time</text>
+<text x="588" y="572" font-size="40" fill="#C2410C" font-weight="800" text-anchor="middle">4.4</text>
+<text x="588" y="596" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">minutes</text>
+<text x="588" y="614" font-size="11" fill="#475569" text-anchor="middle">4 CPUs</text>
+<text x="24" y="646" font-size="13" fill="#0F172A" font-weight="700">coverage per sub-part: first test (grey) and fixed test (colour)</text>
+<line x1="466" y1="660" x2="466" y2="966" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="466" y="982" font-size="11" fill="#475569" text-anchor="middle">60 %</text>
+<line x1="604" y1="660" x2="604" y2="966" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="604" y="982" font-size="11" fill="#475569" text-anchor="middle">90 %</text>
+<text x="180" y="681" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Register file</text>
+<rect x="190" y="668" width="420.7" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="678" width="443.3" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="639.3" y="687" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">96 %</text>
+<text x="180" y="711" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Multiplier</text>
+<rect x="190" y="698" width="459" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="708" width="459" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="655" y="717" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">100 %</text>
+<text x="180" y="741" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Divider</text>
+<rect x="190" y="728" width="457.3" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="738" width="457.3" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="653.3" y="747" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">99 %</text>
+<text x="180" y="771" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">ALU + execute</text>
+<rect x="190" y="758" width="422.5" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="768" width="424.8" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="620.8" y="777" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">92 %</text>
+<text x="180" y="801" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Control</text>
+<rect x="190" y="788" width="434.1" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="798" width="445.6" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="641.6" y="807" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">97 %</text>
+<text x="180" y="831" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">IRQ + timer</text>
+<rect x="190" y="818" width="279.6" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="828" width="362" height="11" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="558" y="837" font-size="12" fill="#D97706" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">79 %</text>
+<text x="180" y="861" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Decoder</text>
+<rect x="190" y="848" width="413" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="858" width="424.5" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="620.5" y="867" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">92 %</text>
+<text x="180" y="891" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Load / store</text>
+<rect x="190" y="878" width="433.2" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="888" width="444.9" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="640.9" y="897" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">97 %</text>
+<text x="180" y="921" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Program counter</text>
+<rect x="190" y="908" width="332.3" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="918" width="418" height="11" rx="2" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="614" y="927" font-size="12" fill="#2E9E6A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">91 %</text>
+<text x="180" y="951" font-size="13" fill="#0F172A" font-weight="600" text-anchor="end">Counters</text>
+<rect x="190" y="938" width="262.5" height="9" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<rect x="190" y="948" width="266.1" height="11" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="462.1" y="957" font-size="12" fill="#D2553F" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">58 %</text>
+<text x="360" y="1020" font-size="16" fill="#0F172A" font-weight="700" text-anchor="middle">A self-test is graded by breaking the CPU, not by reading the code.</text>
+<text x="360" y="1046" font-size="11" fill="#94A3B8" text-anchor="middle">PicoRV32 (ISC) synthesised with Yosys to sky130_fd_sc_hd (Apache-2.0); fault-free run checked against an ISA model.</text>
+<text x="360" y="1063" font-size="11" fill="#94A3B8" text-anchor="middle">An open RISC-V core, not LionDriver's MCU: this shows the method.</text>
+<g class="terms">
+<text x="24" y="1092" font-size="10.5" fill="#475569">Terms: ALU arithmetic logic unit: the part of a processor that adds, compares and shifts · CPU central processing unit:</text>
+<text x="24" y="1106.5" font-size="10.5" fill="#475569">a processor core · FF flip-flop: a one-bit storage cell clocked by the processor clock · IRQ interrupt request · ISA</text>
+<text x="24" y="1121" font-size="10.5" fill="#475569">instruction-set architecture; an ISA model runs a program instruction by instruction to give the expected results · ISC</text>
+<text x="24" y="1135.5" font-size="10.5" fill="#475569">ISC licence: a short permissive open-source licence (Internet Systems Consortium) · MCU microcontroller: the panda</text>
+<text x="24" y="1150" font-size="10.5" fill="#475569">safety processor (STM32H7) · RISC-V an open instruction-set architecture; PicoRV32 is an open-source RISC-V core</text>
+</g>
+</svg>

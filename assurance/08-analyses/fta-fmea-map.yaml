@@ -1048,3 +1048,11 @@ not_in_fta:
     reason: >-
       As for SG-02: the read is an uncredited start-up barrier against a stored ABS/VSC fault; the SG-06 tree starts from a
       loss of longitudinal control while engaged and does not credit the read.
+  - fm: DFM-024
+    goal: SG-02
+    kind: tree_gap
+    reason: >-
+      The ignition sense reading off while driving (Q6, R1, R4 open or R5 short; FMEDA SG-001 FMD-026, FMD-027, FMD-029, FMD-032)
+      sends the device offroad with its power on: pandad closes the relay and the item stops steering. The SG-02 tree has no event
+      for the host leaving onroad while engaged (BE-2.07 is loss of the 12 V supply), and whether the driver is warned is not shown.
+      For the FTA owner to add it next to BE-2.07 (WP-H-03 OI-12, DFM-ACT-017)

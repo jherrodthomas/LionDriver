@@ -7,6 +7,7 @@
 </p>
 
 <p align="center">
+  <a href="#why-liondriver-exists">Why LionDriver exists</a> &nbsp;·&nbsp;
   <a href="docs/liondriver/README.md">Documentation</a> &nbsp;·&nbsp;
   <a href="https://github.com/jherrodthomas/LionDriver/wiki">Wiki</a> &nbsp;·&nbsp;
   <a href="#platform-architecture">Architecture</a> &nbsp;·&nbsp;
@@ -19,6 +20,19 @@
 
 > [!IMPORTANT]
 > **LionDriver is research and development software.** It is a driver-assistance system: the driver must stay attentive and in control at all times. It is not certified, makes no claim of ISO 26262 compliance or ASIL capability, and is not approved for unsupervised operation.
+
+## Why LionDriver exists
+
+On 21 September 2026 NHTSA, the US vehicle-safety regulator, opened Preliminary Evaluation **PE26007** into crashes of cars running openpilot on comma devices. In five crashes the car "reportedly struck stopped or slowly moving vehicles within the same travel lane". Three people died and eleven more were injured. NHTSA said it will look at forks through "the shared components between openpilot and the fork".
+
+LionDriver runs that same driving stack. It was started eighteen days later to build, in the open, the engineered safety argument the stack does not come with: what can go wrong, what should stop it, and the evidence for whether it does.
+
+<p align="center">
+  <a href="docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/evidence/INOA-PE26007-17274.pdf"><img src="docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/evidence/INOA-PE26007-17274-page-1.png" width="70%" alt="NHTSA ODI resume for PE26007, page 1: opened 09/21/2026; subject: crashes involving comma.ai driving automation products; products comma three, comma 3X, comma four, openpilot; population 30,000; problem description: crashes involving stopped or slow moving in-lane vehicles; totals 5 crashes, 14 injuries, 3 fatalities."></a>
+</p>
+<p align="center"><sub>NHTSA ODI Resume PE26007, page 1 of 2, as issued. Click for the full PDF.</sub></p>
+
+**One page:** [Why LionDriver exists (PDF)](docs/liondriver/why/why-liondriver-exists.pdf), to print or hand to anyone who asks why. The long version, with both pages of the report: **[Why LionDriver exists](https://github.com/jherrodthomas/LionDriver/wiki/Problem-statement)** on the wiki, and the [FI-2026-001 problem statement](docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/PROBLEM-STATEMENT.md) in the record.
 
 ## Living Safety Case
 

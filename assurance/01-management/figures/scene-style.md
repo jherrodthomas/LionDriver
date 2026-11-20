@@ -111,3 +111,4 @@ CI holds the style in place:
 | `02-concept/fsc/fsc_scenes.py` | WP-C-04 FTTI scenes | large | `python3 assurance/02-concept/fsc/fsc_figures.py` |
 | `01-management/figures/fig_scenekit.py` | the two figures on this page | full, strip, large | `python3 assurance/01-management/figures/fig_scenekit.py` |
 | `models/fmdtools/sg02/fault_lab.py` | SG-02 Fault Lab page (TE-02 P5) | large | `python3 assurance/models/fmdtools/sg02/fault_lab.py` |
+| `docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures/fig_fi001_problem.py` | field case FI-2026-001 problem statement, Figure 2-1 | full | `python3 docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures/fig_fi001_problem.py` |

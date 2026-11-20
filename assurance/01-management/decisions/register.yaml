@@ -6913,5 +6913,6 @@
       title: "Keep it and mark the upstream rows"
       detail: "No deletion: a correction row marks rows 1-17,693 as upstream and the views hide them. Cost: 18k rows (~8 MB) with comma's PR numbers in the record for good."
   sources: ["assurance/07-supporting/ledger/README.md (Reset of 2026-11-12)", "assurance/07-supporting/ledger/ledger.py FORK_BASE", "assurance/01-management/WP-M-05-quality-assurance-plan.md QG-6 (baseline 655bfde)"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: 1, reset and rebuild."}
+  applied: {ref: 1c460d1, record: "ledger branch rebuilt by ledger.yaml run 44433191792 (603 rows from 8b8c6ae, chain verified); assurance/07-supporting/ledger/README.md Reset of 2026-11-12", at: 2026-11-19}

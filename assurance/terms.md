@@ -25,6 +25,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | AGNOS | the comma device's operating system |
 | AI | artificial intelligence |
 | ALLOWED | the envelope's authority state with controls_allowed = 1 (NOT_ALLOWED: 0), WP-W-05 §5.2 |
+| ALU | arithmetic logic unit: the part of a processor that adds, compares and shifts |
 | AoU | assumption of use: what the analysis assumes about the car, the driver or the environment |
 | ARXML | AUTOSAR XML: the file format AUTOSAR tools exchange |
 | ASIL | Automotive Safety Integrity Level, A (lowest) to D (highest), from ISO 26262 |
@@ -39,6 +40,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | CLU | instrument cluster |
 | CM | configuration management: identifying, baselining and controlling changes to work products (WP-P-01) |
 | COM | common terminal of a changeover switch |
+| CPU | central processing unit: a processor core |
 | CRC | cyclic redundancy check |
 | CSAR | configuration, software and architecture repository: the project lead's Tier-1 toolchain term, not an AUTOSAR one |
 | CSS | clock security system (MCU clock monitor) |
@@ -70,6 +72,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FD | flexible data rate (CAN FD: CAN with a faster data phase and up to 64 bytes) |
 | FDCAN | CAN with flexible data rate (the MCU's CAN controller) |
 | FDTI | fault detection time interval |
+| FF | flip-flop: a one-bit storage cell clocked by the processor clock |
 | FFI | freedom from interference |
 | FHTI | fault handling time interval: FDTI + FRTI |
 | FIT | failures in time: failures per 10⁹ hours |
@@ -84,6 +87,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | FTTI | fault-tolerant time interval: fault to hazard, the time a safety mechanism has |
 | FuSa | functional safety (ISO 26262) |
 | FW | firmware |
+| GDS | GDSII, the standard file format for chip layouts |
 | GiB | gibibyte (2³⁰ bytes) |
 | GND | ground |
 | GNSS | global navigation satellite system (GPS) |
@@ -109,6 +113,8 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | IPC | inter-process communication |
 | IR | infrared |
 | IRQ | interrupt request |
+| ISA | instruction-set architecture; an ISA model runs a program instruction by instruction to give the expected results |
+| ISC | ISC licence: a short permissive open-source licence (Internet Systems Consortium) |
 | ISO | International Organization for Standardization |
 | ISR | interrupt service routine |
 | IWDG | independent watchdog of the MCU |
@@ -118,6 +124,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | LDA | lane departure alert: Toyota's stock lane warning |
 | LDO | low-dropout linear regulator |
 | LDW | lane departure warning |
+| LFM | latent fault metric: share of the multiple-point failure rate that is not latent (ISO 26262-5) |
 | LFS | Git Large File Storage (where the model files live) |
 | LKA | lane keeping assist |
 | LKAS | lane keeping assist system |
@@ -138,6 +145,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | NACK | not acknowledge |
 | NaN | not a number: an invalid floating-point value |
 | NC | normally closed terminal of a changeover switch (connected to COM when not driven) |
+| NHTSA | National Highway Traffic Safety Administration: the US vehicle-safety regulator |
 | NLOC | non-comment lines of code: the lines of a function that are neither blank nor only comment (lizard's count) |
 | NMI | non-maskable interrupt |
 | NO | normally open terminal of a changeover switch (connected to COM when driven) |
@@ -149,6 +157,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | OBD-II | on-board diagnostics port |
 | ODD | operational design domain: where the system is meant to work |
 | ODD-H | the claimed ODD: limited-access highways |
+| ODI | Office of Defects Investigation: the NHTSA office that opens defect investigations |
 | OEM | original equipment manufacturer: the carmaker |
 | ONNX | Open Neural Network Exchange, the model file format |
 | OOD | out of distribution: unlike the data the model learned from |
@@ -179,8 +188,10 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | R-USR | installation record block: driver briefing (WP-O-01 §5) |
 | R-VEH | installation record block: vehicle (WP-O-01 §5) |
 | RAM | random-access memory |
+| RCA | root cause analysis |
 | RDP | read-out protection of the MCU's flash (option bytes) |
 | RF | residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5) |
+| RISC-V | an open instruction-set architecture; PicoRV32 is an open-source RISC-V core |
 | ROM | read-only memory |
 | RPC | remote procedure call |
 | RSA-1024 | RSA signature with a 1024-bit key, too short today |
@@ -193,7 +204,9 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SBU | sideband-use pins of a USB-C connector (in the harness, the intercept drive, orientation and ignition lines) |
 | SC | safety-critical (a guide-word pair that can cause a hazard) |
 | SEC | cybersecurity engineering process group of ASPICE (SEC.1 … SEC.4) |
+| SECDED | single-error-correcting, double-error-detecting code (here Hamming 39,32 on each register) |
 | SecOC | secure onboard communication: AUTOSAR's message authentication for in-vehicle buses |
+| SGO | Standing General Order 2021-01: NHTSA's crash-reporting order for driving automation systems |
 | SHA-1 | secure hash algorithm 1, an outdated hash |
 | SHA-256 | a cryptographic hash used to identify a file exactly |
 | SILENT | the panda's safety mode that sends nothing |
@@ -206,6 +219,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
 | SPF | single-point fault: a fault no safety mechanism covers that violates a safety goal on its own (ISO 26262-5) |
+| SPFM | single-point fault metric: share of the safety-related failure rate not single-point or residual (ISO 26262-5) |
 | SPI | serial peripheral interface (the link between SoC and MCU) |
 | SRAM | static RAM: the MCU's working memory |
 | SSH | secure shell (remote login) |
@@ -292,6 +306,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
 | FI-nn | functional insufficiency (WP-C-06) |
 | FM-nn | functional modification (WP-C-07) |
+| FMD-nn | FMEDA row: component FMD-C-nnn, failure mode FMD-nnn (08-analyses/fmea) |
 | FSR-nn | functional safety requirement (FSC) |
 | G-nn | named gate of a WP-A-04 fault tree (G-SIREN, G-LATCUE); numbered gates read G1.1, G2.3 … |
 | GAP-nn | gap found by the gap assessment |

@@ -87,7 +87,7 @@ class TestScenekit(unittest.TestCase):
     for name, svg in fig_scenekit.build().items():
       self.assertEqual((HERE / name).read_text(encoding="utf-8"), svg, f"{name}: run python3 fig_scenekit.py")
     page = (HERE / "scene-style.md").read_text(encoding="utf-8")
-    users = {p.name for d in ("assurance", "tools") for p in (REPO / d).rglob("*.py")
+    users = {p.name for d in ("assurance", "tools", "docs") for p in (REPO / d).rglob("*.py")
              if not p.name.startswith("test_") and p.name != "scenekit.py"
              and re.search(r"^\s*(import scenekit|from scenekit import)", p.read_text(encoding="utf-8"), re.M)}
     users |= {"hazlog_cards.py", "stpa_ls_scenes.py", "fmea_cards.py", "fig_c09_scenes.py", "fsc_scenes.py"}   # through fm_ / stpa_scenes

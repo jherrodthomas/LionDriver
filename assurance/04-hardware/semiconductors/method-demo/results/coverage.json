@@ -1,0 +1,108 @@
+{
+ "cycles": 44900,
+ "seconds": 265,
+ "faults": 20229,
+ "perm_faults": 17862,
+ "perm_detected": 16501,
+ "perm_dc": 0.9238,
+ "safe_faults": {
+  "unused coprocessor-interface fields": 30,
+  "x0 storage": 64
+ },
+ "perm_dc_excl_safe": 0.9287,
+ "seu_faults": 2367,
+ "seu_detected": 457,
+ "seu_dc": 0.1931,
+ "sub_parts": [
+  {
+   "sub_part": "Register file",
+   "perm_faults": 3971,
+   "perm_detected": 3827,
+   "perm_dc": 0.9636,
+   "seu_faults": 1163,
+   "seu_detected": 97,
+   "seu_dc": 0.0834
+  },
+  {
+   "sub_part": "Multiplier",
+   "perm_faults": 1909,
+   "perm_detected": 1905,
+   "perm_dc": 0.9979,
+   "seu_faults": 255,
+   "seu_detected": 23,
+   "seu_dc": 0.0902
+  },
+  {
+   "sub_part": "Divider",
+   "perm_faults": 2241,
+   "perm_detected": 2228,
+   "perm_dc": 0.9942,
+   "seu_faults": 200,
+   "seu_detected": 8,
+   "seu_dc": 0.04
+  },
+  {
+   "sub_part": "ALU + execute",
+   "perm_faults": 2261,
+   "perm_detected": 2088,
+   "perm_dc": 0.9234,
+   "seu_faults": 70,
+   "seu_detected": 3,
+   "seu_dc": 0.0429
+  },
+  {
+   "sub_part": "Control",
+   "perm_faults": 1893,
+   "perm_detected": 1834,
+   "perm_dc": 0.9688,
+   "seu_faults": 77,
+   "seu_detected": 16,
+   "seu_dc": 0.2078
+  },
+  {
+   "sub_part": "IRQ + timer",
+   "perm_faults": 1394,
+   "perm_detected": 1097,
+   "perm_dc": 0.787,
+   "seu_faults": 138,
+   "seu_detected": 97,
+   "seu_dc": 0.7029
+  },
+  {
+   "sub_part": "Decoder",
+   "perm_faults": 844,
+   "perm_detected": 779,
+   "perm_dc": 0.9229,
+   "seu_faults": 152,
+   "seu_detected": 37,
+   "seu_dc": 0.2434
+  },
+  {
+   "sub_part": "Load / store",
+   "perm_faults": 983,
+   "perm_detected": 951,
+   "perm_dc": 0.9671,
+   "seu_faults": 118,
+   "seu_detected": 34,
+   "seu_dc": 0.2881
+  },
+  {
+   "sub_part": "Fetch + PC",
+   "perm_faults": 1284,
+   "perm_detected": 1167,
+   "perm_dc": 0.9088,
+   "seu_faults": 66,
+   "seu_detected": 34,
+   "seu_dc": 0.5152
+  },
+  {
+   "sub_part": "Counters",
+   "perm_faults": 1082,
+   "perm_detected": 626,
+   "perm_dc": 0.5785,
+   "seu_faults": 128,
+   "seu_detected": 108,
+   "seu_dc": 0.8438
+  }
+ ]
+}

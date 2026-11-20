@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="1054" viewBox="0 0 640 1054" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 6-5. Harness box parts, mode by mode</title>
-<desc>U1 Stuck in intercept, or IN input damaged high: SG-07 SPF, SG-01 safe, Stuck in pass-through: SG-07 safe, SG-01 RF, Channel open, increased on-resistance, leakage or latch-up: SG-07 SPF, SG-01 MPF-L; U2 Stuck in intercept, or IN input damaged high: SG-07 SPF, SG-01 safe, Stuck in pass-through: SG-07 safe, SG-01 RF, Channel open, increased on-resistance, leakage or latch-up: SG-07 SPF, SG-01 MPF-L; R2 Open (IN floats when SBU1 is undriven): SG-07 MPF-L, SG-01 safe, Short (SBU1 held low): SG-07 safe, SG-01 RF; R3 Open (IN floats when SBU1 is undriven): SG-07 MPF-L, SG-01 safe, Short (SBU1 held low): SG-07 safe, SG-01 RF; R7 Open (camera side left with one 120 Ω in intercept): SG-07 MPF-L, SG-01 none, Short (camera CAN2_H to CAN2_L in intercept): SG-07 SPF, SG-01 none; R8 Open (camera side left with one 120 Ω in intercept): SG-07 MPF-L, SG-01 none, Short (camera CAN2_H to CAN2_L in intercept): SG-07 SPF, SG-01 none; R6 Open: SG-07 none, SG-01 none, Short: SG-07 none, SG-01 none; D1 Open (box unpowered without comma power): SG-07 SPF, SG-01 safe, Short (reverse protection lost): SG-07 MPF-L, SG-01 none; D4 Short (box VIN to ground): SG-07 SPF, SG-01 safe, Open (transient protection lost): SG-07 MPF-L, SG-01 none; D2 Short or leakage on a CAN line: SG-07 SPF, SG-01 none, Open (clamp lost): SG-07 MPF-L, SG-01 none; D3 Short or leakage on a CAN line: SG-07 SPF, SG-01 none, Open (clamp lost): SG-07 MPF-L, SG-01 none; Q6 Drain-source short (SBU2 held low): SG-07 none, SG-01 MPF-L, Open (SBU2 never pulled low): SG-07 none, SG-01 open; R1 Open: SG-07 open, SG-01 open, Short: SG-07 open, SG-01 open; R4 Open: SG-07 none, SG-01 open, Short: SG-07 none, SG-01 open; R5 Open: SG-07 none, SG-01 open, Short: SG-07 none, SG-01 open; J1 Contact open in the stock path: SG-07 SPF, SG-01 none, Plug loose (whole box off the harness): SG-07 safe, SG-01 safe; J3 SBU1 contact open: SG-07 safe, SG-01 RF, Cable loose (device off the box): SG-07 safe, SG-01 safe; J2 Contact open or short: SG-07 open, SG-01 open</desc>
+<desc>U1 Stuck in intercept, or IN input damaged high: SG-07 SPF, SG-01 safe, Stuck in pass-through: SG-07 safe, SG-01 RF, Channel open, increased on-resistance, leakage or latch-up: SG-07 SPF, SG-01 MPF-L; U2 Stuck in intercept, or IN input damaged high: SG-07 SPF, SG-01 safe, Stuck in pass-through: SG-07 safe, SG-01 RF, Channel open, increased on-resistance, leakage or latch-up: SG-07 SPF, SG-01 MPF-L; R2 Open (IN floats when SBU1 is undriven): SG-07 MPF-L, SG-01 safe, Short (SBU1 held low): SG-07 safe, SG-01 RF; R3 Open (IN floats when SBU1 is undriven): SG-07 MPF-L, SG-01 safe, Short (SBU1 held low): SG-07 safe, SG-01 RF; R7 Open (camera side left with one 120 Ω in intercept): SG-07 MPF-L, SG-01 none, Short (camera CAN2_H to CAN2_L in intercept): SG-07 SPF, SG-01 none; R8 Open (camera side left with one 120 Ω in intercept): SG-07 MPF-L, SG-01 none, Short (camera CAN2_H to CAN2_L in intercept): SG-07 SPF, SG-01 none; R6 Open: SG-07 none, SG-01 none, Short: SG-07 none, SG-01 none; D1 Open (box unpowered without comma power): SG-07 SPF, SG-01 safe, Short (reverse protection lost): SG-07 MPF-L, SG-01 none; D4 Short (box VIN to ground): SG-07 SPF, SG-01 safe, Open (transient protection lost): SG-07 MPF-L, SG-01 none; D2 Short or leakage on a CAN line: SG-07 SPF, SG-01 none, Open (clamp lost): SG-07 MPF-L, SG-01 none; D3 Short or leakage on a CAN line: SG-07 SPF, SG-01 none, Open (clamp lost): SG-07 MPF-L, SG-01 none; Q6 Drain-source short (SBU2 held low): SG-07 none, SG-01 MPF-L, Open (SBU2 never pulled low): SG-07 none, SG-01 safe; R1 Open: SG-07 none, SG-01 safe, Short: SG-07 safe, SG-01 safe; R4 Open: SG-07 none, SG-01 safe, Short: SG-07 none, SG-01 MPF-L; R5 Open: SG-07 none, SG-01 MPF-L, Short: SG-07 none, SG-01 safe; J1 Contact open in the stock path: SG-07 SPF, SG-01 none, Plug loose (whole box off the harness): SG-07 safe, SG-01 safe; J3 SBU1 contact open: SG-07 safe, SG-01 RF, Cable loose (device off the box): SG-07 safe, SG-01 safe; J2 Contact open or short: SG-07 open, SG-01 open</desc>
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="640" height="1054" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 6-5 · Harness box parts, mode by mode</text>
@@ -178,21 +178,21 @@
 <text x="140" y="632" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
 <rect x="180" y="621" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
 <text x="210.8" y="632" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 50%</text>
-<rect x="245.5" y="621" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="271.7" y="632" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 50%</text>
+<rect x="245.5" y="621" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="270.8" y="632" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 50%</text>
 <path d="M16 642 L624 642" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
 <text x="16" y="658" font-size="12" fill="#0F172A" font-weight="700">R1</text>
 <text x="52" y="658" font-size="10" fill="#475569">0.2 FIT</text>
 <text x="140" y="658" font-size="9.5" fill="#475569" font-weight="700">SG-07</text>
-<rect x="180" y="647" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="206.2" y="658" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
-<rect x="236.4" y="647" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="262.5" y="658" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<rect x="180" y="647" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
+<text x="206.2" y="658" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 60%</text>
+<rect x="236.4" y="647" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="261.6" y="658" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 40%</text>
 <text x="140" y="678" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
-<rect x="180" y="667" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="206.2" y="678" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
-<rect x="236.4" y="667" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="262.5" y="678" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<rect x="180" y="667" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="678" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 60%</text>
+<rect x="234.5" y="667" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="259.8" y="678" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 40%</text>
 <path d="M16 688 L624 688" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
 <text x="16" y="704" font-size="12" fill="#0F172A" font-weight="700">R4</text>
 <text x="52" y="704" font-size="10" fill="#475569">0.2 FIT</text>
@@ -202,10 +202,10 @@
 <rect x="236.4" y="693" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
 <text x="262.5" y="704" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
 <text x="140" y="724" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
-<rect x="180" y="713" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="206.2" y="724" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
-<rect x="236.4" y="713" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="262.5" y="724" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<rect x="180" y="713" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="205.3" y="724" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 60%</text>
+<rect x="234.5" y="713" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="265.3" y="724" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 40%</text>
 <path d="M16 734 L624 734" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
 <text x="16" y="750" font-size="12" fill="#0F172A" font-weight="700">R5</text>
 <text x="52" y="750" font-size="10" fill="#475569">0.2 FIT</text>
@@ -215,10 +215,10 @@
 <rect x="236.4" y="739" width="52.4" height="15" rx="7" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.1"/>
 <text x="262.5" y="750" font-size="9" fill="#94A3B8" font-weight="700" text-anchor="middle">none 40%</text>
 <text x="140" y="770" font-size="9.5" fill="#475569" font-weight="700">SG-01</text>
-<rect x="180" y="759" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="206.2" y="770" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 60%</text>
-<rect x="236.4" y="759" width="52.4" height="15" rx="7" fill="#F1F5F9" stroke="#475569" stroke-width="1.1"/>
-<text x="262.5" y="770" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">open 40%</text>
+<rect x="180" y="759" width="61.5" height="15" rx="7" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.1"/>
+<text x="210.8" y="770" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="middle">MPF-L 60%</text>
+<rect x="245.5" y="759" width="50.5" height="15" rx="7" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.1"/>
+<text x="270.8" y="770" font-size="9" fill="#2E9E6A" font-weight="700" text-anchor="middle">safe 40%</text>
 <path d="M16 780 L624 780" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
 <text x="16" y="796" font-size="12" fill="#0F172A" font-weight="700">J1</text>
 <text x="52" y="796" font-size="10" fill="#475569">in wiring row</text>

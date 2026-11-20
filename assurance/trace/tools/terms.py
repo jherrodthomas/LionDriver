@@ -60,6 +60,7 @@ PAGES = [
   A / "07-supporting/tool-qualification/TQR-32-check-trace.md",
 ]
 FIGURES = [
+  *sorted((A / "04-hardware/semiconductors/method-demo/figures").glob("fig-md-*.svg")),  # Part 11 method demonstration
   A / "01-management/figures/vcycle/fig-m00-vcycle.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-legend.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-time.svg",
@@ -72,6 +73,7 @@ FIGURES = [
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-std-*.svg")),  # one per standard
   *sorted((A / "01-management/figures/vcycle").glob("fig-m00-vcycle-x-*.svg")),  # exploded views, one per box
   A / "05-software/coverage/card-overview.svg",
+  *sorted((REPO / "docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/figures").glob("fig-fi001-*.svg")),
   A / "05-software/coverage/card-status.svg",
   A / "05-software/design-notes/card-overview.svg",
   A / "05-software/design-notes/card-status.svg",
@@ -161,9 +163,19 @@ TERMS = {
   "STPA": "system-theoretic process analysis",
   "FMEA": "failure mode and effects analysis",
   "FMEDA": "failure modes, effects and diagnostic analysis (hardware metrics)",
+  # semiconductors (ISO 26262-11 method demonstration, 04-hardware/semiconductors)
+  "ALU": "arithmetic logic unit: the part of a processor that adds, compares and shifts",
+  "CPU": "central processing unit: a processor core",
+  "FF": "flip-flop: a one-bit storage cell clocked by the processor clock",
+  "ISA": "instruction-set architecture; an ISA model runs a program instruction by instruction to give the expected results",
+  "RISC-V": "an open instruction-set architecture; PicoRV32 is an open-source RISC-V core",
+  "SECDED": "single-error-correcting, double-error-detecting code (here Hamming 39,32 on each register)",
+  "GDS": "GDSII, the standard file format for chip layouts",
+  "ISC": "ISC licence: a short permissive open-source licence (Internet Systems Consortium)",
   "DFMEA": "design FMEA: failure modes and effects analysis of a design (here the harness box and device)",
   "PFMEA": "process FMEA: failure modes of making, installing or updating the item",
   "DFM-": "DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea)",
+  "FMD-": "FMEDA row: component FMD-C-nnn, failure mode FMD-nnn (08-analyses/fmea)",
   "FTA": "fault tree analysis",
   "DFA": "dependent failure analysis",
   "FFI": "freedom from interference",
@@ -225,6 +237,10 @@ TERMS = {
   "XML": "extensible markup language",
   "RTE": "AUTOSAR runtime environment: the layer that connects software components to each other and to basic software",
   "OEM": "original equipment manufacturer: the carmaker",
+  "NHTSA": "National Highway Traffic Safety Administration: the US vehicle-safety regulator",
+  "ODI": "Office of Defects Investigation: the NHTSA office that opens defect investigations",
+  "RCA": "root cause analysis",
+  "SGO": "Standing General Order 2021-01: NHTSA's crash-reporting order for driving automation systems",
   "CSAR": "configuration, software and architecture repository: the project lead's Tier-1 toolchain term, not an AUTOSAR one",
   "OBD": "on-board diagnostics port",
   "OBD-II": "on-board diagnostics port",
@@ -291,6 +307,8 @@ TERMS = {
   "BOM": "bill of materials",
   "UK-": "unknown that WP-H-02 must obtain (UK-01…UK-09, WP-H-02 §5)",
   "PMHF": "probabilistic metric for random hardware failures (ISO 26262-5)",
+  "SPFM": "single-point fault metric: share of the safety-related failure rate not single-point or residual (ISO 26262-5)",
+  "LFM": "latent fault metric: share of the multiple-point failure rate that is not latent (ISO 26262-5)",
   "SRAM": "static RAM: the MCU's working memory",
   "PMIC": "power-management IC of the SoC",
   "SMPS": "switched-mode power supply (the STM32H7's internal step-down regulator)",
@@ -505,6 +523,7 @@ NOT_TERMS = {
   "SAFE", "SITUATION", "SITUATIONS", "SPEED", "STATES", "SURFACE", "TO", "TRIGGER", "TRIGGERING", "VALIDATION",
   "WEATHER", "WHAT", "SAFETY", "GOAL", "SOTIF HAZARD", "ELEMENT", "STATE", "THE", "OF", "VIEW", "IN", "ON", "AT",
   "WAY", "OUT", "DOES", "NOTICE", "TODAY", "CLOSES", "BRAKE",
+  "PART", "ONE", "MINUTE", "SkyWater", "MHz",
   "LionDriver", "GitHub", "LibreOffice", "README", "II", "IV", "YAML", "OpenpilotState", "ENABLE", "IsDriverViewEnabled", "CarParams", "DisengageOnAccelerator", "OK", "PyYAML",
 }
 

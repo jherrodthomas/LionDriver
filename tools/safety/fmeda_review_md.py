@@ -27,9 +27,9 @@ GENERATOR = "tools/safety/fmeda_review_md.py"
 SOURCES = export_fmeda_xlsx.SOURCES
 FIGURE = {"fmeda-sg001": "fig-3-10-fmeda-sg001-metrics.svg", "fmeda-sg009": "fig-3-11-fmeda-sg009-metrics.svg"}
 # the what-if page is a private claude.ai artifact of the project lead; it embeds a snapshot of these YAML files
-WHAT_IF = "https://claude.ai/artifact/6btZjojvGtcyZdYrhzsR8Z"
+WHAT_IF = "https://claude.ai/artifact/FwMt6jccCRfNSZ3BbGJHr1"
 # the live worksheet is a private claude.ai page of the project lead, built by fmeda_views.py
-WORKSHEET = "https://claude.ai/artifact/PCbGoJH1mrjZGDmEzegu7N"
+WORKSHEET = "https://claude.ai/artifact/GqXdK8QZmYi2EVSbj3FiSp"
 
 
 def one(s) -> str:

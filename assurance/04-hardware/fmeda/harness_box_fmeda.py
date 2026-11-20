@@ -10,8 +10,8 @@ Reads harness-box-parts.yaml (one entry per designator) and fmeda-flow.yaml, and
    each part mode's class must match the goal row's classification. Differences listed in known_differences are
    reported; a new one fails, and a listed one that has gone fails too, so the list only shrinks;
 3. computes the four FMEDA outputs: failure rate per mode and per category, useful life, diagnostic coverage per mode,
-   coverage of each periodic test; and what the goal metrics would be with the part-level findings applied
-   (fmea_lint.fmeda_metrics on an in-memory copy; the FMEDA files are not changed);
+   coverage of each periodic test; and the SG-01 metrics before the part-level findings were applied to the SG-001 FMEDA
+   (recorded in `applied`) and now (fmea_lint.fmeda_metrics on the file);
 4. writes README.md (the generated page), fig-h03-6-0-fmeda-flow.svg and fig-h03-6-5-box-parts.svg.
 
     python3 harness_box_fmeda.py            # write the outputs
@@ -21,7 +21,6 @@ Needs PyYAML (pinned in assurance/trace/requirements.txt). Output is determinist
 """
 from __future__ import annotations
 
-import copy
 import datetime
 import io
 import re
@@ -191,33 +190,23 @@ def categories(parts: list[dict], goals: dict) -> dict:
   return out
 
 
-def what_if(parts: list[dict], goals: dict) -> list[dict]:
-  """Goal metrics now, and with the part-level findings applied in memory."""
-  rows = []
-  sg001 = copy.deepcopy(goals["fmeda-sg001"])
-  now = fmea_lint.fmeda_metrics(goals["fmeda-sg001"])
-  # finding 1: the DG419LE split of the SG-009 file and the part list, applied to the SG-001 row
-  u1 = next(p for p in parts if p["ref"] == "U1")
-  comp = next(c for c in sg001["components"] if c["id"] == "FMD-C-007")
-  for pm in u1["modes"]:
-    for r in comp["failure_modes"]:
-      if r["id"] == pm["rows"]["fmeda-sg001"]:
-        r["distribution"] = pm["distribution"]
-  aligned = fmea_lint.fmeda_metrics(sg001)
-  # finding 2: Q6 drain-source short, latent for SG-01, carried as a new row
-  q6 = next(p for p in parts if p["ref"] == "Q6")
-  short = next(m for m in q6["modes"] if m["goals"]["SG-01"] == "MPF-L")
-  sg001["components"].append({"id": "FMD-C-X", "failure_rate_fit": q6["rate_fit"], "safety_related": True,
-                              "failure_modes": [
-                                {"id": "X1", "distribution": short["distribution"], "violates_sg_directly": False,
-                                 "mpf_potential": True},
-                                {"id": "X2", "distribution": 1 - short["distribution"], "violates_sg_directly": False,
-                                 "mpf_potential": False}]})
-  both = fmea_lint.fmeda_metrics(sg001)
-  for label, m in (("SG-01 today (fmeda-sg001)", now), ("with the DG419LE split aligned", aligned),
-                   ("and Q6 short carried as a latent row", both)):
-    rows.append({"case": label, "spfm": m["spfm"], "lfm": m["lfm"], "total": m["total_fit"]})
-  return rows
+def what_if(data: dict, goals: dict) -> list[dict]:
+  """The goal metrics before the part-level findings were applied (recorded) and now (computed from the file)."""
+  ap = data["applied"]
+  doc = goals[ap["file"]]
+  ver = lambda v: tuple(int(x) for x in str(v).split("."))  # noqa: E731
+  if ver(doc["analysis"]["revision"]) < ver(ap["revision"]):
+    raise BoxError(f"applied: {ap['file']} is at revision {doc['analysis']['revision']}, before {ap['revision']}")
+  for ref in ap["new_parts"]:
+    p = next((p for p in data["parts"] if p["ref"] == ref), None)
+    if p is None or not all((m.get("rows") or {}).get(ap["file"]) for m in p["modes"]):
+      raise BoxError(f"applied: {ref} is listed as carried into {ap['file']}, but not every mode of it has a row there")
+  now = fmea_lint.fmeda_metrics(doc)
+  b = ap["before"]
+  return [{"case": f"SG-01 before the findings ({ap['file']} rev {b['revision']})", "spfm": b["spfm"], "lfm": b["lfm"],
+           "total": b["total_fit"]},
+          {"case": f"SG-01 now ({ap['file']} rev {doc['analysis']['revision']})", "spfm": now["spfm"], "lfm": now["lfm"],
+           "total": now["total_fit"]}]
 
 
 def check_blocks(data: dict, parts: list[dict]) -> list[dict]:
@@ -260,7 +249,7 @@ def build() -> dict:
       if not (REPO / r).exists():
         raise BoxError(f"fmeda-flow.yaml: {r} does not exist")
   return {"data": data, "flow": flow, "goals": goals, "parts": parts, "diffs": diffs,
-          "cat": categories(parts, goals), "whatif": what_if(parts, goals)}
+          "cat": categories(parts, goals), "whatif": what_if(data, goals)}
 
 
 # ---------------------------------------------------------------- page
@@ -274,8 +263,11 @@ def page(r: dict) -> str:
   rated = [p for p in parts if p["rate_fit"] is not None]
   n_modes = sum(len(p["modes"]) for p in parts)
   opens = [(p["ref"], m["mode"]) for p in parts for m in p["modes"] if "open" in m["goals"].values()]
-  new = [p["ref"] for p in parts if p["rate_fit"] is not None and not any(m.get("rows") for m in p["modes"])]
+  unmapped = [p for p in parts if p["rate_fit"] is not None and not any(m.get("rows") for m in p["modes"])]
+  no_effect = [p["ref"] for p in unmapped if all(c == "none" for m in p["modes"] for c in m["goals"].values())]
+  new = [p["ref"] for p in unmapped if p["ref"] not in no_effect]
   wi = r["whatif"]
+  applied_new = r["data"]["applied"]["new_parts"]
   L = ["<!-- GENERATED by harness_box_fmeda.py from harness-box-parts.yaml and fmeda-flow.yaml; do not edit -->", "",
        "# Harness box component FMEDA", "",
        "The detailed component FMEDA of the harness box v3 (E-05), one row per part, as [WP-H-03](../WP-H-03-hardware-safety-analysis-fmeda.md) "
@@ -290,11 +282,12 @@ def page(r: dict) -> str:
        f"{fit(sum(p['rate_fit'] for p in rated))} FIT, almost all of it the two DG419LE switches.",
        f"3. **For steering (SG-01) the box has no single point:** {fit(cat['SG-01']['RF'])} FIT is covered by a mechanism, "
        f"{fit(cat['SG-01']['MPF-L'])} FIT is latent and {fit(cat['SG-01']['safe'])} FIT is safe.",
-       f"4. **The part-level view found what the block view hid:** the goal FMEDAs split the same switch two ways, and "
-       f"{', '.join(new)} are in no goal FMEDA. Applied, SG-01's SPFM goes from {wi[0]['spfm'] * 100:.2f} % to "
-       f"{wi[2]['spfm'] * 100:.2f} % and its LFM from {wi[0]['lfm'] * 100:.2f} % to {wi[2]['lfm'] * 100:.2f} %.",
-       f"5. **No periodic test of the box exists**, so every latent fault stays latent for the box's life; {len(opens)} modes "
-       "still need their effect analysed.", "",
+       f"4. **The part-level view found what the block view hid,** and its findings are now in the SG-001 FMEDA: the two "
+       f"goal FMEDAs had split the same switch two ways, and {len(applied_new)} ignition-sense parts were in no goal FMEDA. "
+       f"SG-01's SPFM went from {wi[0]['spfm'] * 100:.2f} % to {wi[1]['spfm'] * 100:.2f} % and its LFM from "
+       f"{wi[0]['lfm'] * 100:.2f} % to {wi[1]['lfm'] * 100:.2f} %.",
+       f"5. **No periodic test of the box exists**, so every latent fault stays latent for the box's life; modes whose effect "
+       f"is still to be analysed: {len(opens)} ({', '.join(ref for ref, _ in opens)}).", "",
        "## The FMEDA flow", "",
        "![The FMEDA flow: six inputs (field data not needed; failure modes and safe state, architecture, diagnostics done; "
        "schematic and BOM partial, the box only; prevention and periodic tests partial), the component FMEDA, and four outputs "
@@ -338,14 +331,22 @@ def page(r: dict) -> str:
         "| Test | When | Finds | Coverage in service | Note |", "|---|---|---|---|---|"]
   for t in r["data"]["periodic_tests"]:
     L.append(f"| {t['name']} | {t['when']} | {', '.join(t['finds'])} | {t['coverage_in_service']:.0%} | {t['note']} |")
-  L += ["", "## Findings", "", "**Disagreements with the goal FMEDAs** (the check reports them; the list only shrinks):", ""]
-  for d in r["diffs"]:
-    reason = next(k["reason"] for k in r["data"]["known_differences"] if (k["file"], k["row"]) == (d["file"], d["row"]))
-    L.append(f"- {d['file']} {d['row']}: {d['what']}. {reason}")
-  L += ["", f"**Parts in no goal FMEDA:** {', '.join(new)}. Their modes are classified above; the Q6 drain-source short is "
-        "latent for SG-01 (DFM-014.C2).", "",
-        "**What the goal metrics would be with these applied** (computed in memory with fmea_lint; the FMEDA files are not "
-        "changed here):", "", "| Case | SPFM | LFM | λ total (FIT) |", "|---|---|---|---|"]
+  ap = r["data"]["applied"]
+  L += ["", "## Findings", "",
+        f"**Applied to the SG-001 FMEDA** (rev {ap['revision']}, WP-H-03; the roll-up check above now finds no difference):", ""]
+  for f in ap["findings"]:
+    L.append(f"- {f['id']}: {f['text']}.")
+  if r["diffs"]:
+    L += ["", "**Disagreements with the goal FMEDAs** (the check reports them; the list only shrinks):", ""]
+    for d in r["diffs"]:
+      reason = next(k["reason"] for k in r["data"]["known_differences"] if (k["file"], k["row"]) == (d["file"], d["row"]))
+      L.append(f"- {d['file']} {d['row']}: {d['what']}. {reason}")
+  if new:
+    L += ["", f"**Parts in no goal FMEDA:** {', '.join(new)}."]
+  if no_effect:
+    L += ["", f"**Parts with no effect on either goal,** so in no goal FMEDA: {', '.join(no_effect)}."]
+  L += ["", "**SG-01 metrics before and after** (after: computed from the file with fmea_lint):", "",
+        "| Case | SPFM | LFM | λ total (FIT) |", "|---|---|---|---|"]
   for w in wi:
     L.append(f"| {w['case']} | {w['spfm'] * 100:.2f} % | {w['lfm'] * 100:.2f} % | {fit(w['total'])} |")
   L += ["", "**Modes whose effect is not yet analysed:**", ""]

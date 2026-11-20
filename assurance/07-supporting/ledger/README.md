@@ -37,9 +37,13 @@ the upstream history before it is a supplier's (WP-M-11) and is not in the ledge
 The first run (merge of #602, 2026-11-12) backfilled the whole inherited openpilot history from 2016: 18,284 rows, of
 which some 17,700 were comma's commits, carrying comma's pull-request numbers (which link to nothing in this
 repository) and 4,205 "pushed without a pull request" exceptions that are not LionDriver's. The lead decided to reset
-it (DQ-443, A): the `ledger` branch was deleted the same day, about an hour after it was written and before anything
-used it or the branch was protected, and the next run rebuilt it from `8b8c6ae`. This is the only time the ledger was
-reset; from then on it is append-only, and the branch is to be protected against force-push and deletion.
+it (DQ-443, A) the same day. The branch was deleted on 2026-11-19, once the lead could do it; by then it held 18,296
+rows, twelve of them appended for LionDriver merges (#602 to #616) on top of the backfill. In that week the wiki read
+work-product versions from it, but no controlled copy was issued (`distribution.yaml` has no entry after 2026-11-12).
+A manual run of the ledger workflow (run 44433191792) rebuilt it from `8b8c6ae`: 603 rows, ledger commit `1c460d1`,
+chain verified against `liondriver-dev`. The seven "pushed without a pull request" rows are LionDriver's own direct
+pushes (the first commit and six early edits made on GitHub). This is the only time the ledger was reset; from then on
+it is append-only, and the branch is to be protected against force-push and deletion.
 
 ## Versions: X.Y.Z, computed
 

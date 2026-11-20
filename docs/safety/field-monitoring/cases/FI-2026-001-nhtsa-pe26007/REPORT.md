@@ -11,27 +11,35 @@
 | Date received | 2026-10-10 |
 | Reporter / source | Project maintainer, from public reporting |
 | Source type | Regulator (NHTSA ODI), media |
-| Source links | [Electrek, 2026-09-24](https://electrek.co/2026/09/24/comma-ai-openpilot-nhtsa-investigation-crashes/) · [Repairer Driven News, 2026-09-29](https://www.repairerdrivennews.com/2026/09/29/nhtsa-investigating-deaths-injuries-linked-to-comma-ai-driving-system/) · [Self Drive News](https://selfdrivenews.com/nhtsa-comma-ai-openpilot-investigation/) · [Roic.ai](https://www.roic.ai/news/us-opens-safety-probe-into-commaai-driver-assistance-after-five-crashes-three-deaths-09-23-2026) · [Yahoo News](https://www.yahoo.com/news/us/articles/federal-probe-opens-aftermarket-self-152942156.html) |
+| Source links | **Primary:** [NHTSA ODI resume, PE26007, opened 2026-09-21](evidence/INOA-PE26007-17274.pdf) (2 pages; SHA-256 `e8eac1901d9bf5a13be62ed290898f11cc09c490e270514b005ca0e2af62da6c`) · Press: [Electrek, 2026-09-24](https://electrek.co/2026/09/24/comma-ai-openpilot-nhtsa-investigation-crashes/) · [Repairer Driven News, 2026-09-29](https://www.repairerdrivennews.com/2026/09/29/nhtsa-investigating-deaths-injuries-linked-to-comma-ai-driving-system/) · [Self Drive News](https://selfdrivenews.com/nhtsa-comma-ai-openpilot-investigation/) · [Roic.ai](https://www.roic.ai/news/us-opens-safety-probe-into-commaai-driver-assistance-after-five-crashes-three-deaths-09-23-2026) · [Yahoo News](https://www.yahoo.com/news/us/articles/federal-probe-opens-aftermarket-self-152942156.html) |
 | Severity class | **A — Critical** (fatalities; regulatory defect investigation) |
 | Provisional category | PERF, ML, MISUSE, CFG, PROC (see RCA) |
 | Safety anomaly? | **Yes.** Collision with an in-lane obstacle while the system was engaged is a hazardous event for a longitudinal-control item. |
-| Status | RCA — complete at the code level; awaiting field logs and reproduction |
+| Status | RCA — complete at the code level; awaiting field logs and reproduction. Problem statement: [`PROBLEM-STATEMENT.md`](PROBLEM-STATEMENT.md) |
 | Safety manager | Project maintainer |
 | RCA lead | Project maintainer |
 
-> **Note on source quality:** the NHTSA resume (ODI document) has not been retrieved for this record. The facts below come from consistent press coverage. Replace them with the primary ODI source when available (action FA-01 in `CORRECTIVE-ACTIONS.md`).
+> **Source quality (revised 2026-11-18, rev B).** The NHTSA ODI resume for PE26007 is now held as
+> [`evidence/INOA-PE26007-17274.pdf`](evidence/INOA-PE26007-17274.pdf) (action FA-01). Facts it states are marked
+> **Verified** below and quote it. Facts it does not state (the RAV4 crash, FrogPilot, the data NHTSA will request) stay
+> **Reported**, from the press. Three press figures differed from the resume and are corrected: the date opened is
+> 2026-09-21, the prompt was SGO crash reports, an owner complaint (VOQ) and police outreach, and the five crashes are
+> five SGO reports whose IDs the resume lists.
 
 ## 2. Event description
 
 | # | Fact | Source | Confidence |
 |---|---|---|---|
-| 1 | NHTSA ODI opened Preliminary Evaluation **PE26007** on 2026-09-21. | Electrek, Roic.ai | Reported |
-| 2 | Scope is ~30,000 comma three, comma 3X and comma four devices **and** the openpilot open-source software. | Electrek, Yahoo | Reported |
-| 3 | Five crashes in which comma-equipped vehicles struck **stopped or slow-moving vehicles in their own lane**: 3 fatalities, 11 injuries. | Electrek, RDN, Self Drive News | Reported |
-| 4 | NHTSA's initial review suggests the system **may not have adequately detected or responded to** the in-lane vehicles. | Electrek, Self Drive News | Reported |
-| 5 | One fatal crash (Feb 2026, Ascension Parish, Louisiana): a **2022 Toyota RAV4**, reportedly running **FrogPilot** (an openpilot fork), struck a **stopped emergency-response vehicle**. Two rear-seat passengers were killed. | Electrek, Yahoo | Reported |
-| 6 | NHTSA will request crash logs, software version histories and driver-monitoring data, and will evaluate forks for components shared with openpilot. | Electrek | Reported |
-| 7 | A Preliminary Evaluation is **not** a finding of defect or causation. | NHTSA via press | Reported |
+| 1 | NHTSA ODI opened Preliminary Evaluation **PE26007** on **2026-09-21**, "prompted by: SGO 2021-01 reports, VOQ, Police outreach". Subject: "Crashes involving comma.ai driving automation products". | ODI resume p. 1 | **Verified** |
+| 2 | Products: "comma three, comma 3X, comma four, openpilot". Population: "30,000 (Estimated)". | ODI resume p. 1 | **Verified** |
+| 3 | Problem description: "Crashes involving stopped or slow moving in-lane vehicles". ODI "received notice of five (5) crashes in which vehicles with comma devices installed reportedly struck stopped or slowly moving vehicles within the same travel lane". | ODI resume p. 1 | **Verified** |
+| 4 | "Two crashes resulted in a total of three (3) fatalities. Four of the five crashes contributed to various non-fatal injuries, including serious injuries, to eleven (11) other individuals." The failure report summary counts 5 crashes, 4 injury incidents, 14 people injured or killed, 2 fatal incidents and 3 fatalities, with duplicates removed. | ODI resume pp. 1–2 | **Verified** |
+| 5 | "ODI has confirmed that the systems were powered on or engaged in multiple crashes. Preliminary data reviewed by ODI suggests that the comma system may not have adequately detected or responded to the in-lane vehicles." | ODI resume pp. 1–2 | **Verified** |
+| 6 | Scope: "particularly crashes involving slower or stopped vehicles or hazards in lane". ODI will "verify system status for each incident and evaluate system performance and safeguards", and where a fork is involved will "consider the shared components between openpilot and the fork". **LionDriver is a fork in that sense.** | ODI resume p. 2 | **Verified** |
+| 7 | The five crashes are SGO reports 30351-15888, 30351-14668, 30351-11961, 30351-1807 and 62-14853, downloadable from NHTSA's Standing General Order crash-reporting page. | ODI resume p. 2 | **Verified** (IDs); report contents not yet retrieved (FA-02) |
+| 8 | One fatal crash (Feb 2026, Ascension Parish, Louisiana): a **2022 Toyota RAV4**, reportedly running **FrogPilot** (an openpilot fork), struck a **stopped emergency-response vehicle**. Two rear-seat passengers were killed. | Electrek, Yahoo | Reported (not in the resume) |
+| 9 | NHTSA will request crash logs, software version histories and driver-monitoring data. | Electrek | Reported (the resume says only that ODI "will obtain data to verify system status") |
+| 10 | A Preliminary Evaluation is **not** a finding of defect or causation. The resume's action is "Open this Preliminary Evaluation (PE)". | ODI resume p. 1; NHTSA via press | **Verified** (action); Reported (characterisation) |
 
 **Known unknowns.** Any of these would change the analysis:
 
@@ -83,3 +91,4 @@
 | Rev | Date | Author | Change |
 |---|---|---|---|
 | A | 2026-10-10 | LionDriver maintainers | Initial record from press coverage and code review |
+| B | 2026-11-18 | LionDriver maintainers | NHTSA ODI resume filed as evidence (FA-01). §2 facts 1–7 and 10 verified against it; opening date 2026-09-21, prompt and SGO report IDs added; RAV4 and data-request facts stay Reported. Link to the problem statement added. |

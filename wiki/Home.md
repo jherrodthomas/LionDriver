@@ -18,10 +18,24 @@ around them: functional safety, SOTIF, cybersecurity, AI safety and a safety cas
 built, with the evidence for each claim and the known counter-evidence against it. The
 [README](../README.md) is the long version.
 
+## Why LionDriver exists
+
+In September 2026 NHTSA opened an investigation into five crashes in which cars driven by openpilot struck a stopped
+or slow vehicle in their own lane; three people died. LionDriver runs the same driving stack, and was started eighteen
+days later to put an engineering safety record around it. **[Why LionDriver exists](Problem-statement.md)** answers
+"why are you doing this?", shows the regulator's report as issued, and states the problem. The
+[one-page version (PDF)](../docs/liondriver/why/why-liondriver-exists.pdf) is the same answer on a single sheet.
+
+![NHTSA ODI resume for PE26007, page 1: opened 09/21/2026; subject: crashes involving comma.ai driving automation products; problem description: crashes involving stopped or slow moving in-lane vehicles; totals 5 crashes, 14 injuries, 3 fatalities.](../docs/safety/field-monitoring/cases/FI-2026-001-nhtsa-pe26007/evidence/INOA-PE26007-17274-page-1.png)
+
+*NHTSA ODI Resume PE26007, page 1 of 2, as issued. The full report and what it means are on
+[Why LionDriver exists](Problem-statement.md).*
+
 ## Start here
 
 | If you want to | Read |
 |---|---|
+| Know why the project exists | [Why LionDriver exists](Problem-statement.md) |
 | See how the device connects to the car and steers it safely | [How LionDriver works](How-LionDriver-works.md) |
 | Understand how the code and the record fit together | [How the repository is organized](How-the-repository-is-organized.md) |
 | See what is done, active and planned | [Roadmap and status](Roadmap-and-status.md) |

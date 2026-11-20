@@ -18,11 +18,11 @@
 
 ![The worksheet as a spreadsheet: a group row per component, a row per failure mode with its class, mechanism, DC and λ split, and the totals with SPFM and LFM](fmeda-views/fmeda-sg009-sheet.svg)
 
-Both drawn by `tools/safety/fmeda_views.py`. The [live worksheet](https://claude.ai/artifact/PCbGoJH1mrjZGDmEzegu7N) (private link) has every row for every goal, with filters, search and each row's notes.
+Both drawn by `tools/safety/fmeda_views.py`. The [live worksheet](https://claude.ai/artifact/GqXdK8QZmYi2EVSbj3FiSp) (private link) has every row for every goal, with filters, search and each row's notes.
 
 ## How to review
 
-Start with the metrics per goal, then the failure modes that drive them (SPF and latent rows). Comment on this page's lines in a pull request, or open an issue naming the row ID (FMD-…). For a rate or DC, say which value you would use and its source. To try values before asking for a change, use the [what-if page](https://claude.ai/artifact/6btZjojvGtcyZdYrhzsR8Z) (private link; it holds a snapshot of this revision). The same data as a workbook with live formulas: [`fmeda-sg009-review.xlsx`](fmeda-sg009-review.xlsx).
+Start with the metrics per goal, then the failure modes that drive them (SPF and latent rows). Comment on this page's lines in a pull request, or open an issue naming the row ID (FMD-…). For a rate or DC, say which value you would use and its source. To try values before asking for a change, use the [what-if page](https://claude.ai/artifact/FwMt6jccCRfNSZ3BbGJHr1) (private link; it holds a snapshot of this revision). The same data as a workbook with live formulas: [`fmeda-sg009-review.xlsx`](fmeda-sg009-review.xlsx).
 
 ## Contents
 

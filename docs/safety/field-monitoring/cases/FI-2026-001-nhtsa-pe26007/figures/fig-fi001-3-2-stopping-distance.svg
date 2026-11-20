@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="562" viewBox="0 0 960 562" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-2 · The distance openpilot needs to stop</title>
+<desc>Stopping distance from confirmation, at the openpilot cap and at full braking: 72 km/h: 67 m against 35 m; 90 km/h: 102 m against 52 m; 108 km/h: 144 m against 71 m; 126 km/h: 193 m against 94 m.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="960" height="562" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-2 · The distance openpilot needs to stop</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">From the moment the stopped vehicle is confirmed, at openpilot's braking cap and at full braking.</text>
+<text x="920" y="44" font-size="11" fill="#475569" text-anchor="end">NHTSA PE26007 · problem statement</text>
+<line x1="40" y1="82" x2="920" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="130" y1="112" x2="130" y2="374" stroke="#E2E8F0" stroke-width="1"/>
+<text x="130" y="392" font-size="11" fill="#475569" text-anchor="middle">0 m</text>
+<line x1="275" y1="112" x2="275" y2="374" stroke="#E2E8F0" stroke-width="1"/>
+<text x="275" y="392" font-size="11" fill="#475569" text-anchor="middle">50 m</text>
+<line x1="420" y1="112" x2="420" y2="374" stroke="#E2E8F0" stroke-width="1"/>
+<text x="420" y="392" font-size="11" fill="#475569" text-anchor="middle">100 m</text>
+<line x1="565" y1="112" x2="565" y2="374" stroke="#E2E8F0" stroke-width="1"/>
+<text x="565" y="392" font-size="11" fill="#475569" text-anchor="middle">150 m</text>
+<line x1="710" y1="112" x2="710" y2="374" stroke="#E2E8F0" stroke-width="1"/>
+<text x="710" y="392" font-size="11" fill="#475569" text-anchor="middle">200 m</text>
+<text x="116" y="146" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end">72 km/h</text>
+<rect x="130" y="124" width="194.3" height="18" rx="3" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="332.3" y="137" font-size="11.5" fill="#D2553F" font-weight="700">67 m · 3.4 s at constant speed</text>
+<rect x="130" y="146" width="101.5" height="18" rx="3" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
+<text x="239.5" y="159" font-size="11.5" fill="#475569">35 m</text>
+<text x="116" y="212" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end">90 km/h</text>
+<rect x="130" y="190" width="295.8" height="18" rx="3" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="433.8" y="203" font-size="11.5" fill="#D2553F" font-weight="700">102 m · 4.1 s at constant speed</text>
+<rect x="130" y="212" width="150.8" height="18" rx="3" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
+<text x="288.8" y="225" font-size="11.5" fill="#475569">52 m</text>
+<text x="116" y="278" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end">108 km/h</text>
+<rect x="130" y="256" width="417.6" height="18" rx="3" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="555.6" y="269" font-size="11.5" fill="#D2553F" font-weight="700">144 m · 4.8 s at constant speed</text>
+<rect x="130" y="278" width="205.9" height="18" rx="3" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
+<text x="343.9" y="291" font-size="11.5" fill="#475569">71 m</text>
+<text x="116" y="344" font-size="13" fill="#0F172A" font-weight="700" text-anchor="end">126 km/h</text>
+<rect x="130" y="322" width="559.7" height="18" rx="3" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="697.7" y="335" font-size="11.5" fill="#D2553F" font-weight="700">193 m · 5.5 s at constant speed</text>
+<rect x="130" y="344" width="272.6" height="18" rx="3" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
+<text x="410.6" y="357" font-size="11.5" fill="#475569">94 m</text>
+<rect x="40" y="414" width="14" height="12" rx="3" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="60" y="424" font-size="11" fill="#475569">at the openpilot cap, -3.5 m/s²</text>
+<rect x="330" y="414" width="14" height="12" rx="3" fill="#CBD5E1" stroke="none" stroke-width="1.2"/>
+<text x="350" y="424" font-size="11" fill="#475569">at about full braking, -8 m/s²</text>
+<text x="40" y="454" font-size="13" fill="#0F172A" font-weight="600">At highway speed openpilot alone avoids a stopped vehicle only if it has confirmed it 140–190 m ahead, about twice the distance full braking</text>
+<text x="40" y="473" font-size="13" fill="#0F172A" font-weight="600">needs. Anything seen later needs the driver or stock emergency braking.</text>
+<text x="40" y="502" font-size="11" fill="#475569">Idealized, as in RCA §3.1: 0.5 s latency, constant deceleration once reached, jerk ignored; real distances are longer. Computed, not measured.</text>
+<g class="terms">
+<text x="40" y="524" font-size="10.5" fill="#475569">Terms: NHTSA National Highway Traffic Safety Administration: the US vehicle-safety regulator · RCA root cause analysis</text>
+</g>
+<text x="40" y="544.5" font-size="10" fill="#94A3B8">Drawn by fig_fi001_problem.py from the case files; CI fails if it is stale.</text>
+</svg>

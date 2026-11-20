@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1200" viewBox="0 0 720 1200" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Part 11 in one minute 1 · counter bits</title>
+<desc>A 64-bit counter's bit k is first 1 after 2^k cycles: bit 63 after 5,845 years at 50 MHz; our 44,900-cycle self-test reaches bits 0 to 15.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="720" height="1200" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="24" y="22" width="236" height="30" rx="15" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="142" y="42" font-size="12" fill="#4F46E5" font-weight="700" text-anchor="middle">PART 11 IN ONE MINUTE · 1</text>
+<text x="360" y="92" font-size="30" fill="#0F172A" font-weight="800" text-anchor="middle">How long before the top bit</text>
+<text x="360" y="130" font-size="30" fill="#0F172A" font-weight="800" text-anchor="middle">of a counter is ever tested?</text>
+<text x="360" y="170" font-size="15" fill="#475569" text-anchor="middle">a bit stuck at 0 only shows up once it should be 1</text>
+<rect x="24" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="88.8" y="215" font-size="11" fill="#475569" text-anchor="middle">fault</text>
+<rect x="159.6" y="198" width="129.6" height="26" rx="13" fill="#C2410C" stroke="#C2410C" stroke-width="1"/>
+<text x="224.4" y="215" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">wait</text>
+<rect x="295.2" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="360" y="215" font-size="11" fill="#475569" text-anchor="middle">test</text>
+<rect x="430.8" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="495.6" y="215" font-size="11" fill="#475569" text-anchor="middle">gap</text>
+<rect x="566.4" y="198" width="129.6" height="26" rx="13" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="631.2" y="215" font-size="11" fill="#475569" text-anchor="middle">fix</text>
+<rect x="24" y="242" width="672" height="230" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+<text x="44" y="270" font-size="14" fill="#0F172A" font-weight="700">64-bit cycle counter, counting up from reset</text>
+<rect x="45" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<text x="53.9" y="342" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">63</text>
+<rect x="64.8" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="84.5" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="104.2" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="124" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="143.8" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="163.5" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="183.2" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="203" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="222.8" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="242.5" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="262.2" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="282" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="301.8" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="321.5" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="341.2" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<text x="350.1" y="342" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">48</text>
+<rect x="361" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="380.8" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="400.5" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="420.2" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="440" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="459.8" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="479.5" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="499.2" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="519" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="538.8" y="292" width="17.8" height="34" rx="3" fill="#D2553F" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="558.5" y="292" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="578.2" y="292" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="598" y="292" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="617.8" y="292" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="637.5" y="292" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="657.2" y="292" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="666.1" y="342" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">32</text>
+<rect x="45" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="53.9" y="412" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">31</text>
+<rect x="64.8" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="84.5" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="104.2" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="124" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="143.8" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="163.5" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="183.2" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="203" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="222.8" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="242.5" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="262.2" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="282" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="301.8" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="321.5" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="341.2" y="362" width="17.8" height="34" rx="3" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/>
+<text x="350.1" y="412" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">16</text>
+<rect x="361" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="380.8" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="400.5" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="420.2" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="440" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="459.8" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="479.5" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="499.2" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="519" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="538.8" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="558.5" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="578.2" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="598" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="617.8" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="637.5" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="657.2" y="362" width="17.8" height="34" rx="3" fill="#2E9E6A" stroke="#FFFFFF" stroke-width="1"/>
+<text x="666.1" y="412" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0</text>
+<circle cx="53.9" cy="309" r="9" fill="none" stroke="#0F172A" stroke-width="2.5"/>
+<rect x="44" y="418" width="14" height="14" rx="3" fill="#2E9E6A" stroke="none" stroke-width="0"/>
+<text x="64" y="430" font-size="12" fill="#0F172A">found within 1 ms</text>
+<rect x="186.2" y="418" width="14" height="14" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="206.2" y="430" font-size="12" fill="#0F172A">within 1 hour</text>
+<rect x="302" y="418" width="14" height="14" rx="3" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="322" y="430" font-size="12" fill="#0F172A">later than that</text>
+<text x="44" y="454" font-size="12" fill="#0F172A" font-weight="600">circled: bit 63 stuck at 0 stays invisible until the counter reaches 2^63</text>
+<rect x="24" y="492" width="672" height="70" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="360" y="522" font-size="18" fill="#0F172A" font-weight="700" text-anchor="middle">At 50 MHz: bit 31 after 43 seconds.</text>
+<text x="360" y="548" font-size="18" fill="#C2410C" font-weight="800" text-anchor="middle">Bit 63 after 5,845 years.</text>
+<text x="132" y="600" font-size="12" fill="#475569" text-anchor="middle">our self-test</text>
+<text x="132" y="644" font-size="40" fill="#4F46E5" font-weight="800" text-anchor="middle">0.90</text>
+<text x="132" y="668" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">milliseconds</text>
+<text x="132" y="686" font-size="11" fill="#475569" text-anchor="middle">44,900 cycles</text>
+<text x="360" y="600" font-size="12" fill="#475569" text-anchor="middle">bits it can reach</text>
+<text x="360" y="644" font-size="40" fill="#D97706" font-weight="800" text-anchor="middle">16</text>
+<text x="360" y="668" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">of 64</text>
+<text x="360" y="686" font-size="11" fill="#475569" text-anchor="middle">bits 0 to 15</text>
+<text x="588" y="600" font-size="12" fill="#475569" text-anchor="middle">one 15-year car life</text>
+<text x="588" y="644" font-size="40" fill="#D2553F" font-weight="800" text-anchor="middle">55</text>
+<text x="588" y="668" font-size="13" fill="#0F172A" font-weight="600" text-anchor="middle">bits reached</text>
+<text x="588" y="686" font-size="11" fill="#475569" text-anchor="middle">bits 0 to 54, not 63</text>
+<text x="24" y="720" font-size="13" fill="#0F172A" font-weight="700">time until bit k first becomes 1 (log scale)</text>
+<line x1="70" y1="994" x2="680" y2="994" stroke="#E2E8F0" stroke-width="1"/>
+<text x="64" y="998" font-size="11" fill="#475569" text-anchor="end">1 µs</text>
+<line x1="70" y1="949" x2="680" y2="949" stroke="#E2E8F0" stroke-width="1"/>
+<text x="64" y="953" font-size="11" fill="#475569" text-anchor="end">1 ms</text>
+<line x1="70" y1="904" x2="680" y2="904" stroke="#E2E8F0" stroke-width="1"/>
+<text x="64" y="908" font-size="11" fill="#475569" text-anchor="end">1 s</text>
+<line x1="70" y1="850.7" x2="680" y2="850.7" stroke="#E2E8F0" stroke-width="1"/>
+<text x="64" y="854.7" font-size="11" fill="#475569" text-anchor="end">1 h</text>
+<line x1="70" y1="791.5" x2="680" y2="791.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="64" y="795.5" font-size="11" fill="#475569" text-anchor="end">1 yr</text>
+<line x1="70" y1="746.5" x2="680" y2="746.5" stroke="#E2E8F0" stroke-width="1"/>
+<text x="64" y="750.5" font-size="11" fill="#475569" text-anchor="end">1,000 yr</text>
+<path d="M70,1019.5 L79.7,1015 L89.4,1010.5 L99,1005.9 L108.7,1001.4 L118.4,996.9 L128.1,992.4 L137.8,987.9 L147.5,983.4 L157.1,978.8 L166.8,974.3 L176.5,969.8 L186.2,965.3 L195.9,960.8 L205.6,956.3 L215.2,951.8 L224.9,947.2 L234.6,942.7 L244.3,938.2 L254,933.7 L263.7,929.2 L273.3,924.7 L283,920.1 L292.7,915.6 L302.4,911.1 L312.1,906.6 L321.7,902.1 L331.4,897.6 L341.1,893.1 L350.8,888.5 L360.5,884 L370.2,879.5 L379.8,875 L389.5,870.5 L399.2,866 L408.9,861.4 L418.6,856.9 L428.3,852.4 L437.9,847.9 L447.6,843.4 L457.3,838.9 L467,834.4 L476.7,829.8 L486.3,825.3 L496,820.8 L505.7,816.3 L515.4,811.8 L525.1,807.3 L534.8,802.7 L544.4,798.2 L554.1,793.7 L563.8,789.2 L573.5,784.7 L583.2,780.2 L592.9,775.7 L602.5,771.1 L612.2,766.6 L621.9,762.1 L631.6,757.6 L641.3,753.1 L651,748.6 L660.6,744 L670.3,739.5 L680,735" fill="none" stroke="#4F46E5" stroke-width="3"/>
+<line x1="70" y1="949.7" x2="680" y2="949.7" stroke="#2E9E6A" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="680" y="943.7" font-size="11" fill="#2E9E6A" font-weight="700" text-anchor="end">our self-test</text>
+<line x1="70" y1="850.7" x2="680" y2="850.7" stroke="#D97706" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="680" y="844.7" font-size="11" fill="#D97706" font-weight="700" text-anchor="end">one drive</text>
+<line x1="70" y1="773.9" x2="680" y2="773.9" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="680" y="767.9" font-size="11" fill="#D2553F" font-weight="700" text-anchor="end">car lifetime</text>
+<text x="70" y="1042" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0</text>
+<text x="224.9" y="1042" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">16</text>
+<text x="379.8" y="1042" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">32</text>
+<text x="534.8" y="1042" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">48</text>
+<text x="680" y="1042" font-size="11" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">63</text>
+<text x="375" y="1060" font-size="12" fill="#475569" text-anchor="middle">bit k of the counter</text>
+<text x="360" y="1098" font-size="16" fill="#0F172A" font-weight="700" text-anchor="middle">Not a lazy test: counting itself hides these faults.</text>
+<text x="360" y="1124" font-size="11" fill="#94A3B8" text-anchor="middle">Assumed: 50 MHz clock, counter starts at 0 on reset. Self-test length from our PicoRV32 campaign.</text>
+<text x="360" y="1141" font-size="11" fill="#94A3B8" text-anchor="middle">In the FMEDA: count these faults as not testable in time, or check the counter against a second clock.</text>
+<g class="terms">
+<text x="24" y="1170" font-size="10.5" fill="#475569">Terms: FMEDA failure modes, effects and diagnostic analysis (hardware metrics)</text>
+</g>
+</svg>

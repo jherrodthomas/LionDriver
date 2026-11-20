@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1055" viewBox="0 0 1280 1055" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-3. DFMEA structure tree (DFM)</title>
-  <desc id="d">DFMEA structure tree (DFM rev 0.13, BL-007): 10 structure elements in 1 root(s), 9 functions with the number of failure modes analyzed for each.</desc>
+  <desc id="d">DFMEA structure tree (DFM rev 0.14, BL-007): 10 structure elements in 1 root(s), 9 functions with the number of failure modes analyzed for each.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1055" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-3 · DFMEA structure and function tree</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.13 · BL-007 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.14 · BL-007 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.2</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -116,10 +116,10 @@
   <rect x="380.1" y="616.3" width="54.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="407.4" y="627.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">interface</text>
   <text x="293" y="641.9" font-size="10.5" fill="#0F172A" font-weight="600">Harness, connectors, SBU</text>
   <text x="293" y="655.9" font-size="10.5" fill="#0F172A" font-weight="600">orientation and ignition sense</text>
-  <text x="293" y="668.7" font-size="9.5" fill="#475569">3 failure modes · 3 causes located here</text>
+  <text x="293" y="668.7" font-size="9.5" fill="#475569">4 failure modes · 4 causes located here</text>
   <rect x="772" y="603.2" width="468" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="781" y="622.7" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-006</text>
-  <rect x="1192.7" y="611.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="622.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <rect x="1192.7" y="611.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="622.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">4 FM</text>
   <text x="781" y="637.2" font-size="10.5" fill="#0F172A">Connect the device to the vehicle buses, power and ignition, and report harness</text>
   <text x="781" y="651.3" font-size="10.5" fill="#0F172A">orientation correctly</text>
   <text x="781" y="668.3" font-size="9.5" fill="#475569" font-weight="600">traces to</text>

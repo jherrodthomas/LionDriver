@@ -54,8 +54,8 @@ class RecordTests(unittest.TestCase):
     with tempfile.TemporaryDirectory() as tmp:
       root = Path(tmp)
       copy_records(root)
-      edit(root, D.H04, "SPFM 96.84 % on the shared generic-rate estimate, 0.16 points below 97 %",
-           "SPFM 97.20 % on the shared generic-rate estimate, 0.16 points below 97 %")
+      edit(root, D.H04, "SPFM 96.96 % on the shared generic-rate estimate, 0.04 points below 97 %",
+           "SPFM 97.20 % on the shared generic-rate estimate, 0.04 points below 97 %")
       self.assertTrue(any("likely missed" in e for e in D.problems(root)))
 
   def test_a_new_independence_requirement_is_a_problem(self):
