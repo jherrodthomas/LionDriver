@@ -1,4 +1,4 @@
-# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests, a stopped car, lane markings, fog, GPS in a tunnel, the night, grades, curves and beacons
+# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests, a stopped car, lane markings, fog, GPS in a tunnel, the night, grades, curves, beacons, steering, a wheel weight and the radar cover
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01), oncoming headlights (TC-02), rain (TC-03), crown and wind (TC-15),
@@ -726,7 +726,81 @@ Results: [`results/beacons.md`](../results/beacons.md).
 
 *Figure 29. Emergency beacons at night.*
 
-## 22. Checks
+## 22. Steering authority for the ODD's curves (GAP-04, TC-14, TC-15)
+
+**Question.** Can openpilot's steering hold a curve at the ODD's bound (R = v²/2.5 m/s²), with the road's bank, an
+adverse crown and a side wind?
+
+**Method.** [`steer_authority.py`](steer_authority.py) reads the ceiling the torque controller sets itself
+(`latcontrol_torque.py`: the lateral acceleration full torque gives) and the Corolla TSS2's torque data from opendbc
+(comma's fit on fleet data). These lines are pinned. It sets the curve's demand, v²/R less g times the bank, plus the
+crosswind study's push, against that ceiling. No raw torque scale is needed: the ceiling is in m/s².
+
+**Result.**
+- **The ceiling is 1.99 m/s²** (comma's fit; 1.87 the most they measured). The ODD's bound asks for 2.5.
+- **On a flat curve at the bound the steering is 0.51 m/s² short at every speed.** At 110 km/h the tightest flat
+  curve it holds is 469 m, against R_ODD's 374 m.
+- **A 6 % bank closes the gap with 0.08 m/s² to spare;** an adverse crown or a 30 km/h side wind puts any curve at
+  the bound over.
+- **For the lead:** WP-C-02 rests the bound on AOU-01, not characterised (OI-2). The fleet data contradicts it.
+  Queued as DQ-444.
+
+Results: [`results/steer-authority.md`](../results/steer-authority.md).
+
+![Above: the minimum curve radius against speed for the ODD's bound today and for what the steering's ceiling holds on an adverse crown, a flat curve and a 6 % bank. Below: the steering needed at the bound at 110 km/h on each, with a 30 km/h side wind on top, against the 1.99 m/s² ceiling](figures/fig-wx-30-steer-authority.webp)
+
+*Figure 30. Steering authority for the ODD's curves.*
+
+## 23. A weight on the steering wheel (TC-25, MC-06)
+
+**Question.** How heavy a weight on the rim reads as the driver's hand, and what does driver monitoring do with it?
+
+**Method.** [`wheel_weight.py`](wheel_weight.py):
+- **Statics:** a mass on the rim gives m·g·r·sin φ.
+- **The thresholds:** the Toyota port's `steeringPressed` threshold (100 counts) and lateral-control drop (500), with
+  the override study's torque-scale band (500 counts = 2.0–5.0 N·m), until M-08 measures it.
+- **The code:** driver monitoring's use of `steeringPressed`, read and pinned.
+
+**Result.**
+- **0.22–0.55 kg at the side of the rim reads as a hand** for as long as it hangs there; lateral control drops only
+  from 1.1–2.8 kg.
+- **With the driver camera blind, that switches monitoring off.** As soon as the camera finds no face, monitoring falls
+  back to the wheel-touch policy (unless already orange). There a steady `steeringPressed` resets awareness on every
+  frame, TSR-634's distance bound with it: no alert ever comes.
+- **The planned fix does not catch it as worded:** FM-05(b)'s "torque above a threshold for a minimum time" is what a
+  weight gives. A test for change in torque or angle, or FM-05's restore cap, would.
+- **It also uses 13–67 % of full LKA torque,** leaving 0.66–1.73 m/s² of the 1.99 ceiling.
+
+Results: [`results/wheel-weight.md`](../results/wheel-weight.md).
+
+![The torque on the column against the mass hung on the rim, with the bands where it reads as the driver steering, where full LKA torque can no longer hold the lane, and where lateral control drops; an arrow marks the masses that defeat driver monitoring while the camera is blind](figures/fig-wx-31-wheel-weight.webp)
+
+*Figure 31. A weight on the steering wheel.*
+
+## 24. Water, ice and slush on the radar cover (TC-03, TC-04)
+
+**Question.** How much range does the stock radar lose behind a film of water, ice or slush on the bumper?
+
+**Method.** [`radar_cover.py`](radar_cover.py):
+- **Permittivities:** liquid water from ITU-R P.840-9's double-Debye model; ice nearly lossless (estimated); slush by
+  Birchak's mixing rule.
+- **The layer:** thin-film transmission at normal incidence, in air (the cover itself, T1, is left out).
+- **Range:** the radar's range falls to the amplitude that gets through.
+
+**Result.**
+- **A rain film costs range fast:** 0.1 mm of water takes 10 dB both ways and leaves 55 % of the range; 0.5 mm 28 dB
+  and 20 %.
+- **Clear ice is nearly transparent:** 5 mm costs about 3 dB. **Wet slush** 2 mm thick takes 48 dB.
+- **What depends on it:** openpilot at highway speed takes its lead from the model and uses the radar to confirm it.
+  The stock PCS, the backstop other studies leave to the car, brakes on this radar.
+
+Results: [`results/radar-cover.md`](../results/radar-cover.md).
+
+![The range the stock radar keeps against the thickness of a layer on its cover, for water at 0 and 20 °C, slush with 20 and 50 % water, and ice](figures/fig-wx-32-radar-cover.webp)
+
+*Figure 32. Water, ice and slush on the radar cover.*
+
+## 25. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -799,6 +873,12 @@ Results: [`results/beacons.md`](../results/beacons.md).
 | U2 A barrier below the sight line hides nothing; the follow gap is v·T + 6 m with T read from long_mpc | a wrong barrier test or a planner change |
 | M1 A flash is on for its duty share and at the partial level between | a wrong flash pattern |
 | M2 No beacon light, no change in the exposure; the clearance algebra | glare from nowhere |
+| Y1 The ceiling read from opendbc and openpilot; a flat curve on the bound needs 2.5 m/s² | a code change or wrong demand |
+| Y2 The tightest curve is v²/(ceiling + g·e); the margin is the ceiling less the demand | a wrong radius |
+| J1 The pinned lines are found; mass = T/(g r sin φ); the threshold is 100 of 500 counts of the band | a code change or wrong statics |
+| J2 Authority used is weight torque over full LKA torque | a wrong share |
+| Z1 No layer passes all; a lossless half-wave layer passes all; P.840 water tends to ε0 | a wrong thin-film or water model |
+| Z2 A thick lossy layer loses at the absorption slope | a wrong loss term |
 
 Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
 study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
@@ -828,4 +908,7 @@ python3 assurance/sim/weather/night_car.py --figures       # reads results/stopp
 python3 assurance/sim/weather/grades.py --figures          # needs the opendbc submodule (the Toyota controller)
 python3 assurance/sim/weather/curve_sight.py --figures     # reads long_mpc.py and model.py
 python3 assurance/sim/weather/beacons.py --figures         # reads the camerad sources and results/headlights.json
+python3 assurance/sim/weather/steer_authority.py --figures # reads opendbc's torque data and latcontrol_torque.py
+python3 assurance/sim/weather/wheel_weight.py --figures    # reads the Toyota port, policy.py and plant/override.py
+python3 assurance/sim/weather/radar_cover.py --figures
 ```

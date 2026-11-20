@@ -99,6 +99,19 @@ Emergency beacons at night
   M1  A flash is on for its duty share of each period and at the partial level between.
   M2  With no beacon light the road's exposure does not move; the clearance is half the lane less half our car plus the
       vehicle's offset.
+Steering authority for the ODD's curves
+  Y1  The ceiling is read from opendbc and openpilot (Corolla TSS2 1.99 / 1.87 m/s², steer_max 1, torqued ±30 %); on
+      the ODD's bound a flat curve needs 2.5 m/s² at every speed.
+  Y2  The tightest curve the ceiling holds is v² / (ceiling + g·e); the margin is the ceiling less the demand.
+A weight on the steering wheel
+  J1  The pinned lines are found; the mass is T / (g r sin φ); the press threshold is 100 of 500 counts of the override
+      study's band.
+  J2  The authority a weight uses is its torque over full LKA torque, and what is left is the ceiling times the rest.
+Water, ice and slush on the radar cover
+  Z1  No layer passes everything; a lossless layer half a wavelength thick passes everything; P.840's water tends to
+      ε0 at low frequency.
+  Z2  A thick lossy layer loses at the absorption slope: from 0.5 to 1 mm of water the two-way loss grows by the
+      absorption of the extra 0.5 mm (10 %).
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -148,6 +161,9 @@ import night_car as nc  # noqa: E402
 import grades as gr  # noqa: E402
 import curve_sight as csi  # noqa: E402
 import beacons as bc  # noqa: E402
+import steer_authority as sa  # noqa: E402
+import wheel_weight as ww  # noqa: E402
+import radar_cover as rcv  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -745,6 +761,61 @@ class Beacons(unittest.TestCase):
     self.assertEqual(r["darkest_stops"], 0.0)
     cl = bc.clearance(P)
     self.assertAlmostEqual(cl[0]["to_vehicle_m"], round(3.66 / 2 - 0.89, 2), places=9)
+
+
+class SteerAuthority(unittest.TestCase):
+  def test_y1_ceiling_and_demand(self):
+    c = sa.code()
+    self.assertAlmostEqual(c["lat_accel_factor"], 1.9911, places=3)
+    self.assertAlmostEqual(c["max_lat_accel_measured"], 1.8689, places=3)
+    self.assertEqual((c["steer_max"], c["factor_sanity"]), (1.0, 0.3))
+    r = sa.run(P)
+    for x in r["rows"]:
+      self.assertAlmostEqual(x["banks"]["0"]["demand"], 2.5, places=6)
+
+  def test_y2_radius_and_margin(self):
+    r = sa.run(P)
+    ce = r["ceiling_m_s2"]["fit"]
+    for x in r["rows"]:
+      v = x["speed_kph"] / 3.6
+      for e in ("-0.02", "0", "0.06"):
+        b = x["banks"][e]
+        self.assertAlmostEqual(b["r_min_m"]["fit"], v * v / (ce + 9.81 * float(e)), delta=0.06)
+        self.assertAlmostEqual(b["margin_fit"], ce - b["demand"], delta=0.002)
+
+
+class WheelWeight(unittest.TestCase):
+  def test_j1_pins_and_mass(self):
+    c = ww.code()
+    self.assertEqual(c["pins"], len(ww.PINS))
+    self.assertEqual((c["steer_threshold"], c["max_user_torque"]), (100, 500))
+    self.assertAlmostEqual(ww.mass(1.0, 0.2, 90.0), 1.0 / (9.81 * 0.2), places=9)
+    self.assertAlmostEqual(ww.mass(1.0, 0.2, 30.0), 2.0 / (9.81 * 0.2), places=9)
+    r = ww.run(P)
+    self.assertEqual(r["press_nm"], [round(h * 100 / 500, 3) for h in c["host_threshold_nm"]])
+
+  def test_j2_authority(self):
+    r = ww.run(P)
+    for a in r["authority"]:
+      self.assertAlmostEqual(a["share_used"], a["weight_nm"] / a["lka_full_nm"], delta=0.001)
+      self.assertAlmostEqual(a["lateral_left_m_s2"], r["ceiling_m_s2"] * (1 - a["share_used"]), delta=0.002)
+
+
+class RadarCover(unittest.TestCase):
+  def test_z1_limits(self):
+    self.assertAlmostEqual(abs(rcv.transmission(complex(8.0, -12.0), 0.0, 76.5)), 1.0, places=12)
+    n = math.sqrt(3.15)
+    half = rcv.C / (76.5e9 * n) / 2
+    self.assertAlmostEqual(abs(rcv.transmission(complex(3.15, 0.0), half, 76.5)), 1.0, places=9)
+    e = rcv.water_eps(1e-6, 20.0)
+    self.assertAlmostEqual(e.real, 77.66 + 103.3 * (300 / 293.15 - 1), places=6)
+    self.assertAlmostEqual(e.imag, 0.0, places=4)
+
+  def test_z2_absorption_slope(self):
+    e = rcv.water_eps(76.5, 0.0)
+    a, b = rcv.case(e, 0.5, 76.5), rcv.case(e, 1.0, 76.5)
+    grow = b["two_way_db"] - a["two_way_db"]
+    self.assertAlmostEqual(grow, b["absorbed_db"] - a["absorbed_db"], delta=0.1 * grow)
 
 
 if __name__ == "__main__":

@@ -6916,3 +6916,31 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-11-12, note: "Lead in chat: 1, reset and rebuild."}
   applied: {ref: 1c460d1, record: "ledger branch rebuilt by ledger.yaml run 44433191792 (603 rows from 8b8c6ae, chain verified); assurance/07-supporting/ledger/README.md Reset of 2026-11-12", at: 2026-11-19}
+
+- id: DQ-444
+  question: "openpilot's own torque data says full steering gives the Corolla about 2.0 m/s² of cornering, but the ODD's curve bound assumes 2.5. Should the curve bound come down to what the steering can deliver?"
+  context: >-
+    The ODD admits curves down to R = v²/2.5 m/s² (WP-C-02 §3.2), resting on AOU-01 (the EPS has the torque), which
+    is not yet characterised (OI-2, GAP-04). openpilot's torque controller limits its own output to what full torque
+    gives: for the Corolla TSS2, comma's fleet-fitted factor is **1.99 m/s², and the most they measured 1.87**. The
+    steering-authority study (synthetic, no credit) finds that on a flat curve at the bound the steering is **0.5 m/s²
+    short at every speed**: the car saturates and runs wide, and `steerSaturated` warns only after 0.4 s. A curve banked
+    6 % closes the gap with 0.08 to spare; an adverse crown or a 30 km/h side wind (DQ-415) puts any curve at the bound
+    over. At 110 km/h the tightest flat curve the steering holds is 469 m, against today's 374 m.
+  reversibility: revisit
+  blocks: "WP-C-02 §3.2 R_ODD table and Figure 3-2, OI-2; WP-V-03 curve test conditions (KS-01); WP-S-04 §3.8 steerSaturated budget"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Bring the bound to the steering's ceiling now: R ≥ v²/2.0, and measure (OI-2) before relaxing it"
+      detail: "The bound matches what full torque gives on a flat curve; design-standard curves that tight are banked, which gives back about 0.6 m/s² of margin. Cost: at 110 km/h the minimum radius grows from 374 m to 467 m (at 80 km/h from 198 m to 248 m); flat curves at the new bound still have no margin for crown or wind."
+    - key: B
+      title: "Keep the 0.5 m/s² margin under the ceiling: R ≥ v²/1.5"
+      detail: "Restores the margin WP-C-02 meant to keep for controller error and crown. Cost: at 110 km/h the minimum radius grows to 622 m, which leaves some design-minimum highway curves outside the ODD."
+    - key: C
+      title: "Keep R ≥ v²/2.5 until the car is measured (OI-2), and state that the fleet data contradicts AOU-01"
+      detail: "No ODD change now; WP-C-02 and the safety case carry the contradiction as a known limitation until a drive measures the reference car's authority. Cost: inside the ODD the item knowingly cannot hold a flat curve at the bound, and the driver must correct it."
+  sources: ["assurance/sim/results/steer-authority.md", "assurance/sim/weather/README.md (steering authority)", "opendbc_repo/opendbc/car/torque_data/params.toml TOYOTA_COROLLA_TSS2", "openpilot/selfdrive/controls/lib/latcontrol_torque.py update_limits", "WP-C-02 §3.2, OI-2, AOU-01", "WP-S-04 §3.8 (steerSaturated)", "DQ-415"]
+  status: queued

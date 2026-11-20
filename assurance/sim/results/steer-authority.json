@@ -1,0 +1,283 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. The controller's ceiling from opendbc's fleet-fitted torque data (comma); the ODD's curve bound; the crosswind study's push.",
+ "car": "TOYOTA_COROLLA_TSS2",
+ "code": {
+  "lat_accel_factor": 1.9911,
+  "max_lat_accel_measured": 1.8689,
+  "friction": 0.1957,
+  "steer_max": 1.0,
+  "factor_sanity": 0.3
+ },
+ "ceiling_m_s2": {
+  "fit": 1.991,
+  "measured": 1.869,
+  "learned_low": 1.394,
+  "learned_high": 2.588
+ },
+ "odd_lateral_m_s2": 2.5,
+ "controller_lateral_m_s2": 3.0,
+ "bound_for_ceiling": {
+  "fit": 1.991,
+  "measured": 1.869,
+  "learned_low": 1.394,
+  "learned_high": 2.588
+ },
+ "rows": [
+  {
+   "speed_kph": 60,
+   "r_odd_m": 111.1,
+   "r_ctrl_m": 92.6,
+   "banks": {
+    "-0.02": {
+     "demand": 2.696,
+     "margin_fit": -0.705,
+     "margin_measured": -0.827,
+     "with_wind": {
+      "15": [
+       2.863,
+       3.034
+      ],
+      "30": [
+       3.032,
+       3.387
+      ]
+     },
+     "r_min_m": {
+      "fit": 154.8,
+      "measured": 166.1
+     }
+    },
+    "0": {
+     "demand": 2.5,
+     "margin_fit": -0.509,
+     "margin_measured": -0.631,
+     "with_wind": {
+      "15": [
+       2.667,
+       2.838
+      ],
+      "30": [
+       2.836,
+       3.191
+      ]
+     },
+     "r_min_m": {
+      "fit": 139.5,
+      "measured": 148.6
+     }
+    },
+    "0.06": {
+     "demand": 1.911,
+     "margin_fit": 0.08,
+     "margin_measured": -0.042,
+     "with_wind": {
+      "15": [
+       2.078,
+       2.249
+      ],
+      "30": [
+       2.247,
+       2.602
+      ]
+     },
+     "r_min_m": {
+      "fit": 107.7,
+      "measured": 113.0
+     }
+    }
+   }
+  },
+  {
+   "speed_kph": 80,
+   "r_odd_m": 197.5,
+   "r_ctrl_m": 164.6,
+   "banks": {
+    "-0.02": {
+     "demand": 2.696,
+     "margin_fit": -0.705,
+     "margin_measured": -0.827,
+     "with_wind": {
+      "15": [
+       2.863,
+       3.034
+      ],
+      "30": [
+       3.032,
+       3.387
+      ]
+     },
+     "r_min_m": {
+      "fit": 275.1,
+      "measured": 295.2
+     }
+    },
+    "0": {
+     "demand": 2.5,
+     "margin_fit": -0.509,
+     "margin_measured": -0.631,
+     "with_wind": {
+      "15": [
+       2.667,
+       2.838
+      ],
+      "30": [
+       2.836,
+       3.191
+      ]
+     },
+     "r_min_m": {
+      "fit": 248.0,
+      "measured": 264.2
+     }
+    },
+    "0.06": {
+     "demand": 1.911,
+     "margin_fit": 0.08,
+     "margin_measured": -0.042,
+     "with_wind": {
+      "15": [
+       2.078,
+       2.249
+      ],
+      "30": [
+       2.247,
+       2.602
+      ]
+     },
+     "r_min_m": {
+      "fit": 191.4,
+      "measured": 200.9
+     }
+    }
+   }
+  },
+  {
+   "speed_kph": 100,
+   "r_odd_m": 308.6,
+   "r_ctrl_m": 257.2,
+   "banks": {
+    "-0.02": {
+     "demand": 2.696,
+     "margin_fit": -0.705,
+     "margin_measured": -0.827,
+     "with_wind": {
+      "15": [
+       3.042,
+       3.396
+      ],
+      "30": [
+       3.385,
+       4.103
+      ]
+     },
+     "r_min_m": {
+      "fit": 429.9,
+      "measured": 461.3
+     }
+    },
+    "0": {
+     "demand": 2.5,
+     "margin_fit": -0.509,
+     "margin_measured": -0.631,
+     "with_wind": {
+      "15": [
+       2.846,
+       3.2
+      ],
+      "30": [
+       3.188,
+       3.906
+      ]
+     },
+     "r_min_m": {
+      "fit": 387.5,
+      "measured": 412.9
+     }
+    },
+    "0.06": {
+     "demand": 1.911,
+     "margin_fit": 0.08,
+     "margin_measured": -0.042,
+     "with_wind": {
+      "15": [
+       2.258,
+       2.611
+      ],
+      "30": [
+       2.6,
+       3.318
+      ]
+     },
+     "r_min_m": {
+      "fit": 299.1,
+      "measured": 314.0
+     }
+    }
+   }
+  },
+  {
+   "speed_kph": 110,
+   "r_odd_m": 373.5,
+   "r_ctrl_m": 311.2,
+   "banks": {
+    "-0.02": {
+     "demand": 2.696,
+     "margin_fit": -0.705,
+     "margin_measured": -0.827,
+     "with_wind": {
+      "15": [
+       3.132,
+       3.577
+      ],
+      "30": [
+       3.561,
+       4.461
+      ]
+     },
+     "r_min_m": {
+      "fit": 520.2,
+      "measured": 558.2
+     }
+    },
+    "0": {
+     "demand": 2.5,
+     "margin_fit": -0.509,
+     "margin_measured": -0.631,
+     "with_wind": {
+      "15": [
+       2.936,
+       3.381
+      ],
+      "30": [
+       3.365,
+       4.264
+      ]
+     },
+     "r_min_m": {
+      "fit": 468.9,
+      "measured": 499.6
+     }
+    },
+    "0.06": {
+     "demand": 1.911,
+     "margin_fit": 0.08,
+     "margin_measured": -0.042,
+     "with_wind": {
+      "15": [
+       2.347,
+       2.792
+      ],
+      "30": [
+       2.776,
+       3.676
+      ]
+     },
+     "r_min_m": {
+      "fit": 361.9,
+      "measured": 379.9
+     }
+    }
+   }
+  }
+ ]
+}

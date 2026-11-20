@@ -1428,3 +1428,133 @@ def beacons_figures(p, r, out: Path):
   out.mkdir(exist_ok=True)
   _beacons(p, r, out / "fig-wx-29-beacons.webp")
   _report(out, "fig-wx-29")
+
+
+# ------------------------------------------------------------------------------------------------ steering authority
+
+def _steer_authority(p, r, path):
+  ce = r["ceiling_m_s2"]
+  fig, (a1, a2) = plt.subplots(2, 1, figsize=(9, 11), dpi=100, gridspec_kw={"height_ratios": [1.2, 1]})
+  fig.subplots_adjust(left=0.13, right=0.95, top=0.88, bottom=0.17, hspace=0.32)
+  fig.text(0.05, 0.955, "Steering authority for the ODD's curves", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.925, "openpilot's torque ceiling for the Corolla TSS2 (opendbc fleet fit) against the curve bound",
+           fontsize=11.5, color=INK2)
+  vk = np.linspace(40, 120, 81)
+  v = vk / 3.6
+  a2.set_xlabel("speed, km/h")
+  a1.plot(vk, v * v / r["odd_lateral_m_s2"], color=INK, lw=2.4, label=f"ODD bound today, R = v²/{r['odd_lateral_m_s2']:g}")
+  for e, col, lab in ((-0.02, CRIT, "adverse crown −2 %"), (0.0, BLUE[1], "flat"), (0.06, BLUE[0], "banked 6 %")):
+    a1.plot(vk, v * v / (ce["fit"] + 9.81 * e), color=col, lw=2, ls=(0, (5, 2)),
+            label=f"tightest the ceiling holds, {lab}")
+  a1.axvline(110, color=INK2, lw=1.1)
+  a1.text(108, 30, "ODD speed bound", rotation=90, ha="right", fontsize=10, color=INK2)
+  a1.set_xlim(40, 120); a1.set_ylim(0, 700); a1.set_ylabel("minimum curve radius, m")
+  a1.legend(loc="upper left", frameon=False, fontsize=10.5)
+  r110 = next(x for x in r["rows"] if x["speed_kph"] == 110)["banks"]
+  names = ["adverse crown\n−2 %", "flat", "banked\n6 %", "flat, 30 km/h\nside wind"]
+  base = [r110["-0.02"]["demand"], r110["0"]["demand"], r110["0.06"]["demand"], r110["0"]["demand"]]
+  wind = [0, 0, 0, r110["0"]["with_wind"]["30"][1] - r110["0"]["demand"]]
+  wlo = r110["0"]["with_wind"]["30"][0] - r110["0"]["demand"]
+  x = np.arange(4)
+  a2.bar(x, base, color=[CRIT, BLUE[1], BLUE[0], BLUE[1]], width=0.55)
+  a2.bar(x, wind, bottom=base, color=MUTED, width=0.55, alpha=0.6)
+  a2.text(3, base[3] + wind[3] + 0.08, f"+{wlo:.1f}–{wind[3]:.1f}", ha="center", fontsize=10, color=INK2)
+  a2.axhline(ce["fit"], color=INK, lw=2)
+  a2.text(-0.4, ce["fit"] + 0.07, f"ceiling {ce['fit']:.2f} m/s² (measured {ce['measured']:.2f})", fontsize=10.5, color=INK)
+  a2.set_xticks(x); a2.set_xticklabels(names, fontsize=10.5)
+  a2.set_ylabel("steering needed at the bound, m/s²"); a2.set_ylim(0, 4.8)
+  a2.set_title("110 km/h on the ODD's tightest curve", fontsize=12, color=INK2, loc="left")
+  a2.set_xlabel("")
+  for ax in (a1, a2):
+    ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  a1.set_xlabel("speed, km/h")
+  fig.text(0.05, 0.07, f"At {r['odd_lateral_m_s2']:g} m/s² the bound asks for more than full steering torque gives on a flat "
+           "curve;\nonly a banked curve without wind stays inside. WP-C-02 OI-2: a question for the lead.",
+           fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def steer_authority_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _steer_authority(p, r, out / "fig-wx-30-steer-authority.webp")
+  _report(out, "fig-wx-30")
+
+
+# ------------------------------------------------------------------------------------------------ wheel weight
+
+def _wheel_weight(p, r, path):
+  c = r["code"]
+  rr = r["rim_radius_m"]
+  fig, ax = plt.subplots(figsize=(9, 8.5), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.85, bottom=0.2)
+  fig.text(0.05, 0.95, "A weight on the steering wheel", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.915, f"A mass at 3 o'clock on an {100 * rr:.1f} cm rim · Toyota thresholds, torque scale assumed "
+           "(override study)", fontsize=11, color=INK2)
+  m = np.linspace(0, 3.2, 200)
+  ax.plot(m, m * 9.81 * rr, color=INK, lw=2.4, label="torque of the weight")
+  bands = ((r["press_nm"], BLUE[0], "reads as the driver steering (steeringPressed)"),
+           (c["lka_full_nm"], BLUE[1], "full LKA torque: the steering can no longer hold the lane"),
+           (r["override_nm"], CRIT, "lateral control drops (MAX_USER_TORQUE)"))
+  for (lo, hi), col, lab in ((( b[0], b[-1]), col, lab) for b, col, lab in bands):
+    ax.axhspan(lo, hi, color=col, alpha=0.25, lw=0, label=lab)
+  a90 = r["by_angle"]["90"]
+  ax.axvspan(a90["press_kg"][0], a90["hold_kg"][0], color=GRID, alpha=0.0)
+  ax.annotate("", xy=(a90["press_kg"][0], 0.15), xytext=(a90["override_kg"][0], 0.15),
+              arrowprops=dict(arrowstyle="<->", color=INK2))
+  ax.text((a90["press_kg"][0] + a90["override_kg"][0]) / 2, 0.25, "driver monitoring defeated\nwhile the camera is blind",
+          ha="center", fontsize=10, color=INK2)
+  ax.set_xlim(0, 3.2); ax.set_ylim(0, 6)
+  ax.set_xlabel("mass hung on the rim, kg"); ax.set_ylabel("torque on the column, N·m")
+  ax.legend(loc="upper left", frameon=False, fontsize=10.5)
+  ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  fig.text(0.05, 0.08, f"{a90['press_kg'][0]:.2f}–{a90['press_kg'][-1]:.2f} kg reads as a hand on the wheel. With the "
+           "driver camera covered,\nthe wheel-touch fallback then resets on every frame: no alert. FM-05(b) as worded "
+           "does not catch it.", fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def wheel_weight_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _wheel_weight(p, r, out / "fig-wx-31-wheel-weight.webp")
+  _report(out, "fig-wx-31")
+
+
+# ------------------------------------------------------------------------------------------------ radar cover
+
+def _radar_cover(p, r, path):
+  import radar_cover as rc
+  f = r["frequency_ghz"]
+  fig, ax = plt.subplots(figsize=(9, 8.5), dpi=100)
+  fig.subplots_adjust(left=0.12, right=0.95, top=0.85, bottom=0.2)
+  fig.text(0.05, 0.95, "Water, ice and slush on the radar cover", fontsize=19, weight="bold", color=INK)
+  fig.text(0.05, 0.915, f"The range the stock radar keeps at {f:g} GHz · a layer in air · water from ITU-R P.840-9",
+           fontsize=11.5, color=INK2)
+  d = np.linspace(0.0, 5.0, 501)
+  def kept(eps):
+    return [100 * abs(rc.transmission(eps, x / 1000, f)) for x in d]
+  pe = r["permittivity"]
+  curves = (("water_0C", "water, 0 °C", BLUE[2], "-"), ("water_20C", "water, 20 °C", BLUE[1], "-"),
+            ("slush_0.5", "slush, 50 % water", CRIT, "-"), ("slush_0.2", "slush, 20 % water", CRIT, (0, (5, 2))),
+            ("ice", "ice", MUTED, "-"))
+  for k, lab, col, ls in curves:
+    e = complex(pe[k][0], -pe[k][1])
+    ax.plot(d, kept(e), color=col, lw=2.2, ls=ls, label=lab)
+  ax.set_xscale("symlog", linthresh=0.1); ax.set_xlim(0, 5)
+  ax.set_xticks([0, 0.05, 0.1, 0.2, 0.5, 1, 2, 5]); ax.set_xticklabels(["0", "0.05", "0.1", "0.2", "0.5", "1", "2", "5"])
+  ax.set_ylim(0, 105); ax.set_xlabel("layer thickness, mm"); ax.set_ylabel("range kept, % of a clean cover")
+  ax.legend(loc="lower left", frameon=False, fontsize=10.5)
+  ax.grid(color=GRID); ax.spines[["top", "right"]].set_visible(False)
+  w = {x["thickness_mm"]: x for x in r["layers"]["water_0C"]}
+  fig.text(0.05, 0.08, f"A tenth of a millimetre of water costs {100 - 100 * w[0.1]['range_kept']:.0f} % of the range; "
+           "clear ice hardly any. The stock PCS,\nthe backstop other studies leave to the car, brakes on this radar.",
+           fontsize=11, color=INK2)
+  _stamp(fig)
+  _save(fig, path)
+
+
+def radar_cover_figures(p, r, out: Path):
+  out.mkdir(exist_ok=True)
+  _radar_cover(p, r, out / "fig-wx-32-radar-cover.webp")
+  _report(out, "fig-wx-32")
