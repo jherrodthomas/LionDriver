@@ -1,0 +1,120 @@
+# What the panda firmware uses on the STM32H725, and in which modes: the screen for the errata review (README §4).
+#
+# An erratum can matter only if it touches a block listed here as used, in a mode listed here. Each entry gives the
+# block, its instances, what it is used for, its role, the modes that errata typically depend on, and path:line
+# evidence in the panda tree at the LionDriver submodule pin. Blocks the firmware never clocks are listed under
+# `not_used`, so an erratum against them is ruled out with a reason, not skipped.
+#
+#   role   safety: on the envelope's path (CAN forwarding and limits, SoC command link, timing, watchdog, relay drive,
+#                  harness orientation, clocks, power, memory)
+#          alert:  on the path of the driver alert (the siren, FSR-02.05)
+#          qm:     neither; still listed, because an erratum there can interfere (DMA, bus, interrupt load)
+#
+# AI-drafted (I0) from the firmware at panda fd0a6a7; not reviewed.
+schema_version: 1
+part: STM32H725
+firmware_pin: fd0a6a7
+used:
+  - block: RCC
+    instances: [HSE, PLL1, HSI48, CSS]
+    use: "25 MHz crystal into PLL1: 240 MHz CPU, 80 MHz FDCAN kernel clock (PLL1Q); HSI48 for USB; CSS on the crystal"
+    role: safety
+    modes: [HSE crystal, PLL1 from HSE, CSS enabled, ADC kernel clock from per_ck]
+    evidence: ["board/stm32h7/clock.h:78-121"]
+  - block: PWR
+    instances: [SMPS, LDO, VOS, stop mode, USB33 detector]
+    use: "Direct SMPS supply (STM32H725 packages) or LDO (STM32H723), voltage scaling VOS1, stop mode on cuatro in SILENT and on request in debug builds"
+    role: safety
+    modes: [SMPS direct, LDO, VOS1, Stop mode, PWR CR3 written once per power-on]
+    evidence: ["board/stm32h7/clock.h:60-73", "board/sys/power_saving.h:57-161", "board/main.c:424-449"]
+  - block: FLASH
+    instances: [bank 1]
+    use: "Program and constants; sector erase and word programming by the flasher (firmware update)"
+    role: safety
+    modes: [2 wait states, sector erase, word programming, ECC]
+    evidence: ["board/stm32h7/clock.h:76", "board/stm32h7/llflash.h:4-12", "board/flasher.h:41-113"]
+  - block: FDCAN
+    instances: [FDCAN1, FDCAN2, FDCAN3]
+    use: "The three vehicle CAN buses: forwarding, the envelope's TX limits, RX timeouts"
+    role: safety
+    modes: [CAN FD with bit-rate switching enabled, automatic retransmission, transmit pause, protocol exception handling disabled, TX FIFO mode, 64-byte elements, no acceptance filters, remote frames accepted, bus-off recovery by core reset]
+    evidence: ["board/stm32h7/llfdcan.h:150-175", "board/drivers/fdcan.h:44-63", "board/stm32h7/peripherals.h:95"]
+  - block: SPI
+    instances: [SPI4]
+    use: "The link to the SoC: commands, heartbeat, health"
+    role: safety
+    modes: [DMA RX and TX, peripheral (slave) side]
+    evidence: ["board/stm32h7/llspi.h:7-36", "board/stm32h7/peripherals.h:90"]
+  - block: DMA
+    instances: [DMA2 streams 2 and 3, DMA1, BDMA]
+    use: "DMA2 for SPI4; DMA1 for the DAC (audio); BDMA for SAI4 (audio)"
+    role: safety
+    modes: [peripheral-to-memory, memory-to-peripheral, SRAM1/SRAM2 and SRAM4 buffers]
+    evidence: ["board/stm32h7/peripherals.h:79-86", "board/stm32h7/llspi.h:7-36"]
+  - block: IWDG
+    instances: [IWDG1]
+    use: "Independent watchdog, window mode, started at the first relay drive"
+    role: safety
+    modes: [window mode, prescaler /4, started by software]
+    evidence: ["board/drivers/hw_watchdog.h:33-55"]
+  - block: TIM
+    instances: [TIM1, TIM2, TIM3, TIM4, TIM5, TIM6, TIM7, TIM8, TIM12]
+    use: "TIM4 the 100 Hz safety task; TIM8 the tick; TIM2 the microsecond counter behind every timeout; TIM6 the interrupt-rate check; TIM1 clock source; TIM3 fan and LED PWM; TIM7 and TIM5 audio triggers; TIM12 slow loop"
+    role: safety
+    modes: [upcounting, update interrupts, PWM on TIM3, DMA trigger on TIM7]
+    evidence: ["board/stm32h7/peripherals.h:106-120"]
+  - block: GPIO
+    instances: [GPIOA to GPIOH]
+    use: "Harness switch drive, transceiver enables, SoC reset and boot lines, LEDs; all floated at start-up"
+    role: safety
+    modes: [push-pull and open-drain outputs, alternate functions, SWD left on PA13/PA14]
+    evidence: ["board/stm32h7/stm32h7_config.h:97-102", "board/stm32h7/peripherals.h:22-77"]
+  - block: ADC
+    instances: [ADC1, ADC3]
+    use: "ADC1: harness orientation (SBU1, SBU2), input voltage, current on cuatro"
+    role: safety
+    modes: [single conversion, software trigger, kernel clock per_ck]
+    evidence: ["board/stm32h7/lladc.h:26-37", "board/boards/tres.h:147-148", "board/boards/cuatro.h:29-33"]
+  - block: DTS
+    instances: [DTS]
+    use: "Die temperature, reported to the host"
+    role: qm
+    modes: [continuous measurement]
+    evidence: ["board/stm32h7/lldts.h:9-30"]
+  - block: SYSCFG
+    instances: [SYSCFG]
+    use: "Package register, read to choose the SMPS or LDO supply"
+    role: safety
+    modes: [read only]
+    evidence: ["board/stm32h7/clock.h:29-48"]
+  - block: EXTI
+    instances: [EXTI2, wake-up lines]
+    use: "Fan tachometer; wake from stop mode on CAN or SBU activity"
+    role: qm
+    modes: [edge interrupts, stop-mode wake-up]
+    evidence: ["board/stm32h7/llfan.h", "board/sys/power_saving.h"]
+  - block: Audio
+    instances: [SAI4, DFSDM1, DAC, I2C5]
+    use: "Sound output (including the siren) through the DAC and the codec on I2C5; microphone through DFSDM1"
+    role: alert
+    modes: [DMA-driven, timer-triggered]
+    evidence: ["board/stm32h7/peripherals.h:91-104", "board/stm32h7/sound.h"]
+  - block: USB
+    instances: [OTG_HS with the internal full-speed PHY]
+    use: "Host link and flashing; ULPI disabled"
+    role: qm
+    modes: [device mode, internal PHY, active in CSleep]
+    evidence: ["board/stm32h7/peripherals.h:92-94", "board/stm32h7/llusb.h"]
+not_used:
+  - {block: "L1 caches", reason: "never enabled (MF-09)"}
+  - {block: "MPU", reason: "never configured (MF-08)"}
+  - {block: "WWDG", reason: "never clocked (MF-02)"}
+  - {block: "MDMA", reason: "never clocked"}
+  - {block: "Ethernet", reason: "never clocked"}
+  - {block: "OCTOSPI", reason: "never clocked"}
+  - {block: "SDMMC", reason: "never clocked"}
+  - {block: "CRYP, HASH, RNG", reason: "never clocked"}
+  - {block: "USART, UART", reason: "never clocked"}
+  - {block: "LPTIM", reason: "never clocked"}
+  - {block: "COMP, VREFBUF", reason: "never clocked"}
+  - {block: "CRC", reason: "never clocked (MF-10)"}

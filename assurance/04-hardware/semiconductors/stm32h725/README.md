@@ -10,10 +10,10 @@ firmware today, and what inside the chip can fail two things at once. It feeds t
 | Field | Value |
 |---|---|
 | Record | Supporting record of WP-H-03, WP-H-07 and WP-A-03; not a registered work product |
-| Version | 0.1 (2026-11-20): identity, 15 safety features checked against the firmware, on-chip dependent failures with Figure 1. Errata review and safety-manual intake not started (§4) |
+| Version | 0.2 (2026-11-20): errata screen added, `peripheral-use.yaml`: the 15 blocks the firmware uses with their modes, and the 12 it never clocks. 0.1 (2026-11-20): identity, 15 safety features checked against the firmware, on-chip dependent failures with Figure 1. Errata review and safety-manual intake not started (§4) |
 | Status | Draft, not reviewed. AI-drafted (I0 under WP-M-02 §3.3) |
 | Firmware checked | panda at the LionDriver submodule pin `fd0a6a7`; every reference below is a path:line in that tree |
-| Records | [`features.yaml`](features.yaml) (MF-01 to MF-15), [`onchip-dfa.yaml`](onchip-dfa.yaml) |
+| Records | [`features.yaml`](features.yaml) (MF-01 to MF-15), [`onchip-dfa.yaml`](onchip-dfa.yaml), [`peripheral-use.yaml`](peripheral-use.yaml) |
 
 ## 1. Which part
 
@@ -95,6 +95,12 @@ refused every automated download from this environment. Nothing below is assumed
 | STM32H7 safety manual (believed to be UM2331; whether it covers the H72x/73x line is to be checked) | Its conditions of use become requirements on the firmware or recorded deviations (WP-H-07 QE-03; the paid ST package stays declined, DQ-069) | Not obtained |
 | RM0468, reference manual | The `to-confirm` entries of `features.yaml` and the cells whose basis is RM0468 | Not obtained |
 | STM32H725 datasheet | LSI minimum and maximum for the IWDG time-out (WP-H-07 OI-7); temperature grades | Not obtained |
+
+The screen for the errata review is ready: [`peripheral-use.yaml`](peripheral-use.yaml) lists the 15 blocks the
+firmware uses, each with its role (safety path, alert path or neither) and the modes errata typically depend on (CAN FD
+with bit-rate switching, automatic retransmission and transmit pause, protocol exception handling off, no acceptance
+filters; direct SMPS at VOS1; stop mode; flash programming), and the 12 blocks it never clocks, so an erratum against
+one of those is ruled out with a reason. Every reference in it is a path:line at the panda pin.
 
 When the PDFs are available (downloaded by hand and attached to a session, for instance), the intake becomes
 `errata.yaml` and `aou-intake.yaml` in this folder, in the same form as `features.yaml` (OI-3, OI-4).
