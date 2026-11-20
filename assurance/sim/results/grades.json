@@ -1,0 +1,152 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. Friction from the wet-braking and wet-curve studies; AASHTO's sag model; UN R112's cut-off.",
+ "code": {
+  "pitch_cap": 1.5,
+  "pitch_hp": true,
+  "pitch_comp": true,
+  "downhill_only": true,
+  "permit": true,
+  "clip": true,
+  "accel_min": -3.5
+ },
+ "speed_kph": 110.0,
+ "water_mm": 0.2,
+ "available": {
+  "dry": 0.775,
+  "wet_new": 0.575,
+  "wet_3mm_continental": 0.537,
+  "wet_3mm_mira": 0.426
+ },
+ "rows": [
+  {
+   "grade_pct": 0,
+   "need": 0.357,
+   "gravity_mps2": 0.0,
+   "margin": {
+    "dry": 0.418,
+    "wet_new": 0.218,
+    "wet_3mm_continental": 0.181,
+    "wet_3mm_mira": 0.069
+   },
+   "item_reachable": {
+    "dry": true,
+    "wet_new": true,
+    "wet_3mm_continental": true,
+    "wet_3mm_mira": true
+   },
+   "driver_stop_m": {
+    "dry": 137.8,
+    "wet_new": 159.1,
+    "wet_3mm_continental": 164.9,
+    "wet_3mm_mira": 188.1
+   }
+  },
+  {
+   "grade_pct": 2,
+   "need": 0.377,
+   "gravity_mps2": 0.196,
+   "margin": {
+    "dry": 0.398,
+    "wet_new": 0.198,
+    "wet_3mm_continental": 0.161,
+    "wet_3mm_mira": 0.049
+   },
+   "item_reachable": {
+    "dry": true,
+    "wet_new": true,
+    "wet_3mm_continental": true,
+    "wet_3mm_mira": true
+   },
+   "driver_stop_m": {
+    "dry": 139.4,
+    "wet_new": 162.1,
+    "wet_3mm_continental": 168.4,
+    "wet_3mm_mira": 193.6
+   }
+  },
+  {
+   "grade_pct": 4,
+   "need": 0.397,
+   "gravity_mps2": 0.392,
+   "margin": {
+    "dry": 0.378,
+    "wet_new": 0.178,
+    "wet_3mm_continental": 0.14,
+    "wet_3mm_mira": 0.029
+   },
+   "item_reachable": {
+    "dry": true,
+    "wet_new": true,
+    "wet_3mm_continental": true,
+    "wet_3mm_mira": true
+   },
+   "driver_stop_m": {
+    "dry": 141.2,
+    "wet_new": 165.4,
+    "wet_3mm_continental": 172.1,
+    "wet_3mm_mira": 199.8
+   }
+  },
+  {
+   "grade_pct": 6,
+   "need": 0.417,
+   "gravity_mps2": 0.588,
+   "margin": {
+    "dry": 0.358,
+    "wet_new": 0.158,
+    "wet_3mm_continental": 0.12,
+    "wet_3mm_mira": 0.009
+   },
+   "item_reachable": {
+    "dry": true,
+    "wet_new": true,
+    "wet_3mm_continental": true,
+    "wet_3mm_mira": true
+   },
+   "driver_stop_m": {
+    "dry": 143.1,
+    "wet_new": 169.0,
+    "wet_3mm_continental": 176.2,
+    "wet_3mm_mira": 206.7
+   }
+  }
+ ],
+ "sags": [
+  {
+   "design_speed_kph": 100,
+   "ssd_m": 185,
+   "k": 44.7,
+   "aashto_light_m": 185.0,
+   "cutoff_m": 43.8,
+   "cutoff_m_band": [
+    41.2,
+    48.7
+   ]
+  },
+  {
+   "design_speed_kph": 110,
+   "ssd_m": 220,
+   "k": 54.5,
+   "aashto_light_m": 220.0,
+   "cutoff_m": 45.9,
+   "cutoff_m_band": [
+    43.1,
+    51.2
+   ]
+  },
+  {
+   "design_speed_kph": 120,
+   "ssd_m": 250,
+   "k": 63.0,
+   "aashto_light_m": 250.0,
+   "cutoff_m": 47.4,
+   "cutoff_m_band": [
+    44.5,
+    53.0
+   ]
+  }
+ ],
+ "flat_cutoff_m": 65.3,
+ "item_stop_m": 148.7,
+ "odd_grade_pct": 6.0
+}

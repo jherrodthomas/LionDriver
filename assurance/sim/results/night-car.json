@@ -1,0 +1,1902 @@
+{
+ "about": "Synthetic (DSR-12), design aid, no evidence credit. UN R112 class B beam bounds (above the cut-off at most, below at least); FMVSS 108 reflector minimum; paint reflectances assumed.",
+ "exposure": {
+  "ev": 40280.1,
+  "road_median_cd_m2": 1.0
+ },
+ "focal_px": 2648.0,
+ "cutoff_on_road_m": 65.3,
+ "rear_over_cutoff_beyond_m": 30.5,
+ "stop_m": {
+  "item_110": 148.7,
+  "item_120": 175.4,
+  "driver_unwarned_dry": 137.8
+ },
+ "passing": {
+  "low": [
+   {
+    "distance_m": 25.0,
+    "rear_lux": {
+     "0.4": 10.37647,
+     "0.9": 1.11924,
+     "1.3": 1.1186
+    },
+    "road_lux": 16.29959,
+    "luminance_cd_m2": {
+     "dark": 0.0107,
+     "grey": 0.0891,
+     "white": 0.267,
+     "road_dry": 0.222,
+     "road_wet": 0.0326,
+     "reflector": 17.4
+    },
+    "reflector_cd": 0.0522,
+    "reflector_px": 5.8,
+    "stops_below_median": {
+     "dark": 6.5,
+     "grey": 3.5,
+     "white": 1.9,
+     "road_dry": 2.2,
+     "road_wet": 4.9,
+     "reflector": -4.1
+    },
+    "grey_of_255": {
+     "dark": 3.3,
+     "grey": 10.7,
+     "white": 20.9,
+     "road_dry": 18.6,
+     "road_wet": 6.0,
+     "reflector": 216.8
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.95,
+     "grey": -0.6,
+     "white": 0.21
+    },
+    "contrast_to_road_wet": {
+     "dark": -0.67,
+     "grey": 1.73,
+     "white": 7.2
+    },
+    "rear_above_cutoff": false
+   },
+   {
+    "distance_m": 50.0,
+    "rear_lux": {
+     "0.4": 0.28126,
+     "0.9": 0.27995,
+     "1.3": 0.27991
+    },
+    "road_lux": 4.07872,
+    "luminance_cd_m2": {
+     "dark": 0.00267,
+     "grey": 0.0223,
+     "white": 0.0668,
+     "road_dry": 0.0555,
+     "road_wet": 0.00816,
+     "reflector": 6.37
+    },
+    "reflector_cd": 0.0191,
+    "reflector_px": 2.9,
+    "stops_below_median": {
+     "dark": 8.5,
+     "grey": 5.5,
+     "white": 3.9,
+     "road_dry": 4.2,
+     "road_wet": 6.9,
+     "reflector": -2.7
+    },
+    "grey_of_255": {
+     "dark": 1.6,
+     "grey": 4.9,
+     "white": 9.1,
+     "road_dry": 8.2,
+     "road_wet": 2.8,
+     "reflector": 152.0
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.95,
+     "grey": -0.6,
+     "white": 0.2
+    },
+    "contrast_to_road_wet": {
+     "dark": -0.67,
+     "grey": 1.73,
+     "white": 7.19
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 75.0,
+    "rear_lux": {
+     "0.4": 0.12444,
+     "0.9": 0.12444,
+     "1.3": 0.12443
+    },
+    "road_lux": 0.54886,
+    "luminance_cd_m2": {
+     "dark": 0.00119,
+     "grey": 0.0099,
+     "white": 0.0297,
+     "road_dry": 0.00746,
+     "road_wet": 0.0011,
+     "reflector": 4.39
+    },
+    "reflector_cd": 0.0132,
+    "reflector_px": 1.93,
+    "stops_below_median": {
+     "dark": 9.7,
+     "grey": 6.7,
+     "white": 5.1,
+     "road_dry": 7.1,
+     "road_wet": 9.8,
+     "reflector": -2.1
+    },
+    "grey_of_255": {
+     "dark": 1.0,
+     "grey": 3.2,
+     "white": 5.7,
+     "road_dry": 2.7,
+     "road_wet": 1.0,
+     "reflector": 125.1
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.84,
+     "grey": 0.33,
+     "white": 2.98
+    },
+    "contrast_to_road_wet": {
+     "dark": 0.08,
+     "grey": 8.02,
+     "white": 26.06
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 100.0,
+    "rear_lux": {
+     "0.4": 0.07,
+     "0.9": 0.07,
+     "1.3": 0.06999
+    },
+    "road_lux": 0.06999,
+    "luminance_cd_m2": {
+     "dark": 0.000668,
+     "grey": 0.00557,
+     "white": 0.0167,
+     "road_dry": 0.000952,
+     "road_wet": 0.00014,
+     "reflector": 4.1
+    },
+    "reflector_cd": 0.0123,
+    "reflector_px": 1.45,
+    "stops_below_median": {
+     "dark": 10.5,
+     "grey": 7.5,
+     "white": 5.9,
+     "road_dry": 10.0,
+     "road_wet": 12.8,
+     "reflector": -2.0
+    },
+    "grey_of_255": {
+     "dark": 0.8,
+     "grey": 2.3,
+     "white": 4.2,
+     "road_dry": 0.9,
+     "road_wet": 0.4,
+     "reflector": 120.4
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 125.0,
+    "rear_lux": {
+     "0.4": 0.0448,
+     "0.9": 0.0448,
+     "1.3": 0.0448
+    },
+    "road_lux": 0.0448,
+    "luminance_cd_m2": {
+     "dark": 0.000428,
+     "grey": 0.00356,
+     "white": 0.0107,
+     "road_dry": 0.000609,
+     "road_wet": 8.96e-05,
+     "reflector": 3.56
+    },
+    "reflector_cd": 0.0107,
+    "reflector_px": 1.16,
+    "stops_below_median": {
+     "dark": 11.2,
+     "grey": 8.1,
+     "white": 6.5,
+     "road_dry": 10.7,
+     "road_wet": 13.4,
+     "reflector": -1.8
+    },
+    "grey_of_255": {
+     "dark": 0.6,
+     "grey": 1.8,
+     "white": 3.3,
+     "road_dry": 0.7,
+     "road_wet": 0.3,
+     "reflector": 111.0
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 150.0,
+    "rear_lux": {
+     "0.4": 0.03111,
+     "0.9": 0.03111,
+     "1.3": 0.03111
+    },
+    "road_lux": 0.03111,
+    "luminance_cd_m2": {
+     "dark": 0.000297,
+     "grey": 0.00248,
+     "white": 0.00743,
+     "road_dry": 0.000423,
+     "road_wet": 6.22e-05,
+     "reflector": 2.83
+    },
+    "reflector_cd": 0.00909,
+    "reflector_px": 0.97,
+    "stops_below_median": {
+     "dark": 11.7,
+     "grey": 8.7,
+     "white": 7.1,
+     "road_dry": 11.2,
+     "road_wet": 14.0,
+     "reflector": -1.5
+    },
+    "grey_of_255": {
+     "dark": 0.5,
+     "grey": 1.5,
+     "white": 2.7,
+     "road_dry": 0.6,
+     "road_wet": 0.2,
+     "reflector": 96.6
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 200.0,
+    "rear_lux": {
+     "0.4": 0.0175,
+     "0.9": 0.0175,
+     "1.3": 0.0175
+    },
+    "road_lux": 0.0175,
+    "luminance_cd_m2": {
+     "dark": 0.000167,
+     "grey": 0.00139,
+     "white": 0.00418,
+     "road_dry": 0.000238,
+     "road_wet": 3.5e-05,
+     "reflector": 1.16
+    },
+    "reflector_cd": 0.00659,
+    "reflector_px": 0.73,
+    "stops_below_median": {
+     "dark": 12.5,
+     "grey": 9.5,
+     "white": 7.9,
+     "road_dry": 12.0,
+     "road_wet": 14.8,
+     "reflector": -0.2
+    },
+    "grey_of_255": {
+     "dark": 0.4,
+     "grey": 1.1,
+     "white": 2.0,
+     "road_dry": 0.5,
+     "road_wet": 0.2,
+     "reflector": 54.3
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   }
+  ],
+  "value": [
+   {
+    "distance_m": 25.0,
+    "rear_lux": {
+     "0.4": 11.09855,
+     "0.9": 1.99865,
+     "1.3": 1.9975
+    },
+    "road_lux": 16.29959,
+    "luminance_cd_m2": {
+     "dark": 0.0191,
+     "grey": 0.159,
+     "white": 0.477,
+     "road_dry": 0.222,
+     "road_wet": 0.0326,
+     "reflector": 18.3
+    },
+    "reflector_cd": 0.0548,
+    "reflector_px": 5.8,
+    "stops_below_median": {
+     "dark": 5.7,
+     "grey": 2.7,
+     "white": 1.1,
+     "road_dry": 2.2,
+     "road_wet": 4.9,
+     "reflector": -4.2
+    },
+    "grey_of_255": {
+     "dark": 4.5,
+     "grey": 15.2,
+     "white": 30.3,
+     "road_dry": 18.6,
+     "road_wet": 6.0,
+     "reflector": 219.2
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.91,
+     "grey": -0.28,
+     "white": 1.15
+    },
+    "contrast_to_road_wet": {
+     "dark": -0.41,
+     "grey": 3.88,
+     "white": 13.64
+    },
+    "rear_above_cutoff": false
+   },
+   {
+    "distance_m": 50.0,
+    "rear_lux": {
+     "0.4": 0.50175,
+     "0.9": 0.49992,
+     "1.3": 0.49984
+    },
+    "road_lux": 4.07872,
+    "luminance_cd_m2": {
+     "dark": 0.00477,
+     "grey": 0.0398,
+     "white": 0.119,
+     "road_dry": 0.0555,
+     "road_wet": 0.00816,
+     "reflector": 9.86
+    },
+    "reflector_cd": 0.0296,
+    "reflector_px": 2.9,
+    "stops_below_median": {
+     "dark": 7.7,
+     "grey": 4.7,
+     "white": 3.1,
+     "road_dry": 4.2,
+     "road_wet": 6.9,
+     "reflector": -3.3
+    },
+    "grey_of_255": {
+     "dark": 2.1,
+     "grey": 6.8,
+     "white": 12.7,
+     "road_dry": 8.2,
+     "road_wet": 2.8,
+     "reflector": 183.2
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.91,
+     "grey": -0.28,
+     "white": 1.15
+    },
+    "contrast_to_road_wet": {
+     "dark": -0.41,
+     "grey": 3.88,
+     "white": 13.63
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 75.0,
+    "rear_lux": {
+     "0.4": 0.22221,
+     "0.9": 0.22221,
+     "1.3": 0.22219
+    },
+    "road_lux": 0.67962,
+    "luminance_cd_m2": {
+     "dark": 0.00212,
+     "grey": 0.0177,
+     "white": 0.053,
+     "road_dry": 0.00924,
+     "road_wet": 0.00136,
+     "reflector": 7.84
+    },
+    "reflector_cd": 0.0235,
+    "reflector_px": 1.93,
+    "stops_below_median": {
+     "dark": 8.9,
+     "grey": 5.8,
+     "white": 4.2,
+     "road_dry": 6.8,
+     "road_wet": 9.5,
+     "reflector": -3.0
+    },
+    "grey_of_255": {
+     "dark": 1.4,
+     "grey": 4.3,
+     "white": 7.9,
+     "road_dry": 3.0,
+     "road_wet": 1.1,
+     "reflector": 167.1
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.77,
+     "grey": 0.91,
+     "white": 4.74
+    },
+    "contrast_to_road_wet": {
+     "dark": 0.56,
+     "grey": 12.01,
+     "white": 38.03
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 100.0,
+    "rear_lux": {
+     "0.4": 0.12499,
+     "0.9": 0.12499,
+     "1.3": 0.12499
+    },
+    "road_lux": 0.12499,
+    "luminance_cd_m2": {
+     "dark": 0.00119,
+     "grey": 0.00995,
+     "white": 0.0298,
+     "road_dry": 0.0017,
+     "road_wet": 0.00025,
+     "reflector": 7.33
+    },
+    "reflector_cd": 0.022,
+    "reflector_px": 1.45,
+    "stops_below_median": {
+     "dark": 9.7,
+     "grey": 6.7,
+     "white": 5.1,
+     "road_dry": 9.2,
+     "road_wet": 12.0,
+     "reflector": -2.9
+    },
+    "grey_of_255": {
+     "dark": 1.0,
+     "grey": 3.2,
+     "white": 5.7,
+     "road_dry": 1.3,
+     "road_wet": 0.5,
+     "reflector": 162.2
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 125.0,
+    "rear_lux": {
+     "0.4": 0.08,
+     "0.9": 0.08,
+     "1.3": 0.08
+    },
+    "road_lux": 0.08,
+    "luminance_cd_m2": {
+     "dark": 0.000764,
+     "grey": 0.00637,
+     "white": 0.0191,
+     "road_dry": 0.00109,
+     "road_wet": 0.00016,
+     "reflector": 6.36
+    },
+    "reflector_cd": 0.0191,
+    "reflector_px": 1.16,
+    "stops_below_median": {
+     "dark": 10.4,
+     "grey": 7.3,
+     "white": 5.7,
+     "road_dry": 9.8,
+     "road_wet": 12.6,
+     "reflector": -2.7
+    },
+    "grey_of_255": {
+     "dark": 0.8,
+     "grey": 2.5,
+     "white": 4.5,
+     "road_dry": 1.0,
+     "road_wet": 0.4,
+     "reflector": 151.9
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 150.0,
+    "rear_lux": {
+     "0.4": 0.05555,
+     "0.9": 0.05555,
+     "1.3": 0.05555
+    },
+    "road_lux": 0.05555,
+    "luminance_cd_m2": {
+     "dark": 0.000531,
+     "grey": 0.00442,
+     "white": 0.0133,
+     "road_dry": 0.000756,
+     "road_wet": 0.000111,
+     "reflector": 5.06
+    },
+    "reflector_cd": 0.0162,
+    "reflector_px": 0.97,
+    "stops_below_median": {
+     "dark": 10.9,
+     "grey": 7.8,
+     "white": 6.2,
+     "road_dry": 10.4,
+     "road_wet": 13.1,
+     "reflector": -2.3
+    },
+    "grey_of_255": {
+     "dark": 0.7,
+     "grey": 2.1,
+     "white": 3.7,
+     "road_dry": 0.8,
+     "road_wet": 0.3,
+     "reflector": 135.2
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 200.0,
+    "rear_lux": {
+     "0.4": 0.03125,
+     "0.9": 0.03125,
+     "1.3": 0.03125
+    },
+    "road_lux": 0.03125,
+    "luminance_cd_m2": {
+     "dark": 0.000298,
+     "grey": 0.00249,
+     "white": 0.00746,
+     "road_dry": 0.000425,
+     "road_wet": 6.25e-05,
+     "reflector": 2.06
+    },
+    "reflector_cd": 0.0118,
+    "reflector_px": 0.73,
+    "stops_below_median": {
+     "dark": 11.7,
+     "grey": 8.6,
+     "white": 7.1,
+     "road_dry": 11.2,
+     "road_wet": 14.0,
+     "reflector": -1.0
+    },
+    "grey_of_255": {
+     "dark": 0.5,
+     "grey": 1.5,
+     "white": 2.7,
+     "road_dry": 0.6,
+     "road_wet": 0.2,
+     "reflector": 79.1
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   }
+  ],
+  "high": [
+   {
+    "distance_m": 25.0,
+    "rear_lux": {
+     "0.4": 13.00688,
+     "0.9": 5.59622,
+     "1.3": 5.593
+    },
+    "road_lux": 16.29959,
+    "luminance_cd_m2": {
+     "dark": 0.0534,
+     "grey": 0.445,
+     "white": 1.34,
+     "road_dry": 0.222,
+     "road_wet": 0.0326,
+     "reflector": 21.9
+    },
+    "reflector_cd": 0.0656,
+    "reflector_px": 5.8,
+    "stops_below_median": {
+     "dark": 4.2,
+     "grey": 1.2,
+     "white": -0.4,
+     "road_dry": 2.2,
+     "road_wet": 4.9,
+     "reflector": -4.5
+    },
+    "grey_of_255": {
+     "dark": 8.0,
+     "grey": 28.9,
+     "white": 59.7,
+     "road_dry": 18.6,
+     "road_wet": 6.0,
+     "reflector": 227.1
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.76,
+     "grey": 1.01,
+     "white": 5.03
+    },
+    "contrast_to_road_wet": {
+     "dark": 0.64,
+     "grey": 12.66,
+     "white": 39.98
+    },
+    "rear_above_cutoff": false
+   },
+   {
+    "distance_m": 50.0,
+    "rear_lux": {
+     "0.4": 1.40237,
+     "0.9": 1.39976,
+     "1.3": 1.39956
+    },
+    "road_lux": 4.07872,
+    "luminance_cd_m2": {
+     "dark": 0.0134,
+     "grey": 0.111,
+     "white": 0.334,
+     "road_dry": 0.0555,
+     "road_wet": 0.00816,
+     "reflector": 21.9
+    },
+    "reflector_cd": 0.0658,
+    "reflector_px": 2.9,
+    "stops_below_median": {
+     "dark": 6.2,
+     "grey": 3.2,
+     "white": 1.6,
+     "road_dry": 4.2,
+     "road_wet": 6.9,
+     "reflector": -4.5
+    },
+    "grey_of_255": {
+     "dark": 3.7,
+     "grey": 12.2,
+     "white": 24.1,
+     "road_dry": 8.2,
+     "road_wet": 2.8,
+     "reflector": 227.1
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.76,
+     "grey": 1.01,
+     "white": 5.02
+    },
+    "contrast_to_road_wet": {
+     "dark": 0.64,
+     "grey": 12.65,
+     "white": 39.96
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 75.0,
+    "rear_lux": {
+     "0.4": 0.62218,
+     "0.9": 0.62218,
+     "1.3": 0.62214
+    },
+    "road_lux": 1.05002,
+    "luminance_cd_m2": {
+     "dark": 0.00594,
+     "grey": 0.0495,
+     "white": 0.149,
+     "road_dry": 0.0143,
+     "road_wet": 0.0021,
+     "reflector": 21.9
+    },
+    "reflector_cd": 0.0658,
+    "reflector_px": 1.93,
+    "stops_below_median": {
+     "dark": 7.4,
+     "grey": 4.3,
+     "white": 2.7,
+     "road_dry": 6.1,
+     "road_wet": 8.9,
+     "reflector": -4.5
+    },
+    "grey_of_255": {
+     "dark": 2.4,
+     "grey": 7.6,
+     "white": 14.6,
+     "road_dry": 3.8,
+     "road_wet": 1.4,
+     "reflector": 227.1
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.58,
+     "grey": 2.47,
+     "white": 9.4
+    },
+    "contrast_to_road_wet": {
+     "dark": 1.83,
+     "grey": 22.58,
+     "white": 69.73
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 100.0,
+    "rear_lux": {
+     "0.4": 0.34999,
+     "0.9": 0.34999,
+     "1.3": 0.34997
+    },
+    "road_lux": 0.34997,
+    "luminance_cd_m2": {
+     "dark": 0.00334,
+     "grey": 0.0279,
+     "white": 0.0836,
+     "road_dry": 0.00476,
+     "road_wet": 0.0007,
+     "reflector": 20.5
+    },
+    "reflector_cd": 0.0616,
+    "reflector_px": 1.45,
+    "stops_below_median": {
+     "dark": 8.2,
+     "grey": 5.2,
+     "white": 3.6,
+     "road_dry": 7.7,
+     "road_wet": 10.5,
+     "reflector": -4.4
+    },
+    "grey_of_255": {
+     "dark": 1.8,
+     "grey": 5.5,
+     "white": 10.3,
+     "road_dry": 2.1,
+     "road_wet": 0.8,
+     "reflector": 224.4
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 125.0,
+    "rear_lux": {
+     "0.4": 0.22399,
+     "0.9": 0.22399,
+     "1.3": 0.22399
+    },
+    "road_lux": 0.22399,
+    "luminance_cd_m2": {
+     "dark": 0.00214,
+     "grey": 0.0178,
+     "white": 0.0535,
+     "road_dry": 0.00305,
+     "road_wet": 0.000448,
+     "reflector": 17.8
+    },
+    "reflector_cd": 0.0534,
+    "reflector_px": 1.16,
+    "stops_below_median": {
+     "dark": 8.9,
+     "grey": 5.8,
+     "white": 4.2,
+     "road_dry": 8.4,
+     "road_wet": 11.1,
+     "reflector": -4.2
+    },
+    "grey_of_255": {
+     "dark": 1.4,
+     "grey": 4.3,
+     "white": 8.0,
+     "road_dry": 1.7,
+     "road_wet": 0.6,
+     "reflector": 217.9
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 150.0,
+    "rear_lux": {
+     "0.4": 0.15555,
+     "0.9": 0.15555,
+     "1.3": 0.15555
+    },
+    "road_lux": 0.15555,
+    "luminance_cd_m2": {
+     "dark": 0.00149,
+     "grey": 0.0124,
+     "white": 0.0371,
+     "road_dry": 0.00212,
+     "road_wet": 0.000311,
+     "reflector": 14.2
+    },
+    "reflector_cd": 0.0455,
+    "reflector_px": 0.97,
+    "stops_below_median": {
+     "dark": 9.4,
+     "grey": 6.3,
+     "white": 4.8,
+     "road_dry": 8.9,
+     "road_wet": 11.7,
+     "reflector": -3.8
+    },
+    "grey_of_255": {
+     "dark": 1.2,
+     "grey": 3.6,
+     "white": 6.5,
+     "road_dry": 1.4,
+     "road_wet": 0.5,
+     "reflector": 206.1
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   },
+   {
+    "distance_m": 200.0,
+    "rear_lux": {
+     "0.4": 0.0875,
+     "0.9": 0.0875,
+     "1.3": 0.0875
+    },
+    "road_lux": 0.0875,
+    "luminance_cd_m2": {
+     "dark": 0.000836,
+     "grey": 0.00696,
+     "white": 0.0209,
+     "road_dry": 0.00119,
+     "road_wet": 0.000175,
+     "reflector": 5.78
+    },
+    "reflector_cd": 0.033,
+    "reflector_px": 0.73,
+    "stops_below_median": {
+     "dark": 10.2,
+     "grey": 7.2,
+     "white": 5.6,
+     "road_dry": 9.7,
+     "road_wet": 12.5,
+     "reflector": -2.5
+    },
+    "grey_of_255": {
+     "dark": 0.9,
+     "grey": 2.6,
+     "white": 4.7,
+     "road_dry": 1.0,
+     "road_wet": 0.4,
+     "reflector": 144.9
+    },
+    "contrast_to_road_dry": {
+     "dark": -0.3,
+     "grey": 4.85,
+     "white": 16.55
+    },
+    "contrast_to_road_wet": {
+     "dark": 3.77,
+     "grey": 38.79,
+     "white": 118.37
+    },
+    "rear_above_cutoff": true
+   }
+  ]
+ },
+ "driving": [
+  {
+   "distance_m": 25.0,
+   "rear_lux": {
+    "0.4": 103.60996,
+    "0.9": 103.60996,
+    "1.3": 103.55035
+   },
+   "road_lux": 103.55035,
+   "luminance_cd_m2": {
+    "dark": 0.989,
+    "grey": 8.25,
+    "white": 24.7,
+    "road_dry": 1.41,
+    "road_wet": 0.207,
+    "reflector": 207.0
+   },
+   "reflector_cd": 0.621,
+   "reflector_px": 5.8,
+   "stops_below_median": {
+    "dark": 0.0,
+    "grey": -3.0,
+    "white": -4.6,
+    "road_dry": -0.5,
+    "road_wet": 2.3,
+    "reflector": -7.7
+   },
+   "grey_of_255": {
+    "dark": 48.8,
+    "grey": 170.8,
+    "white": 231.8,
+    "road_dry": 61.7,
+    "road_wet": 17.8,
+    "reflector": 255.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.56
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.78,
+    "grey": 38.81,
+    "white": 118.43
+   },
+   "rear_above_cutoff": false
+  },
+  {
+   "distance_m": 50.0,
+   "rear_lux": {
+    "0.4": 25.91562,
+    "0.9": 25.91562,
+    "1.3": 25.91189
+   },
+   "road_lux": 25.91189,
+   "luminance_cd_m2": {
+    "dark": 0.247,
+    "grey": 2.06,
+    "white": 6.19,
+    "road_dry": 0.352,
+    "road_wet": 0.0518,
+    "reflector": 331.0
+   },
+   "reflector_cd": 0.993,
+   "reflector_px": 2.9,
+   "stops_below_median": {
+    "dark": 2.0,
+    "grey": -1.0,
+    "white": -2.6,
+    "road_dry": 1.5,
+    "road_wet": 4.3,
+    "reflector": -8.4
+   },
+   "grey_of_255": {
+    "dark": 19.9,
+    "grey": 79.1,
+    "white": 149.9,
+    "road_dry": 24.9,
+    "road_wet": 7.8,
+    "reflector": 255.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.56
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.78,
+    "grey": 38.79,
+    "white": 118.38
+   },
+   "rear_above_cutoff": true
+  },
+  {
+   "distance_m": 75.0,
+   "rear_lux": {
+    "0.4": 11.51913,
+    "0.9": 11.51913,
+    "1.3": 11.5184
+   },
+   "road_lux": 11.5184,
+   "luminance_cd_m2": {
+    "dark": 0.11,
+    "grey": 0.917,
+    "white": 2.75,
+    "road_dry": 0.157,
+    "road_wet": 0.023,
+    "reflector": 406.0
+   },
+   "reflector_cd": 1.22,
+   "reflector_px": 1.93,
+   "stops_below_median": {
+    "dark": 3.2,
+    "grey": 0.1,
+    "white": -1.5,
+    "road_dry": 2.7,
+    "road_wet": 5.4,
+    "reflector": -8.7
+   },
+   "grey_of_255": {
+    "dark": 12.2,
+    "grey": 46.5,
+    "white": 94.9,
+    "road_dry": 15.1,
+    "road_wet": 5.0,
+    "reflector": 255.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  },
+  {
+   "distance_m": 100.0,
+   "rear_lux": {
+    "0.4": 6.47973,
+    "0.9": 6.47973,
+    "1.3": 6.47949
+   },
+   "road_lux": 6.47949,
+   "luminance_cd_m2": {
+    "dark": 0.0619,
+    "grey": 0.516,
+    "white": 1.55,
+    "road_dry": 0.0881,
+    "road_wet": 0.013,
+    "reflector": 380.0
+   },
+   "reflector_cd": 1.14,
+   "reflector_px": 1.45,
+   "stops_below_median": {
+    "dark": 4.0,
+    "grey": 1.0,
+    "white": -0.6,
+    "road_dry": 3.5,
+    "road_wet": 6.3,
+    "reflector": -8.6
+   },
+   "grey_of_255": {
+    "dark": 8.7,
+    "grey": 31.9,
+    "white": 65.7,
+    "road_dry": 10.7,
+    "road_wet": 3.7,
+    "reflector": 255.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  },
+  {
+   "distance_m": 125.0,
+   "rear_lux": {
+    "0.4": 4.14709,
+    "0.9": 4.14709,
+    "1.3": 4.14699
+   },
+   "road_lux": 4.14699,
+   "luminance_cd_m2": {
+    "dark": 0.0396,
+    "grey": 0.33,
+    "white": 0.99,
+    "road_dry": 0.0564,
+    "road_wet": 0.00829,
+    "reflector": 330.0
+   },
+   "reflector_cd": 0.989,
+   "reflector_px": 1.16,
+   "stops_below_median": {
+    "dark": 4.7,
+    "grey": 1.6,
+    "white": 0.0,
+    "road_dry": 4.1,
+    "road_wet": 6.9,
+    "reflector": -8.4
+   },
+   "grey_of_255": {
+    "dark": 6.7,
+    "grey": 23.9,
+    "white": 48.9,
+    "road_dry": 8.2,
+    "road_wet": 2.9,
+    "reflector": 255.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  },
+  {
+   "distance_m": 150.0,
+   "rear_lux": {
+    "0.4": 2.87995,
+    "0.9": 2.87995,
+    "1.3": 2.8799
+   },
+   "road_lux": 2.8799,
+   "luminance_cd_m2": {
+    "dark": 0.0275,
+    "grey": 0.229,
+    "white": 0.688,
+    "road_dry": 0.0392,
+    "road_wet": 0.00576,
+    "reflector": 262.0
+   },
+   "reflector_cd": 0.842,
+   "reflector_px": 0.97,
+   "stops_below_median": {
+    "dark": 5.2,
+    "grey": 2.1,
+    "white": 0.5,
+    "road_dry": 4.7,
+    "road_wet": 7.4,
+    "reflector": -8.0
+   },
+   "grey_of_255": {
+    "dark": 5.5,
+    "grey": 19.0,
+    "white": 38.4,
+    "road_dry": 6.7,
+    "road_wet": 2.4,
+    "reflector": 255.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  },
+  {
+   "distance_m": 200.0,
+   "rear_lux": {
+    "0.4": 1.61998,
+    "0.9": 1.61998,
+    "1.3": 1.61997
+   },
+   "road_lux": 1.61997,
+   "luminance_cd_m2": {
+    "dark": 0.0155,
+    "grey": 0.129,
+    "white": 0.387,
+    "road_dry": 0.022,
+    "road_wet": 0.00324,
+    "reflector": 107.0
+   },
+   "reflector_cd": 0.61,
+   "reflector_px": 0.73,
+   "stops_below_median": {
+    "dark": 6.0,
+    "grey": 3.0,
+    "white": 1.4,
+    "road_dry": 5.5,
+    "road_wet": 8.3,
+    "reflector": -6.7
+   },
+   "grey_of_255": {
+    "dark": 4.0,
+    "grey": 13.4,
+    "white": 26.5,
+    "road_dry": 4.9,
+    "road_wet": 1.8,
+    "reflector": 255.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  }
+ ],
+ "curve": {
+  "d": [
+   15.0,
+   20.0,
+   25.0,
+   30.0,
+   35.0,
+   40.0,
+   45.0,
+   50.0,
+   55.0,
+   60.0,
+   65.0,
+   70.0,
+   75.0,
+   80.0,
+   85.0,
+   90.0,
+   95.0,
+   100.0,
+   105.0,
+   110.0,
+   115.0,
+   120.0,
+   125.0,
+   130.0,
+   135.0,
+   140.0,
+   145.0,
+   150.0,
+   155.0,
+   160.0,
+   165.0,
+   170.0,
+   175.0,
+   180.0,
+   185.0,
+   190.0,
+   195.0,
+   200.0,
+   205.0,
+   210.0,
+   215.0,
+   220.0
+  ],
+  "lux": {
+   "low": [
+    3.10528,
+    1.74815,
+    1.11924,
+    0.77741,
+    0.57123,
+    0.43738,
+    0.34561,
+    0.27995,
+    0.23137,
+    0.19442,
+    0.16566,
+    0.14284,
+    0.12444,
+    0.10937,
+    0.09688,
+    0.08642,
+    0.07756,
+    0.07,
+    0.06349,
+    0.05785,
+    0.05293,
+    0.04861,
+    0.0448,
+    0.04142,
+    0.03841,
+    0.03571,
+    0.03329,
+    0.03111,
+    0.02914,
+    0.02734,
+    0.02571,
+    0.02422,
+    0.02286,
+    0.0216,
+    0.02045,
+    0.01939,
+    0.01841,
+    0.0175,
+    0.01666,
+    0.01587,
+    0.01514,
+    0.01446
+   ],
+   "value": [
+    5.54514,
+    3.1217,
+    1.99865,
+    1.38824,
+    1.02006,
+    0.78104,
+    0.61716,
+    0.49992,
+    0.41317,
+    0.34718,
+    0.29583,
+    0.25508,
+    0.22221,
+    0.1953,
+    0.173,
+    0.15431,
+    0.1385,
+    0.12499,
+    0.11337,
+    0.1033,
+    0.09451,
+    0.0868,
+    0.08,
+    0.07396,
+    0.06859,
+    0.06377,
+    0.05945,
+    0.05555,
+    0.05203,
+    0.04883,
+    0.04591,
+    0.04325,
+    0.04082,
+    0.03858,
+    0.03652,
+    0.03463,
+    0.03287,
+    0.03125,
+    0.02974,
+    0.02834,
+    0.02704,
+    0.02583
+   ],
+   "high": [
+    15.5264,
+    8.74077,
+    5.59622,
+    3.88706,
+    2.85616,
+    2.18692,
+    1.72803,
+    1.39976,
+    1.15686,
+    0.97211,
+    0.82832,
+    0.71422,
+    0.62218,
+    0.54684,
+    0.4844,
+    0.43208,
+    0.38779,
+    0.34999,
+    0.31745,
+    0.28925,
+    0.26464,
+    0.24305,
+    0.22399,
+    0.2071,
+    0.19204,
+    0.17857,
+    0.16647,
+    0.15555,
+    0.14568,
+    0.13672,
+    0.12856,
+    0.12111,
+    0.11428,
+    0.10802,
+    0.10226,
+    0.09695,
+    0.09204,
+    0.0875,
+    0.08328,
+    0.07936,
+    0.07572,
+    0.07231
+   ],
+   "driving": [
+    287.46021,
+    161.82907,
+    103.60996,
+    71.96622,
+    52.87972,
+    40.48931,
+    31.99332,
+    25.91562,
+    21.4185,
+    17.99789,
+    15.33574,
+    13.22335,
+    11.51913,
+    10.12433,
+    8.96833,
+    7.99958,
+    7.17972,
+    6.47973,
+    5.87733,
+    5.35518,
+    4.89965,
+    4.49987,
+    4.14709,
+    3.83422,
+    3.55547,
+    3.30605,
+    3.08198,
+    2.87995,
+    2.69714,
+    2.53121,
+    2.38013,
+    2.24218,
+    2.11589,
+    1.99997,
+    1.89333,
+    1.79499,
+    1.70412,
+    1.61998,
+    1.54192,
+    1.46937,
+    1.40183,
+    1.33883
+   ]
+  },
+  "stops": {
+   "dark": [
+    4.2,
+    5.1,
+    5.7,
+    6.2,
+    6.7,
+    7.1,
+    7.4,
+    7.7,
+    8.0,
+    8.2,
+    8.5,
+    8.7,
+    8.9,
+    9.1,
+    9.2,
+    9.4,
+    9.6,
+    9.7,
+    9.9,
+    10.0,
+    10.1,
+    10.2,
+    10.4,
+    10.5,
+    10.6,
+    10.7,
+    10.8,
+    10.9,
+    11.0,
+    11.1,
+    11.2,
+    11.2,
+    11.3,
+    11.4,
+    11.5,
+    11.6,
+    11.6,
+    11.7,
+    11.8,
+    11.8,
+    11.9,
+    12.0
+   ],
+   "white": [
+    -0.4,
+    0.4,
+    1.1,
+    1.6,
+    2.0,
+    2.4,
+    2.8,
+    3.1,
+    3.3,
+    3.6,
+    3.8,
+    4.0,
+    4.2,
+    4.4,
+    4.6,
+    4.8,
+    4.9,
+    5.1,
+    5.2,
+    5.3,
+    5.5,
+    5.6,
+    5.7,
+    5.8,
+    5.9,
+    6.0,
+    6.1,
+    6.2,
+    6.3,
+    6.4,
+    6.5,
+    6.6,
+    6.7,
+    6.8,
+    6.8,
+    6.9,
+    7.0,
+    7.1,
+    7.1,
+    7.2,
+    7.3,
+    7.3
+   ],
+   "road_dry": [
+    0.7,
+    1.5,
+    2.2,
+    2.7,
+    3.1,
+    3.5,
+    3.9,
+    4.2,
+    4.4,
+    5.0,
+    5.5,
+    5.9,
+    6.8,
+    7.5,
+    8.0,
+    8.5,
+    8.9,
+    9.2,
+    9.3,
+    9.5,
+    9.6,
+    9.7,
+    9.8,
+    10.0,
+    10.1,
+    10.2,
+    10.3,
+    10.4,
+    10.5,
+    10.6,
+    10.6,
+    10.7,
+    10.8,
+    10.9,
+    11.0,
+    11.1,
+    11.1,
+    11.2,
+    11.3,
+    11.3,
+    11.4,
+    11.5
+   ],
+   "reflector": [
+    -5.9,
+    -4.8,
+    -4.2,
+    -3.7,
+    -4.0,
+    -4.4,
+    -3.8,
+    -3.3,
+    -3.0,
+    -2.9,
+    -2.9,
+    -3.0,
+    -3.0,
+    -3.0,
+    -3.0,
+    -2.9,
+    -2.9,
+    -2.9,
+    -2.8,
+    -2.8,
+    -2.8,
+    -2.7,
+    -2.7,
+    -2.6,
+    -2.6,
+    -2.5,
+    -2.5,
+    -2.3,
+    -2.2,
+    -2.1,
+    -1.9,
+    -1.8,
+    -1.7,
+    -1.5,
+    -1.4,
+    -1.3,
+    -1.2,
+    -1.0,
+    -0.9,
+    -0.8,
+    -0.7,
+    -0.6
+   ]
+  }
+ },
+ "at_item_stop": {
+  "low": {
+   "distance_m": 148.7,
+   "rear_lux": {
+    "0.4": 0.03166,
+    "0.9": 0.03166,
+    "1.3": 0.03166
+   },
+   "road_lux": 0.03166,
+   "luminance_cd_m2": {
+    "dark": 0.000302,
+    "grey": 0.00252,
+    "white": 0.00756,
+    "road_dry": 0.000431,
+    "road_wet": 6.33e-05,
+    "reflector": 2.91
+   },
+   "reflector_cd": 0.00917,
+   "reflector_px": 0.98,
+   "stops_below_median": {
+    "dark": 11.7,
+    "grey": 8.6,
+    "white": 7.0,
+    "road_dry": 11.2,
+    "road_wet": 13.9,
+    "reflector": -1.5
+   },
+   "grey_of_255": {
+    "dark": 0.5,
+    "grey": 1.5,
+    "white": 2.7,
+    "road_dry": 0.6,
+    "road_wet": 0.2,
+    "reflector": 98.3
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  },
+  "value": {
+   "distance_m": 148.7,
+   "rear_lux": {
+    "0.4": 0.05653,
+    "0.9": 0.05653,
+    "1.3": 0.05653
+   },
+   "road_lux": 0.05653,
+   "luminance_cd_m2": {
+    "dark": 0.00054,
+    "grey": 0.0045,
+    "white": 0.0135,
+    "road_dry": 0.000769,
+    "road_wet": 0.000113,
+    "reflector": 5.19
+   },
+   "reflector_cd": 0.0164,
+   "reflector_px": 0.98,
+   "stops_below_median": {
+    "dark": 10.9,
+    "grey": 7.8,
+    "white": 6.2,
+    "road_dry": 10.3,
+    "road_wet": 13.1,
+    "reflector": -2.4
+   },
+   "grey_of_255": {
+    "dark": 0.7,
+    "grey": 2.1,
+    "white": 3.7,
+    "road_dry": 0.8,
+    "road_wet": 0.3,
+    "reflector": 137.0
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  },
+  "high": {
+   "distance_m": 148.7,
+   "rear_lux": {
+    "0.4": 0.15828,
+    "0.9": 0.15828,
+    "1.3": 0.15828
+   },
+   "road_lux": 0.15828,
+   "luminance_cd_m2": {
+    "dark": 0.00151,
+    "grey": 0.0126,
+    "white": 0.0378,
+    "road_dry": 0.00215,
+    "road_wet": 0.000317,
+    "reflector": 14.5
+   },
+   "reflector_cd": 0.0459,
+   "reflector_px": 0.98,
+   "stops_below_median": {
+    "dark": 9.4,
+    "grey": 6.3,
+    "white": 4.7,
+    "road_dry": 8.9,
+    "road_wet": 11.6,
+    "reflector": -3.9
+   },
+   "grey_of_255": {
+    "dark": 1.2,
+    "grey": 3.6,
+    "white": 6.6,
+    "road_dry": 1.4,
+    "road_wet": 0.5,
+    "reflector": 207.3
+   },
+   "contrast_to_road_dry": {
+    "dark": -0.3,
+    "grey": 4.85,
+    "white": 16.55
+   },
+   "contrast_to_road_wet": {
+    "dark": 3.77,
+    "grey": 38.79,
+    "white": 118.37
+   },
+   "rear_above_cutoff": true
+  }
+ },
+ "at_item_stop_driving": {
+  "distance_m": 148.7,
+  "rear_lux": {
+   "0.4": 2.93052,
+   "0.9": 2.93052,
+   "1.3": 2.93047
+  },
+  "road_lux": 2.93047,
+  "luminance_cd_m2": {
+   "dark": 0.028,
+   "grey": 0.233,
+   "white": 0.7,
+   "road_dry": 0.0399,
+   "road_wet": 0.00586,
+   "reflector": 269.0
+  },
+  "reflector_cd": 0.849,
+  "reflector_px": 0.98,
+  "stops_below_median": {
+   "dark": 5.2,
+   "grey": 2.1,
+   "white": 0.5,
+   "road_dry": 4.6,
+   "road_wet": 7.4,
+   "reflector": -8.1
+  },
+  "grey_of_255": {
+   "dark": 5.6,
+   "grey": 19.2,
+   "white": 38.9,
+   "road_dry": 6.8,
+   "road_wet": 2.4,
+   "reflector": 255.0
+  },
+  "contrast_to_road_dry": {
+   "dark": -0.3,
+   "grey": 4.85,
+   "white": 16.55
+  },
+  "contrast_to_road_wet": {
+   "dark": 3.77,
+   "grey": 38.79,
+   "white": 118.37
+  },
+  "rear_above_cutoff": true
+ },
+ "stopped_px_ratio": 0.3437
+}

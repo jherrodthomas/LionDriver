@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Plan ten physics studies that follow the twenty of rounds 2 and 3 ([round 2](physics-plan.md), [round 3](physics-plan-round3.md)): what each answers, how, with which inputs, checks and picture, and in what order. They cover triggering conditions (TCs) no study has touched yet, or only a Blender render has: the night, grades and curves, emergency vehicles, the driver's hands, the steering's torque, the radar's cover, and the traffic ahead changing lanes or braking hard |
-| Status | Planned 2026-11-20; nothing built. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
+| Status | Phase A built 2026-11-20 (studies 21–24; §2); phases B and C planned. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed |
 | Credit | None. Every study is a design aid, synthetic (DSR-12), with no evidence credit (DQ-413, WP-V-02 §5.3, DQ-139). A result that would move an ODD limit or a requirement goes to the lead as a register question; the study itself does not move it |
 | Lead decisions needed | **None to start.** Phases A and B run in existing environments. Phase C adds one tool, openpilot's own MPC solver (acados, from the `comma-deps-acados` wheel openpilot's `uv.lock` pins), as a new tool entry; that is a reversible technical choice. Inputs with no public source (raw torque scales, the radar cover's material) are T1 tasks, and the study gives a band until they come |
 
@@ -31,6 +31,25 @@ build, the three studies fall back to closed forms on the planner's own constant
 with its CI checks green and a results page.
 
 ## 2. Phase A: reuse what is built
+
+**Built 2026-11-20.** Results, synthetic:
+
+| # | Study | Finding | Results |
+|---|---|---|---|
+| 21 | A stopped car beyond the headlights | Beyond 31 m an unlit car's whole rear is above the low beam's cut-off, lit by at most the regulation's caps. At the item's 149 m stop it gets 0.03–0.16 lux: a dark rear is about 11 stops under the exposure and about as dark as the road beside it. Its red reflectors are the brightest part, about a pixel across. A driving beam puts about 3 lux on it | [`night-car.md`](results/night-car.md), [weather §18](weather/README.md#18-a-stopped-car-beyond-the-headlights-tc-08-tc-20-ks-05) |
+| 22 | Grades and sag curves | openpilot's Toyota controller asks for the car's own deceleration; the grade only shapes transients (read and pinned). On 6 % downhill the item's −3.5 m/s² needs 0.42 of friction; with 3 mm of tread in light rain that leaves +0.12 to +0.01. Over a sag built for 110 km/h the low beam's bright part meets the road at 46 m, not AASHTO's 220 m | [`grades.md`](results/grades.md), [weather §19](weather/README.md#19-grades-and-sag-curves-tc-16-tc-17) |
+| 23 | A lead hidden on the inside of a curve | A lead at the follow gap stays within ±15° on every ODD curve. A wall or cutting at the inside shoulder's edge hides a stopped car from 95 m (1.2 m shoulder) or 120 m (3.0 m) at 110 km/h, short of the item's 149 m; a concrete barrier hides its tail lights about as early, its roof stays in view | [`curve-sight.md`](results/curve-sight.md), [weather §20](weather/README.md#20-a-lead-hidden-on-the-inside-of-a-curve-tc-35-tc-14) |
+| 24 | Emergency beacons at night | Beacons of 750–3,100 cd hardly move the exposure until the last 50 m, then each flash darkens the road by up to 0.6 stops; no frame by more than a stop. Lane centring passes a vehicle on the edge line 0.94 m away, 0.34 m from a person at its door; move-over stays the driver's | [`beacons.md`](results/beacons.md), [weather §21](weather/README.md#21-emergency-beacons-at-night-tc-36-tc-02) |
+
+Changes from the plan below:
+- **Study 21** adds the car's red reflectors (FMVSS 108's minimum) and the road beside the car, which decide what
+  there is to see. Paint reflectances are assumed; tail lamps are left out (FMVSS 108's table could not be read).
+- **Study 22** takes the grade as friction: the code shows the item's −3.5 m/s² is the car's own deceleration, so the
+  pitch compensation is not a limit on braking.
+- **Study 23** adds concrete barriers beside walls; the over-speed row (120 km/h) is kept to show the trend.
+- **Study 24** found the exposure effect small: beacons are far dimmer than high beams. Its weight moved to the pass.
+- **For the lead:** none of the four moves an ODD limit by itself. Study 23 is the nearest: a stopped car round a
+  walled curve is the driver's and the stock PCS's, as WP-C-02 F-02 already says. No register question.
 
 ### 21. A stopped car beyond the headlights (TC-08, TC-20, KS-05)
 

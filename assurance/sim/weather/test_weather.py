@@ -80,6 +80,25 @@ Losing GPS in a tunnel
       selfdrived ignores the GPS service and its noGps event carries no alert.
   L2  The scan for GPS readers finds the two GPS drivers (it is not blind), finds no reader it has not reviewed, and the
       noGps distance is 1500 m, 49 s at 110 km/h.
+A stopped car beyond the headlights
+  A1  The low beam has at least 5,100 cd below the cut-off and the cap above it, log-linear across; the cut-off rises
+      to the right of the elbow and meets the road at h / tan 0.57°.
+  A2  The rear's light falls with 1 / range² (a driving beam, 50 against 100 m, within 1 %); its luminance is ρE/π.
+  A3  The red reflector's return is FMVSS 108's minimum at 0.2° and 1.5° and falls monotonically between.
+Grades and sag curves
+  E1  The friction the item needs is 3.5/g on the level and (3.5 + g sin θ)/(g cos θ) downhill, by hand.
+  E2  The sag K is AASHTO's S² / (120 + 3.5 S) (0.3 %), its feet form S² / (400 + 3.5 S) with 2.0 ft headlights, and a
+      1° beam from 0.6 m meets that sag's road at S.
+  E3  The controller lines the grade part rests on are found in opendbc (pitch cap 1.5 m/s², ACCEL_MIN −3.5).
+A lead hidden on the inside of a curve
+  U1  The sightline offset is R (1 − cos(s / 2R)), about s² / 8R; behind a wall the sight distance is the exact chord
+      2R acos(1 − m / R) (0.5 %).
+  U2  A barrier lower than the whole sight line hides nothing; the follow gap is v·T + 6 m with T read from long_mpc
+      (1.25, 1.45, 1.75 s).
+Emergency beacons at night
+  M1  A flash is on for its duty share of each period and at the partial level between.
+  M2  With no beacon light the road's exposure does not move; the clearance is half the lane less half our car plus the
+      vehicle's offset.
 Road crown
   R1  The roll path read from openpilot is the one reviewed: compensation by params.roll·g, calibration roll taken as
       zero, 20 Hz, process noise 1°/√s, fallback noise 10°, validity limit 1.5°. A change in the code fails here.
@@ -125,6 +144,10 @@ import stopped_car as stc  # noqa: E402
 import markings as mk  # noqa: E402
 import fog_visibility as fv  # noqa: E402
 import gnss_tunnel as gt  # noqa: E402
+import night_car as nc  # noqa: E402
+import grades as gr  # noqa: E402
+import curve_sight as csi  # noqa: E402
+import beacons as bc  # noqa: E402
 import sun_glare as sg  # noqa: E402
 
 P = yaml.safe_load((HERE / "params.yaml").read_text(encoding="utf-8"))
@@ -642,6 +665,87 @@ class GnssTunnel(unittest.TestCase):
     self.assertEqual(r["unreviewed_readers"], [])
     self.assertEqual(r["no_gps_after_m"], 1500.0)
     self.assertAlmostEqual(r["no_gps_after_s"], round(1500 / (110 / 3.6), 1), places=6)
+
+class NightCar(unittest.TestCase):
+  def test_a1_beam(self):
+    b = P["night_car"]["passing_beam_cd"]
+    w = P["night_car"]["cutoff_width_deg"]["value"]
+    self.assertEqual(nc.passing_cd(-2.0, 0.0, b, 625.0, w), 5100.0)
+    self.assertEqual(nc.passing_cd(0.5, 0.0, b, 625.0, w), 625.0)
+    mid = nc.passing_cd(b["cutoff_deg"], 0.0, b, 625.0, w)
+    self.assertAlmostEqual(mid, math.sqrt(5100.0 * 625.0), places=6)
+    self.assertGreater(nc.passing_cd(-0.4, 1.0, b, 625.0, w), nc.passing_cd(-0.4, -1.0, b, 625.0, w))
+    h = P["night_car"]["lamp_height_m"]["value"]
+    self.assertAlmostEqual(nc.cutoff_ground_m(P), h / math.tan(math.radians(0.57)), places=6)
+
+  def test_a2_photometry(self):
+    e50 = sum(x["E"] for x in nc.light_at(P, 0.0, 0.9, 50.0, "driving", 625.0))
+    e100 = sum(x["E"] for x in nc.light_at(P, 0.0, 0.9, 100.0, "driving", 625.0))
+    self.assertAlmostEqual(e50 / e100, 4.0, delta=0.04)
+    r = json.loads(nc.OUT_JSON.read_text(encoding="utf-8"))
+    x = r["passing"]["value"][2]
+    E = x["rear_lux"]["0.9"]
+    self.assertAlmostEqual(x["luminance_cd_m2"]["white"], 0.75 * E / math.pi, delta=0.002 * E)
+
+  def test_a3_reflector(self):
+    self.assertAlmostEqual(nc.cil(P, 0.2), 0.420, places=9)
+    self.assertAlmostEqual(nc.cil(P, 1.5), 0.006, places=9)
+    xs = [nc.cil(P, a) for a in np.linspace(0.2, 1.5, 14)]
+    self.assertTrue(all(a > b for a, b in zip(xs, xs[1:])))
+
+
+class Grades(unittest.TestCase):
+  def test_e1_friction(self):
+    self.assertAlmostEqual(wb.need(3.5, 0.0), 3.5 / 9.81, places=6)
+    th = math.atan(0.06)
+    self.assertAlmostEqual(wb.need(3.5, 6.0), (3.5 + 9.81 * math.sin(th)) / (9.81 * math.cos(th)), places=9)
+
+  def test_e2_sag(self):
+    for s in (185.0, 220.0, 250.0):
+      k = gr.sag_k(s, 0.6, 1.0)
+      self.assertAlmostEqual(k, s * s / (120 + 3.5 * s), delta=0.003 * k)
+      ft = s / 0.3048                                  # the feet form uses 2.0 ft headlights, 0.6096 m
+      k_ft = gr.sag_k(s, 2.0 * 0.3048, 1.0)
+      self.assertAlmostEqual(k_ft, ft * ft / (400 + 3.5 * ft) * 0.3048, delta=0.003 * k_ft)
+      self.assertAlmostEqual(gr.beam_hits_road(k, 0.6, 1.0), s, places=6)
+
+  def test_e3_pins(self):
+    c = gr.code()
+    self.assertEqual(c["pitch_cap"], 1.5)
+    self.assertEqual(c["accel_min"], -3.5)
+    self.assertEqual(len(c), len(gr.PINS))
+
+
+class CurveSight(unittest.TestCase):
+  def test_u1_offset_and_wall(self):
+    R = 373.5
+    self.assertAlmostEqual(csi.offset(100.0, R), 100.0 ** 2 / (8 * R), delta=0.01)
+    for m in (3.0, 4.8):
+      s = csi.sight(R, m, 1.2, 0.6, 10.0)
+      self.assertAlmostEqual(s, 2 * R * math.acos(1 - m / R), delta=0.005 * s)
+
+  def test_u2_low_barrier_and_gap(self):
+    self.assertEqual(csi.sight(373.5, 3.0, 1.2, 0.6, 0.1), math.inf)
+    m = csi.mpc_code()
+    self.assertEqual(m["t_follow_s"], {"relaxed": 1.75, "standard": 1.45, "aggressive": 1.25})
+    self.assertAlmostEqual(csi.gap(m, 30.0, 1.45), 30.0 * 1.45 + 6.0, places=9)
+
+
+class Beacons(unittest.TestCase):
+  def test_m1_flash(self):
+    t = np.arange(0, 10, 0.001)
+    self.assertAlmostEqual(bc.flash(t, 2.0, 0.5, 0.0).mean(), 0.5, delta=0.002)
+    self.assertAlmostEqual(bc.flash(t, 1.0, 0.5, 0.1).min(), 0.1, places=9)
+
+  def test_m2_no_light_and_clearance(self):
+    c = cae.code()
+    fov = sg.camera_fov()
+    scale = tu.scale_for(c, P["tunnel"]["outside_cd_m2"]["value"], P["tunnel"]["ev_day"]["value"])
+    r, _ = bc.run_case(P, c, fov, scale, 1.0, 0.0, 0.1, 0.0)
+    self.assertEqual(r["darkest_stops"], 0.0)
+    cl = bc.clearance(P)
+    self.assertAlmostEqual(cl[0]["to_vehicle_m"], round(3.66 / 2 - 0.89, 2), places=9)
+
 
 if __name__ == "__main__":
   unittest.main(verbosity=2)

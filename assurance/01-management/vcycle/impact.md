@@ -2,17 +2,17 @@
 
 # Change impact
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · **All changes**
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-P-07 · 20 Nov](impact-wp-p-07.md) · [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · **All changes**
 
 Each work product's latest dated change, and what depends on it in the process model (WP-P-11): how many of those have a version dated after the change, how many have not, and how many have no dated version. The 8 most recent changes have a page with the V. A dependence is a prompt to look, not proof of an impact; the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) decides.
 
 | Change | Version | Dated | Downstream | Worth a look | Updated since | Undated |
 |---|---|---|---|---|---|---|
+| [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-20 | 17 | 16 | 0 | 1 |
 | [WP-H-07](impact-wp-h-07.md) Qualification of hardware components (comma device, STM32H7, harness) | 0.6 | 2026-11-19 | 8 | 8 | 0 | 0 |
 | [WP-H-04](impact-wp-h-04.md) Hardware architectural metrics (SPFM, LFM) | 0.14 | 2026-11-19 | 1 | 1 | 0 | 0 |
 | [WP-H-03](impact-wp-h-03.md) Hardware safety analysis (FMEA/FMEDA) | 0.13 | 2026-11-19 | 11 | 9 | 2 | 0 |
 | [WP-A-04](impact-wp-a-04.md) System-level safety analyses (FTA, FMEA) | 1.22 | 2026-11-19 | 13 | 10 | 3 | 0 |
-| [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-18 | 17 | 16 | 0 | 1 |
 | [WP-C-05](impact-wp-c-05.md) SOTIF hazard identification and risk evaluation, acceptance criteria | 0.11 | 2026-11-18 | 25 | 21 | 4 | 0 |
 | [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.25 | 2026-11-17 | 23 | 19 | 3 | 1 |
 | [WP-S-02](impact-wp-s-02.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 36 | 5 | 2 |

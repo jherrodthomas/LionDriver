@@ -1,4 +1,4 @@
-# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests, a stopped car, lane markings, fog and GPS in a tunnel
+# Weather physics: sun, rain, heat, wind, fog, road crown, wet braking, gusts, tunnels, headlights, sun on the device, wet curves, crests, a stopped car, lane markings, fog, GPS in a tunnel, the night, grades, curves and beacons
 
 > **Synthetic data (DSR-12). Design aid, no evidence credit (DQ-139).** Small physics studies for the SOTIF
 > triggering conditions of low sun (TC-01), oncoming headlights (TC-02), rain (TC-03), crown and wind (TC-15),
@@ -615,7 +615,118 @@ is a pinned code reading. It has no figure, because a table says it.
 
 Results: [`results/gnss-tunnel.md`](../results/gnss-tunnel.md).
 
-## 18. Checks
+## 18. A stopped car beyond the headlights (TC-08, TC-20, KS-05)
+
+**Question.** At night on an unlit road, how much of our own low beam reaches a stopped, unlit car at the 149 m the
+item needs to stop from 110 km/h, and what does the road camera see of it?
+
+**Method.** [`night_car.py`](night_car.py):
+- **The beam:** UN R112's class B passing beam. The cut-off is aimed 0.57° down; below it at least 5,100 cd, above
+  it at most 350–1,750 cd (the regulation's caps; nothing sets the beam straight ahead above the cut-off).
+- **The car:** its rear lit by both lamps; dark, grey and white paint (reflectances assumed); its red reflectors at
+  FMVSS 108's minimum.
+- **The road beside it:** its retroreflectivity from the lane-markings study, dry and wet.
+- **The camera:** openpilot's auto exposure, settled on the road near our car as at night.
+
+**Result.**
+- **Beyond 31 m the car's whole rear is above the cut-off.** At 149 m it gets 0.03–0.16 lux at most.
+- **A dark rear is near black**, about 11 stops under the road the exposure is set on, and about as dark as the road
+  beside it, so there is little silhouette either.
+- **The reflectors are the brightest part:** about 2 stops over the exposure, but 1 px across in the road camera and
+  0.3 px in the model's input.
+- **A driving beam** puts about 3 lux on the rear at 149 m. Highway traffic usually means low beams.
+- **For KS-05:** an unlit stopped car at night on low beams, dark and light coloured. A night log (T1) shows what the
+  model does.
+
+Results: [`results/night-car.md`](../results/night-car.md).
+
+![The light on a stopped car's rear against distance, low beam and driving beam, and how many stops over or under the exposure's road a dark rear, a white rear, the road beside it and a red reflector are, with the item's 149 m stop and 175 m at 120 km/h](figures/fig-wx-26-night-car.webp)
+
+*Figure 26. A stopped car beyond the headlights.*
+
+## 19. Grades and sag curves (TC-16, TC-17)
+
+**Question.** Does the ODD's 6 % downhill eat into the item's braking? And over a sag curve, how far does our low beam
+light the road?
+
+**Method.** [`grades.py`](grades.py):
+- **The code:** openpilot's Toyota controller asks the PCM for the car's own acceleration, clipped at −3.5 m/s². The
+  grade enters only as a short high-pass term (at most ±1.5 m/s²) and in the brake-permit logic. These lines are read
+  and pinned.
+- **Grades:** on a downhill the tyres need (3.5 + g sin θ)/(g cos θ) of friction. This is set against the wet-braking
+  and wet-curve studies' friction.
+- **Sags:** AASHTO's sag curve is built for a beam diverging 1° up from 0.6 m (MDT Road Design Manual §4.4.2). The
+  study finds where a low beam's cut-off, 0.57° down, meets that rising road.
+
+**Result.**
+- **On 6 % downhill the item's braking needs 0.42 of friction,** against 0.36 on the level. With the ODD's 3 mm of
+  tread in light rain there is +0.12 left at Continental's end of the measured band, and almost none (+0.01) at
+  MIRA's.
+- **A driver's full stop** (wet, 3 mm, MIRA) grows from 188 m on the level to 207 m.
+- **Over a sag built for 110 km/h** the bright part of the low beam meets the road 46 m ahead, against 65 m on the
+  flat and the 220 m AASHTO assumes. The design beam is the dim light above the cut-off.
+- **For WP-C-02 OI-5:** a line for the grade bound's rationale, not a register question.
+
+Results: [`results/grades.md`](../results/grades.md).
+
+![Above: the friction the item's braking needs against downhill grade, with the friction available dry, wet with new tyres and wet with 3 mm of tread, and the ODD's 6 % bound. Below: a sag curve in profile with AASHTO's 1° design beam meeting the road at 220 m and the low beam's cut-off meeting it at 46 m](figures/fig-wx-27-grades.webp)
+
+*Figure 27. Grades and sag curves.*
+
+## 20. A lead hidden on the inside of a curve (TC-35, TC-14)
+
+**Question.** On the ODD's tightest curve, does a lead at openpilot's follow gap stay in the camera's frame, and how far
+does something on the inside of the curve hide a stopped car?
+
+**Method.** [`curve_sight.py`](curve_sight.py):
+- **The curve:** WP-C-02's bound, R = v²/2.5 m/s². Our car is in the lane next to the inside shoulder.
+- **The lead:** at openpilot's follow gap, v·T + 6 m, with T read from `long_mpc.py` (1.25, 1.45, 1.75 s). Its
+  angle off our heading is set against the camera's and the model's frames.
+- **A stopped car:** the sight line is a chord that bows inward by R (1 − cos(s / 2R)) (AASHTO's sightline offset).
+  It is checked against a wall or cutting, and against 0.81 m and 1.07 m concrete barriers, at the edge of a 1.2 m or
+  3.0 m inside shoulder.
+
+**Result.**
+- **The lead stays in frame:** at most 14.8° off our heading (relaxed, 40 km/h), inside the camera's ±20° and the
+  model's narrow ±15.7°.
+- **A wall or cutting hides a stopped car short of the item's stop.** At 110 km/h the camera sees it from 95 m
+  (narrow shoulder) or 120 m (wide), against the item's 149 m. The same holds at 100 km/h.
+- **A concrete barrier hides the tail lights at about the same range,** but the roof stays in view over it.
+- **For KS tests:** a stopped car beyond a walled or cut inside edge.
+
+Results: [`results/curve-sight.md`](../results/curve-sight.md).
+
+![Above: a top-down view of the 110 km/h ODD curve with a wall at the inside shoulder's edge, the sight line to a stopped car at 95 m and the blocked line to one at the item's 149 m. Below: the distance at which a stopped car is seen past a wall or a barrier against speed, with the item's and a driver's stopping distances](figures/fig-wx-28-curve-sight.webp)
+
+*Figure 28. A stopped car hidden on the inside of a curve.*
+
+## 21. Emergency beacons at night (TC-36, TC-02)
+
+**Question.** Do an emergency vehicle's flashing beacons upset the road camera's exposure as we approach at night? How
+close does lane centring pass the vehicle?
+
+**Method.** [`beacons.py`](beacons.py):
+- **The beacons:** two, at 750–3,100 cd peak (Rea and Bullough 2016), flashing at 1–4 Hz (SAE J845, as they quote
+  it), fully off or 10 % on between flashes.
+- **The camera:** their light scattered by the lens and windshield (1–10 %), through openpilot's ported auto exposure,
+  as in the headlight study (§10).
+- **The pass:** where lane centring puts our car against a vehicle on the shoulder.
+
+**Result.**
+- **The beacons hardly move the exposure until the last 50 m** (at most 0.2 stops at 2,000 cd and 3 % scatter). They
+  are far dimmer than an undipped high beam.
+- **Close in, each flash darkens the road** by up to 0.6 stops at worst. No frame is darkened by more than a stop.
+- **The pass is the hazard:** lane centring leaves 0.94–1.94 m to the vehicle and 0.34–1.34 m to a person at its door.
+  Every US state's move-over law asks for a lane change or slowing; the item does neither, so it stays the driver's
+  task.
+
+Results: [`results/beacons.md`](../results/beacons.md).
+
+![Above: how much the road in the image is darkened against distance to a stopped vehicle with flashing beacons, for a 2,000 cd beacon with 3 % scatter and a 3,100 cd one with 10 %. Below: a top-down view of our car passing a vehicle stopped on the shoulder's edge line, 0.94 m away, 0.34 m from a person at its door](figures/fig-wx-29-beacons.webp)
+
+*Figure 29. Emergency beacons at night.*
+
+## 22. Checks
 
 [`test_weather.py`](test_weather.py) runs in CI:
 
@@ -678,6 +789,16 @@ Results: [`results/gnss-tunnel.md`](../results/gnss-tunnel.md).
 | V2 A line against a road as bright as the horizon fades by Koschmieder itself; brighter airlight, sooner | a wrong airlight term |
 | L1 The lines the GPS study rests on are found in openpilot (locationd's inputs, controlsd's motion, selfdrived's ignore lists, noGps with no alert) | openpilot starting to use the GPS while engaged |
 | L2 The reader scan finds the GPS drivers, finds no unreviewed reader, and the noGps distance is 1500 m | a blind scan or a new reader |
+| A1 The low beam: 5,100 cd below the cut-off, the cap above it, log-linear across; the cut-off rises right of the elbow and meets the road at h / tan 0.57° | a wrong beam pattern |
+| A2 The rear's light falls with 1 / range²; its luminance is ρE/π | a wrong photometry |
+| A3 The reflector's return is FMVSS 108's minimum at 0.2° and 1.5° and falls between | a mistyped reflector table |
+| E1 Friction for −3.5 m/s²: 3.5/g level, (3.5 + g sin θ)/(g cos θ) downhill | a wrong grade term |
+| E2 The sag K is AASHTO's S²/(120 + 3.5 S) and its feet form; a 1° beam meets the sag's road at S | a wrong sag model |
+| E3 The controller lines the grade part rests on are found in opendbc | a controller change |
+| U1 The sightline offset is R (1 − cos(s/2R)); behind a wall the sight is the exact chord | a wrong arc geometry |
+| U2 A barrier below the sight line hides nothing; the follow gap is v·T + 6 m with T read from long_mpc | a wrong barrier test or a planner change |
+| M1 A flash is on for its duty share and at the partial level between | a wrong flash pattern |
+| M2 No beacon light, no change in the exposure; the clearance algebra | glare from nowhere |
 
 Each study's `--check` reruns it and fails if any number moves by more than 0.05 from the committed JSON. The crown
 study reads openpilot's code, so a change there shows up as a failed R1 or `--check` the next time this job runs.
@@ -703,4 +824,8 @@ python3 assurance/sim/weather/stopped_car.py --figures     # reads model.py and 
 python3 assurance/sim/weather/markings.py --figures        # reads results/headlights.json
 python3 assurance/sim/weather/fog_visibility.py --figures  # reads results/stopped-car.json
 python3 assurance/sim/weather/gnss_tunnel.py               # reads openpilot's locationd, controlsd, selfdrived
+python3 assurance/sim/weather/night_car.py --figures       # reads results/stopped-car.json and the camerad sources
+python3 assurance/sim/weather/grades.py --figures          # needs the opendbc submodule (the Toyota controller)
+python3 assurance/sim/weather/curve_sight.py --figures     # reads long_mpc.py and model.py
+python3 assurance/sim/weather/beacons.py --figures         # reads the camerad sources and results/headlights.json
 ```
