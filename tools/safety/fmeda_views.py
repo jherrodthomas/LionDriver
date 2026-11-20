@@ -37,7 +37,7 @@ ANALYSES = FMEA / "analyses"
 FIGS = FMEA / "exports/review/fmeda-views"
 SOURCES = export_fmeda_xlsx.SOURCES
 FINGERPRINT = Path(__file__).with_name("fmeda_views.sha256")
-WORKSHEET_URL = "https://claude.ai/artifact/PCbGoJH1mrjZGDmEzegu7N"
+WORKSHEET_URL = "https://claude.ai/artifact/GqXdK8QZmYi2EVSbj3FiSp"
 GENERATOR = "tools/safety/fmeda_views.py"
 W = 640
 

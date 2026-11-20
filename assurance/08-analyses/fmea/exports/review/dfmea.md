@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.13 | draft | BL-007 | RT-3 | 2026-10-16 |
+| 0.14 | draft | BL-007 | RT-3 | 2026-11-19 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-007 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -503,6 +503,26 @@ Effects:
 
 <sub>Note: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout). Circuit view (synthetic, no credit) in assurance/sim/results/harness-box.md, with a Falstad link to flip this fault.</sub>
 
+#### DFM-024 · Ignition sense reads off while driving
+
+🔴 **H** · **S 10** · guideword *open* · function `DFM-FN-006` Connect the device to the vehicle buses, power and ignition, and report harness orientation correctly
+
+Effects:
+
+- **End:** The item stops steering while engaged without its take-control warning; stock LKA resumes (HZ-004, S 10)
+- **Next higher:** pandad closes the relay (should_close_relay), so the switch returns to pass-through and the stock camera rejoins the car bus; the device goes offroad and stops sending
+- **Local:** SBU2 is not pulled low, so harness_check_ignition reads off; the heartbeat timeout takes its 2 s ignition-off value
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `DFM-024.C1` Ignition-sense parts of the harness box open, or shorted the safe way: Q6 open, R1 open, R4 open, R5 short (FMEDA SG-001 FMD-026, FMD-027, FMD-029, FMD-032) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-017 |
+
+Safety mechanisms: (1) None: the reading is not cross-checked
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-024.C1` mechanism 1: M 10 · F 3 · S after response 10 → 🔴 **H**
+
+<sub>Note: Added from the component FMEDA of the harness box (WP-H-03 §6.5, OI-12). Safe for SG-01 (no torque from the item); a loss of function for the warning goals (HZ-004). R1 short is not this mode: it misreads the orientation (WP-H-03 FM-HAR-02) and the relay-malfunction check blocks TX.</sub>
+
 ### `DFM-SE-008` SoC-MCU interface: SPI link, STM_RST_N, STM_BOOT0
 
 #### DFM-015 · Corrupted SoC-to-MCU transfer accepted
@@ -605,6 +625,7 @@ Effects:
 | DFM-ACT-014 | detection | Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short on CAN0; camera-side termination R7/R8 lifted in intercept (VS-HW-24 (e), DFM-022); confirm the shipped box matches the v3 drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A, 2026-10-16); procedures in WP-H-06 §3.1 | Jherrod Thomas | open | DFM-010.C3, DFM-010.C4, DFM-011.C2, DFM-014.C2, DFM-020.C1, DFM-020.C2, DFM-021.C1, DFM-022.C1, DFM-023.C1 | — |
 | DFM-ACT-015 | detection | Read the Vishay DG417LE/DG418LE/DG419LE datasheet (document 76432) and record the absolute maximum V+ to V-, VL and IN ratings, the single-supply operating range and VINH/VINL at VL = V+ = 14 V; compare with VIN including the D4 clamp level. If a limit is exceeded, raise it with comma.ai and with DQ-209 (RR-2026-010 F-05; blocked at 2026-10-16: vendor and datasheet hosts unreachable from the analysis environment) | Jherrod Thomas | open | DFM-010.C4, DFM-011.C2 | — |
 | DFM-ACT-016 | detection | Time the EPS-fault warning chain on the HIL bench (WP-S-04 T-28): inject a persistent LKA_STATE fault on 0x262 while authority is granted and measure fault onset to audible siren against the 0.96 s design worst case and the SG-02 1 s budget (margin 0.04 s), with the speaker phase varied. Persistence 0.7 s since panda bf8102a (DQ-048). Waits for the HIL bench, which the lead deferred (DQ-049, 2026-10-14) | Jherrod Thomas | open | DFM-017.C1, DFM-017.C2 | — |
+| DFM-ACT-017 | detection | Bench-test the ignition sense of the harness box (WP-H-03 OI-12): open Q6 and R1 with the device engaged on the HIL bench and record what the driver is told and when; record the Q6 gate rating against the ignition voltage with R4 shorted or R5 open (DMN3200U-7 datasheet, resistor values from the shipped box, VS-HW-02). Waits for the HIL bench (DQ-049) and DFM-ACT-014 | Jherrod Thomas | open | DFM-024.C1 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -642,12 +663,13 @@ Effects:
 | `DFM-021.C1` | Clamp diode short loads or grounds a vehicle bus in the harness box | 10/3/10 | DFM-ACT-014 |
 | `DFM-022.C1` | Camera bus left unterminated in intercept | 10/2/10 | DFM-ACT-014 |
 | `DFM-023.C1` | Camera-side termination shorted in intercept | 10/3/10 | DFM-ACT-014 |
+| `DFM-024.C1` | Ignition sense reads off while driving | 10/3/10 | DFM-ACT-017 |
 
 ## 7. Monitoring and system response
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 25 of 25 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
+**Coverage:** 26 of 26 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
 
 ![Frequency by monitoring](figures/dfmea-msr.svg)
 
@@ -667,6 +689,7 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
 | `DFM-023.C1` Termination resistor R7 or R8 short (FMEDA SG-009 FMD-036); pass-through is not affected (R7/R8 are on the NO side) | None: the device checks only car-side messages for timeouts, so a silent camera bus is not flagged → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
+| `DFM-024.C1` Ignition-sense parts of the harness box open, or shorted the safe way: Q6 open, R1 open, R4 open, R5 short (FMEDA SG-001 FMD-026, FMD-027, FMD-029, FMD-032) | None: the panda and the host take the line reading as the ignition state; Toyota has no CAN ignition hook to cross-check (WP-H-03 FM-IGN-01) → Relay closed to pass-through, heartbeat timeout 2 s, device offroad | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-017 |
 | `DFM-010.C3` Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable) | None: the open pull-down is latent while the device drives SBU1, and no readback exists (GAP-12) → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-007, DFM-ACT-014 |
 | `DFM-019.C2` Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01) | None: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-013 |
 | `DFM-022.C1` Termination resistor R7 open together with R8 or the P13-P15 loopback open. One open alone leaves 120 ohm and a recessive edge of about 0.06 us, so it is latent (FMEDA SG-009 FMD-035); pass-through is not affected (R7/R8 are on the NO side) | None: the device checks only car-side messages for timeouts; a single open is latent and nothing checks the camera-side termination → None | unknown | 10 | 2 | **10** | 🟠 M | DFM-ACT-014 |

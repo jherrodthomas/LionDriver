@@ -2,10 +2,10 @@
 
 # Change impact: WP-S-05 Hardware-software interface specification
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · **WP-S-05 · 17 Nov** · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · **WP-S-05 · 17 Nov** · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [All changes](impact.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-s-05.svg" width="100%" alt="Change impact of WP-S-05 Hardware-software interface specification, dated 2026-11-17: 23 work products depend on it in the process model; 21 have no version dated after it, 1 have been updated since, 1 have no dated version."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-s-05.svg" width="100%" alt="Change impact of WP-S-05 Hardware-software interface specification, dated 2026-11-17: 23 work products depend on it in the process model; 19 have no version dated after it, 3 have been updated since, 1 have no dated version."></a>
 </p>
 
 *The change: WP-S-05 version 0.25, dated 2026-11-17: §4.1: SPI layout as implemented: the 7-byte header keeps the VERSION request working and carries a CRC-8 that only gates the data DMA; counter and control-frame index open the data phase, and CRC-32C covers header, counter, index and payload; counter rule checked on every endpoint, with a repeat answered by an empty DACK and anything else by SEQ_NACK*
@@ -20,8 +20,8 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay)](../../04-hardware/WP-H-02-hardware-design.md) | 1 | 2026-11-13 | worth a look |
 | [WP-S-08 System integration and test strategy, specification and report](../../03-system/WP-S-08-system-integration-test.md) | 1 | 2026-11-02 | worth a look |
 | [WP-W-02 Software safety requirements specification](../../05-software/WP-W-02-software-safety-requirements.md) | 1 | 2026-11-11 | worth a look |
-| [WP-H-03 Hardware safety analysis (FMEA/FMEDA)](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | 2 | 2026-11-13 | worth a look |
-| [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 2 | 2026-11-02 | worth a look |
+| [WP-H-03 Hardware safety analysis (FMEA/FMEDA)](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | 2 | 2026-11-19 | updated |
+| [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 2 | 2026-11-19 | updated |
 | [WP-H-06 Hardware integration and verification specification and report](../../04-hardware/WP-H-06-hardware-integration-verification.md) | 2 | 2026-10-27 | worth a look |
 | [WP-H-07 Qualification of hardware components (comma device, STM32H7, harness)](../../04-hardware/WP-H-07-hardware-component-qualification.md) | 2 | 2026-11-19 | updated |
 | [WP-P-08 Qualification of software components (third-party and upstream software)](../../07-supporting/WP-P-08-software-component-qualification.md) | 2 | 2026-10-23 | worth a look |

@@ -124,6 +124,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | LDA | lane departure alert: Toyota's stock lane warning |
 | LDO | low-dropout linear regulator |
 | LDW | lane departure warning |
+| LFM | latent fault metric: share of the multiple-point failure rate that is not latent (ISO 26262-5) |
 | LFS | Git Large File Storage (where the model files live) |
 | LKA | lane keeping assist |
 | LKAS | lane keeping assist system |
@@ -218,6 +219,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SoC | system on chip: the comma device's main processor, running openpilot (QM) |
 | SOTIF | safety of the intended functionality (ISO 21448): hazards with nothing failing |
 | SPF | single-point fault: a fault no safety mechanism covers that violates a safety goal on its own (ISO 26262-5) |
+| SPFM | single-point fault metric: share of the safety-related failure rate not single-point or residual (ISO 26262-5) |
 | SPI | serial peripheral interface (the link between SoC and MCU) |
 | SRAM | static RAM: the MCU's working memory |
 | SSH | secure shell (remote login) |
@@ -304,6 +306,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | F-nn | function of the item (WP-C-01 §2.1), F-01…F-09 |
 | FI-nn | functional insufficiency (WP-C-06) |
 | FM-nn | functional modification (WP-C-07) |
+| FMD-nn | FMEDA row: component FMD-C-nnn, failure mode FMD-nnn (08-analyses/fmea) |
 | FSR-nn | functional safety requirement (FSC) |
 | G-nn | named gate of a WP-A-04 fault tree (G-SIREN, G-LATCUE); numbered gates read G1.1, G2.3 … |
 | GAP-nn | gap found by the gap assessment |

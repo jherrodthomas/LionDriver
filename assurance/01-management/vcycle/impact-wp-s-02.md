@@ -2,10 +2,10 @@
 
 # Change impact: WP-S-02 Technical safety requirements specification
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · **WP-S-02 · 17 Nov** · [WP-H-03 · 13 Nov](impact-wp-h-03.md) · [WP-H-02 · 13 Nov](impact-wp-h-02.md) · [WP-P-04 · 12 Nov](impact-wp-p-04.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-H-07 · 19 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-P-07 · 18 Nov](impact-wp-p-07.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · **WP-S-02 · 17 Nov** · [All changes](impact.md)
 
 <p align="center">
-  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-s-02.svg" width="100%" alt="Change impact of WP-S-02 Technical safety requirements specification, dated 2026-11-17: 43 work products depend on it in the process model; 39 have no version dated after it, 2 have been updated since, 2 have no dated version."></a>
+  <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-s-02.svg" width="100%" alt="Change impact of WP-S-02 Technical safety requirements specification, dated 2026-11-17: 43 work products depend on it in the process model; 36 have no version dated after it, 5 have been updated since, 2 have no dated version."></a>
 </p>
 
 *The change: WP-S-02 version 0.69, dated 2026-11-17: TSR-410: CRC-32C coverage named field by field, following the WP-S-05 §4.1 layout; no change in what is protected*
@@ -19,7 +19,7 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-A-01 ASIL decomposition rationale](../../08-analyses/WP-A-01-asil-decomposition.md) | 1 | 2026-10-19 | worth a look |
 | [WP-A-02 Coexistence of elements and freedom from interference](../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) | 1 | 2026-10-27 | worth a look |
 | [WP-A-03 Dependent failure analysis](../../08-analyses/WP-A-03-dependent-failure-analysis.md) | 1 | 2026-10-27 | worth a look |
-| [WP-A-04 System-level safety analyses (FTA, FMEA)](../../08-analyses/WP-A-04-system-fta-fmea.md) | 1 | 2026-10-29 | worth a look |
+| [WP-A-04 System-level safety analyses (FTA, FMEA)](../../08-analyses/WP-A-04-system-fta-fmea.md) | 1 | 2026-11-19 | updated |
 | [WP-A-05 System-theoretic process analysis (STPA)](../../08-analyses/WP-A-05-stpa.md) | 1 | 2026-10-21 | worth a look |
 | [WP-H-01 Hardware safety requirements specification](../../04-hardware/WP-H-01-hardware-safety-requirements.md) | 1 | 2026-11-02 | worth a look |
 | [WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-14)](../WP-M-14-iso26262-6-implementation-specification.md) | 1 | 2026-11-11 | worth a look |
@@ -34,8 +34,8 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-W-06 Software unit verification specification and report (static analysis, MISRA, coverage, mutation)](../../05-software/WP-W-06-software-unit-verification.md) | 1 | 2026-11-02 | worth a look |
 | [WP-W-09 Safety-related configuration and calibration data (car params, fingerprints, limits, model weights)](../../05-software/WP-W-09-configuration-calibration-data.md) | 1 | 2026-10-27 | worth a look |
 | [WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay)](../../04-hardware/WP-H-02-hardware-design.md) | 2 | 2026-11-13 | worth a look |
-| [WP-H-03 Hardware safety analysis (FMEA/FMEDA)](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | 2 | 2026-11-13 | worth a look |
-| [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 2 | 2026-11-02 | worth a look |
+| [WP-H-03 Hardware safety analysis (FMEA/FMEDA)](../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | 2 | 2026-11-19 | updated |
+| [WP-H-04 Hardware architectural metrics (SPFM, LFM)](../../04-hardware/WP-H-04-hardware-metrics.md) | 2 | 2026-11-19 | updated |
 | [WP-H-06 Hardware integration and verification specification and report](../../04-hardware/WP-H-06-hardware-integration-verification.md) | 2 | 2026-10-27 | worth a look |
 | [WP-K-03 Cybersecurity case](../../10-safety-case/WP-K-03-cybersecurity-case.md) | 2 | 2026-10-23 | worth a look |
 | [WP-K-04 Functional safety assessment report (performed independently, I3)](../../10-safety-case/WP-K-04-functional-safety-assessment.md) | 2 | 2026-10-12 | worth a look |
