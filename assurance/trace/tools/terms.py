@@ -61,6 +61,7 @@ PAGES = [
 ]
 FIGURES = [
   *sorted((A / "04-hardware/semiconductors/method-demo/figures").glob("fig-md-*.svg")),  # Part 11 method demonstration
+  A / "04-hardware/semiconductors/stm32h725/figures/fig-h07-semi-1-onchip-dfa.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-legend.svg",
   A / "01-management/figures/vcycle/fig-m00-vcycle-time.svg",
@@ -172,6 +173,12 @@ TERMS = {
   "SECDED": "single-error-correcting, double-error-detecting code (here Hamming 39,32 on each register)",
   "GDS": "GDSII, the standard file format for chip layouts",
   "ISC": "ISC licence: a short permissive open-source licence (Internet Systems Consortium)",
+  "MF-": "MCU feature: a safety feature of the STM32H725 and what the firmware does with it (04-hardware/semiconductors/stm32h725/features.yaml)",
+  "LSI": "low-speed internal oscillator of the MCU (32 kHz RC); it clocks the IWDG",
+  "VDD": "the MCU's main supply voltage",
+  "SWD": "serial wire debug: the MCU's two-pin debug port",
+  "DTS": "digital temperature sensor of the MCU",
+  "RC": "resistor-capacitor; an RC oscillator needs no crystal and drifts more than one",
   "DFMEA": "design FMEA: failure modes and effects analysis of a design (here the harness box and device)",
   "PFMEA": "process FMEA: failure modes of making, installing or updating the item",
   "DFM-": "DFMEA row: failure mode DFM-nnn, cause .Cn (08-analyses/fmea)",

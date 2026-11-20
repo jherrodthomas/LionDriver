@@ -57,6 +57,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | DSU | driving support unit (Toyota's radar cruise module) |
 | DTC | diagnostic trouble code: a fault code an ECU stores, read with a scan tool or over UDS |
 | DTCM | the MCU's tightly coupled data memory, where the safety state lives |
+| DTS | digital temperature sensor of the MCU |
 | E/E | electrical and electronic (systems) |
 | ECC | error-correcting code (memory) |
 | ECDSA | elliptic-curve digital signature algorithm |
@@ -129,6 +130,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | LKA | lane keeping assist |
 | LKAS | lane keeping assist system |
 | LOG | verification by analysis of drive logs |
+| LSI | low-speed internal oscillator of the MCU (32 kHz RC); it clocks the IWDG |
 | LTA | lane tracing assist: Toyota's stock lane-centring function |
 | MAN | management process group of ASPICE (MAN.3 project, MAN.5 risk, MAN.6 measurement) |
 | MB | megabyte |
@@ -188,6 +190,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | R-USR | installation record block: driver briefing (WP-O-01 §5) |
 | R-VEH | installation record block: vehicle (WP-O-01 §5) |
 | RAM | random-access memory |
+| RC | resistor-capacitor; an RC oscillator needs no crystal and drifts more than one |
 | RCA | root cause analysis |
 | RDP | read-out protection of the MCU's flash (option bytes) |
 | RF | residual fault: the part of a fault a safety mechanism does not cover (ISO 26262-5) |
@@ -229,6 +232,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | SUP | supporting process group of ASPICE (SUP.1 quality assurance … SUP.11 machine learning data management) |
 | SVG | scalable vector graphics (the figure format) |
 | SW | software |
+| SWD | serial wire debug: the MCU's two-pin debug port |
 | SWE | software engineering process group of ASPICE (SWE.1 requirements … SWE.6 qualification test) |
 | SYS | system requirement SYS-nnn of WP-S-01; also the system engineering process group of ASPICE (SYS.1 … SYS.5) |
 | SysML | Systems Modeling Language: the system model in models/sysml |
@@ -256,6 +260,7 @@ Pages covered: [item](02-concept/item/README.md), [ai](02-concept/ai/README.md),
 | USB-C | USB Type-C connector |
 | USR | owner, installer or maintainer acting under a procedure (allocation class) |
 | VAL | validation process of ASPICE (VAL.1) |
+| VDD | the MCU's main supply voltage |
 | VIN | vehicle identification number; in the harness box and its simulations, the box supply voltage |
 | VL | logic supply pin of the DG419LE switch (in the harness box, tied to VIN) |
 | VRU | vulnerable road user: pedestrian or cyclist |
@@ -326,6 +331,7 @@ A record code is a prefix and a number, for example `FSR-01.05`.
 | IX-nn | safety-security interaction (HATARA) |
 | KS-nn | known scenario (WP-V-03) |
 | M-nn | timing measurement of the plan in WP-S-04 §6 |
+| MF-nn | MCU feature: a safety feature of the STM32H725 and what the firmware does with it (04-hardware/semiconductors/stm32h725/features.yaml) |
 | NF-nn | finding of the onboard code review |
 | OI-nn | open item of the document it appears in |
 | OPS-nn | operation step: the driver's pre-drive and field checks (WP-O-02 §3) |

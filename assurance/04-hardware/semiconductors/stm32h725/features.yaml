@@ -1,0 +1,165 @@
+# STM32H725 safety features: what the silicon offers and what the panda firmware does with it.
+#
+# Checked against the panda firmware at the LionDriver submodule pin fd0a6a7 (panda/, 2026-11-20). Every `evidence`
+# entry is a path:line in that tree. `present` says whether the block exists on the STM32H72x/73x: "yes" where the
+# firmware or the device header shows it, "to-confirm" where only ST's reference manual (RM0468) can settle it.
+# `firmware`: used | partly | not-used. `on_detection`: what actually happens when the mechanism fires today.
+# `finding`: a gap or a fact the FMEDA (WP-H-03 §6.2) or the DFA (WP-A-03) must carry; null when there is none.
+# `design_change`: the WP-H-02 §6 design change that already covers it, or "new".
+#
+# This is an AI-drafted analysis of the code (I0). It does not replace the safety manual intake or the errata review,
+# which are not started (README §4).
+schema_version: 1
+part: STM32H725
+firmware_pin: fd0a6a7
+features:
+  - id: MF-01
+    name: Independent watchdog (IWDG1)
+    block: IWDG1 on the LSI oscillator
+    detects: CPU or main-loop hang, safety task running too fast or too slow (window mode)
+    present: "yes"
+    firmware: used
+    evidence: ["board/drivers/hw_watchdog.h:5-68", "board/drivers/harness.h:20", "board/main.c:413"]
+    on_detection: Reset; all GPIOs float, the harness switch drive drops and the stock camera path returns (TSR-506); the next boot reports HEALTH_FLAG_WATCHDOG_RESET
+    finding: Started only at the first relay drive, by design (GAP-43). Before that point nothing resets a hang, including the clock and package checks of MF-03 and MF-15. The debug-halt behaviour is set by DBGMCU APB4FZ1 bit DBG_IWDG1, which the firmware never writes (see MF-14)
+    design_change: DC-01
+  - id: MF-02
+    name: Window watchdog (WWDG1)
+    block: WWDG1 on the APB clock
+    detects: Program-flow timing faults, on the main clock
+    present: to-confirm
+    firmware: not-used
+    evidence: []
+    on_detection: Nothing
+    finding: null
+    design_change: null
+  - id: MF-03
+    name: Clock security system on the crystal (CSS)
+    block: RCC CSS on HSE
+    detects: Crystal stop (not frequency drift)
+    present: "yes"
+    firmware: used
+    evidence: ["board/stm32h7/clock.h:119", "board/early_init.h:73-76", "board/stm32h7/clock.h:80"]
+    on_detection: NMI, whose handler sets a cookie and resets; the next boot reports HEALTH_FLAG_NMI_RESET
+    finding: After that reset clock_init waits for the crystal with no time-out (clock.h:80), before the watchdog runs. A dead crystal therefore leaves the MCU looping silently in clock_init. GPIOs stay floated, so the stock path holds (safe for SG-07), but the host gets no health report saying why. CSS also does not see a crystal running at the wrong frequency
+    design_change: new
+  - id: MF-04
+    name: Brown-out reset (BOR)
+    block: PWR BOR, level set in the option bytes
+    detects: Supply below the BOR threshold
+    present: "yes"
+    firmware: not-used
+    evidence: []
+    on_detection: Reset, if the option bytes enable a level
+    finding: No code in the firmware or the panda tools writes the option bytes (no OPTSR access at the pin), so the BOR level on shipped devices is whatever comma programmed or the factory default. Unknown until read out (WP-H-02 UK-04)
+    design_change: DC-07
+  - id: MF-05
+    name: Programmable voltage detector (PVD/AVD)
+    block: PWR PVD/AVD through EXTI
+    detects: Supply dropping toward the brown-out zone, early enough to act
+    present: "yes"
+    firmware: not-used
+    evidence: ["board/stm32h7/interrupt_handlers.h:7"]
+    on_detection: Nothing; the interrupt has a stub handler and is never enabled
+    finding: null
+    design_change: DC-07
+  - id: MF-06
+    name: SRAM ECC and the RAMECC monitors
+    block: ECC on the SRAMs; RAMECC monitor units; ECC interrupt
+    detects: Single-bit errors (corrected) and double-bit errors (detected) in SRAM
+    present: to-confirm
+    firmware: partly
+    evidence: ["board/stm32h7/interrupt_handlers.h:129", "board/early_init.h:78-81", "board/main.c:406-407"]
+    on_detection: Single-bit errors are corrected in hardware and counted nowhere. A double-bit error ends as a bus error; no fault exception is enabled, so it escalates to HardFault, whose handler resets with a cookie; the next boot reports HEALTH_FLAG_HARDFAULT_RESET
+    finding: Corrected errors are invisible, so an accumulating memory fault stays latent until it becomes uncorrectable (an LFM gap). An uncorrectable error is not told apart from any other HardFault. The reaction (reset, GPIOs float) is the safe state for SG-07
+    design_change: DC-05
+  - id: MF-07
+    name: Flash ECC
+    block: FLASH ECC with single and double error flags; FLASH interrupt
+    detects: Bit errors in the program and constant memory
+    present: to-confirm
+    firmware: not-used
+    evidence: ["board/stm32h7/interrupt_handlers.h:10"]
+    on_detection: As MF-06 for a double error on read; single errors are corrected and not counted; no periodic CRC of the image
+    finding: As MF-06. The image is checked only by signature at boot (bootstub), not while running
+    design_change: DC-05
+  - id: MF-08
+    name: Memory protection unit (MPU)
+    block: Cortex-M7 MPU
+    detects: Stray writes to code, stack overflow, writes to protected data
+    present: "yes"
+    firmware: not-used
+    evidence: []
+    on_detection: Nothing
+    finding: null
+    design_change: DC-06
+  - id: MF-09
+    name: Level-1 caches
+    block: Cortex-M7 instruction and data caches
+    detects: n/a (a resource, not a mechanism)
+    present: "yes"
+    firmware: not-used
+    evidence: []
+    on_detection: n/a
+    finding: The caches are never enabled (no SCB_EnableICache or SCB_EnableDCache at the pin), so they are not a sub-part of the MCU FMEDA and cache coherency with DMA cannot fail. Keep it that way, or add them to WP-H-03 §6.2 if a future change enables them
+    design_change: null
+  - id: MF-10
+    name: CRC unit
+    block: CRC calculation unit
+    detects: Image or data corruption, if used for it
+    present: "yes"
+    firmware: not-used
+    evidence: []
+    on_detection: Nothing
+    finding: null
+    design_change: DC-05
+  - id: MF-11
+    name: Digital temperature sensor (DTS)
+    block: DTS
+    detects: Die temperature
+    present: "yes"
+    firmware: partly
+    evidence: ["board/stm32h7/lldts.h:9-30", "board/main_comms.h:58"]
+    on_detection: Read and sent to the host; no reaction in the MCU
+    finding: null
+    design_change: DC-10
+  - id: MF-12
+    name: Fault exceptions and the default handler
+    block: Cortex-M7 MemManage, BusFault, UsageFault, HardFault; vector-table default handler
+    detects: Illegal accesses, bus errors, undefined instructions
+    present: "yes"
+    firmware: partly
+    evidence: ["board/early_init.h:73-81", "board/stm32h7/startup_stm32h7x5xx.s:112-114"]
+    on_detection: MemManage, BusFault and UsageFault are not enabled, so all three escalate to HardFault, which resets. An enabled interrupt with no handler lands in Default_Handler, an endless loop, ended only by the IWDG if it is running
+    finding: The endless loop is a hang, not a reset, before the first relay drive
+    design_change: DC-08
+  - id: MF-13
+    name: Device identity check
+    block: DBGMCU IDCODE (device and revision identifiers)
+    detects: Firmware running on the wrong chip family
+    present: "yes"
+    firmware: partly
+    evidence: ["board/early_init.h:47-49", "board/stm32h7/stm32h7_config.h:5"]
+    on_detection: A device code other than 0x483 (the STM32H72x/73x family) sends the MCU to the bootloader
+    finding: The revision identifier in the upper half of IDCODE is never read or reported, so the silicon revision of a device in the field is unknown, and with it which errata apply (README §3)
+    design_change: new
+  - id: MF-14
+    name: Debug port (SWD) and its effect on the watchdog
+    block: SWD on PA13 and PA14; DBGMCU freeze bits
+    detects: n/a (an access path, a shared cause in the DFA)
+    present: "yes"
+    firmware: partly
+    evidence: ["board/stm32h7/stm32h7_config.h:99", "board/stm32h7/inc/stm32h725xx.h:22148-22150", "SConscript:12-20"]
+    on_detection: n/a
+    finding: The early GPIO set-up keeps PA13 and PA14 in their debug function in every build, release and reference builds included (ALLOW_DEBUG only gates firmware commands). Whether a debugger can actually connect depends on the read-out protection level in the option bytes, which is unknown (MF-04, UK-04). The firmware never sets the IWDG debug-freeze bit, so the watchdog's behaviour when a debugger halts the core is the reset default of that bit (to confirm in RM0468)
+    design_change: DC-07
+  - id: MF-15
+    name: Package and power-supply configuration check
+    block: SYSCFG PKGR; PWR CR3 (SMPS or LDO, writable once per power-on)
+    detects: An unknown package, so a wrong supply configuration is not written
+    present: "yes"
+    firmware: used
+    evidence: ["board/stm32h7/clock.h:29-48", "board/stm32h7/clock.h:60-69"]
+    on_detection: An unknown package code makes clock_init loop for ever, before the watchdog runs
+    finding: The loop is silent and has no time-out, like MF-03
+    design_change: new
