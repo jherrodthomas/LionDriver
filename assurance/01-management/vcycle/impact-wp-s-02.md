@@ -2,7 +2,7 @@
 
 # Change impact: WP-S-02 Technical safety requirements specification
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-P-07 · 20 Nov](impact-wp-p-07.md) · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · **WP-S-02 · 17 Nov** · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 26 Nov](impact-wp-s-05.md) · [WP-P-07 · 20 Nov](impact-wp-p-07.md) · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · **WP-S-02 · 17 Nov** · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-s-02.svg" width="100%" alt="Change impact of WP-S-02 Technical safety requirements specification, dated 2026-11-17: 43 work products depend on it in the process model; 36 have no version dated after it, 5 have been updated since, 2 have no dated version."></a>
@@ -24,7 +24,7 @@ Depending on a change is a prompt to look, not proof of an impact: the [impact a
 | [WP-H-01 Hardware safety requirements specification](../../04-hardware/WP-H-01-hardware-safety-requirements.md) | 1 | 2026-11-02 | worth a look |
 | [WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-14)](../WP-M-14-iso26262-6-implementation-specification.md) | 1 | 2026-11-11 | worth a look |
 | [WP-S-03 Technical safety concept and system architectural design](../../03-system/WP-S-03-technical-safety-concept-architecture.md) | 1 | 2026-11-01 | worth a look |
-| [WP-S-05 Hardware-software interface specification](../../03-system/WP-S-05-hsi-specification.md) | 1 | 2026-11-17 | updated |
+| [WP-S-05 Hardware-software interface specification](../../03-system/WP-S-05-hsi-specification.md) | 1 | 2026-11-26 | updated |
 | [WP-S-06 Requirements for production, operation, service and decommissioning](../../03-system/WP-S-06-requirements-production-operation.md) | 1 | 2026-11-02 | worth a look |
 | [WP-S-07 Cybersecurity requirements and architectural design](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) | 1 | 2026-11-03 | worth a look |
 | [WP-S-08 System integration and test strategy, specification and report](../../03-system/WP-S-08-system-integration-test.md) | 1 | 2026-11-02 | worth a look |
