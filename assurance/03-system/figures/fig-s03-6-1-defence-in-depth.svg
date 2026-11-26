@@ -32,16 +32,16 @@
 <rect x="212" y="168" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="186" font-size="12.5" fill="#0F172A" font-weight="700">12 TSRs</text>
 <rect x="222" y="194" width="13.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="237" y="194" width="58.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="297" y="194" width="103.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="217" font-size="10.5" fill="#475569">1 impl. · 4 partly · 7 not</text>
+<rect x="237" y="194" width="73.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="312" y="194" width="88.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="217" font-size="10.5" fill="#475569">1 impl. · 5 partly · 6 not</text>
 <text x="222" y="231" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 4 · CFG 3 · TMO 2</text>
 <rect x="422" y="168" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="186" font-size="12.5" fill="#0F172A" font-weight="700">44 TSRs</text>
 <rect x="432" y="194" width="32.9" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="466.4" y="194" width="101.6" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="569.5" y="194" width="77" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="432" y="217" font-size="10.5" fill="#475569">7 impl. · 21 partly · 16 not</text>
+<rect x="466.4" y="194" width="111.4" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="579.3" y="194" width="67.2" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="432" y="217" font-size="10.5" fill="#475569">7 impl. · 23 partly · 14 not</text>
 <text x="432" y="231" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 13 · FR 8 · GATE 6</text>
 <rect x="1076" y="168" width="164" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="1086" y="186" font-size="12.5" fill="#0F172A" font-weight="700">6 TSRs + AOU-14</text>
@@ -98,16 +98,16 @@
 <rect x="212" y="328" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="346" font-size="12.5" fill="#0F172A" font-weight="700">9 TSRs</text>
 <rect x="222" y="354" width="18.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="242" y="354" width="18.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="262" y="354" width="138.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="377" font-size="10.5" fill="#475569">1 impl. · 1 partly · 7 not</text>
+<rect x="242" y="354" width="38.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="282" y="354" width="118.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="377" font-size="10.5" fill="#475569">1 impl. · 2 partly · 6 not</text>
 <text x="222" y="391" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 3 · CFG 2 · TMO 2</text>
 <rect x="422" y="328" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="346" font-size="12.5" fill="#0F172A" font-weight="700">40 TSRs</text>
 <rect x="432" y="354" width="25.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="459" y="354" width="106.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="567" y="354" width="79.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="432" y="377" font-size="10.5" fill="#475569">5 impl. · 20 partly · 15 not</text>
+<rect x="459" y="354" width="117.3" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="577.8" y="354" width="68.7" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="432" y="377" font-size="10.5" fill="#475569">5 impl. · 22 partly · 13 not</text>
 <text x="432" y="391" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 12 · FR 7 · GATE 5</text>
 <rect x="1076" y="328" width="164" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="1086" y="346" font-size="12.5" fill="#0F172A" font-weight="700">5 TSRs + AOU-14</text>
@@ -131,16 +131,16 @@
 <rect x="212" y="408" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="426" font-size="12.5" fill="#0F172A" font-weight="700">12 TSRs</text>
 <rect x="222" y="434" width="13.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="237" y="434" width="58.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="297" y="434" width="103.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="457" font-size="10.5" fill="#475569">1 impl. · 4 partly · 7 not</text>
+<rect x="237" y="434" width="73.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="312" y="434" width="88.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="457" font-size="10.5" fill="#475569">1 impl. · 5 partly · 6 not</text>
 <text x="222" y="471" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 4 · CFG 2 · FR 2</text>
 <rect x="422" y="408" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="426" font-size="12.5" fill="#0F172A" font-weight="700">39 TSRs</text>
 <rect x="432" y="434" width="26.2" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="459.7" y="434" width="103.7" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="564.9" y="434" width="81.6" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="432" y="457" font-size="10.5" fill="#475569">5 impl. · 19 partly · 15 not</text>
+<rect x="459.7" y="434" width="114.8" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="576" y="434" width="70.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="432" y="457" font-size="10.5" fill="#475569">5 impl. · 21 partly · 13 not</text>
 <text x="432" y="471" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 10 · GATE 6 · FR 5</text>
 <rect x="1076" y="408" width="164" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="1086" y="426" font-size="12.5" fill="#0F172A" font-weight="700">5 TSRs + AOU-14</text>
@@ -171,9 +171,9 @@
 <rect x="422" y="488" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="506" font-size="12.5" fill="#0F172A" font-weight="700">32 TSRs</text>
 <rect x="432" y="514" width="39" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="472.5" y="514" width="93" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="567" y="514" width="79.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="432" y="537" font-size="10.5" fill="#475569">6 impl. · 14 partly · 12 not</text>
+<rect x="472.5" y="514" width="99.8" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="573.8" y="514" width="72.8" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="432" y="537" font-size="10.5" fill="#475569">6 impl. · 15 partly · 11 not</text>
 <text x="432" y="551" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 11 · GATE 7 · CFG 4</text>
 <rect x="1076" y="488" width="164" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="1086" y="506" font-size="12.5" fill="#0F172A" font-weight="700">5 TSRs + AOU-14</text>
@@ -236,10 +236,10 @@
 <rect x="422" y="648" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="666" font-size="12.5" fill="#0F172A" font-weight="700">28 TSRs + AOU-13</text>
 <rect x="432" y="674" width="21.6" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="455.1" y="674" width="91.1" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="547.7" y="674" width="91.1" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="455.1" y="674" width="98.8" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="555.4" y="674" width="83.4" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
 <rect x="640.3" y="674" width="6.2" height="8" rx="2" fill="#94A3B8" stroke="none" stroke-width="0"/>
-<text x="432" y="697" font-size="10.5" fill="#475569">3 impl. · 12 partly · 12 not · 1 assumed</text>
+<text x="432" y="697" font-size="10.5" fill="#475569">3 impl. · 13 partly · 11 not · 1 assumed</text>
 <text x="432" y="711" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 11 · FR 7 · CFG 4</text>
 <rect x="1076" y="648" width="164" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="1086" y="666" font-size="12.5" fill="#0F172A" font-weight="700">8 TSRs + AOU-14</text>
