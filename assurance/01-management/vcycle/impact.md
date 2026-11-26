@@ -2,27 +2,27 @@
 
 # Change impact
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-S-05 · 26 Nov](impact-wp-s-05.md) · [WP-P-07 · 20 Nov](impact-wp-p-07.md) · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · **All changes**
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-W-02 · 26 Nov](impact-wp-w-02.md) · [WP-S-05 · 26 Nov](impact-wp-s-05.md) · [WP-P-07 · 26 Nov](impact-wp-p-07.md) · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · **All changes**
 
 Each work product's latest dated change, and what depends on it in the process model (WP-P-11): how many of those have a version dated after the change, how many have not, and how many have no dated version. The 8 most recent changes have a page with the V. A dependence is a prompt to look, not proof of an impact; the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) decides.
 
 | Change | Version | Dated | Downstream | Worth a look | Updated since | Undated |
 |---|---|---|---|---|---|---|
-| [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.26 | 2026-11-26 | 23 | 22 | 0 | 1 |
-| [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-20 | 17 | 16 | 0 | 1 |
+| [WP-W-02](impact-wp-w-02.md) Software safety requirements specification | 0.56 | 2026-11-26 | 14 | 13 | 0 | 1 |
+| [WP-S-05](impact-wp-s-05.md) Hardware-software interface specification | 0.26 | 2026-11-26 | 23 | 21 | 1 | 1 |
+| [WP-P-07](impact-wp-p-07.md) Software tool classification and qualification | 0.9 | 2026-11-26 | 17 | 16 | 0 | 1 |
 | [WP-H-07](impact-wp-h-07.md) Qualification of hardware components (comma device, STM32H7, harness) | 0.7 | 2026-11-20 | 8 | 8 | 0 | 0 |
 | [WP-H-04](impact-wp-h-04.md) Hardware architectural metrics (SPFM, LFM) | 0.14 | 2026-11-19 | 1 | 1 | 0 | 0 |
 | [WP-H-03](impact-wp-h-03.md) Hardware safety analysis (FMEA/FMEDA) | 0.13 | 2026-11-19 | 11 | 9 | 2 | 0 |
 | [WP-A-04](impact-wp-a-04.md) System-level safety analyses (FTA, FMEA) | 1.22 | 2026-11-19 | 13 | 10 | 3 | 0 |
 | [WP-C-05](impact-wp-c-05.md) SOTIF hazard identification and risk evaluation, acceptance criteria | 0.11 | 2026-11-18 | 25 | 21 | 4 | 0 |
-| [WP-S-02](impact-wp-s-02.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 36 | 5 | 2 |
-| [WP-H-02](../../04-hardware/WP-H-02-hardware-design.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | 0.15 | 2026-11-13 | 22 | 18 | 3 | 1 |
+| [WP-S-02](../../03-system/WP-S-02-technical-safety-requirements.md) Technical safety requirements specification | 0.69 | 2026-11-17 | 43 | 35 | 6 | 2 |
+| [WP-H-02](../../04-hardware/WP-H-02-hardware-design.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | 0.15 | 2026-11-13 | 22 | 17 | 4 | 1 |
 | [WP-P-04](../../07-supporting/WP-P-04-documentation-management.md) Documentation management | 0.8 | 2026-11-12 | 1 | 1 | 0 | 0 |
 | [WP-P-02](../../07-supporting/WP-P-02-change-management.md) Change management plan | 0.5 | 2026-11-12 | 2 | 2 | 0 | 0 |
 | [WP-W-11](../../05-software/WP-W-11-cybersecurity-implementation-verification.md) Cybersecurity implementation and verification | 0.8 | 2026-11-11 | 5 | 2 | 2 | 1 |
 | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | 0.5 | 2026-11-11 | 7 | 6 | 1 | 0 |
 | [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) Testing of the embedded software (SW qualification, HIL) | 0.4 | 2026-11-11 | 5 | 4 | 1 | 0 |
-| [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | 0.55 | 2026-11-11 | 14 | 11 | 2 | 1 |
 | [WP-P-10](../../07-supporting/WP-P-10-release-management.md) Release management and baseline procedure | 0.7 | 2026-11-11 | 2 | 0 | 2 | 0 |
 | [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) Cybersecurity incident response, vulnerability management and software updates | 0.7 | 2026-11-11 | 0 | 0 | 0 | 0 |
 | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md) Field monitoring (safety, SOTIF and AI) and crash reporting | 0.5 | 2026-11-11 | 1 | 0 | 1 | 0 |

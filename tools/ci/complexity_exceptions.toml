@@ -43,6 +43,7 @@ files = [
   "panda/board/early_init.h",
   "panda/board/drivers/fdcan.h",
   "panda/board/drivers/spi.h",
+  "panda/board/crc32c.h",
   "panda/board/drivers/harness.h",
   "panda/board/drivers/simple_watchdog.h",
   "panda/board/drivers/registers.h",
@@ -137,15 +138,6 @@ unit = "UN-21"
 nloc = 226
 ccn = 61
 structure = "One switch over the control-request byte (WP-W-05 UN-21)"
-reason = "to justify"
-
-[[exceptions]]
-file = "panda/board/drivers/spi.h"
-function = "spi_rx_done"
-unit = "UN-23"
-nloc = 101
-ccn = 22
-structure = "SPI protocol state machine step (WP-W-05 UN-23)"
 reason = "to justify"
 
 [[exceptions]]

@@ -101,6 +101,9 @@
 - child: SWSR-410h
   parent: TSR-410
   owner: "WP-S-02 OI-2: re-derive the SWSR ASILs after HARA v0.4 (WP-W-02)"
+- child: SWSR-410i
+  parent: TSR-410
+  owner: "WP-S-02 OI-2: re-derive the SWSR ASILs after HARA v0.4 (WP-W-02); host rule as SWSR-410h"
 - child: SWSR-514h
   parent: TSR-514
   owner: "WP-S-02 OI-2: re-derive the SWSR ASILs after HARA v0.4 (WP-W-02)"

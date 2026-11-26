@@ -168,8 +168,9 @@
 <circle cx="756.4" cy="366" r="5.4" fill="#1D4ED8" opacity=".55"/>
 <circle cx="766.5" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="847.7" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="1000" cy="366" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="1014" cy="366" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
-<text x="1014" y="370" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">2</text>
+<text x="1014" y="370" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">1</text>
 <rect x="1171.8" y="358" width="81.7" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
 <rect x="1253.6" y="358" width="91.5" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1" stroke-dasharray="3 2" opacity=".6"/>
 <rect x="40" y="398" width="1560" height="48" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
@@ -258,7 +259,7 @@
 <circle cx="928.9" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
 <circle cx="939.1" cy="590" r="4.2" fill="#15803D" opacity=".55"/>
 <circle cx="1014" cy="590" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
-<text x="1014" y="594" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">2</text>
+<text x="1014" y="594" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">3</text>
 <rect x="1253.6" y="582" width="50.9" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1.2"/>
 <rect x="1304.5" y="582" width="122.4" height="16" rx="4" fill="#F0FDF4" stroke="#15803D" stroke-width="1" stroke-dasharray="3 2" opacity=".6"/>
 <rect x="40" y="622" width="1560" height="48" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
@@ -329,7 +330,7 @@
 <text x="56" y="906" font-size="12" fill="#475569" font-weight="700">Trace freshness</text>
 <text x="56" y="936" font-size="22" fill="#C2410C" font-weight="700">50 of 86</text>
 <text x="56" y="958" font-size="10.5" fill="#475569">work products have an input dated after their own last version, e.g.</text>
-<text x="56" y="972" font-size="10.5" fill="#475569">WP-W-02 (11 Nov) needs WP-S-05 (dated 26 Nov)</text>
+<text x="56" y="972" font-size="10.5" fill="#475569">WP-W-11 (11 Nov) needs WP-P-07 (dated 26 Nov)</text>
 <rect x="433" y="882" width="381" height="118" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
 <text x="449" y="906" font-size="12" fill="#475569" font-weight="700">Reviews recorded</text>
 <text x="449" y="936" font-size="22" fill="#0F172A" font-weight="700">0 of 21</text>

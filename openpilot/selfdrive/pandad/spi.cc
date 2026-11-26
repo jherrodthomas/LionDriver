@@ -19,12 +19,25 @@
 #define SPI_HACK 0x79U
 #define SPI_DACK 0x85U
 #define SPI_NACK 0x1FU
-#define SPI_CHECKSUM_START 0xABU
+#define SPI_SEQ_NACK 0x2EU  // LionDriver SWSR-410a: sequence counter out of step, restart the counter
+
+// LionDriver SPI protocol version 3 (TSR-410, 411, 412; WP-S-05 §4.1), matching panda/board/drivers/spi.h:
+// header: sync, endpoint, MOSI length (2), max MISO length (2), CRC-8 (poly 0x2F) over the first 6 bytes
+// data: sequence counter, control-frame index, payload, CRC-32C (4) over header bytes 0-5, counter, index, payload
+// response: DACK, length (2), echoed sequence counter, payload, CRC-32C (4) over all of it
+#define SPI_HEADER_CRC_POLY 0x2FU
+#define SPI_DATA_PREFIX_SIZE 2U
+#define SPI_CRC_SIZE 4U
+#define SPI_RESP_HEADER_SIZE 4U
+#define SPI_MAX_DATA_PHASE 2047U  // TSR-412, enforced by the panda
+#define SPI_MAX_MOSI_LEN (SPI_MAX_DATA_PHASE - SPI_DATA_PREFIX_SIZE - SPI_CRC_SIZE)
+#define SPI_MAX_MISO_LEN (SPI_MAX_DATA_PHASE - SPI_RESP_HEADER_SIZE - SPI_CRC_SIZE)
 
 
 enum SpiError {
   NACK = -2,
   ACK_TIMEOUT = -3,
+  SEQ_NACK = -4,
 };
 
 const unsigned int SPI_ACK_TIMEOUT = 500; // milliseconds
@@ -186,19 +199,43 @@ std::vector<std::string> PandaSpiHandle::list() {
   return {};
 }
 
-void add_checksum(uint8_t *data, int data_len) {
-  data[data_len] = SPI_CHECKSUM_START;
-  for (int i=0; i < data_len; i++) {
-    data[data_len] ^= data[i];
+// the panda's crc_checksum: init 0xFF, bytes from last to first, MSB first
+static uint8_t spi_crc8(const uint8_t *data, int len, uint8_t poly) {
+  uint8_t crc = 0xFFU;
+  for (int i = len - 1; i >= 0; i--) {
+    crc ^= data[i];
+    for (int j = 0; j < 8; j++) {
+      crc = ((crc & 0x80U) != 0U) ? (uint8_t)((crc << 1) ^ poly) : (uint8_t)(crc << 1);
+    }
+  }
+  return crc;
+}
+
+// CRC-32C (Castagnoli): poly 0x1EDC6F41 reflected (0x82F63B78), init and final XOR 0xFFFFFFFF;
+// spi_crc32c("123456789") == 0xE3069283
+static uint32_t spi_crc32c_update(uint32_t crc, const uint8_t *data, size_t len) {
+  for (size_t i = 0; i < len; i++) {
+    crc ^= data[i];
+    for (int j = 0; j < 8; j++) {
+      crc = ((crc & 1U) != 0U) ? ((crc >> 1) ^ 0x82F63B78U) : (crc >> 1);
+    }
+  }
+  return crc;
+}
+
+static void put_le32(uint8_t *p, uint32_t v) {
+  for (int i = 0; i < 4; i++) {
+    p[i] = (uint8_t)(v >> (8 * i));
   }
 }
 
-bool check_checksum(uint8_t *data, int data_len) {
-  uint8_t checksum = SPI_CHECKSUM_START;
-  for (uint16_t i = 0U; i < data_len; i++) {
-    checksum ^= data[i];
-  }
-  return checksum == 0U;
+static uint32_t get_le32(const uint8_t *p) {
+  return (uint32_t)p[0] | ((uint32_t)p[1] << 8) | ((uint32_t)p[2] << 16) | ((uint32_t)p[3] << 24);
+}
+
+static uint8_t next_seq(uint8_t seq) {
+  // 0 starts a session and is never reused within it: 255 is followed by 1
+  return (seq == 255U) ? 1U : (uint8_t)(seq + 1U);
 }
 
 
@@ -209,8 +246,21 @@ int PandaSpiHandle::spi_transfer_retry(uint8_t endpoint, uint8_t *tx_data, uint1
   bool timed_out = false;
   double start_time = millis_since_boot();
 
+  // one counter value per transfer, kept on every retry of it (SWSR-410a); taken when the transfer first holds the bus
+  bool seq_assigned = false;
+  uint8_t seq = 0U;
+
   do {
-    ret = spi_transfer(endpoint, tx_data, tx_len, rx_data, max_rx_len, timeout);
+    ret = spi_transfer(endpoint, tx_data, tx_len, rx_data, max_rx_len, timeout, seq, seq_assigned);
+
+    if (ret == SpiError::SEQ_NACK) {
+      // the panda's counter is out of step with ours (another host session ran): start a new session
+      SPILOG(LOGW, "SPI: sequence counter out of step, restarting it");
+      std::lock_guard lk(hw_lock);
+      seq = 0U;
+      next_tx_seq = 1U;
+      continue;
+    }
 
     if (ret < 0) {
       timed_out = (timeout != 0) && (timeout_count > 5);
@@ -264,6 +314,9 @@ int PandaSpiHandle::wait_for_ack(uint8_t ack, uint8_t tx, unsigned int timeout, 
     } else if (rx_buf[0] == SPI_NACK) {
       SPILOG(LOGD, "SPI: got NACK, waiting for 0x%x", ack);
       return SpiError::NACK;
+    } else if (rx_buf[0] == SPI_SEQ_NACK) {
+      SPILOG(LOGW, "SPI: got sequence NACK, waiting for 0x%x", ack);
+      return SpiError::SEQ_NACK;
     }
 
     // handle timeout
@@ -310,14 +363,23 @@ int PandaSpiHandle::lltransfer(spi_ioc_transfer &t) {
   return ret;
 }
 
-int PandaSpiHandle::spi_transfer(uint8_t endpoint, uint8_t *tx_data, uint16_t tx_len, uint8_t *rx_data, uint16_t max_rx_len, unsigned int timeout) {
+int PandaSpiHandle::spi_transfer(uint8_t endpoint, uint8_t *tx_data, uint16_t tx_len, uint8_t *rx_data, uint16_t max_rx_len, unsigned int timeout,
+                                 uint8_t &seq, bool &seq_assigned) {
   int ret;
   uint16_t rx_data_len;
+  uint32_t crc;
+  uint8_t header_bytes[sizeof(spi_header)];
   LockEx lock(spi_fd, hw_lock);
 
-  // needs to be less, since we need to have space for the checksum
-  assert(tx_len < SPI_BUF_SIZE);
-  assert(max_rx_len < SPI_BUF_SIZE);
+  // TSR-412: the data phase in either direction is at most 2047 bytes; the panda refuses longer ones
+  assert(tx_len <= SPI_MAX_MOSI_LEN);
+  assert(max_rx_len <= SPI_MAX_MISO_LEN);
+
+  if (!seq_assigned) {
+    seq = next_tx_seq;
+    next_tx_seq = next_seq(seq);
+    seq_assigned = true;
+  }
 
   xfer_count++;
   header = {
@@ -326,6 +388,7 @@ int PandaSpiHandle::spi_transfer(uint8_t endpoint, uint8_t *tx_data, uint16_t tx
     .tx_len = tx_len,
     .max_rx_len = max_rx_len
   };
+  memcpy(header_bytes, &header, sizeof(header));
 
   spi_ioc_transfer transfer = {
     .tx_buf = (uint64_t)tx_buf,
@@ -333,8 +396,8 @@ int PandaSpiHandle::spi_transfer(uint8_t endpoint, uint8_t *tx_data, uint16_t tx
   };
 
   // Send header
-  memcpy(tx_buf, &header, sizeof(header));
-  add_checksum(tx_buf, sizeof(header));
+  memcpy(tx_buf, header_bytes, sizeof(header));
+  tx_buf[sizeof(header)] = spi_crc8(header_bytes, sizeof(header), SPI_HEADER_CRC_POLY);
   transfer.len = sizeof(header) + 1;
   ret = lltransfer(transfer);
   if (ret < 0) {
@@ -348,12 +411,16 @@ int PandaSpiHandle::spi_transfer(uint8_t endpoint, uint8_t *tx_data, uint16_t tx
     goto fail;
   }
 
-  // Send data
+  // Send data: sequence counter, control-frame index (the sendcan frame on endpoint 3), payload, CRC-32C
+  tx_buf[0] = seq;
+  tx_buf[1] = (endpoint == 3U) ? can_frame_index.load() : (uint8_t)0U;
   if (tx_data != NULL) {
-    memcpy(tx_buf, tx_data, tx_len);
+    memcpy(&tx_buf[SPI_DATA_PREFIX_SIZE], tx_data, tx_len);
   }
-  add_checksum(tx_buf, tx_len);
-  transfer.len = tx_len + 1;
+  crc = spi_crc32c_update(0xFFFFFFFFU, header_bytes, sizeof(header));
+  crc = spi_crc32c_update(crc, tx_buf, SPI_DATA_PREFIX_SIZE + tx_len) ^ 0xFFFFFFFFU;
+  put_le32(&tx_buf[SPI_DATA_PREFIX_SIZE + tx_len], crc);
+  transfer.len = SPI_DATA_PREFIX_SIZE + tx_len + SPI_CRC_SIZE;
   ret = lltransfer(transfer);
   if (ret < 0) {
     SPILOG(LOGE, "SPI: failed to send data");
@@ -361,32 +428,41 @@ int PandaSpiHandle::spi_transfer(uint8_t endpoint, uint8_t *tx_data, uint16_t tx
   }
 
   // Wait for (N)ACK
-  ret = wait_for_ack(SPI_DACK, 0x13, timeout, 3);
+  ret = wait_for_ack(SPI_DACK, 0x13, timeout, SPI_RESP_HEADER_SIZE);
+  if (ret == SpiError::SEQ_NACK) {
+    // a clean one-byte reply: the panda is ready for the next header, nothing to drain
+    return ret;
+  }
   if (ret < 0) {
     goto fail;
   }
 
   // Read data
-  rx_data_len = *(uint16_t *)(rx_buf+1);
-  if (rx_data_len >= SPI_BUF_SIZE) {
-    SPILOG(LOGE, "SPI: RX data len larger than buf size %d", rx_data_len);
+  rx_data_len = (uint16_t)(rx_buf[1] | (rx_buf[2] << 8));
+  if (rx_data_len > max_rx_len) {
+    SPILOG(LOGE, "SPI: RX data len %d larger than requested %d", rx_data_len, max_rx_len);
     goto fail;
   }
 
-  transfer.len = rx_data_len + 1;
-  transfer.rx_buf = (uint64_t)(rx_buf + 2 + 1);
+  transfer.len = rx_data_len + SPI_CRC_SIZE;
+  transfer.rx_buf = (uint64_t)(rx_buf + SPI_RESP_HEADER_SIZE);
   ret = lltransfer(transfer);
   if (ret < 0) {
     SPILOG(LOGE, "SPI: failed to read rx data");
     goto fail;
   }
-  if (!check_checksum(rx_buf, rx_data_len + 4)) {
-    SPILOG(LOGE, "SPI: bad checksum");
+  crc = spi_crc32c_update(0xFFFFFFFFU, rx_buf, SPI_RESP_HEADER_SIZE + rx_data_len) ^ 0xFFFFFFFFU;
+  if (crc != get_le32(&rx_buf[SPI_RESP_HEADER_SIZE + rx_data_len])) {
+    SPILOG(LOGE, "SPI: bad CRC");
+    goto fail;
+  }
+  if (rx_buf[3] != seq) {
+    SPILOG(LOGE, "SPI: response to another transfer (sequence %d, expected %d)", rx_buf[3], seq);
     goto fail;
   }
 
   if (rx_data != NULL) {
-    memcpy(rx_data, rx_buf + 3, rx_data_len);
+    memcpy(rx_data, rx_buf + SPI_RESP_HEADER_SIZE, rx_data_len);
   }
 
   return rx_data_len;
