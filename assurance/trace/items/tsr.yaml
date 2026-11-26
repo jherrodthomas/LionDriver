@@ -599,7 +599,7 @@
   mechanism: "E2E"
   timing: "per transfer"
   verification: "A, T-HIL, FI"
-  baseline_impl: "Not met: 8-bit XOR seeded 0xAB on header and data (`drivers/spi.h:97-104, 122, 137`); per-CAN-packet 8-bit XOR (`drivers/can_common.h:144-159`, checked at FDCAN TX `drivers/fdcan.h:100`); no sequence counter (`can_comms.h:8-37`) (GAP-10)"
+  baseline_impl: "**Partial, all builds** (panda `46ed771`, SPI protocol version 3; SWSR-410, 410a, 410h, 410i): every transfer carries a CRC-32C over header bytes 0–5, the sequence counter, the control-frame index and the payload, and the response carries one too; the counter is checked on every endpoint (step 1 or 2, a repeat acknowledged and not run again, anything else refused with SEQ_NACK and counted). Host tests: every 1-bit error and random 2-bit, 3-bit and burst errors never executed; replay, gap, reorder, wrap and lost response. Not verified on hardware (HIL `test_5_spi` not run). Open: the Toyota checksum check before `0x2E4`/`0x343` (WP-S-05 §12.7 P-3) is not implemented; a host test that fails if a write becomes a session's first transfer (SWSR-410i) is not written (IA SPI v3 (assurance/07-supporting/impact/change-2026-11-26-pin-46ed771-spi-crc.md) OI-7) (GAP-10)"
   status: proposed
   source: WP-S-02
 
@@ -629,7 +629,7 @@
   mechanism: "ISO, PLB"
   timing: "per transfer"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Not met (NF-04):** MOSI/MISO lengths are taken from the header (`drivers/spi.h:115-116`) and the data DMA is started with `spi_data_len_mosi + 1` into a 4096-byte buffer (`drivers/spi.h:233`, `drivers/drivers.h:216`) without a bound check; `comms_can_read` fills `spi_buf_tx` up to the requested MISO length (`drivers/spi.h:150`); the control-request indices are bounded since panda `0e8a7b9` (SWSR-412a partly met: an out-of-range request is ignored in all builds, not yet counted). The nominal host keeps lengths below the buffer size (`selfdrive/pandad/spi.cc:319-320`), but freedom from interference cannot rely on the QM host"
+  baseline_impl: "**Partial, all builds** (panda `46ed771`; SWSR-412, 412a, 412b): the header is refused and counted when the MOSI or MISO length would make the data phase longer than 2047 bytes, before the data DMA starts (NF-04 closed in code); every control-request index is checked before use and an out-of-range request is ignored (since `0e8a7b9`). Open: index refusals are not yet counted (SWSR-412a), and `comms_can_write` has no resynchronisation rule after an oversized DLC (SWSR-412b, WP-A-02 FFI-SP-03). Not verified on hardware"
   status: proposed
   source: WP-S-02
 
