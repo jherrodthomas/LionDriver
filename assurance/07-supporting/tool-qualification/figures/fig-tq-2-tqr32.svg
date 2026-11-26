@@ -4,7 +4,7 @@
 <defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="640" height="752" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="16" y="30" font-size="15" fill="#0F172A" font-weight="700">Figure 2 · TQR-32: the trace checker, validated</text>
-<text x="16" y="48" font-size="11" fill="#475569">Faults planted in the real trace data (743 items, 107 test links)</text>
+<text x="16" y="48" font-size="11" fill="#475569">Faults planted in the real trace data (744 items, 107 test links)</text>
 <text x="16" y="74" font-size="13" fill="#2E9E6A" font-weight="700">Planted faults: 26 of 26 caught</text>
 <text x="16" y="102" font-size="10.5" fill="#0F172A" font-weight="700">EC-1 broken link</text>
 <rect x="200" y="90" width="43" height="17" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>

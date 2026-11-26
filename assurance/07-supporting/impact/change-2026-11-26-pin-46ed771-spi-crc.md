@@ -8,7 +8,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Status | **Proposed 2026-11-26** in this LionDriver PR; host-tested end to end; not verified on hardware; not reviewed independently |
 | Pin | panda `fd0a6a7` → `46ed771` (merge commit of [jherrodthomas/panda#26](https://github.com/jherrodthomas/panda/pull/26), change commit `591f8e7`). opendbc unchanged. `pandad` changes in this PR |
 | Decision | Register DQ-143 A (project lead): a CRC meeting the residual-error target; CRC-32C selected as a technical choice within it (WP-S-05 §4.1, 2026-11-01). The lead set the order "small fixes first", G-4 bounds check, allow-list, then the SPI CRC, and approved the panda merge in chat ("Merge, then pin") |
-| Requirements | TSR-410, TSR-412 (TSR-411 field only); SWSR-410, 410a, 410h, 412 implemented; SWSR-413 counts more causes |
+| Requirements | TSR-410, TSR-412 (TSR-411 field only); SWSR-410, 410a, 410h, 412 implemented; SWSR-410i (new, host) met by the current hosts; SWSR-413 counts more causes |
 | Reference configuration affected | Yes, all builds (the protocol is the same in every build, the bootstub included) |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
 
@@ -23,7 +23,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 - **Layout differs from WP-S-05 §4.1.** §4.1 places the counter and the control-frame index in the header with its own CRC-32C. The header has to stay 7 bytes, because the 7-byte `VERSION` request must be recognised by every firmware: hosts use it to detect a protocol mismatch and recover an old panda, app or bootstub, through DFU (`pandad.py`). The MCU receives the header by a fixed-length DMA. So the two fields moved to the start of the data phase, where the CRC-32C covers them with the header fields before anything runs. The header CRC-8 only keeps a corrupted length from starting a wrong DMA. Proposed to the FSC/TSC owner as a §4.1 edit.
 - **Upgrade.** Host and firmware must match. A panda on protocol 2 is refused (`PandaProtocolMismatch`) and recovered through DFU by `pandad.py`, as on earlier upstream bumps. Not tried on a device.
-- **Residuals of the counter rule.** 0 starts a session and is always accepted, so a host retry of a session's first transfer (a control request at connect) can run twice. A repeated CAN read (a retry after a lost response) returns no data; the frames read the first time are lost, as before. A second host process moves the panda's counter; the first one then gets one `SEQ_NACK`, restarts and goes on.
+- **Residuals of the counter rule.** 0 starts a session and is always accepted, so a host retry of a session's first transfer can run twice. New SWSR-410i makes that first transfer a read in both hosts (`pandad`: `0xc3`; the library: `0xdd`), so the repeat changes nothing. The FSC/TSC owner had proposed treating a 0 after a 0 as a repeat instead. That would have stopped `pandad` connecting: `Panda::list()` (`pandad.cc:478`) opens a one-transfer session, and the real handle's first read at 0 would then be suppressed on every attempt. A repeated CAN read (a retry after a lost response) returns no data; the frames read the first time are lost, as before. A second host process moves the panda's counter; the first one then gets one `SEQ_NACK`, restarts and goes on.
 - **Error count.** CRC, length and counter rejections all count in `spi_error_count`. The hosts' drain after a failed transfer (bytes `0x11` / `0x14`) is still counted as bad headers, as before this change; SWSR-413 has to allow for it when it is built (OI-3).
 - **Timing.** The CRC is computed in software, four bits at a time: about two table steps per byte, inside the DMA interrupt. Not measured on the MCU (OI-4).
 
@@ -49,3 +49,4 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | OI-4 | Measure the CRC time in the DMA interrupt; the STM32H7 CRC unit as an alternative | HIL bench (D-04) |
 | OI-5 | HIL: `test_5_spi`, `test_pandad_spi.py` with `SPI_ERR_PROB`, and the DFU upgrade from protocol 2; bit-error-rate soak at 50 MHz (new measurement ID, WP-S-05 OI-2) | HIL bench (D-04) |
 | OI-6 | SW FMEA SWF-026.C1 and DFMEA DFM-015.C1: re-rate with the CRC and counter as controls (FMEA owners) | FMEA revision |
+| OI-7 | A host test that fails when a session's first counted transfer is not a read (SWSR-410i), for `pandad` and the Python library | Next host PR |

@@ -883,6 +883,22 @@
   status: proposed
   source: WP-W-02
 
+- id: SWSR-410i
+  kind: swsr
+  text: "The first transfer of each host SPI session (counter value 0, SWSR-410a) shall be a read without side effects, so that running it a second time, which the counter cannot detect, changes nothing on the panda or the car."
+  asil: "QM (B-sup)"
+  parents: [TSR-410]
+  parent_text: "TSR-410"
+  other_parents: false
+  allocated_to: "`host.pandad`"
+  verification: "R, IT"
+  acceptance: "First counted transfer of `pandad` and of the Python library is a read"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented: `pandad` reads the serial (`0xc3`) first in the `PandaSpiHandle` constructor (`selfdrive/pandad/spi.cc`); the Python library reads the packet versions (`0xdd`, `Panda.connect` → `get_packets_versions`) after the `VERSION` exchange, which carries no counter. The end-to-end test `tests/test_pandad_spi_protocol.py` connects through the constructor; nothing yet fails if a later change puts a write first (IA SPI v3 (assurance/07-supporting/impact/change-2026-11-26-pin-46ed771-spi-crc.md) OI-7). Agreed with the FSC/TSC owner in place of a firmware rule that would have stopped `pandad` connecting"
+  status: proposed
+  source: WP-W-02
+
 - id: SWSR-411
   kind: swsr
   text: "The envelope shall reject actuation frames whose transfer counter is more than 2 control periods older than the newest accepted transfer."

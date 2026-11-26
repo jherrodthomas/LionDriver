@@ -1,6 +1,6 @@
 {
  "tool": "assurance/trace/tools/check_trace.py",
- "items": 743,
+ "items": 744,
  "links": 107,
  "kinds": 19,
  "faults": [
@@ -273,7 +273,7 @@
    "id": "TM-04",
    "what": "every ASIL ranks the same",
    "killed": true,
-   "baseline_errors": 53,
+   "baseline_errors": 54,
    "missed": [
     "PF-07",
     "PF-09",

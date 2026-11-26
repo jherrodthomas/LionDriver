@@ -8,7 +8,7 @@
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-w-02.svg" width="100%" alt="Change impact of WP-W-02 Software safety requirements specification, dated 2026-11-26: 14 work products depend on it in the process model; 13 have no version dated after it, 0 have been updated since, 1 have no dated version."></a>
 </p>
 
-*The change: WP-W-02 version 0.56, dated 2026-11-26: SWSR-410, 410a, 410h and 412 implemented in all builds, panda 46ed771, SPI protocol version 3: CRC-32C over header fields and data, CRC-8 on the header, sequence counter on every endpoint with a repetition acknowledged but not run again, data phase ≤ 2047 bytes checked at the header; pandad follows; host-tested end to end, not verified on hardware; SWSR-411 (freshness on the control-frame index) not implemented; AI-drafted, I0*
+*The change: WP-W-02 version 0.56, dated 2026-11-26: SWSR-410, 410a, 410h and 412 implemented in all builds, panda 46ed771, SPI protocol version 3: CRC-32C over header fields and data, CRC-8 on the header, sequence counter on every endpoint with a repetition acknowledged but not run again, data phase ≤ 2047 bytes checked at the header; pandad follows; new SWSR-410i: a host session starts with a read, so the one transfer the counter cannot protect (a retried counter-0 transfer) has no effect; host-tested end to end, not verified on hardware; SWSR-411 (freshness on the control-frame index) not implemented; AI-drafted, I0*
 
 Depending on a change is a prompt to look, not proof of an impact: the [impact analysis (WP-M-12)](../WP-M-12-impact-analysis.md) and its records decide what a change actually affects.
 
