@@ -34,7 +34,7 @@ class RecordTests(unittest.TestCase):
   def test_statuses_are_read_from_the_tsr_list(self):
     d = C.data()
     self.assertEqual(set(d["status"]), set(C.tsrs()))
-    self.assertEqual(d["status"]["TSR-410"], "not implemented")
+    self.assertEqual(d["status"]["TSR-410"], "partly")
 
   def test_every_fault_names_a_gate_of_its_hop(self):
     hops = {h[0]: {n for n, _k in h[4]} for h in C.HOPS}
@@ -43,7 +43,8 @@ class RecordTests(unittest.TestCase):
 
   def test_a_planned_check_lets_its_fault_through(self):
     d = C.data()
-    self.assertFalse(C.caught("H1", "CRC", d))
+    self.assertTrue(C.caught("H1", "CRC", d))
+    self.assertFalse(C.caught("H1", "counter, age", d))
     self.assertTrue(C.caught("H3", "CAN CRC", d))
     self.assertTrue(C.caught("H4", "checksum, counter", d))
 
@@ -68,13 +69,13 @@ class RecordTests(unittest.TestCase):
       edit(root, C.S05, "For these frames the panda is a black channel", "For these frames the panda forwards")
       self.assertTrue(any("black channel" in e for e in C.problems(root)))
 
-  def test_a_built_crc_is_a_problem(self):
+  def test_a_crc_no_longer_built_is_a_problem(self):
     with tempfile.TemporaryDirectory() as tmp:
       root = Path(tmp)
       copy_records(root)
       text = (root / C.TSR_LIST).read_text(encoding="utf-8")
       row = next(line for line in text.splitlines() if line.startswith("| [TSR-410]"))
-      edit(root, C.TSR_LIST, row, row.replace("| not implemented |", "| implemented |"))
+      edit(root, C.TSR_LIST, row, row.replace("| partly |", "| not implemented |"))
       self.assertTrue(any("TSR-410" in e for e in C.problems(root)))
 
 
