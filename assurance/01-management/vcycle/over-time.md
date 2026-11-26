@@ -64,8 +64,8 @@ A prompt to look, not proof the work product is wrong: the input may have change
 | WP-W-07 | 2026-10-13 | WP-W-02 | 2026-11-26 |
 | WP-W-08 | 2026-11-11 | WP-W-02 | 2026-11-26 |
 | WP-W-09 | 2026-10-27 | WP-W-02 | 2026-11-26 |
-| WP-W-10 | 2026-11-11 | WP-P-07 | 2026-11-20 |
-| WP-W-11 | 2026-11-11 | WP-P-07 | 2026-11-20 |
+| WP-W-10 | 2026-11-11 | WP-P-07 | 2026-11-26 |
+| WP-W-11 | 2026-11-11 | WP-P-07 | 2026-11-26 |
 
 ## Work products with no dated version entry
 
