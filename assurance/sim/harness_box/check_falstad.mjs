@@ -11,7 +11,7 @@ import { chromium } from 'playwright';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PAGE = 'https://www.falstad.com/circuit/circuitjs.html';
-const BUNDLE = 'circuitjs116/circuitjs-D4ylC0oc.js';
+const BUNDLE = 'circuitjs117/circuitjs-Be1vqlxU.js';
 const TOL_V = 0.005;
 
 const results = JSON.parse(readFileSync(join(HERE, '../results/harness-box.json'), 'utf8'));

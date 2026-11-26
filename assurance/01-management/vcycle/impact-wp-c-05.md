@@ -2,7 +2,7 @@
 
 # Change impact: WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-P-07 · 20 Nov](impact-wp-p-07.md) · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · **WP-C-05 · 18 Nov** · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [WP-S-02 · 17 Nov](impact-wp-s-02.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-W-02 · 26 Nov](impact-wp-w-02.md) · [WP-P-07 · 26 Nov](impact-wp-p-07.md) · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · **WP-C-05 · 18 Nov** · [WP-S-05 · 17 Nov](impact-wp-s-05.md) · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-c-05.svg" width="100%" alt="Change impact of WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria, dated 2026-11-18: 25 work products depend on it in the process model; 21 have no version dated after it, 4 have been updated since, 0 have no dated version."></a>
