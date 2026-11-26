@@ -847,7 +847,7 @@
   acceptance: "All injected 1–3 bit errors and burst errors ≤ CRC width detected"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: 8-bit XOR seeded 0xAB (`drivers/spi.h:97-104, 122, 137`) (GAP-10)"
+  baseline_impl: "Implemented in all builds (panda `46ed771`, protocol version 3): CRC-32C (`board/crc32c.h`) over header bytes 0–5, sequence counter, control-frame index and payload, NACK and counted on a mismatch; the header has its own CRC-8 (poly `0x2F`) and the response a CRC-32C checked by the host (`drivers/spi.h`). Host test `tests/spi_protocol`: every 1-bit error and 3000 random cases each of 2-bit, 3-bit and ≤ 32-bit burst errors on a 64-byte transfer, none executed; HIL `test_5_spi` not run; not verified on hardware. The counter and index are in the data phase, not the header as WP-S-05 §4.1 words it (proposed §4.1 edit, IA SPI v3 (assurance/07-supporting/impact/change-2026-11-26-pin-46ed771-spi-crc.md))"
   status: proposed
   source: WP-W-02
 
@@ -863,7 +863,7 @@
   acceptance: "Replayed, dropped and reordered transfers detected"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl (`can_comms.h:8-37`)"
+  baseline_impl: "Implemented in all builds, on every endpoint (panda `46ed771`, `drivers/spi.h` `spi_seq_check`): a counter step of 1 or 2 is accepted; the last executed counter again is acknowledged without running the transfer a second time; any other step is refused with `SEQ_NACK` (`0x2E`); each rejection is counted in `spi_error_count`. 0 starts a host session and is always accepted, so a retry of a session's first transfer can run twice (IA SPI v3 (assurance/07-supporting/impact/change-2026-11-26-pin-46ed771-spi-crc.md) §2). Host test `tests/spi_protocol` (replay, gap, reorder, wrap, lost response); HIL not run"
   status: proposed
   source: WP-W-02
 
@@ -879,7 +879,7 @@
   acceptance: "Interface test VS-SWI"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl (`selfdrive/pandad/spi.cc`)"
+  baseline_impl: "Implemented (`selfdrive/pandad/spi.cc`): CRC-8 header, counter kept across the retries of a transfer and restarted at 0 after `SEQ_NACK`, control-frame index per sendcan message on endpoint 3 (`panda.cc`), response CRC, echoed counter and length checked. End-to-end host test `tests/test_pandad_spi_protocol.py` runs `spi.cc` against the pinned firmware's `spi.h`; `SPI_ERR_PROB` fault injection needs the device (`test_pandad_spi.py`), not run"
   status: proposed
   source: WP-W-02
 
@@ -911,7 +911,7 @@
   acceptance: "Length = bound accepted; bound + 1 NACKed, no write outside `spi_buf_rx`"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: lengths from header (`drivers/spi.h:115-116`) used for DMA (`:233`) and read (`:150`) unchecked (GAP-47)"
+  baseline_impl: "Implemented in all builds with a stricter bound (panda `46ed771`): the header is NACKed and counted when the MOSI length exceeds 2041 or the MISO length 2039 bytes, so the data phase is ≤ 2047 bytes in either direction (WP-S-05 §4.1), checked before the data DMA is started (`drivers/spi.h` `spi_header_valid`). Host test `tests/spi_protocol` (bound accepted, bound + 1 refused, no data DMA started); HIL `test_5_spi` not run. GAP-47 closed in code, not verified on hardware"
   status: proposed
   source: WP-W-02
 
@@ -959,7 +959,7 @@
   acceptance: "Clear on N_spi + 1 errors"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: counted only (`drivers/spi.h:220-222`, `main_comms.h:36`)"
+  baseline_impl: "Partial: counted only (`drivers/spi.h` `spi_rx_done`, panda `46ed771`: CRC, length and sequence-counter rejections; `main_comms.h:36`)"
   status: proposed
   source: WP-W-02
 
