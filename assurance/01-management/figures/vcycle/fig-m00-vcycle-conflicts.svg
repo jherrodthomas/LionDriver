@@ -50,13 +50,13 @@
 <text x="690" y="368" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
 <rect x="795.6" y="354" width="119.8" height="20" rx="10" fill="#FEF2F2" stroke="#C2410C" stroke-width="1"/>
 <text x="803.6" y="368" font-size="10.5" fill="#C2410C" font-weight="700">older than definition</text>
-<g transform="translate(682.0,394.0)"><text x="0" y="0" font-size="10.5" fill="#C2410C">WP-S-08 2 Nov; WP-A-04 changed 19 Nov, 17 days later</text></g>
+<g transform="translate(682.0,394.0)"><text x="0" y="0" font-size="10.5" fill="#C2410C">WP-S-08 2 Nov; WP-S-05 changed 26 Nov, 24 days later</text></g>
 <rect x="130" y="428" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
 <text x="144" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software requirements</text>
 <text x="488" y="450" font-size="11" fill="#475569" text-anchor="end">2 work products</text>
 <rect x="144" y="462" width="107.6" height="20" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1"/>
 <text x="152" y="476" font-size="10.5" fill="#D97706" font-weight="700">1 older than input</text>
-<g transform="translate(144.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-H-01 last 2 Nov, reads WP-S-05 changed 17 Nov</text></g>
+<g transform="translate(144.0,502.0)"><text x="0" y="0" font-size="10.5" fill="#475569">e.g. WP-H-01 last 2 Nov, reads WP-S-05 changed 26 Nov</text></g>
 <rect x="638" y="428" width="372" height="96" rx="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4"/>
 <text x="652" y="450" font-size="13" fill="#0F172A" font-weight="700">Hardware and software integration</text>
 <text x="996" y="450" font-size="11" fill="#475569" text-anchor="end">4 work products</text>

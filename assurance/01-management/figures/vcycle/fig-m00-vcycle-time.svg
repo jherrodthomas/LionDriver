@@ -142,6 +142,7 @@
 <circle cx="766.5" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="908.6" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="928.9" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
+<circle cx="1000" cy="310" r="4.2" fill="#1D4ED8" opacity=".55"/>
 <circle cx="1014" cy="310" r="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="1014" y="314" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">5</text>
 <rect x="1131.1" y="302" width="40.7" height="16" rx="4" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="1.2"/>
