@@ -100,7 +100,7 @@ FAULTS = [
   ("H3", "CAN CRC", "A bit flips on the wire", "The CAN controller's CRC catches it, on this hop."),
   ("H3", "timeout", "The brake module goes silent", "Absence for 5 periods is detected."),
   ("H3", "frozen value", "Wheel speeds freeze but keep coming", "No counter on this car: only a frozen-value check can see it."),
-  ("H1", "CRC", "Two bits flip on the SPI link", "The 8-bit XOR misses two flips in the same bit position; a CRC would not."),
+  ("H1", "CRC", "Two bits flip on the SPI link", "The 8-bit XOR misses two flips in the same bit position; the CRC-32C catches them."),
   ("H2", "limits", "openpilot packs a wrong torque, correctly", "E2E protects the channel, not the sender: only the limits stop it."),
   ("H4", "checksum, counter", "A byte changes inside the panda", "A fresh CAN CRC hides it; the camera's own checksum does not."),
 ]
@@ -177,8 +177,10 @@ def problems(root: Path = ROOT) -> list[str]:
       errs.append(f"comms-e2e.svg: fault on {hop} names gate {gate!r}, which the hop does not have")
   try:
     d = data(root)
-    if d["status"]["TSR-410"] == "implemented" or d["status"]["TSR-404"] == "implemented":
-      errs.append(f"{TSR_LIST}: TSR-410 or TSR-404 is now implemented; comms-e2e.svg captions say those faults get through")
+    if d["status"]["TSR-410"] == "not implemented":
+      errs.append(f"{TSR_LIST}: TSR-410 is 'not implemented' again; comms-e2e.svg and comms-path.svg say the SPI CRC catches two flips")
+    if d["status"]["TSR-404"] == "implemented":
+      errs.append(f"{TSR_LIST}: TSR-404 is now implemented; comms-e2e.svg captions say that fault gets through")
     if d["status"]["TSR-404"] != "not implemented":
       errs.append(f"{TSR_LIST}: TSR-404 is no longer 'not implemented'; comms-timeline.svg draws the frozen value as not detected")
   except (OSError, ValueError) as e:
@@ -401,15 +403,15 @@ def path(d: dict) -> str:
     f'<path d="M{cx[0]:.0f},{yb} v8 H{cx[-1]:.0f} v-8" fill="none" stroke="{AMBER}" stroke-width="2.5"/>',
     t((cx[0] + cx[-1]) / 2, yb + 26, "End to end: the counter and checksum openpilot writes are checked only by the EPS", 12.5, AMBER, 700, "middle"),
     f'<path d="M{cx[1] - cw / 2 + 6:.0f},{yb + 40} v8 H{cx[2] + cw / 2 - 6:.0f} v-8" fill="none" stroke="{GREY}" stroke-width="2"/>',
-    t(cx[1] + cw / 2, yb + 64, "per link: XOR on SPI", 11.5, MID, 700, "middle"),
+    t(cx[1] + cw / 2, yb + 64, "per link: CRC-32C on SPI", 11.5, MID, 700, "middle"),
     f'<path d="M{cx[3] - cw / 2 + 6:.0f},{yb + 40} v8 H{cx[4] + cw / 2 - 6:.0f} v-8" fill="none" stroke="{GREY}" stroke-width="2"/>',
     t(cx[3] + cw / 2, yb + 64, "per link: CRC-15 on CAN", 11.5, MID, 700, "middle")]))
   k = tl.show(0.8 + n * step + 0.4)
   b.append(g(f"{k} fin", [
     box(16, yb + 80, W - 32, 62, "#fdf3e1", AMBER),
     t(30, yb + 101, "openpilot writes the counter and checksum, so a wrong torque packed correctly passes both.", 12.5, NAVY, 600),
-    t(30, yb + 119, "Only the panda's limits stand between it and the EPS. The SPI link in between has a weak XOR", 12.5, NAVY),
-    t(30, yb + 135, "today; a CRC and a counter are required (TSR-410, TSR-411).", 12.5, NAVY)]))
+    t(30, yb + 119, "Only the panda's limits stand between it and the EPS. The SPI link in between now has a CRC-32C", 12.5, NAVY),
+    t(30, yb + 135, "and a counter (TSR-410, partly built); the age check is still required (TSR-411).", 12.5, NAVY)]))
   desc = ["One steering command, frame 0x2E4, from openpilot to the EPS, box by box."]
   for name, where, acts in PATH:
     parts = []
@@ -417,7 +419,7 @@ def path(d: dict) -> str:
       st = "" if kind == "none" else f" ({look(kind, d)[4]}{', ' + kind if kind.startswith('TSR-') else ''})"
       parts.append(("adds " if verb == "+" else "checks " if verb == "✓" else "") + what + st)
     desc.append(f"{name}, {where}: " + "; ".join(parts) + ".")
-  desc.append("The counter and checksum travel end to end, written by openpilot and checked only by the EPS; the XOR on the "
+  desc.append("The counter and checksum travel end to end, written by openpilot and checked only by the EPS; the CRC-32C on the "
               "SPI link and the CRC-15 on CAN are rebuilt on each link. A wrong torque packed correctly passes both "
               "end-to-end checks; only the panda's limits stop it.")
   return svg(h, "One steering command, end to end (animated)", " ".join(desc), tl, b)

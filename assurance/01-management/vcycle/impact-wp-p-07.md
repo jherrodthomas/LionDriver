@@ -2,7 +2,7 @@
 
 # Change impact: WP-P-07 Software tool classification and qualification
 
-[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-W-02 · 26 Nov](impact-wp-w-02.md) · [WP-S-05 · 26 Nov](impact-wp-s-05.md) · **WP-P-07 · 26 Nov** · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [WP-C-05 · 18 Nov](impact-wp-c-05.md) · [All changes](impact.md)
+[← Back to the V-cycle](../../README.md#the-v-cycle) · Recent changes: [WP-W-02 · 26 Nov](impact-wp-w-02.md) · [WP-S-05 · 26 Nov](impact-wp-s-05.md) · [WP-S-02 · 26 Nov](impact-wp-s-02.md) · **WP-P-07 · 26 Nov** · [WP-H-07 · 20 Nov](impact-wp-h-07.md) · [WP-H-04 · 19 Nov](impact-wp-h-04.md) · [WP-H-03 · 19 Nov](impact-wp-h-03.md) · [WP-A-04 · 19 Nov](impact-wp-a-04.md) · [All changes](impact.md)
 
 <p align="center">
   <a href="../../README.md#the-v-cycle"><img src="../figures/vcycle/fig-m00-vcycle-impact-wp-p-07.svg" width="100%" alt="Change impact of WP-P-07 Software tool classification and qualification, dated 2026-11-26: 17 work products depend on it in the process model; 16 have no version dated after it, 0 have been updated since, 1 have no dated version."></a>
